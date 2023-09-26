@@ -2,7 +2,6 @@ package woowacourse.paint.custom
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
@@ -25,8 +24,6 @@ class CustomView(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-
-        paint.color = Color.BLACK
         canvas.drawPath(path, paint)
     }
 
@@ -55,6 +52,10 @@ class CustomView(
 
     fun changeThickness(new: Float) {
         ovalSize = (new * NORMALIZATION).toInt()
+    }
+
+    fun changeColor(new: Int) {
+        paint.color = new
     }
 
     companion object {
