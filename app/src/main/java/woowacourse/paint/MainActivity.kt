@@ -1,7 +1,6 @@
 package woowacourse.paint
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
 import androidx.appcompat.app.AppCompatActivity
@@ -21,7 +20,6 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
     private fun setListener() {
         viewBinding.btnColorChange.setOnClickListener {
-            Log.d("krrong", "$color")
             viewBinding.customCanvas.changeColor(color)
         }
 
