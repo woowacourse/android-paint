@@ -28,14 +28,21 @@ class CustomView(
         for (index in 1 until size) {
             paint.color = points[index].color
             paint.strokeWidth = points[index].strokeWidth
-            canvas.drawLine(
-                points[index - 1].x,
-                points[index - 1].y,
-                points[index].x,
-                points[index].y,
-                paint,
-            )
+
+            if (!points[index].isStart) {
+                drawPoint(canvas, points[index])
+                continue
+            }
+            drawLine(canvas, points[index - 1], points[index])
         }
+    }
+
+    private fun drawPoint(canvas: Canvas, point: Point) {
+        canvas.drawPoint(point.x, point.y, paint)
+    }
+
+    private fun drawLine(canvas: Canvas, startPoint: Point, endPoint: Point) {
+        canvas.drawLine(startPoint.x, startPoint.y, endPoint.x, endPoint.y, paint)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -44,9 +51,8 @@ class CustomView(
         val pointY = event.y
 
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> { points.add(Point(pointX, pointY, paint.strokeWidth, paint.color)) }
-            MotionEvent.ACTION_MOVE -> { points.add(Point(pointX, pointY, paint.strokeWidth, paint.color)) }
-            MotionEvent.ACTION_UP -> { points.removeLast() }
+            MotionEvent.ACTION_DOWN -> { points.add(Point(pointX, pointY, false, paint.strokeWidth, paint.color)) }
+            MotionEvent.ACTION_MOVE -> { points.add(Point(pointX, pointY, true, paint.strokeWidth, paint.color)) }
             else -> super.onTouchEvent(event)
         }
         invalidate()
@@ -54,7 +60,7 @@ class CustomView(
     }
 
     fun changeThickness(new: Float) {
-        paint.strokeWidth = new * 100
+        paint.strokeWidth = new
     }
 
     fun changeColor(new: Int) {
