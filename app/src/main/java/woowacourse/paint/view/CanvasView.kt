@@ -2,7 +2,6 @@ package woowacourse.paint.view
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
@@ -16,11 +15,17 @@ class CanvasView : View {
     private val path = Path()
     private val paint = Paint().apply {
         isAntiAlias = true
-        strokeWidth = 10F
-        color = Color.BLACK
         style = Paint.Style.STROKE
         strokeJoin = Paint.Join.ROUND
         strokeCap = Paint.Cap.ROUND
+    }
+
+    fun setPaintColor(paletteColor: PaletteColor) {
+        paint.color = paletteColor.color
+    }
+
+    fun setPaintThickness(painterThickness: Float) {
+        paint.strokeWidth = painterThickness
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -33,13 +38,8 @@ class CanvasView : View {
         val pointY = event.y
 
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> {
-                path.moveTo(pointX, pointY)
-            }
-
-            MotionEvent.ACTION_MOVE -> {
-                path.lineTo(pointX, pointY)
-            }
+            MotionEvent.ACTION_DOWN -> path.moveTo(pointX, pointY)
+            MotionEvent.ACTION_MOVE -> path.lineTo(pointX, pointY)
         }
         invalidate()
         return true
