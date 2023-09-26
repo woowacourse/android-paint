@@ -5,14 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <woowacourse.paint.DrawingPaper
         android:id="@+id/dp_main"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/rs_main_width"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <com.google.android.material.slider.RangeSlider
         android:id="@+id/rs_main_width"
@@ -34,7 +32,6 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/btn_main_color"
         tools:listitem="@layout/item_color" />
-
 
     <Button
         android:id="@+id/btn_main_color"
@@ -61,6 +58,5 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btn_main_color"
         app:layout_constraintTop_toTopOf="@+id/btn_main_color" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
