@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Paint</string>
+    <!-- Main -->
+    <string name="main_change_color">색상 변경</string>
+    <string name="main_change_brush_size">굵기 변경</string>
 </resources>
