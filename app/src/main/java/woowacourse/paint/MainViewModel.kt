@@ -3,7 +3,7 @@ package woowacourse.paint
 import androidx.lifecycle.ViewModel
 
 class MainViewModel : ViewModel() {
-    private val _colors: MutableList<Int> = mutableListOf()
+    private var _colors: MutableList<Int> = mutableListOf()
     val colors: List<Int> get() = _colors.toList()
 
     var strokeSize: Float = 0.0f
@@ -13,7 +13,7 @@ class MainViewModel : ViewModel() {
         private set
 
     fun setColors(colors: List<Int>) {
-        _colors.addAll(colors)
+        _colors = colors.toMutableList()
     }
 
     fun setPaintColor(color: Int) {
