@@ -16,6 +16,7 @@ class CustomView(
 
     private val path = Path()
     private val paint = Paint()
+    private var ovalSize = 0
 
     init {
         isFocusable = true
@@ -44,15 +45,19 @@ class CustomView(
 
     private fun addOvalToPath(x: Float, y: Float) {
         path.addOval(
-            x - (OVAL_SIZE / 2),
-            y - (OVAL_SIZE / 2),
-            x + (OVAL_SIZE / 2),
-            y + (OVAL_SIZE / 2),
+            x - (ovalSize / 2),
+            y - (ovalSize / 2),
+            x + (ovalSize / 2),
+            y + (ovalSize / 2),
             Path.Direction.CW,
         )
     }
 
+    fun changeThickness(new: Float) {
+        ovalSize = (new * NORMALIZATION).toInt()
+    }
+
     companion object {
-        private const val OVAL_SIZE = 50
+        const val NORMALIZATION = 100
     }
 }
