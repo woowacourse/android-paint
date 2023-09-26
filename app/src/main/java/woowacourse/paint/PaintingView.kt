@@ -44,6 +44,7 @@ class PaintingView(
                 MotionEvent.ACTION_UP -> {
                     painting.record(PaintingRecord(path, brush))
                     path = Path()
+                    return true
                 }
             }
         }
