@@ -1,5 +1,6 @@
 package woowacourse.paint
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -17,8 +18,30 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        initPaletteColor()
+        initPalette()
         setupRangeSliderListener()
+        setupChangePaintColorListener()
         setupChangeStrokeSizeListener()
+    }
+
+    private fun initPaletteColor() {
+        mainViewModel.setColors(
+            listOf(
+                Color.RED,
+                getColor(R.color.orange),
+                Color.YELLOW,
+                Color.GREEN,
+                Color.BLUE,
+            ),
+        )
+    }
+
+    private fun initPalette() {
+        binding.rvMain.adapter = PaletteAdapter(mainViewModel.colors) { color ->
+            mainViewModel.setPaintColor(color)
+        }
+        binding.rvMain.setHasFixedSize(true)
     }
 
     private fun setupRangeSliderListener() {
@@ -27,6 +50,12 @@ class MainActivity : AppCompatActivity() {
                 mainViewModel.setStrokeSize(value)
             },
         )
+    }
+
+    private fun setupChangePaintColorListener() {
+        binding.btnMainChangeColor.setOnClickListener {
+            binding.canvasMain.setPaintColor(mainViewModel.paintColor)
+        }
     }
 
     private fun setupChangeStrokeSizeListener() {

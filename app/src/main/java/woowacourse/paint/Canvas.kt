@@ -74,4 +74,8 @@ class Canvas(
     fun setStrokeSize(size: Float) {
         currentPaint.strokeWidth = size
     }
+
+    fun setPaintColor(color: Int) {
+        currentPaint.color = color
+    }
 }
