@@ -20,6 +20,8 @@ class PaintingView(
         style = Paint.Style.STROKE
         color = context.getColor(R.color.red)
         isAntiAlias = true
+        strokeCap = Paint.Cap.ROUND
+        strokeJoin = Paint.Join.ROUND
     }
 
     init {
