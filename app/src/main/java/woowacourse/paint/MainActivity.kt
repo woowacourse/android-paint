@@ -13,15 +13,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        with(binding.rsMain) {
-            valueFrom = 0f
-            valueTo = 10f
-
-            addOnChangeListener(
-                RangeSlider.OnChangeListener { _, value, _ ->
-                    binding.canvasMain.setStrokeSize(value)
-                },
-            )
-        }
+        binding.rsMain.addOnChangeListener(
+            RangeSlider.OnChangeListener { _, value, _ ->
+                binding.canvasMain.setStrokeSize(value)
+            },
+        )
     }
 }
