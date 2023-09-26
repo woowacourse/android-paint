@@ -25,6 +25,12 @@ class MainActivity : AppCompatActivity() {
         setupChangeStrokeSizeListener()
     }
 
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        binding.canvasMain.setPaintColor(mainViewModel.paintColor)
+        binding.canvasMain.setStrokeSize(mainViewModel.strokeSize)
+        super.onRestoreInstanceState(savedInstanceState)
+    }
+
     private fun initPaletteColor() {
         mainViewModel.setColors(
             listOf(
