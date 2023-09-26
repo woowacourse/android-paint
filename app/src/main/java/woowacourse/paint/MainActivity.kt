@@ -16,6 +16,8 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
         setListener()
+        viewBinding.rangebar.valueFrom = 0.0f
+        viewBinding.rangebar.valueTo = 100.0f
     }
 
     private fun setListener() {
