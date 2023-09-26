@@ -36,6 +36,7 @@ class Canvas(
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
+                pathPaint.add(currentPath to currentPaint)
                 currentPath.moveTo(event.x, event.y)
                 currentPath.lineTo(event.x, event.y)
             }
@@ -47,7 +48,6 @@ class Canvas(
             MotionEvent.ACTION_UP -> {
                 initPaint()
                 initPath()
-                pathPaint.add(currentPath to currentPaint)
             }
 
             else -> {
