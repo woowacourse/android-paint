@@ -1,3 +1,5 @@
+
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -32,6 +34,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
+    }
+    buildFeatures {
+        dataBinding = true
     }
 }
 
