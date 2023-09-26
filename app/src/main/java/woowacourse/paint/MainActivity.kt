@@ -1,6 +1,7 @@
 package woowacourse.paint
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.slider.RangeSlider
@@ -31,12 +32,13 @@ class MainActivity : AppCompatActivity() {
         binding.rsMainWidth.valueFrom = MIN_VALUE
         binding.rsMainWidth.valueTo = MAX_VALUE
         binding.rsMainWidth.addOnChangeListener(RangeSlider.OnChangeListener { _, value, _ ->
-            binding.dpMain.setWidth(value)
+            binding.dpMain.changeWidth(value)
         })
     }
 
-    private fun selectColor(color: Color) {
-        //
+    private fun selectColor(color: Int) {
+        Log.d("123123", color.toString())
+        binding.dpMain.changeColor(color)
     }
 
     private fun attachColorAdapter() {

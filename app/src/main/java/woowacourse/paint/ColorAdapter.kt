@@ -11,7 +11,7 @@ import woowacourse.paint.Color.RED
 import woowacourse.paint.Color.YELLOW
 
 class ColorAdapter(
-    private val onClick: (color: Color) -> Unit,
+    private val onClick: (color: Int) -> Unit,
     private val context: Context
 ) : RecyclerView.Adapter<ColorViewHolder>() {
 

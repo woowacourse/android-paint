@@ -5,17 +5,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.paint.Color.BLACK
-import woowacourse.paint.Color.BLUE
-import woowacourse.paint.Color.GREEN
-import woowacourse.paint.Color.ORANGE
-import woowacourse.paint.Color.RED
-import woowacourse.paint.Color.YELLOW
 import woowacourse.paint.databinding.ItemColorBinding
 
 class ColorViewHolder(
     private val binding: ItemColorBinding,
-    private val onClick: (color: Color) -> Unit,
+    private val onClick: (color: Int) -> Unit,
     private val context: Context,
 ) : RecyclerView.ViewHolder(binding.root) {
 
@@ -24,16 +18,7 @@ class ColorViewHolder(
     }
 
     fun bind(colors: Color) {
-        val color = ContextCompat.getColor(
-            context, when (colors) {
-                RED -> R.color.red
-                ORANGE -> R.color.orange
-                YELLOW -> R.color.yellow
-                GREEN -> R.color.green
-                BLUE -> R.color.blue
-                BLACK -> R.color.black
-            }
-        )
+        val color = ContextCompat.getColor(context, colors.colorRes)
 
         binding.itemColorPaint.setBackgroundColor(color)
     }
@@ -42,7 +27,7 @@ class ColorViewHolder(
 
         fun from(
             parent: ViewGroup,
-            onClick: (color: Color) -> Unit,
+            onClick: (color: Int) -> Unit,
             context: Context
         ): ColorViewHolder = ColorViewHolder(
             ItemColorBinding.inflate(LayoutInflater.from(parent.context), parent, false),

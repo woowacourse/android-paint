@@ -3,7 +3,6 @@ package woowacourse.paint
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
@@ -11,21 +10,31 @@ import android.view.MotionEvent
 import android.view.View
 
 class DrawingPaper(
-    context: Context, attributeSet: AttributeSet
+    private val context: Context,
+    attributeSet: AttributeSet
 ) : View(context, attributeSet) {
 
     private val pathRecords: MutableList<Path> = mutableListOf(Path())
     private val paintRecords: MutableList<Paint> = mutableListOf(Paint())
     private var brushWidth = 0f
+    private var brushColor = R.color.black
 
-
-    fun setWidth(width: Float) {
+    fun changeWidth(width: Float) {
         val newPath = Path()
         val newPaint = Paint()
 
         pathRecords.add(newPath)
         paintRecords.add(newPaint)
         brushWidth = width
+    }
+
+    fun changeColor(color: Int) {
+        val newPath = Path()
+        val newPaint = Paint()
+
+        pathRecords.add(newPath)
+        paintRecords.add(newPaint)
+        brushColor = color
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -35,7 +44,7 @@ class DrawingPaper(
             val paint = paintRecords[record].setBrush()
 
             paintRecords.last().strokeWidth = brushWidth
-            paintRecords.last().color = Color.GREEN
+            paintRecords.last().color = context.getColor(brushColor)
 
             canvas.drawPath(path, paint)
         }
