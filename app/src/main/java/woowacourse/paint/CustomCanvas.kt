@@ -10,17 +10,19 @@ import android.view.MotionEvent
 import android.view.View
 
 class CustomCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    private val path = Path()
-    private val paint = Paint()
+    private var path = Path()
+    private var paint = Paint()
+    private val paths = mutableListOf<Pair<Path, Paint>>()
 
     init {
-        paint.style = Paint.Style.STROKE
-        paint.strokeWidth = 10f
-        paint.color = Color.MAGENTA
+        changePaint(Color.RED, 10f)
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+        paths.forEach { (path: Path, paint: Paint) ->
+            canvas.drawPath(path, paint)
+        }
         canvas.drawPath(path, paint)
     }
 
@@ -36,9 +38,30 @@ class CustomCanvas(context: Context, attrs: AttributeSet) : View(context, attrs)
                 path.lineTo(pointX, pointY)
             }
 
+            MotionEvent.ACTION_UP -> {
+                paths.add(path to paint)
+                path = Path()
+            }
+
             else -> super.onTouchEvent(event)
         }
         invalidate()
         return true
+    }
+
+    fun changeColor(color: Int) {
+        changePaint(color, paint.strokeWidth)
+    }
+
+    fun changeWidth(width: Float) {
+        changePaint(paint.color, width)
+    }
+
+    private fun changePaint(color: Int, width: Float) {
+        paint = Paint()
+        paint.style = Paint.Style.STROKE
+        paint.strokeCap = Paint.Cap.ROUND
+        paint.strokeWidth = width
+        paint.color = color
     }
 }
