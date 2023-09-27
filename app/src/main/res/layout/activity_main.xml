@@ -14,22 +14,22 @@
         android:layout_height="match_parent">
 
         <woowacourse.paint.CustomCanvas
-            android:id="@+id/custom_canvas"
+            android:id="@+id/main_custom_canvas"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/range_slider"
+            app:layout_constraintBottom_toTopOf="@id/main_range_slider"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.slider.RangeSlider
-            android:id="@+id/range_slider"
+            android:id="@+id/main_range_slider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            app:layout_constraintBottom_toTopOf="@+id/colors_recycler_view" />
+            app:layout_constraintBottom_toTopOf="@+id/main_colors_recycler_view" />
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/colors_recycler_view"
+            android:id="@+id/main_colors_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"

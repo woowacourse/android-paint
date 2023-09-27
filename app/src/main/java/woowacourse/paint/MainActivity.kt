@@ -29,15 +29,15 @@ class MainActivity : AppCompatActivity() {
         ).map { getColor(it) }
 
         binding.adapter = PaletteAdapter(colors) { color: Int ->
-            binding.customCanvas.changeColor(color)
+            binding.mainCustomCanvas.changeColor(color)
         }
     }
 
     private fun initRangeSlider() {
-        binding.rangeSlider.valueFrom = 0.0f
-        binding.rangeSlider.valueTo = 100.0f
-        binding.rangeSlider.addOnChangeListener { _, value, _ ->
-            binding.customCanvas.changeWidth(value)
+        binding.mainRangeSlider.valueFrom = 0.0f
+        binding.mainRangeSlider.valueTo = 100.0f
+        binding.mainRangeSlider.addOnChangeListener { _, value, _ ->
+            binding.mainCustomCanvas.changeWidth(value)
         }
     }
 }
