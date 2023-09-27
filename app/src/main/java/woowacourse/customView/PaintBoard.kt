@@ -9,8 +9,6 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.ColorInt
-import androidx.core.content.ContextCompat
-import woowacourse.model.BoardColor
 
 class PaintBoard(
     context: Context,
@@ -29,7 +27,7 @@ class PaintBoard(
     private val newPath: Path = Path()
 
     @ColorInt
-    var nowColor: Int = ContextCompat.getColor(context, BoardColor.RedColor.colorInt)
+    var nowColor: Int = 0xFF0000
     var nowStrokeWidth: Float = 50f
 
     override fun onDraw(canvas: Canvas?) {
@@ -39,7 +37,7 @@ class PaintBoard(
             canvas?.drawPath(
                 pathInfo.path,
                 paint.apply {
-                    color = pathInfo.boardColor
+                    color = pathInfo.color
                     strokeWidth = pathInfo.strokeWidth
                 },
             )

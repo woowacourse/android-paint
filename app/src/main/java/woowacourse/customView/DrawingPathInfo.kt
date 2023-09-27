@@ -5,6 +5,6 @@ import androidx.annotation.ColorInt
 
 data class DrawingPathInfo(
     val path: Path,
-    @ColorInt val boardColor: Int,
+    @ColorInt val color: Int,
     val strokeWidth: Float,
 )
