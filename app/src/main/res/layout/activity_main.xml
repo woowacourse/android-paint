@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="androidx.core.content.ContextCompat"/>
+
         <variable
             name="vm"
             type="woowacourse.paint.MainViewModel" />
@@ -15,7 +17,7 @@
         android:layout_height="match_parent">
 
         <woowacourse.customView.PaintBoard
-            nowColor="@{vm.appliedColor}"
+            nowColor="@{ContextCompat.getColor(context, vm.appliedColor.colorInt)}"
             nowStrokeWidth="@{vm.appliedStroke}"
             android:layout_width="match_parent"
             android:layout_height="0dp"

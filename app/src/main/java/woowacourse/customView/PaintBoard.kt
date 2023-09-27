@@ -8,6 +8,7 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import woowacourse.model.BoardColor
 
@@ -18,31 +19,35 @@ class PaintBoard(
     private val paint = Paint().apply {
         isAntiAlias = true
         style = Paint.Style.STROKE
+        strokeCap = Paint.Cap.ROUND
+        strokeJoin = Paint.Join.ROUND
         color = Color.RED
         strokeWidth = 50f
     }
 
-    private val drawingPaths: MutableList<PathWithColor> = mutableListOf()
+    private val drawingPaths: MutableList<DrawingPathInfo> = mutableListOf()
     private val newPath: Path = Path()
-    var nowColor: BoardColor = BoardColor.RedColor
+
+    @ColorInt
+    var nowColor: Int = ContextCompat.getColor(context, BoardColor.RedColor.colorInt)
     var nowStrokeWidth: Float = 50f
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        drawingPaths.forEach { pathWithColor ->
+        drawingPaths.forEach { pathInfo ->
             canvas?.drawPath(
-                pathWithColor.path,
+                pathInfo.path,
                 paint.apply {
-                    color = ContextCompat.getColor(context, pathWithColor.color.colorInt)
-                    strokeWidth = pathWithColor.strokeWidth
+                    color = pathInfo.boardColor
+                    strokeWidth = pathInfo.strokeWidth
                 },
             )
         }
         canvas?.drawPath(
             newPath,
             paint.apply {
-                color = ContextCompat.getColor(context, nowColor.colorInt)
+                color = nowColor
                 strokeWidth = nowStrokeWidth
             },
         )
@@ -60,7 +65,7 @@ class PaintBoard(
             }
 
             MotionEvent.ACTION_UP -> {
-                drawingPaths.add(PathWithColor(Path(newPath), nowColor, nowStrokeWidth))
+                drawingPaths.add(DrawingPathInfo(Path(newPath), nowColor, nowStrokeWidth))
                 newPath.reset()
             }
         }

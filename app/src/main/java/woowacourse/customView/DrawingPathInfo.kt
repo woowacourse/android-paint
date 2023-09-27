@@ -1,10 +1,10 @@
 package woowacourse.customView
 
 import android.graphics.Path
-import woowacourse.model.BoardColor
+import androidx.annotation.ColorInt
 
-data class PathWithColor(
+data class DrawingPathInfo(
     val path: Path,
-    val color: BoardColor,
+    @ColorInt val boardColor: Int,
     val strokeWidth: Float,
 )
