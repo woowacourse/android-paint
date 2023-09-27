@@ -9,12 +9,14 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.MotionEvent.ACTION_DOWN
 import android.view.MotionEvent.ACTION_MOVE
+import android.view.MotionEvent.ACTION_UP
 import android.view.View
 
 class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
+    private val history: History = History()
     private val paint: Paint = Paint()
-    private val path: Path = Path()
+    private var path: Path = Path()
 
     init {
         setupPaintSetting()
@@ -24,7 +26,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
         paint.apply {
             isAntiAlias = true
             style = Paint.Style.STROKE
-            strokeWidth = 20F
+            strokeWidth = DEFAULT_SIZE
             strokeCap = Paint.Cap.ROUND
             strokeJoin = Paint.Join.ROUND
         }
@@ -33,24 +35,49 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        canvas.drawPath(path, paint)
+        canvas.apply {
+            drawHistory()
+            drawPath(path, paint)
+        }
+    }
+
+    private fun Canvas.drawHistory() {
+        history.paintings.forEach { painting ->
+            drawPath(painting.path, painting.paint)
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
-            ACTION_DOWN -> {
-                path.moveTo(event.x, event.y)
-                path.lineTo(event.x, event.y)
-            }
-
-            ACTION_MOVE -> {
-                path.lineTo(event.x, event.y)
-            }
-
+            ACTION_DOWN -> initPath(event.x, event.y)
+            ACTION_MOVE -> drawPath(event.x, event.y)
+            ACTION_UP -> savePath()
             else -> super.onTouchEvent(event)
         }
         invalidate()
         return true
+    }
+
+    private fun initPath(pointX: Float, pointY: Float) {
+        path = Path()
+        path.moveTo(pointX, pointY)
+        path.lineTo(pointX, pointY)
+    }
+
+    private fun drawPath(pointX: Float, pointY: Float) {
+        path.lineTo(pointX, pointY)
+    }
+
+    private fun savePath() {
+        history.add(Painting(path, Paint(paint)))
+    }
+
+    fun changeSize(value: Float) {
+        paint.strokeWidth = value
+    }
+
+    companion object {
+        const val DEFAULT_SIZE = 20F
     }
 }
