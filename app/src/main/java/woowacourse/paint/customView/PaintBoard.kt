@@ -1,4 +1,4 @@
-package woowacourse.customView
+package woowacourse.paint.customView
 
 import android.content.Context
 import android.graphics.Canvas

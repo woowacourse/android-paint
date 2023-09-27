@@ -1,9 +1,9 @@
-package woowacourse.paint
+package woowacourse.paint.ui.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import woowacourse.model.PaintColor
+import woowacourse.paint.model.PaintColor
 
 class MainViewModel : ViewModel() {
     var selectedPenStroke: Float = 50f

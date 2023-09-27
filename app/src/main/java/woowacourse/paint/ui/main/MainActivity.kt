@@ -1,9 +1,8 @@
-package woowacourse.paint
+package woowacourse.paint.ui.main
 
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import woowacourse.paint.adapter.BoardColorAdapter
 import woowacourse.paint.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

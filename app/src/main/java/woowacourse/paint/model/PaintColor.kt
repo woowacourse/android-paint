@@ -1,4 +1,4 @@
-package woowacourse.model
+package woowacourse.paint.model
 
 import androidx.annotation.ColorRes
 import woowacourse.paint.R

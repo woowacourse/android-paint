@@ -1,9 +1,9 @@
-package woowacourse.paint.adapter
+package woowacourse.paint.ui.main
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import woowacourse.model.PaintColor
+import woowacourse.paint.model.PaintColor
 
 class BoardColorAdapter(
     private val onColorClick: (PaintColor) -> Unit,

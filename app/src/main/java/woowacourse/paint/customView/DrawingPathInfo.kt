@@ -1,4 +1,4 @@
-package woowacourse.customView
+package woowacourse.paint.customView
 
 import android.graphics.Path
 import androidx.annotation.ColorInt

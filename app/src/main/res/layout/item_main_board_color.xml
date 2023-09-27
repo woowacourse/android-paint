@@ -6,7 +6,7 @@
 
         <variable
             name="color"
-            type="woowacourse.model.PaintColor" />
+            type="woowacourse.paint.model.PaintColor" />
 
         <variable
             name="onColorClickListener"

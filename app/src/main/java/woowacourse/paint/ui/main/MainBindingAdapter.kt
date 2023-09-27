@@ -1,4 +1,4 @@
-package woowacourse.paint
+package woowacourse.paint.ui.main
 
 import androidx.databinding.BindingAdapter
 import com.google.android.material.slider.Slider

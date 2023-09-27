@@ -1,10 +1,10 @@
-package woowacourse.paint.adapter
+package woowacourse.paint.ui.main
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import woowacourse.model.PaintColor
 import woowacourse.paint.databinding.ItemMainBoardColorBinding
+import woowacourse.paint.model.PaintColor
 
 class BoardColorViewHolder(
     private val binding: ItemMainBoardColorBinding,

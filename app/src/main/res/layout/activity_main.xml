@@ -9,14 +9,14 @@
 
         <variable
             name="vm"
-            type="woowacourse.paint.MainViewModel" />
+            type="woowacourse.paint.ui.main.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <woowacourse.customView.PaintBoard
+        <woowacourse.paint.customView.PaintBoard
             android:id="@+id/pb_board"
             nowColor="@{ContextCompat.getColor(context, vm.appliedColor.colorRes)}"
             nowStrokeWidth="@{vm.appliedStroke}"
