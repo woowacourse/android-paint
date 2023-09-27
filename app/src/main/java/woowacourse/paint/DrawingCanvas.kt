@@ -10,12 +10,13 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 
-class CustomPainterView @JvmOverloads constructor(
+class DrawingCanvas @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
 ) : View(context, attrs) {
 
-    private val path = Path()
+    private val paletteHistory = DrawingHistory()
+    private var path = Path()
     private val paint = Paint()
 
     init {
@@ -26,6 +27,9 @@ class CustomPainterView @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+        paletteHistory.history.forEach {
+            canvas.drawPath(it.path, it.paint)
+        }
         canvas.drawPath(path, paint)
     }
 
@@ -44,6 +48,7 @@ class CustomPainterView @JvmOverloads constructor(
 
             else -> super.onTouchEvent(event)
         }
+        paletteHistory.addHistory(DrawingElement(path, Paint(paint)))
         invalidate()
         return true
     }
@@ -55,10 +60,12 @@ class CustomPainterView @JvmOverloads constructor(
     }
 
     fun setStroke(value: Float) {
-        paint.strokeWidth = value
+        path = Path()
+        this.paint.strokeWidth = value
     }
 
     fun setColor(color: Int) {
-        paint.color = context.getColor(color)
+        path = Path()
+        this.paint.color = context.getColor(color)
     }
 }
