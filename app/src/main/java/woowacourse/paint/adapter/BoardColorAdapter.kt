@@ -33,7 +33,7 @@ class BoardColorAdapter(
                 oldItem: BoardColor,
                 newItem: BoardColor,
             ): Boolean {
-                return oldItem == newItem
+                return oldItem.colorInt == newItem.colorInt
             }
         }
     }

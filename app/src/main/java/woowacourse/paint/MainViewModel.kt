@@ -38,4 +38,9 @@ class MainViewModel : ViewModel() {
     fun onAppliedStrokeChange() {
         _appliedStroke.value = selectedPenStroke
     }
+
+    fun onChangeSelectedColor(color: BoardColor) {
+        selectedPenColor = color
+        Log.d("mendel!", "!! $color")
+    }
 }
