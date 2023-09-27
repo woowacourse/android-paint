@@ -95,6 +95,7 @@ class CustomView constructor(context: Context, attr: AttributeSet) : View(contex
         setStrokeWidth(10f)
         paint.isAntiAlias = true
         paint.style = Paint.Style.STROKE
+        paint.strokeCap = Paint.Cap.ROUND
     }
 
     companion object {
