@@ -3,27 +3,34 @@ package woowacourse.paint.view
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
+import com.google.android.material.slider.RangeSlider
 
 class PaletteView : LinearLayout {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     private var paintPropertyChangeListener: OnPaintPropertyChangeListener? = null
+    var selectedPaintThickness: Float
+    var selectedPaintColor: PaletteColor = PaletteColor.values().first()
+
+    private val Float.paintThickness: Float
+        get() = this * 100 * THICKNESS_SIZE_UNIT
+    private val RangeSlider.paintThickness
+        get() = values.first().paintThickness
 
     init {
         orientation = VERTICAL
         val painterThicknessRangeSlider = rangeSlider(context) { value ->
-            setPaintThickness(value * 100 * THICKNESS_SIZE_UNIT)
+            selectedPaintThickness = value.paintThickness
+            paintPropertyChangeListener?.onStrokeThicknessChanged(value.paintThickness)
         }
+        selectedPaintThickness = painterThicknessRangeSlider.paintThickness
         addView(painterThicknessRangeSlider)
         addView(ColorScrollView.create(context, ::setPaintColor))
     }
 
-    private fun setPaintThickness(paintThickness: Float) {
-        paintPropertyChangeListener?.onStrokeThicknessChanged(paintThickness)
-    }
-
     private fun setPaintColor(paintColor: PaletteColor) {
+        this.selectedPaintColor = paintColor
         paintPropertyChangeListener?.onColorSelected(paintColor)
     }
 

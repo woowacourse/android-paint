@@ -14,6 +14,16 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        setupCanvasView()
+        setupPaletteView()
+    }
+
+    private fun setupCanvasView() {
+        canvasView.setPaintThickness(paletteView.selectedPaintThickness)
+        canvasView.setPaintColor(paletteView.selectedPaintColor)
+    }
+
+    private fun setupPaletteView() {
         paletteView.setOnPropertyChangeListener(object : PaletteView.OnPaintPropertyChangeListener {
             override fun onColorSelected(paintColor: PaletteColor) {
                 canvasView.setPaintColor(paintColor)

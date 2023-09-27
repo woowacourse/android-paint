@@ -13,12 +13,7 @@ class CanvasView : View {
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     private val path = Path()
-    private val paint = Paint().apply {
-        isAntiAlias = true
-        style = Paint.Style.STROKE
-        strokeJoin = Paint.Join.ROUND
-        strokeCap = Paint.Cap.ROUND
-    }
+    private val paint = Paint().softPainter()
 
     fun setPaintColor(paletteColor: PaletteColor) {
         paint.color = paletteColor.color
@@ -43,5 +38,15 @@ class CanvasView : View {
         }
         invalidate()
         return true
+    }
+
+    private fun Paint.softPainter(
+        paletteColor: PaletteColor = PaletteColor.RED,
+    ): Paint = apply {
+        isAntiAlias = true
+        style = Paint.Style.STROKE
+        strokeJoin = Paint.Join.ROUND
+        strokeCap = Paint.Cap.ROUND
+        color = paletteColor.color
     }
 }
