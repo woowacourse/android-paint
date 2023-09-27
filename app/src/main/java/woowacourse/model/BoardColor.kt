@@ -1,9 +1,9 @@
 package woowacourse.model
 
-import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
 import woowacourse.paint.R
 
-enum class BoardColor(@ColorInt val colorInt: Int) {
+enum class BoardColor(@ColorRes val colorInt: Int) {
     RedColor(R.color.red),
     OrangeColor(R.color.orange),
     YellowColor(R.color.yellow),
