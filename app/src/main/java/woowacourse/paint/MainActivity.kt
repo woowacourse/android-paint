@@ -22,6 +22,22 @@ class MainActivity : AppCompatActivity() {
             rangeSlider.addOnChangeListener { _, value, _ ->
                 customView.setStrokeWidth(value)
             }
+
+            red.setOnClickListener {
+                customView.setColor(getColor(R.color.red))
+            }
+            orange.setOnClickListener {
+                customView.setColor(getColor(R.color.orange))
+            }
+            yellow.setOnClickListener {
+                customView.setColor(getColor(R.color.yellow))
+            }
+            green.setOnClickListener {
+                customView.setColor(getColor(R.color.green))
+            }
+            blue.setOnClickListener {
+                customView.setColor(getColor(R.color.blue))
+            }
         }
     }
 }
