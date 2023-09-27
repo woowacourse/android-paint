@@ -11,6 +11,7 @@ import android.view.MotionEvent.ACTION_DOWN
 import android.view.MotionEvent.ACTION_MOVE
 import android.view.MotionEvent.ACTION_UP
 import android.view.View
+import androidx.annotation.ColorRes
 
 class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
@@ -29,6 +30,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
             strokeWidth = DEFAULT_SIZE
             strokeCap = Paint.Cap.ROUND
             strokeJoin = Paint.Join.ROUND
+            color = context.getColor(DEFAULT_COLOR)
         }
     }
 
@@ -77,7 +79,14 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
         paint.strokeWidth = value
     }
 
+    fun changeColor(value: Int) {
+        paint.color = context.getColor(value)
+    }
+
     companion object {
+        @ColorRes private val DEFAULT_COLOR = R.color.blue
         const val DEFAULT_SIZE = 20F
+        val COLORS =
+            listOf(R.color.red, R.color.orange, R.color.yellow, R.color.green, R.color.blue)
     }
 }

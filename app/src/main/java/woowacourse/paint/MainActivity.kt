@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupSizeSelector()
+        setUpColorSelector()
     }
 
     private fun setupSizeSelector() {
@@ -31,5 +32,13 @@ class MainActivity : AppCompatActivity() {
                 binding.pbPaintBoard.changeSize(value)
             },
         )
+    }
+
+    private fun setUpColorSelector() {
+        binding.rvColors.adapter = ColorAdapter(PaintBoard.COLORS, ::onColorClicked)
+    }
+
+    private fun onColorClicked(color: Int) {
+        binding.pbPaintBoard.changeColor(color)
     }
 }
