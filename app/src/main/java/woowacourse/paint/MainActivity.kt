@@ -18,7 +18,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        setupBrushThicknessSettingTool()
         setupPaintColorPalette()
+    }
+
+    private fun setupBrushThicknessSettingTool() {
+        binding.brushThicknessSettingTool.isTickVisible = false
+        binding.brushThicknessSettingTool.addOnChangeListener { _, value, _ ->
+            binding.paintBoard.setBrushThickness(value)
+        }
     }
 
     private fun setupPaintColorPalette() {
