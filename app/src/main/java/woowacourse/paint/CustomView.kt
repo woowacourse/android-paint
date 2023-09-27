@@ -2,8 +2,8 @@ package woowacourse.paint
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
@@ -14,8 +14,10 @@ import kotlin.math.abs
 class CustomView constructor(context: Context, attr: AttributeSet) : View(context, attr) {
     private val path = Path()
     private val paint = Paint()
-    private var xx: Float = 0f
-    private var yy: Float = 0f
+    private lateinit var canvas: Canvas
+    private lateinit var bitmap: Bitmap
+    private var xBefore: Float = 0f
+    private var yBefore: Float = 0f
 
     init {
         isFocusable = true
@@ -23,10 +25,25 @@ class CustomView constructor(context: Context, attr: AttributeSet) : View(contex
         setupPaint()
     }
 
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+        bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
+        canvas = Canvas(bitmap)
+    }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
+        canvas.drawBitmap(bitmap, 0f, 0f, paint)
         canvas.drawPath(path, paint)
+    }
+
+    fun setColor(color: Int) {
+        paint.color = color
+    }
+
+    fun setStrokeWidth(width: Float) {
+        paint.strokeWidth = width
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -42,30 +59,45 @@ class CustomView constructor(context: Context, attr: AttributeSet) : View(contex
                 keepDrawing(pointX, pointY)
             }
 
+            MotionEvent.ACTION_UP -> {
+                finishDrawing()
+            }
+
             else -> super.onTouchEvent(event)
         }
         invalidate()
         return true
     }
 
-    fun setupPaint() {
-        paint.color = Color.BLUE
-        paint.strokeWidth = 50f
+    private fun startDrawing(x: Float, y: Float) {
+        path.reset()
+        path.moveTo(x, y)
+        xBefore = x
+        yBefore = y
+    }
+
+    private fun keepDrawing(x: Float, y: Float) {
+        if (abs(x - xBefore) >= MOVE_THRESHOLD || abs(y - yBefore) >= MOVE_THRESHOLD) {
+            path.quadTo(xBefore, yBefore, (x + xBefore) / 2, (y + yBefore) / 2)
+            xBefore = x
+            yBefore = y
+        }
+    }
+
+    private fun finishDrawing() {
+        path.lineTo(xBefore, yBefore)
+        canvas.drawPath(path, paint)
+        path.reset()
+    }
+
+    private fun setupPaint() {
+        setColor(context.getColor(R.color.red))
+        setStrokeWidth(10f)
         paint.isAntiAlias = true
         paint.style = Paint.Style.STROKE
     }
 
-    private fun startDrawing(x: Float, y: Float) {
-        path.moveTo(x, y)
-        xx = x
-        yy = y
-    }
-
-    private fun keepDrawing(x: Float, y: Float) {
-        if (abs(x - xx) >= 5 || abs(y - yy) >= 5) {
-            path.quadTo(xx, yy, (x + xx) / 2, (y + yy) / 2)
-            xx = x
-            yy = y
-        }
+    companion object {
+        private const val MOVE_THRESHOLD = 5
     }
 }

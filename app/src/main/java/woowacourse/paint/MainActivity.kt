@@ -17,6 +17,11 @@ class MainActivity : AppCompatActivity() {
         binding.apply {
             rangeSlider.valueFrom = 0.0f
             rangeSlider.valueTo = 100.0f
+            rangeSlider.setValues(10f)
+
+            rangeSlider.addOnChangeListener { _, value, _ ->
+                customView.setStrokeWidth(value)
+            }
         }
     }
 }
