@@ -54,6 +54,9 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private fun setupPaint(thickness: Float, color: Int) {
         paint = Paint().apply {
             style = Paint.Style.STROKE
+            strokeCap = Paint.Cap.ROUND
+            strokeJoin = Paint.Join.ROUND
+            isAntiAlias = true
             strokeWidth = thickness
             this.color = color
         }
