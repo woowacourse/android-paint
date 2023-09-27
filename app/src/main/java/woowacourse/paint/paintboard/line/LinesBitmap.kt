@@ -1,4 +1,4 @@
-package woowacourse.paint.paintboard
+package woowacourse.paint.paintboard.line
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
