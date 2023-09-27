@@ -33,11 +33,16 @@ class CanvasView : View {
         val pointY = event.y
 
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> path.moveTo(pointX, pointY)
+            MotionEvent.ACTION_DOWN -> path.dotTo(pointX, pointY)
             MotionEvent.ACTION_MOVE -> path.lineTo(pointX, pointY)
         }
         invalidate()
         return true
+    }
+
+    private fun Path.dotTo(pointX: Float, pointY: Float) {
+        path.moveTo(pointX, pointY)
+        lineTo(pointX, pointY)
     }
 
     private fun Paint.softPainter(
