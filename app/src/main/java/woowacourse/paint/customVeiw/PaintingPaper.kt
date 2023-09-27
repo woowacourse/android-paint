@@ -1,18 +1,23 @@
 package woowacourse.paint.customVeiw
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import java.lang.Math.sqrt
 
 class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    private val path = Path()
+    private var path = Path()
+    private val records = mutableListOf<Record>()
     private val paint = Paint()
+    private var prevPoint = Pair(0f, 0f)
+
+    class Record(val path: Path, val paint: Paint)
 
     init {
         isFocusable = true
@@ -22,26 +27,56 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvas.drawPath(path, paint)
+        records.forEach {
+            canvas.drawPath(it.path, it.paint)
+        }
     }
 
-    @SuppressLint("ClickableViewAccessibility")
-    override fun onTouchEvent(event: MotionEvent): Boolean {
-        val pointX = event.x
-        val pointY = event.y
-        when (event.action) {
-            MotionEvent.ACTION_DOWN -> path.addOval(
-                pointX,
-                pointY,
-                pointX + OVAL_SIZE,
-                pointY + OVAL_SIZE,
-                Path.Direction.CW,
-            )
-
-            else -> super.onTouchEvent(event)
+    override fun onTouchEvent(event: MotionEvent): Boolean = when (event.action) {
+        MotionEvent.ACTION_DOWN -> {
+            Log.d(TAG, "ACTION_DOWN")
+            records += getNewRecord().apply {
+                path.moveTo(event.x, event.y)
+            }
+            true
         }
-        invalidate()
-        return true
+
+        MotionEvent.ACTION_MOVE -> {
+            if (calculateDistance(event, prevPoint) >= 1) {
+                prevPoint = Pair(event.x, event.y)
+                records.last().path.lineTo(event.x, event.y)
+                invalidate()
+            }
+            true
+        }
+
+        MotionEvent.ACTION_UP -> {
+            Log.d(TAG, "ACTION_UP")
+            true
+        }
+
+        else -> super.onTouchEvent(event)
+    }
+
+    private fun getNewRecord(): Record {
+        return Record(getNewPath(), getNewPaint())
+    }
+
+    private fun getNewPath(): Path {
+        return Path()
+    }
+
+    private fun getNewPaint(): Paint {
+        return Paint().apply {
+            strokeWidth = 10F
+            style = Paint.Style.STROKE
+        }
+    }
+
+    private fun calculateDistance(event: MotionEvent, point: Pair<Float, Float>): Float {
+        val dx = event.x - point.first
+        val dy = event.y - point.second
+        return sqrt((dx * dx + dy * dy).toDouble()).toFloat()
     }
 
     private fun setupPaint() {
@@ -49,6 +84,6 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
     }
 
     companion object {
-        private const val OVAL_SIZE = 50
+        private val TAG = PaintingPaper::class.java.simpleName
     }
 }
