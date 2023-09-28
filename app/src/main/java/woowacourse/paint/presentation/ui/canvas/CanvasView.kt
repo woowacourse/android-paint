@@ -2,44 +2,36 @@ package woowacourse.paint.presentation.ui.canvas
 
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import woowacourse.paint.presentation.ui.model.LineModel
 
 class CanvasView(
     context: Context,
     attributeSet: AttributeSet,
 ) : View(context, attributeSet) {
 
-    private val path by lazy { Path() }
-    private val paint by lazy {
-        Paint().apply {
-            style = Paint.Style.STROKE
-        }
-    }
+    private val brush = Brush()
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvas.drawPath(path, paint)
+        brush.drawPath(canvas)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
-            MotionEvent.ACTION_MOVE -> path.lineTo(event.x, event.y)
-            MotionEvent.ACTION_DOWN -> path.moveTo(event.x, event.y)
+            MotionEvent.ACTION_MOVE -> brush.drawLine(event.x, event.y)
+            MotionEvent.ACTION_DOWN -> brush.movePoint(event.x, event.y)
+
             else -> super.onTouchEvent(event)
         }
         invalidate()
         return true
     }
 
-    fun setLineColor(color: Int) {
-        paint.color = color
-    }
-
-    fun setLineWidth(width: Float) {
-        paint.strokeWidth = width
+    fun setLine(line: LineModel) {
+        brush.changeColor(line.color.value)
+        brush.changeWidth(line.width)
     }
 }
