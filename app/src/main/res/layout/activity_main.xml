@@ -6,11 +6,80 @@
     android:layout_height="match_parent">
 
     <woowacourse.paint.BoardView
+        android:id="@+id/board"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/seekbar_width"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <SeekBar
+        android:id="@+id/seekbar_width"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/board" />
+
+    <View
+        android:id="@+id/color_red"
+        android:layout_width="@dimen/palette_default"
+        android:layout_height="@dimen/palette_default"
+        android:layout_marginTop="8dp"
+        android:background="@color/red"
+        app:layout_constraintEnd_toStartOf="@id/color_orange"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/seekbar_width" />
+
+    <View
+        android:id="@+id/color_orange"
+        android:layout_width="@dimen/palette_default"
+        android:layout_height="@dimen/palette_default"
+        android:background="@color/orange"
+        app:layout_constraintBottom_toBottomOf="@id/color_red"
+        app:layout_constraintEnd_toStartOf="@id/color_yellow"
+        app:layout_constraintStart_toEndOf="@id/color_red"
+        app:layout_constraintTop_toTopOf="@id/color_red" />
+
+    <View
+        android:id="@+id/color_yellow"
+        android:layout_width="@dimen/palette_default"
+        android:layout_height="@dimen/palette_default"
+        android:background="@color/yellow"
+        app:layout_constraintBottom_toBottomOf="@id/color_red"
+        app:layout_constraintEnd_toStartOf="@id/color_green"
+        app:layout_constraintStart_toEndOf="@id/color_orange"
+        app:layout_constraintTop_toTopOf="@id/color_red" />
+
+    <View
+        android:id="@+id/color_green"
+        android:layout_width="@dimen/palette_default"
+        android:layout_height="@dimen/palette_default"
+        android:background="@color/green"
+        app:layout_constraintBottom_toBottomOf="@id/color_red"
+        app:layout_constraintEnd_toStartOf="@id/color_blue"
+        app:layout_constraintStart_toEndOf="@id/color_yellow"
+        app:layout_constraintTop_toTopOf="@id/color_red" />
+
+    <View
+        android:id="@+id/color_blue"
+        android:layout_width="@dimen/palette_default"
+        android:layout_height="@dimen/palette_default"
+        android:background="#3F51B5"
+        app:layout_constraintBottom_toBottomOf="@id/color_red"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/color_green"
+        app:layout_constraintTop_toTopOf="@id/color_red" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_erase"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_erase"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/color_red" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
