@@ -15,7 +15,7 @@ class CustomCanvas(context: Context, attrs: AttributeSet) : View(context, attrs)
     private val pathHistory = PathHistory()
 
     init {
-        changePaint(Color.RED, DEFAULT_PAINT_WIDTH)
+        changePaintProperty(Color.RED, DEFAULT_PAINT_WIDTH)
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -54,15 +54,16 @@ class CustomCanvas(context: Context, attrs: AttributeSet) : View(context, attrs)
     }
 
     fun changePaintColor(color: Int) {
-        changePaint(color, paint.strokeWidth)
+        paint = Paint(paint)
+        changePaintProperty(color = color)
     }
 
     fun changePaintWidth(width: Float) {
-        changePaint(paint.color, width)
+        paint = Paint(paint)
+        changePaintProperty(width = width)
     }
 
-    private fun changePaint(color: Int, width: Float) {
-        paint = Paint()
+    private fun changePaintProperty(color: Int = paint.color, width: Float = paint.strokeWidth) {
         paint.style = Paint.Style.STROKE
         paint.strokeCap = Paint.Cap.ROUND
         paint.strokeWidth = width
