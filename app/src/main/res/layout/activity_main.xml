@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="woowacourse.paint.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,6 +18,8 @@
             android:id="@+id/pv_main"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            app:brushColor="@{viewModel.brushColor}"
+            app:brushThickness="@{viewModel.brushThickness}"
             app:layout_constraintBottom_toTopOf="@+id/rs_main_brush_thickness"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -27,10 +32,10 @@
             android:stepSize="1.0"
             android:valueFrom="10.0"
             android:valueTo="100.0"
-            app:rangeSliderCurrentValue="@{viewModel.brushThickness}"
             app:layout_constraintBottom_toTopOf="@+id/rv_main_color_palette"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:rangeSliderCurrentValue="@{viewModel.brushThickness}" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_main_color_palette"

@@ -14,14 +14,17 @@ import androidx.core.content.ContextCompat.getColor
 class PaintingView : View {
 
     constructor(context: Context) : super(context)
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
+        setupAttrs(attrs)
+    }
 
     @ColorInt
     private var currentColor: Int = getColor(context, BrushColor.BLUE.colorRes)
-    private var currentThickness: Float = 10.0f
+    private var currentThickness: Float = DEFAULT_BRUSH_THICKNESS
     private var currentStroke: Stroke = Stroke(Path(), Paint())
 
-    private val strokes: MutableList<Stroke> = mutableListOf(currentStroke)
+    private val _strokes: MutableList<Stroke> = mutableListOf(currentStroke)
+    val strokes: List<Stroke> get() = _strokes.toList()
 
     init {
         isFocusable = true
@@ -30,11 +33,21 @@ class PaintingView : View {
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        strokes.forEach { stroke ->
+        _strokes.forEach { stroke ->
             canvas.drawPath(stroke.path, stroke.paint)
         }
 
         canvas.drawPath(currentStroke.path, currentStroke.paint)
+    }
+
+    private fun setupAttrs(attrs: AttributeSet) {
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.PaintingView)
+        currentThickness =
+            typedArray.getFloat(R.styleable.PaintingView_brushThickness, DEFAULT_BRUSH_THICKNESS)
+        currentColor =
+            typedArray.getColor(R.styleable.PaintingView_brushColor, getColor(context, R.color.red))
+
+        typedArray.recycle()
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -54,7 +67,7 @@ class PaintingView : View {
 
             MotionEvent.ACTION_UP -> {
                 currentStroke.path.lineTo(pointX, pointY)
-                strokes.add(currentStroke)
+                _strokes.add(currentStroke)
             }
 
             else -> super.onTouchEvent(event)
@@ -72,11 +85,20 @@ class PaintingView : View {
         paint.style = Paint.Style.STROKE
     }
 
-    fun changeBrushColor(color: BrushColor) {
-        currentColor = getColor(context, color.colorRes)
+    fun setBrushColor(colorRes: Int) {
+        currentColor = getColor(context, colorRes)
     }
 
-    fun changeBrushThickness(thickness: Float) {
+    fun setBrushThickness(thickness: Float) {
         currentThickness = thickness
+    }
+
+    fun setStrokes(strokes: List<Stroke>) {
+        _strokes.clear()
+        _strokes.addAll(strokes)
+    }
+
+    companion object {
+        private const val DEFAULT_BRUSH_THICKNESS: Float = 10.0f
     }
 }
