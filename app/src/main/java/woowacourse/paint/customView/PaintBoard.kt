@@ -14,41 +14,44 @@ class PaintBoard @JvmOverloads constructor(
     context: Context,
     attr: AttributeSet? = null,
 ) : View(context, attr) {
-    private val paint = Paint().apply {
-        isAntiAlias = true
-        style = Paint.Style.STROKE
-        strokeCap = Paint.Cap.ROUND
-        strokeJoin = Paint.Join.ROUND
-        color = Color.RED
-        strokeWidth = 50f
-    }
-
     private val drawingPaths: MutableList<DrawingPathInfo> = mutableListOf()
     private val newPath: Path = Path()
 
     @ColorInt
     var nowColor: Int = 0xFF0000
+        set(value) {
+            field = value
+            updateNowPaint()
+        }
     var nowStrokeWidth: Float = 50f
+        set(value) {
+            field = value
+            updateNowPaint()
+        }
+
+    private var nowPaint: Paint = getPaint(nowColor, nowStrokeWidth)
+
+    private fun updateNowPaint() {
+        nowPaint = getPaint(nowColor, nowStrokeWidth)
+    }
+
+    private fun getPaint(@ColorInt colorInt: Int = Color.RED, strokeWidth: Float = 50f): Paint =
+        Paint().apply {
+            isAntiAlias = true
+            style = Paint.Style.STROKE
+            strokeCap = Paint.Cap.ROUND
+            strokeJoin = Paint.Join.ROUND
+            color = colorInt
+            this.strokeWidth = strokeWidth
+        }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
         drawingPaths.forEach { pathInfo ->
-            canvas?.drawPath(
-                pathInfo.path,
-                paint.apply {
-                    color = pathInfo.color
-                    strokeWidth = pathInfo.strokeWidth
-                },
-            )
+            canvas?.drawPath(pathInfo.path, pathInfo.paint)
         }
-        canvas?.drawPath(
-            newPath,
-            paint.apply {
-                color = nowColor
-                strokeWidth = nowStrokeWidth
-            },
-        )
+        canvas?.drawPath(newPath, nowPaint)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -63,7 +66,7 @@ class PaintBoard @JvmOverloads constructor(
             }
 
             MotionEvent.ACTION_UP -> {
-                drawingPaths.add(DrawingPathInfo(Path(newPath), nowColor, nowStrokeWidth))
+                drawingPaths.add(DrawingPathInfo(Path(newPath), getPaint(nowColor, nowStrokeWidth)))
                 newPath.reset()
             }
         }
