@@ -1,7 +1,9 @@
 package woowacourse.paint.presentation.ui
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import woowacourse.paint.data.model.SettingMode
 import woowacourse.paint.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -10,8 +12,35 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
+    private val viewModel: MainViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        setUpDataBinding()
+    }
+
+    private fun setUpDataBinding() {
+        binding.vm = viewModel
+        binding.lifecycleOwner = this
+        binding.onColorChangeButtonClick = ::onColorChangeButtonClick
+        binding.onThicknessChangeButtonClick = ::onThicknessChangeButtonClick
+    }
+
+    private fun onColorChangeButtonClick() {
+        if (viewModel.uiState.value!!.settingMode == SettingMode.COLOR) {
+            viewModel.finishSetting()
+        } else {
+            viewModel.startColorSelection()
+        }
+    }
+
+    private fun onThicknessChangeButtonClick() {
+        if (viewModel.uiState.value!!.settingMode == SettingMode.THICKNESS) {
+            viewModel.finishSetting()
+        } else {
+            viewModel.startThicknessSelection()
+        }
     }
 }
