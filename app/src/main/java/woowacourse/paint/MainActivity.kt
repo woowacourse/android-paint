@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initPalette() {
         binding.rvMain.adapter = PaletteAdapter(mainViewModel.colors) { color ->
-            mainViewModel.setPaintColor(color)
+            mainViewModel.paintColor = color
         }
         binding.rvMain.setHasFixedSize(true)
     }
@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupRangeSliderListener() {
         binding.rsMain.addOnChangeListener(
             RangeSlider.OnChangeListener { _, value, _ ->
-                mainViewModel.setStrokeSize(value)
+                mainViewModel.strokeSize = value
             },
         )
     }
