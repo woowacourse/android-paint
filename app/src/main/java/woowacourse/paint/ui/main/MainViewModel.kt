@@ -6,9 +6,9 @@ import androidx.lifecycle.ViewModel
 import woowacourse.paint.model.PaintColor
 
 class MainViewModel : ViewModel() {
-    val minStrokeWidth: Float = 0f
-    val maxStrokeWidth: Float = 100f
-    var selectedPenStroke: Float = 50f
+    val minStrokeWidth: Float = MIN_STROKE_WIDTH
+    val maxStrokeWidth: Float = MAX_STROKE_WIDTH
+    var selectedPenStroke: Float = (minStrokeWidth + maxStrokeWidth) / 2
         private set
 
     var selectedPenColor: PaintColor = PaintColor.values().first()
@@ -41,5 +41,10 @@ class MainViewModel : ViewModel() {
 
     fun onAppliedStrokeChange() {
         _appliedStroke.value = selectedPenStroke
+    }
+
+    companion object {
+        private const val MIN_STROKE_WIDTH = 0f
+        private const val MAX_STROKE_WIDTH = 100F
     }
 }

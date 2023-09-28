@@ -19,9 +19,9 @@ class PaintBoard @JvmOverloads constructor(
     private val drawnPaths: MutableList<DrawingPathInfo> = mutableListOf()
     private val drawingPath: Path = Path()
 
-    var minStrokeWidth: Float = 0f
+    var minStrokeWidth: Float = DEFAULT_MIN_STROKE_WIDTH
         set(value) {
-            require(value in 0f..maxStrokeWidth) { "[ERROR] 펜의 최소 두께는 최대 두께 보다 작고 0이상이여야 합니다" }
+            require(value in DEFAULT_MIN_STROKE_WIDTH..maxStrokeWidth) { "[ERROR] 펜의 최소 두께는 최대 두께 보다 작고 0이상이여야 합니다" }
             if (currentStrokeWidth < value) {
                 currentStrokeWidth = value
             }
@@ -29,7 +29,7 @@ class PaintBoard @JvmOverloads constructor(
             updateDefaultStrokeWidth()
         }
 
-    var maxStrokeWidth: Float = 100f
+    var maxStrokeWidth: Float = DEFAULT_MAX_STROKE_WIDTH
         set(value) {
             require(value > minStrokeWidth) { "[ERROR] 펜의 최대 두께는 최소 두께 보다 커야 합니다" }
             if (currentStrokeWidth > value) {
@@ -42,14 +42,14 @@ class PaintBoard @JvmOverloads constructor(
     private var defaultStrokeWidth: Float = (minStrokeWidth + maxStrokeWidth) / 2
 
     @ColorInt
-    var currentColor: Int = 0xFF0000
+    var currentColor: Int = DEFAULT_COLOR
         set(value) {
             field = value
             updateNowPaint()
         }
-    var currentStrokeWidth: Float = 50f
+    var currentStrokeWidth: Float = defaultStrokeWidth
         set(value) {
-            require(value in 0f..100f) { "[ERROR] 펜 두께는 0이상 100이하의 범위만 가능합니다" }
+            require(value in minStrokeWidth..maxStrokeWidth) { "[ERROR] 펜 두께는 ${minStrokeWidth}이상 ${maxStrokeWidth}이하의 범위만 가능합니다" }
             field = value
             updateNowPaint()
         }
@@ -105,6 +105,12 @@ class PaintBoard @JvmOverloads constructor(
     }
 
     companion object {
+        private const val DEFAULT_MIN_STROKE_WIDTH = 0f
+        private const val DEFAULT_MAX_STROKE_WIDTH = 100f
+
+        @ColorInt
+        private const val DEFAULT_COLOR = Color.RED
+
         @JvmStatic
         @BindingAdapter("app:paint_board_currentColor")
         fun PaintBoard.setBindingCurrentColor(@ColorInt colorInt: Int) {
