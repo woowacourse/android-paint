@@ -18,10 +18,10 @@
 
         <woowacourse.paint.customView.PaintBoard
             android:id="@+id/pb_board"
-            currentColor="@{ContextCompat.getColor(context, vm.appliedColor.colorRes)}"
-            currentStrokeWidth="@{vm.appliedStroke}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            app:paint_board_currentColor="@{ContextCompat.getColor(context, vm.appliedColor.colorRes)}"
+            app:paint_board_currentStrokeWidth="@{vm.appliedStroke}"
             app:layout_constraintBottom_toTopOf="@id/slider_pen_stroke_width"
             app:layout_constraintTop_toTopOf="parent" />
 

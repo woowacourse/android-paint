@@ -9,6 +9,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.ColorInt
+import androidx.databinding.BindingAdapter
 
 class PaintBoard @JvmOverloads constructor(
     context: Context,
@@ -77,5 +78,19 @@ class PaintBoard @JvmOverloads constructor(
         }
         invalidate()
         return true
+    }
+
+    companion object {
+        @JvmStatic
+        @BindingAdapter("app:paint_board_currentColor")
+        fun PaintBoard.setBindingCurrentColor(@ColorInt colorInt: Int) {
+            this.currentColor = colorInt
+        }
+
+        @JvmStatic
+        @BindingAdapter("app:paint_board_currentStrokeWidth")
+        fun PaintBoard.setBindingCurrentStrokeWidth(currentStrokeWidth: Float) {
+            this.currentStrokeWidth = currentStrokeWidth
+        }
     }
 }
