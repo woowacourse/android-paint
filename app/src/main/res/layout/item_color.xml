@@ -5,13 +5,15 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="listener"
             type="woowacourse.paint.OnColorClickListener" />
 
         <variable
-            name="color"
-            type="int" />
+            name="colorbox"
+            type="woowacourse.paint.ColorBox" />
     </data>
 
 
@@ -20,17 +22,30 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:id="@+id/tv_color"
+            android:id="@+id/iv_color"
             android:layout_width="60dp"
             android:layout_height="0dp"
             android:layout_margin="10dp"
-            android:onClick="@{() -> listener.onColorClick(color)}"
+            android:onClick="@{() -> listener.onColorClick(colorbox)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:background="@color/red" />
+
+        <ImageView
+            android:id="@+id/iv_check"
+            android:layout_width="60dp"
+            android:layout_height="0dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/checkmark"
+            android:visibility="@{colorbox.selected ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

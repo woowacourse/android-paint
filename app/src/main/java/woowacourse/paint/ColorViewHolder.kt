@@ -14,9 +14,9 @@ class ColorViewHolder private constructor(
         binding.listener = onColorClickListener
     }
 
-    fun bind(color: Int) {
-        binding.tvColor.setBackgroundResource(color)
-        binding.color = color
+    fun bind(colorBox: ColorBox) {
+        binding.ivColor.setBackgroundResource(colorBox.color)
+        binding.colorbox = colorBox
     }
 
     companion object {

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.slider.RangeSlider
 import woowacourse.paint.databinding.ActivityMainBinding
 
@@ -13,6 +14,14 @@ class MainActivity : AppCompatActivity(), OnColorClickListener {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
+    private val viewModel by lazy {
+        ViewModelProvider(this)[MainViewModel::class.java]
+    }
+
+    private val adapter by lazy {
+        ColorAdapter(this)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -20,6 +29,7 @@ class MainActivity : AppCompatActivity(), OnColorClickListener {
         setupRangeSlider()
         setAdapter()
         setListener()
+        setObserver()
     }
 
     private fun setupRangeSlider() {
@@ -28,7 +38,7 @@ class MainActivity : AppCompatActivity(), OnColorClickListener {
     }
 
     private fun setAdapter() {
-        binding.rvColor.adapter = ColorAdapter(paintColors, this)
+        binding.rvColor.adapter = adapter
     }
 
     private fun setListener() {
@@ -55,17 +65,14 @@ class MainActivity : AppCompatActivity(), OnColorClickListener {
         }
     }
 
-    override fun onColorClick(color: Int) {
-        binding.cvPainter.setColor(color)
+    private fun setObserver() {
+        viewModel.colors.observe(this) {
+            adapter.setColors(it)
+        }
     }
 
-    companion object {
-        private val paintColors = listOf(
-            R.color.red,
-            R.color.orange,
-            R.color.yellow,
-            R.color.green,
-            R.color.blue,
-        )
+    override fun onColorClick(colorBox: ColorBox) {
+        binding.cvPainter.setColor(colorBox.color)
+        viewModel.setColorsSelected(colorBox)
     }
 }

@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="listener"
             type="woowacourse.paint.OnColorClickListener" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -63,6 +65,7 @@
             android:id="@+id/btn_stroke_change"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginBottom="20dp"
             android:text="@string/stroke_change"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"

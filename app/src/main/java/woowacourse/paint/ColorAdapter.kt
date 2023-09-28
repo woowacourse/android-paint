@@ -1,21 +1,20 @@
 package woowacourse.paint
 
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ListAdapter
 
 class ColorAdapter(
-    private val colors: List<Int>,
     private val onColorClickListener: OnColorClickListener,
-) : RecyclerView.Adapter<ColorViewHolder>() {
+) : ListAdapter<ColorBox, ColorViewHolder>(ColorDiffUtilCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ColorViewHolder {
         return ColorViewHolder.from(parent, onColorClickListener)
     }
 
     override fun onBindViewHolder(holder: ColorViewHolder, position: Int) {
-        return holder.bind(colors[position])
+        return holder.bind(currentList[position])
     }
 
-    override fun getItemCount(): Int {
-        return colors.size
+    fun setColors(colors: List<ColorBox>) {
+        submitList(colors)
     }
 }
