@@ -15,7 +15,7 @@ class CustomCanvas(context: Context, attrs: AttributeSet) : View(context, attrs)
     private val paths = mutableListOf<Pair<Path, Paint>>()
 
     init {
-        changePaint(Color.RED, 10f)
+        changePaint(Color.RED, DEFAULT_PAINT_WIDTH)
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -63,5 +63,9 @@ class CustomCanvas(context: Context, attrs: AttributeSet) : View(context, attrs)
         paint.strokeCap = Paint.Cap.ROUND
         paint.strokeWidth = width
         paint.color = color
+    }
+
+    companion object {
+        const val DEFAULT_PAINT_WIDTH = 15f
     }
 }
