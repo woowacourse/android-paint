@@ -10,7 +10,7 @@ class ColorScrollView private constructor(
     private var onColorSelected: (PaletteColor) -> Unit = {}
         set(value) {
             field = value
-            resetPaletteColorViews()
+            setupPaletteColorViews()
         }
 
     private val paletteColorViews = LinearLayout(context).apply {
@@ -22,7 +22,7 @@ class ColorScrollView private constructor(
         addView(paletteColorViews)
     }
 
-    private fun resetPaletteColorViews() {
+    private fun setupPaletteColorViews() {
         PaletteColor.values().forEach { paletteColor ->
             paletteColorViews.addView(ColorView.create(context, paletteColor, onColorSelected))
         }
