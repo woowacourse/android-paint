@@ -1,5 +1,6 @@
 package woowacourse.paint.customView
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -17,6 +18,28 @@ class PaintBoard @JvmOverloads constructor(
 ) : View(context, attr) {
     private val drawnPaths: MutableList<DrawingPathInfo> = mutableListOf()
     private val drawingPath: Path = Path()
+
+    var minStrokeWidth: Float = 0f
+        set(value) {
+            require(value in 0f..maxStrokeWidth) { "[ERROR] 펜의 최소 두께는 최대 두께 보다 작고 0이상이여야 합니다" }
+            if (currentStrokeWidth < value) {
+                currentStrokeWidth = value
+            }
+            field = value
+            updateDefaultStrokeWidth()
+        }
+
+    var maxStrokeWidth: Float = 100f
+        set(value) {
+            require(value > minStrokeWidth) { "[ERROR] 펜의 최대 두께는 최소 두께 보다 커야 합니다" }
+            if (currentStrokeWidth > value) {
+                currentStrokeWidth = value
+            }
+            field = value
+            updateDefaultStrokeWidth()
+        }
+
+    private var defaultStrokeWidth: Float = (minStrokeWidth + maxStrokeWidth) / 2
 
     @ColorInt
     var currentColor: Int = 0xFF0000
@@ -37,6 +60,10 @@ class PaintBoard @JvmOverloads constructor(
         currentPaint = getPaint(currentColor, currentStrokeWidth)
     }
 
+    private fun updateDefaultStrokeWidth() {
+        defaultStrokeWidth = (minStrokeWidth + maxStrokeWidth) / 2
+    }
+
     private fun getPaint(@ColorInt colorInt: Int = Color.RED, strokeWidth: Float = 50f): Paint =
         Paint().apply {
             isAntiAlias = true
@@ -54,6 +81,7 @@ class PaintBoard @JvmOverloads constructor(
         canvas?.drawPath(drawingPath, currentPaint)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
@@ -87,6 +115,18 @@ class PaintBoard @JvmOverloads constructor(
         @BindingAdapter("app:paint_board_currentStrokeWidth")
         fun PaintBoard.setBindingCurrentStrokeWidth(currentStrokeWidth: Float) {
             this.currentStrokeWidth = currentStrokeWidth
+        }
+
+        @JvmStatic
+        @BindingAdapter("app:paint_board_minStrokeWidth")
+        fun PaintBoard.setBindingMinStrokeWidth(strokeWidth: Float) {
+            this.minStrokeWidth = strokeWidth
+        }
+
+        @JvmStatic
+        @BindingAdapter("app:paint_board_maxStrokeWidth")
+        fun PaintBoard.setBindingMaxStrokeWidth(strokeWidth: Float) {
+            this.maxStrokeWidth = strokeWidth
         }
     }
 }

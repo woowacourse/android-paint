@@ -20,10 +20,12 @@
             android:id="@+id/pb_board"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/slider_pen_stroke_width"
+            app:layout_constraintTop_toTopOf="parent"
             app:paint_board_currentColor="@{ContextCompat.getColor(context, vm.appliedColor.colorRes)}"
             app:paint_board_currentStrokeWidth="@{vm.appliedStroke}"
-            app:layout_constraintBottom_toTopOf="@id/slider_pen_stroke_width"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:paint_board_maxStrokeWidth="@{100f}"
+            app:paint_board_minStrokeWidth="@{0f}" />
 
         <com.google.android.material.slider.Slider
             android:id="@+id/slider_pen_stroke_width"
