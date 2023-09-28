@@ -18,6 +18,9 @@ class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(conte
 
     init {
         currentPaint.apply {
+            strokeCap = Paint.Cap.ROUND
+            strokeJoin = Paint.Join.ROUND
+            isAntiAlias = true
             style = Paint.Style.STROKE
         }
     }
