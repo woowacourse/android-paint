@@ -4,13 +4,6 @@
 
     <data>
 
-        <variable
-            name="lineColor"
-            type="int" />
-
-        <variable
-            name="lineWidth"
-            type="float" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,8 +17,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:LineColor="@{lineColor}"
-            app:LineWidth="@{lineWidth}"
             app:layout_constraintBottom_toTopOf="@+id/rsWidth" />
 
 
