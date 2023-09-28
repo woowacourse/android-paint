@@ -23,7 +23,6 @@ class ColorScrollView private constructor(
     }
 
     private fun resetPaletteColorViews() {
-        paletteColorViews.removeAllViews()
         PaletteColor.values().forEach { paletteColor ->
             paletteColorViews.addView(ColorView.create(context, paletteColor, onColorSelected))
         }
