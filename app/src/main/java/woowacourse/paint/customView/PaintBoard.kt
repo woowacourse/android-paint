@@ -10,9 +10,9 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.ColorInt
 
-class PaintBoard(
+class PaintBoard @JvmOverloads constructor(
     context: Context,
-    attr: AttributeSet,
+    attr: AttributeSet? = null,
 ) : View(context, attr) {
     private val paint = Paint().apply {
         isAntiAlias = true
