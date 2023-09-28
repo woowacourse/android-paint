@@ -1,4 +1,6 @@
-package woowacourse.paint
+package woowacourse.paint.main.model
+
+import woowacourse.paint.customview.BrushColor
 
 data class BrushColorBox(
     val brushColor: BrushColor,

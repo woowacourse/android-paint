@@ -1,4 +1,4 @@
-package woowacourse.paint
+package woowacourse.paint.customview
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -10,6 +10,7 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat.getColor
+import woowacourse.paint.R
 
 class PaintingView : View {
 

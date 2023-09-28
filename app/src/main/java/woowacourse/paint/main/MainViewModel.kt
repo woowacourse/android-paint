@@ -1,8 +1,11 @@
-package woowacourse.paint
+package woowacourse.paint.main
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import woowacourse.paint.R
+import woowacourse.paint.customview.Stroke
+import woowacourse.paint.main.model.BrushColorBox
 
 class MainViewModel : ViewModel() {
 

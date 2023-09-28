@@ -1,6 +1,7 @@
-package woowacourse.paint
+package woowacourse.paint.customview
 
 import androidx.annotation.ColorRes
+import woowacourse.paint.R
 
 enum class BrushColor(@ColorRes val colorRes: Int) {
     RED(R.color.red),

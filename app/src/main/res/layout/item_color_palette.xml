@@ -7,11 +7,11 @@
 
         <variable
             name="brushColorBox"
-            type="woowacourse.paint.BrushColorBox" />
+            type="woowacourse.paint.main.model.BrushColorBox" />
 
         <variable
             name="colorClickListener"
-            type="woowacourse.paint.ColorClickListener" />
+            type="woowacourse.paint.main.ColorClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

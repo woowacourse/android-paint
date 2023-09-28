@@ -1,4 +1,4 @@
-package woowacourse.paint
+package woowacourse.paint.customview
 
 import android.graphics.Paint
 import android.graphics.Path

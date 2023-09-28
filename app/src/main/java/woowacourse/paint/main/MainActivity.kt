@@ -1,4 +1,4 @@
-package woowacourse.paint
+package woowacourse.paint.main
 
 import android.os.Bundle
 import android.view.View
@@ -6,7 +6,11 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.slider.RangeSlider
+import woowacourse.paint.R
+import woowacourse.paint.customview.BrushColor
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.main.adapter.BrushColorPaletteAdapter
+import woowacourse.paint.main.model.BrushColorBox
 
 class MainActivity : AppCompatActivity(), ColorClickListener {
 

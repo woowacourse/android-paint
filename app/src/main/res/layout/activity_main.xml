@@ -7,14 +7,14 @@
 
         <variable
             name="viewModel"
-            type="woowacourse.paint.MainViewModel" />
+            type="woowacourse.paint.main.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <woowacourse.paint.PaintingView
+        <woowacourse.paint.customview.PaintingView
             android:id="@+id/pv_main"
             android:layout_width="match_parent"
             android:layout_height="0dp"

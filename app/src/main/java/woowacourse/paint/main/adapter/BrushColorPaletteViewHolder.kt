@@ -1,9 +1,11 @@
-package woowacourse.paint
+package woowacourse.paint.main.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.paint.databinding.ItemColorPaletteBinding
+import woowacourse.paint.main.ColorClickListener
+import woowacourse.paint.main.model.BrushColorBox
 
 class BrushColorPaletteViewHolder(
     private val binding: ItemColorPaletteBinding,

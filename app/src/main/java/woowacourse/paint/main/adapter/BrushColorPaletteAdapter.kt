@@ -1,8 +1,10 @@
-package woowacourse.paint
+package woowacourse.paint.main.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import woowacourse.paint.main.ColorClickListener
+import woowacourse.paint.main.model.BrushColorBox
 
 class BrushColorPaletteAdapter(
     private val colorClickListener: ColorClickListener,
