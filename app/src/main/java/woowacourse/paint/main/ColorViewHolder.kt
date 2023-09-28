@@ -1,8 +1,8 @@
 package woowacourse.paint.main
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat.getColor
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.paint.R
@@ -23,13 +23,11 @@ class ColorViewHolder(
 
     init {
         binding.root.setOnClickListener {
-            @ColorInt val color = getColor(itemView.context, PaintColor.getColorRes(adapterPosition))
-            onColorClickListener(color)
+            onColorClickListener(binding.color ?: Color.BLACK)
         }
     }
 
     fun bind(paintColor: PaintColor) {
-        @ColorInt val color = getColor(itemView.context, paintColor.colorRes)
-        binding.root.setBackgroundColor(color)
+        binding.color = getColor(itemView.context, paintColor.colorRes)
     }
 }
