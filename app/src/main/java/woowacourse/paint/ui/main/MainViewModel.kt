@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import woowacourse.paint.model.PaintColor
 
 class MainViewModel : ViewModel() {
+    val minStrokeWidth: Float = 0f
+    val maxStrokeWidth: Float = 100f
     var selectedPenStroke: Float = 50f
         private set
 
