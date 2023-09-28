@@ -68,4 +68,8 @@ class DrawingCanvas @JvmOverloads constructor(
         path = Path()
         this.paint.color = context.getColor(color)
     }
+
+    companion object {
+        const val DEFAULT_STROKE_WIDTH = 50.0f
+    }
 }

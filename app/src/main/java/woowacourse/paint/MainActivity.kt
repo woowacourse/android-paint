@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.slider.RangeSlider
+import woowacourse.paint.DrawingCanvas.Companion.DEFAULT_STROKE_WIDTH
 import woowacourse.paint.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), OnColorClickListener {
@@ -33,8 +34,7 @@ class MainActivity : AppCompatActivity(), OnColorClickListener {
     }
 
     private fun setupRangeSlider() {
-        binding.rangeSlider.valueFrom = 0.0f
-        binding.rangeSlider.valueTo = 100.0f
+        binding.rangeSlider.setValues(DEFAULT_STROKE_WIDTH)
     }
 
     private fun setAdapter() {
