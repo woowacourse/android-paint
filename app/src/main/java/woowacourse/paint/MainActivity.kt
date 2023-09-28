@@ -43,6 +43,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 },
             )
+            binding.paintBoard.setPaintColor(getColor(it))
         }
         paintColorPaletteAdapter.updateColors(colors)
         binding.paintColorPalette.adapter = paintColorPaletteAdapter

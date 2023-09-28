@@ -66,6 +66,10 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
         paint.strokeWidth = thickness
     }
 
+    fun setPaintColor(color: Int) {
+        paint.color = color
+    }
+
     companion object {
         private const val DEFAULT_PAINT_THICKNESS = 0f
         private const val DEFAULT_PAINT_COLOR = Color.RED
