@@ -64,6 +64,8 @@ class CustomCanvas(context: Context, attrs: AttributeSet) : View(context, attrs)
     }
 
     private fun changePaintProperty(color: Int = paint.color, width: Float = paint.strokeWidth) {
+        paint.isAntiAlias = true
+        paint.strokeJoin = Paint.Join.ROUND
         paint.style = Paint.Style.STROKE
         paint.strokeCap = Paint.Cap.ROUND
         paint.strokeWidth = width
