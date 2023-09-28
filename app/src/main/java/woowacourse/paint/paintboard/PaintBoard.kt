@@ -9,6 +9,8 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.ContextCompat
 import woowacourse.paint.R
+import woowacourse.paint.paintboard.line.Lines
+import woowacourse.paint.paintboard.line.LinesBitmap
 
 class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     var brushColor: Int = DEFAULT_BRUSH_COLOR
