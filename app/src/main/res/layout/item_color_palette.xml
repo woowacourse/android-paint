@@ -30,7 +30,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:setBackgroundColorRes="@{brushColorBox.brushColor.colorRes}"
+            app:backgroundColorRes="@{brushColorBox.brushColor.colorRes}"
             tools:background="@color/blue" />
 
         <ImageView
@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_check_24"
-            app:isVisible="@{brushColorBox.selected}"
+            app:visible="@{brushColorBox.selected}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

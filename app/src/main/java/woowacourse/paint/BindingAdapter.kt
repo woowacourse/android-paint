@@ -7,7 +7,7 @@ import com.google.android.material.slider.RangeSlider
 
 object BindingAdapter {
     @JvmStatic
-    @BindingAdapter("isVisible")
+    @BindingAdapter("visible")
     fun isVisible(view: View, isVisible: Boolean) {
         when (isVisible) {
             true -> view.visibility = View.VISIBLE
@@ -16,7 +16,7 @@ object BindingAdapter {
     }
 
     @JvmStatic
-    @BindingAdapter("setBackgroundColorRes")
+    @BindingAdapter("backgroundColorRes")
     fun setBackgroundColorRes(view: View, @ColorRes colorRes: Int) {
         view.setBackgroundResource(colorRes)
     }
