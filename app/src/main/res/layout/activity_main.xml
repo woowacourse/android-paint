@@ -7,19 +7,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <woowacourse.paint.custom.PaintBoard
+        <woowacourse.paint.paint.PaintBoard
             android:id="@+id/ctv_paint_board"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/range_slider"
+            app:layout_constraintBottom_toTopOf="@id/range_slider_brush_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.slider.RangeSlider
-            android:id="@+id/range_slider"
+            android:id="@+id/range_slider_brush_size"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:valueFrom="0"
+            android:valueTo="100"
             app:layout_constraintBottom_toTopOf="@id/rv_colors"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -35,7 +37,7 @@
             app:layout_constraintBottom_toTopOf="@id/btn_change_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/range_slider"
+            app:layout_constraintTop_toBottomOf="@id/range_slider_brush_size"
             tools:listitem="@layout/item_color" />
 
         <Button
