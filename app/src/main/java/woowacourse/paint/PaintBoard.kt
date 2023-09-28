@@ -21,7 +21,13 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+        // draw previous paths
         drawings.forEach { (path, paint) ->
+            canvas.drawPath(path, paint)
+        }
+
+        // draw current path
+        if (::path.isInitialized && ::paint.isInitialized) {
             canvas.drawPath(path, paint)
         }
     }
@@ -32,17 +38,19 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
             MotionEvent.ACTION_DOWN -> {
                 path = Path()
                 path.moveTo(event.x, event.y)
+                invalidate()
                 true
             }
 
             MotionEvent.ACTION_MOVE -> {
                 path.lineTo(event.x, event.y)
+                invalidate()
                 true
             }
 
             MotionEvent.ACTION_UP -> {
-                drawings[path] = paint
                 invalidate()
+                drawings[path] = paint
                 setupPaint(paint.strokeWidth, paint.color)
                 true
             }
