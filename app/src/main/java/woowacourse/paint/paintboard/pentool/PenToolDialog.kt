@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.Window
 import android.view.WindowManager
+import com.google.android.material.slider.RangeSlider
 import woowacourse.paint.R
 import woowacourse.paint.databinding.DialogPenToolBinding
 import woowacourse.paint.paintboard.pentool.PenColors.Companion.DEFAULT_COLOR_POSITION
@@ -15,6 +16,7 @@ import woowacourse.paint.paintboard.pentool.PenColors.Companion.DEFAULT_COLOR_PO
 class PenToolDialog(
     context: Context,
     private val getSelectedColor: (colorId: Int) -> Unit,
+    private val getWidth: (width: Float) -> Unit,
 ) {
     private val dialog = Dialog(context)
     private val binding = DialogPenToolBinding.inflate(LayoutInflater.from(context))
@@ -34,6 +36,18 @@ class PenToolDialog(
         setSize()
         dialog.window?.setBackgroundDrawableResource(R.drawable.rect_radius_12)
         dialog.setContentView(binding.root)
+        binding.rsPenToolWidth.valueFrom = 0f
+        binding.rsPenToolWidth.valueTo = 200f
+        binding.rsPenToolWidth.stepSize = 1f
+        setPenWidth()
+    }
+
+    private fun setPenWidth() {
+        binding.rsPenToolWidth.addOnChangeListener(
+            RangeSlider.OnChangeListener { _, value, _ ->
+                getWidth(value)
+            },
+        )
     }
 
     private fun setSize() {
