@@ -12,14 +12,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        setColorsAdapter()
+        setColorsRecyclerview()
         setDefaultBrush()
         setBrushSizeListener()
     }
 
-    private fun setColorsAdapter() {
-        binding.rvColors.adapter = ColorAdapter {
-            binding.ctvPaintBoard.setBrushColor(it)
+    private fun setColorsRecyclerview() {
+        binding.rvColors.apply {
+            adapter = ColorAdapter {
+                binding.ctvPaintBoard.setBrushColor(it)
+            }
+            setHasFixedSize(true)
         }
     }
 
