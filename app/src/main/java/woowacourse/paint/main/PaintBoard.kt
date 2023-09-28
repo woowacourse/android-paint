@@ -1,14 +1,15 @@
-package woowacourse.paint.paint
+package woowacourse.paint.main
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import androidx.annotation.ColorInt
+import woowacourse.paint.model.DrawablePath
 
 class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val paths = mutableListOf<DrawablePath>()
@@ -17,8 +18,6 @@ class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(conte
 
     init {
         currentPaint.apply {
-            color = Color.BLUE
-            strokeWidth = DEFAULT_BRUSH_SIZE
             style = Paint.Style.STROKE
         }
     }
@@ -59,7 +58,7 @@ class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(conte
         currentPaint.strokeWidth = size
     }
 
-    companion object {
-        const val DEFAULT_BRUSH_SIZE = 50f
+    fun setBrushColor(@ColorInt color: Int) {
+        currentPaint.color = color
     }
 }
