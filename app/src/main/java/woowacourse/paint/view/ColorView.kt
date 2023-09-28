@@ -11,7 +11,7 @@ class ColorView private constructor(
     private val paint = Paint()
 
     private var onColorSelected: (PaletteColor) -> Unit = {}
-    var paletteColor: PaletteColor = PaletteColor.values().first()
+    private var paletteColor: PaletteColor = PaletteColor.values().first()
         set(value) {
             field = value
             paint.color = paletteColor.color
