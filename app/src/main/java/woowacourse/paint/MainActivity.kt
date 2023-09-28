@@ -12,15 +12,15 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initBinding()
-        initColorsRecyclerView()
-        initRangeSlider()
+        initPaintColorsRecyclerView()
+        initPaintWidthRangeSlider()
     }
 
     private fun initBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
     }
 
-    private fun initColorsRecyclerView() {
+    private fun initPaintColorsRecyclerView() {
         val colors = listOf(
             R.color.red, R.color.orange, R.color.yellow, R.color.green, R.color.blue
         ).map { getColor(it) }
@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initRangeSlider() {
+    private fun initPaintWidthRangeSlider() {
         binding.mainRangeSlider.valueFrom = 0.0f
         binding.mainRangeSlider.valueTo = 100.0f
 
