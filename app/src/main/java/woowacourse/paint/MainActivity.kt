@@ -30,7 +30,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupBrushSettingTool() {
-        brushSettingToolAdapter = BrushSettingToolAdapter()
+        brushSettingToolAdapter = BrushSettingToolAdapter {
+            brushSettingToolAdapter.updateBrushes(
+                brushes.map { brushModel ->
+                    if (brushModel.brush == it) {
+                        brushModel.copy(isSelected = true)
+                    } else {
+                        brushModel.copy(isSelected = false)
+                    }
+                },
+            )
+        }
         brushSettingToolAdapter.updateBrushes(brushes)
         binding.rvBrushSettingTool.adapter = brushSettingToolAdapter
         binding.rvBrushSettingTool.itemAnimator = null
@@ -48,9 +58,7 @@ class MainActivity : AppCompatActivity() {
             paintColorPaletteAdapter.updateColors(
                 colors.map { paintColor ->
                     if (paintColor.color == it) {
-                        paintColor.copy(
-                            isSelected = true,
-                        )
+                        paintColor.copy(isSelected = true)
                     } else {
                         paintColor.copy(isSelected = false)
                     }

@@ -4,9 +4,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 
-class BrushSettingToolAdapter : ListAdapter<BrushModel, BrushSettingToolViewHolder>(BrushDiffUtil) {
+class BrushSettingToolAdapter(
+    private val onBrushChanged: (Brush) -> Unit,
+) : ListAdapter<BrushModel, BrushSettingToolViewHolder>(BrushDiffUtil) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BrushSettingToolViewHolder {
-        return BrushSettingToolViewHolder.create(parent)
+        return BrushSettingToolViewHolder.create(parent, onBrushChanged)
     }
 
     override fun onBindViewHolder(holder: BrushSettingToolViewHolder, position: Int) {

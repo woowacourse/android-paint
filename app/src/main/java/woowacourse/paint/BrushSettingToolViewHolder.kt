@@ -7,7 +7,16 @@ import woowacourse.paint.databinding.ItemBrushBinding
 
 class BrushSettingToolViewHolder private constructor(
     private val binding: ItemBrushBinding,
+    onBrushChanged: (Brush) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
+
+    init {
+        binding.ivBrush.setOnClickListener {
+            binding.brush?.let {
+                onBrushChanged(it)
+            }
+        }
+    }
 
     fun bind(brushModel: BrushModel) {
         binding.brush = brushModel.brush
@@ -15,10 +24,10 @@ class BrushSettingToolViewHolder private constructor(
     }
 
     companion object {
-        fun create(parent: ViewGroup): BrushSettingToolViewHolder {
+        fun create(parent: ViewGroup, onBrushChanged: (Brush) -> Unit): BrushSettingToolViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             val binding = ItemBrushBinding.inflate(layoutInflater, parent, false)
-            return BrushSettingToolViewHolder(binding)
+            return BrushSettingToolViewHolder(binding, onBrushChanged)
         }
     }
 }
