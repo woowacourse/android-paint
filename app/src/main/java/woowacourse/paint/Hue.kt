@@ -5,15 +5,13 @@ import android.graphics.Color
 import android.util.AttributeSet
 import android.view.View
 
-class Paint(
+class Hue(
     context: Context,
     attributeSet: AttributeSet,
 ) : View(context, attributeSet) {
-    var color: Int = Color.BLACK
-        private set
-
-    fun setColor(color: Int) {
-        this.color = color
-        setBackgroundColor(color)
-    }
+    var hue: Int = Color.BLACK
+        set(value) {
+            field = value
+            this.setBackgroundColor(value)
+        }
 }

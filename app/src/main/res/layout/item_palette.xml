@@ -5,7 +5,7 @@
     <data>
 
         <variable
-            name="color"
+            name="hue"
             type="Integer" />
     </data>
 
@@ -14,11 +14,11 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp">
 
-        <woowacourse.paint.Paint
-            android:id="@+id/paint_palette"
+        <woowacourse.paint.Hue
+            android:id="@+id/hue_palette"
             android:layout_width="70dp"
             android:layout_height="0dp"
-            app:color="@{color}"
+            app:hue="@{hue}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="H, 1:1"
             app:layout_constraintEnd_toEndOf="parent"

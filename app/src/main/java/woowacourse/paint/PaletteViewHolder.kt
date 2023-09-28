@@ -15,11 +15,11 @@ class PaletteViewHolder(
 
     init {
         itemView.setOnClickListener {
-            onPaletteClick(binding.paintPalette.color)
+            onPaletteClick(binding.huePalette.hue)
         }
     }
 
-    fun bind(color: Int) {
-        binding.color = color
+    fun bind(hue: Int) {
+        binding.hue = hue
     }
 }
