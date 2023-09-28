@@ -26,6 +26,7 @@ class PaintBoard @JvmOverloads constructor(
         }
     var currentStrokeWidth: Float = 50f
         set(value) {
+            require(value in 0f..100f) { "[ERROR] 펜 두께는 0이상 100이하의 범위만 가능합니다" }
             field = value
             updateNowPaint()
         }
@@ -49,9 +50,7 @@ class PaintBoard @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        drawnPaths.forEach { pathInfo ->
-            canvas?.drawPath(pathInfo.path, pathInfo.paint)
-        }
+        drawnPaths.forEach { pathInfo -> canvas?.drawPath(pathInfo.path, pathInfo.paint) }
         canvas?.drawPath(drawingPath, currentPaint)
     }
 
@@ -68,10 +67,7 @@ class PaintBoard @JvmOverloads constructor(
 
             MotionEvent.ACTION_UP -> {
                 drawnPaths.add(
-                    DrawingPathInfo(
-                        Path(drawingPath),
-                        getPaint(currentColor, currentStrokeWidth),
-                    ),
+                    DrawingPathInfo(Path(drawingPath), getPaint(currentColor, currentStrokeWidth)),
                 )
                 drawingPath.reset()
             }
