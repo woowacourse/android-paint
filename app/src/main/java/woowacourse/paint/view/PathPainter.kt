@@ -8,6 +8,9 @@ data class PathPainter(
     val path: Path = Path(),
     val paint: Paint = Paint().softPainter(),
 ) {
+    private var prevX: Float = 0F
+    private var prevY: Float = 0F
+
     fun setPaintColor(paletteColor: PaletteColor): PathPainter = copy(
         path = Path(),
         paint = updatePaint(paintColor = paletteColor.color),
@@ -26,13 +29,20 @@ data class PathPainter(
         strokeWidth = thickness
     }
 
-    fun dotTo(pointX: Float, pointY: Float) {
-        path.moveTo(pointX, pointY)
-        lineTo(pointX, pointY)
+    fun dotTo(x: Float, y: Float) {
+        path.moveTo(x, y)
+        path.lineTo(x, y)
+        updatePrevPoint(x, y)
     }
 
-    fun lineTo(pointX: Float, pointY: Float) {
-        path.lineTo(pointX, pointY)
+    fun drawLine(x: Float, y: Float) {
+        path.quadTo(prevX, prevY, (prevX + x) / 2, (prevY + y) / 2)
+        updatePrevPoint(x, y)
+    }
+
+    private fun updatePrevPoint(pointX: Float, pointY: Float) {
+        prevX = pointX
+        prevY = pointY
     }
 
     fun drawPath(canvas: Canvas) {

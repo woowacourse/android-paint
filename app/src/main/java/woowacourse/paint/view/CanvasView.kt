@@ -34,7 +34,7 @@ class CanvasView : View {
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> pathPainter.dotTo(pointX, pointY)
-            MotionEvent.ACTION_MOVE -> pathPainter.lineTo(pointX, pointY)
+            MotionEvent.ACTION_MOVE -> pathPainter.drawLine(pointX, pointY)
         }
         invalidate()
         return true
