@@ -29,6 +29,10 @@ class PaintBoardView(
         canvas.drawPath(path, paint)
     }
 
+    fun setStrokeColor(colorCode: Int) {
+        paint.color = colorCode
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         val pointX = event.x
