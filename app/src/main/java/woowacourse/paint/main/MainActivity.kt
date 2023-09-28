@@ -44,7 +44,6 @@ class MainActivity : AppCompatActivity(), ColorClickListener {
 
     private fun setupBrushColorPaletteAdapter() {
         binding.rvMainColorPalette.adapter = brushColorPaletteAdapter
-        brushColorPaletteAdapter.submitList(getColorBoxes())
     }
 
     private fun setupBrushThicknessRangeSliderChangeListener() {
@@ -83,21 +82,14 @@ class MainActivity : AppCompatActivity(), ColorClickListener {
         val selectedColorBox = brushColorPaletteAdapter.currentList.firstOrNull { it.isSelected }
         if (selectedColorBox == clickedBrushColorBox) return
 
-        val brushColorBoxes = getUpdatedBrushColorBoxes(clickedBrushColorBox)
-        brushColorPaletteAdapter.submitList(brushColorBoxes)
+        val newBrushColorBoxes = getUpdatedBrushColorBoxes(clickedBrushColorBox)
+        brushColorPaletteAdapter.submitList(newBrushColorBoxes)
         viewModel.updateBrushColor(clickedBrushColorBox.brushColor.colorRes)
+        viewModel.updateBrushColorBoxes(newBrushColorBoxes)
     }
 
-    private fun getUpdatedBrushColorBoxes(clickedBrushColorBox: BrushColorBox) =
-        getColorBoxes().map { brushColorBox ->
-            if (brushColorBox.brushColor == clickedBrushColorBox.brushColor) {
-                return@map brushColorBox.copy(isSelected = !clickedBrushColorBox.isSelected)
-            }
-            brushColorBox
-        }
-
-    private fun getColorBoxes(): List<BrushColorBox> =
-        BrushColor.values().map { BrushColorBox(it) }
+    private fun getUpdatedBrushColorBoxes(clickedBrushColorBox: BrushColorBox): List<BrushColorBox> =
+        BrushColor.getColorBoxes(clickedBrushColorBox.brushColor.colorRes)
 
     private fun View.toggleVisibleOrGone() {
         this.visibility = if (this.visibility == View.VISIBLE) View.GONE else View.VISIBLE
