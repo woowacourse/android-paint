@@ -4,7 +4,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 
-class BrushSettingToolAdapter : ListAdapter<Brush, BrushSettingToolViewHolder>(BrushDiffUtil) {
+class BrushSettingToolAdapter : ListAdapter<BrushModel, BrushSettingToolViewHolder>(BrushDiffUtil) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BrushSettingToolViewHolder {
         return BrushSettingToolViewHolder.create(parent)
     }
@@ -13,22 +13,22 @@ class BrushSettingToolAdapter : ListAdapter<Brush, BrushSettingToolViewHolder>(B
         holder.bind(currentList[position])
     }
 
-    fun updateBrushes(brushes: List<Brush>) {
+    fun updateBrushes(brushes: List<BrushModel>) {
         submitList(brushes)
     }
 
     companion object {
-        private val BrushDiffUtil = object : DiffUtil.ItemCallback<Brush>() {
+        private val BrushDiffUtil = object : DiffUtil.ItemCallback<BrushModel>() {
             override fun areItemsTheSame(
-                oldItem: Brush,
-                newItem: Brush,
+                oldItem: BrushModel,
+                newItem: BrushModel,
             ): Boolean {
-                return oldItem.name == newItem.name
+                return oldItem.brush == newItem.brush
             }
 
             override fun areContentsTheSame(
-                oldItem: Brush,
-                newItem: Brush,
+                oldItem: BrushModel,
+                newItem: BrushModel,
             ): Boolean {
                 return oldItem == newItem
             }

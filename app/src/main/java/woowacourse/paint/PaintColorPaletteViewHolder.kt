@@ -18,7 +18,7 @@ class PaintColorPaletteViewHolder private constructor(
         }
     }
 
-    fun bind(paintColor: PaintColor) {
+    fun bind(paintColor: PaintColorModel) {
         binding.paintColor = paintColor
     }
 

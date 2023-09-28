@@ -9,8 +9,9 @@ class BrushSettingToolViewHolder private constructor(
     private val binding: ItemBrushBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
 
-    fun bind(brush: Brush) {
-        binding.brush = brush
+    fun bind(brushModel: BrushModel) {
+        binding.brush = brushModel.brush
+        binding.ivBrush.isSelected = brushModel.isSelected
     }
 
     companion object {

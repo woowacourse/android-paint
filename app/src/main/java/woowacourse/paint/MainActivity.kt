@@ -7,11 +7,15 @@ import woowacourse.paint.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private val colors = listOf(
-        PaintColor(R.color.red, true),
-        PaintColor(R.color.orange, false),
-        PaintColor(R.color.yellow, false),
-        PaintColor(R.color.green, false),
-        PaintColor(R.color.blue, false),
+        PaintColorModel(R.color.red, true),
+        PaintColorModel(R.color.orange, false),
+        PaintColorModel(R.color.yellow, false),
+        PaintColorModel(R.color.green, false),
+        PaintColorModel(R.color.blue, false),
+    )
+    private val brushes = listOf(
+        BrushModel(Brush.PEN, true),
+        BrushModel(Brush.HIGHLIGHTER, false),
     )
     private lateinit var paintColorPaletteAdapter: PaintColorPaletteAdapter
     private lateinit var brushSettingToolAdapter: BrushSettingToolAdapter
@@ -27,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupBrushSettingTool() {
         brushSettingToolAdapter = BrushSettingToolAdapter()
-        brushSettingToolAdapter.updateBrushes(Brush.values().toList())
+        brushSettingToolAdapter.updateBrushes(brushes)
         binding.rvBrushSettingTool.adapter = brushSettingToolAdapter
         binding.rvBrushSettingTool.itemAnimator = null
     }
