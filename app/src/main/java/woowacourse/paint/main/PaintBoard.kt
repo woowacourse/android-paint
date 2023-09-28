@@ -10,25 +10,21 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.ColorInt
 import woowacourse.paint.model.DrawablePath
+import woowacourse.paint.model.DrawablePathHistory
 
 class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    private val paths = mutableListOf<DrawablePath>()
+    private val pathHistory = DrawablePathHistory()
     private var currentPath = Path()
     private val currentPaint = Paint()
 
     init {
-        currentPaint.apply {
-            strokeCap = Paint.Cap.ROUND
-            strokeJoin = Paint.Join.ROUND
-            isAntiAlias = true
-            style = Paint.Style.STROKE
-        }
+        setDefaultPaint()
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        paths.forEach {
+        pathHistory.paths.forEach {
             canvas.drawPath(it.path, it.paint)
         }
         canvas.drawPath(currentPath, currentPaint)
@@ -37,24 +33,36 @@ class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(conte
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> {
-                currentPath = Path()
-                currentPath.moveTo(event.x, event.y)
-                currentPath.lineTo(event.x, event.y)
-            }
-
-            MotionEvent.ACTION_MOVE -> {
-                currentPath.lineTo(event.x, event.y)
-            }
-
-            MotionEvent.ACTION_UP -> {
-                paths.add(DrawablePath(currentPath, Paint(currentPaint)))
-            }
-
+            MotionEvent.ACTION_DOWN -> startDrawing(event)
+            MotionEvent.ACTION_MOVE -> moveDrawing(event)
+            MotionEvent.ACTION_UP -> endDrawing()
             else -> return super.onTouchEvent(event)
         }
         invalidate()
         return true
+    }
+
+    private fun setDefaultPaint() {
+        currentPaint.apply {
+            strokeCap = Paint.Cap.ROUND
+            strokeJoin = Paint.Join.ROUND
+            isAntiAlias = true
+            style = Paint.Style.STROKE
+        }
+    }
+
+    private fun startDrawing(event: MotionEvent) {
+        currentPath = Path()
+        currentPath.moveTo(event.x, event.y)
+        currentPath.lineTo(event.x, event.y)
+    }
+
+    private fun moveDrawing(event: MotionEvent) {
+        currentPath.lineTo(event.x, event.y)
+    }
+
+    private fun endDrawing() {
+        pathHistory.add(DrawablePath(currentPath, Paint(currentPaint)))
     }
 
     fun setBrushSize(size: Float) {
