@@ -14,18 +14,27 @@ class MainActivity : AppCompatActivity() {
         PaintColor(R.color.blue, false),
     )
     private lateinit var paintColorPaletteAdapter: PaintColorPaletteAdapter
+    private lateinit var brushSettingToolAdapter: BrushSettingToolAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        setupBrushSettingTool()
         setupBrushThicknessSettingTool()
         setupPaintColorPalette()
     }
 
+    private fun setupBrushSettingTool() {
+        brushSettingToolAdapter = BrushSettingToolAdapter()
+        brushSettingToolAdapter.updateBrushes(Brush.values().toList())
+        binding.rvBrushSettingTool.adapter = brushSettingToolAdapter
+        binding.rvBrushSettingTool.itemAnimator = null
+    }
+
     private fun setupBrushThicknessSettingTool() {
-        binding.brushThicknessSettingTool.isTickVisible = false
-        binding.brushThicknessSettingTool.addOnChangeListener { _, value, _ ->
+        binding.rsBrushThicknessSettingTool.isTickVisible = false
+        binding.rsBrushThicknessSettingTool.addOnChangeListener { _, value, _ ->
             binding.paintBoard.setBrushThickness(value)
         }
     }
@@ -46,7 +55,7 @@ class MainActivity : AppCompatActivity() {
             binding.paintBoard.setPaintColor(getColor(it))
         }
         paintColorPaletteAdapter.updateColors(colors)
-        binding.paintColorPalette.adapter = paintColorPaletteAdapter
-        binding.paintColorPalette.itemAnimator = null
+        binding.rvPaintColorPalette.adapter = paintColorPaletteAdapter
+        binding.rvPaintColorPalette.itemAnimator = null
     }
 }

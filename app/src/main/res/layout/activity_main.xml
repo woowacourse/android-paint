@@ -12,26 +12,39 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/white"
-            app:layout_constraintBottom_toTopOf="@id/brush_thickness_setting_tool"
+            app:layout_constraintBottom_toTopOf="@id/rs_brush_thickness_setting_tool"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_brush_setting_tool"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_brush_setting_tool"
+            android:orientation="horizontal"
+            android:overScrollMode="never"
+            android:paddingVertical="10dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/rs_brush_thickness_setting_tool"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/paint_board" />
+
         <com.google.android.material.slider.RangeSlider
-            android:id="@+id/brush_thickness_setting_tool"
+            android:id="@+id/rs_brush_thickness_setting_tool"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:stepSize="10"
             android:valueFrom="0"
             android:valueTo="100"
-            app:layout_constraintBottom_toTopOf="@id/paint_color_palette"
+            app:layout_constraintBottom_toTopOf="@id/rv_paint_color_palette"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/paint_board" />
+            app:layout_constraintTop_toBottomOf="@id/rv_brush_setting_tool" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/paint_color_palette"
+            android:id="@+id/rv_paint_color_palette"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
@@ -40,7 +53,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/brush_thickness_setting_tool" />
+            app:layout_constraintTop_toBottomOf="@id/rs_brush_thickness_setting_tool" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
