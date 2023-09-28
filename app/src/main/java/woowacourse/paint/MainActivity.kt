@@ -1,8 +1,10 @@
 package woowacourse.paint
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import com.google.android.material.slider.RangeSlider
 import woowacourse.paint.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), ColorClickListener {
@@ -14,9 +16,44 @@ class MainActivity : AppCompatActivity(), ColorClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setupBinding()
+        setupBrushColorPaletteAdapter()
+        setupBrushThicknessRangeSliderChangeListener()
+        setupChangeBrushColorPaletteButtonClickListener()
+        setupChangeBrushThicknessButtonClickListener()
+    }
+
+    private fun setupBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+    }
+
+    private fun setupBrushColorPaletteAdapter() {
         binding.rvMainColorPalette.adapter = brushColorPaletteAdapter
         brushColorPaletteAdapter.submitList(getColorBoxes())
+    }
+
+    private fun setupBrushThicknessRangeSliderChangeListener() {
+        binding.rsMainBrushThickness.addOnChangeListener(
+            RangeSlider.OnChangeListener { _, value, _ ->
+                binding.pvMain.changeBrushThickness(value)
+            },
+        )
+    }
+
+    private fun setupChangeBrushColorPaletteButtonClickListener() {
+        binding.btnMainChangeBrushColor.setOnClickListener {
+            binding.rvMainColorPalette.toggleVisibleOrGone()
+        }
+    }
+
+    private fun setupChangeBrushThicknessButtonClickListener() {
+        binding.btnMainChangeBrushThickness.setOnClickListener {
+            binding.rsMainBrushThickness.toggleVisibleOrGone()
+        }
+    }
+
+    private fun View.toggleVisibleOrGone() {
+        this.visibility = if (this.visibility == View.VISIBLE) View.GONE else View.VISIBLE
     }
 
     override fun onColorClick(clickedBrushColorBox: BrushColorBox) {

@@ -18,7 +18,7 @@ class PaintingView : View {
 
     @ColorInt
     private var currentColor: Int = getColor(context, BrushColor.BLUE.colorRes)
-
+    private var currentThickness: Float = 10.0f
     private var currentStroke: Stroke = Stroke(Path(), Paint())
 
     private val strokes: MutableList<Stroke> = mutableListOf(currentStroke)
@@ -66,14 +66,17 @@ class PaintingView : View {
     private fun setupPaint(paint: Paint) {
         paint.color = currentColor
         paint.isAntiAlias = true
-        paint.strokeWidth = 20f
+        paint.strokeWidth = currentThickness
         paint.strokeJoin = Paint.Join.ROUND
         paint.strokeCap = Paint.Cap.ROUND
         paint.style = Paint.Style.STROKE
     }
 
     fun changeBrushColor(color: BrushColor) {
-        val changedColor = getColor(context, color.colorRes)
-        currentColor = changedColor
+        currentColor = getColor(context, color.colorRes)
+    }
+
+    fun changeBrushThickness(thickness: Float) {
+        currentThickness = thickness
     }
 }
