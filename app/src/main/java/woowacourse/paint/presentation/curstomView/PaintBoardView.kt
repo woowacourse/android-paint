@@ -17,6 +17,7 @@ class PaintBoardView(
 
     private val path: Path = Path()
     private val paint: Paint = Paint()
+    private val touchEventListeners: MutableList<() -> Unit> = mutableListOf()
 
     init {
         isFocusable = true
@@ -31,6 +32,10 @@ class PaintBoardView(
 
     fun setStrokeColor(colorCode: Int) {
         paint.color = colorCode
+    }
+
+    fun addTouchEventListener(listener: () -> Unit) {
+        touchEventListeners.add(listener)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -56,6 +61,7 @@ class PaintBoardView(
 
             else -> super.onTouchEvent(event)
         }
+        touchEventListeners.forEach { it() }
         invalidate()
         return true
     }

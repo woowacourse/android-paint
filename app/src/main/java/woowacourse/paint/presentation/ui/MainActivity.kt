@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setUpDataBinding()
+        setUpPaintBoardView()
     }
 
     private fun setUpDataBinding() {
@@ -42,5 +43,9 @@ class MainActivity : AppCompatActivity() {
         } else {
             viewModel.startThicknessSelection()
         }
+    }
+
+    private fun setUpPaintBoardView() {
+        binding.pbvPaintBoardView.addTouchEventListener { viewModel.finishSetting() }
     }
 }
