@@ -1,6 +1,7 @@
 package woowacourse.paint
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.databinding.ActivityMainBinding
 
@@ -12,6 +13,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setAdapter()
+        setClickListener()
     }
 
     private fun setAdapter() {
@@ -19,9 +21,22 @@ class MainActivity : AppCompatActivity() {
             backgroundColors = PaletteColor.values().map {
                 it.convertToArgb(this)
             },
-        ) { paletteClickEvent(it) }
+            onClick = ::paletteClickEvent,
+        )
     }
 
     private fun paletteClickEvent(color: Int) {
+        binding.rvPalette.visibility = View.GONE
+        binding.fdvBoard.updateColor(color)
+    }
+
+    private fun setClickListener() {
+        binding.btChangeColor.setOnClickListener {
+            binding.rvPalette.visibility = View.VISIBLE
+        }
+        binding.btChangeThickness.setOnClickListener {
+            val thickness = binding.rsThickness.values.last()
+            binding.fdvBoard.updateThickness(thickness)
+        }
     }
 }

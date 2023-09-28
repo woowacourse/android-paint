@@ -36,6 +36,6 @@ class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context,
         paint.color = color
     }
 
-    fun updateThickness() {
+    fun updateThickness(thickness: Float) {
     }
 }
