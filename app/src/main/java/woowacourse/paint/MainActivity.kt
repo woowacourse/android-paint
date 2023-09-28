@@ -7,12 +7,13 @@ import woowacourse.paint.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private val colors = listOf(
-        R.color.red,
-        R.color.orange,
-        R.color.yellow,
-        R.color.green,
-        R.color.blue,
+        PaintColor(R.color.red, true),
+        PaintColor(R.color.orange, false),
+        PaintColor(R.color.yellow, false),
+        PaintColor(R.color.green, false),
+        PaintColor(R.color.blue, false),
     )
+    private lateinit var paintColorPaletteAdapter: PaintColorPaletteAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,6 +31,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupPaintColorPalette() {
-        binding.paintColorPalette.adapter = PaintColorPaletteAdapter(colors)
+        paintColorPaletteAdapter = PaintColorPaletteAdapter {
+            paintColorPaletteAdapter.updateColors(
+                colors.map { paintColor ->
+                    if (paintColor.color == it) {
+                        paintColor.copy(
+                            isSelected = true,
+                        )
+                    } else {
+                        paintColor.copy(isSelected = false)
+                    }
+                },
+            )
+        }
+        paintColorPaletteAdapter.updateColors(colors)
+        binding.paintColorPalette.adapter = paintColorPaletteAdapter
+        binding.paintColorPalette.itemAnimator = null
     }
 }
