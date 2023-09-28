@@ -14,25 +14,25 @@ class PaintBoard @JvmOverloads constructor(
     context: Context,
     attr: AttributeSet? = null,
 ) : View(context, attr) {
-    private val drawingPaths: MutableList<DrawingPathInfo> = mutableListOf()
-    private val newPath: Path = Path()
+    private val drawnPaths: MutableList<DrawingPathInfo> = mutableListOf()
+    private val drawingPath: Path = Path()
 
     @ColorInt
-    var nowColor: Int = 0xFF0000
+    var currentColor: Int = 0xFF0000
         set(value) {
             field = value
             updateNowPaint()
         }
-    var nowStrokeWidth: Float = 50f
+    var currentStrokeWidth: Float = 50f
         set(value) {
             field = value
             updateNowPaint()
         }
 
-    private var nowPaint: Paint = getPaint(nowColor, nowStrokeWidth)
+    private var currentPaint: Paint = getPaint(currentColor, currentStrokeWidth)
 
     private fun updateNowPaint() {
-        nowPaint = getPaint(nowColor, nowStrokeWidth)
+        currentPaint = getPaint(currentColor, currentStrokeWidth)
     }
 
     private fun getPaint(@ColorInt colorInt: Int = Color.RED, strokeWidth: Float = 50f): Paint =
@@ -48,26 +48,31 @@ class PaintBoard @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        drawingPaths.forEach { pathInfo ->
+        drawnPaths.forEach { pathInfo ->
             canvas?.drawPath(pathInfo.path, pathInfo.paint)
         }
-        canvas?.drawPath(newPath, nowPaint)
+        canvas?.drawPath(drawingPath, currentPaint)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                newPath.reset()
-                newPath.moveTo(event.x, event.y)
+                drawingPath.reset()
+                drawingPath.moveTo(event.x, event.y)
             }
 
             MotionEvent.ACTION_MOVE -> {
-                newPath.lineTo(event.x, event.y)
+                drawingPath.lineTo(event.x, event.y)
             }
 
             MotionEvent.ACTION_UP -> {
-                drawingPaths.add(DrawingPathInfo(Path(newPath), getPaint(nowColor, nowStrokeWidth)))
-                newPath.reset()
+                drawnPaths.add(
+                    DrawingPathInfo(
+                        Path(drawingPath),
+                        getPaint(currentColor, currentStrokeWidth),
+                    ),
+                )
+                drawingPath.reset()
             }
         }
         invalidate()
