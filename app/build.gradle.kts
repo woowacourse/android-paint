@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "woowacourse.paint"
-        minSdk = 26
+        minSdk = 29
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -22,7 +22,7 @@ android {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -32,6 +32,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
+    }
+    dataBinding {
+        enable = true
     }
 }
 
