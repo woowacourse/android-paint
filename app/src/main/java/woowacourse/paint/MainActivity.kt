@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         ).map { getColor(it) }
 
         binding.adapter = PaletteAdapter(colors) { color: Int ->
-            binding.mainCustomCanvas.changeColor(color)
+            binding.mainCustomCanvas.changePaintColor(color)
         }
     }
 
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         binding.mainRangeSlider.setValues(DEFAULT_PAINT_WIDTH)
 
         binding.mainRangeSlider.addOnChangeListener { _, value, _ ->
-            binding.mainCustomCanvas.changeWidth(value)
+            binding.mainCustomCanvas.changePaintWidth(value)
         }
     }
 }

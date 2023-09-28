@@ -12,7 +12,7 @@ import android.view.View
 class CustomCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private var path = Path()
     private var paint = Paint()
-    private val paths = mutableListOf<Pair<Path, Paint>>()
+    private val pathHistory = PathHistory()
 
     init {
         changePaint(Color.RED, DEFAULT_PAINT_WIDTH)
@@ -20,10 +20,14 @@ class CustomCanvas(context: Context, attrs: AttributeSet) : View(context, attrs)
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        paths.forEach { (path: Path, paint: Paint) ->
+        drawPathHistory(canvas)
+        canvas.drawPath(path, paint)
+    }
+
+    private fun drawPathHistory(canvas: Canvas) {
+        pathHistory.paths.forEach { (path: Path, paint: Paint) ->
             canvas.drawPath(path, paint)
         }
-        canvas.drawPath(path, paint)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -39,7 +43,7 @@ class CustomCanvas(context: Context, attrs: AttributeSet) : View(context, attrs)
             }
 
             MotionEvent.ACTION_UP -> {
-                paths.add(path to paint)
+                pathHistory.addPath(PathPaint(path, paint))
                 path = Path()
             }
 
@@ -49,11 +53,11 @@ class CustomCanvas(context: Context, attrs: AttributeSet) : View(context, attrs)
         return true
     }
 
-    fun changeColor(color: Int) {
+    fun changePaintColor(color: Int) {
         changePaint(color, paint.strokeWidth)
     }
 
-    fun changeWidth(width: Float) {
+    fun changePaintWidth(width: Float) {
         changePaint(paint.color, width)
     }
 
