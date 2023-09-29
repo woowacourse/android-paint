@@ -15,11 +15,17 @@ class Palette(val paint: Paint = Paint()) {
         paint.isAntiAlias = true
     }
 
-    fun changeColor(color: Int) = Palette(
-        Paint().apply { this.color = color },
+    fun changeColor(color: Int): Palette = Palette(
+        Paint().apply {
+            this.color = color
+            this.strokeWidth = paint.strokeWidth
+        },
     )
 
     fun changeWidth(width: Float) = Palette(
-        Paint().apply { this.strokeWidth = width },
+        Paint().apply {
+            this.strokeWidth = width
+            this.color = paint.color
+        },
     )
 }

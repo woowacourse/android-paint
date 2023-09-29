@@ -4,7 +4,7 @@ import android.graphics.Canvas
 
 class Painting {
     private val paintedLines: MutableList<Line> = mutableListOf()
-    private lateinit var line: Line
+    private var line: Line = Line()
 
     fun drawLines(canvas: Canvas) {
         paintedLines.forEach { line -> line.draw(canvas) }
