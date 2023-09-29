@@ -15,8 +15,8 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val drawings: ArrayDeque<Pair<Path, Paint>> = ArrayDeque()
     private val savedDrawings: ArrayDeque<Pair<Path, Paint>> = ArrayDeque()
     private lateinit var path: Path
-    private var drawingTool: DrawingToolModel = DrawingToolModel.PEN
-    private var thickness = -1f
+    private lateinit var drawingTool: DrawingToolModel
+    private var thickness = DEFAULT_THICKNESS
     private var paintColor = DEFAULT_PAINT_COLOR
 
     override fun onDraw(canvas: Canvas) {
@@ -56,8 +56,8 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
         path = Path()
         val paint = Paint(drawingTool.paint).apply {
             strokeWidth = thickness
-            color = if (drawingTool == DrawingToolModel.ERASER) Color.WHITE else paintColor
-            if (drawingTool == DrawingToolModel.HIGHLIGHTER) alpha = 80
+            if (drawingTool != DrawingToolModel.ERASER) color = paintColor
+            if (drawingTool == DrawingToolModel.HIGHLIGHTER) alpha = HIGHLIGHTER_OPACITY
         }
         drawings.add(path to paint)
         savedDrawings.clear()
@@ -98,6 +98,8 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     companion object {
+        private const val DEFAULT_THICKNESS = 0f
         private const val DEFAULT_PAINT_COLOR = Color.RED
+        private const val HIGHLIGHTER_OPACITY = 80
     }
 }
