@@ -56,7 +56,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
         val paint = Paint(brush.paint).apply {
             strokeWidth = thickness
             color = if (brush == DrawingTool.ERASER) Color.WHITE else paintColor
-            if (brush == DrawingTool.HIGHLIGHTER) alpha = 50
+            if (brush == DrawingTool.HIGHLIGHTER) alpha = 80
         }
         drawings.add(path to paint)
         savedDrawings.clear()
