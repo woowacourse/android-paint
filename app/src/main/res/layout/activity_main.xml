@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="woowacourse.paint.MainViewModel" />
+
+        <import type="woowacourse.paint.ChangingState" />
+
+        <import type="android.view.View" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -21,6 +31,7 @@
             android:id="@+id/rs_thickness_changer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:visibility="@{viewModel.changingState instanceof ChangingState.ThicknessChanging ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toTopOf="@id/rv_colors"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -30,6 +41,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:visibility="@{viewModel.changingState instanceof ChangingState.ColorChanging ? View.VISIBLE : View.GONE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -41,6 +53,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:onClick="@{() -> viewModel.setChangeColor()}"
             android:text="@string/main_change_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_change_thickness"
@@ -52,6 +65,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
+            android:onClick="@{() -> viewModel.setChangeThickness()}"
             android:text="@string/main_change_thickness"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
