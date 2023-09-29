@@ -19,7 +19,6 @@ class PaintBoardView(
     private val touchEventListeners: MutableList<TouchEventListener> = mutableListOf()
 
     init {
-        setUpView()
         setUpPaint()
     }
 
@@ -61,11 +60,6 @@ class PaintBoardView(
     fun reset() {
         strokes.clear()
         invalidate()
-    }
-
-    private fun setUpView() {
-        isFocusable = true
-        isFocusableInTouchMode = true
     }
 
     private fun setUpPaint() {
