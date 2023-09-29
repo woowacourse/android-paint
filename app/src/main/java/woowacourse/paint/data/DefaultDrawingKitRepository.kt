@@ -3,8 +3,9 @@ package woowacourse.paint.data
 import woowacourse.paint.model.DrawingTool
 import woowacourse.paint.model.PaintColor
 import woowacourse.paint.repository.DrawingKitRepository
+import javax.inject.Inject
 
-class DefaultDrawingKitRepository : DrawingKitRepository {
+class DefaultDrawingKitRepository @Inject constructor() : DrawingKitRepository {
     private var drawingTool = DrawingTool.PEN
     private val drawingTools = DrawingTool.values().toList()
     private var thickness = 0f

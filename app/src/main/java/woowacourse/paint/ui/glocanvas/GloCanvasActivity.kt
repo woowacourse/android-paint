@@ -3,19 +3,20 @@ package woowacourse.paint.ui.glocanvas
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
 import woowacourse.paint.R
-import woowacourse.paint.data.DefaultDrawingKitRepository
 import woowacourse.paint.databinding.ActivityGloCanvasBinding
 
+@AndroidEntryPoint
 class GloCanvasActivity : AppCompatActivity() {
     private val binding: ActivityGloCanvasBinding by lazy {
         ActivityGloCanvasBinding.inflate(
             layoutInflater,
         )
     }
-    private val viewModel =
-        GloCanvasViewModel(DefaultDrawingKitRepository())
+    private val viewModel: GloCanvasViewModel by viewModels()
     private lateinit var paintColorPaletteAdapter: PaintColorPaletteAdapter
     private lateinit var drawingToolSettingsAdapter: DrawingToolSettingsAdapter
 

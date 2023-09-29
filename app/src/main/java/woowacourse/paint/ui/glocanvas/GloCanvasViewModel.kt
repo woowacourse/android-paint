@@ -3,6 +3,8 @@ package woowacourse.paint.ui.glocanvas
 import android.graphics.Color
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
 import woowacourse.paint.model.PaintColor
 import woowacourse.paint.repository.DrawingKitRepository
 import woowacourse.paint.ui.model.DrawingToolModel
@@ -12,10 +14,12 @@ import woowacourse.paint.ui.model.mapper.toDrawingTool
 import woowacourse.paint.ui.model.mapper.toDrawingToolModel
 import woowacourse.paint.ui.model.mapper.toPaintColorModel
 import woowacourse.paint.ui.model.mapper.toSelectableDrawingToolModel
+import javax.inject.Inject
 
-class GloCanvasViewModel(
+@HiltViewModel
+class GloCanvasViewModel @Inject constructor(
     private val drawingKitRepository: DrawingKitRepository,
-) {
+) : ViewModel() {
     private var _drawingTool: MutableLiveData<DrawingToolModel> = MutableLiveData()
     val drawingTool: LiveData<DrawingToolModel>
         get() = _drawingTool
