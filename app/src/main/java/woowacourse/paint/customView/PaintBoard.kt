@@ -16,26 +16,27 @@ class PaintBoard @JvmOverloads constructor(
     context: Context,
     attr: AttributeSet? = null,
 ) : View(context, attr) {
-    private val drawnPaths: MutableList<DrawingPathInfo> = mutableListOf()
-    private val drawingPath: Path = Path()
+    private val _drawnPaths: MutableList<DrawingPathInfo> = mutableListOf()
+    val drawnPaths: List<DrawingPathInfo>
+        get() = _drawnPaths.map { it.deepCopy() }
+
+    private val _drawingPath: Path = Path()
+    val drawingPath: Path
+        get() = Path(_drawingPath)
 
     var minStrokeWidth: Float = DEFAULT_MIN_STROKE_WIDTH
         set(value) {
             require(value in DEFAULT_MIN_STROKE_WIDTH..maxStrokeWidth) { "[ERROR] 펜의 최소 두께는 최대 두께 보다 작고 0이상이여야 합니다" }
-            if (currentStrokeWidth < value) {
-                currentStrokeWidth = value
-            }
             field = value
+            if (currentStrokeWidth < value) currentStrokeWidth = value
             updateDefaultStrokeWidth()
         }
 
     var maxStrokeWidth: Float = DEFAULT_MAX_STROKE_WIDTH
         set(value) {
             require(value > minStrokeWidth) { "[ERROR] 펜의 최대 두께는 최소 두께 보다 커야 합니다" }
-            if (currentStrokeWidth > value) {
-                currentStrokeWidth = value
-            }
             field = value
+            if (currentStrokeWidth > value) currentStrokeWidth = value
             updateDefaultStrokeWidth()
         }
 
@@ -45,59 +46,56 @@ class PaintBoard @JvmOverloads constructor(
     var currentColor: Int = DEFAULT_COLOR
         set(value) {
             field = value
-            updateNowPaint()
+            updateCurrentPaint()
         }
     var currentStrokeWidth: Float = defaultStrokeWidth
         set(value) {
             require(value in minStrokeWidth..maxStrokeWidth) { "[ERROR] 펜 두께는 ${minStrokeWidth}이상 ${maxStrokeWidth}이하의 범위만 가능합니다" }
             field = value
-            updateNowPaint()
+            updateCurrentPaint()
         }
 
-    private var currentPaint: Paint = getPaint(currentColor, currentStrokeWidth)
-
-    private fun updateNowPaint() {
-        currentPaint = getPaint(currentColor, currentStrokeWidth)
-    }
+    private var currentPaint: Paint = getCurrentPaint()
 
     private fun updateDefaultStrokeWidth() {
         defaultStrokeWidth = (minStrokeWidth + maxStrokeWidth) / 2
     }
 
-    private fun getPaint(@ColorInt colorInt: Int = Color.RED, strokeWidth: Float = 50f): Paint =
-        Paint().apply {
-            isAntiAlias = true
-            style = Paint.Style.STROKE
-            strokeCap = Paint.Cap.ROUND
-            strokeJoin = Paint.Join.ROUND
-            color = colorInt
-            this.strokeWidth = strokeWidth
-        }
+    private fun updateCurrentPaint() {
+        currentPaint = getCurrentPaint()
+    }
+
+    private fun getCurrentPaint(): Paint = Paint().apply {
+        isAntiAlias = true
+        style = Paint.Style.STROKE
+        strokeCap = Paint.Cap.ROUND
+        strokeJoin = Paint.Join.ROUND
+        color = currentColor
+        this.strokeWidth = currentStrokeWidth
+    }
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
-        drawnPaths.forEach { pathInfo -> canvas?.drawPath(pathInfo.path, pathInfo.paint) }
-        canvas?.drawPath(drawingPath, currentPaint)
+        _drawnPaths.forEach { pathInfo -> canvas?.drawPath(pathInfo.path, pathInfo.paint) }
+        canvas?.drawPath(_drawingPath, currentPaint)
     }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                drawingPath.reset()
-                drawingPath.moveTo(event.x, event.y)
+                _drawingPath.reset()
+                _drawingPath.moveTo(event.x, event.y)
             }
 
             MotionEvent.ACTION_MOVE -> {
-                drawingPath.lineTo(event.x, event.y)
+                _drawingPath.lineTo(event.x, event.y)
             }
 
             MotionEvent.ACTION_UP -> {
-                drawnPaths.add(
-                    DrawingPathInfo(Path(drawingPath), getPaint(currentColor, currentStrokeWidth)),
-                )
-                drawingPath.reset()
+                _drawnPaths.add(DrawingPathInfo(Path(_drawingPath), getCurrentPaint()))
+                _drawingPath.reset()
             }
         }
         invalidate()
@@ -112,27 +110,27 @@ class PaintBoard @JvmOverloads constructor(
         private const val DEFAULT_COLOR = Color.RED
 
         @JvmStatic
-        @BindingAdapter("app:paint_board_currentColor")
-        fun PaintBoard.setBindingCurrentColor(@ColorInt colorInt: Int) {
-            this.currentColor = colorInt
-        }
-
-        @JvmStatic
-        @BindingAdapter("app:paint_board_currentStrokeWidth")
-        fun PaintBoard.setBindingCurrentStrokeWidth(currentStrokeWidth: Float) {
-            this.currentStrokeWidth = currentStrokeWidth
-        }
-
-        @JvmStatic
-        @BindingAdapter("app:paint_board_minStrokeWidth")
+        @BindingAdapter("paint_board_minStrokeWidth")
         fun PaintBoard.setBindingMinStrokeWidth(strokeWidth: Float) {
             this.minStrokeWidth = strokeWidth
         }
 
         @JvmStatic
-        @BindingAdapter("app:paint_board_maxStrokeWidth")
+        @BindingAdapter("paint_board_maxStrokeWidth")
         fun PaintBoard.setBindingMaxStrokeWidth(strokeWidth: Float) {
             this.maxStrokeWidth = strokeWidth
+        }
+
+        @JvmStatic
+        @BindingAdapter("paint_board_currentColor")
+        fun PaintBoard.setBindingCurrentColor(@ColorInt colorInt: Int) {
+            this.currentColor = colorInt
+        }
+
+        @JvmStatic
+        @BindingAdapter("paint_board_currentStrokeWidth")
+        fun PaintBoard.setBindingCurrentStrokeWidth(currentStrokeWidth: Float) {
+            this.currentStrokeWidth = currentStrokeWidth
         }
     }
 }

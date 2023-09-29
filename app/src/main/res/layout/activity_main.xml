@@ -18,14 +18,14 @@
 
         <woowacourse.paint.customView.PaintBoard
             android:id="@+id/pb_board"
+            paint_board_currentColor="@{ContextCompat.getColor(context, vm.appliedColor.colorRes)}"
+            paint_board_currentStrokeWidth="@{vm.appliedStroke}"
+            paint_board_maxStrokeWidth="@{vm.maxStrokeWidth}"
+            paint_board_minStrokeWidth="@{vm.minStrokeWidth}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@id/slider_pen_stroke_width"
-            app:layout_constraintTop_toTopOf="parent"
-            app:paint_board_currentColor="@{ContextCompat.getColor(context, vm.appliedColor.colorRes)}"
-            app:paint_board_currentStrokeWidth="@{vm.appliedStroke}"
-            app:paint_board_maxStrokeWidth="@{vm.maxStrokeWidth}"
-            app:paint_board_minStrokeWidth="@{vm.minStrokeWidth}" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.slider.Slider
             android:id="@+id/slider_pen_stroke_width"
@@ -58,7 +58,7 @@
             android:onClick="@{()->vm.onAppliedColorChange()}"
             android:text="@string/main_pen_color_change"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/gl_center_guide_line"
+            app:layout_constraintEnd_toStartOf="@id/gl_center_guide_line"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
