@@ -6,6 +6,7 @@ import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.paintboard.FileNameDialog
+import woowacourse.paint.paintboard.PaintMode
 import woowacourse.paint.paintboard.pentool.PenToolDialog
 
 class MainActivity : AppCompatActivity() {
@@ -29,12 +30,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun setClickListeners() {
         binding.ivPen.setOnClickListener {
-            convertTool(true)
-            showPenToolDialog()
+            convertTool(PaintMode.Pen)
         }
         binding.ivEraser.setOnClickListener {
-            convertTool(false)
-            binding.paintBoard.penColor = binding.paintBoard.canvasColor
+            convertTool(PaintMode.Eraser)
         }
         binding.ivRevert.setOnClickListener {
             binding.paintBoard.revertDrawing()
@@ -44,21 +43,35 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showPenToolDialog() {
-        val posY = binding.clCanvasTop.bottom + binding.clCanvasTop.height
-        penToolDialog.setPosY(posY)
-        penToolDialog.show()
-    }
-
     private fun setBrushColor(@ColorRes colorId: Int) {
-        binding.paintBoard.penColor = colorId
+        binding.paintBoard.setPenColor(colorId)
     }
 
     private fun setBrushWidth(value: Float) {
         binding.paintBoard.penWidth = value
     }
 
-    private fun convertTool(isPenSelected: Boolean) {
+    private fun convertTool(paintMode: PaintMode) {
+        when (paintMode) {
+            is PaintMode.Eraser -> {
+                binding.paintBoard.setEraserMode()
+                convertToolSelected(false)
+            }
+            is PaintMode.Pen -> {
+                binding.paintBoard.setPenMode()
+                convertToolSelected(true)
+                showPenToolDialog()
+            }
+        }
+    }
+
+    private fun showPenToolDialog() {
+        val posY = binding.clCanvasTop.bottom + binding.clCanvasTop.height
+        penToolDialog.setPosY(posY)
+        penToolDialog.show()
+    }
+
+    private fun convertToolSelected(isPenSelected: Boolean) {
         binding.ivPen.isSelected = isPenSelected
         binding.ivEraser.isSelected = !isPenSelected
     }
