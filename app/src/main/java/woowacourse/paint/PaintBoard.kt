@@ -14,7 +14,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val drawings: ArrayDeque<Pair<Path, Paint>> = ArrayDeque()
     private val savedDrawings: ArrayDeque<Pair<Path, Paint>> = ArrayDeque()
     private lateinit var path: Path
-    private var brush: DrawingTool = DrawingTool.PEN
+    private var drawingTool: DrawingTool = DrawingTool.PEN
     private var thickness = DEFAULT_PAINT_THICKNESS
     private var paintColor = DEFAULT_PAINT_COLOR
 
@@ -53,10 +53,10 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private fun setupDrawing() {
         path = Path()
-        val paint = Paint(brush.paint).apply {
+        val paint = Paint(drawingTool.paint).apply {
             strokeWidth = thickness
-            color = if (brush == DrawingTool.ERASER) Color.WHITE else paintColor
-            if (brush == DrawingTool.HIGHLIGHTER) alpha = 80
+            color = if (drawingTool == DrawingTool.ERASER) Color.WHITE else paintColor
+            if (drawingTool == DrawingTool.HIGHLIGHTER) alpha = 80
         }
         drawings.add(path to paint)
         savedDrawings.clear()
@@ -71,7 +71,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     fun setDrawingTool(brush: DrawingTool) {
-        this.brush = brush
+        this.drawingTool = brush
     }
 
     fun goToPreviousDrawing() {
