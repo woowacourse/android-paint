@@ -1,8 +1,9 @@
-package woowacourse.paint
+package woowacourse.paint.ui.glocanvas
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import woowacourse.paint.ui.model.PaintColorModel
 
 class PaintColorPaletteAdapter(
     private val onColorChanged: (Int) -> Unit,

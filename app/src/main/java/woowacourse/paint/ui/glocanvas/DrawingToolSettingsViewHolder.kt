@@ -1,13 +1,15 @@
-package woowacourse.paint
+package woowacourse.paint.ui.glocanvas
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.paint.databinding.ItemDrawingToolBinding
+import woowacourse.paint.ui.model.DrawingToolModel
+import woowacourse.paint.ui.model.SelectableDrawingToolModel
 
 class DrawingToolSettingsViewHolder private constructor(
     private val binding: ItemDrawingToolBinding,
-    onDrawingToolChanged: (DrawingTool) -> Unit,
+    onDrawingToolChanged: (DrawingToolModel) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {
@@ -18,7 +20,7 @@ class DrawingToolSettingsViewHolder private constructor(
         }
     }
 
-    fun bind(drawingToolModel: DrawingToolModel) {
+    fun bind(drawingToolModel: SelectableDrawingToolModel) {
         binding.drawingTool = drawingToolModel.drawingTool
         binding.ivDrawingTool.isSelected = drawingToolModel.isSelected
     }
@@ -26,7 +28,7 @@ class DrawingToolSettingsViewHolder private constructor(
     companion object {
         fun create(
             parent: ViewGroup,
-            onDrawingToolChanged: (DrawingTool) -> Unit,
+            onDrawingToolChanged: (DrawingToolModel) -> Unit,
         ): DrawingToolSettingsViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             val binding = ItemDrawingToolBinding.inflate(layoutInflater, parent, false)

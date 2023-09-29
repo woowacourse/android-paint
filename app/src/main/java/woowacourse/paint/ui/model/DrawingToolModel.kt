@@ -1,9 +1,10 @@
-package woowacourse.paint
+package woowacourse.paint.ui.model
 
 import android.graphics.Paint
 import androidx.annotation.DrawableRes
+import woowacourse.paint.R
 
-enum class DrawingTool(@DrawableRes val image: Int, val paint: Paint) {
+enum class DrawingToolModel(@DrawableRes val image: Int, val paint: Paint) {
     PEN(
         R.drawable.ic_pen_100,
         Paint().apply {

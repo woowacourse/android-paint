@@ -12,7 +12,7 @@
         android:theme="@style/Theme.Paint"
         tools:targetApi="31">
         <activity
-            android:name=".GloCanvasActivity"
+            android:name=".ui.glocanvas.GloCanvasActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

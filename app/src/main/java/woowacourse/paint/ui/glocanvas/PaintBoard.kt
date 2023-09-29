@@ -1,4 +1,4 @@
-package woowacourse.paint
+package woowacourse.paint.ui.glocanvas
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,12 +9,13 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import woowacourse.paint.ui.model.DrawingToolModel
 
 class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val drawings: ArrayDeque<Pair<Path, Paint>> = ArrayDeque()
     private val savedDrawings: ArrayDeque<Pair<Path, Paint>> = ArrayDeque()
     private lateinit var path: Path
-    private var drawingTool: DrawingTool = DrawingTool.PEN
+    private var drawingTool: DrawingToolModel = DrawingToolModel.PEN
     private var thickness = DEFAULT_PAINT_THICKNESS
     private var paintColor = DEFAULT_PAINT_COLOR
 
@@ -55,8 +56,8 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
         path = Path()
         val paint = Paint(drawingTool.paint).apply {
             strokeWidth = thickness
-            color = if (drawingTool == DrawingTool.ERASER) Color.WHITE else paintColor
-            if (drawingTool == DrawingTool.HIGHLIGHTER) alpha = 80
+            color = if (drawingTool == DrawingToolModel.ERASER) Color.WHITE else paintColor
+            if (drawingTool == DrawingToolModel.HIGHLIGHTER) alpha = 80
         }
         drawings.add(path to paint)
         savedDrawings.clear()
@@ -70,7 +71,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
         paintColor = color
     }
 
-    fun setDrawingTool(brush: DrawingTool) {
+    fun setDrawingTool(brush: DrawingToolModel) {
         this.drawingTool = brush
     }
 

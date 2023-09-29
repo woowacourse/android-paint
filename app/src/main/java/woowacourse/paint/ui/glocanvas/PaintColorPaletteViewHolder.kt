@@ -1,9 +1,10 @@
-package woowacourse.paint
+package woowacourse.paint.ui.glocanvas
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.paint.databinding.ItemPaintColorBinding
+import woowacourse.paint.ui.model.PaintColorModel
 
 class PaintColorPaletteViewHolder private constructor(
     private val binding: ItemPaintColorBinding,

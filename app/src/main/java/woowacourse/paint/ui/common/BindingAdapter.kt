@@ -1,4 +1,4 @@
-package woowacourse.paint.common
+package woowacourse.paint.ui.common
 
 import android.view.View
 import androidx.core.view.isVisible

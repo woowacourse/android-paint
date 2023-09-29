@@ -7,8 +7,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <woowacourse.paint.PaintBoard
-            android:id="@+id/paint_board"
+        <woowacourse.paint.ui.glocanvas.PaintBoard
+            android:id="@+id/v_paint_board"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="@color/white"
@@ -29,7 +29,7 @@
             app:layout_constraintBottom_toTopOf="@id/rs_thickness_settings"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/paint_board" />
+            app:layout_constraintTop_toBottomOf="@id/v_paint_board" />
 
         <com.google.android.material.slider.RangeSlider
             android:id="@+id/rs_thickness_settings"

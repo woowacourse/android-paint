@@ -1,9 +1,12 @@
-package woowacourse.paint
+package woowacourse.paint.ui.glocanvas
 
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import woowacourse.paint.R
+import woowacourse.paint.data.DefaultDrawingToolRepository
+import woowacourse.paint.data.DefaultPaintColorRepository
 import woowacourse.paint.databinding.ActivityGloCanvasBinding
 
 class GloCanvasActivity : AppCompatActivity() {
@@ -12,18 +15,8 @@ class GloCanvasActivity : AppCompatActivity() {
             layoutInflater,
         )
     }
-    private val colors = listOf(
-        PaintColorModel(R.color.red, true),
-        PaintColorModel(R.color.orange, false),
-        PaintColorModel(R.color.yellow, false),
-        PaintColorModel(R.color.green, false),
-        PaintColorModel(R.color.blue, false),
-    )
-    private val drawingTools = listOf(
-        DrawingToolModel(DrawingTool.PEN, true),
-        DrawingToolModel(DrawingTool.HIGHLIGHTER, false),
-        DrawingToolModel(DrawingTool.ERASER, false),
-    )
+    private val viewModel =
+        GloCanvasViewModel(DefaultPaintColorRepository(), DefaultDrawingToolRepository())
     private lateinit var paintColorPaletteAdapter: PaintColorPaletteAdapter
     private lateinit var drawingToolSettingsAdapter: DrawingToolSettingsAdapter
 
@@ -39,17 +32,11 @@ class GloCanvasActivity : AppCompatActivity() {
     private fun setupDrawingToolSettings() {
         drawingToolSettingsAdapter = DrawingToolSettingsAdapter {
             drawingToolSettingsAdapter.updateDrawingTools(
-                drawingTools.map { drawingToolModel ->
-                    if (drawingToolModel.drawingTool == it) {
-                        drawingToolModel.copy(isSelected = true)
-                    } else {
-                        drawingToolModel.copy(isSelected = false)
-                    }
-                },
+                viewModel.selectDrawingTool(it),
             )
-            binding.paintBoard.setDrawingTool(it)
+            binding.vPaintBoard.setDrawingTool(it)
         }
-        drawingToolSettingsAdapter.updateDrawingTools(drawingTools)
+        drawingToolSettingsAdapter.updateDrawingTools(viewModel.getAllDrawingTools())
         binding.rvDrawingToolSettings.adapter = drawingToolSettingsAdapter
         binding.rvDrawingToolSettings.itemAnimator = null
     }
@@ -57,24 +44,18 @@ class GloCanvasActivity : AppCompatActivity() {
     private fun setupThicknessSettings() {
         binding.rsThicknessSettings.isTickVisible = false
         binding.rsThicknessSettings.addOnChangeListener { _, value, _ ->
-            binding.paintBoard.setThickness(value)
+            binding.vPaintBoard.setThickness(value)
         }
     }
 
     private fun setupPaintColorPalette() {
         paintColorPaletteAdapter = PaintColorPaletteAdapter {
             paintColorPaletteAdapter.updateColors(
-                colors.map { paintColor ->
-                    if (paintColor.color == it) {
-                        paintColor.copy(isSelected = true)
-                    } else {
-                        paintColor.copy(isSelected = false)
-                    }
-                },
+                viewModel.selectPaintColor(it),
             )
-            binding.paintBoard.setPaintColor(getColor(it))
+            binding.vPaintBoard.setPaintColor(it)
         }
-        paintColorPaletteAdapter.updateColors(colors)
+        paintColorPaletteAdapter.updateColors(viewModel.getAllPaintColors())
         binding.rvPaintColorPalette.adapter = paintColorPaletteAdapter
         binding.rvPaintColorPalette.itemAnimator = null
     }
@@ -87,13 +68,15 @@ class GloCanvasActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.go_to_previous_drawing -> {
-                binding.paintBoard.goToPreviousDrawing()
+                binding.vPaintBoard.goToPreviousDrawing()
             }
+
             R.id.go_to_next_drawing -> {
-                binding.paintBoard.goToNextDrawing()
+                binding.vPaintBoard.goToNextDrawing()
             }
+
             R.id.new_canvas -> {
-                binding.paintBoard.setNewCanvas()
+                binding.vPaintBoard.setNewCanvas()
             }
         }
         return super.onOptionsItemSelected(item)

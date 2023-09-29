@@ -5,7 +5,7 @@
 
         <variable
             name="drawingTool"
-            type="woowacourse.paint.DrawingTool" />
+            type="woowacourse.paint.ui.model.DrawingToolModel" />
     </data>
 
     <ImageView
