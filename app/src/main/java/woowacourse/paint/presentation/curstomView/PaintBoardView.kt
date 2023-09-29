@@ -12,12 +12,12 @@ import android.view.View
 
 class PaintBoardView(
     context: Context,
-    attrs: AttributeSet?,
+    attrs: AttributeSet? = null,
 ) : View(context, attrs) {
 
     private val path: Path = Path()
     private val paint: Paint = Paint()
-    private val touchEventListeners: MutableList<() -> Unit> = mutableListOf()
+    private val touchEventListeners: MutableList<TouchEventListener> = mutableListOf()
 
     init {
         setUpView()
@@ -27,18 +27,6 @@ class PaintBoardView(
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         canvas.drawPath(path, paint)
-    }
-
-    fun setStrokeColor(colorCode: Int) {
-        paint.color = colorCode
-    }
-
-    fun setStrokeWidth(width: Float) {
-        paint.strokeWidth = width
-    }
-
-    fun addTouchEventListener(listener: () -> Unit) {
-        touchEventListeners.add(listener)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -52,9 +40,21 @@ class PaintBoardView(
 
             else -> super.onTouchEvent(event)
         }
-        touchEventListeners.forEach { it() }
+        touchEventListeners.forEach { it.onTouch() }
         invalidate()
         return true
+    }
+
+    fun setStrokeColor(colorCode: Int) {
+        paint.color = colorCode
+    }
+
+    fun setStrokeWidth(width: Float) {
+        paint.strokeWidth = width
+    }
+
+    fun addTouchEventListener(listener: TouchEventListener) {
+        touchEventListeners.add(listener)
     }
 
     private fun setUpView() {
@@ -67,5 +67,9 @@ class PaintBoardView(
         paint.style = Paint.Style.STROKE
         paint.strokeCap = Paint.Cap.ROUND
         paint.strokeJoin = Paint.Join.ROUND
+    }
+
+    fun interface TouchEventListener {
+        fun onTouch()
     }
 }
