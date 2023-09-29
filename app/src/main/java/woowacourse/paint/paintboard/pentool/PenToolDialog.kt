@@ -15,8 +15,8 @@ import woowacourse.paint.paintboard.pentool.PenColors.Companion.DEFAULT_COLOR_PO
 
 class PenToolDialog(
     context: Context,
-    private val getSelectedColor: (colorId: Int) -> Unit,
-    private val getWidth: (width: Float) -> Unit,
+    private val getPenColor: (colorId: Int) -> Unit,
+    private val getPenWidth: (width: Float) -> Unit,
 ) {
     private val dialog = Dialog(context)
     private val binding = DialogPenToolBinding.inflate(LayoutInflater.from(context))
@@ -33,7 +33,7 @@ class PenToolDialog(
     }
 
     private fun initView() {
-        setSize()
+        setDialogSize()
         dialog.window?.setBackgroundDrawableResource(R.drawable.rect_radius_12)
         dialog.setContentView(binding.root)
         binding.rsPenToolWidth.valueFrom = 0f
@@ -45,12 +45,12 @@ class PenToolDialog(
     private fun setPenWidth() {
         binding.rsPenToolWidth.addOnChangeListener(
             RangeSlider.OnChangeListener { _, value, _ ->
-                getWidth(value)
+                getPenWidth(value)
             },
         )
     }
 
-    private fun setSize() {
+    private fun setDialogSize() {
         val windowManager: WindowManager =
             dialog.context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         val width: Int = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -76,6 +76,6 @@ class PenToolDialog(
 
     private fun selectColor(position: Int) {
         adapter.submitList(penColors.selectColor(position))
-        getSelectedColor(penColors.currentPenColor)
+        getPenColor(penColors.currentPenColor)
     }
 }

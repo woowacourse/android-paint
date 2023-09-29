@@ -13,8 +13,8 @@ import woowacourse.paint.paintboard.line.Lines
 import woowacourse.paint.paintboard.line.LinesBitmap
 
 class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    var brushColor: Int = DEFAULT_BRUSH_COLOR
-    var brushWidth: Float = DEFAULT_BRUSH_WIDTH
+    var penColor: Int = DEFAULT_BRUSH_COLOR
+    var penWidth: Float = DEFAULT_BRUSH_WIDTH
     var canvasColor: Int = DEFAULT_CANVAS_COLOR
     private val lines = Lines()
     private lateinit var linesBitmap: LinesBitmap
@@ -72,8 +72,8 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
         style = Paint.Style.STROKE
         strokeJoin = Paint.Join.ROUND
         strokeCap = Paint.Cap.ROUND
-        strokeWidth = this@PaintBoard.brushWidth
-        color = ContextCompat.getColor(this@PaintBoard.context, this@PaintBoard.brushColor)
+        strokeWidth = this@PaintBoard.penWidth
+        color = ContextCompat.getColor(this@PaintBoard.context, this@PaintBoard.penColor)
     }
 
     companion object {
