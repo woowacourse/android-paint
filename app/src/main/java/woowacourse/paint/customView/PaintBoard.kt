@@ -74,6 +74,12 @@ class PaintBoard @JvmOverloads constructor(
         this.strokeWidth = currentStrokeWidth
     }
 
+    fun changeDrawnPaths(paths: List<DrawingPathInfo>) {
+        _drawnPaths.clear()
+        _drawnPaths.addAll(paths)
+        invalidate()
+    }
+
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
 
