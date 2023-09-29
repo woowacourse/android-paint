@@ -12,18 +12,17 @@ class CanvasView(
     attributeSet: AttributeSet,
 ) : View(context, attributeSet) {
 
-    private val brush = Brush()
+    private val painting = Painting()
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        brush.drawPath(canvas)
+        painting.drawLines(canvas)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
-            MotionEvent.ACTION_MOVE -> brush.drawLine(event.x, event.y)
-            MotionEvent.ACTION_DOWN -> brush.movePoint(event.x, event.y)
-
+            MotionEvent.ACTION_MOVE -> painting.drawLine(event.x, event.y)
+            MotionEvent.ACTION_DOWN -> painting.movePoint(event.x, event.y)
             else -> super.onTouchEvent(event)
         }
         invalidate()
