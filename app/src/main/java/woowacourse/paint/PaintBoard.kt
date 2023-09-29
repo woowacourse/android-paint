@@ -11,7 +11,8 @@ import android.view.MotionEvent
 import android.view.View
 
 class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    private val drawings: MutableMap<Path, Paint> = mutableMapOf()
+    private val drawings: ArrayDeque<Pair<Path, Paint>> = ArrayDeque()
+    private val savedDrawings: ArrayDeque<Pair<Path, Paint>> = ArrayDeque()
     private lateinit var path: Path
     private var brush: DrawingTool = DrawingTool.PEN
     private var thickness = DEFAULT_PAINT_THICKNESS
@@ -57,7 +58,8 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
             color = if (brush == DrawingTool.ERASER) Color.WHITE else paintColor
             if (brush == DrawingTool.HIGHLIGHTER) alpha = 50
         }
-        drawings[path] = paint
+        drawings.add(path to paint)
+        savedDrawings.clear()
     }
 
     fun setThickness(thickness: Float) {
@@ -72,8 +74,25 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
         this.brush = brush
     }
 
+    fun goToPreviousDrawing() {
+        if (drawings.isNotEmpty()) {
+            val drawing = drawings.removeLast()
+            savedDrawings.addFirst(drawing)
+            invalidate()
+        }
+    }
+
+    fun goToNextDrawing() {
+        if (savedDrawings.isNotEmpty()) {
+            val drawing = savedDrawings.removeFirst()
+            drawings.add(drawing)
+            invalidate()
+        }
+    }
+
     fun setNewCanvas() {
         drawings.clear()
+        savedDrawings.clear()
         invalidate()
     }
 

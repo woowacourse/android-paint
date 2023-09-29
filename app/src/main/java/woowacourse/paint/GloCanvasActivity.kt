@@ -86,6 +86,12 @@ class GloCanvasActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.go_to_previous_drawing -> {
+                binding.paintBoard.goToPreviousDrawing()
+            }
+            R.id.go_to_next_drawing -> {
+                binding.paintBoard.goToNextDrawing()
+            }
             R.id.new_canvas -> {
                 binding.paintBoard.setNewCanvas()
             }

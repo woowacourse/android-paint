@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">글로의 캔버스</string>
 
+    <string name="menu_item_go_to_previous_drawing">이전</string>
+    <string name="menu_item_go_to_next_drawing">다음</string>
     <string name="menu_item_new_canvas">새 캔버스</string>
 </resources>
