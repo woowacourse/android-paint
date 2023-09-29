@@ -18,24 +18,10 @@ class MainActivity : AppCompatActivity() {
             rangeSlider.setValues(10f)
 
             rangeSlider.addOnChangeListener { _, value, _ ->
-                customView.setStrokeWidth(value)
+                canvasView.setStrokeWidth(value)
             }
 
-            red.setOnClickListener {
-                customView.setColor(Color.RED)
-            }
-            orange.setOnClickListener {
-                customView.setColor(Color.ORANGE)
-            }
-            yellow.setOnClickListener {
-                customView.setColor(Color.YELLOW)
-            }
-            green.setOnClickListener {
-                customView.setColor(Color.GREEN)
-            }
-            blue.setOnClickListener {
-                customView.setColor(Color.BLUE)
-            }
+            paletteView.onColorSelected = { canvasView.setColor(it) }
         }
     }
 }
