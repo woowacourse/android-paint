@@ -7,13 +7,15 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import woowacourse.paint.R
 import woowacourse.paint.paintboard.line.Lines
 import woowacourse.paint.paintboard.line.LinesBitmap
 
 class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    var penColor: Int = DEFAULT_BRUSH_COLOR
+    private var penColor: Int = DEFAULT_BRUSH_COLOR
+    private var lastPenColor: Int = DEFAULT_BRUSH_COLOR
     var penWidth: Float = DEFAULT_BRUSH_WIDTH
     var canvasColor: Int = DEFAULT_CANVAS_COLOR
     private val lines = Lines()
@@ -66,6 +68,20 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     fun revertDrawing() {
         lines.revert()
         invalidate()
+    }
+
+    fun setEraserMode() {
+        lastPenColor = penColor
+        penColor = canvasColor
+    }
+
+    fun setPenMode() {
+        penColor = lastPenColor
+    }
+
+    fun setPenColor(@ColorRes colorId: Int) {
+        lastPenColor = penColor
+        penColor = colorId
     }
 
     private fun newPaint() = Paint().apply {
