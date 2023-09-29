@@ -13,11 +13,9 @@ import android.view.View
 class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val drawings: MutableMap<Path, Paint> = mutableMapOf()
     private lateinit var path: Path
-    private lateinit var paint: Paint
-
-    init {
-        setupPaint(DEFAULT_PAINT_THICKNESS, DEFAULT_PAINT_COLOR)
-    }
+    private var brush: Brush = Brush.PEN
+    private var thickness = DEFAULT_PAINT_THICKNESS
+    private var paintColor = DEFAULT_PAINT_COLOR
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -30,8 +28,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         return when (event?.action) {
             MotionEvent.ACTION_DOWN -> {
-                path = Path()
-                drawings[path] = paint
+                setupDrawing()
                 path.moveTo(event.x, event.y)
                 invalidate()
                 true
@@ -46,7 +43,6 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
             MotionEvent.ACTION_UP -> {
                 path.lineTo(event.x, event.y)
                 invalidate()
-                setupPaint(paint.strokeWidth, paint.color)
                 true
             }
 
@@ -54,23 +50,26 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
         }
     }
 
-    private fun setupPaint(thickness: Float, color: Int) {
-        paint = Paint().apply {
-            style = Paint.Style.STROKE
-            strokeCap = Paint.Cap.ROUND
-            strokeJoin = Paint.Join.ROUND
-            isAntiAlias = true
+    private fun setupDrawing() {
+        path = Path()
+        val paint = Paint(brush.paint).apply {
             strokeWidth = thickness
-            this.color = color
+            color = paintColor
+            if (brush == Brush.HIGHLIGHTER) alpha = 50
         }
+        drawings[path] = paint
     }
 
     fun setBrushThickness(thickness: Float) {
-        paint.strokeWidth = thickness
+        this.thickness = thickness
     }
 
     fun setPaintColor(color: Int) {
-        paint.color = color
+        paintColor = color
+    }
+
+    fun setBrush(brush: Brush) {
+        this.brush = brush
     }
 
     companion object {

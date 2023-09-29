@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 },
             )
+            binding.paintBoard.setBrush(it)
         }
         brushSettingToolAdapter.updateBrushes(brushes)
         binding.rvBrushSettingTool.adapter = brushSettingToolAdapter
