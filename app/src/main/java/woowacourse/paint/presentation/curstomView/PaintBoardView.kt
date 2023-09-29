@@ -33,6 +33,10 @@ class PaintBoardView(
         paint.color = colorCode
     }
 
+    fun setStrokeWidth(width: Float) {
+        paint.strokeWidth = width
+    }
+
     fun addTouchEventListener(listener: () -> Unit) {
         touchEventListeners.add(listener)
     }

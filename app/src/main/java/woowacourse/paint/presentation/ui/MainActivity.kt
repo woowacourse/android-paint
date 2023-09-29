@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
 
         setUpDataBinding()
         setUpPaintBoardView()
+        setUpStrokeWidthRangeSlider()
     }
 
     private fun setUpDataBinding() {
@@ -47,5 +48,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun setUpPaintBoardView() {
         binding.pbvPaintBoardView.addTouchEventListener { viewModel.finishSetting() }
+    }
+
+    private fun setUpStrokeWidthRangeSlider() {
+        binding.rsThicknessSettingBar.addOnChangeListener { _, value, fromUser ->
+            if (fromUser) binding.pbvPaintBoardView.setStrokeWidth(value)
+        }
     }
 }
