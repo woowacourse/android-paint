@@ -26,7 +26,7 @@ class CanvasView(
         super.onDraw(canvas)
 
         val size = points.size
-        for (index in 1 until size) {
+        for (index in 0 until size) {
             paint.color = points[index].color
             paint.strokeWidth = points[index].strokeWidth
 
