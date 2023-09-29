@@ -38,8 +38,8 @@ class CanvasView constructor(context: Context, attr: AttributeSet) : View(contex
         canvas.drawPath(path, paint)
     }
 
-    fun setColor(color: Int) {
-        paint.color = color
+    fun setColor(color: Color) {
+        paint.color = context.getColor(color.id)
     }
 
     fun setStrokeWidth(width: Float) {
@@ -91,7 +91,7 @@ class CanvasView constructor(context: Context, attr: AttributeSet) : View(contex
     }
 
     private fun setupPaint() {
-        setColor(context.getColor(R.color.red))
+        setColor(Color.values().first())
         setStrokeWidth(10f)
         paint.isAntiAlias = true
         paint.style = Paint.Style.STROKE

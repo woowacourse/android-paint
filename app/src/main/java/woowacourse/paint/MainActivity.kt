@@ -22,19 +22,19 @@ class MainActivity : AppCompatActivity() {
             }
 
             red.setOnClickListener {
-                customView.setColor(getColor(R.color.red))
+                customView.setColor(Color.RED)
             }
             orange.setOnClickListener {
-                customView.setColor(getColor(R.color.orange))
+                customView.setColor(Color.ORANGE)
             }
             yellow.setOnClickListener {
-                customView.setColor(getColor(R.color.yellow))
+                customView.setColor(Color.YELLOW)
             }
             green.setOnClickListener {
-                customView.setColor(getColor(R.color.green))
+                customView.setColor(Color.GREEN)
             }
             blue.setOnClickListener {
-                customView.setColor(getColor(R.color.blue))
+                customView.setColor(Color.BLUE)
             }
         }
     }
