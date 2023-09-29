@@ -24,6 +24,14 @@ data class Painting(
         },
     )
 
+    fun getInitializedPathPainting(): Painting {
+        return Painting(
+            path = Path(),
+            paintColor = paint.color,
+            paintWidth = paint.strokeWidth,
+        )
+    }
+
     fun movePath(x: Float, y: Float) {
         path.moveTo(x, y)
     }

@@ -31,7 +31,7 @@ class PaintingView(context: Context, attrs: AttributeSet) : View(context, attrs)
 
             MotionEvent.ACTION_UP -> {
                 previousPaintings.add(painting)
-                painting = painting.copy(path = Path())
+                painting = painting.getInitializedPathPainting()
             }
         }
 
