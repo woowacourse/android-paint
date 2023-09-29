@@ -13,44 +13,45 @@ class MainActivity : AppCompatActivity() {
         PaintColorModel(R.color.green, false),
         PaintColorModel(R.color.blue, false),
     )
-    private val brushes = listOf(
-        BrushModel(Brush.PEN, true),
-        BrushModel(Brush.HIGHLIGHTER, false),
+    private val drawingTools = listOf(
+        DrawingToolModel(DrawingTool.PEN, true),
+        DrawingToolModel(DrawingTool.HIGHLIGHTER, false),
+        DrawingToolModel(DrawingTool.ERASER, false),
     )
     private lateinit var paintColorPaletteAdapter: PaintColorPaletteAdapter
-    private lateinit var brushSettingToolAdapter: BrushSettingToolAdapter
+    private lateinit var drawingToolSettingsAdapter: DrawingToolSettingsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        setupBrushSettingTool()
-        setupBrushThicknessSettingTool()
+        setupDrawingToolSettings()
+        setupThicknessSettings()
         setupPaintColorPalette()
     }
 
-    private fun setupBrushSettingTool() {
-        brushSettingToolAdapter = BrushSettingToolAdapter {
-            brushSettingToolAdapter.updateBrushes(
-                brushes.map { brushModel ->
-                    if (brushModel.brush == it) {
-                        brushModel.copy(isSelected = true)
+    private fun setupDrawingToolSettings() {
+        drawingToolSettingsAdapter = DrawingToolSettingsAdapter {
+            drawingToolSettingsAdapter.updateDrawingTools(
+                drawingTools.map { drawingToolModel ->
+                    if (drawingToolModel.drawingTool == it) {
+                        drawingToolModel.copy(isSelected = true)
                     } else {
-                        brushModel.copy(isSelected = false)
+                        drawingToolModel.copy(isSelected = false)
                     }
                 },
             )
-            binding.paintBoard.setBrush(it)
+            binding.paintBoard.setDrawingTool(it)
         }
-        brushSettingToolAdapter.updateBrushes(brushes)
-        binding.rvBrushSettingTool.adapter = brushSettingToolAdapter
-        binding.rvBrushSettingTool.itemAnimator = null
+        drawingToolSettingsAdapter.updateDrawingTools(drawingTools)
+        binding.rvDrawingToolSettings.adapter = drawingToolSettingsAdapter
+        binding.rvDrawingToolSettings.itemAnimator = null
     }
 
-    private fun setupBrushThicknessSettingTool() {
-        binding.rsBrushThicknessSettingTool.isTickVisible = false
-        binding.rsBrushThicknessSettingTool.addOnChangeListener { _, value, _ ->
-            binding.paintBoard.setBrushThickness(value)
+    private fun setupThicknessSettings() {
+        binding.rsThicknessSettings.isTickVisible = false
+        binding.rsThicknessSettings.addOnChangeListener { _, value, _ ->
+            binding.paintBoard.setThickness(value)
         }
     }
 

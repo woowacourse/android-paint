@@ -13,7 +13,7 @@ import android.view.View
 class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val drawings: MutableMap<Path, Paint> = mutableMapOf()
     private lateinit var path: Path
-    private var brush: Brush = Brush.PEN
+    private var brush: DrawingTool = DrawingTool.PEN
     private var thickness = DEFAULT_PAINT_THICKNESS
     private var paintColor = DEFAULT_PAINT_COLOR
 
@@ -54,13 +54,13 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
         path = Path()
         val paint = Paint(brush.paint).apply {
             strokeWidth = thickness
-            color = paintColor
-            if (brush == Brush.HIGHLIGHTER) alpha = 50
+            color = if (brush == DrawingTool.ERASER) Color.WHITE else paintColor
+            if (brush == DrawingTool.HIGHLIGHTER) alpha = 50
         }
         drawings[path] = paint
     }
 
-    fun setBrushThickness(thickness: Float) {
+    fun setThickness(thickness: Float) {
         this.thickness = thickness
     }
 
@@ -68,7 +68,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
         paintColor = color
     }
 
-    fun setBrush(brush: Brush) {
+    fun setDrawingTool(brush: DrawingTool) {
         this.brush = brush
     }
 
