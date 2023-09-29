@@ -6,6 +6,8 @@
 
         <import type="woowacourse.paint.data.model.SettingMode" />
 
+        <import type="woowacourse.paint.data.model.Color" />
+
         <variable
             name="vm"
             type="woowacourse.paint.presentation.ui.MainViewModel" />
@@ -66,6 +68,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_clear_btn"
+            app:strokeColor="@{vm.uiState.color}"
             app:onTouch="@{() -> vm.finishSetting()}" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -85,7 +88,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="5dp"
                 android:background="@color/red"
-                android:onClick="@{() -> pbvPaintBoardView.setStrokeColor(@color/red)}"
+                android:onClick="@{() -> vm.setColor(Color.RED)}"
+                app:colorSelected="@{vm.uiState.color == Color.RED}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toStartOf="@+id/view_select_orange"
@@ -99,7 +103,8 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
                 android:background="@color/orange"
-                android:onClick="@{() -> pbvPaintBoardView.setStrokeColor(@color/orange)}"
+                android:onClick="@{() -> vm.setColor(Color.ORANGE)}"
+                app:colorSelected="@{vm.uiState.color == Color.ORANGE}"
                 app:layout_constraintBottom_toBottomOf="@+id/view_select_red"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toStartOf="@+id/view_select_yellow"
@@ -113,7 +118,8 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
                 android:background="@color/yellow"
-                android:onClick="@{() -> pbvPaintBoardView.setStrokeColor(@color/yellow)}"
+                android:onClick="@{() -> vm.setColor(Color.YELLOW)}"
+                app:colorSelected="@{vm.uiState.color == Color.YELLOW}"
                 app:layout_constraintBottom_toBottomOf="@+id/view_select_red"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toStartOf="@+id/view_select_green"
@@ -127,7 +133,8 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
                 android:background="@color/green"
-                android:onClick="@{() -> pbvPaintBoardView.setStrokeColor(@color/green)}"
+                android:onClick="@{() -> vm.setColor(Color.GREEN)}"
+                app:colorSelected="@{vm.uiState.color == Color.GREEN}"
                 app:layout_constraintBottom_toBottomOf="@+id/view_select_red"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toStartOf="@+id/view_select_blue"
@@ -141,7 +148,8 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="10dp"
                 android:background="@color/blue"
-                android:onClick="@{() -> pbvPaintBoardView.setStrokeColor(@color/blue)}"
+                android:onClick="@{() -> vm.setColor(Color.BLUE)}"
+                app:colorSelected="@{vm.uiState.color == Color.BLUE}"
                 app:layout_constraintBottom_toBottomOf="@+id/view_select_red"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintEnd_toEndOf="parent"
