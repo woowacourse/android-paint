@@ -60,12 +60,13 @@
             android:id="@+id/pbv_paint_board_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            app:onTouch="@{() -> vm.finishSetting()}"
             app:layout_constraintBottom_toTopOf="@+id/tv_color_change_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_clear_btn"
+            app:onTouch="@{() -> vm.finishSetting()}" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_color_select_layout"
@@ -155,11 +156,25 @@
             android:layout_marginBottom="10dp"
             android:valueFrom="0.0"
             android:valueTo="100.0"
-            app:onValueChange="@{(slider, value, fromUser) -> pbvPaintBoardView.setStrokeWidth(value)}"
             app:layout_constraintBottom_toTopOf="@+id/tv_thickness_change_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:onValueChange="@{(slider, value, fromUser) -> pbvPaintBoardView.setStrokeWidth(value)}"
             app:visible="@{vm.uiState.settingMode == SettingMode.THICKNESS}" />
+
+        <TextView
+            android:id="@+id/tv_clear_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/bg_unselected_button"
+            android:onClick="@{() -> pbvPaintBoardView.reset()}"
+            android:padding="10dp"
+            android:text="@string/main_reset_button_label"
+            android:textColor="@color/primary_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

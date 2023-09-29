@@ -59,6 +59,11 @@ class PaintBoardView(
         touchEventListeners.add(listener)
     }
 
+    fun reset() {
+        strokes.clear()
+        invalidate()
+    }
+
     private fun setUpView() {
         isFocusable = true
         isFocusableInTouchMode = true
