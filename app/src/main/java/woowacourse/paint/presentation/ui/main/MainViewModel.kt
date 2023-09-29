@@ -7,8 +7,8 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import woowacourse.paint.domain.model.Brush
 import woowacourse.paint.domain.model.BrushColor
-import woowacourse.paint.domain.model.BrushCondition
 import woowacourse.paint.domain.model.BrushWidth
 import woowacourse.paint.presentation.ui.model.BrushColorModel
 import woowacourse.paint.presentation.ui.model.BrushModel
@@ -35,6 +35,6 @@ class MainViewModel : ViewModel() {
     }
 
     companion object {
-        private val INITIAL_Brush_CONDITION = BrushCondition(BrushColor.RED, BrushWidth(30f))
+        private val INITIAL_Brush_CONDITION = Brush(BrushColor.RED, BrushWidth(30f))
     }
 }

@@ -1,10 +1,10 @@
 package woowacourse.paint.presentation.ui.model
 
+import woowacourse.paint.domain.model.Brush
 import woowacourse.paint.domain.model.BrushColor
-import woowacourse.paint.domain.model.BrushCondition
 import woowacourse.paint.domain.model.BrushWidth
 
-fun BrushCondition.toPresentation() = BrushModel(
+fun Brush.toPresentation() = BrushModel(
     color = color.toPresentation(),
     width = width.value,
     minWidth = BrushWidth.MIN_WIDTH,
