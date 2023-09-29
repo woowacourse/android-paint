@@ -72,6 +72,11 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
         this.brush = brush
     }
 
+    fun setNewCanvas() {
+        drawings.clear()
+        invalidate()
+    }
+
     companion object {
         private const val DEFAULT_PAINT_THICKNESS = 0f
         private const val DEFAULT_PAINT_COLOR = Color.RED

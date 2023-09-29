@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">글로의 캔버스</string>
+
+    <string name="menu_item_new_canvas">새 캔버스</string>
 </resources>

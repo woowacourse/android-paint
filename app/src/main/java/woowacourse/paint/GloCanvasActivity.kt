@@ -1,11 +1,17 @@
 package woowacourse.paint
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.databinding.ActivityGloCanvasBinding
 
-class MainActivity : AppCompatActivity() {
-    private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+class GloCanvasActivity : AppCompatActivity() {
+    private val binding: ActivityGloCanvasBinding by lazy {
+        ActivityGloCanvasBinding.inflate(
+            layoutInflater,
+        )
+    }
     private val colors = listOf(
         PaintColorModel(R.color.red, true),
         PaintColorModel(R.color.orange, false),
@@ -71,5 +77,19 @@ class MainActivity : AppCompatActivity() {
         paintColorPaletteAdapter.updateColors(colors)
         binding.rvPaintColorPalette.adapter = paintColorPaletteAdapter
         binding.rvPaintColorPalette.itemAnimator = null
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_glo_canvas, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.new_canvas -> {
+                binding.paintBoard.setNewCanvas()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
