@@ -11,6 +11,7 @@ import android.view.WindowManager
 import com.google.android.material.slider.RangeSlider
 import woowacourse.paint.R
 import woowacourse.paint.databinding.DialogPenToolBinding
+import woowacourse.paint.paintboard.PaintBoard.Companion.DEFAULT_BRUSH_WIDTH
 import woowacourse.paint.paintboard.pentool.PenColors.Companion.DEFAULT_COLOR_POSITION
 
 class PenToolDialog(
@@ -39,6 +40,7 @@ class PenToolDialog(
         binding.rsPenToolWidth.valueFrom = 0f
         binding.rsPenToolWidth.valueTo = 200f
         binding.rsPenToolWidth.stepSize = 1f
+        binding.rsPenToolWidth.values = listOf(DEFAULT_BRUSH_WIDTH)
         setPenWidth()
     }
 
