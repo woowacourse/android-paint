@@ -1,24 +1,28 @@
 package woowacourse.paint.presentation.ui.model
 
-import woowacourse.paint.domain.model.LineColor
-import woowacourse.paint.domain.model.LineCondition
-import woowacourse.paint.domain.model.LineWidth
+import woowacourse.paint.domain.model.BrushColor
+import woowacourse.paint.domain.model.BrushCondition
+import woowacourse.paint.domain.model.BrushWidth
 
-fun LineCondition.toPresentation() =
-    LineModel(color.toPresentation(), width.value, LineWidth.MIN_WIDTH, LineWidth.MAX_WIDTH)
+fun BrushCondition.toPresentation() = BrushModel(
+    color = color.toPresentation(),
+    width = width.value,
+    minWidth = BrushWidth.MIN_WIDTH,
+    maxWidth = BrushWidth.MAX_WIDTH,
+)
 
-fun LineColor.toPresentation() = when (this) {
-    LineColor.RED -> LineColorModel.RED
-    LineColor.ORANGE -> LineColorModel.ORANGE
-    LineColor.YELLOW -> LineColorModel.YELLOW
-    LineColor.GREEN -> LineColorModel.GREEN
-    LineColor.BLUE -> LineColorModel.BLUE
+fun BrushColor.toPresentation() = when (this) {
+    BrushColor.RED -> BrushColorModel.RED
+    BrushColor.ORANGE -> BrushColorModel.ORANGE
+    BrushColor.YELLOW -> BrushColorModel.YELLOW
+    BrushColor.GREEN -> BrushColorModel.GREEN
+    BrushColor.BLUE -> BrushColorModel.BLUE
 }
 
-fun LineColorModel.toLineColor() = when (this) {
-    LineColorModel.RED -> LineColor.RED
-    LineColorModel.ORANGE -> LineColor.ORANGE
-    LineColorModel.YELLOW -> LineColor.YELLOW
-    LineColorModel.GREEN -> LineColor.GREEN
-    LineColorModel.BLUE -> LineColor.BLUE
+fun BrushColorModel.toLineColor() = when (this) {
+    BrushColorModel.RED -> BrushColor.RED
+    BrushColorModel.ORANGE -> BrushColor.ORANGE
+    BrushColorModel.YELLOW -> BrushColor.YELLOW
+    BrushColorModel.GREEN -> BrushColor.GREEN
+    BrushColorModel.BLUE -> BrushColor.BLUE
 }

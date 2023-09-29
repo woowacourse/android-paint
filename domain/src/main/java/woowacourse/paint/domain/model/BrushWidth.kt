@@ -1,7 +1,7 @@
 package woowacourse.paint.domain.model
 
 @JvmInline
-value class LineWidth(val value: Float = 30f) {
+value class BrushWidth(val value: Float = 30f) {
     init {
         require(value in MIN_WIDTH..MAX_WIDTH) { "굵기가 범위를 벗어났습니다" }
     }

@@ -1,7 +1,7 @@
 package woowacourse.paint.presentation.ui.model
 
-data class LineModel(
-    val color: LineColorModel,
+data class BrushModel(
+    val color: BrushColorModel,
     val width: Float,
     val minWidth: Float,
     val maxWidth: Float,
