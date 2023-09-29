@@ -3,44 +3,52 @@ package woowacourse.paint.ui.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import woowacourse.paint.model.BoardColorItem
 import woowacourse.paint.model.PaintColor
 
 class MainViewModel : ViewModel() {
     val minStrokeWidth: Float = MIN_STROKE_WIDTH
     val maxStrokeWidth: Float = MAX_STROKE_WIDTH
-    var selectedPenStroke: Float = (minStrokeWidth + maxStrokeWidth) / 2
+    var selectedStroke: Float = (minStrokeWidth + maxStrokeWidth) / 2
         private set
 
-    var selectedPenColor: PaintColor = PaintColor.values().first()
+    var selectedColor: PaintColor = PaintColor.values().first()
         private set
 
-    private val _colors: MutableLiveData<List<PaintColor>> =
-        MutableLiveData(PaintColor.values().toList())
-    val colors: LiveData<List<PaintColor>>
-        get() = _colors
-
-    private val _appliedColor: MutableLiveData<PaintColor> = MutableLiveData(selectedPenColor)
+    private val _appliedColor: MutableLiveData<PaintColor> = MutableLiveData(selectedColor)
     val appliedColor: LiveData<PaintColor>
         get() = _appliedColor
 
-    private val _appliedStroke: MutableLiveData<Float> = MutableLiveData(selectedPenStroke)
+    private val _appliedStroke: MutableLiveData<Float> = MutableLiveData(selectedStroke)
     val appliedStroke: LiveData<Float>
         get() = _appliedStroke
 
-    fun onChangeSelectedColor(color: PaintColor) {
-        selectedPenColor = color
+    private val _colors: MutableLiveData<List<BoardColorItem>> =
+        MutableLiveData(getBoardColorItems(selectedColor))
+    val colors: LiveData<List<BoardColorItem>>
+        get() = _colors
+
+    private fun getBoardColorItems(selectedColor: PaintColor): List<BoardColorItem> =
+        PaintColor.values().map {
+            if (it == selectedColor) return@map BoardColorItem(it, true)
+            BoardColorItem(it, false)
+        }
+
+    fun onChangeSelectedColor(boardColorItem: BoardColorItem) {
+        selectedColor = boardColorItem.color
     }
 
     val onSelectedStrokeChange = { value: Float ->
-        selectedPenStroke = value
+        selectedStroke = value
     }
 
     fun onAppliedColorChange() {
-        _appliedColor.value = selectedPenColor
+        _appliedColor.value = selectedColor
+        _colors.value = getBoardColorItems(selectedColor)
     }
 
     fun onAppliedStrokeChange() {
-        _appliedStroke.value = selectedPenStroke
+        _appliedStroke.value = selectedStroke
     }
 
     companion object {

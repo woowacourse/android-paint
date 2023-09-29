@@ -3,11 +3,11 @@ package woowacourse.paint.ui.main
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import woowacourse.paint.model.PaintColor
+import woowacourse.paint.model.BoardColorItem
 
 class BoardColorAdapter(
-    private val onColorClick: (PaintColor) -> Unit,
-) : ListAdapter<PaintColor, BoardColorViewHolder>(ColorDiffUtil) {
+    private val onColorClick: (BoardColorItem) -> Unit,
+) : ListAdapter<BoardColorItem, BoardColorViewHolder>(boardColorDiffUtil) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BoardColorViewHolder {
         return BoardColorViewHolder.create(parent, onColorClick)
     }
@@ -16,24 +16,24 @@ class BoardColorAdapter(
         holder.bind(currentList[position])
     }
 
-    fun changeColorList(colors: List<PaintColor>) {
+    fun changeColorList(colors: List<BoardColorItem>) {
         submitList(colors)
     }
 
     companion object {
-        private val ColorDiffUtil = object : DiffUtil.ItemCallback<PaintColor>() {
+        private val boardColorDiffUtil = object : DiffUtil.ItemCallback<BoardColorItem>() {
             override fun areItemsTheSame(
-                oldItem: PaintColor,
-                newItem: PaintColor,
+                oldItem: BoardColorItem,
+                newItem: BoardColorItem,
             ): Boolean {
-                return oldItem == newItem
+                return oldItem.color == newItem.color
             }
 
             override fun areContentsTheSame(
-                oldItem: PaintColor,
-                newItem: PaintColor,
+                oldItem: BoardColorItem,
+                newItem: BoardColorItem,
             ): Boolean {
-                return oldItem.colorRes == newItem.colorRes
+                return oldItem == newItem
             }
         }
     }

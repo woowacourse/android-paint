@@ -32,7 +32,7 @@
             registerSliderChangeListener="@{vm.onSelectedStrokeChange}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:value="@{vm.selectedPenStroke}"
+            android:value="@{vm.selectedStroke}"
             android:valueFrom="@{vm.minStrokeWidth}"
             android:valueTo="@{vm.maxStrokeWidth}"
             app:layout_constraintBottom_toTopOf="@id/rv_colors" />
