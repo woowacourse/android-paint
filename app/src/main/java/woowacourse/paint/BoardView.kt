@@ -3,21 +3,30 @@ package woowacourse.paint
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import androidx.core.content.ContextCompat
 
 class BoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private val path = Path()
     private val paint = Paint()
 
+    fun changeColor(color: ColorPalette) {
+        when (color) {
+            ColorPalette.RED -> paint.color = ContextCompat.getColor(context, R.color.red)
+            ColorPalette.ORANGE -> paint.color = ContextCompat.getColor(context, R.color.orange)
+            ColorPalette.YELLOW -> paint.color = ContextCompat.getColor(context, R.color.yellow)
+            ColorPalette.GREEN -> paint.color = ContextCompat.getColor(context, R.color.green)
+            ColorPalette.BLUE -> paint.color = ContextCompat.getColor(context, R.color.blue)
+        }
+    }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        paint.color = Color.BLACK
 
         paint.strokeWidth = 10f
         paint.style = Paint.Style.STROKE
