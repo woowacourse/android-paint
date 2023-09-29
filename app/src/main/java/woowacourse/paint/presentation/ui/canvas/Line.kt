@@ -4,34 +4,31 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 
-class Brush {
-    private val path = Path()
-    private val paint = Paint()
+class Line(
+    private val path: Path = Path(),
+    private val paint: Paint = Paint(),
+) {
 
     init {
+        initPaint()
+    }
+
+    private fun initPaint() {
         paint.style = Paint.Style.STROKE
         paint.strokeJoin = Paint.Join.ROUND
         paint.strokeCap = Paint.Cap.ROUND
         paint.isAntiAlias = true
     }
 
-    fun drawPath(canvas: Canvas) {
+    fun draw(canvas: Canvas) {
         canvas.drawPath(path, paint)
     }
 
-    fun drawLine(pointX: Float, pointY: Float) {
+    fun lineTo(pointX: Float, pointY: Float) {
         path.lineTo(pointX, pointY)
     }
 
-    fun movePoint(pointX: Float, pointY: Float) {
-        path.lineTo(pointX, pointY)
-    }
-
-    fun changeColor(color: Int) {
-        paint.color = color
-    }
-
-    fun changeWidth(width: Float) {
-        paint.strokeWidth = width
+    fun moveTo(pointX: Float, pointY: Float) {
+        path.moveTo(pointX, pointY)
     }
 }
