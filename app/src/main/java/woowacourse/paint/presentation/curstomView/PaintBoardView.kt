@@ -3,7 +3,6 @@ package woowacourse.paint.presentation.curstomView
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
@@ -70,7 +69,6 @@ class PaintBoardView(
     }
 
     private fun setUpPaint() {
-        paint.color = Color.RED
         paint.style = Paint.Style.STROKE
         paint.strokeCap = Paint.Cap.ROUND
         paint.strokeJoin = Paint.Join.ROUND
