@@ -35,28 +35,29 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        initRangeSliderWidth()
+        initRangeSliderBrushWidth()
         initColorAdapter()
     }
 
-    private fun initRangeSliderWidth() {
+    private fun initRangeSliderBrushWidth() {
         val brush = viewModel.brush.value
-        binding.rsWidth.valueFrom = brush.minWidth
-        binding.rsWidth.valueTo = brush.maxWidth
-        binding.rsWidth.setValues(brush.width)
-        binding.rsWidth.addOnChangeListener(
-            RangeSlider.OnChangeListener { _, value, _ ->
-                viewModel.changeLineWidth(value)
-            },
-        )
+        val rangeSliderClickListener = RangeSlider.OnChangeListener { _, value, _ ->
+            viewModel.changeLineWidth(value)
+        }
+        with(binding.rsBrushWidth) {
+            valueFrom = brush.minWidth
+            valueTo = brush.maxWidth
+            setValues(brush.width)
+            addOnChangeListener(rangeSliderClickListener)
+        }
     }
 
     private fun initColorAdapter() {
-        binding.rvColors.adapter = ColorsAdapter(
-            BrushColorModel.values().map {
-                ItemColor(it, viewModel::changeLineColor)
-            },
-        )
-        binding.rvColors.setHasFixedSize(true)
+        val itemColors = BrushColorModel.values()
+            .map { brushColor ->
+                ItemColor(brushColor, viewModel::changeLineColor)
+            }
+        binding.rvBrushColors.adapter = ColorsAdapter(itemColors)
+        binding.rvBrushColors.setHasFixedSize(true)
     }
 }

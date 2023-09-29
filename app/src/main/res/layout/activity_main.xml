@@ -18,19 +18,19 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/rsWidth" />
+            app:layout_constraintBottom_toTopOf="@+id/rsBrushWidth" />
 
 
         <com.google.android.material.slider.RangeSlider
-            android:id="@+id/rsWidth"
+            android:id="@+id/rsBrushWidth"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/rvColors"
+            app:layout_constraintBottom_toTopOf="@id/rvBrushColors"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvColors"
+            android:id="@+id/rvBrushColors"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
