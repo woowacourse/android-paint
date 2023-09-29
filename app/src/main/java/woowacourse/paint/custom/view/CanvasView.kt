@@ -1,4 +1,4 @@
-package woowacourse.paint.custom
+package woowacourse.paint.custom.view
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -7,8 +7,9 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import woowacourse.paint.Point
 
-class CustomView(
+class CanvasView(
     context: Context,
     attributeSet: AttributeSet,
 ) : View(context, attributeSet) {

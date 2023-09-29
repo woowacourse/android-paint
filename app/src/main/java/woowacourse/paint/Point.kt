@@ -1,4 +1,4 @@
-package woowacourse.paint.custom
+package woowacourse.paint
 
 data class Point(
     val x: Float,
