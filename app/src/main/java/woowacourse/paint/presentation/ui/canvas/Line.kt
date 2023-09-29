@@ -1,27 +1,15 @@
 package woowacourse.paint.presentation.ui.canvas
 
 import android.graphics.Canvas
-import android.graphics.Paint
 import android.graphics.Path
 
 class Line(
     private val path: Path = Path(),
-    private val paint: Paint = Paint(),
+    val palette: Palette = Palette(),
 ) {
 
-    init {
-        initPaint()
-    }
-
-    private fun initPaint() {
-        paint.style = Paint.Style.STROKE
-        paint.strokeJoin = Paint.Join.ROUND
-        paint.strokeCap = Paint.Cap.ROUND
-        paint.isAntiAlias = true
-    }
-
     fun draw(canvas: Canvas) {
-        canvas.drawPath(path, paint)
+        canvas.drawPath(path, palette.paint)
     }
 
     fun lineTo(pointX: Float, pointY: Float) {

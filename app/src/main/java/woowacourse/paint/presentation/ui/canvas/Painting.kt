@@ -1,7 +1,6 @@
 package woowacourse.paint.presentation.ui.canvas
 
 import android.graphics.Canvas
-import android.graphics.Paint
 
 class Painting {
     private val paintedLines: MutableList<Line> = mutableListOf()
@@ -12,17 +11,17 @@ class Painting {
     }
 
     fun changeColor(color: Int) {
-        val paint = Paint().apply { this.color = color }
-        changePaint(paint)
+        val palette = line.palette.changeColor(color)
+        changePalette(palette)
     }
 
     fun changeWidth(width: Float) {
-        val paint = Paint().apply { this.strokeWidth = width }
-        changePaint(paint)
+        val palette = line.palette.changeWidth(width)
+        changePalette(palette)
     }
 
-    private fun changePaint(paint: Paint) {
-        line = Line(paint = paint)
+    private fun changePalette(palette: Palette) {
+        line = Line(palette = palette)
         paintedLines.add(line)
     }
 
