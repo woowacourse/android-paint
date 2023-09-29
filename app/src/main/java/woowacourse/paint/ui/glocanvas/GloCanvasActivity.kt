@@ -33,6 +33,7 @@ class GloCanvasActivity : AppCompatActivity() {
     private fun setupViewModel() {
         viewModel.drawingTools.observe(this) { drawingToolSettingsAdapter.updateDrawingTools(it) }
         viewModel.paintColors.observe(this) { paintColorPaletteAdapter.updateColors(it) }
+        viewModel.thickness.observe(this) { binding.vPaintBoard.setThickness(it) }
     }
 
     private fun setupDrawingToolSettings() {
@@ -47,7 +48,7 @@ class GloCanvasActivity : AppCompatActivity() {
     private fun setupThicknessSettings() {
         binding.rsThicknessSettings.isTickVisible = false
         binding.rsThicknessSettings.addOnChangeListener { _, value, _ ->
-            binding.vPaintBoard.setThickness(value)
+            viewModel.setThickness(value)
         }
     }
 

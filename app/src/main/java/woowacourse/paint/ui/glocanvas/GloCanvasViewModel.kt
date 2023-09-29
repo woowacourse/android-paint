@@ -17,12 +17,16 @@ class GloCanvasViewModel(
     private var _drawingTools: MutableLiveData<List<SelectableDrawingToolModel>> = MutableLiveData()
     val drawingTools: LiveData<List<SelectableDrawingToolModel>>
         get() = _drawingTools
+    private var _thickness: MutableLiveData<Float> = MutableLiveData()
+    val thickness: LiveData<Float>
+        get() = _thickness
     private var _paintColors: MutableLiveData<List<PaintColorModel>> = MutableLiveData()
     val paintColors: LiveData<List<PaintColorModel>>
         get() = _paintColors
 
     init {
         setupDrawingTools()
+        setupThickness()
         setupPaintColors()
     }
 
@@ -35,6 +39,10 @@ class GloCanvasViewModel(
                     drawingTool.toSelectableDrawingToolModel(false)
                 }
             }
+    }
+
+    private fun setupThickness() {
+        _thickness.value = DEFAULT_THICKNESS
     }
 
     private fun setupPaintColors() {
@@ -60,6 +68,10 @@ class GloCanvasViewModel(
         }
     }
 
+    fun setThickness(thickness: Float) {
+        _thickness.value = thickness
+    }
+
     fun selectPaintColor(color: Int) {
         _paintColors.value?.let {
             _paintColors.value = it.map { paintColor ->
@@ -70,5 +82,9 @@ class GloCanvasViewModel(
                 }
             }
         }
+    }
+
+    companion object {
+        private const val DEFAULT_THICKNESS = 0f
     }
 }

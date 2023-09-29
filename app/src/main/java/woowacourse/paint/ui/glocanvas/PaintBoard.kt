@@ -16,7 +16,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val savedDrawings: ArrayDeque<Pair<Path, Paint>> = ArrayDeque()
     private lateinit var path: Path
     private var drawingTool: DrawingToolModel = DrawingToolModel.PEN
-    private var thickness = DEFAULT_PAINT_THICKNESS
+    private var thickness = -1f
     private var paintColor = DEFAULT_PAINT_COLOR
 
     override fun onDraw(canvas: Canvas) {
@@ -98,7 +98,6 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     companion object {
-        private const val DEFAULT_PAINT_THICKNESS = 0f
         private const val DEFAULT_PAINT_COLOR = Color.RED
     }
 }
