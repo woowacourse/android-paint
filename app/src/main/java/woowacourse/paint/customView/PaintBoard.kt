@@ -10,7 +10,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.ColorInt
-import androidx.databinding.BindingAdapter
+import woowacourse.paint.R
 
 class PaintBoard @JvmOverloads constructor(
     context: Context,
@@ -56,6 +56,22 @@ class PaintBoard @JvmOverloads constructor(
         }
 
     private var currentPaint: Paint = getCurrentPaint()
+
+    init {
+        if (attr != null) initAttrs(attr)
+    }
+
+    private fun initAttrs(attr: AttributeSet) {
+        val typedArray = context.obtainStyledAttributes(attr, R.styleable.PaintBoard)
+        this.currentColor = typedArray.getColor(R.styleable.PaintBoard_currentColor, DEFAULT_COLOR)
+        this.currentStrokeWidth =
+            typedArray.getFloat(R.styleable.PaintBoard_currentStrokeWidth, defaultStrokeWidth)
+        this.minStrokeWidth =
+            typedArray.getFloat(R.styleable.PaintBoard_minStrokeWidth, DEFAULT_MIN_STROKE_WIDTH)
+        this.maxStrokeWidth =
+            typedArray.getFloat(R.styleable.PaintBoard_maxStrokeWidth, DEFAULT_MAX_STROKE_WIDTH)
+        typedArray.recycle()
+    }
 
     private fun updateDefaultStrokeWidth() {
         defaultStrokeWidth = (minStrokeWidth + maxStrokeWidth) / 2
@@ -114,29 +130,5 @@ class PaintBoard @JvmOverloads constructor(
 
         @ColorInt
         private const val DEFAULT_COLOR = Color.RED
-
-        @JvmStatic
-        @BindingAdapter("paint_board_minStrokeWidth")
-        fun PaintBoard.setBindingMinStrokeWidth(strokeWidth: Float) {
-            this.minStrokeWidth = strokeWidth
-        }
-
-        @JvmStatic
-        @BindingAdapter("paint_board_maxStrokeWidth")
-        fun PaintBoard.setBindingMaxStrokeWidth(strokeWidth: Float) {
-            this.maxStrokeWidth = strokeWidth
-        }
-
-        @JvmStatic
-        @BindingAdapter("paint_board_currentColor")
-        fun PaintBoard.setBindingCurrentColor(@ColorInt colorInt: Int) {
-            this.currentColor = colorInt
-        }
-
-        @JvmStatic
-        @BindingAdapter("paint_board_currentStrokeWidth")
-        fun PaintBoard.setBindingCurrentStrokeWidth(currentStrokeWidth: Float) {
-            this.currentStrokeWidth = currentStrokeWidth
-        }
     }
 }

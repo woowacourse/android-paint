@@ -18,14 +18,14 @@
 
         <woowacourse.paint.customView.PaintBoard
             android:id="@+id/pb_board"
-            paint_board_currentColor="@{ContextCompat.getColor(context, vm.appliedColor.colorRes)}"
-            paint_board_currentStrokeWidth="@{vm.appliedStroke}"
-            paint_board_maxStrokeWidth="@{vm.maxStrokeWidth}"
-            paint_board_minStrokeWidth="@{vm.minStrokeWidth}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            app:currentColor="@{ContextCompat.getColor(context, vm.appliedColor.colorRes)}"
+            app:currentStrokeWidth="@{vm.appliedStroke}"
             app:layout_constraintBottom_toTopOf="@id/slider_pen_stroke_width"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:maxStrokeWidth="@{vm.maxStrokeWidth}"
+            app:minStrokeWidth="@{vm.minStrokeWidth}" />
 
         <com.google.android.material.slider.Slider
             android:id="@+id/slider_pen_stroke_width"
