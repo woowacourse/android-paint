@@ -31,17 +31,15 @@ class GloCanvasActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
+        viewModel.drawingTools.observe(this) { drawingToolSettingsAdapter.updateDrawingTools(it) }
         viewModel.paintColors.observe(this) { paintColorPaletteAdapter.updateColors(it) }
     }
 
     private fun setupDrawingToolSettings() {
         drawingToolSettingsAdapter = DrawingToolSettingsAdapter {
-            drawingToolSettingsAdapter.updateDrawingTools(
-                viewModel.selectDrawingTool(it),
-            )
+            viewModel.selectDrawingTool(it)
             binding.vPaintBoard.setDrawingTool(it)
         }
-        drawingToolSettingsAdapter.updateDrawingTools(viewModel.getAllDrawingTools())
         binding.rvDrawingToolSettings.adapter = drawingToolSettingsAdapter
         binding.rvDrawingToolSettings.itemAnimator = null
     }
