@@ -15,8 +15,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.apply {
-            rangeSlider.valueFrom = 0.0f
-            rangeSlider.valueTo = 100.0f
             rangeSlider.setValues(10f)
 
             rangeSlider.addOnChangeListener { _, value, _ ->
