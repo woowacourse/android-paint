@@ -9,7 +9,7 @@
         android:id="@+id/custom_canvas"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/rangebar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -18,58 +18,23 @@
         android:id="@+id/rangebar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/btn_red"
+        app:layout_constraintBottom_toTopOf="@id/rv_color"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/custom_canvas" />
 
-    <Button
-        android:id="@+id/btn_red"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_color"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/red"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/btn_color_change"
-        app:layout_constraintEnd_toStartOf="@id/btn_orange"
-        app:layout_constraintStart_toStartOf="@id/btn_color_change" />
-
-    <Button
-        android:id="@+id/btn_orange"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:backgroundTint="@color/orange"
-        app:layout_constraintBottom_toBottomOf="@id/btn_red"
-        app:layout_constraintEnd_toStartOf="@id/btn_yellow"
-        app:layout_constraintStart_toEndOf="@id/btn_red" />
-
-    <Button
-        android:id="@+id/btn_yellow"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:backgroundTint="@color/yellow"
-        app:layout_constraintBottom_toBottomOf="@id/btn_red"
-        app:layout_constraintEnd_toStartOf="@id/btn_green"
-        app:layout_constraintStart_toEndOf="@id/btn_orange" />
-
-    <Button
-        android:id="@+id/btn_green"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:backgroundTint="@color/green"
-        app:layout_constraintBottom_toBottomOf="@id/btn_red"
-        app:layout_constraintEnd_toStartOf="@id/btn_blue"
-        app:layout_constraintStart_toEndOf="@id/btn_yellow" />
-
-    <Button
-        android:id="@+id/btn_blue"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:backgroundTint="@color/blue"
-        app:layout_constraintBottom_toBottomOf="@id/btn_red"
-        app:layout_constraintEnd_toEndOf="@id/btn_thickness_change"
-        app:layout_constraintStart_toEndOf="@id/btn_green" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rangebar"
+        tools:itemCount="5"
+        tools:listitem="@layout/item_palette" />
 
     <Button
         android:id="@+id/btn_color_change"

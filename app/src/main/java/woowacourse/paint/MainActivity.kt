@@ -1,12 +1,11 @@
 package woowacourse.paint
 
 import android.os.Bundle
-import android.view.View
-import android.view.View.OnClickListener
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.palette.PaletteAdapter
 
-class MainActivity : AppCompatActivity(), OnClickListener {
+class MainActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityMainBinding
     private var thickness = 0f
     private var color = 0
@@ -16,8 +15,21 @@ class MainActivity : AppCompatActivity(), OnClickListener {
         viewBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
         setListener()
+        initRecyclerView()
         viewBinding.rangebar.valueFrom = 0.0f
         viewBinding.rangebar.valueTo = 100.0f
+    }
+
+    private fun initRecyclerView() {
+        val colors = listOf(
+            getColor(R.color.red),
+            getColor(R.color.orange),
+            getColor(R.color.yellow),
+            getColor(R.color.green),
+            getColor(R.color.blue),
+        )
+        val adapter = PaletteAdapter(colors) { color = colors[it] }
+        viewBinding.rvColor.adapter = adapter
     }
 
     private fun setListener() {
@@ -31,21 +43,6 @@ class MainActivity : AppCompatActivity(), OnClickListener {
 
         viewBinding.rangebar.addOnChangeListener { _, value, _ ->
             thickness = value
-        }
-        viewBinding.btnRed.setOnClickListener(this)
-        viewBinding.btnOrange.setOnClickListener(this)
-        viewBinding.btnYellow.setOnClickListener(this)
-        viewBinding.btnGreen.setOnClickListener(this)
-        viewBinding.btnBlue.setOnClickListener(this)
-    }
-
-    override fun onClick(v: View) {
-        when (v.id) {
-            R.id.btn_red -> color = getColor(R.color.red)
-            R.id.btn_orange -> color = getColor(R.color.orange)
-            R.id.btn_yellow -> color = getColor(R.color.yellow)
-            R.id.btn_green -> color = getColor(R.color.green)
-            R.id.btn_blue -> color = getColor(R.color.blue)
         }
     }
 }

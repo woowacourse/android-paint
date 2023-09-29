@@ -17,7 +17,7 @@ class PaletteAdapter(
     }
 
     override fun onBindViewHolder(holder: PaletteViewHolder, position: Int) {
-        holder.bind(position) { onPaletteClick(position) }
+        holder.bind(position, colors[position]) { onPaletteClick(position) }
     }
 
     override fun getItemCount(): Int {
