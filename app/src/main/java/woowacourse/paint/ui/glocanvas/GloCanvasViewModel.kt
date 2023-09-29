@@ -14,7 +14,7 @@ import woowacourse.paint.ui.model.mapper.toPaintColorModel
 import woowacourse.paint.ui.model.mapper.toSelectableDrawingToolModel
 
 class GloCanvasViewModel(
-    private val drawingToolRepository: DrawingKitRepository,
+    private val drawingKitRepository: DrawingKitRepository,
 ) {
     private var _drawingTool: MutableLiveData<DrawingToolModel> = MutableLiveData()
     val drawingTool: LiveData<DrawingToolModel>
@@ -41,12 +41,12 @@ class GloCanvasViewModel(
     }
 
     private fun setupDrawingTool() {
-        _drawingTool.value = drawingToolRepository.getDrawingTool().toDrawingToolModel()
+        _drawingTool.value = drawingKitRepository.getDrawingTool().toDrawingToolModel()
     }
 
     private fun setupDrawingTools() {
         _drawingTool.value?.let { selectedDrawingTool ->
-            _drawingTools.value = drawingToolRepository.getAllDrawingTools()
+            _drawingTools.value = drawingKitRepository.getAllDrawingTools()
                 .map {
                     if (it.toDrawingToolModel() == selectedDrawingTool) {
                         it.toSelectableDrawingToolModel(true)
@@ -58,16 +58,16 @@ class GloCanvasViewModel(
     }
 
     private fun setupThickness() {
-        _thickness.value = DEFAULT_THICKNESS
+        _thickness.value = drawingKitRepository.getThickness()
     }
 
     private fun setupPaintColor() {
-        _paintColor.value = Color.parseColor(drawingToolRepository.getPaintColor().color)
+        _paintColor.value = Color.parseColor(drawingKitRepository.getPaintColor().color)
     }
 
     private fun setupPaintColors() {
         _paintColor.value?.let { selectedPaintColor ->
-            _paintColors.value = drawingToolRepository.getAllPaintColors()
+            _paintColors.value = drawingKitRepository.getAllPaintColors()
                 .map {
                     if (Color.parseColor(it.color) == selectedPaintColor) {
                         it.toPaintColorModel(true)
@@ -79,7 +79,7 @@ class GloCanvasViewModel(
     }
 
     fun selectDrawingTool(drawingTool: DrawingToolModel) {
-        drawingToolRepository.setDrawingTool(drawingTool.toDrawingTool())
+        drawingKitRepository.changeDrawingTool(drawingTool.toDrawingTool())
         _drawingTool.value = drawingTool
         _drawingTools.value?.let {
             _drawingTools.value = it.map { drawingToolModel ->
@@ -93,11 +93,12 @@ class GloCanvasViewModel(
     }
 
     fun setThickness(thickness: Float) {
+        drawingKitRepository.changeThickness(thickness)
         _thickness.value = thickness
     }
 
     fun selectPaintColor(color: Int) {
-        drawingToolRepository.setPaintColor(PaintColor(Integer.toHexString(color)))
+        drawingKitRepository.changePaintColor(PaintColor(Integer.toHexString(color)))
         _paintColor.value = color
         _paintColors.value?.let {
             _paintColors.value = it.map { paintColor ->
@@ -108,9 +109,5 @@ class GloCanvasViewModel(
                 }
             }
         }
-    }
-
-    companion object {
-        private const val DEFAULT_THICKNESS = 0f
     }
 }

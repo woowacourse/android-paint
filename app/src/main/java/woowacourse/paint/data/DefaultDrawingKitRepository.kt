@@ -7,6 +7,7 @@ import woowacourse.paint.repository.DrawingKitRepository
 class DefaultDrawingKitRepository : DrawingKitRepository {
     private var drawingTool = DrawingTool.PEN
     private val drawingTools = DrawingTool.values().toList()
+    private var thickness = 0f
     private var paintColor = PaintColor("#FF0000")
     private val paintColors = listOf(
         PaintColor("#FF0000"),
@@ -20,7 +21,7 @@ class DefaultDrawingKitRepository : DrawingKitRepository {
         return drawingTools.first()
     }
 
-    override fun setDrawingTool(drawingTool: DrawingTool) {
+    override fun changeDrawingTool(drawingTool: DrawingTool) {
         this.drawingTool = drawingTool
     }
 
@@ -28,11 +29,19 @@ class DefaultDrawingKitRepository : DrawingKitRepository {
         return drawingTools
     }
 
+    override fun getThickness(): Float {
+        return thickness
+    }
+
+    override fun changeThickness(thickness: Float) {
+        this.thickness = thickness
+    }
+
     override fun getPaintColor(): PaintColor {
         return paintColor
     }
 
-    override fun setPaintColor(paintColor: PaintColor) {
+    override fun changePaintColor(paintColor: PaintColor) {
         this.paintColor = paintColor
     }
 
