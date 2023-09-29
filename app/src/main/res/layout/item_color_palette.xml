@@ -3,7 +3,7 @@
     <data>
         <variable
             name="colorModel"
-            type="woowacourse.paint.ColorUiModel" />
+            type="woowacourse.paint.model.ColorUiModel" />
         <variable
             name="onItemClick"
             type="kotlin.jvm.functions.Function1" />
@@ -16,8 +16,8 @@
         android:onClick="@{() -> onItemClick.invoke(colorModel)}">
 
         <RelativeLayout
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/color_item_size"
+            android:layout_height="@dimen/color_item_size"
             android:background="@{colorModel.color.colorCode}">
 
             <ImageView
