@@ -16,7 +16,7 @@
 
     <com.google.android.material.slider.RangeSlider
         android:id="@+id/range_slider"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toTopOf="@id/rv_color"
         app:layout_constraintEnd_toEndOf="parent"
