@@ -16,8 +16,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(viewBinding.root)
         setListener()
         initRecyclerView()
-        viewBinding.rangebar.valueFrom = 0.0f
-        viewBinding.rangebar.valueTo = 100.0f
     }
 
     private fun initRecyclerView() {
@@ -41,7 +39,7 @@ class MainActivity : AppCompatActivity() {
             viewBinding.customCanvas.changeThickness(thickness)
         }
 
-        viewBinding.rangebar.addOnChangeListener { _, value, _ ->
+        viewBinding.rangeSlider.addOnChangeListener { _, value, _ ->
             thickness = value
         }
     }
