@@ -19,7 +19,7 @@ fun BrushColor.toPresentation() = when (this) {
     BrushColor.BLUE -> BrushColorModel.BLUE
 }
 
-fun BrushColorModel.toLineColor() = when (this) {
+fun BrushColorModel.toBrushColor() = when (this) {
     BrushColorModel.RED -> BrushColor.RED
     BrushColorModel.ORANGE -> BrushColor.ORANGE
     BrushColorModel.YELLOW -> BrushColor.YELLOW

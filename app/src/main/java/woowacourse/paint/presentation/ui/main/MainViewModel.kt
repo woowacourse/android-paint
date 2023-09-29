@@ -3,34 +3,31 @@ package woowacourse.paint.presentation.ui.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import woowacourse.paint.domain.model.BrushColor
 import woowacourse.paint.domain.model.BrushCondition
 import woowacourse.paint.domain.model.BrushWidth
 import woowacourse.paint.presentation.ui.model.BrushColorModel
 import woowacourse.paint.presentation.ui.model.BrushModel
-import woowacourse.paint.presentation.ui.model.toLineColor
+import woowacourse.paint.presentation.ui.model.toBrushColor
 import woowacourse.paint.presentation.ui.model.toPresentation
 
 class MainViewModel : ViewModel() {
 
     private val _brushCondition = MutableStateFlow(INITIAL_LINE_CONDITION)
-
-    private val _brush = MutableStateFlow(INITIAL_LINE_CONDITION.toPresentation())
-    val brush: StateFlow<BrushModel> = _brush.asStateFlow()
-
-    init {
-        viewModelScope.launch {
-            _brushCondition.collect { lineCondition ->
-                _brush.value = lineCondition.toPresentation()
-            }
-        }
-    }
+    val brush: StateFlow<BrushModel> = _brushCondition
+        .map { it.toPresentation() }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = _brushCondition.value.toPresentation(),
+        )
 
     fun changeLineColor(color: BrushColorModel) {
-        _brushCondition.value = _brushCondition.value.changeColor(color.toLineColor())
+        _brushCondition.value = _brushCondition.value.changeColor(color.toBrushColor())
     }
 
     fun changeLineWidth(width: Float) {

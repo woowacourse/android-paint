@@ -26,8 +26,8 @@ class MainActivity : AppCompatActivity() {
     private fun initCollect() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.brush.collect { line ->
-                    binding.cvCanvas.changeBrush(line)
+                viewModel.brush.collect { brush ->
+                    binding.cvCanvas.changeBrush(brush)
                 }
             }
         }
@@ -43,9 +43,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRangeWidth() {
-        val line = viewModel.brush.value
-        binding.rsWidth.valueFrom = line.minWidth
-        binding.rsWidth.valueTo = line.maxWidth
-        binding.rsWidth.setValues(line.width)
+        val brush = viewModel.brush.value
+        binding.rsWidth.valueFrom = brush.minWidth
+        binding.rsWidth.valueTo = brush.maxWidth
+        binding.rsWidth.setValues(brush.width)
     }
 }
