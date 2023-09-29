@@ -15,7 +15,7 @@ class PaintBoardView(
     attrs: AttributeSet? = null,
 ) : View(context, attrs) {
 
-    private val path: Path = Path()
+    private val strokes: MutableList<Stroke> = mutableListOf()
     private val paint: Paint = Paint()
     private val touchEventListeners: MutableList<TouchEventListener> = mutableListOf()
 
@@ -26,7 +26,7 @@ class PaintBoardView(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvas.drawPath(path, paint)
+        strokes.forEach { canvas.drawPath(it.path, it.paint) }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -34,9 +34,11 @@ class PaintBoardView(
         val pointX = event.x
         val pointY = event.y
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> path.moveTo(pointX, pointY)
+            MotionEvent.ACTION_DOWN -> strokes.add(
+                Stroke(Path().apply { moveTo(pointX, pointY) }, Paint(paint)),
+            )
 
-            MotionEvent.ACTION_MOVE -> path.lineTo(pointX, pointY)
+            MotionEvent.ACTION_MOVE -> strokes.last().path.lineTo(pointX, pointY)
 
             else -> super.onTouchEvent(event)
         }
@@ -72,4 +74,6 @@ class PaintBoardView(
     fun interface TouchEventListener {
         fun onTouch()
     }
+
+    private class Stroke(val path: Path, val paint: Paint)
 }
