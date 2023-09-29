@@ -18,7 +18,7 @@ enum class DrawingTool(@DrawableRes val image: Int, val paint: Paint) {
         Paint().apply {
             style = Paint.Style.STROKE
             strokeCap = Paint.Cap.SQUARE
-            strokeJoin = Paint.Join.MITER
+            strokeJoin = Paint.Join.BEVEL
             isAntiAlias = true
         },
     ),
