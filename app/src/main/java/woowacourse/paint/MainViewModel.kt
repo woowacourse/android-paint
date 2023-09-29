@@ -9,6 +9,11 @@ class MainViewModel : ViewModel() {
     val changingState: LiveData<ChangingState>
         get() = _changingState
 
+    private val _colors =
+        MutableLiveData(CustomColor.getAllColors().map { ColorUiModel(it, false) })
+    val colors: LiveData<List<ColorUiModel>>
+        get() = _colors
+
     fun setChangeColor() {
         if (_changingState.value == ChangingState.ColorChanging) {
             _changingState.value = ChangingState.Nothing
@@ -18,10 +23,24 @@ class MainViewModel : ViewModel() {
     }
 
     fun setChangeThickness() {
-        if (_changingState.value == ChangingState.ThicknessChanging) {
+        if (_changingState.value == ChangingState.WidthChanging) {
             _changingState.value = ChangingState.Nothing
             return
         }
-        _changingState.value = ChangingState.ThicknessChanging
+        _changingState.value = ChangingState.WidthChanging
+    }
+
+    fun pickColor(color: ColorUiModel) {
+        _colors.value?.let { colors ->
+            val newPalette = colors.toMutableList()
+            newPalette.replaceAll {
+                if (it.color == color.color) {
+                    it.copy(isPicked = true)
+                } else {
+                    it.copy(isPicked = false)
+                }
+            }
+            _colors.value = newPalette
+        }
     }
 }
