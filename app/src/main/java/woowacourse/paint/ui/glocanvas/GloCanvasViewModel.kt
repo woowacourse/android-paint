@@ -9,6 +9,7 @@ import woowacourse.paint.repository.PaintColorRepository
 import woowacourse.paint.ui.model.DrawingToolModel
 import woowacourse.paint.ui.model.PaintColorModel
 import woowacourse.paint.ui.model.SelectableDrawingToolModel
+import woowacourse.paint.ui.model.mapper.toDrawingTool
 import woowacourse.paint.ui.model.mapper.toDrawingToolModel
 import woowacourse.paint.ui.model.mapper.toPaintColorModel
 import woowacourse.paint.ui.model.mapper.toSelectableDrawingToolModel
@@ -80,6 +81,7 @@ class GloCanvasViewModel(
     }
 
     fun selectDrawingTool(drawingTool: DrawingToolModel) {
+        drawingToolRepository.setDrawingTool(drawingTool.toDrawingTool())
         _drawingTool.value = drawingTool
         _drawingTools.value?.let {
             _drawingTools.value = it.map { drawingToolModel ->

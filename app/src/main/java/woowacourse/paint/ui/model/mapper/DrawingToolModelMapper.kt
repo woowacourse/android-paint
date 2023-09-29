@@ -10,3 +10,11 @@ fun DrawingTool.toDrawingToolModel(): DrawingToolModel {
         DrawingTool.ERASER -> DrawingToolModel.ERASER
     }
 }
+
+fun DrawingToolModel.toDrawingTool(): DrawingTool {
+    return when (this) {
+        DrawingToolModel.PEN -> DrawingTool.PEN
+        DrawingToolModel.HIGHLIGHTER -> DrawingTool.HIGHLIGHTER
+        DrawingToolModel.ERASER -> DrawingTool.ERASER
+    }
+}
