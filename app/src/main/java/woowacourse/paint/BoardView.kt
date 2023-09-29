@@ -25,10 +25,13 @@ class BoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         }
     }
 
+    fun setWidth(width: Float) {
+        paint.strokeWidth = width
+    }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        paint.strokeWidth = 10f
         paint.style = Paint.Style.STROKE
         canvas.drawPath(path, paint)
     }

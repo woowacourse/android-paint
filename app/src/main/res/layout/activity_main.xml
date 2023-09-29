@@ -26,7 +26,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:setColorPalette="@{mainViewModel.color}" />
+            app:setColorPalette="@{mainViewModel.color}"
+            app:setWidth="@{mainViewModel.width}" />
 
         <SeekBar
             android:id="@+id/seekbar_width"
@@ -34,7 +35,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/board" />
+            app:layout_constraintTop_toBottomOf="@id/board"
+            app:setupSeekbar="@{mainViewModel}" />
 
         <View
             android:id="@+id/color_red"
