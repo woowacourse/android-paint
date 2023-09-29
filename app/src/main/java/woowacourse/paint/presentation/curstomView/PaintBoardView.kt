@@ -20,9 +20,8 @@ class PaintBoardView(
     private val touchEventListeners: MutableList<() -> Unit> = mutableListOf()
 
     init {
-        isFocusable = true
-        isFocusableInTouchMode = true
-        paint.color = Color.RED
+        setUpView()
+        setUpPaint()
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -43,21 +42,9 @@ class PaintBoardView(
         val pointX = event.x
         val pointY = event.y
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> path.addOval(
-                pointX,
-                pointY,
-                pointX + OVAL_SIZE,
-                pointY + OVAL_SIZE,
-                Path.Direction.CW,
-            )
+            MotionEvent.ACTION_DOWN -> path.moveTo(pointX, pointY)
 
-            MotionEvent.ACTION_MOVE -> path.addOval(
-                pointX,
-                pointY,
-                pointX + OVAL_SIZE,
-                pointY + OVAL_SIZE,
-                Path.Direction.CW,
-            )
+            MotionEvent.ACTION_MOVE -> path.lineTo(pointX, pointY)
 
             else -> super.onTouchEvent(event)
         }
@@ -66,7 +53,15 @@ class PaintBoardView(
         return true
     }
 
-    companion object {
-        private const val OVAL_SIZE = 50
+    private fun setUpView() {
+        isFocusable = true
+        isFocusableInTouchMode = true
+    }
+
+    private fun setUpPaint() {
+        paint.color = Color.RED
+        paint.style = Paint.Style.STROKE
+        paint.strokeCap = Paint.Cap.ROUND
+        paint.strokeJoin = Paint.Join.ROUND
     }
 }
