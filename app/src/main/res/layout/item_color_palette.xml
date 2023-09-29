@@ -1,20 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+    <data>
+        <variable
+            name="colorModel"
+            type="woowacourse.paint.ColorUiModel" />
+        <variable
+            name="onItemClick"
+            type="kotlin.jvm.functions.Function1" />
+        <import type="android.view.View" />
+    </data>
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="@{() -> onItemClick.invoke(colorModel)}">
 
         <RelativeLayout
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@color/black">
+            android:background="@{colorModel.color.colorCode}">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
+                android:visibility="@{colorModel.isPicked ? View.VISIBLE : View.GONE}"
                 android:src="@drawable/ic_check_24" />
         </RelativeLayout>
 
