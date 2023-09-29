@@ -1,5 +1,7 @@
 package woowacourse.paint.ui.glocanvas
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import woowacourse.paint.repository.DrawingToolRepository
 import woowacourse.paint.repository.PaintColorRepository
 import woowacourse.paint.ui.model.DrawingToolModel
@@ -12,11 +14,17 @@ class GloCanvasViewModel(
     private val paintColorRepository: PaintColorRepository,
     private val drawingToolRepository: DrawingToolRepository,
 ) {
-    private lateinit var paintColors: List<PaintColorModel>
+    private var _paintColors: MutableLiveData<List<PaintColorModel>> = MutableLiveData()
+    val paintColors: LiveData<List<PaintColorModel>>
+        get() = _paintColors
     private lateinit var drawingTools: List<SelectableDrawingToolModel>
 
-    fun getAllPaintColors(): List<PaintColorModel> {
-        paintColors = paintColorRepository.getAllPaintColors()
+    init {
+        setupPaintColors()
+    }
+
+    private fun setupPaintColors() {
+        _paintColors.value = paintColorRepository.getAllPaintColors()
             .mapIndexed { index, paintColor ->
                 if (index == 0) {
                     paintColor.toPaintColorModel(true)
@@ -24,15 +32,16 @@ class GloCanvasViewModel(
                     paintColor.toPaintColorModel(false)
                 }
             }
-        return paintColors
     }
 
-    fun selectPaintColor(color: Int): List<PaintColorModel> {
-        return paintColors.map { paintColor ->
-            if (paintColor.color == color) {
-                paintColor.copy(isSelected = true)
-            } else {
-                paintColor.copy(isSelected = false)
+    fun selectPaintColor(color: Int) {
+        _paintColors.value?.let {
+            _paintColors.value = it.map { paintColor ->
+                if (paintColor.color == color) {
+                    paintColor.copy(isSelected = true)
+                } else {
+                    paintColor.copy(isSelected = false)
+                }
             }
         }
     }
