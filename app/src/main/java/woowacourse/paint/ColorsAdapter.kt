@@ -3,6 +3,7 @@ package woowacourse.paint
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import woowacourse.paint.model.ColorUiModel
 
 class ColorsAdapter(private val onItemClick: (ColorUiModel) -> Unit) :
     ListAdapter<ColorUiModel, ColorViewHolder>(

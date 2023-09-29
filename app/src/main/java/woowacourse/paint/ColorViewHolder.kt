@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.paint.databinding.ItemColorPaletteBinding
+import woowacourse.paint.model.ColorUiModel
 
 class ColorViewHolder(private val binding: ItemColorPaletteBinding, onItemClick: (ColorUiModel) -> Unit) :
     RecyclerView.ViewHolder(binding.root) {
