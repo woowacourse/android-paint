@@ -17,21 +17,21 @@ import woowacourse.paint.presentation.ui.model.toPresentation
 
 class MainViewModel : ViewModel() {
 
-    private val _brushCondition = MutableStateFlow(INITIAL_Brush_CONDITION)
-    val brush: StateFlow<BrushModel> = _brushCondition
+    private val _brush = MutableStateFlow(INITIAL_Brush_CONDITION)
+    val brush: StateFlow<BrushModel> = _brush
         .map { it.toPresentation() }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.Eagerly,
-            initialValue = _brushCondition.value.toPresentation(),
+            initialValue = _brush.value.toPresentation(),
         )
 
     fun changeLineColor(color: BrushColorModel) {
-        _brushCondition.value = _brushCondition.value.changeColor(color.toBrushColor())
+        _brush.value = _brush.value.changeColor(color.toBrushColor())
     }
 
     fun changeLineWidth(width: Float) {
-        _brushCondition.value = _brushCondition.value.changeWidth(BrushWidth(width))
+        _brush.value = _brush.value.changeWidth(BrushWidth(width))
     }
 
     companion object {
