@@ -4,6 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class BrushConditionTest {
+
     @Test
     fun `붓 두께를 10에서 20으로 변경하면 붓 두께만 변경된다`() {
         // given

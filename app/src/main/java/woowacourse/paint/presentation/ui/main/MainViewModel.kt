@@ -17,7 +17,7 @@ import woowacourse.paint.presentation.ui.model.toPresentation
 
 class MainViewModel : ViewModel() {
 
-    private val _brushCondition = MutableStateFlow(INITIAL_LINE_CONDITION)
+    private val _brushCondition = MutableStateFlow(INITIAL_Brush_CONDITION)
     val brush: StateFlow<BrushModel> = _brushCondition
         .map { it.toPresentation() }
         .stateIn(
@@ -35,6 +35,6 @@ class MainViewModel : ViewModel() {
     }
 
     companion object {
-        private val INITIAL_LINE_CONDITION = BrushCondition(BrushColor.RED, BrushWidth())
+        private val INITIAL_Brush_CONDITION = BrushCondition(BrushColor.RED, BrushWidth(30f))
     }
 }
