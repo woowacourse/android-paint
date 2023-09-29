@@ -4,8 +4,7 @@ import android.graphics.Color
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import woowacourse.paint.model.PaintColor
-import woowacourse.paint.repository.DrawingToolRepository
-import woowacourse.paint.repository.PaintColorRepository
+import woowacourse.paint.repository.DrawingKitRepository
 import woowacourse.paint.ui.model.DrawingToolModel
 import woowacourse.paint.ui.model.PaintColorModel
 import woowacourse.paint.ui.model.SelectableDrawingToolModel
@@ -15,8 +14,7 @@ import woowacourse.paint.ui.model.mapper.toPaintColorModel
 import woowacourse.paint.ui.model.mapper.toSelectableDrawingToolModel
 
 class GloCanvasViewModel(
-    private val paintColorRepository: PaintColorRepository,
-    private val drawingToolRepository: DrawingToolRepository,
+    private val drawingToolRepository: DrawingKitRepository,
 ) {
     private var _drawingTool: MutableLiveData<DrawingToolModel> = MutableLiveData()
     val drawingTool: LiveData<DrawingToolModel>
@@ -64,12 +62,12 @@ class GloCanvasViewModel(
     }
 
     private fun setupPaintColor() {
-        _paintColor.value = Color.parseColor(paintColorRepository.getPaintColor().color)
+        _paintColor.value = Color.parseColor(drawingToolRepository.getPaintColor().color)
     }
 
     private fun setupPaintColors() {
         _paintColor.value?.let { selectedPaintColor ->
-            _paintColors.value = paintColorRepository.getAllPaintColors()
+            _paintColors.value = drawingToolRepository.getAllPaintColors()
                 .map {
                     if (Color.parseColor(it.color) == selectedPaintColor) {
                         it.toPaintColorModel(true)
@@ -99,7 +97,7 @@ class GloCanvasViewModel(
     }
 
     fun selectPaintColor(color: Int) {
-        paintColorRepository.setPaintColor(PaintColor(Integer.toHexString(color)))
+        drawingToolRepository.setPaintColor(PaintColor(Integer.toHexString(color)))
         _paintColor.value = color
         _paintColors.value?.let {
             _paintColors.value = it.map { paintColor ->

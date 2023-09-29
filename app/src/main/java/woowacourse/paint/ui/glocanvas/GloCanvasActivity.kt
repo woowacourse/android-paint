@@ -5,8 +5,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.R
-import woowacourse.paint.data.DefaultDrawingToolRepository
-import woowacourse.paint.data.DefaultPaintColorRepository
+import woowacourse.paint.data.DefaultDrawingKitRepository
 import woowacourse.paint.databinding.ActivityGloCanvasBinding
 
 class GloCanvasActivity : AppCompatActivity() {
@@ -16,7 +15,7 @@ class GloCanvasActivity : AppCompatActivity() {
         )
     }
     private val viewModel =
-        GloCanvasViewModel(DefaultPaintColorRepository(), DefaultDrawingToolRepository())
+        GloCanvasViewModel(DefaultDrawingKitRepository())
     private lateinit var paintColorPaletteAdapter: PaintColorPaletteAdapter
     private lateinit var drawingToolSettingsAdapter: DrawingToolSettingsAdapter
 
