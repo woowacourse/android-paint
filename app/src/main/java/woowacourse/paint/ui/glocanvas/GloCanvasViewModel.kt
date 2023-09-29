@@ -7,6 +7,7 @@ import woowacourse.paint.repository.PaintColorRepository
 import woowacourse.paint.ui.model.DrawingToolModel
 import woowacourse.paint.ui.model.PaintColorModel
 import woowacourse.paint.ui.model.SelectableDrawingToolModel
+import woowacourse.paint.ui.model.mapper.toDrawingToolModel
 import woowacourse.paint.ui.model.mapper.toPaintColorModel
 import woowacourse.paint.ui.model.mapper.toSelectableDrawingToolModel
 
@@ -14,6 +15,9 @@ class GloCanvasViewModel(
     private val paintColorRepository: PaintColorRepository,
     private val drawingToolRepository: DrawingToolRepository,
 ) {
+    private var _drawingTool: MutableLiveData<DrawingToolModel> = MutableLiveData()
+    val drawingTool: LiveData<DrawingToolModel>
+        get() = _drawingTool
     private var _drawingTools: MutableLiveData<List<SelectableDrawingToolModel>> = MutableLiveData()
     val drawingTools: LiveData<List<SelectableDrawingToolModel>>
         get() = _drawingTools
@@ -25,20 +29,27 @@ class GloCanvasViewModel(
         get() = _paintColors
 
     init {
+        setupDrawingTool()
         setupDrawingTools()
         setupThickness()
         setupPaintColors()
     }
 
+    private fun setupDrawingTool() {
+        _drawingTool.value = drawingToolRepository.getDrawingTool().toDrawingToolModel()
+    }
+
     private fun setupDrawingTools() {
-        _drawingTools.value = drawingToolRepository.getAllDrawingTools()
-            .mapIndexed { index, drawingTool ->
-                if (index == 0) {
-                    drawingTool.toSelectableDrawingToolModel(true)
-                } else {
-                    drawingTool.toSelectableDrawingToolModel(false)
+        _drawingTool.value?.let { drawingToolModel ->
+            _drawingTools.value = drawingToolRepository.getAllDrawingTools()
+                .map {
+                    if (it.toDrawingToolModel() == drawingToolModel) {
+                        it.toSelectableDrawingToolModel(true)
+                    } else {
+                        it.toSelectableDrawingToolModel(false)
+                    }
                 }
-            }
+        }
     }
 
     private fun setupThickness() {
@@ -57,6 +68,7 @@ class GloCanvasViewModel(
     }
 
     fun selectDrawingTool(drawingTool: DrawingToolModel) {
+        _drawingTool.value = drawingTool
         _drawingTools.value?.let {
             _drawingTools.value = it.map { drawingToolModel ->
                 if (drawingToolModel.drawingTool == drawingTool) {
