@@ -1,7 +1,7 @@
 package woowacourse.paint
 
-import android.widget.SeekBar
 import androidx.databinding.BindingAdapter
+import com.google.android.material.slider.RangeSlider
 
 @BindingAdapter("app:setColorPalette")
 fun BoardView.setColorPalette(colorPalette: ColorPalette?) {
@@ -21,15 +21,17 @@ fun BoardView.eraseAll(isErasing: Boolean?) {
     if (isErasing) erase()
 }
 
-@BindingAdapter("app:setupSeekbar")
-fun SeekBar.setupSeekbar(viewModel: MainViewModel) {
-    this.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-        override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-            viewModel.changeWidth(progress.toFloat())
-        }
+@BindingAdapter("app:setupSlider")
+fun RangeSlider.setupSlider(viewModel: MainViewModel) {
+    this.valueFrom = MIN_WIDTH_VALUE
+    this.valueTo = MAX_WIDTH_VALUE
 
-        override fun onStartTrackingTouch(seekBar: SeekBar?) {}
-
-        override fun onStopTrackingTouch(seekBar: SeekBar?) {}
-    })
+    this.addOnChangeListener(
+        RangeSlider.OnChangeListener { _, value, _ ->
+            viewModel.changeWidth(value)
+        },
+    )
 }
+
+private const val MIN_WIDTH_VALUE = 0.0f
+private const val MAX_WIDTH_VALUE = 100.0f

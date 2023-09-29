@@ -23,21 +23,21 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:eraseAll="@{mainViewModel.isErasing}"
-            app:layout_constraintBottom_toTopOf="@id/seekbar_width"
+            app:layout_constraintBottom_toTopOf="@id/range_slider_width"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:setColorPalette="@{mainViewModel.color}"
             app:setWidth="@{mainViewModel.width}" />
 
-        <SeekBar
-            android:id="@+id/seekbar_width"
+        <com.google.android.material.slider.RangeSlider
+            android:id="@+id/range_slider_width"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/board"
-            app:setupSeekbar="@{mainViewModel}" />
+            app:setupSlider="@{mainViewModel}" />
 
         <View
             android:id="@+id/color_red"
@@ -48,7 +48,7 @@
             android:onClick="@{()->mainViewModel.changeColor(palette.RED)}"
             app:layout_constraintEnd_toStartOf="@id/color_orange"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/seekbar_width" />
+            app:layout_constraintTop_toBottomOf="@id/range_slider_width" />
 
         <View
             android:id="@+id/color_orange"
