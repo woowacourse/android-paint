@@ -43,6 +43,12 @@ dependencies {
     // domain
     implementation(project(":domain"))
 
+    // assertj
+    testImplementation("org.assertj:assertj-core:3.22.0")
+
+    // coroutineTest
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
+
     // viewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
     implementation("androidx.activity:activity-ktx:1.7.2")
