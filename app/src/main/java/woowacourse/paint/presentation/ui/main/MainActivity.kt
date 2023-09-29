@@ -9,6 +9,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.slider.RangeSlider
 import kotlinx.coroutines.launch
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.presentation.ui.model.BrushColorModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,7 +35,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        initRangeWidth()
+        initRangeSliderWidth()
+        initColorAdapter()
+    }
+
+    private fun initRangeSliderWidth() {
+        val brush = viewModel.brush.value
+        binding.rsWidth.valueFrom = brush.minWidth
+        binding.rsWidth.valueTo = brush.maxWidth
+        binding.rsWidth.setValues(brush.width)
         binding.rsWidth.addOnChangeListener(
             RangeSlider.OnChangeListener { _, value, _ ->
                 viewModel.changeLineWidth(value)
@@ -42,10 +51,12 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private fun initRangeWidth() {
-        val brush = viewModel.brush.value
-        binding.rsWidth.valueFrom = brush.minWidth
-        binding.rsWidth.valueTo = brush.maxWidth
-        binding.rsWidth.setValues(brush.width)
+    private fun initColorAdapter() {
+        binding.rvColors.adapter = ColorsAdapter(
+            BrushColorModel.values().map {
+                ItemColor(it, viewModel::changeLineColor)
+            },
+        )
+        binding.rvColors.setHasFixedSize(true)
     }
 }
