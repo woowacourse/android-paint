@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.brush.collect { line ->
-                    binding.cvCanvas.setLine(line)
+                    binding.cvCanvas.changeBrush(line)
                 }
             }
         }

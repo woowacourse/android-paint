@@ -5,7 +5,7 @@ import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import woowacourse.paint.presentation.ui.model.LineModel
+import woowacourse.paint.presentation.ui.model.BrushModel
 
 class CanvasView(
     context: Context,
@@ -30,8 +30,8 @@ class CanvasView(
         return true
     }
 
-    fun setLine(line: LineModel) {
-        brush.changeColor(line.color.value)
-        brush.changeWidth(line.width)
+    fun changeBrush(brush: BrushModel) {
+        painting.changeColor(brush.color.value)
+        painting.changeWidth(brush.width)
     }
 }
