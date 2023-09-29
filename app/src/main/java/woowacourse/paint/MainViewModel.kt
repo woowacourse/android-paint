@@ -12,11 +12,18 @@ class MainViewModel : ViewModel() {
     private val _width = MutableLiveData<Float>()
     val width: LiveData<Float> = _width
 
+    private val _isErasing = MutableLiveData<Boolean>()
+    val isErasing: LiveData<Boolean> = _isErasing
+
     fun changeColor(color: ColorPalette) {
         _color.value = color
     }
 
     fun changeWidth(width: Float) {
         _width.value = width
+    }
+
+    fun erase() {
+        _isErasing.value = true
     }
 }

@@ -15,6 +15,12 @@ fun BoardView.setWidth(width: Float?) {
     setWidth(width)
 }
 
+@BindingAdapter("app:eraseAll")
+fun BoardView.eraseAll(isErasing: Boolean?) {
+    if (isErasing == null) return
+    if (isErasing) erase()
+}
+
 @BindingAdapter("app:setupSeekbar")
 fun SeekBar.setupSeekbar(viewModel: MainViewModel) {
     this.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {

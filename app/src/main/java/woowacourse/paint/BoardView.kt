@@ -23,10 +23,17 @@ class BoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             ColorPalette.GREEN -> paint.color = ContextCompat.getColor(context, R.color.green)
             ColorPalette.BLUE -> paint.color = ContextCompat.getColor(context, R.color.blue)
         }
+        invalidate()
     }
 
     fun setWidth(width: Float) {
         paint.strokeWidth = width
+        invalidate()
+    }
+
+    fun erase() {
+        path.reset()
+        invalidate()
     }
 
     override fun onDraw(canvas: Canvas) {
