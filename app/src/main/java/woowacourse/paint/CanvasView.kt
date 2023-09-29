@@ -11,7 +11,7 @@ import android.view.MotionEvent
 import android.view.View
 import kotlin.math.abs
 
-class CustomView constructor(context: Context, attr: AttributeSet) : View(context, attr) {
+class CanvasView constructor(context: Context, attr: AttributeSet) : View(context, attr) {
     private val path = Path()
     private val paint = Paint()
     private lateinit var canvas: Canvas
