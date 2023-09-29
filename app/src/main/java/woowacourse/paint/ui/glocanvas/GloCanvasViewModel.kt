@@ -1,7 +1,9 @@
 package woowacourse.paint.ui.glocanvas
 
+import android.graphics.Color
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import woowacourse.paint.model.PaintColor
 import woowacourse.paint.repository.DrawingToolRepository
 import woowacourse.paint.repository.PaintColorRepository
 import woowacourse.paint.ui.model.DrawingToolModel
@@ -24,6 +26,9 @@ class GloCanvasViewModel(
     private var _thickness: MutableLiveData<Float> = MutableLiveData()
     val thickness: LiveData<Float>
         get() = _thickness
+    private var _paintColor: MutableLiveData<Int> = MutableLiveData()
+    val paintColor: LiveData<Int>
+        get() = _paintColor
     private var _paintColors: MutableLiveData<List<PaintColorModel>> = MutableLiveData()
     val paintColors: LiveData<List<PaintColorModel>>
         get() = _paintColors
@@ -32,6 +37,7 @@ class GloCanvasViewModel(
         setupDrawingTool()
         setupDrawingTools()
         setupThickness()
+        setupPaintColor()
         setupPaintColors()
     }
 
@@ -40,10 +46,10 @@ class GloCanvasViewModel(
     }
 
     private fun setupDrawingTools() {
-        _drawingTool.value?.let { drawingToolModel ->
+        _drawingTool.value?.let { selectedDrawingTool ->
             _drawingTools.value = drawingToolRepository.getAllDrawingTools()
                 .map {
-                    if (it.toDrawingToolModel() == drawingToolModel) {
+                    if (it.toDrawingToolModel() == selectedDrawingTool) {
                         it.toSelectableDrawingToolModel(true)
                     } else {
                         it.toSelectableDrawingToolModel(false)
@@ -56,15 +62,21 @@ class GloCanvasViewModel(
         _thickness.value = DEFAULT_THICKNESS
     }
 
+    private fun setupPaintColor() {
+        _paintColor.value = Color.parseColor(paintColorRepository.getPaintColor().color)
+    }
+
     private fun setupPaintColors() {
-        _paintColors.value = paintColorRepository.getAllPaintColors()
-            .mapIndexed { index, paintColor ->
-                if (index == 0) {
-                    paintColor.toPaintColorModel(true)
-                } else {
-                    paintColor.toPaintColorModel(false)
+        _paintColor.value?.let { selectedPaintColor ->
+            _paintColors.value = paintColorRepository.getAllPaintColors()
+                .map {
+                    if (Color.parseColor(it.color) == selectedPaintColor) {
+                        it.toPaintColorModel(true)
+                    } else {
+                        it.toPaintColorModel(false)
+                    }
                 }
-            }
+        }
     }
 
     fun selectDrawingTool(drawingTool: DrawingToolModel) {
@@ -85,6 +97,8 @@ class GloCanvasViewModel(
     }
 
     fun selectPaintColor(color: Int) {
+        paintColorRepository.setPaintColor(PaintColor(Integer.toHexString(color)))
+        _paintColor.value = color
         _paintColors.value?.let {
             _paintColors.value = it.map { paintColor ->
                 if (paintColor.color == color) {

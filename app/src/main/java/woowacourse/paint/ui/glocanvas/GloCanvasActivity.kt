@@ -33,8 +33,9 @@ class GloCanvasActivity : AppCompatActivity() {
     private fun setupViewModel() {
         viewModel.drawingTool.observe(this) { binding.vPaintBoard.setDrawingTool(it) }
         viewModel.drawingTools.observe(this) { drawingToolSettingsAdapter.updateDrawingTools(it) }
-        viewModel.paintColors.observe(this) { paintColorPaletteAdapter.updateColors(it) }
         viewModel.thickness.observe(this) { binding.vPaintBoard.setThickness(it) }
+        viewModel.paintColor.observe(this) { binding.vPaintBoard.setPaintColor(it) }
+        viewModel.paintColors.observe(this) { paintColorPaletteAdapter.updateColors(it) }
     }
 
     private fun setupDrawingToolSettings() {
@@ -55,7 +56,6 @@ class GloCanvasActivity : AppCompatActivity() {
     private fun setupPaintColorPalette() {
         paintColorPaletteAdapter = PaintColorPaletteAdapter {
             viewModel.selectPaintColor(it)
-            binding.vPaintBoard.setPaintColor(it)
         }
         binding.rvPaintColorPalette.adapter = paintColorPaletteAdapter
         binding.rvPaintColorPalette.itemAnimator = null
