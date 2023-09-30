@@ -18,6 +18,8 @@ class CanvasView(
 
     private val curveLines = CurveLines()
     private var curveLine = CurveLine(Path(), Paint())
+    private var lastX = 0f
+    private var lastY = 0f
 
     init {
         isFocusable = true
@@ -36,16 +38,29 @@ class CanvasView(
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                curveLines.add(curveLine)
-                curveLine.path.moveTo(pointX, pointY)
+                startDrawing(pointX, pointY)
+                invalidate()
             }
             MotionEvent.ACTION_MOVE -> {
-                curveLine.path.lineTo(pointX, pointY)
+                keepDrawing(pointX, pointY)
+                invalidate()
             }
             else -> super.onTouchEvent(event)
         }
-        invalidate()
         return true
+    }
+
+    private fun startDrawing(x: Float, y: Float) {
+        curveLines.add(curveLine)
+        curveLine.path.moveTo(x, y)
+        lastX = x
+        lastY = y
+    }
+
+    private fun keepDrawing(x: Float, y: Float) {
+        curveLine.path.quadTo(lastX, lastY, (x + lastX) / 2, (y + lastY) / 2)
+        lastX = x
+        lastY = y
     }
 
     fun changeThickness(new: Float) {
