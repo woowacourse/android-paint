@@ -17,7 +17,7 @@ class DrawingPaper(
     private val pathRecords: MutableList<Path> = mutableListOf(Path())
     private val paintRecords: MutableList<Paint> = mutableListOf(Paint())
     private var brushWidth = DEFAULT_WIDTH
-    private var brushColor = DEFAULT_COLOR
+    private var brushColor = R.color.black
 
     // RangeSlider로부터 너비를 지정하며, 새로운 Path, Paint 객체 추가
     fun changeWidth(width: Float) {
@@ -83,8 +83,6 @@ class DrawingPaper(
     }
 
     companion object {
-        @SuppressLint("NonConstantResourceId")
-        private const val DEFAULT_COLOR = R.color.black
         private const val DEFAULT_WIDTH = 0f
         private const val SOFT_ANGLE = 0f
     }
