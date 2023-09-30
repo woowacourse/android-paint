@@ -28,5 +28,9 @@ class MainActivity : AppCompatActivity() {
         binding.btnBrushSize.setOnClickListener {
             binding.paintingPaper.brushSize += 10F
         }
+
+        binding.btnUndo.setOnClickListener {
+            binding.paintingPaper.undo()
+        }
     }
 }

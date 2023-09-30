@@ -87,6 +87,13 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
         paint.color = Color.RED
     }
 
+    fun undo() {
+        if (records.isNotEmpty()) {
+            records.removeLast()
+            invalidate()
+        }
+    }
+
     companion object {
         private val TAG = PaintingPaper::class.java.simpleName
     }

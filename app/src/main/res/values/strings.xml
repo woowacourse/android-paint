@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Paint</string>
     <string name="Main_btnBrushSize">크기 변경</string>
-    <string name="Main_btnColor">색상 변경</string>
+    <string name="Main_btnUndo">되돌리기</string>
 </resources>

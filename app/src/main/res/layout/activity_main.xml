@@ -38,10 +38,10 @@
                 android:layout_height="50dp">
 
                 <Button
-                    android:id="@+id/btnColor"
+                    android:id="@+id/btnUndo"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="@string/Main_btnColor"
+                    android:text="@string/Main_btnUndo"
                     android:layout_margin="4dp"
                     android:layout_weight="1" />
 
