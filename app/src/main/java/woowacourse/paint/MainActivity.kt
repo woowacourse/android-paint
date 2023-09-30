@@ -9,7 +9,7 @@ import woowacourse.paint.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    private val colorAdapter by lazy { ColorAdapter(::selectColor, this) }
+    private val colorAdapter by lazy { ColorAdapter(::selectColor) }
 
     private fun selectColor(color: Int) {
         binding.dpMain.changeColor(color)

@@ -1,6 +1,5 @@
 package woowacourse.paint
 
-import android.content.Context
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.paint.Color.BLACK
@@ -12,13 +11,12 @@ import woowacourse.paint.Color.YELLOW
 
 class ColorAdapter(
     private val onPaletteClick: (color: Int) -> Unit,
-    private val context: Context
 ) : RecyclerView.Adapter<ColorViewHolder>() {
 
     private val colors: List<Color> = listOf(RED, ORANGE, YELLOW, GREEN, BLUE, BLACK)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ColorViewHolder =
-        ColorViewHolder.from(parent, onPaletteClick, context)
+        ColorViewHolder.from(parent, onPaletteClick)
 
     override fun getItemCount(): Int = colors.size
 
