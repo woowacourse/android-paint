@@ -25,8 +25,12 @@ class MainActivity : AppCompatActivity() {
     private fun setUpView() {
         binding.paintingPaper.color = Color.RED
 
-        binding.btnBrushSize.setOnClickListener {
-            binding.paintingPaper.brushSize += 10F
+        binding.rsSlider.addOnChangeListener { _, value, _ ->
+            binding.paintingPaper.brushSize = value * 100
+        }
+
+        binding.btnClear.setOnClickListener {
+            binding.paintingPaper.clear()
         }
 
         binding.btnUndo.setOnClickListener {

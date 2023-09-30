@@ -113,6 +113,11 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
         }
     }
 
+    fun clear() {
+        brushes.clear()
+        invalidate()
+    }
+
     companion object {
         private val TAG = PaintingPaper::class.java.simpleName
     }

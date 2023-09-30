@@ -21,7 +21,7 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <com.google.android.material.slider.RangeSlider
-                android:id="@+id/RsSlider"
+                android:id="@+id/rs_slider"
                 android:layout_width="match_parent"
                 android:layout_height="50dp" />
 
@@ -46,9 +46,9 @@
                     android:layout_weight="1" />
 
                 <Button
-                    android:id="@+id/btnBrushSize"
+                    android:id="@+id/btnClear"
                     android:layout_width="0dp"
-                    android:text="@string/Main_btnBrushSize"
+                    android:text="@string/Main_btnClear"
                     android:layout_height="match_parent"
                     android:layout_margin="4dp"
                     android:layout_weight="1" />
