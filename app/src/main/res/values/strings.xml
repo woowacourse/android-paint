@@ -2,4 +2,5 @@
     <string name="app_name">Paint</string>
     <string name="Main_btnClear">초기화</string>
     <string name="Main_btnUndo">되돌리기</string>
+    <string name="Main_btnRedo">취소</string>
 </resources>

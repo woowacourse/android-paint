@@ -33,6 +33,10 @@ class MainActivity : AppCompatActivity() {
             binding.paintingPaper.clear()
         }
 
+        binding.btnRedo.setOnClickListener {
+            binding.paintingPaper.redo()
+        }
+
         binding.btnUndo.setOnClickListener {
             binding.paintingPaper.undo()
         }

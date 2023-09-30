@@ -10,10 +10,7 @@ import android.view.MotionEvent
 import android.view.View
 
 class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(context, attrs) {
-
-    private val brushes = mutableListOf<Brush>()
-
-    private val lastBrush get() = brushes.last()
+    private val brushes: Brushes = Brushes()
 
     private val previewBrush
         get() = Brush(
@@ -53,7 +50,7 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        brushes.forEach { brush -> brush.drawOn(canvas) }
+        brushes.drawOn(canvas)
         previewBrush.drawOn(canvas)
     }
 
@@ -64,7 +61,7 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
         }
 
         MotionEvent.ACTION_MOVE -> {
-            if (lastBrush.move(event.x, event.y)) {
+            if (brushes.last().move(event.x, event.y)) {
                 invalidate()
             }
             true
@@ -74,7 +71,12 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
     }
 
     fun undo() {
-        brushes.removeLastOrNull() ?: return
+        brushes.undo()
+        invalidate()
+    }
+
+    fun redo() {
+        brushes.redo()
         invalidate()
     }
 
