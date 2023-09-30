@@ -13,7 +13,7 @@
 
         <variable
             name="colorbox"
-            type="woowacourse.paint.ColorBox" />
+            type="woowacourse.paint.model.ColorBox" />
     </data>
 
 

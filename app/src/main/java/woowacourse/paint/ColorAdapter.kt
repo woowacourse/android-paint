@@ -2,6 +2,7 @@ package woowacourse.paint
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
+import woowacourse.paint.model.ColorBox
 
 class ColorAdapter(
     private val onColorClickListener: OnColorClickListener,

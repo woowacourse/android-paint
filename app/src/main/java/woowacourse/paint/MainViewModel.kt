@@ -3,6 +3,8 @@ package woowacourse.paint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import woowacourse.paint.model.ColorBox
+import woowacourse.paint.model.DrawingHistory
 
 class MainViewModel : ViewModel() {
     private val _colors = MutableLiveData<List<ColorBox>>()
@@ -25,6 +27,10 @@ class MainViewModel : ViewModel() {
         _colors.value = _colors.value?.map {
             it.copy(isSelected = it == colorBox)
         }
+    }
+
+    fun addHistory(history: DrawingHistory) {
+        _history.value = history
     }
 
     companion object {

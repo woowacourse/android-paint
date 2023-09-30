@@ -1,13 +1,13 @@
 package woowacourse.paint
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.slider.RangeSlider
 import woowacourse.paint.DrawingCanvas.Companion.DEFAULT_STROKE_WIDTH
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.model.ColorBox
 
 class MainActivity : AppCompatActivity(), OnColorClickListener {
 
