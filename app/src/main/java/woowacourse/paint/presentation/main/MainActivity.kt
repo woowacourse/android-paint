@@ -2,9 +2,9 @@ package woowacourse.paint.presentation.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import woowacourse.paint.R
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.palette.PaletteAdapter
+import woowacourse.paint.presentation.uimodel.BrushColorUiModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityMainBinding
@@ -20,13 +20,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
-        val colors = listOf(
-            getColor(R.color.red),
-            getColor(R.color.orange),
-            getColor(R.color.yellow),
-            getColor(R.color.green),
-            getColor(R.color.blue),
-        )
+        val colors = BrushColorUiModel.values().map { it.color }
         val adapter = PaletteAdapter(colors) { paintColor = colors[it] }
         viewBinding.rvColor.adapter = adapter
     }
