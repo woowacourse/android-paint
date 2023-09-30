@@ -57,6 +57,7 @@ class DrawingCanvas @JvmOverloads constructor(
         drawingElement.paint.apply {
             strokeWidth = 50.0f
             style = Paint.Style.STROKE
+            strokeCap = Paint.Cap.ROUND
             color = Color.RED
         }
     }
