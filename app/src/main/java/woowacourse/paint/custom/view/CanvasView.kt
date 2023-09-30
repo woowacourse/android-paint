@@ -66,16 +66,10 @@ class CanvasView(
     }
 
     fun changeStrokeWidth(new: BrushWidth) {
-        curveLine = curveLine.copy(
-            path = Path(),
-            paint = Paint(curveLine.paint).apply { strokeWidth = new.width },
-        )
+        curveLine = curveLine.changeStrokeWidth(new)
     }
 
     fun changeColor(new: BrushColorUiModel) {
-        curveLine = curveLine.copy(
-            path = Path(),
-            paint = Paint(curveLine.paint).apply { color = new.color },
-        )
+        curveLine = curveLine.changeColor(new)
     }
 }
