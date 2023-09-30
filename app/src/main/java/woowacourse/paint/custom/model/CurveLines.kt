@@ -10,8 +10,6 @@ class CurveLines {
     }
 
     fun draw(canvas: Canvas) {
-        lines.forEach {
-            canvas.drawPath(it.path, it.paint)
-        }
+        lines.forEach { canvas.drawPath(it.path, it.paint) }
     }
 }

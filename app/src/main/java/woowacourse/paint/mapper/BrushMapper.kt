@@ -18,10 +18,10 @@ fun Brush.toBrushUiModel(): BrushUiModel {
 
 fun BrushUiModel.toBrush(): Brush {
     return when (this.brushColor) {
-        woowacourse.paint.presentation.uimodel.BrushColorUiModel.RED -> { Brush(BrushColor.RED, BrushWidth(this.brushWidth)) }
-        woowacourse.paint.presentation.uimodel.BrushColorUiModel.YELLOW -> { Brush(BrushColor.YELLOW, BrushWidth(this.brushWidth)) }
-        woowacourse.paint.presentation.uimodel.BrushColorUiModel.ORANGE -> { Brush(BrushColor.ORANGE, BrushWidth(this.brushWidth)) }
-        woowacourse.paint.presentation.uimodel.BrushColorUiModel.GREEN -> { Brush(BrushColor.GREEN, BrushWidth(this.brushWidth)) }
-        woowacourse.paint.presentation.uimodel.BrushColorUiModel.BLUE -> { Brush(BrushColor.BLUE, BrushWidth(this.brushWidth)) }
+        BrushColorUiModel.RED -> { Brush(BrushColor.RED, BrushWidth(this.brushWidth)) }
+        BrushColorUiModel.YELLOW -> { Brush(BrushColor.YELLOW, BrushWidth(this.brushWidth)) }
+        BrushColorUiModel.ORANGE -> { Brush(BrushColor.ORANGE, BrushWidth(this.brushWidth)) }
+        BrushColorUiModel.GREEN -> { Brush(BrushColor.GREEN, BrushWidth(this.brushWidth)) }
+        BrushColorUiModel.BLUE -> { Brush(BrushColor.BLUE, BrushWidth(this.brushWidth)) }
     }
 }
