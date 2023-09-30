@@ -1,7 +1,8 @@
-package woowacourse.paint
+package woowacourse.paint.presentation.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import woowacourse.paint.R
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.palette.PaletteAdapter
 

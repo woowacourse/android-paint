@@ -1,4 +1,4 @@
-package woowacourse.paint.custom.uimodel
+package woowacourse.paint.presentation.uimodel
 
 data class BrushUiModel(
     val brushColor: BrushColorUiModel,
