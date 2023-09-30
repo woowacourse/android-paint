@@ -11,14 +11,14 @@ import woowacourse.paint.Color.RED
 import woowacourse.paint.Color.YELLOW
 
 class ColorAdapter(
-    private val onClick: (color: Int) -> Unit,
+    private val onPaletteClick: (color: Int) -> Unit,
     private val context: Context
 ) : RecyclerView.Adapter<ColorViewHolder>() {
 
     private val colors: List<Color> = listOf(RED, ORANGE, YELLOW, GREEN, BLUE, BLACK)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ColorViewHolder =
-        ColorViewHolder.from(parent, onClick, context)
+        ColorViewHolder.from(parent, onPaletteClick, context)
 
     override fun getItemCount(): Int = colors.size
 

@@ -58,4 +58,3 @@ class MainActivity : AppCompatActivity() {
         private const val MAX_VALUE = 100.0f
     }
 }
-

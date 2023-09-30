@@ -9,16 +9,16 @@ import woowacourse.paint.databinding.ItemColorBinding
 
 class ColorViewHolder(
     private val binding: ItemColorBinding,
-    private val onClick: (color: Int) -> Unit,
-    private val context: Context,
+    private val onColorClick: (color: Int) -> Unit,
+    context: Context
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {
-        binding.root.setOnClickListener { onClick(Color.valueOf(adapterPosition)) }
+        binding.root.setOnClickListener { onColorClick(Color.valueOf(adapterPosition)) }
     }
 
     fun bind(colors: Color) {
-        val color = ContextCompat.getColor(context, colors.colorRes)
+        val color = ContextCompat.getColor(binding.root.context, colors.colorRes)
 
         binding.itemColorPaint.setBackgroundColor(color)
     }
