@@ -8,8 +8,10 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import com.now.domain.BrushWidth
 import woowacourse.paint.custom.model.CurveLine
 import woowacourse.paint.custom.model.CurveLines
+import woowacourse.paint.presentation.uimodel.BrushColorUiModel
 
 class CanvasView(
     context: Context,
@@ -63,17 +65,17 @@ class CanvasView(
         lastY = y
     }
 
-    fun changeStrokeWidth(new: Float) {
+    fun changeStrokeWidth(new: BrushWidth) {
         curveLine = curveLine.copy(
             path = Path(),
-            paint = Paint(curveLine.paint).apply { strokeWidth = new },
+            paint = Paint(curveLine.paint).apply { strokeWidth = new.width },
         )
     }
 
-    fun changeColor(new: Int) {
+    fun changeColor(new: BrushColorUiModel) {
         curveLine = curveLine.copy(
             path = Path(),
-            paint = Paint(curveLine.paint).apply { color = new },
+            paint = Paint(curveLine.paint).apply { color = new.color },
         )
     }
 }

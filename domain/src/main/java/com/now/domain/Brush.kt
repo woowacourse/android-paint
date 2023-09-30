@@ -8,4 +8,10 @@ data class Brush(val brushColor: BrushColor, val brushWidth: BrushWidth) {
     fun changeWidth(brushWidth: BrushWidth): Brush {
         return copy(brushWidth = brushWidth)
     }
+
+    companion object {
+        fun fromDefault(): Brush {
+            return Brush(brushColor = BrushColor.RED, brushWidth = BrushWidth(1f))
+        }
+    }
 }
