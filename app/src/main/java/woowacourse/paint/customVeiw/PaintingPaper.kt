@@ -17,6 +17,9 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
     private val paint = Paint()
     private var prevPoint = Pair(0f, 0f)
 
+    var color = Color.RED
+    var brushSize = 10F
+
     class Record(val path: Path, val paint: Paint)
 
     init {
@@ -68,7 +71,8 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
 
     private fun getNewPaint(): Paint {
         return Paint().apply {
-            strokeWidth = 10F
+            color = this@PaintingPaper.color
+            strokeWidth = brushSize
             style = Paint.Style.STROKE
         }
     }
