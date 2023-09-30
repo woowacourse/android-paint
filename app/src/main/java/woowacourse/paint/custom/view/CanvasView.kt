@@ -20,8 +20,6 @@ class CanvasView(
 
     private val curveLines = CurveLines()
     private var curveLine = CurveLine(Path(), Paint())
-    private var lastX = 0f
-    private var lastY = 0f
 
     init {
         isFocusable = true
@@ -54,15 +52,11 @@ class CanvasView(
 
     private fun startDrawing(x: Float, y: Float) {
         curveLines.add(curveLine)
-        curveLine.path.moveTo(x, y)
-        lastX = x
-        lastY = y
+        curveLine.moveTo(x, y)
     }
 
     private fun keepDrawing(x: Float, y: Float) {
-        curveLine.path.quadTo(lastX, lastY, (x + lastX) / 2, (y + lastY) / 2)
-        lastX = x
-        lastY = y
+        curveLine.quadTo(x, y)
     }
 
     fun changeStrokeWidth(new: BrushWidth) {
