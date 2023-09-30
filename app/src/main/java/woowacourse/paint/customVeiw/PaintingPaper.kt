@@ -8,7 +8,6 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import java.lang.Math.sqrt
 
 class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
@@ -23,8 +22,6 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
             strokeWidth = brushSize
             style = Paint.Style.STROKE
         }
-
-    private var prevPoint = Pair(0f, 0f)
 
     private val previewBrush
         get() = Brush(
@@ -62,26 +59,19 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
 
     override fun onTouchEvent(event: MotionEvent): Boolean = when (event.action) {
         MotionEvent.ACTION_DOWN -> {
-            brushes += Brush(path.apply { moveTo(event.x, event.y) }, paint)
+            brushes += Brush(path, paint).apply { start(event.x, event.y) }
             true
         }
 
         MotionEvent.ACTION_MOVE -> {
-            if (calculateDistance(event, prevPoint) >= 0.1) {
-                prevPoint = Pair(event.x, event.y)
-                brushes.last().path.lineTo(event.x, event.y)
+            if (brushes.last().available(event.x, event.y)) {
+                brushes.last().move(event.x, event.y)
                 invalidate()
             }
             true
         }
 
         else -> super.onTouchEvent(event)
-    }
-
-    private fun calculateDistance(event: MotionEvent, point: Pair<Float, Float>): Float {
-        val dx = event.x - point.first
-        val dy = event.y - point.second
-        return sqrt((dx * dx + dy * dy).toDouble()).toFloat()
     }
 
     fun undo() {
