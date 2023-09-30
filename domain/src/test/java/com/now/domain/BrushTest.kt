@@ -30,4 +30,14 @@ class BrushTest {
         assertNotEquals(originBrush.brushWidth, newBrush.brushWidth)
         assertEquals(originBrush.brushColor, newBrush.brushColor)
     }
+
+    @Test
+    fun `Brush의 default 값은 붉은색 색상에 두께는 1f다`() {
+        // given
+        val brush = Brush.fromDefault()
+
+        // when & then
+        assertEquals(brush.brushColor, BrushColor.RED)
+        assertEquals(brush.brushWidth, BrushWidth(1f))
+    }
 }
