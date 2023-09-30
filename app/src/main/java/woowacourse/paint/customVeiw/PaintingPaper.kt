@@ -12,15 +12,30 @@ import android.view.View
 import java.lang.Math.sqrt
 
 class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    private var path = Path()
-    private val records = mutableListOf<Record>()
+    private val brushes = mutableListOf<Brush>()
     private val paint = Paint()
     private var prevPoint = Pair(0f, 0f)
 
-    var color = Color.RED
-    var brushSize = 10F
+    private val previewBrush
+        get() = Brush(
+            Path().apply {
+                moveTo(100F, 100F)
+                lineTo(200F, 100F)
+            },
+            getNewPaint(),
+        )
 
-    class Record(val path: Path, val paint: Paint)
+    var color = Color.BLACK
+        set(value) {
+            field = value
+            invalidate()
+        }
+
+    var brushSize = 10F
+        set(value) {
+            field = value
+            invalidate()
+        }
 
     init {
         isFocusable = true
@@ -30,24 +45,28 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        records.forEach {
+        brushes.forEach {
             canvas.drawPath(it.path, it.paint)
         }
+        canvas.drawPath(previewBrush.path, previewBrush.paint)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean = when (event.action) {
         MotionEvent.ACTION_DOWN -> {
             Log.d(TAG, "ACTION_DOWN")
-            records += getNewRecord().apply {
-                path.moveTo(event.x, event.y)
-            }
+            brushes += Brush(
+                getNewPath().apply {
+                    moveTo(event.x, event.y)
+                },
+                getNewPaint(),
+            )
             true
         }
 
         MotionEvent.ACTION_MOVE -> {
             if (calculateDistance(event, prevPoint) >= 1) {
                 prevPoint = Pair(event.x, event.y)
-                records.last().path.lineTo(event.x, event.y)
+                brushes.last().path.lineTo(event.x, event.y)
                 invalidate()
             }
             true
@@ -61,8 +80,8 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
         else -> super.onTouchEvent(event)
     }
 
-    private fun getNewRecord(): Record {
-        return Record(getNewPath(), getNewPaint())
+    private fun getNewBrush(): Brush {
+        return Brush(getNewPath(), getNewPaint())
     }
 
     private fun getNewPath(): Path {
@@ -88,8 +107,8 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
     }
 
     fun undo() {
-        if (records.isNotEmpty()) {
-            records.removeLast()
+        if (brushes.isNotEmpty()) {
+            brushes.removeLast()
             invalidate()
         }
     }
