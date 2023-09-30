@@ -2,7 +2,9 @@ package woowacourse.paint
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
@@ -14,6 +16,8 @@ class BoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private val path = Path()
     private val paint = Paint()
+    private lateinit var storedCanvas: Canvas
+    private lateinit var bitmap: Bitmap
 
     fun changeColor(color: ColorPalette) {
         when (color) {
@@ -23,23 +27,29 @@ class BoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             ColorPalette.GREEN -> paint.color = ContextCompat.getColor(context, R.color.green)
             ColorPalette.BLUE -> paint.color = ContextCompat.getColor(context, R.color.blue)
         }
-        invalidate()
     }
 
     fun setWidth(width: Float) {
         paint.strokeWidth = width
-        invalidate()
     }
 
     fun erase() {
-        path.reset()
+        bitmap.eraseColor(Color.TRANSPARENT)
         invalidate()
+    }
+
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+        bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
+        storedCanvas = Canvas(bitmap)
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
         paint.style = Paint.Style.STROKE
+        paint.strokeCap = Paint.Cap.ROUND
+        canvas.drawBitmap(bitmap, 0f, 0f, null)
         canvas.drawPath(path, paint)
     }
 
@@ -54,6 +64,10 @@ class BoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             }
             MotionEvent.ACTION_MOVE -> {
                 path.lineTo(pointX, pointY)
+            }
+            MotionEvent.ACTION_UP -> {
+                storedCanvas.drawPath(path, paint)
+                path.reset()
             }
         }
         invalidate()
