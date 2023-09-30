@@ -9,13 +9,14 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.custom.model.CurveLine
+import woowacourse.paint.custom.model.CurveLines
 
 class CanvasView(
     context: Context,
     attributeSet: AttributeSet,
 ) : View(context, attributeSet) {
 
-    private val curveLines = mutableListOf<CurveLine>()
+    private val curveLines = CurveLines()
     private var curveLine = CurveLine(Path(), Paint())
 
     init {
@@ -25,9 +26,7 @@ class CanvasView(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        curveLines.forEach {
-            canvas.drawPath(it.path, it.paint)
-        }
+        curveLines.draw(canvas)
     }
 
     @SuppressLint("ClickableViewAccessibility")
