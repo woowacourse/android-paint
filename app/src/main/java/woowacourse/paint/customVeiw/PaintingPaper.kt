@@ -64,8 +64,7 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
         }
 
         MotionEvent.ACTION_MOVE -> {
-            if (lastBrush.available(event.x, event.y)) {
-                lastBrush.move(event.x, event.y)
+            if (lastBrush.move(event.x, event.y)) {
                 invalidate()
             }
             true

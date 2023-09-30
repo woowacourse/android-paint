@@ -12,14 +12,18 @@ class Brush(private val path: Path, private val paint: Paint) {
         lastPosition = Pair(x, y)
     }
 
-    fun move(x: Float, y: Float) {
-        path.lineTo(x, y)
-        lastPosition = Pair(x, y)
+    fun move(x: Float, y: Float): Boolean {
+        if (available(x, y)) {
+            path.lineTo(x, y)
+            lastPosition = Pair(x, y)
+            return true
+        }
+        return false
     }
+
+    private fun available(x: Float, y: Float) = lastPosition != Pair(x, y)
 
     fun drawOn(canvas: Canvas) {
         canvas.drawPath(path, paint)
     }
-
-    fun available(x: Float, y: Float) = lastPosition != Pair(x, y)
 }
