@@ -7,8 +7,8 @@ import woowacourse.paint.palette.PaletteAdapter
 
 class MainActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityMainBinding
-    private var thickness = 0f
-    private var color = 0
+    private var paintStrokeWidth = 0f
+    private var paintColor = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,21 +26,21 @@ class MainActivity : AppCompatActivity() {
             getColor(R.color.green),
             getColor(R.color.blue),
         )
-        val adapter = PaletteAdapter(colors) { color = colors[it] }
+        val adapter = PaletteAdapter(colors) { paintColor = colors[it] }
         viewBinding.rvColor.adapter = adapter
     }
 
     private fun setListener() {
         viewBinding.btnColorChange.setOnClickListener {
-            viewBinding.customCanvas.changeColor(color)
+            viewBinding.customCanvas.changeColor(paintColor)
         }
 
         viewBinding.btnThicknessChange.setOnClickListener {
-            viewBinding.customCanvas.changeThickness(thickness)
+            viewBinding.customCanvas.changeStrokeWidth(paintStrokeWidth)
         }
 
         viewBinding.rangeSlider.addOnChangeListener { _, value, _ ->
-            thickness = value
+            paintStrokeWidth = value
         }
     }
 }

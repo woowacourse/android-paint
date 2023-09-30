@@ -63,7 +63,7 @@ class CanvasView(
         lastY = y
     }
 
-    fun changeThickness(new: Float) {
+    fun changeStrokeWidth(new: Float) {
         curveLine = curveLine.copy(
             path = Path(),
             paint = Paint(curveLine.paint).apply { strokeWidth = new },
