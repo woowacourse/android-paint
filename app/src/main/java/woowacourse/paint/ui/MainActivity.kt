@@ -10,11 +10,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupBinding()
+        setUpBinding()
         setUpView()
     }
 
-    private fun setupBinding() {
+    private fun setUpBinding() {
         setContentView(binding.root)
         binding.rvColors.adapter = ColorAdapter { binding.paintingPaper.color = it }
     }
