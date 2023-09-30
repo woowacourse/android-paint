@@ -8,7 +8,7 @@ class BrushTest {
     @Test
     fun `Brush의 색상을 변경했을 때 두께는 유지된다`() {
         // given
-        val originBrush = Brush(BrushColor.RED, BrushWidth(10))
+        val originBrush = Brush(BrushColor.RED, BrushWidth(10f))
 
         // when
         val newBrush = originBrush.changeColor(BrushColor.BLUE)
@@ -21,10 +21,10 @@ class BrushTest {
     @Test
     fun `Brush의 두께를 변경했을 때 색상은 유지된다`() {
         // given
-        val originBrush = Brush(BrushColor.RED, BrushWidth(10))
+        val originBrush = Brush(BrushColor.RED, BrushWidth(10f))
 
         // when
-        val newBrush = originBrush.changeWidth(BrushWidth(50))
+        val newBrush = originBrush.changeWidth(BrushWidth(50f))
 
         // then
         assertNotEquals(originBrush.brushWidth, newBrush.brushWidth)

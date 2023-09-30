@@ -1,9 +1,9 @@
 package com.now.domain
 
 @JvmInline
-value class BrushWidth(val width: Int) {
+value class BrushWidth(val width: Float) {
     init {
-        require(width in 0..100) { ERROR_WIDTH }
+        require(width in 0f..100f) { ERROR_WIDTH }
     }
 
     companion object {
