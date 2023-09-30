@@ -5,7 +5,6 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -16,8 +15,7 @@ class DrawingCanvas @JvmOverloads constructor(
 ) : View(context, attrs) {
 
     private val paletteHistory = DrawingHistory()
-    private var path = Path()
-    private val paint = Paint()
+    private var drawingElement = DrawingElement()
 
     init {
         isFocusable = true
@@ -30,7 +28,7 @@ class DrawingCanvas @JvmOverloads constructor(
         paletteHistory.history.forEach {
             canvas.drawPath(it.path, it.paint)
         }
-        canvas.drawPath(path, paint)
+        canvas.drawPath(drawingElement.path, drawingElement.paint)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -39,34 +37,34 @@ class DrawingCanvas @JvmOverloads constructor(
         val pointY = event.y
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                path.moveTo(pointX, pointY)
+                drawingElement.movePath(pointX, pointY)
             }
 
             MotionEvent.ACTION_MOVE -> {
-                path.lineTo(pointX, pointY)
+                drawingElement.initPath(pointX, pointY)
             }
 
             else -> super.onTouchEvent(event)
         }
-        paletteHistory.addHistory(DrawingElement(path, Paint(paint)))
+        paletteHistory.addHistory(drawingElement.copy(paint = Paint(drawingElement.paint)))
         invalidate()
         return true
     }
 
     private fun initSetupPaint() {
-        paint.strokeWidth = 50.0f
-        paint.style = Paint.Style.STROKE
-        paint.color = Color.RED
+        drawingElement.paint.apply {
+            strokeWidth = 50.0f
+            style = Paint.Style.STROKE
+            color = Color.RED
+        }
     }
 
     fun setStroke(value: Float) {
-        path = Path()
-        this.paint.strokeWidth = value
+        drawingElement = drawingElement.setStroke(value)
     }
 
     fun setColor(color: Int) {
-        path = Path()
-        this.paint.color = context.getColor(color)
+        drawingElement = drawingElement.setColor(context.getColor(color))
     }
 
     companion object {
