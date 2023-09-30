@@ -11,11 +11,20 @@ class DefaultDrawingKitRepository @Inject constructor() : DrawingKitRepository {
     private var thickness = 0f
     private var paintColor = PaintColor("#FF0000")
     private val paintColors = listOf(
-        PaintColor("#FF0000"),
-        PaintColor("#FFA500"),
-        PaintColor("#FFFF00"),
-        PaintColor("#008000"),
-        PaintColor("#0000FF"),
+        PaintColor("#FF0000"), // 빨강
+        PaintColor("#FF8C00"), // 주황
+        PaintColor("#FFFF00"), // 노랑
+        PaintColor("#008000"), // 초록
+        PaintColor("#0000FF"), // 파랑
+        PaintColor("#000080"), // 남색
+        PaintColor("#8B00FF"), // 보라
+        PaintColor("#FFC0CB"), // 분홍
+        PaintColor("#964B00"), // 갈색
+        PaintColor("#808080"), // 회색
+        PaintColor("#9DD84B"), // 연두
+        PaintColor("#99CCFF"), // 하늘
+        PaintColor("#000000"), // 검정
+        PaintColor("#FFFFFF"), // 흰색
     )
 
     override fun getDrawingTool(): DrawingTool {
