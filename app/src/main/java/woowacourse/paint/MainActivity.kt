@@ -18,6 +18,8 @@ class MainActivity : AppCompatActivity() {
     private fun setupBinding() {
         setContentView(binding.root)
         binding.paintingPaper
+
+        binding.rvColors.adapter = ColorAdapter { binding.paintingPaper.color = it }
     }
 
     private fun setUpView() {
@@ -25,10 +27,6 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnBrushSize.setOnClickListener {
             binding.paintingPaper.brushSize += 10F
-        }
-
-        binding.btnColor.setOnClickListener {
-            binding.paintingPaper.color = Color.BLUE
         }
     }
 }
