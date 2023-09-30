@@ -6,14 +6,24 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import java.lang.Math.sqrt
 
 class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(context, attrs) {
+
     private val brushes = mutableListOf<Brush>()
-    private val paint = Paint()
+
+    private val path
+        get() = Path()
+
+    private val paint
+        get() = Paint().apply {
+            color = this@PaintingPaper.color
+            strokeWidth = brushSize
+            style = Paint.Style.STROKE
+        }
+
     private var prevPoint = Pair(0f, 0f)
 
     private val previewBrush
@@ -22,7 +32,7 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
                 moveTo(100F, 100F)
                 lineTo(200F, 100F)
             },
-            getNewPaint(),
+            paint,
         )
 
     var color = Color.BLACK
@@ -40,7 +50,6 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
     init {
         isFocusable = true
         isFocusableInTouchMode = true
-        setupPaint()
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -53,18 +62,12 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
 
     override fun onTouchEvent(event: MotionEvent): Boolean = when (event.action) {
         MotionEvent.ACTION_DOWN -> {
-            Log.d(TAG, "ACTION_DOWN")
-            brushes += Brush(
-                getNewPath().apply {
-                    moveTo(event.x, event.y)
-                },
-                getNewPaint(),
-            )
+            brushes += Brush(path.apply { moveTo(event.x, event.y) }, paint)
             true
         }
 
         MotionEvent.ACTION_MOVE -> {
-            if (calculateDistance(event, prevPoint) >= 1) {
+            if (calculateDistance(event, prevPoint) >= 0.1) {
                 prevPoint = Pair(event.x, event.y)
                 brushes.last().path.lineTo(event.x, event.y)
                 invalidate()
@@ -72,38 +75,13 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
             true
         }
 
-        MotionEvent.ACTION_UP -> {
-            Log.d(TAG, "ACTION_UP")
-            true
-        }
-
         else -> super.onTouchEvent(event)
-    }
-
-    private fun getNewBrush(): Brush {
-        return Brush(getNewPath(), getNewPaint())
-    }
-
-    private fun getNewPath(): Path {
-        return Path()
-    }
-
-    private fun getNewPaint(): Paint {
-        return Paint().apply {
-            color = this@PaintingPaper.color
-            strokeWidth = brushSize
-            style = Paint.Style.STROKE
-        }
     }
 
     private fun calculateDistance(event: MotionEvent, point: Pair<Float, Float>): Float {
         val dx = event.x - point.first
         val dy = event.y - point.second
         return sqrt((dx * dx + dy * dy).toDouble()).toFloat()
-    }
-
-    private fun setupPaint() {
-        paint.color = Color.RED
     }
 
     fun undo() {
@@ -116,9 +94,5 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
     fun clear() {
         brushes.clear()
         invalidate()
-    }
-
-    companion object {
-        private val TAG = PaintingPaper::class.java.simpleName
     }
 }
