@@ -1,7 +1,7 @@
 package com.now.domain
 
 @JvmInline
-value class BrushWidth(private val width: Int) {
+value class BrushWidth(val width: Int) {
     init {
         require(width in 0..100) { ERROR_WIDTH }
     }
