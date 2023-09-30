@@ -49,19 +49,11 @@ class MainActivity : AppCompatActivity(), OnColorClickListener {
         )
 
         binding.btnColorChange.setOnClickListener {
-            if (binding.rvColor.isVisible) {
-                binding.rvColor.visibility = View.GONE
-            } else {
-                binding.rvColor.visibility = View.VISIBLE
-            }
+            binding.rvColor.isVisible = !binding.rvColor.isVisible
         }
 
         binding.btnStrokeChange.setOnClickListener {
-            if (binding.rangeSlider.isVisible) {
-                binding.rangeSlider.visibility = View.GONE
-            } else {
-                binding.rangeSlider.visibility = View.VISIBLE
-            }
+            binding.rangeSlider.isVisible = !binding.rangeSlider.isVisible
         }
     }
 
