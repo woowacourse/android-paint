@@ -1,4 +1,4 @@
-package woowacourse.paint
+package woowacourse.paint.ui
 
 import android.graphics.Color
 import android.os.Bundle

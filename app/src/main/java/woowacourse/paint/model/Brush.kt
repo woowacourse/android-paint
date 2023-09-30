@@ -1,4 +1,4 @@
-package woowacourse.paint.customVeiw
+package woowacourse.paint.model
 
 import android.graphics.Canvas
 import android.graphics.Paint
