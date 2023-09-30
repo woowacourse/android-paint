@@ -15,7 +15,7 @@ class PaintView(
     attributeSet: AttributeSet,
 ) : View(context, attributeSet) {
 
-    private var penSize = 50f
+    var penSize: Float = 5f
 
     private val path = Path()
     private val paint = Paint().apply {
