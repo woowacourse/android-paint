@@ -11,8 +11,6 @@ import woowacourse.paint.presentation.uimodel.BrushColorUiModel
 class MainActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityMainBinding
     private val viewModel: MainViewModel by viewModels()
-    private var paintStrokeWidth = 0f
-    private lateinit var paintColor: BrushColorUiModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,8 +23,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRecyclerView() {
         val colors = BrushColorUiModel.values().toList()
-        val adapter = PaletteAdapter(colors) { paintColor = colors[it] }
+        val adapter = PaletteAdapter(colors) { viewModel.changeBrushColor(it) }
         viewBinding.rvColor.adapter = adapter
+        viewBinding.rvColor.setHasFixedSize(true)
     }
 
     private fun subscribe() {
@@ -37,16 +36,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setListener() {
-        viewBinding.btnColorChange.setOnClickListener {
-            viewModel.changeBrushColor(paintColor)
-        }
-
-        viewBinding.btnThicknessChange.setOnClickListener {
-            viewModel.changeBrushWidth(paintStrokeWidth)
-        }
-
         viewBinding.rangeSlider.addOnChangeListener { _, value, _ ->
-            paintStrokeWidth = value
+            viewModel.changeBrushWidth(value)
         }
     }
 }

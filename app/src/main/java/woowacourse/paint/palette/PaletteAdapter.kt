@@ -8,7 +8,7 @@ import woowacourse.paint.presentation.uimodel.BrushColorUiModel
 
 class PaletteAdapter(
     private val colors: List<BrushColorUiModel>,
-    private val onPaletteClick: (Int) -> Unit,
+    private val onPaletteClick: (BrushColorUiModel) -> Unit,
 ) :
     RecyclerView.Adapter<PaletteViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PaletteViewHolder {
@@ -18,7 +18,7 @@ class PaletteAdapter(
     }
 
     override fun onBindViewHolder(holder: PaletteViewHolder, position: Int) {
-        holder.bind(position, colors[position].color) { onPaletteClick(position) }
+        holder.bind(colors[position]) { onPaletteClick(colors[position]) }
     }
 
     override fun getItemCount(): Int {
