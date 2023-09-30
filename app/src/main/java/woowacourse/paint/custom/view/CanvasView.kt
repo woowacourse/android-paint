@@ -36,15 +36,12 @@ class CanvasView(
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
+                curveLines.add(curveLine)
                 curveLine.path.moveTo(pointX, pointY)
             }
-
             MotionEvent.ACTION_MOVE -> {
                 curveLine.path.lineTo(pointX, pointY)
-                curveLine.path.moveTo(pointX, pointY)
-                curveLines.add(curveLine)
             }
-
             else -> super.onTouchEvent(event)
         }
         invalidate()
