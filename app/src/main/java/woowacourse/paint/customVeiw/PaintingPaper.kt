@@ -13,15 +13,7 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
 
     private val brushes = mutableListOf<Brush>()
 
-    private val path
-        get() = Path()
-
-    private val paint
-        get() = Paint().apply {
-            color = this@PaintingPaper.color
-            strokeWidth = brushSize
-            style = Paint.Style.STROKE
-        }
+    private val lastBrush get() = brushes.last()
 
     private val previewBrush
         get() = Brush(
@@ -31,6 +23,16 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
             },
             paint,
         )
+
+    private val path
+        get() = Path()
+
+    private val paint
+        get() = Paint().apply {
+            color = this@PaintingPaper.color
+            strokeWidth = brushSize
+            style = Paint.Style.STROKE
+        }
 
     var color = Color.BLACK
         set(value) {
@@ -51,10 +53,8 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        brushes.forEach {
-            canvas.drawPath(it.path, it.paint)
-        }
-        canvas.drawPath(previewBrush.path, previewBrush.paint)
+        brushes.forEach { brush -> brush.drawOn(canvas) }
+        previewBrush.drawOn(canvas)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean = when (event.action) {
@@ -64,8 +64,8 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
         }
 
         MotionEvent.ACTION_MOVE -> {
-            if (brushes.last().available(event.x, event.y)) {
-                brushes.last().move(event.x, event.y)
+            if (lastBrush.available(event.x, event.y)) {
+                lastBrush.move(event.x, event.y)
                 invalidate()
             }
             true
@@ -75,10 +75,8 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
     }
 
     fun undo() {
-        if (brushes.isNotEmpty()) {
-            brushes.removeLast()
-            invalidate()
-        }
+        brushes.removeLastOrNull() ?: return
+        invalidate()
     }
 
     fun clear() {
