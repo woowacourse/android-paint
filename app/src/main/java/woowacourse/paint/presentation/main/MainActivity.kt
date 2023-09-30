@@ -20,8 +20,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initRecyclerView() {
-        val colors = BrushColorUiModel.values().map { it.color }
-        val adapter = PaletteAdapter(colors) { paintColor = colors[it] }
+        val colors = BrushColorUiModel.values().toList()
+        val adapter = PaletteAdapter(colors) { paintColor = colors[it].color }
         viewBinding.rvColor.adapter = adapter
     }
 

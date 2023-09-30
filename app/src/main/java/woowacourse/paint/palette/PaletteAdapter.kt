@@ -4,9 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.paint.databinding.ItemPaletteBinding
+import woowacourse.paint.presentation.uimodel.BrushColorUiModel
 
 class PaletteAdapter(
-    private val colors: List<Int>,
+    private val colors: List<BrushColorUiModel>,
     private val onPaletteClick: (Int) -> Unit,
 ) :
     RecyclerView.Adapter<PaletteViewHolder>() {
@@ -17,7 +18,7 @@ class PaletteAdapter(
     }
 
     override fun onBindViewHolder(holder: PaletteViewHolder, position: Int) {
-        holder.bind(position, colors[position]) { onPaletteClick(position) }
+        holder.bind(position, colors[position].color) { onPaletteClick(position) }
     }
 
     override fun getItemCount(): Int {
