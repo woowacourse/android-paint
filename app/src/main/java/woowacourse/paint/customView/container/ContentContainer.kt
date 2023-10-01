@@ -15,22 +15,20 @@ class ContentContainer(
     private val size: Int
         get() = _drawnContents.size
 
-    private lateinit var drawingContent: Content
-
     fun updateContent(event: MotionEvent, paint: Paint) {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                drawingContent = createContent(paint)
+                val drawingContent = createContent(paint)
                 drawingContent.action(event)
                 _drawnContents.add(drawingContent)
             }
 
             MotionEvent.ACTION_MOVE -> {
-                drawingContent.action(event)
+                _drawnContents.lastOrNull()?.action(event)
             }
 
             MotionEvent.ACTION_UP -> {
-                drawingContent.action(event)
+                _drawnContents.lastOrNull()?.action(event)
             }
         }
     }

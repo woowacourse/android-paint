@@ -5,22 +5,21 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.ColorInt
 import woowacourse.paint.R
-import woowacourse.paint.customView.content.Stroke
+import woowacourse.paint.customView.container.ContentContainer
+import woowacourse.paint.customView.content.Content
 
 class PaintBoard @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
 ) : View(context, attrs) {
-    private var id: Int = 0
-    private val _drawnPaths: MutableList<Stroke> = mutableListOf()
-    val drawnPaths: List<Stroke>
-        get() = _drawnPaths.map { it.deepCopy() }
+    private val contents = ContentContainer()
+    val drawnPaths: List<Content>
+        get() = contents.getDrawnContents()
 
     var minStrokeWidth: Float = DEFAULT_MIN_STROKE_WIDTH
         set(value) {
@@ -88,34 +87,19 @@ class PaintBoard @JvmOverloads constructor(
         this.strokeWidth = currentStrokeWidth
     }
 
-    fun changeDrawnPaths(paths: List<Stroke>) {
-        _drawnPaths.clear()
-        _drawnPaths.addAll(paths)
+    fun changeDrawnPaths(paths: List<Content>) {
+        contents.changeDrawnContents(paths)
         invalidate()
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-
-        _drawnPaths.forEach { pathInfo -> canvas.drawPath(pathInfo.path, pathInfo.paint) }
+        contents.drawOnCanvas(canvas)
     }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        when (event.action) {
-            MotionEvent.ACTION_DOWN -> {
-                _drawnPaths.add(Stroke(id++, Path(), getCurrentPaint()))
-                _drawnPaths.lastOrNull()?.path?.moveTo(event.x, event.y)
-            }
-
-            MotionEvent.ACTION_MOVE -> {
-                _drawnPaths.lastOrNull()?.path?.lineTo(event.x, event.y)
-            }
-
-            MotionEvent.ACTION_UP -> {
-                _drawnPaths.lastOrNull()?.path?.lineTo(event.x, event.y)
-            }
-        }
+        contents.updateContent(event, getCurrentPaint())
         invalidate()
         return true
     }
