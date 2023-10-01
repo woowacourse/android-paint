@@ -3,8 +3,6 @@ package woowacourse.paint.customView
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -12,6 +10,7 @@ import androidx.annotation.ColorInt
 import woowacourse.paint.R
 import woowacourse.paint.customView.container.ContentContainer
 import woowacourse.paint.customView.content.Content
+import woowacourse.paint.customView.content.ContentType
 
 class PaintBoard @JvmOverloads constructor(
     context: Context,
@@ -21,38 +20,35 @@ class PaintBoard @JvmOverloads constructor(
     val drawnPaths: List<Content>
         get() = contents.getDrawnContents()
 
-    var minStrokeWidth: Float = DEFAULT_MIN_STROKE_WIDTH
-        set(value) {
-            require(value in DEFAULT_MIN_STROKE_WIDTH..maxStrokeWidth) { "[ERROR] 펜의 최소 두께는 최대 두께 보다 작고 0이상이여야 합니다" }
-            field = value
-            if (currentStrokeWidth < value) currentStrokeWidth = value
-            updateDefaultStrokeWidth()
+    var currentColor: Int
+        set(@ColorInt value) {
+            contents.paintInfo.currentColor = value
         }
+        get() = contents.paintInfo.currentColor
 
-    var maxStrokeWidth: Float = DEFAULT_MAX_STROKE_WIDTH
+    var minStrokeWidth: Float
         set(value) {
-            require(value > minStrokeWidth) { "[ERROR] 펜의 최대 두께는 최소 두께 보다 커야 합니다" }
-            field = value
-            if (currentStrokeWidth > value) currentStrokeWidth = value
-            updateDefaultStrokeWidth()
+            contents.paintInfo.minStrokeWidth = value
         }
+        get() = contents.paintInfo.minStrokeWidth
 
-    private var defaultStrokeWidth: Float = (minStrokeWidth + maxStrokeWidth) / 2
-
-    @ColorInt
-    var currentColor: Int = DEFAULT_COLOR
+    var maxStrokeWidth: Float
         set(value) {
-            field = value
-            updateCurrentPaint()
+            contents.paintInfo.maxStrokeWidth = value
         }
-    var currentStrokeWidth: Float = defaultStrokeWidth
-        set(value) {
-            require(value in minStrokeWidth..maxStrokeWidth) { "[ERROR] 펜 두께는 ${minStrokeWidth}이상 ${maxStrokeWidth}이하의 범위만 가능합니다" }
-            field = value
-            updateCurrentPaint()
-        }
+        get() = contents.paintInfo.maxStrokeWidth
 
-    private var currentPaint: Paint = getCurrentPaint()
+    var currentStrokeWidth: Float
+        set(value) {
+            contents.paintInfo.currentStrokeWidth = value
+        }
+        get() = contents.paintInfo.currentStrokeWidth
+
+    var type: ContentType
+        set(value) {
+            contents.type = value
+        }
+        get() = contents.type
 
     init {
         if (attrs != null) initAttrs(attrs)
@@ -60,31 +56,23 @@ class PaintBoard @JvmOverloads constructor(
 
     private fun initAttrs(attrs: AttributeSet) {
         val typedArray = context.obtainStyledAttributes(attrs, R.styleable.PaintBoard)
-        this.currentColor = typedArray.getColor(R.styleable.PaintBoard_currentColor, DEFAULT_COLOR)
-        this.currentStrokeWidth =
-            typedArray.getFloat(R.styleable.PaintBoard_currentStrokeWidth, defaultStrokeWidth)
-        this.minStrokeWidth =
-            typedArray.getFloat(R.styleable.PaintBoard_minStrokeWidth, DEFAULT_MIN_STROKE_WIDTH)
-        this.maxStrokeWidth =
-            typedArray.getFloat(R.styleable.PaintBoard_maxStrokeWidth, DEFAULT_MAX_STROKE_WIDTH)
+        this.minStrokeWidth = typedArray.getFloat(
+            R.styleable.PaintBoard_minStrokeWidth,
+            contents.paintInfo.minStrokeWidth,
+        )
+        this.maxStrokeWidth = typedArray.getFloat(
+            R.styleable.PaintBoard_maxStrokeWidth,
+            contents.paintInfo.maxStrokeWidth,
+        )
+        this.currentColor = typedArray.getColor(
+            R.styleable.PaintBoard_currentColor,
+            contents.paintInfo.currentColor,
+        )
+        this.currentStrokeWidth = typedArray.getFloat(
+            R.styleable.PaintBoard_currentStrokeWidth,
+            contents.paintInfo.currentStrokeWidth,
+        )
         typedArray.recycle()
-    }
-
-    private fun updateDefaultStrokeWidth() {
-        defaultStrokeWidth = (minStrokeWidth + maxStrokeWidth) / 2
-    }
-
-    private fun updateCurrentPaint() {
-        currentPaint = getCurrentPaint()
-    }
-
-    private fun getCurrentPaint(): Paint = Paint().apply {
-        isAntiAlias = true
-        style = Paint.Style.STROKE
-        strokeCap = Paint.Cap.ROUND
-        strokeJoin = Paint.Join.ROUND
-        color = currentColor
-        this.strokeWidth = currentStrokeWidth
     }
 
     fun changeDrawnPaths(paths: List<Content>) {
@@ -99,16 +87,8 @@ class PaintBoard @JvmOverloads constructor(
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        contents.updateContent(event, getCurrentPaint())
+        contents.updateContent(event)
         invalidate()
         return true
-    }
-
-    companion object {
-        private const val DEFAULT_MIN_STROKE_WIDTH = 0f
-        private const val DEFAULT_MAX_STROKE_WIDTH = 100f
-
-        @ColorInt
-        private const val DEFAULT_COLOR = Color.RED
     }
 }

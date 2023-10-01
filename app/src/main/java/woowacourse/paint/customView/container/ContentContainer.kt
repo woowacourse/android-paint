@@ -4,6 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 import android.view.MotionEvent
+import woowacourse.paint.customView.PaintInfo
 import woowacourse.paint.customView.content.Content
 import woowacourse.paint.customView.content.ContentType
 import woowacourse.paint.customView.content.Stroke
@@ -12,13 +13,12 @@ class ContentContainer(
     private val _drawnContents: MutableList<Content> = mutableListOf(),
 ) {
     var type: ContentType = ContentType.Stroke
-    private val size: Int
-        get() = _drawnContents.size
+    val paintInfo = PaintInfo()
 
-    fun updateContent(event: MotionEvent, paint: Paint) {
+    fun updateContent(event: MotionEvent) {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                val drawingContent = createContent(paint)
+                val drawingContent = createContent(paintInfo.getPaint())
                 drawingContent.action(event)
                 _drawnContents.add(drawingContent)
             }
@@ -35,7 +35,7 @@ class ContentContainer(
 
     private fun createContent(paint: Paint): Content {
         return when (type) {
-            ContentType.Stroke -> Stroke(size, Path(), paint)
+            ContentType.Stroke -> Stroke(Path(), paint)
         }
     }
 
