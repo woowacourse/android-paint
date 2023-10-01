@@ -19,8 +19,6 @@ class PaletteAdapter(private val data: List<Int>, private val onClickPalette: (I
     override fun getItemCount(): Int = data.size
 
     override fun onBindViewHolder(holder: PaletteViewHolder, position: Int) {
-        if (holder.binding.paletteImageButton.drawable != null) DrawableCompat.setTint(
-            holder.binding.paletteImageButton.drawable, data[position]
-        )
+        holder.bind(data[position])
     }
 }
