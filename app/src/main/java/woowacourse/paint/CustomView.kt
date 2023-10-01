@@ -10,9 +10,9 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 
-class CustomView(context: Context, attrs: AttributeSet?) : View(context, attrs) {
-    private val path = Path()
-    private val paint = Paint()
+class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
+    private var path = Path()
+    private var paint = Paint()
 
     init {
         setupPaint()
@@ -35,7 +35,9 @@ class CustomView(context: Context, attrs: AttributeSet?) : View(context, attrs) 
             MotionEvent.ACTION_MOVE -> {
                 path.lineTo(pointX, pointY)
             }
-            MotionEvent.ACTION_UP -> { }
+            MotionEvent.ACTION_UP -> {
+                path.lineTo(pointX, pointY)
+            }
             else -> super.onTouchEvent(event)
         }
         invalidate()
@@ -43,9 +45,16 @@ class CustomView(context: Context, attrs: AttributeSet?) : View(context, attrs) 
     }
 
     private fun setupPaint() {
-        paint.color = Color.MAGENTA
+        paint.isAntiAlias = true
+        paint.color = Color.BLACK
         paint.style = Paint.Style.STROKE
         paint.strokeCap = Paint.Cap.ROUND
+        paint.strokeJoin = Paint.Join.ROUND
         paint.strokeWidth = 10f
+    }
+
+    fun setMyStrokeWidth(width: Float) {
+        paint.strokeWidth = width
+        invalidate()
     }
 }
