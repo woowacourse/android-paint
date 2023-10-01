@@ -46,24 +46,23 @@ class PaintView(
 
     private fun penDown(event: MotionEvent) {
         addLine()
+        currentLine.path.moveTo(event.x, event.y)
         penMove(event)
     }
 
     private fun penMove(event: MotionEvent) {
         val pointX: Float = event.x
         val pointY: Float = event.y
-        currentLine.path.addOval(
-            pointX - penSize / 2,
-            pointY - penSize / 2,
-            pointX + penSize / 2,
-            pointY + penSize / 2,
-            Path.Direction.CW,
-        )
+        currentLine.path.lineTo(pointX, pointY)
     }
 
     private fun addLine() {
         val paint = Paint().apply {
             color = penColor
+            style = Paint.Style.STROKE
+            strokeWidth = penSize
+            strokeCap = Paint.Cap.ROUND
+            strokeJoin = Paint.Join.ROUND
         }
         lines.add(Line(Path(), paint))
     }
