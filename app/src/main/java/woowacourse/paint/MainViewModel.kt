@@ -14,10 +14,7 @@ class MainViewModel : ViewModel() {
         get() = _paintChangingState
 
     private val _colors =
-        MutableLiveData(
-            PaletteColor.getAllColors()
-                .map { ColorUiModel(it, it.ordinal == 0) },
-        )
+        MutableLiveData(PaletteColor.getAllColors().map { ColorUiModel(it, it.ordinal == 0) })
     val colors: LiveData<List<ColorUiModel>>
         get() = _colors
 
