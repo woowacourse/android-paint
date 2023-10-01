@@ -19,12 +19,6 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
             TwoPointerDragListener(this, screenWidth, screenHeight),
         )
 
-    private val pinchZoomScaleDetector =
-        ScaleGestureDetector(
-            context,
-            PinchZoomListener(this),
-        )
-
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         adjustBoardSize()
@@ -42,7 +36,6 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         twoPointerDragScaleDetector.onTouchEvent(event)
-//        pinchZoomScaleDetector.onTouchEvent(event)
         return true
     }
 
