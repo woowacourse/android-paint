@@ -9,11 +9,13 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import woowacourse.paint.ui.model.Drawing
 import woowacourse.paint.ui.model.DrawingToolModel
+import woowacourse.paint.ui.model.Drawings
 
 class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    private val drawings: ArrayDeque<Pair<Path, Paint>> = ArrayDeque()
-    private val savedDrawings: ArrayDeque<Pair<Path, Paint>> = ArrayDeque()
+    private val drawings: Drawings = Drawings()
+    private val savedDrawings: Drawings = Drawings()
     private lateinit var path: Path
     private lateinit var drawingTool: DrawingToolModel
     private var thickness = DEFAULT_THICKNESS
@@ -21,7 +23,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        drawings.forEach { (path, paint) ->
+        drawings.items.forEach { (path, paint) ->
             canvas.drawPath(path, paint)
         }
     }
@@ -59,7 +61,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
             if (drawingTool != DrawingToolModel.ERASER) color = paintColor
             if (drawingTool == DrawingToolModel.HIGHLIGHTER) alpha = HIGHLIGHTER_OPACITY
         }
-        drawings.add(path to paint)
+        drawings.addLast(Drawing(path, paint))
         savedDrawings.clear()
     }
 
@@ -76,19 +78,15 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     fun goToPreviousDrawing() {
-        if (drawings.isNotEmpty()) {
-            val drawing = drawings.removeLast()
-            savedDrawings.addFirst(drawing)
-            invalidate()
-        }
+        val drawing = drawings.removeLast()
+        drawing?.let { savedDrawings.addFirst(drawing) }
+        invalidate()
     }
 
     fun goToNextDrawing() {
-        if (savedDrawings.isNotEmpty()) {
-            val drawing = savedDrawings.removeFirst()
-            drawings.add(drawing)
-            invalidate()
-        }
+        val drawing = savedDrawings.removeFirst()
+        drawing?.let { drawings.addLast(drawing) }
+        invalidate()
     }
 
     fun setNewCanvas() {
