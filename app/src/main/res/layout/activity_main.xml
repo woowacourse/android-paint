@@ -7,7 +7,7 @@
             name="viewModel"
             type="woowacourse.paint.MainViewModel" />
 
-        <import type="woowacourse.paint.ChangingState" />
+        <import type="woowacourse.paint.PaintChangingState" />
 
         <import type="android.view.View" />
     </data>
@@ -31,7 +31,7 @@
             android:id="@+id/rs_thickness_changer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:visibility="@{viewModel.changingState instanceof ChangingState.WidthChanging ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.paintChangingState instanceof PaintChangingState.WidthChanging ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toTopOf="@id/rv_colors"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -41,7 +41,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:visibility="@{viewModel.changingState instanceof ChangingState.ColorChanging ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.paintChangingState instanceof PaintChangingState.ColorChanging ? View.VISIBLE : View.GONE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

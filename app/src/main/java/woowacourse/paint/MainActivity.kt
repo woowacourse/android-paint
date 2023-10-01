@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupColors() {
         binding.rvColors.adapter = adapter
         binding.rvColors.setHasFixedSize(true)
-        binding.rvColors.addItemDecoration(ColorSpaceItemDecoration(getSpace()))
+        binding.rvColors.addItemDecoration(SpaceItemDecoration(getSpace()))
     }
 
     private fun getSpace(): Int {
