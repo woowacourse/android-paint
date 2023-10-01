@@ -15,7 +15,7 @@ class PaintView(
     attributeSet: AttributeSet,
 ) : View(context, attributeSet) {
 
-    private val lines: MutableList<Line> = mutableListOf(Line(Path(), Paint()))
+    private val lines: MutableList<Line> = mutableListOf()
     private val currentLine get() = lines[lines.lastIndex]
 
     var penSize: Float = 5f
