@@ -3,33 +3,33 @@ package woowacourse.paint.presentation.ui.canvas
 import android.graphics.Canvas
 
 class Painting {
-    private val paintedLines: MutableList<Line> = mutableListOf()
-    private var line: Line = Line()
+    private val drawnLines: Lines = Lines()
+    private var drawingLine: Line = Line()
 
     fun drawLines(canvas: Canvas) {
-        paintedLines.forEach { line -> line.draw(canvas) }
+        drawnLines.draw(canvas)
     }
 
     fun changeColor(color: Int) {
-        val palette = line.palette.changeColor(color)
+        val palette = drawingLine.palette.changeColor(color)
         changePalette(palette)
     }
 
     fun changeWidth(width: Float) {
-        val palette = line.palette.changeWidth(width)
+        val palette = drawingLine.palette.changeWidth(width)
         changePalette(palette)
     }
 
     private fun changePalette(palette: Palette) {
-        line = Line(palette = palette)
-        paintedLines.add(line)
+        drawingLine = Line(palette = palette)
+        drawnLines.add(drawingLine)
     }
 
     fun drawLine(pointX: Float, pointY: Float) {
-        line.lineTo(pointX, pointY)
+        drawingLine.lineTo(pointX, pointY)
     }
 
     fun movePoint(pointX: Float, pointY: Float) {
-        line.moveTo(pointX, pointY)
+        drawingLine.moveTo(pointX, pointY)
     }
 }
