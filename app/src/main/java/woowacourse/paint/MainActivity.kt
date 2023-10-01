@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MarginLayoutParamsCompat
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.model.PaletteColor
+import woowacourse.paint.model.pen.Pen
 
 class MainActivity : AppCompatActivity() {
 
@@ -23,13 +24,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initSlider() {
-        binding.slider.value = 5f
-        binding.slider.valueTo = 100f
-        binding.slider.valueFrom = 1f
-        binding.slider.stepSize = 1f
+        binding.slider.value = Pen.DEFAULT_WIDTH
+        binding.slider.valueTo = Pen.MAX_WIDTH
+        binding.slider.valueFrom = Pen.MIN_WIDTH
+        binding.slider.stepSize = Pen.WIDTH_STEP
 
         binding.slider.addOnChangeListener { slider, value, fromUser ->
-            binding.paintView.penSize = value
+            binding.paintView.pen.width = value
         }
     }
 
@@ -46,7 +47,7 @@ class MainActivity : AppCompatActivity() {
             view.setBackgroundColor(Color.parseColor(paletteColor.hexCode))
 
             view.setOnClickListener {
-                binding.paintView.penColor = Color.parseColor(paletteColor.hexCode)
+                binding.paintView.pen.paletteColor = paletteColor
             }
 
             container.addView(view)

@@ -3,14 +3,13 @@ package woowacourse.paint
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import woowacourse.paint.model.pen.BallpointPen
 import woowacourse.paint.model.Line
-import woowacourse.paint.model.PaletteColor
+import woowacourse.paint.model.pen.Pen
 
 class PaintView(
     context: Context,
@@ -20,8 +19,7 @@ class PaintView(
     private val lines: MutableList<Line> = mutableListOf()
     private val currentLine get() = lines[lines.lastIndex]
 
-    var penSize: Float = 5f
-    var penColor: Int = Color.parseColor(PaletteColor.BLUE.hexCode)
+    var pen: Pen = BallpointPen()
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -59,13 +57,7 @@ class PaintView(
     }
 
     private fun addLine() {
-        val paint = Paint().apply {
-            color = penColor
-            style = Paint.Style.STROKE
-            strokeWidth = penSize
-            strokeCap = Paint.Cap.ROUND
-            strokeJoin = Paint.Join.ROUND
-        }
+        val paint = pen.getPaint()
         lines.add(Line(Path(), paint))
     }
 }
