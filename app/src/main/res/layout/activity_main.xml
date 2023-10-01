@@ -20,6 +20,7 @@
             android:id="@+id/pb_board"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            app:contentType="@{vm.type}"
             app:currentColor="@{ContextCompat.getColor(context, vm.appliedColor.colorRes)}"
             app:currentStrokeWidth="@{vm.appliedStroke}"
             app:layout_constraintBottom_toTopOf="@id/slider_pen_stroke_width"

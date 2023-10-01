@@ -5,5 +5,8 @@
         <attr name="maxStrokeWidth" format="float" />
         <attr name="currentColor" format="color" />
         <attr name="currentStrokeWidth" format="float" />
+        <attr name="contentType" format="enum">
+            <enum name="STROKE" value="0" />
+        </attr>
     </declare-styleable>
 </resources>

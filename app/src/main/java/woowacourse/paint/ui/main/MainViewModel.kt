@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import woowacourse.paint.customView.content.Content
+import woowacourse.paint.customView.content.ContentType
 import woowacourse.paint.model.BoardColorItem
 import woowacourse.paint.model.PaintColor
 
@@ -28,6 +29,10 @@ class MainViewModel : ViewModel() {
         MutableLiveData(getBoardColorItems(selectedColor))
     val colors: LiveData<List<BoardColorItem>>
         get() = _colors
+
+    private val _type: MutableLiveData<ContentType> = MutableLiveData(ContentType.Stroke)
+    val type: LiveData<ContentType>
+        get() = _type
 
     private val _drawnPaths = mutableListOf<Content>()
     val drawnPaths: List<Content>

@@ -12,7 +12,7 @@ import woowacourse.paint.customView.content.Stroke
 class ContentContainer(
     private val _drawnContents: MutableList<Content> = mutableListOf(),
 ) {
-    var type: ContentType = ContentType.Stroke
+    var contentType: ContentType = ContentType.Stroke
     val paintInfo = PaintInfo()
 
     fun updateContent(event: MotionEvent) {
@@ -34,7 +34,7 @@ class ContentContainer(
     }
 
     private fun createContent(paint: Paint): Content {
-        return when (type) {
+        return when (contentType) {
             ContentType.Stroke -> Stroke(Path(), paint)
         }
     }
