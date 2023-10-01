@@ -96,11 +96,11 @@ class PaintBoard @JvmOverloads constructor(
         invalidate()
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        _drawnPaths.forEach { pathInfo -> canvas?.drawPath(pathInfo.path, pathInfo.paint) }
-        canvas?.drawPath(_drawingPath, currentPaint)
+        _drawnPaths.forEach { pathInfo -> canvas.drawPath(pathInfo.path, pathInfo.paint) }
+        canvas.drawPath(_drawingPath, currentPaint)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -116,6 +116,7 @@ class PaintBoard @JvmOverloads constructor(
             }
 
             MotionEvent.ACTION_UP -> {
+                _drawingPath.lineTo(event.x, event.y)
                 _drawnPaths.add(DrawingPathInfo(Path(_drawingPath), getCurrentPaint()))
                 _drawingPath.reset()
             }
