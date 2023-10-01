@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import woowacourse.paint.canvas.CustomColor
+import woowacourse.paint.canvas.PaletteColor
 import woowacourse.paint.model.ColorUiModel
 
 class MainViewModel : ViewModel() {
@@ -15,15 +15,15 @@ class MainViewModel : ViewModel() {
 
     private val _colors =
         MutableLiveData(
-            CustomColor.getAllColors()
+            PaletteColor.getAllColors()
                 .map { ColorUiModel(it, it.ordinal == 0) },
         )
     val colors: LiveData<List<ColorUiModel>>
         get() = _colors
 
-    val selectedColor: LiveData<CustomColor>
+    val selectedColor: LiveData<PaletteColor>
         get() = Transformations.map(_colors) { colors ->
-            colors.firstOrNull { it.isPicked }?.color ?: CustomColor.RED
+            colors.firstOrNull { it.isPicked }?.color ?: PaletteColor.RED
         }
 
     private val _width = MutableLiveData(0f)

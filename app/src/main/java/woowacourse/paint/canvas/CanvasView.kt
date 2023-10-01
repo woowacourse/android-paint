@@ -17,7 +17,7 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
     private var startPoint: Point = Point(0f, 0f)
     private val lines = mutableListOf<Line>()
 
-    fun initPaint(width: Float, color: CustomColor) {
+    fun initPaint(width: Float, color: PaletteColor) {
         paint = getPaint(width, color.colorCode)
     }
 
@@ -63,7 +63,7 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
         paint = getPaint(width, paint.color)
     }
 
-    fun setupColor(color: CustomColor) {
+    fun setupColor(color: PaletteColor) {
         paint = getPaint(paint.strokeWidth, color.colorCode)
     }
 
