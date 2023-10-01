@@ -28,17 +28,18 @@ class PaintView(context: Context, attributeSet: AttributeSet) : View(context, at
     override fun onTouchEvent(event: MotionEvent): Boolean {
         return when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                startTouch(event.x, event.y)
+                startPaint(event.x, event.y)
+                drawDot(event.x, event.y)
                 true
             }
 
             MotionEvent.ACTION_MOVE -> {
-                moveTouch(event.x, event.y)
+                movePaint(event.x, event.y)
                 true
             }
 
             MotionEvent.ACTION_UP -> {
-                endTouch()
+                cacheCurrentPaint()
                 true
             }
 
@@ -54,22 +55,25 @@ class PaintView(context: Context, attributeSet: AttributeSet) : View(context, at
         currentPaint.strokeWidth = strokeWidth
     }
 
-    private fun startTouch(pointX: Float, pointY: Float) {
+    private fun startPaint(pointX: Float, pointY: Float) {
         currentPath.moveTo(pointX, pointY)
+    }
+    
+    private fun drawDot(pointX: Float, pointY: Float) {
         currentPath.lineTo(
             pointX, pointY
         )
         invalidate()
     }
 
-    private fun moveTouch(pointX: Float, pointY: Float) {
+    private fun movePaint(pointX: Float, pointY: Float) {
         currentPath.lineTo(
             pointX, pointY
         )
         invalidate()
     }
 
-    private fun endTouch() {
+    private fun cacheCurrentPaint() {
         paths.add(currentPath to currentPaint)
         currentPath = Path()
         currentPaint = Paint(currentPaint)
