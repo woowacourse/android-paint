@@ -1,7 +1,10 @@
 package woowacourse.paint
 
-class Paintings(private val paintings: MutableList<Painting>) {
+class Paintings(item: MutableList<Painting>) {
+    private val _paintings = item
+    val painting: List<Painting> = _paintings
+
     fun storePainting(painting: Painting) {
-        paintings.add(painting)
+        _paintings.add(painting)
     }
 }
