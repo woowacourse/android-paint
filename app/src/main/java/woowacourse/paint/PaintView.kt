@@ -3,7 +3,7 @@ package woowacourse.paint
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color.BLACK
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
@@ -15,25 +15,28 @@ class PaintView(
     attributeSet: AttributeSet,
 ) : View(context, attributeSet) {
 
-    var penSize: Float = 5f
+    private val lines: MutableList<Line> = mutableListOf(Line(Path(), Paint()))
+    private val currentLine get() = lines[lines.lastIndex]
 
-    private val path = Path()
-    private val paint = Paint().apply {
-        color = BLACK
-    }
+    var penSize: Float = 5f
+    var penColor: Int = Color.parseColor(PaletteColor.BLUE.hexCode)
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvas.drawPath(path, paint)
+        drawCanvas(canvas)
+    }
+
+    private fun drawCanvas(canvas: Canvas) {
+        lines.forEach {
+            canvas.drawPath(it.path, it.paint)
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        val pointX = event.x
-        val pointY = event.y
-
         when (event.action) {
-            MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE -> addOval(pointX, pointY)
+            MotionEvent.ACTION_DOWN -> penDown(event)
+            MotionEvent.ACTION_MOVE -> penMove(event)
             else -> super.onTouchEvent(event)
         }
 
@@ -41,13 +44,27 @@ class PaintView(
         return true
     }
 
-    private fun addOval(pointX: Float, pointY: Float) {
-        path.addOval(
+    private fun penDown(event: MotionEvent) {
+        addLine()
+        penMove(event)
+    }
+
+    private fun penMove(event: MotionEvent) {
+        val pointX: Float = event.x
+        val pointY: Float = event.y
+        currentLine.path.addOval(
             pointX - penSize / 2,
             pointY - penSize / 2,
             pointX + penSize / 2,
             pointY + penSize / 2,
             Path.Direction.CW,
         )
+    }
+
+    private fun addLine() {
+        val paint = Paint().apply {
+            color = penColor
+        }
+        lines.add(Line(Path(), paint))
     }
 }

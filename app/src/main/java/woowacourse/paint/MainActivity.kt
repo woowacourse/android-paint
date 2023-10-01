@@ -1,7 +1,11 @@
 package woowacourse.paint
 
+import android.graphics.Color
 import android.os.Bundle
+import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.MarginLayoutParamsCompat
 import woowacourse.paint.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -12,7 +16,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         initSlider()
+        initColorPalette()
     }
 
     private fun initSlider() {
@@ -23,6 +29,26 @@ class MainActivity : AppCompatActivity() {
 
         binding.slider.addOnChangeListener { slider, value, fromUser ->
             binding.paintView.penSize = value
+        }
+    }
+
+    private fun initColorPalette() {
+        PaletteColor.values().forEachIndexed { index, paletteColor ->
+            val container = binding.colorContainer
+            val view = TextView(this@MainActivity)
+            val params = ViewGroup.MarginLayoutParams(240, 240)
+            if (index != PaletteColor.values().lastIndex) {
+                MarginLayoutParamsCompat.setMarginEnd(params, 40)
+            }
+
+            view.layoutParams = params
+            view.setBackgroundColor(Color.parseColor(paletteColor.hexCode))
+
+            view.setOnClickListener {
+                binding.paintView.penColor = Color.parseColor(paletteColor.hexCode)
+            }
+
+            container.addView(view)
         }
     }
 }
