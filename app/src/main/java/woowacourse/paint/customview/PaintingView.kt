@@ -25,7 +25,13 @@ class PaintingView : View {
     private var currentStroke: Stroke = Stroke(Path(), Paint())
 
     private val _strokes: MutableList<Stroke> = mutableListOf(currentStroke)
-    val strokes: List<Stroke> get() = _strokes.toList()
+    val strokes: List<Stroke>
+        get() = _strokes.map { stroke ->
+            stroke.copy(
+                path = Path(stroke.path),
+                paint = Paint(stroke.paint),
+            )
+        }
 
     init {
         isFocusable = true
