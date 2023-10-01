@@ -13,6 +13,7 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
     context,
     attr,
 ) {
+    private var path = Path()
     private var paint = Paint()
     private var startPoint: Point = Point(0f, 0f)
     private val lines = mutableListOf<Line>()
@@ -26,6 +27,7 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
         lines.forEach { line ->
             canvas.drawPath(line.path, line.paint)
         }
+        canvas.drawPath(path, paint)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -42,29 +44,32 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
 
     private fun drawDot(x: Float, y: Float) {
         startPoint = Point(x, y)
-        addLine(x, y)
+        path.moveTo(startPoint.x, startPoint.y)
+        path.lineTo(x, y)
         invalidate()
     }
 
     private fun drawLine(x: Float, y: Float) {
-        addLine(x, y)
+        path.moveTo(startPoint.x, startPoint.y)
+        path.lineTo(x, y)
         startPoint = Point(x, y)
         invalidate()
     }
 
-    private fun addLine(x: Float, y: Float) {
-        val path = Path()
-        path.moveTo(startPoint.x, startPoint.y)
-        path.lineTo(x, y)
-        lines.add(Line(path, paint))
-    }
-
     fun setupWidth(width: Float) {
+        addLine()
         paint = getPaint(width, paint.color)
     }
 
     fun setupColor(color: PaletteColor) {
+        addLine()
         paint = getPaint(paint.strokeWidth, color.colorCode)
+    }
+
+    private fun addLine() {
+        if (path.isEmpty) return
+        lines.add(Line(path, paint))
+        path = Path()
     }
 
     private fun getPaint(width: Float, @ColorInt selectedColor: Int): Paint {
