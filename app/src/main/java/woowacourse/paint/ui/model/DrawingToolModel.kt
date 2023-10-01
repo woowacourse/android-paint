@@ -1,6 +1,5 @@
 package woowacourse.paint.ui.model
 
-import android.graphics.Color
 import android.graphics.Paint
 import androidx.annotation.DrawableRes
 import woowacourse.paint.R
@@ -31,7 +30,6 @@ enum class DrawingToolModel(@DrawableRes val image: Int, val paint: Paint) {
             strokeCap = Paint.Cap.ROUND
             strokeJoin = Paint.Join.ROUND
             isAntiAlias = true
-            color = Color.WHITE
         },
     ),
 }

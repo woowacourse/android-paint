@@ -9,6 +9,7 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import woowacourse.paint.R
 import woowacourse.paint.ui.model.Drawing
 import woowacourse.paint.ui.model.DrawingToolModel
 import woowacourse.paint.ui.model.Drawings
@@ -58,7 +59,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
         path = Path()
         val paint = Paint(drawingTool.paint).apply {
             strokeWidth = thickness
-            if (drawingTool != DrawingToolModel.ERASER) color = paintColor
+            color = if (drawingTool == DrawingToolModel.ERASER) context.getColor(R.color.canvas_color) else paintColor
             if (drawingTool == DrawingToolModel.HIGHLIGHTER) alpha = HIGHLIGHTER_OPACITY
         }
         drawings.addLast(Drawing(path, paint))
