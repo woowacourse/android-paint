@@ -68,4 +68,9 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         paint.strokeWidth = width
         invalidate()
     }
+
+    fun setMyStrokeColor(color: Int) {
+        paint.color = color
+        invalidate()
+    }
 }
