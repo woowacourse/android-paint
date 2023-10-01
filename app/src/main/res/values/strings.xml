@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Paint</string>
+    <string name="main_pen_stroke_change">굵기 변경</string>
+    <string name="main_pen_color_change">색상 변경</string>
 </resources>

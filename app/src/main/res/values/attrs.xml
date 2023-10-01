@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PaintBoard">
+        <attr name="minStrokeWidth" format="float" />
+        <attr name="maxStrokeWidth" format="float" />
+        <attr name="currentColor" format="color" />
+        <attr name="currentStrokeWidth" format="float" />
+        <attr name="contentType" format="enum">
+            <enum name="STROKE" value="0" />
+        </attr>
+    </declare-styleable>
+</resources>
