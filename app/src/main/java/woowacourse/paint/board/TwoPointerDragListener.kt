@@ -3,22 +3,17 @@ package woowacourse.paint.board
 import android.view.ScaleGestureDetector
 import android.view.View
 
-/**
- * 그림판에 적용하기 위한 ScaleGestureListener로 두가지 사양을 제공한다.
- * 1.핀치줌 : 어느 지점이든 핀치줌을 사용할 수 있다.
- * 2.두 손가락 드래그 : 그림판이기 때문에 두 손가락을 이용해서 드래그 및 이동을 할수 있도록 설정 하였다.
- */
-class PinchZoomTwoPointerDragListener(
+class TwoPointerDragListener(
     private val targetView: View,
     private val screenWidth: Int,
     private val screenHeight: Int,
-) :
-    ScaleGestureDetector.SimpleOnScaleGestureListener() {
+) : ScaleGestureDetector.SimpleOnScaleGestureListener() {
 
     private var lastFocusX: Float = 0f
     private var lastFocusY: Float = 0f
 
     override fun onScaleBegin(detector: ScaleGestureDetector): Boolean {
+        super.onScaleBegin(detector)
         twoPointerDragOnScaleBegin(detector)
         return true
     }
@@ -29,6 +24,7 @@ class PinchZoomTwoPointerDragListener(
     }
 
     override fun onScale(detector: ScaleGestureDetector): Boolean {
+        super.onScale(detector)
         twoPointerDragOnScale(detector)
         return true
     }
