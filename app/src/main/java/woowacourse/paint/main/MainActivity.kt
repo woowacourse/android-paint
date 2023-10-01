@@ -32,8 +32,8 @@ class MainActivity : AppCompatActivity(), ColorClickListener {
     }
 
     override fun onDestroy() {
-        viewModel.updateStrokes(binding.pvMain.strokes)
         super.onDestroy()
+        viewModel.updateStrokes(binding.pvMain.strokes)
     }
 
     private fun setupBinding() {
