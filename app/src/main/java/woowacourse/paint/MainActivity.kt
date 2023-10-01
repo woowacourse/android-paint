@@ -3,7 +3,6 @@ package woowacourse.paint
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import com.google.android.material.slider.RangeSlider
 import woowacourse.paint.canvas.CustomColor
 import woowacourse.paint.databinding.ActivityMainBinding

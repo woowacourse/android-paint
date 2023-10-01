@@ -7,9 +7,9 @@ import woowacourse.paint.canvas.CustomColor
 import woowacourse.paint.model.ColorUiModel
 
 class MainViewModel : ViewModel() {
-    private val _Paint_changingState = MutableLiveData<PaintChangingState>(PaintChangingState.Nothing)
+    private val _paintChangingState = MutableLiveData<PaintChangingState>(PaintChangingState.Nothing)
     val paintChangingState: LiveData<PaintChangingState>
-        get() = _Paint_changingState
+        get() = _paintChangingState
 
     private val _colors =
         MutableLiveData(
@@ -20,19 +20,19 @@ class MainViewModel : ViewModel() {
         get() = _colors
 
     fun showColorSetting() {
-        if (_Paint_changingState.value == PaintChangingState.ColorChanging) {
-            _Paint_changingState.value = PaintChangingState.Nothing
+        if (_paintChangingState.value == PaintChangingState.ColorChanging) {
+            _paintChangingState.value = PaintChangingState.Nothing
             return
         }
-        _Paint_changingState.value = PaintChangingState.ColorChanging
+        _paintChangingState.value = PaintChangingState.ColorChanging
     }
 
     fun showWidthSetting() {
-        if (_Paint_changingState.value == PaintChangingState.WidthChanging) {
-            _Paint_changingState.value = PaintChangingState.Nothing
+        if (_paintChangingState.value == PaintChangingState.WidthChanging) {
+            _paintChangingState.value = PaintChangingState.Nothing
             return
         }
-        _Paint_changingState.value = PaintChangingState.WidthChanging
+        _paintChangingState.value = PaintChangingState.WidthChanging
     }
 
     fun pickColor(model: ColorUiModel) {
