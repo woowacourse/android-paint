@@ -14,8 +14,4 @@ class ColorAdapter(
     override fun onBindViewHolder(holder: ColorViewHolder, position: Int) {
         return holder.bind(currentList[position])
     }
-
-    fun setColors(colors: List<ColorBox>) {
-        submitList(colors)
-    }
 }

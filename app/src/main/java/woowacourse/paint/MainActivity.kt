@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity(), OnColorClickListener {
 
     private fun setObserver() {
         viewModel.colors.observe(this) {
-            adapter.setColors(it)
+            adapter.submitList(it)
         }
     }
 
