@@ -20,18 +20,18 @@ import javax.inject.Inject
 class GloCanvasViewModel @Inject constructor(
     private val drawingKitRepository: DrawingKitRepository,
 ) : ViewModel() {
-    private var _drawingTool: MutableLiveData<DrawingToolModel> = MutableLiveData()
-    val drawingTool: LiveData<DrawingToolModel>
-        get() = _drawingTool
+    private var _currentDrawingTool: MutableLiveData<DrawingToolModel> = MutableLiveData()
+    val currentDrawingTool: LiveData<DrawingToolModel>
+        get() = _currentDrawingTool
     private var _drawingTools: MutableLiveData<List<SelectableDrawingToolModel>> = MutableLiveData()
     val drawingTools: LiveData<List<SelectableDrawingToolModel>>
         get() = _drawingTools
     private var _thickness: MutableLiveData<Float> = MutableLiveData()
     val thickness: LiveData<Float>
         get() = _thickness
-    private var _paintColor: MutableLiveData<Int> = MutableLiveData()
-    val paintColor: LiveData<Int>
-        get() = _paintColor
+    private var _currentPaintColor: MutableLiveData<Int> = MutableLiveData()
+    val currentPaintColor: LiveData<Int>
+        get() = _currentPaintColor
     private var _paintColors: MutableLiveData<List<PaintColorModel>> = MutableLiveData()
     val paintColors: LiveData<List<PaintColorModel>>
         get() = _paintColors
@@ -45,11 +45,11 @@ class GloCanvasViewModel @Inject constructor(
     }
 
     private fun setupDrawingTool() {
-        _drawingTool.value = drawingKitRepository.getDrawingTool().toDrawingToolModel()
+        _currentDrawingTool.value = drawingKitRepository.getDrawingTool().toDrawingToolModel()
     }
 
     private fun setupDrawingTools() {
-        _drawingTool.value?.let { selectedDrawingTool ->
+        _currentDrawingTool.value?.let { selectedDrawingTool ->
             _drawingTools.value = drawingKitRepository.getAllDrawingTools()
                 .map {
                     if (it.toDrawingToolModel() == selectedDrawingTool) {
@@ -66,11 +66,11 @@ class GloCanvasViewModel @Inject constructor(
     }
 
     private fun setupPaintColor() {
-        _paintColor.value = Color.parseColor(drawingKitRepository.getPaintColor().color)
+        _currentPaintColor.value = Color.parseColor(drawingKitRepository.getPaintColor().color)
     }
 
     private fun setupPaintColors() {
-        _paintColor.value?.let { selectedPaintColor ->
+        _currentPaintColor.value?.let { selectedPaintColor ->
             _paintColors.value = drawingKitRepository.getAllPaintColors()
                 .map {
                     if (Color.parseColor(it.color) == selectedPaintColor) {
@@ -84,7 +84,7 @@ class GloCanvasViewModel @Inject constructor(
 
     fun selectDrawingTool(drawingTool: DrawingToolModel) {
         drawingKitRepository.changeDrawingTool(drawingTool.toDrawingTool())
-        _drawingTool.value = drawingTool
+        _currentDrawingTool.value = drawingTool
         _drawingTools.value?.let {
             _drawingTools.value = it.map { drawingToolModel ->
                 if (drawingToolModel.drawingTool == drawingTool) {
@@ -103,7 +103,7 @@ class GloCanvasViewModel @Inject constructor(
 
     fun selectPaintColor(color: Int) {
         drawingKitRepository.changePaintColor(PaintColor(Integer.toHexString(color)))
-        _paintColor.value = color
+        _currentPaintColor.value = color
         _paintColors.value?.let {
             _paintColors.value = it.map { paintColor ->
                 if (paintColor.color == color) {

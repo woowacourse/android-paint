@@ -31,10 +31,10 @@ class GloCanvasActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        viewModel.drawingTool.observe(this) { binding.vPaintBoard.setDrawingTool(it) }
+        viewModel.currentDrawingTool.observe(this) { binding.vPaintBoard.setDrawingTool(it) }
         viewModel.drawingTools.observe(this) { drawingToolSettingsAdapter.updateDrawingTools(it) }
         viewModel.thickness.observe(this) { binding.vPaintBoard.setThickness(it) }
-        viewModel.paintColor.observe(this) { binding.vPaintBoard.setPaintColor(it) }
+        viewModel.currentPaintColor.observe(this) { binding.vPaintBoard.setPaintColor(it) }
         viewModel.paintColors.observe(this) { paintColorPaletteAdapter.updateColors(it) }
     }
 
