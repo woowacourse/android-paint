@@ -7,8 +7,9 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import woowacourse.paint.model.line.Line
+import woowacourse.paint.model.line.Lines
 import woowacourse.paint.model.pen.BallpointPen
-import woowacourse.paint.model.Line
 import woowacourse.paint.model.pen.Pen
 
 class PaintView(
@@ -16,9 +17,7 @@ class PaintView(
     attributeSet: AttributeSet,
 ) : View(context, attributeSet) {
 
-    private val lines: MutableList<Line> = mutableListOf()
-    private val currentLine get() = lines[lines.lastIndex]
-
+    private val lines: Lines = Lines()
     var pen: Pen = BallpointPen()
 
     override fun onDraw(canvas: Canvas) {
@@ -27,7 +26,7 @@ class PaintView(
     }
 
     private fun drawCanvas(canvas: Canvas) {
-        lines.forEach {
+        lines.value.forEach {
             canvas.drawPath(it.path, it.paint)
         }
     }
@@ -46,14 +45,14 @@ class PaintView(
 
     private fun penDown(event: MotionEvent) {
         addLine()
-        currentLine.path.moveTo(event.x, event.y)
+        lines.last().path.moveTo(event.x, event.y)
         penMove(event)
     }
 
     private fun penMove(event: MotionEvent) {
         val pointX: Float = event.x
         val pointY: Float = event.y
-        currentLine.path.lineTo(pointX, pointY)
+        lines.last().path.lineTo(pointX, pointY)
     }
 
     private fun addLine() {
