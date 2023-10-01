@@ -1,4 +1,4 @@
-package woowacourse.paint
+package woowacourse.paint.model
 
 enum class PaletteColor(val hexCode: String) {
     RED("#FF5722"),

@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.MarginLayoutParamsCompat
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.model.PaletteColor
 
 class MainActivity : AppCompatActivity() {
 

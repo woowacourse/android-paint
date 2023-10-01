@@ -9,6 +9,8 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import woowacourse.paint.model.Line
+import woowacourse.paint.model.PaletteColor
 
 class PaintView(
     context: Context,
