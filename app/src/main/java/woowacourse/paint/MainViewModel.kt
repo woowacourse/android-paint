@@ -20,10 +20,10 @@ class MainViewModel : ViewModel() {
 
     val selectedColor: LiveData<PaletteColor>
         get() = Transformations.map(_colors) { colors ->
-            colors.firstOrNull { it.isPicked }?.color ?: PaletteColor.RED
+            colors.firstOrNull { it.isPicked }?.color ?: DEFAULT_SELECTED_COLOR
         }
 
-    private val _width = MutableLiveData(0f)
+    private val _width = MutableLiveData(DEFAULT_WIDTH)
     val width: LiveData<Float>
         get() = _width
 
@@ -50,5 +50,10 @@ class MainViewModel : ViewModel() {
 
     fun pickWidth(selectedWidth: Float) {
         _width.value = selectedWidth
+    }
+
+    companion object {
+        const val DEFAULT_WIDTH = 0F
+        val DEFAULT_SELECTED_COLOR = PaletteColor.RED
     }
 }

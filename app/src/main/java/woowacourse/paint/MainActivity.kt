@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.slider.RangeSlider
-import woowacourse.paint.canvas.PaletteColor
 import woowacourse.paint.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -45,8 +44,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupCanvas() {
         binding.cvCanvas.initPaint(
-            viewModel.width.value ?: minWidth,
-            viewModel.selectedColor.value ?: PaletteColor.RED,
+            viewModel.width.value ?: MainViewModel.DEFAULT_WIDTH,
+            viewModel.selectedColor.value ?: MainViewModel.DEFAULT_SELECTED_COLOR,
         )
     }
 
