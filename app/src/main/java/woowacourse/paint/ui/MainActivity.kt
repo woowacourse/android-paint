@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
                 ),
                 binding.Canvas::setMyStrokeColor,
             )
+            setHasFixedSize(true)
         }
     }
 }
