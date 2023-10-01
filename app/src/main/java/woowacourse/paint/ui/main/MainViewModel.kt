@@ -3,7 +3,7 @@ package woowacourse.paint.ui.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import woowacourse.paint.customView.DrawingPathInfo
+import woowacourse.paint.customView.content.Stroke
 import woowacourse.paint.model.BoardColorItem
 import woowacourse.paint.model.PaintColor
 
@@ -29,8 +29,8 @@ class MainViewModel : ViewModel() {
     val colors: LiveData<List<BoardColorItem>>
         get() = _colors
 
-    private val _drawnPaths = mutableListOf<DrawingPathInfo>()
-    val drawnPaths: List<DrawingPathInfo>
+    private val _drawnPaths = mutableListOf<Stroke>()
+    val drawnPaths: List<Stroke>
         get() = _drawnPaths.map { it.deepCopy() }
 
     private fun getBoardColorItems(selectedColor: PaintColor): List<BoardColorItem> =
@@ -56,7 +56,7 @@ class MainViewModel : ViewModel() {
         _appliedStroke.value = selectedStroke
     }
 
-    fun saveDrawnPaths(paths: List<DrawingPathInfo>) {
+    fun saveDrawnPaths(paths: List<Stroke>) {
         _drawnPaths.clear()
         _drawnPaths.addAll(paths)
     }

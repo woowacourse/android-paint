@@ -11,13 +11,15 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.ColorInt
 import woowacourse.paint.R
+import woowacourse.paint.customView.content.Stroke
 
 class PaintBoard @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
 ) : View(context, attrs) {
-    private val _drawnPaths: MutableList<DrawingPathInfo> = mutableListOf()
-    val drawnPaths: List<DrawingPathInfo>
+    private var id: Int = 0
+    private val _drawnPaths: MutableList<Stroke> = mutableListOf()
+    val drawnPaths: List<Stroke>
         get() = _drawnPaths.map { it.deepCopy() }
 
     var minStrokeWidth: Float = DEFAULT_MIN_STROKE_WIDTH
@@ -86,7 +88,7 @@ class PaintBoard @JvmOverloads constructor(
         this.strokeWidth = currentStrokeWidth
     }
 
-    fun changeDrawnPaths(paths: List<DrawingPathInfo>) {
+    fun changeDrawnPaths(paths: List<Stroke>) {
         _drawnPaths.clear()
         _drawnPaths.addAll(paths)
         invalidate()
@@ -102,7 +104,7 @@ class PaintBoard @JvmOverloads constructor(
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                _drawnPaths.add(DrawingPathInfo(Path(), getCurrentPaint()))
+                _drawnPaths.add(Stroke(id++, Path(), getCurrentPaint()))
                 _drawnPaths.lastOrNull()?.path?.moveTo(event.x, event.y)
             }
 
