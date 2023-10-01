@@ -16,7 +16,7 @@ class MainViewModel : ViewModel() {
     private val _colors =
         MutableLiveData(
             CustomColor.getAllColors()
-                .map { if (it.ordinal == 0) ColorUiModel(it, true) else ColorUiModel(it, false) },
+                .map { ColorUiModel(it, it.ordinal == 0) },
         )
     val colors: LiveData<List<ColorUiModel>>
         get() = _colors
@@ -47,17 +47,8 @@ class MainViewModel : ViewModel() {
     }
 
     fun pickColor(model: ColorUiModel) {
-        _colors.value?.let { colors ->
-            val newColors = colors.toMutableList()
-            newColors.replaceAll {
-                if (it.color == model.color) {
-                    it.copy(isPicked = true)
-                } else {
-                    it.copy(isPicked = false)
-                }
-            }
-            _colors.value = newColors
-        }
+        val colors = _colors.value ?: return
+        _colors.value = colors.map { it.copy(isPicked = it.color == model.color) }
     }
 
     fun pickWidth(selectedWidth: Float) {
