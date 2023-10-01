@@ -30,7 +30,7 @@ class MainViewModel : ViewModel() {
     val width: LiveData<Float>
         get() = _width
 
-    fun showColorSetting() {
+    fun setColorSettingState() {
         if (_paintChangingState.value == PaintChangingState.ColorChanging) {
             _paintChangingState.value = PaintChangingState.Nothing
             return
@@ -38,7 +38,7 @@ class MainViewModel : ViewModel() {
         _paintChangingState.value = PaintChangingState.ColorChanging
     }
 
-    fun showWidthSetting() {
+    fun setWidthSettingState() {
         if (_paintChangingState.value == PaintChangingState.WidthChanging) {
             _paintChangingState.value = PaintChangingState.Nothing
             return
