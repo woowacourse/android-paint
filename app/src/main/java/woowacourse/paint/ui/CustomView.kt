@@ -27,6 +27,7 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         paintings.painting.forEach { painting ->
             canvas.drawPath(painting.path, painting.paint)
         }
+        canvas.drawPath(path, paint)
     }
 
     @SuppressLint("ClickableViewAccessibility")
