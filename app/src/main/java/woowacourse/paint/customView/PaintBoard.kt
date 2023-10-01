@@ -14,8 +14,8 @@ import woowacourse.paint.R
 
 class PaintBoard @JvmOverloads constructor(
     context: Context,
-    attr: AttributeSet? = null,
-) : View(context, attr) {
+    attrs: AttributeSet? = null,
+) : View(context, attrs) {
     private val _drawnPaths: MutableList<DrawingPathInfo> = mutableListOf()
     val drawnPaths: List<DrawingPathInfo>
         get() = _drawnPaths.map { it.deepCopy() }
@@ -54,11 +54,11 @@ class PaintBoard @JvmOverloads constructor(
     private var currentPaint: Paint = getCurrentPaint()
 
     init {
-        if (attr != null) initAttrs(attr)
+        if (attrs != null) initAttrs(attrs)
     }
 
-    private fun initAttrs(attr: AttributeSet) {
-        val typedArray = context.obtainStyledAttributes(attr, R.styleable.PaintBoard)
+    private fun initAttrs(attrs: AttributeSet) {
+        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.PaintBoard)
         this.currentColor = typedArray.getColor(R.styleable.PaintBoard_currentColor, DEFAULT_COLOR)
         this.currentStrokeWidth =
             typedArray.getFloat(R.styleable.PaintBoard_currentStrokeWidth, defaultStrokeWidth)
