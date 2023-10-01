@@ -1,4 +1,4 @@
-package woowacourse.paint
+package woowacourse.paint.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

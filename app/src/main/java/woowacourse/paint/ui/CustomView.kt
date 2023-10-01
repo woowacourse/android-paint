@@ -1,4 +1,4 @@
-package woowacourse.paint
+package woowacourse.paint.ui
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -9,6 +9,8 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import woowacourse.paint.Painting
+import woowacourse.paint.Paintings
 
 class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private var path = Path()
@@ -64,11 +66,6 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     fun setMyStrokeWidth(width: Float) {
         paint.strokeWidth = width
-        invalidate()
-    }
-
-    fun setMyStrokeColor(color: Int) {
-        paint.color = color
         invalidate()
     }
 }
