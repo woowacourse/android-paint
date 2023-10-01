@@ -60,11 +60,11 @@ class MainActivity : AppCompatActivity(), OnColorClickListener {
     private fun setObserver() {
         viewModel.colors.observe(this) {
             adapter.submitList(it)
+            binding.cvPainter.setColor(it.first { colorBox -> colorBox.isSelected }.color)
         }
     }
 
     override fun onColorClick(colorBox: ColorBox) {
-        binding.cvPainter.setColor(colorBox.color)
         viewModel.setColorsSelected(colorBox)
     }
 }
