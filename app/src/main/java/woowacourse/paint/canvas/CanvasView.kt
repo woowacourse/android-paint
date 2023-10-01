@@ -42,17 +42,17 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
 
     private fun drawDot(x: Float, y: Float) {
         startPoint = Point(x, y)
-        updateLine(x, y)
+        addLine(x, y)
         invalidate()
     }
 
     private fun drawLine(x: Float, y: Float) {
-        updateLine(x, y)
+        addLine(x, y)
         startPoint = Point(x, y)
         invalidate()
     }
 
-    private fun updateLine(x: Float, y: Float) {
+    private fun addLine(x: Float, y: Float) {
         val path = Path()
         path.moveTo(startPoint.x, startPoint.y)
         path.lineTo(x, y)
