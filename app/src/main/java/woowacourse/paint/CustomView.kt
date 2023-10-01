@@ -14,13 +14,17 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private var path = Path()
     private var paint = Paint()
 
+    private val paintings = Paintings(mutableListOf())
+
     init {
         setupPaint()
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvas.drawPath(path, paint)
+        paintings.painting.forEach { painting ->
+            canvas.drawPath(painting.path, painting.paint)
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -37,6 +41,8 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             }
             MotionEvent.ACTION_UP -> {
                 path.lineTo(pointX, pointY)
+                paintings.storePainting(Painting(paint, path))
+                setupPaint(paint.strokeWidth, paint.color)
             }
             else -> super.onTouchEvent(event)
         }
@@ -44,17 +50,25 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         return true
     }
 
-    private fun setupPaint() {
+    private fun setupPaint(width: Float = 0F, color: Int = Color.BLACK) {
+        path = Path()
+        paint = Paint()
+
         paint.isAntiAlias = true
-        paint.color = Color.BLACK
+        paint.color = color
         paint.style = Paint.Style.STROKE
         paint.strokeCap = Paint.Cap.ROUND
         paint.strokeJoin = Paint.Join.ROUND
-        paint.strokeWidth = 10f
+        paint.strokeWidth = width
     }
 
     fun setMyStrokeWidth(width: Float) {
         paint.strokeWidth = width
+        invalidate()
+    }
+
+    fun setMyStrokeColor(color: Int) {
+        paint.color = color
         invalidate()
     }
 }
