@@ -17,7 +17,7 @@ import woowacourse.paint.presentation.ui.model.toPresentation
 
 class MainViewModel : ViewModel() {
 
-    private val _brush = MutableStateFlow(INITIAL_Brush_CONDITION)
+    private val _brush = MutableStateFlow(INITIAL_BRUSH)
     val brush: StateFlow<BrushModel> = _brush
         .map { it.toPresentation() }
         .stateIn(
@@ -35,6 +35,6 @@ class MainViewModel : ViewModel() {
     }
 
     companion object {
-        private val INITIAL_Brush_CONDITION = Brush(BrushColor.RED, BrushWidth(30f))
+        private val INITIAL_BRUSH = Brush(BrushColor.RED, BrushWidth(30f))
     }
 }
