@@ -13,7 +13,6 @@ class MainActivity : AppCompatActivity() {
     private val canvasView by lazy { binding.cvCanvas }
     private val adapter = ColorsAdapter { model ->
         viewModel.pickColor(model)
-        canvasView.setupColor(model.color.colorCode)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,13 +32,22 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupViewModel() {
         binding.viewModel = viewModel
-        viewModel.colors.observe(this) { colors ->
-            adapter.submitList(colors)
+        viewModel.width.observe(this) { width ->
+            canvasView.setupWidth(width)
+        }
+        viewModel.selectedColor.observe(this) { color ->
+            canvasView.setupColor(color)
+            viewModel.colors.value?.let { colors ->
+                adapter.submitList(colors)
+            }
         }
     }
 
     private fun setupCanvas() {
-        binding.cvCanvas.initPaint(minWidth, CustomColor.RED.colorCode)
+        binding.cvCanvas.initPaint(
+            viewModel.width.value ?: minWidth,
+            viewModel.selectedColor.value ?: CustomColor.RED,
+        )
     }
 
     private fun setupColors() {
@@ -64,7 +72,7 @@ class MainActivity : AppCompatActivity() {
         binding.rsThicknessChanger.valueTo = maxWidth
         binding.rsThicknessChanger.addOnChangeListener(
             RangeSlider.OnChangeListener { _, value, _ ->
-                canvasView.setupWidth(value)
+                viewModel.pickWidth(value)
             },
         )
     }

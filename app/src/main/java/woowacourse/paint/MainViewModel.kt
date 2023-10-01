@@ -2,12 +2,14 @@ package woowacourse.paint
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import woowacourse.paint.canvas.CustomColor
 import woowacourse.paint.model.ColorUiModel
 
 class MainViewModel : ViewModel() {
-    private val _paintChangingState = MutableLiveData<PaintChangingState>(PaintChangingState.Nothing)
+    private val _paintChangingState =
+        MutableLiveData<PaintChangingState>(PaintChangingState.Nothing)
     val paintChangingState: LiveData<PaintChangingState>
         get() = _paintChangingState
 
@@ -18,6 +20,15 @@ class MainViewModel : ViewModel() {
         )
     val colors: LiveData<List<ColorUiModel>>
         get() = _colors
+
+    val selectedColor: LiveData<CustomColor>
+        get() = Transformations.map(_colors) { colors ->
+            colors.firstOrNull { it.isPicked }?.color ?: CustomColor.RED
+        }
+
+    private val _width = MutableLiveData(0f)
+    val width: LiveData<Float>
+        get() = _width
 
     fun showColorSetting() {
         if (_paintChangingState.value == PaintChangingState.ColorChanging) {
@@ -47,5 +58,9 @@ class MainViewModel : ViewModel() {
             }
             _colors.value = newColors
         }
+    }
+
+    fun pickWidth(selectedWidth: Float) {
+        _width.value = selectedWidth
     }
 }
