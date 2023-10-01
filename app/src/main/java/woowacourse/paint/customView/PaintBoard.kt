@@ -20,10 +20,6 @@ class PaintBoard @JvmOverloads constructor(
     val drawnPaths: List<DrawingPathInfo>
         get() = _drawnPaths.map { it.deepCopy() }
 
-    private val _drawingPath: Path = Path()
-    val drawingPath: Path
-        get() = Path(_drawingPath)
-
     var minStrokeWidth: Float = DEFAULT_MIN_STROKE_WIDTH
         set(value) {
             require(value in DEFAULT_MIN_STROKE_WIDTH..maxStrokeWidth) { "[ERROR] 펜의 최소 두께는 최대 두께 보다 작고 0이상이여야 합니다" }
@@ -100,25 +96,22 @@ class PaintBoard @JvmOverloads constructor(
         super.onDraw(canvas)
 
         _drawnPaths.forEach { pathInfo -> canvas.drawPath(pathInfo.path, pathInfo.paint) }
-        canvas.drawPath(_drawingPath, currentPaint)
     }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                _drawingPath.reset()
-                _drawingPath.moveTo(event.x, event.y)
+                _drawnPaths.add(DrawingPathInfo(Path(), getCurrentPaint()))
+                _drawnPaths.lastOrNull()?.path?.moveTo(event.x, event.y)
             }
 
             MotionEvent.ACTION_MOVE -> {
-                _drawingPath.lineTo(event.x, event.y)
+                _drawnPaths.lastOrNull()?.path?.lineTo(event.x, event.y)
             }
 
             MotionEvent.ACTION_UP -> {
-                _drawingPath.lineTo(event.x, event.y)
-                _drawnPaths.add(DrawingPathInfo(Path(_drawingPath), getCurrentPaint()))
-                _drawingPath.reset()
+                _drawnPaths.lastOrNull()?.path?.lineTo(event.x, event.y)
             }
         }
         invalidate()
