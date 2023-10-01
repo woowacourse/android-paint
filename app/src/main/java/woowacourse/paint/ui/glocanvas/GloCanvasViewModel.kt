@@ -102,7 +102,7 @@ class GloCanvasViewModel @Inject constructor(
     }
 
     fun selectPaintColor(color: Int) {
-        drawingKitRepository.changePaintColor(PaintColor(Integer.toHexString(color)))
+        drawingKitRepository.changePaintColor(PaintColor.of(color))
         _currentPaintColor.value = color
         _paintColors.value?.let {
             _paintColors.value = it.map { paintColor ->
