@@ -27,8 +27,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupBinding() {
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         binding.lifecycleOwner = this
+        setContentView(binding.root)
     }
 
     private fun setupViewModel() {
