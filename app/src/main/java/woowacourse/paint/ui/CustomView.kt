@@ -16,7 +16,7 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private var path = Path()
     private var paint = Paint()
 
-    private val paintings = Paintings(mutableListOf())
+    private val paintings = Paintings()
 
     init {
         setupPaint()
