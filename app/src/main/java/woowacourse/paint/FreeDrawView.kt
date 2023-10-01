@@ -2,6 +2,7 @@ package woowacourse.paint
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
@@ -10,26 +11,45 @@ import android.view.View
 
 class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context, attributeSet) {
 
-    private val path = Path()
     private val paint = Paint()
+    private val previousDraw: MutableList<Pair<Path, Paint>> = mutableListOf()
+
+    init {
+        initStroke()
+    }
+
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
+        previousDraw.forEach {
+            canvas?.drawPath(it.first, it.second)
+        }
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        return when (event.action) {
+        when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                true
+                previousDraw.add(
+                    Pair(
+                        Path().apply { moveTo(event.x, event.y) },
+                        Paint().apply {
+                            set(paint)
+                        },
+                    ),
+                )
             }
 
             MotionEvent.ACTION_MOVE -> {
-                true
+                previousDraw.last().first.lineTo(event.x, event.y)
+                invalidate()
             }
 
-            else -> {
-                false
+            MotionEvent.ACTION_UP -> {
             }
+
+            else -> super.onTouchEvent(event)
         }
+
+        return true
     }
 
     fun updateColor(color: Int) {
@@ -37,5 +57,15 @@ class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context,
     }
 
     fun updateThickness(thickness: Float) {
+        paint.strokeWidth = thickness
+    }
+
+    private fun initStroke() {
+        paint.apply {
+            style = Paint.Style.STROKE
+            strokeCap = Paint.Cap.ROUND
+            strokeJoin = Paint.Join.ROUND
+            color = Color.RED
+        }
     }
 }
