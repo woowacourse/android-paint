@@ -5,7 +5,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.google.android.material.slider.RangeSlider
+import com.google.android.material.slider.Slider
 import woowacourse.paint.R
 import woowacourse.paint.customview.BrushColor
 import woowacourse.paint.databinding.ActivityMainBinding
@@ -47,8 +47,8 @@ class MainActivity : AppCompatActivity(), ColorClickListener {
     }
 
     private fun setupBrushThicknessRangeSliderChangeListener() {
-        binding.rsMainBrushThickness.addOnChangeListener(
-            RangeSlider.OnChangeListener { _, value, _ ->
+        binding.sliderMainBrushThickness.addOnChangeListener(
+            Slider.OnChangeListener { _, value, _ ->
                 viewModel.updateBrushThickness(value)
             },
         )
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity(), ColorClickListener {
 
     private fun setupChangeBrushThicknessButtonClickListener() {
         binding.btnMainChangeBrushThickness.setOnClickListener {
-            binding.rsMainBrushThickness.toggleVisibleOrGone()
+            binding.sliderMainBrushThickness.toggleVisibleOrGone()
         }
     }
 

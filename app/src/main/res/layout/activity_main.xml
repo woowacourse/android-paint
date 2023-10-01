@@ -20,22 +20,22 @@
             android:layout_height="0dp"
             app:brushColor="@{viewModel.brushColor}"
             app:brushThickness="@{viewModel.brushThickness}"
-            app:layout_constraintBottom_toTopOf="@+id/rs_main_brush_thickness"
+            app:layout_constraintBottom_toTopOf="@id/slider_main_brush_thickness"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.slider.RangeSlider
-            android:id="@+id/rs_main_brush_thickness"
+        <com.google.android.material.slider.Slider
+            android:id="@+id/slider_main_brush_thickness"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:stepSize="1.0"
+            android:value="@{viewModel.brushThickness}"
             android:valueFrom="10.0"
             android:valueTo="100.0"
             app:layout_constraintBottom_toTopOf="@+id/rv_main_color_palette"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:rangeSliderCurrentValue="@{viewModel.brushThickness}" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_main_color_palette"
@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@+id/btn_main_change_brush_color"
+            app:layout_constraintBottom_toTopOf="@id/btn_main_change_brush_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:listitem="@layout/item_color_palette" />
@@ -55,7 +55,7 @@
             android:layout_margin="8dp"
             android:text="@string/main_change_brush_color"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btn_main_change_brush_thickness"
+            app:layout_constraintEnd_toStartOf="@id/btn_main_change_brush_thickness"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -68,7 +68,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/btn_main_change_brush_color" />
+            app:layout_constraintStart_toEndOf="@id/btn_main_change_brush_color" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

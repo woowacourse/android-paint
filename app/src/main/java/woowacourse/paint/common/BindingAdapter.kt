@@ -3,7 +3,6 @@ package woowacourse.paint.common
 import android.view.View
 import androidx.annotation.ColorRes
 import androidx.databinding.BindingAdapter
-import com.google.android.material.slider.RangeSlider
 
 object BindingAdapter {
     @JvmStatic
@@ -19,11 +18,5 @@ object BindingAdapter {
     @BindingAdapter("backgroundColorRes")
     fun setBackgroundColorRes(view: View, @ColorRes colorRes: Int) {
         view.setBackgroundResource(colorRes)
-    }
-
-    @JvmStatic
-    @BindingAdapter("rangeSliderCurrentValue")
-    fun setRangeSliderCurrentValue(rangeSlider: RangeSlider, value: Float) {
-        rangeSlider.setValues(value)
     }
 }
