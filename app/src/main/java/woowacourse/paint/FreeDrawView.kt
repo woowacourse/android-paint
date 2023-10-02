@@ -27,6 +27,7 @@ class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context,
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
+        performClick()
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 previousDraw.add(
@@ -51,6 +52,10 @@ class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context,
         }
 
         return true
+    }
+
+    override fun performClick(): Boolean {
+        return super.performClick()
     }
 
     fun updateColor(@ColorInt color: Int) {
