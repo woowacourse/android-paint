@@ -24,7 +24,7 @@ class DrawingCanvas @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        paletteHistory.history.forEach {
+        paletteHistory.forEach {
             it.draw(canvas)
         }
         drawingElement.draw(canvas)
