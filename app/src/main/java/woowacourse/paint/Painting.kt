@@ -4,8 +4,8 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 
-data class Painting(
-    val path: Path,
+class Painting(
+    private val path: Path,
     val paint: Paint,
 ) {
     constructor(

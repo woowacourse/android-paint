@@ -2,7 +2,7 @@ package woowacourse.paint
 
 import android.graphics.Canvas
 
-data class Paintings(private val value: MutableList<Painting> = mutableListOf()) {
+class Paintings(private val value: MutableList<Painting> = mutableListOf()) {
 
     fun drawOnCanvas(canvas: Canvas) {
         value.forEach { painting -> painting.drawOnCanvas(canvas) }
