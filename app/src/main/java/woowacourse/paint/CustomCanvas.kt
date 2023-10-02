@@ -9,7 +9,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 
-class CustomCanvas(context: Context, attrs: AttributeSet) : View(context, attrs) {
+class CustomCanvas(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
     private var path = Path()
     private var paint = Paint()
     private val pathHistory = PathHistory()
