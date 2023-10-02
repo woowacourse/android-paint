@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
             ),
             onColorClicked = binding.pv::setBrushColor
         )
+        binding.rvColors.setHasFixedSize(true)
     }
 
     private fun setupSlider() {
