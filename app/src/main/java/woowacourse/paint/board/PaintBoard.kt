@@ -41,11 +41,8 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        return when (event.pointerCount) {
-            2 -> twoPointerDragScaleDetector.onTouchEvent(event)
-            1 -> lineEvent(event)
-            else -> super.onTouchEvent(event)
-        }
+        twoPointerDragScaleDetector.onTouchEvent(event)
+        return twoPointerDragScaleDetector.isInProgress || lineEvent(event)
     }
 
     private fun lineEvent(event: MotionEvent): Boolean {
