@@ -104,6 +104,7 @@ class PaintingView : View {
     fun setStrokes(strokes: List<Stroke>) {
         _strokes.clear()
         _strokes.addAll(strokes)
+        invalidate()
     }
 
     companion object {
