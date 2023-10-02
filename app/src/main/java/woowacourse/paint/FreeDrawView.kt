@@ -18,11 +18,10 @@ class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context,
         initStroke()
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        previousDraw.forEach {
-            canvas?.drawPath(it.first, it.second)
-        }
+        for ((path, paint) in previousDraw)
+            canvas.drawPath(path, paint)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
