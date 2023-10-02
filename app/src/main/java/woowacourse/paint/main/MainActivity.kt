@@ -84,12 +84,12 @@ class MainActivity : AppCompatActivity(), ColorClickListener {
 
         val newBrushColorBoxes = getUpdatedBrushColorBoxes(clickedBrushColorBox)
         brushColorPaletteAdapter.submitList(newBrushColorBoxes)
-        viewModel.updateBrushColor(clickedBrushColorBox.brushColor.colorRes)
+        viewModel.updateBrushColor(clickedBrushColorBox.brushColor)
         viewModel.updateBrushColorBoxes(newBrushColorBoxes)
     }
 
     private fun getUpdatedBrushColorBoxes(clickedBrushColorBox: BrushColorBox): List<BrushColorBox> =
-        BrushColor.getColorBoxes(clickedBrushColorBox.brushColor.colorRes)
+        BrushColor.getColorBoxes(clickedBrushColorBox.brushColor)
 
     private fun View.toggleVisibleOrGone() {
         this.visibility = if (this.visibility == View.VISIBLE) View.GONE else View.VISIBLE

@@ -13,9 +13,9 @@ enum class BrushColor(@ColorRes val colorRes: Int) {
     ;
 
     companion object {
-        fun getColorBoxes(@ColorRes selectedColor: Int): List<BrushColorBox> =
+        fun getColorBoxes(selectedColor: BrushColor): List<BrushColorBox> =
             BrushColor.values().map { brushColor ->
-                if (selectedColor == brushColor.colorRes) {
+                if (selectedColor == brushColor) {
                     BrushColorBox(brushColor, true)
                 } else {
                     BrushColorBox(brushColor, false)

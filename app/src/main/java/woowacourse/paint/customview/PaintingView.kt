@@ -10,6 +10,7 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat.getColor
+import androidx.databinding.BindingAdapter
 import woowacourse.paint.R
 
 class PaintingView : View {
@@ -92,8 +93,8 @@ class PaintingView : View {
         paint.style = Paint.Style.STROKE
     }
 
-    fun setBrushColor(colorRes: Int) {
-        currentColor = getColor(context, colorRes)
+    fun setBrushColor(brushColor: BrushColor) {
+        currentColor = getColor(context, brushColor.colorRes)
     }
 
     fun setBrushThickness(thickness: Float) {
@@ -107,5 +108,11 @@ class PaintingView : View {
 
     companion object {
         private const val DEFAULT_BRUSH_THICKNESS: Float = 10.0f
+
+        @JvmStatic
+        @BindingAdapter("brushColor")
+        fun setBrushColor(paintingView: PaintingView, brushColor: BrushColor) {
+            paintingView.setBrushColor(brushColor)
+        }
     }
 }
