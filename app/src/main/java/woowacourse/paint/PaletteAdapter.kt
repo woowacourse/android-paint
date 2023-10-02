@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class PaletteAdapter(
     private val backgroundColors: List<Int>,
-    private val onClick: (Int) -> Unit,
+    private val onClick: (hexCode: Int) -> Unit,
 ) :
     RecyclerView.Adapter<PaletteViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PaletteViewHolder {

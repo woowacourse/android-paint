@@ -7,7 +7,7 @@ import woowacourse.paint.databinding.ItemPaletteBinding
 
 class PaletteViewHolder(
     parent: ViewGroup,
-    onClick: (Int) -> Unit,
+    onClick: (position: Int) -> Unit,
 ) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.item_palette, parent, false),
 ) {
