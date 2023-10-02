@@ -39,7 +39,7 @@ class DrawingCanvas @JvmOverloads constructor(
                 drawingElement.movePath(pointX, pointY)
             }
 
-            MotionEvent.ACTION_MOVE -> {
+            MotionEvent.ACTION_MOVE, MotionEvent.ACTION_UP -> {
                 drawingElement.initPath(pointX, pointY)
             }
 
