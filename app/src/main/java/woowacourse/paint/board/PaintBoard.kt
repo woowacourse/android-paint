@@ -6,10 +6,11 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
-import android.view.ViewGroup.LayoutParams
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.FrameLayout
+import androidx.annotation.ColorRes
 import androidx.constraintlayout.widget.ConstraintLayout
+import woowacourse.paint.R
 import woowacourse.paint.board.draw.GraphicObject
 import woowacourse.paint.board.draw.Line
 import woowacourse.paint.palette.Palette
@@ -21,6 +22,10 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     private val expandedHeight = screenHeight * BOARD_HEIGHT_EXPANSION_RATE
 
     private val graphicObjects: MutableList<GraphicObject> = mutableListOf()
+
+    @ColorRes
+    private var currentSelectedColor: Int = R.color.black
+    private var currentStrokeWidth: Float = 10f
 
     private lateinit var palette: Palette
 
@@ -69,7 +74,11 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
 
     private fun lineEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
-            val line: Line = Line(Paint(), 10f, ::invalidate)
+            val line: Line = Line(
+                Paint().apply { color = context.getColor(currentSelectedColor) },
+                currentStrokeWidth,
+                ::invalidate,
+            )
             graphicObjects.add(line)
         }
         graphicObjects.last().onTouchEventAction(event)
@@ -82,9 +91,22 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     }
 
     private fun addStickyPalette() {
-        palette = Palette(context)
+        palette = Palette(
+            context,
+            null,
+            ::onSelectedColorIdChangedListener,
+            ::onStrokeWidthChangedListener,
+        )
         palette.layoutParams = FrameLayout.LayoutParams(screenWidth, WRAP_CONTENT)
         addView(palette)
+    }
+
+    private fun onSelectedColorIdChangedListener(colorId: Int) {
+        currentSelectedColor = colorId
+    }
+
+    private fun onStrokeWidthChangedListener(strokeWidth: Float) {
+        currentStrokeWidth = strokeWidth
     }
 
     companion object {

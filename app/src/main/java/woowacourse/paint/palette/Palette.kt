@@ -11,12 +11,26 @@ import woowacourse.paint.R
 import woowacourse.paint.databinding.PaletteBinding
 
 class Palette(context: Context, attrs: AttributeSet? = null) : ConstraintLayout(context, attrs) {
+
+    constructor(
+        context: Context,
+        attrs: AttributeSet? = null,
+        onSelectedColorIdChangedListener: (Int) -> Unit,
+        onStrokeWidthChangedListener: (Float) -> Unit,
+    ) : this(context, attrs) {
+        this.onSelectedColorIdChangedListener = onSelectedColorIdChangedListener
+        this.onStrokeWidthChangedListener = onStrokeWidthChangedListener
+    }
+
+    private lateinit var onSelectedColorIdChangedListener: (Int) -> Unit
+    private lateinit var onStrokeWidthChangedListener: ((Float) -> Unit)
+
     private val binding: PaletteBinding
 
     @ColorRes
-    var selectedColorId: Int = R.color.black
+    private var selectedColorId: Int = R.color.black
 
-    var strokeWidth: Float = 0f
+    private var strokeWidth: Float = 0f
         get() {
             return field + 10f
         }
@@ -32,6 +46,7 @@ class Palette(context: Context, attrs: AttributeSet? = null) : ConstraintLayout(
     private fun initColorSelectorRecyclerView() {
         binding.rvColorSelector.adapter = ColorSelectorAdapter {
             selectedColorId = it
+            onSelectedColorIdChangedListener(it)
         }
     }
 
@@ -46,6 +61,7 @@ class Palette(context: Context, attrs: AttributeSet? = null) : ConstraintLayout(
         binding.rangeSliderStrokeWidthSelector.addOnChangeListener(
             RangeSlider.OnChangeListener { _, value, _ ->
                 strokeWidth = value
+                onStrokeWidthChangedListener(strokeWidth)
             },
         )
     }
