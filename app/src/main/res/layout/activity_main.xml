@@ -3,6 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="mainViewModel"
+            type="woowacourse.paint.MainViewModel" />
+
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -18,6 +26,7 @@
 
         <woowacourse.paint.PenToolView
             android:id="@+id/pen_tool_view"
+            penToolVisibility="@{mainViewModel.penToolVisibility}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:visibility="gone"
@@ -29,9 +38,10 @@
             android:id="@+id/btn_open_pen_tool"
             android:layout_width="54dp"
             android:layout_height="54dp"
-            android:background="@drawable/ic_pen"
             android:layout_marginBottom="16dp"
+            android:background="@drawable/ic_pen"
             android:contentDescription="펜 선택 버튼"
+            android:onClick="@{() -> mainViewModel.changePenToolVisibility()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
