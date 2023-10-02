@@ -13,7 +13,6 @@ class TwoPointerDragListener(
     private var lastFocusY: Float = 0f
 
     override fun onScaleBegin(detector: ScaleGestureDetector): Boolean {
-        super.onScaleBegin(detector)
         twoPointerDragOnScaleBegin(detector)
         return true
     }
@@ -24,7 +23,6 @@ class TwoPointerDragListener(
     }
 
     override fun onScale(detector: ScaleGestureDetector): Boolean {
-        super.onScale(detector)
         twoPointerDragOnScale(detector)
         return true
     }

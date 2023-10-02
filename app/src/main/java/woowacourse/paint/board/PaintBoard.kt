@@ -1,17 +1,23 @@
 package woowacourse.paint.board
 
 import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import android.widget.FrameLayout
 import androidx.constraintlayout.widget.ConstraintLayout
+import woowacourse.paint.board.draw.GraphicObject
+import woowacourse.paint.board.draw.Line
 
 class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
     private val screenWidth = resources.displayMetrics.widthPixels
     private val screenHeight = resources.displayMetrics.heightPixels
     private val expandedWidth = screenWidth * BOARD_WIDTH_EXPANSION_RATE
     private val expandedHeight = screenHeight * BOARD_HEIGHT_EXPANSION_RATE
+
+    private val graphicObjects: MutableList<GraphicObject> = mutableListOf()
 
     private val twoPointerDragScaleDetector =
         ScaleGestureDetector(
@@ -35,8 +41,25 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        twoPointerDragScaleDetector.onTouchEvent(event)
+        return when (event.pointerCount) {
+            2 -> twoPointerDragScaleDetector.onTouchEvent(event)
+            1 -> lineEvent(event)
+            else -> super.onTouchEvent(event)
+        }
+    }
+
+    private fun lineEvent(event: MotionEvent): Boolean {
+        if (event.action == MotionEvent.ACTION_DOWN) {
+            val line: Line = Line(Paint(), 10f, ::invalidate)
+            graphicObjects.add(line)
+        }
+        graphicObjects.last().onTouchEventAction(event)
         return true
+    }
+
+    override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
+        graphicObjects.forEach { it.onDrawAction(canvas) }
     }
 
     companion object {
