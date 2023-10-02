@@ -57,15 +57,16 @@ class CanvasView constructor(context: Context, attr: AttributeSet) : View(contex
 
             MotionEvent.ACTION_MOVE -> {
                 keepDrawing(pointX, pointY)
+                invalidate()
             }
 
             MotionEvent.ACTION_UP -> {
                 finishDrawing()
+                invalidate()
             }
 
             else -> super.onTouchEvent(event)
         }
-        invalidate()
         return true
     }
 
