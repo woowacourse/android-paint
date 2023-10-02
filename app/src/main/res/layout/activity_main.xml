@@ -25,12 +25,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.slider.RangeSlider
+        <com.google.android.material.slider.Slider
             android:id="@+id/range_slider_brush_size"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:valueFrom="0"
             android:valueTo="100"
+            android:value="@{viewModel.brushSize.width}"
             app:layout_constraintBottom_toTopOf="@id/rv_colors"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"

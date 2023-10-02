@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import woowacourse.paint.databinding.ActivityMainBinding
-import woowacourse.paint.model.BrushSize
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
@@ -16,7 +15,6 @@ class MainActivity : AppCompatActivity() {
         setViewModel()
 
         setColorsRecyclerview()
-        setDefaultBrush()
         setBrushSizeListener()
     }
 
@@ -32,10 +30,6 @@ class MainActivity : AppCompatActivity() {
             }
             setHasFixedSize(true)
         }
-    }
-
-    private fun setDefaultBrush() {
-        binding.rangeSliderBrushSize.values = listOf(BrushSize.DEFAULT_SIZE)
     }
 
     private fun setBrushSizeListener() {
