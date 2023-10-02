@@ -23,7 +23,7 @@ class PaintingView : View {
     @ColorInt
     private var currentColor: Int = getColor(context, BrushColor.BLUE.colorRes)
     private var currentThickness: Float = DEFAULT_BRUSH_THICKNESS
-    private var currentStroke: Stroke = Stroke(Path(), Paint())
+    private var currentStroke: Stroke = Stroke(Path(), createInitializedPaint())
 
     private val _strokes: MutableList<Stroke> = mutableListOf(currentStroke)
     val strokes: List<Stroke>
@@ -64,8 +64,7 @@ class PaintingView : View {
         val pointY = event.y
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                currentStroke = Stroke(Path(), Paint())
-                setupPaint(currentStroke.paint)
+                currentStroke = Stroke(Path(), createInitializedPaint())
                 currentStroke.path.moveTo(pointX, pointY)
             }
 
@@ -84,13 +83,15 @@ class PaintingView : View {
         return true
     }
 
-    private fun setupPaint(paint: Paint) {
-        paint.color = currentColor
-        paint.isAntiAlias = true
-        paint.strokeWidth = currentThickness
-        paint.strokeJoin = Paint.Join.ROUND
-        paint.strokeCap = Paint.Cap.ROUND
-        paint.style = Paint.Style.STROKE
+    private fun createInitializedPaint(): Paint {
+        return Paint().apply {
+            color = currentColor
+            isAntiAlias = true
+            strokeWidth = currentThickness
+            strokeJoin = Paint.Join.ROUND
+            strokeCap = Paint.Cap.ROUND
+            style = Paint.Style.STROKE
+        }
     }
 
     fun setBrushColor(brushColor: BrushColor) {
