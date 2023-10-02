@@ -2,6 +2,7 @@ package woowacourse.paint
 
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.databinding.ActivityMainBinding
 
@@ -25,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
-    private fun paletteClickEvent(color: Int) {
+    private fun paletteClickEvent(@ColorInt color: Int) {
         binding.rvPalette.visibility = View.GONE
         binding.fdvBoard.updateColor(color)
     }
