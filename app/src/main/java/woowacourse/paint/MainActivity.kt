@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setPaintColor(color: PaintingColor) {
-        binding.paintingView.changePaintColor(getColor(color.colorRes))
+        binding.paintingView.changePaintColor(colorRes = color.colorRes)
     }
 
     companion object {

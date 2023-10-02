@@ -42,8 +42,8 @@ class PaintingView(context: Context, attrs: AttributeSet) : View(context, attrs)
         paintings.drawOnCanvas(canvas)
     }
 
-    fun changePaintColor(color: Int) {
-        paintings.presentPainting?.changeColor(color)
+    fun changePaintColor(colorRes: Int) {
+        paintings.presentPainting?.changeColor(context.getColor(colorRes))
     }
 
     fun changePaintWidth(width: Float) {
