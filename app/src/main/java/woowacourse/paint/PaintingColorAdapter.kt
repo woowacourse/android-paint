@@ -4,18 +4,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 class PaintingColorAdapter(
-    private val colors: List<Int>,
-    private val setPaintingColor: (paintingColor: Int) -> Unit,
+    private val paintingColors: List<PaintingColor>,
+    private val setPaintingColor: (paintingColor: PaintingColor) -> Unit,
 ) : RecyclerView.Adapter<PaintingColorViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PaintingColorViewHolder {
         return PaintingColorViewHolder.from(parent, setPaintingColor)
     }
 
     override fun onBindViewHolder(holder: PaintingColorViewHolder, position: Int) {
-        holder.bind(colors[position])
+        holder.bind(paintingColors[position])
     }
 
     override fun getItemCount(): Int {
-        return colors.size
+        return paintingColors.size
     }
 }

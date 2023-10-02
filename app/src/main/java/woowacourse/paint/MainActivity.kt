@@ -8,14 +8,8 @@ import woowacourse.paint.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private val colors: List<Int> by lazy {
-        listOf(
-            getColor(R.color.red),
-            getColor(R.color.orange),
-            getColor(R.color.yellow),
-            getColor(R.color.green),
-            getColor(R.color.blue),
-        )
+    private val paintingColors: List<PaintingColor> by lazy {
+        PaintingColor.values().toList()
     }
 
     private val binding: ActivityMainBinding by lazy {
@@ -23,7 +17,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val paintingColorAdapter: PaintingColorAdapter by lazy {
-        PaintingColorAdapter(colors, ::setPaintColor)
+        PaintingColorAdapter(paintingColors, ::setPaintColor)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,11 +41,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun setUpPaintingColorControllerView() {
         binding.rvColors.adapter = paintingColorAdapter
-        binding.rvColors.layoutManager = GridLayoutManager(this, colors.size)
+        binding.rvColors.layoutManager = GridLayoutManager(this, paintingColors.size)
     }
 
-    private fun setPaintColor(color: Int) {
-        binding.paintingView.changePaintColor(color)
+    private fun setPaintColor(color: PaintingColor) {
+        binding.paintingView.changePaintColor(getColor(color.colorRes))
     }
 
     companion object {
