@@ -1,7 +1,6 @@
 package woowacourse.paint
 
 import android.content.Context
-import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
@@ -13,17 +12,17 @@ class ColorView private constructor(
     private var size: Int = -1
     private lateinit var color: Color
 
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        setBackgroundColor(context.getColor(color.id))
+    }
+
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
         setMeasuredDimension(
             size - HORIZONTAL_PADDING * 2,
             size - HORIZONTAL_PADDING * 2,
         )
-    }
-
-    override fun onDraw(canvas: Canvas?) {
-        super.onDraw(canvas)
-        setBackgroundColor(context.getColor(color.id))
     }
 
     companion object {
