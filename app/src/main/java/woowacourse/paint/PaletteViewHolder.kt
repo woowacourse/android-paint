@@ -2,6 +2,7 @@ package woowacourse.paint
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.ColorRes
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.paint.databinding.ItemPaletteBinding
 
@@ -19,7 +20,7 @@ class PaletteViewHolder(
         }
     }
 
-    fun bind(hue: Int) {
-        binding.hue = hue
+    fun bind(@ColorRes hue: Int) {
+        binding.hue = binding.root.context.getColor(hue)
     }
 }

@@ -1,6 +1,5 @@
 package woowacourse.paint
 
-import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -17,7 +16,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        initPaletteColor()
         initPalette()
         setupRangeSliderListener()
         setupChangePaintColorListener()
@@ -30,20 +28,8 @@ class MainActivity : AppCompatActivity() {
         super.onRestoreInstanceState(savedInstanceState)
     }
 
-    private fun initPaletteColor() {
-        mainViewModel.setColors(
-            listOf(
-                Color.RED,
-                getColor(R.color.orange),
-                Color.YELLOW,
-                Color.GREEN,
-                Color.BLUE,
-            ),
-        )
-    }
-
     private fun initPalette() {
-        binding.rvMain.adapter = PaletteAdapter(mainViewModel.colors) { color ->
+        binding.rvMain.adapter = PaletteAdapter(mainViewModel.paletteColor) { color ->
             mainViewModel.paintColor = color
         }
         binding.rvMain.setHasFixedSize(true)
