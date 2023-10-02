@@ -1,7 +1,8 @@
-package woowacourse.paint.main
+package woowacourse.paint.main.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import woowacourse.paint.main.viewholder.ColorViewHolder
 import woowacourse.paint.model.PaintColor
 
 class ColorAdapter(
