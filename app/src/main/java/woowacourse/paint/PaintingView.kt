@@ -9,29 +9,27 @@ import android.view.View
 
 class PaintingView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
-    private var painting: Painting =
-        Painting(
+    private val paintings: Paintings = Paintings(
+        initPresentPainting = Painting(
             path = Path(),
-            paintColor = context.getColor(R.color.red),
-            paintWidth = 0f,
-        )
-
-    private val previousPaintings: Paintings = Paintings()
+            paintColor = context.getColor(PaintingColor.RED.colorRes),
+            paintWidth = INIT_STROKE_WIDTH,
+        ),
+    )
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         val pointX = event.x
         val pointY = event.y
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                painting.movePath(pointX, pointY)
-                painting.linePath(pointX, pointY)
+                paintings.presentPainting?.movePath(pointX, pointY)
+                paintings.presentPainting?.linePath(pointX, pointY)
             }
 
-            MotionEvent.ACTION_MOVE -> painting.linePath(pointX, pointY)
-
+            MotionEvent.ACTION_MOVE -> paintings.presentPainting?.linePath(pointX, pointY)
             MotionEvent.ACTION_UP -> {
-                previousPaintings.add(painting)
-                painting = painting.getInitializedPathPainting()
+                paintings.startNewPainting()
+                return true
             }
         }
 
@@ -41,15 +39,18 @@ class PaintingView(context: Context, attrs: AttributeSet) : View(context, attrs)
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        previousPaintings.drawOnCanvas(canvas)
-        painting.drawOnCanvas(canvas)
+        paintings.drawOnCanvas(canvas)
     }
 
     fun changePaintColor(color: Int) {
-        painting.changeColor(color = color)
+        paintings.presentPainting?.changeColor(color)
     }
 
     fun changePaintWidth(width: Float) {
-        painting.changeWidth(width)
+        paintings.presentPainting?.changeWidth(width)
+    }
+
+    companion object {
+        private const val INIT_STROKE_WIDTH = 0f
     }
 }
