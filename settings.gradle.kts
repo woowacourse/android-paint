@@ -14,3 +14,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "android-paint"
 include(":app")
+include(":domain")
