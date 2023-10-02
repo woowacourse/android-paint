@@ -4,7 +4,6 @@ import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.slider.RangeSlider
 import woowacourse.paint.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -51,11 +50,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupRangeSliderListener() {
-        binding.rsMain.addOnChangeListener(
-            RangeSlider.OnChangeListener { _, value, _ ->
-                mainViewModel.strokeSize = value
-            },
-        )
+        binding.rsMain.addOnChangeListener { _, value, _ ->
+            mainViewModel.strokeSize = value
+        }
     }
 
     private fun setupChangePaintColorListener() {
