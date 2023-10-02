@@ -31,7 +31,7 @@ class PaintView(context: Context, attributeSet: AttributeSet) : View(context, at
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 startPaint(event.x, event.y)
-                movePaint(event.x, event.y)
+                movePaint(event.x + EPSILON, event.y + EPSILON)
             }
 
             MotionEvent.ACTION_MOVE -> {
@@ -87,6 +87,8 @@ class PaintView(context: Context, attributeSet: AttributeSet) : View(context, at
     }
 
     companion object {
+        private const val EPSILON = 0.01F
+
         fun defaultLinePaint(): Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
             style = Paint.Style.STROKE
             strokeJoin = Paint.Join.ROUND
