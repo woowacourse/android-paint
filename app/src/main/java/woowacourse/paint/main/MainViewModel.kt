@@ -17,7 +17,7 @@ class MainViewModel : ViewModel() {
 
     init {
         _brushSize.value = BrushSize(BrushSize.DEFAULT_SIZE)
-        _brushColor.value = PaintColor.getDefaultColor()
+        _brushColor.value = PaintColor.DEFAULT_COLOR
     }
 
     fun setBrushSize(size: Float) {
