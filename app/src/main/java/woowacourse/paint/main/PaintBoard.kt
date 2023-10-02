@@ -67,13 +67,11 @@ class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(conte
         pathHistory.add(DrawablePath(currentPath, Paint(currentPaint)))
     }
 
-    fun setBrushSize(size: BrushSize?) {
-        if (size == null) return
+    fun setBrushSize(size: BrushSize) {
         currentPaint.strokeWidth = size.width
     }
 
-    fun setBrushColor(color: PaintColor?) {
-        if (color == null) return
+    fun setBrushColor(color: PaintColor) {
         currentPaint.color = ContextCompat.getColor(context, color.colorRes)
     }
 }
