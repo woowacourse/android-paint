@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         setupBinding()
-        setupView()
+        setupColorsView()
         setupSlider()
     }
 
@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
     }
 
-    private fun setupView() {
+    private fun setupColorsView() {
         binding.rvColors.adapter = ColorsAdapter(
             colors = listOf(
                 getColor(R.color.red),

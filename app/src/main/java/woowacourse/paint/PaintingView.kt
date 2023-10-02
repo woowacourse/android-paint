@@ -44,9 +44,11 @@ class PaintingView(
                 MotionEvent.ACTION_MOVE -> path.lineTo(x, y)
 
                 MotionEvent.ACTION_UP -> {
-                    painting.record(PaintingRecord(path, brush))
+                    painting.drawLine(Line(path, brush)) {
+                        Line.dot(x, y, brush)
+                    }
+
                     path = Path()
-                    return true
                 }
             }
         }

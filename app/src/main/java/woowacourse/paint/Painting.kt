@@ -2,7 +2,7 @@ package woowacourse.paint
 
 import android.graphics.Canvas
 
-class Painting(private val records: MutableList<PaintingRecord> = mutableListOf()) {
+class Painting(private val records: MutableList<Line> = mutableListOf()) {
 
     fun drawOn(canvas: Canvas) {
         records.forEach {
@@ -10,7 +10,19 @@ class Painting(private val records: MutableList<PaintingRecord> = mutableListOf(
         }
     }
 
-    fun record(paintingRecord: PaintingRecord) {
-        records.add(paintingRecord)
+    fun drawLine(
+        line: Line,
+        onEmptyLine: (() -> Line)
+    ) {
+        if (line.length == EMPTY_LINE) {
+            records.add(onEmptyLine())
+        } else {
+            records.add(line)
+        }
+    }
+
+    companion object {
+
+        private const val EMPTY_LINE = 0f
     }
 }
