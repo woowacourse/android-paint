@@ -26,10 +26,6 @@ class MainViewModel : ViewModel() {
     )
     val brushColorBoxes: LiveData<List<BrushColorBox>> get() = _brushColorBoxes
 
-    fun updateBrushColor(brushColor: BrushColor) {
-        _brushColor.value = brushColor
-    }
-
     fun updateBrushThickness(value: Float) {
         _brushThickness.value = value
     }
@@ -38,8 +34,14 @@ class MainViewModel : ViewModel() {
         _strokes.value = newStrokes
     }
 
-    fun updateBrushColorBoxes(newBrushColorBoxes: List<BrushColorBox>) {
-        _brushColorBoxes.value = newBrushColorBoxes
+    fun updateBrushColorBoxes(clickedColor: BrushColor) {
+        val currentColor: BrushColor? =
+            _brushColorBoxes.value?.firstOrNull { it.isSelected }?.brushColor
+
+        if (clickedColor == currentColor) return
+
+        _brushColor.value = clickedColor
+        _brushColorBoxes.value = BrushColor.getColorBoxes(clickedColor)
     }
 
     companion object {

@@ -10,7 +10,6 @@ import woowacourse.paint.R
 import woowacourse.paint.customview.BrushColor
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.main.adapter.BrushColorPaletteAdapter
-import woowacourse.paint.main.model.BrushColorBox
 
 class MainActivity : AppCompatActivity(), ColorClickListener {
 
@@ -78,18 +77,9 @@ class MainActivity : AppCompatActivity(), ColorClickListener {
         }
     }
 
-    override fun onColorClick(clickedBrushColorBox: BrushColorBox) {
-        val selectedColorBox = brushColorPaletteAdapter.currentList.firstOrNull { it.isSelected }
-        if (selectedColorBox == clickedBrushColorBox) return
-
-        val newBrushColorBoxes = getUpdatedBrushColorBoxes(clickedBrushColorBox)
-        brushColorPaletteAdapter.submitList(newBrushColorBoxes)
-        viewModel.updateBrushColor(clickedBrushColorBox.brushColor)
-        viewModel.updateBrushColorBoxes(newBrushColorBoxes)
+    override fun onColorClick(brushColor: BrushColor) {
+        viewModel.updateBrushColorBoxes(brushColor)
     }
-
-    private fun getUpdatedBrushColorBoxes(clickedBrushColorBox: BrushColorBox): List<BrushColorBox> =
-        BrushColor.getColorBoxes(clickedBrushColorBox.brushColor)
 
     private fun View.toggleVisibleOrGone() {
         this.visibility = if (this.visibility == View.VISIBLE) View.GONE else View.VISIBLE

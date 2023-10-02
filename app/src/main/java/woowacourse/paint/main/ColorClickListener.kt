@@ -1,7 +1,7 @@
 package woowacourse.paint.main
 
-import woowacourse.paint.main.model.BrushColorBox
+import woowacourse.paint.customview.BrushColor
 
 interface ColorClickListener {
-    fun onColorClick(clickedBrushColorBox: BrushColorBox)
+    fun onColorClick(brushColor: BrushColor)
 }
