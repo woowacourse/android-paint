@@ -1,5 +1,4 @@
 <resources>
     <string name="app_name">🦦 수달 그림판 🦦</string>
-    <string name="view_pen_tool_btn_change_color">색상 변경</string>
-    <string name="view_pen_tool_btn_change_width">굵기 변경</string>
+    <string name="view_pen_tool_btn_change_pen">적용</string>
 </resources>

@@ -28,14 +28,8 @@ class PenToolView(
         initColorPalette()
     }
 
-    fun setChangeColorClickEvent(f: () -> Unit) {
-        binding.btnChangeColor.setOnClickListener {
-            f()
-        }
-    }
-
-    fun setChangeWidthClickEvent(f: () -> Unit) {
-        binding.btnChangeWidth.setOnClickListener {
+    fun setPenChangeClickEvent(f: () -> Unit) {
+        binding.btnChangePen.setOnClickListener {
             f()
         }
     }
