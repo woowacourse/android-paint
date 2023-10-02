@@ -2,6 +2,15 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="woowacourse.paint.MainViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -20,6 +29,7 @@
             android:layout_marginHorizontal="10dp"
             android:valueFrom="0.0"
             android:valueTo="100.0"
+            android:visibility="@{viewModel.paintWidthControllerVisibility ? View.VISIBLE : View.GONE, default = gone}"
             app:layout_constraintBottom_toTopOf="@+id/main_colors_recycler_view" />
 
 
@@ -27,10 +37,34 @@
             android:id="@+id/main_colors_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="10dp"
             android:orientation="horizontal"
+            android:visibility="@{viewModel.paintColorControllerVisibility ? View.VISIBLE : View.GONE, default = gone}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent" />
+            app:layout_constraintBottom_toTopOf="@id/btn_change_paint_color" />
 
+        <Button
+            android:id="@+id/btn_change_paint_color"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="10dp"
+            android:onClick="@{()->viewModel.togglePaintColorControllerVisibility()}"
+            android:text="@string/main_btn_change_paint_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_change_paint_width"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btn_change_paint_width"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:onClick="@{()->viewModel.togglePaintWidthControllerVisibility()}"
+            android:text="@string/main_btn_change_paint_width"
+            app:layout_constraintBottom_toBottomOf="@id/btn_change_paint_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_change_paint_color" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
