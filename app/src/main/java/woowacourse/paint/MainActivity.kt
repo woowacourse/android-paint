@@ -38,8 +38,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupSlider() {
         with(binding) {
-            rs.valueFrom = MINIMUM_WIDTH
-            rs.valueTo = MAXIMUM_WIDTH
             rs.addOnChangeListener(
                 RangeSlider.OnChangeListener { _, value, _ ->
                     pv.setBrushWidth(value)
@@ -47,11 +45,5 @@ class MainActivity : AppCompatActivity() {
             )
             pv.setBrushWidth(rs.valueFrom)
         }
-    }
-
-    companion object {
-
-        private const val MINIMUM_WIDTH = 0.0f
-        private const val MAXIMUM_WIDTH = 100.0f
     }
 }
