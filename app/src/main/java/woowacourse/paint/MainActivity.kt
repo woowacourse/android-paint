@@ -12,11 +12,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        setAdapter()
-        setClickListener()
+        initAdapter()
+        initClickListener()
     }
 
-    private fun setAdapter() {
+    private fun initAdapter() {
         binding.rvPalette.adapter = PaletteAdapter(
             backgroundColors = PaletteColor.values().map {
                 it.convertToArgb(this)
@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
         binding.fdvBoard.updateColor(color)
     }
 
-    private fun setClickListener() {
+    private fun initClickListener() {
         binding.btChangeColor.setOnClickListener {
             binding.rvPalette.visibility = View.VISIBLE
         }
