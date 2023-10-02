@@ -21,9 +21,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initPaintColorsRecyclerView() {
-        val colors = listOf(
-            R.color.red, R.color.orange, R.color.yellow, R.color.green, R.color.blue
-        ).map { getColor(it) }
+        val colors = resources.getIntArray(R.array.palette_colors).toList()
 
         binding.mainColorsRecyclerView.adapter = PaletteAdapter(colors) { color: Int ->
             binding.mainCustomCanvas.changePaintColor(color)
