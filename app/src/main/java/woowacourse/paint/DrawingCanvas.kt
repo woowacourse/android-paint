@@ -3,8 +3,6 @@ package woowacourse.paint
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -22,15 +20,14 @@ class DrawingCanvas @JvmOverloads constructor(
     init {
         isFocusable = true
         isFocusableInTouchMode = true
-        initSetupPaint()
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         paletteHistory.history.forEach {
-            canvas.drawPath(it.path, it.paint)
+            it.draw(canvas)
         }
-        canvas.drawPath(drawingElement.path, drawingElement.paint)
+        drawingElement.draw(canvas)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -48,18 +45,9 @@ class DrawingCanvas @JvmOverloads constructor(
 
             else -> super.onTouchEvent(event)
         }
-        paletteHistory.addHistory(drawingElement.copy(paint = Paint(drawingElement.paint)))
+        paletteHistory.addHistory(drawingElement.withNewPaint())
         invalidate()
         return true
-    }
-
-    private fun initSetupPaint() {
-        drawingElement.paint.apply {
-            strokeWidth = 50.0f
-            style = Paint.Style.STROKE
-            strokeCap = Paint.Cap.ROUND
-            color = Color.RED
-        }
     }
 
     fun setStroke(value: Float) {

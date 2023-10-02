@@ -1,11 +1,13 @@
 package woowacourse.paint.model
 
+import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 
 data class DrawingElement(
-    val path: Path = Path(),
-    val paint: Paint = Paint(),
+    private val path: Path = Path(),
+    private val paint: Paint = initSetupPaint(),
 ) {
 
     fun movePath(x: Float, y: Float) {
@@ -16,11 +18,34 @@ data class DrawingElement(
         path.lineTo(x, y)
     }
 
-    fun setStroke(value: Float) = this.copy(path = Path(), paint = paint).apply {
-        this.paint.strokeWidth = value
+    private fun withNewPath(): DrawingElement {
+        return this.copy(path = Path())
     }
 
-    fun setColor(color: Int) = this.copy(path = Path(), paint = paint).apply {
-        this.paint.color = color
+    fun withNewPaint(): DrawingElement {
+        return this.copy(paint = Paint(paint))
+    }
+
+    fun setStroke(value: Float) = withNewPath().apply {
+        paint.strokeWidth = value
+    }
+
+    fun setColor(color: Int) = withNewPath().apply {
+        paint.color = color
+    }
+
+    fun draw(canvas: Canvas) {
+        canvas.drawPath(path, paint)
+    }
+
+    companion object {
+        private fun initSetupPaint(): Paint {
+            return Paint().apply {
+                strokeWidth = 50.0f
+                style = Paint.Style.STROKE
+                strokeCap = Paint.Cap.ROUND
+                color = Color.RED
+            }
+        }
     }
 }
