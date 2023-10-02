@@ -10,7 +10,7 @@ import com.google.android.material.slider.RangeSlider
 import woowacourse.paint.R
 import woowacourse.paint.databinding.PaletteBinding
 
-class Palette(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
+class Palette(context: Context, attrs: AttributeSet? = null) : ConstraintLayout(context, attrs) {
     private val binding: PaletteBinding
 
     @ColorRes

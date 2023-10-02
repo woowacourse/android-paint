@@ -6,10 +6,13 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
+import android.view.ViewGroup.LayoutParams
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.FrameLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import woowacourse.paint.board.draw.GraphicObject
 import woowacourse.paint.board.draw.Line
+import woowacourse.paint.palette.Palette
 
 class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
     private val screenWidth = resources.displayMetrics.widthPixels
@@ -19,11 +22,17 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
 
     private val graphicObjects: MutableList<GraphicObject> = mutableListOf()
 
+    private lateinit var palette: Palette
+
     private val twoPointerDragScaleDetector =
         ScaleGestureDetector(
             context,
             TwoPointerDragListener(this, screenWidth, screenHeight),
         )
+
+    init {
+        addStickyPalette()
+    }
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
@@ -57,6 +66,12 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         graphicObjects.forEach { it.onDrawAction(canvas) }
+    }
+
+    private fun addStickyPalette() {
+        palette = Palette(context)
+        palette.layoutParams = FrameLayout.LayoutParams(screenWidth, WRAP_CONTENT)
+        addView(palette)
     }
 
     companion object {
