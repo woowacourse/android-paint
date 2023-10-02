@@ -31,9 +31,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initPaintWidthRangeSlider() {
-        binding.mainRangeSlider.valueFrom = 0.0f
-        binding.mainRangeSlider.valueTo = 100.0f
-
         binding.mainRangeSlider.setValues(DEFAULT_PAINT_WIDTH)
 
         binding.mainRangeSlider.addOnChangeListener { _, value, _ ->
