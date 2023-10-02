@@ -28,12 +28,6 @@ class PenToolView(
         initColorPalette()
     }
 
-    fun setPenChangeClickEvent(f: () -> Unit) {
-        binding.btnChangePen.setOnClickListener {
-            f()
-        }
-    }
-
     private fun initSlider() {
         binding.slider.value = Pen.DEFAULT_WIDTH
         binding.slider.valueTo = Pen.MAX_WIDTH

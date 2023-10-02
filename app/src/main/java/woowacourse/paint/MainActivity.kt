@@ -28,9 +28,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun initPenTool() {
         val selectedPen = binding.penToolView.selectedPen
-        binding.penToolView.setPenChangeClickEvent {
-            binding.penToolView.visibility = View.GONE
-            binding.paintView.pen = selectedPen
-        }
+        binding.paintView.pen = selectedPen
     }
 }
