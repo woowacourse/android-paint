@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setUpStrokeWidthControllerView()
         setUpPaintingColorControllerView()
+        binding.rvColors.setHasFixedSize(true)
     }
 
     private fun setUpStrokeWidthControllerView() {
