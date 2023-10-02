@@ -7,6 +7,7 @@ class TwoPointerDragListener(
     private val targetView: View,
     private val screenWidth: Int,
     private val screenHeight: Int,
+    private val onScreenMoveListener: () -> Unit,
 ) : ScaleGestureDetector.SimpleOnScaleGestureListener() {
 
     private var lastFocusX: Float = 0f
@@ -41,6 +42,8 @@ class TwoPointerDragListener(
             destinationXPreventOverScroll,
             destinationYPreventOverScroll,
         )
+
+        onScreenMoveListener()
 
         lastFocusX = currentFocusX
         lastFocusY = currentFocusY
