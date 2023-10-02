@@ -9,7 +9,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.MarginLayoutParamsCompat
 import woowacourse.paint.databinding.ViewPenToolBinding
 import woowacourse.paint.model.PaletteColor
-import woowacourse.paint.model.pen.BallpointPen
 import woowacourse.paint.model.pen.Pen
 
 class PenToolView(
@@ -20,7 +19,7 @@ class PenToolView(
     private val binding: ViewPenToolBinding =
         ViewPenToolBinding.inflate(LayoutInflater.from(context), this, true)
 
-    var selectedPen: Pen = BallpointPen()
+    var selectedPen: Pen = Pen.createDefaultPenInstance()
         private set
 
     init {

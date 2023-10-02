@@ -9,7 +9,6 @@ import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.model.line.Line
 import woowacourse.paint.model.line.Lines
-import woowacourse.paint.model.pen.BallpointPen
 import woowacourse.paint.model.pen.Pen
 
 class PaintView(
@@ -18,7 +17,7 @@ class PaintView(
 ) : View(context, attributeSet) {
 
     private val lines: Lines = Lines()
-    var pen: Pen = BallpointPen()
+    var pen: Pen = Pen.createDefaultPenInstance()
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
