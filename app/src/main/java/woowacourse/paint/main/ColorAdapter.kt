@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.paint.model.PaintColor
 
 class ColorAdapter(
-    private val onColorClickListener: (Int) -> Unit,
+    private val onColorClickListener: (PaintColor) -> Unit,
 ) : RecyclerView.Adapter<ColorViewHolder>() {
     private val colors = PaintColor.values()
 

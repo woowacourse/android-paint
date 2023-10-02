@@ -8,9 +8,11 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import androidx.annotation.ColorInt
+import androidx.core.content.ContextCompat
+import woowacourse.paint.model.BrushSize
 import woowacourse.paint.model.DrawablePath
 import woowacourse.paint.model.DrawablePathHistory
+import woowacourse.paint.model.PaintColor
 
 class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val pathHistory = DrawablePathHistory()
@@ -65,11 +67,13 @@ class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(conte
         pathHistory.add(DrawablePath(currentPath, Paint(currentPaint)))
     }
 
-    fun setBrushSize(size: Float) {
-        currentPaint.strokeWidth = size
+    fun setBrushSize(size: BrushSize?) {
+        if (size == null) return
+        currentPaint.strokeWidth = size.width
     }
 
-    fun setBrushColor(@ColorInt color: Int) {
-        currentPaint.color = color
+    fun setBrushColor(color: PaintColor?) {
+        if (color == null) return
+        currentPaint.color = ContextCompat.getColor(context, color.colorRes)
     }
 }

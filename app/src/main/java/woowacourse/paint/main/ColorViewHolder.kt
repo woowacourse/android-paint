@@ -1,6 +1,5 @@
 package woowacourse.paint.main
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat.getColor
@@ -11,7 +10,7 @@ import woowacourse.paint.model.PaintColor
 
 class ColorViewHolder(
     parent: ViewGroup,
-    onColorClickListener: (Int) -> Unit,
+    onColorClickListener: (PaintColor) -> Unit,
 ) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(
         R.layout.item_color,
@@ -23,7 +22,7 @@ class ColorViewHolder(
 
     init {
         binding.root.setOnClickListener {
-            onColorClickListener(binding.color ?: Color.BLACK)
+            onColorClickListener(PaintColor.getColor(adapterPosition))
         }
     }
 

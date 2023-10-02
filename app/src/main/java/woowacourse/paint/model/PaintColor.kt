@@ -12,8 +12,12 @@ enum class PaintColor(@ColorRes val colorRes: Int) {
     ;
 
     companion object {
-        fun getColorRes(index: Int): Int {
-            return PaintColor.values()[index].colorRes
+        fun getDefaultColor(): PaintColor {
+            return RED
+        }
+
+        fun getColor(index: Int): PaintColor {
+            return values()[index]
         }
     }
 }
