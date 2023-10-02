@@ -8,6 +8,7 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import androidx.annotation.ColorInt
 
 class CustomCanvas(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
     private var path = Path()
@@ -53,7 +54,7 @@ class CustomCanvas(context: Context, attrs: AttributeSet? = null) : View(context
         return true
     }
 
-    fun changePaintColor(color: Int) {
+    fun changePaintColor(@ColorInt color: Int) {
         paint = Paint(paint)
         changePaintProperty(color = color)
     }
@@ -63,7 +64,10 @@ class CustomCanvas(context: Context, attrs: AttributeSet? = null) : View(context
         changePaintProperty(width = width)
     }
 
-    private fun changePaintProperty(color: Int = paint.color, width: Float = paint.strokeWidth) {
+    private fun changePaintProperty(
+        @ColorInt color: Int = paint.color,
+        width: Float = paint.strokeWidth
+    ) {
         paint.isAntiAlias = true
         paint.strokeJoin = Paint.Join.ROUND
         paint.style = Paint.Style.STROKE
