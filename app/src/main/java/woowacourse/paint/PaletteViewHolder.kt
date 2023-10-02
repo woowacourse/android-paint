@@ -2,6 +2,7 @@ package woowacourse.paint
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.paint.databinding.PaletteItemBinding
 
@@ -14,7 +15,7 @@ class PaletteViewHolder private constructor(
         binding.paletteItemView.setOnClickListener { onItemClick(adapterPosition) }
     }
 
-    fun bind(color: Int) {
+    fun bind(@ColorInt color: Int) {
         binding.color = color
     }
 
