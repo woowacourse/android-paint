@@ -2,12 +2,13 @@ package woowacourse.paint.model
 
 import android.graphics.Paint
 import android.graphics.Path
+import androidx.annotation.ColorInt
 
 class PathPaint(
     val path: Path = Path(),
     val paint: Paint = Paint(),
 ) {
-    fun setPaintColor(color: Int) {
+    fun setPaintColor(@ColorInt color: Int) {
         paint.color = color
     }
 

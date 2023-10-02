@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import androidx.annotation.ColorInt
 import woowacourse.paint.model.PathPaint
 
 class Canvas(
@@ -70,7 +71,7 @@ class Canvas(
         currentPathPaint.setPaintStrokeSize(size)
     }
 
-    fun setPaintColor(color: Int) {
+    fun setPaintColor(@ColorInt color: Int) {
         currentPathPaint.setPaintColor(color)
     }
 }
