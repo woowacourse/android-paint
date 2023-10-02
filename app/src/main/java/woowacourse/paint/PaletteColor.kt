@@ -1,9 +1,10 @@
 package woowacourse.paint
 
 import android.content.Context
+import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 
-enum class PaletteColor(private val hexColor: Int) {
+enum class PaletteColor(@ColorRes private val color: Int) {
     RED(R.color.red),
     ORANGE(R.color.orange),
     YELLOW(R.color.yellow),
@@ -12,6 +13,6 @@ enum class PaletteColor(private val hexColor: Int) {
     ;
 
     fun convertToArgb(context: Context): Int {
-        return ContextCompat.getColor(context, hexColor)
+        return ContextCompat.getColor(context, color)
     }
 }

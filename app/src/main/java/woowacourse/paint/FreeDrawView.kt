@@ -8,6 +8,7 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import androidx.annotation.ColorInt
 
 class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context, attributeSet) {
 
@@ -52,7 +53,7 @@ class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context,
         return true
     }
 
-    fun updateColor(color: Int) {
+    fun updateColor(@ColorInt color: Int) {
         paint.color = color
     }
 
