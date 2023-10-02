@@ -2,6 +2,7 @@ package woowacourse.paint
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.paint.databinding.ItemPaletteBinding
 
@@ -19,7 +20,7 @@ class PaletteViewHolder(
         }
     }
 
-    fun bind(color: Int) {
+    fun bind(@ColorInt color: Int) {
         binding.viewPalette.setBackgroundColor(color)
     }
 }

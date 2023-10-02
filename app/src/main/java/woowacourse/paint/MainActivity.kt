@@ -22,11 +22,11 @@ class MainActivity : AppCompatActivity() {
             backgroundColors = PaletteColor.values().map {
                 it.convertToArgb(this)
             },
-            onClick = ::paletteClickEvent,
+            onClick = ::onPaletteClick,
         )
     }
 
-    private fun paletteClickEvent(@ColorInt color: Int) {
+    private fun onPaletteClick(@ColorInt color: Int) {
         binding.rvPalette.visibility = View.GONE
         binding.fdvBoard.updateColor(color)
     }
