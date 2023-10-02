@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
             R.color.red, R.color.orange, R.color.yellow, R.color.green, R.color.blue
         ).map { getColor(it) }
 
-        binding.adapter = PaletteAdapter(colors) { color: Int ->
+        binding.mainColorsRecyclerView.adapter = PaletteAdapter(colors) { color: Int ->
             binding.mainCustomCanvas.changePaintColor(color)
         }
     }
