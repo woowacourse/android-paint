@@ -10,7 +10,7 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.ColorInt
 
-class CustomCanvas(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
+class Canvas(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
     private var path = Path()
     private var paint = Paint()
     private val pathHistory = PathHistory()
