@@ -5,6 +5,10 @@
     <data>
 
         <variable
+            name="paintViewModel"
+            type="woowacourse.paint.view.PaintViewModel" />
+
+        <variable
             name="color"
             type="Integer" />
 
@@ -17,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <woowacourse.paint.PaintView
+        <woowacourse.paint.view.PaintView
             android:id="@+id/main_paint_view"
             android:layout_width="match_parent"
             android:layout_height="500dp"

@@ -1,8 +1,7 @@
-package woowacourse.paint.palette
+package woowacourse.paint.view.palette
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.paint.databinding.ViewPaletteBinding
 

@@ -1,4 +1,4 @@
-package woowacourse.paint.palette
+package woowacourse.paint.view.palette
 
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
