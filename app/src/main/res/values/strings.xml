@@ -4,4 +4,7 @@
     <!-- MainActivity -->
     <string name="main_change_brush_color">색상 변경</string>
     <string name="main_change_brush_thickness">굵기 변경</string>
+
+    <!-- ItemColorPalette -->
+    <string name="item_color_palette_check_symbol_description">선택된 색상</string>
 </resources>
