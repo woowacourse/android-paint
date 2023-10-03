@@ -13,6 +13,7 @@
             android:layout_height="match_parent" />
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -37,32 +38,29 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="50dp"
+                android:gravity="end">
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnUndo"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="4dp"
-                    android:layout_weight="1"
-                    android:text="@string/Main_btnUndo" />
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/ic_baseline_undo_32"
+                    android:padding="8dp" />
 
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnRedo"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="4dp"
-                    android:layout_weight="1"
-                    android:text="@string/Main_btnRedo" />
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/ic_baseline_redo_32"
+                    android:padding="8dp" />
 
-
-                <Button
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnClear"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_margin="4dp"
-                    android:layout_weight="1"
-                    android:text="@string/Main_btnClear" />
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/ic_baseline_clear_32"
+                    android:padding="8dp" />
 
             </LinearLayout>
         </LinearLayout>
