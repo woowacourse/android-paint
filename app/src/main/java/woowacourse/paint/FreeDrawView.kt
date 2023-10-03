@@ -21,7 +21,7 @@ class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context,
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        for ((path, paint) in previousDraw) {
+        previousDraw.forEach { (path, paint) ->
             canvas.drawPath(path, paint)
         }
     }
