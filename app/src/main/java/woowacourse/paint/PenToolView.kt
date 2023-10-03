@@ -5,10 +5,11 @@ import android.graphics.Color
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.MarginLayoutParamsCompat
-import woowacourse.paint.databinding.ViewPenToolBinding
+import com.google.android.material.slider.Slider
 import woowacourse.paint.model.PaletteColor
 import woowacourse.paint.model.pen.Pen
 
@@ -17,13 +18,14 @@ class PenToolView(
     attrs: AttributeSet? = null,
 ) : ConstraintLayout(context, attrs) {
 
-    private val binding: ViewPenToolBinding =
-        ViewPenToolBinding.inflate(LayoutInflater.from(context), this, true)
+    private lateinit var slider: Slider
+    private lateinit var colorContainer: LinearLayout
 
     var selectedPen: Pen = Pen.createDefaultPenInstance()
         private set
 
     init {
+        initView()
         initSlider()
         initColorPalette()
     }
@@ -37,19 +39,29 @@ class PenToolView(
             }
     }
 
-    private fun initSlider() {
-        binding.slider.value = Pen.DEFAULT_WIDTH
-        binding.slider.valueTo = Pen.MAX_WIDTH
-        binding.slider.valueFrom = Pen.MIN_WIDTH
-        binding.slider.stepSize = Pen.WIDTH_STEP
+    private fun initView() {
+        val inflateService = Context.LAYOUT_INFLATER_SERVICE
+        val layoutInflater = context.getSystemService(inflateService) as LayoutInflater
+        val v: View = layoutInflater.inflate(R.layout.view_pen_tool, this, false)
+        addView(v)
 
-        binding.slider.addOnChangeListener { slider, value, fromUser ->
+        slider = findViewById(R.id.slider_pen_tool_pen_width)
+        colorContainer = findViewById(R.id.linear_layout_pen_tool_color_container)
+    }
+
+    private fun initSlider() {
+        slider.value = Pen.DEFAULT_WIDTH
+        slider.valueTo = Pen.MAX_WIDTH
+        slider.valueFrom = Pen.MIN_WIDTH
+        slider.stepSize = Pen.WIDTH_STEP
+
+        slider.addOnChangeListener { slider, value, fromUser ->
             selectedPen.width = value
         }
     }
 
     private fun initColorPalette() {
-        val container = binding.colorContainer
+        val container = colorContainer
         val paletteColors = PaletteColor.values().toList()
 
         repeat(paletteColors.size) { index ->
