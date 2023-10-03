@@ -40,34 +40,42 @@ class BoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-
-        paint.style = Paint.Style.STROKE
-        paint.strokeCap = Paint.Cap.ROUND
-        paint.strokeJoin = Paint.Join.ROUND
-        paint.isAntiAlias = true
+        setDefaultPaint()
         canvas.drawBitmap(bitmap, 0f, 0f, null)
         canvas.drawPath(path, paint)
     }
 
+    private fun setDefaultPaint() {
+        paint.apply {
+            style = Paint.Style.STROKE
+            strokeCap = Paint.Cap.ROUND
+            strokeJoin = Paint.Join.ROUND
+            isAntiAlias = true
+        }
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        val pointX = event.x
-        val pointY = event.y
-
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> {
-                path.moveTo(pointX, pointY)
-                path.lineTo(pointX, pointY)
-            }
-            MotionEvent.ACTION_MOVE -> {
-                path.lineTo(pointX, pointY)
-            }
-            MotionEvent.ACTION_UP -> {
-                storedCanvas.drawPath(path, paint)
-                path.reset()
-            }
+            MotionEvent.ACTION_DOWN -> startDrawing(event)
+            MotionEvent.ACTION_MOVE -> moveDrawing(event)
+            MotionEvent.ACTION_UP -> endDrawing()
         }
         invalidate()
         return true
+    }
+
+    private fun startDrawing(event: MotionEvent) {
+        path.moveTo(event.x, event.y)
+        path.lineTo(event.x, event.y)
+    }
+
+    private fun moveDrawing(event: MotionEvent) {
+        path.lineTo(event.x, event.y)
+    }
+
+    private fun endDrawing() {
+        storedCanvas.drawPath(path, paint)
+        path.reset()
     }
 }
