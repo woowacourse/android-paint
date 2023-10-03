@@ -3,7 +3,6 @@ package woowacourse.paint
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -33,26 +32,28 @@ class PaintView(
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
+        val pointX: Float = event.x
+        val pointY: Float = event.y
+
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> penDown(event)
-            MotionEvent.ACTION_MOVE -> penMove(event)
+            MotionEvent.ACTION_DOWN -> penDown(pointX, pointY)
+            MotionEvent.ACTION_MOVE -> penMove(pointX, pointY)
             else -> super.onTouchEvent(event)
         }
 
-        invalidate()
         return true
     }
 
-    private fun penDown(event: MotionEvent) {
+    private fun penDown(pointX: Float, pointY: Float) {
         val addedLine = addLine()
-        addedLine.path.moveTo(event.x, event.y)
-        penMove(event)
+        addedLine.path.moveTo(pointX, pointY)
+        penMove(pointX, pointY)
+        invalidate()
     }
 
-    private fun penMove(event: MotionEvent) {
-        val pointX: Float = event.x
-        val pointY: Float = event.y
+    private fun penMove(pointX: Float, pointY: Float) {
         lines.last().path.lineTo(pointX, pointY)
+        invalidate()
     }
 
     private fun addLine(): Line {
