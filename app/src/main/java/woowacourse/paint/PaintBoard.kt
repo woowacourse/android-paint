@@ -16,22 +16,24 @@ import androidx.annotation.ColorRes
 class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private val history: History = History()
-    private val paint: Paint = Paint()
-    private var path: Path = Path()
+    private lateinit var painting: Painting
 
     init {
         setupPaintSetting()
     }
 
     private fun setupPaintSetting() {
-        paint.apply {
-            isAntiAlias = true
-            style = Paint.Style.STROKE
-            strokeWidth = DEFAULT_SIZE
-            strokeCap = Paint.Cap.ROUND
-            strokeJoin = Paint.Join.ROUND
-            color = context.getColor(DEFAULT_COLOR)
-        }
+        painting = Painting(
+            path = Path(),
+            paint = Paint().apply {
+                isAntiAlias = true
+                style = Paint.Style.STROKE
+                strokeWidth = DEFAULT_SIZE
+                strokeCap = Paint.Cap.ROUND
+                strokeJoin = Paint.Join.ROUND
+                color = context.getColor(DEFAULT_COLOR)
+            },
+        )
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -39,7 +41,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
         canvas.apply {
             drawHistory()
-            drawPath(path, paint)
+            drawPath(painting.path, painting.paint)
         }
     }
 
@@ -62,29 +64,29 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     private fun initPath(pointX: Float, pointY: Float) {
-        path = Path()
-        path.moveTo(pointX, pointY)
-        path.lineTo(pointX, pointY)
+        painting.startDraw(pointX, pointY)
     }
 
     private fun drawPath(pointX: Float, pointY: Float) {
-        path.lineTo(pointX, pointY)
+        painting.onDraw(pointX, pointY)
     }
 
     private fun savePath() {
-        history.add(Painting(path, Paint(paint)))
+        history.add(painting)
+        painting = Painting(path = Path(), paint = Paint(painting.paint))
     }
 
     fun changeSize(value: Float) {
-        paint.strokeWidth = value
+        painting.changeSize(value)
     }
 
     fun changeColor(value: Int) {
-        paint.color = context.getColor(value)
+        painting.changeColor(context.getColor(value))
     }
 
     companion object {
-        @ColorRes private val DEFAULT_COLOR = R.color.blue
+        @ColorRes
+        private val DEFAULT_COLOR = R.color.blue
         const val DEFAULT_SIZE = 20F
         val COLORS =
             listOf(R.color.red, R.color.orange, R.color.yellow, R.color.green, R.color.blue)
