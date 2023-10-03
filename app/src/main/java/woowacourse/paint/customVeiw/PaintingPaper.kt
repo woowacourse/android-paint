@@ -3,6 +3,7 @@ package woowacourse.paint.customVeiw
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.CornerPathEffect
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
@@ -31,6 +32,9 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
             color = this@PaintingPaper.color
             strokeWidth = brushSize
             style = Paint.Style.STROKE
+            strokeJoin = Paint.Join.ROUND
+            strokeCap = Paint.Cap.ROUND
+            pathEffect = CornerPathEffect(100F)
         }
 
     var color = Color.BLACK
