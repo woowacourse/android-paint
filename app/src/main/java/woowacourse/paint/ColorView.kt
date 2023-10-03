@@ -26,7 +26,7 @@ class ColorView private constructor(
     }
 
     companion object {
-        const val HORIZONTAL_PADDING = 12
+        private const val HORIZONTAL_PADDING = 12
 
         fun create(
             context: Context,
