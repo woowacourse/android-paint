@@ -28,18 +28,19 @@
                 android:valueFrom="0.0f"
                 android:valueTo="100.0f" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvColors"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/item_main_colors" />
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:gravity="end">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvColors"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_main_colors" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnUndo"
