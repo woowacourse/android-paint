@@ -19,10 +19,10 @@ class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context,
         initStroke()
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         for ((path, paint) in previousDraw) {
-            canvas?.drawPath(path, paint)
+            canvas.drawPath(path, paint)
         }
     }
 
