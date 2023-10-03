@@ -28,6 +28,16 @@ class PenToolView(
         initColorPalette()
     }
 
+    fun changeVisibility() {
+        if (visibility == View.VISIBLE) {
+            binding.root.visibility = View.GONE
+            visibility = View.GONE
+        } else {
+            binding.root.visibility = View.VISIBLE
+            visibility = View.VISIBLE
+        }
+    }
+
     private fun initSlider() {
         binding.slider.value = Pen.DEFAULT_WIDTH
         binding.slider.valueTo = Pen.MAX_WIDTH
