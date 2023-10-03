@@ -36,6 +36,8 @@ class ColorAdapter(
             Color.RED,
             Color.BLUE,
             Color.GREEN,
+            // Orange Color
+            Color.rgb(255, 165, 0),
             Color.YELLOW,
             Color.BLACK,
             Color.WHITE,
