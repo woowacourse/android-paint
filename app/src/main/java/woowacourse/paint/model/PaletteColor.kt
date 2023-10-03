@@ -6,4 +6,9 @@ enum class PaletteColor(val hexCode: String) {
     YELLOW("#FFEB3B"),
     GREEN("#009688"),
     BLUE("#3F51B5"),
+    ;
+
+    companion object {
+        val default: PaletteColor = BLUE
+    }
 }

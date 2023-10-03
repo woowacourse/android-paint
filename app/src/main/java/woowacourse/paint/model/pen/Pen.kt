@@ -29,7 +29,7 @@ abstract class Pen(
         const val DEFAULT_WIDTH = 5f
         const val WIDTH_STEP = 1f
 
-        val DEFAULT_PALETTE_COLOR = PaletteColor.BLUE
+        val DEFAULT_PALETTE_COLOR = PaletteColor.default
 
         fun createDefaultPenInstance(): Pen = BallpointPen()
     }
