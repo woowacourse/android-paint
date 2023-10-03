@@ -7,6 +7,10 @@
         <variable
             name="paintColor"
             type="woowacourse.paint.ui.model.PaintColorModel" />
+
+        <variable
+            name="onItemClick"
+            type="kotlin.jvm.functions.Function1" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -20,6 +24,7 @@
             android:layout_marginHorizontal="10dp"
             android:background="@drawable/bg_paint_color"
             android:backgroundTint="@{paintColor.color}"
+            android:onClick="@{() -> onItemClick.invoke(paintColor.color)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
