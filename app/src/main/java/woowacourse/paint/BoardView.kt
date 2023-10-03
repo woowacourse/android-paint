@@ -19,14 +19,8 @@ class BoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private lateinit var storedCanvas: Canvas
     private lateinit var bitmap: Bitmap
 
-    fun changeColor(color: ColorPalette) {
-        when (color) {
-            ColorPalette.RED -> paint.color = ContextCompat.getColor(context, R.color.red)
-            ColorPalette.ORANGE -> paint.color = ContextCompat.getColor(context, R.color.orange)
-            ColorPalette.YELLOW -> paint.color = ContextCompat.getColor(context, R.color.yellow)
-            ColorPalette.GREEN -> paint.color = ContextCompat.getColor(context, R.color.green)
-            ColorPalette.BLUE -> paint.color = ContextCompat.getColor(context, R.color.blue)
-        }
+    fun changeColor(colorPalette: ColorPalette) {
+        paint.color = ContextCompat.getColor(context, colorPalette.color)
     }
 
     fun setWidth(width: Float) {
