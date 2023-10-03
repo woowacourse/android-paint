@@ -3,34 +3,30 @@ package woowacourse.paint.model
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
-import kotlin.math.pow
-import kotlin.math.sqrt
 
 class Brush(private val path: Path, private val paint: Paint) {
-    private var lastPosition = Pair(0F, 0F)
+    private var lastPoint = Point(0F, 0F)
 
-    fun start(x: Float, y: Float) {
-        path.moveTo(x + ADJUSTMENT, y + ADJUSTMENT)
-        path.lineTo(x, y)
-        lastPosition = Pair(x, y)
+    fun start(x: Float, y: Float) = start(Point(x, y))
+
+    private fun start(point: Point) {
+        path.moveTo(point.x + ADJUSTMENT, point.y + ADJUSTMENT)
+        path.lineTo(point.x, point.y)
+        lastPoint = point
     }
 
-    fun move(x: Float, y: Float): Boolean {
-        if (available(x, y)) {
-            path.lineTo(x, y)
-            lastPosition = Pair(x, y)
+    fun move(x: Float, y: Float) = move(Point(x, y))
+
+    private fun move(point: Point): Boolean {
+        if (isDrawable(point)) {
+            path.lineTo(point.x, point.y)
+            lastPoint = point
             return true
         }
         return false
     }
 
-    private fun available(x: Float, y: Float) = calculateDistance(x, y) > THRESHOLD
-
-    private fun calculateDistance(x: Float, y: Float): Double {
-        val x = (lastPosition.first - x).toDouble().pow(2.0)
-        val y = (lastPosition.second - y).toDouble().pow(2.0)
-        return sqrt(x + y)
-    }
+    private fun isDrawable(point: Point) = point.distanceTo(lastPoint) > THRESHOLD
 
     fun drawOn(canvas: Canvas) {
         canvas.drawPath(path, paint)
