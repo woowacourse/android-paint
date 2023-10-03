@@ -61,20 +61,22 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean = when (event.action) {
-        MotionEvent.ACTION_DOWN -> {
-            brushes += Brush(path, paint).apply { start(event.x, event.y) }
-            invalidate()
-            true
-        }
-
-        MotionEvent.ACTION_MOVE -> {
-            if (brushes.last().move(event.x, event.y)) {
-                invalidate()
-            }
-            true
-        }
-
+        MotionEvent.ACTION_DOWN -> onActionDown(event)
+        MotionEvent.ACTION_MOVE -> onActionMove(event)
         else -> super.onTouchEvent(event)
+    }
+
+    private fun onActionDown(event: MotionEvent): Boolean {
+        brushes += Brush(path, paint).apply { start(event.x, event.y) }
+        invalidate()
+        return true
+    }
+
+    private fun onActionMove(event: MotionEvent): Boolean {
+        if (brushes.last().move(event.x, event.y)) {
+            invalidate()
+        }
+        return true
     }
 
     fun undo() {
