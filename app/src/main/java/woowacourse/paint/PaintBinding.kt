@@ -1,7 +1,7 @@
 package woowacourse.paint
 
 import androidx.databinding.BindingAdapter
-import com.google.android.material.slider.RangeSlider
+import com.google.android.material.slider.Slider
 
 @BindingAdapter("app:setColorPalette")
 fun BoardView.setColorPalette(colorPalette: ColorPalette?) {
@@ -22,16 +22,8 @@ fun BoardView.eraseAll(isErasing: Boolean?) {
 }
 
 @BindingAdapter("app:setupSlider")
-fun RangeSlider.setupSlider(viewModel: MainViewModel) {
-    this.valueFrom = MIN_WIDTH_VALUE
-    this.valueTo = MAX_WIDTH_VALUE
-
-    this.addOnChangeListener(
-        RangeSlider.OnChangeListener { _, value, _ ->
-            viewModel.changeWidth(value)
-        },
-    )
+fun Slider.setupSlider(viewModel: MainViewModel) {
+    this.addOnChangeListener { _, value, _ ->
+        viewModel.changeWidth(value)
+    }
 }
-
-private const val MIN_WIDTH_VALUE = 0.0f
-private const val MAX_WIDTH_VALUE = 100.0f
