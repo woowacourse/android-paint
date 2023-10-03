@@ -49,6 +49,8 @@ class BoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
         paint.style = Paint.Style.STROKE
         paint.strokeCap = Paint.Cap.ROUND
+        paint.strokeJoin = Paint.Join.ROUND
+        paint.isAntiAlias = true
         canvas.drawBitmap(bitmap, 0f, 0f, null)
         canvas.drawPath(path, paint)
     }
