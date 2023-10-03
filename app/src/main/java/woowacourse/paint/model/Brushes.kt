@@ -20,19 +20,23 @@ class Brushes() {
         return brushes.last()
     }
 
-    fun undo() {
+    fun undo(onSuccess: () -> Unit = {}) {
         if (brushes.isNotEmpty()) {
             undoHistory.add(brushes.removeLast())
+            onSuccess()
         }
     }
 
-    fun redo() {
+    fun redo(onSuccess: () -> Unit = {}) {
         if (undoHistory.isNotEmpty()) {
             brushes.add(undoHistory.removeLast())
+            onSuccess()
         }
     }
 
-    fun clear() {
+    fun clear(callback: () -> Unit = {}) {
         brushes.clear()
+        undoHistory.clear()
+        callback()
     }
 }

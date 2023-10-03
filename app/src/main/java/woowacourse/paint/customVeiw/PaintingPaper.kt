@@ -67,30 +67,28 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
     }
 
     private fun onActionDown(event: MotionEvent): Boolean {
-        brushes += Brush(path, paint).apply { start(event.x, event.y) }
-        invalidate()
+        brushes += Brush(path, paint).apply { start(event.x, event.y, ::updatePaper) }
         return true
     }
 
     private fun onActionMove(event: MotionEvent): Boolean {
-        if (brushes.last().move(event.x, event.y)) {
-            invalidate()
-        }
+        brushes.last().move(event.x, event.y, ::updatePaper)
         return true
     }
 
     fun undo() {
-        brushes.undo()
-        invalidate()
+        brushes.undo(::updatePaper)
     }
 
     fun redo() {
-        brushes.redo()
-        invalidate()
+        brushes.redo(::updatePaper)
     }
 
     fun clear() {
-        brushes.clear()
+        brushes.clear(::updatePaper)
+    }
+
+    private fun updatePaper() {
         invalidate()
     }
 }
