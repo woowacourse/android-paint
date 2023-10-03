@@ -29,13 +29,12 @@ class PenToolView(
     }
 
     fun changeVisibility() {
-        if (visibility == View.VISIBLE) {
-            binding.root.visibility = View.GONE
-            visibility = View.GONE
-        } else {
-            binding.root.visibility = View.VISIBLE
-            visibility = View.VISIBLE
-        }
+        visibility =
+            if (visibility == View.VISIBLE) {
+                View.GONE
+            } else {
+                View.VISIBLE
+            }
     }
 
     private fun initSlider() {
