@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initAdapter() {
         binding.rvPalette.adapter = PaletteAdapter(
-            backgroundColors = Palette.convertAllColor(context = this),
+            backgroundColors = PaletteColor.getAllArgb(this),
             onClick = ::onPaletteClick,
         )
     }
