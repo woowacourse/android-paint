@@ -10,7 +10,8 @@ class Brush(private val path: Path, private val paint: Paint) {
     private var lastPosition = Pair(0F, 0F)
 
     fun start(x: Float, y: Float) {
-        path.moveTo(x, y)
+        path.moveTo(x + ADJUSTMENT, y + ADJUSTMENT)
+        path.lineTo(x, y)
         lastPosition = Pair(x, y)
     }
 
@@ -36,6 +37,7 @@ class Brush(private val path: Path, private val paint: Paint) {
     }
 
     companion object {
+        private const val ADJUSTMENT = Float.MIN_VALUE
         private const val THRESHOLD = 5
     }
 }

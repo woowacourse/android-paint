@@ -63,6 +63,7 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
     override fun onTouchEvent(event: MotionEvent): Boolean = when (event.action) {
         MotionEvent.ACTION_DOWN -> {
             brushes += Brush(path, paint).apply { start(event.x, event.y) }
+            invalidate()
             true
         }
 
