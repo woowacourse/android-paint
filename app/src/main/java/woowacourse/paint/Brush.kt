@@ -52,5 +52,9 @@ class Brush(
 
     companion object {
         private const val MOVE_THRESHOLD = 5
+
+        fun of(initialColorRes: Int): Brush {
+            return Brush().also { it.setColor(initialColorRes) }
+        }
     }
 }

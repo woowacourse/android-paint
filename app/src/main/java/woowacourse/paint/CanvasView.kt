@@ -11,9 +11,7 @@ import android.view.View
 class CanvasView constructor(context: Context, attr: AttributeSet) : View(context, attr) {
 
     private val brush by lazy {
-        Brush().also {
-            it.setColor(context.getColor(woowacourse.paint.Color.values().first().id))
-        }
+        Brush.of(initialColorRes = context.getColor(Color.values().first().id))
     }
     private lateinit var canvas: Canvas
     private lateinit var bitmap: Bitmap
