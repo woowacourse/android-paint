@@ -13,13 +13,11 @@ class CanvasView constructor(context: Context, attr: AttributeSet) : View(contex
     private val brush by lazy {
         Brush.of(initialColorRes = context.getColor(Color.values().first().id))
     }
-    private lateinit var canvas: Canvas
-    private lateinit var bitmap: Bitmap
-
-    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-        super.onSizeChanged(w, h, oldw, oldh)
-        bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
-        canvas = Canvas(bitmap)
+    private val bitmap: Bitmap by lazy {
+        Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+    }
+    private val canvas: Canvas by lazy {
+        Canvas(bitmap)
     }
 
     override fun onDraw(canvas: Canvas) {
