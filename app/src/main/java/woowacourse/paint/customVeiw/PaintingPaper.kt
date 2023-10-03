@@ -54,6 +54,10 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
         isFocusableInTouchMode = true
     }
 
+    var onUndoHistoryChangeListener: (Boolean) -> Unit = {}
+
+    var onRedoHistoryChangeListener: (Boolean) -> Unit = {}
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         brushes.drawOn(canvas)
@@ -89,6 +93,8 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
     }
 
     private fun updatePaper() {
+        onUndoHistoryChangeListener(brushes.hasHistory)
+        onRedoHistoryChangeListener(brushes.hasUndoHistory)
         invalidate()
     }
 }

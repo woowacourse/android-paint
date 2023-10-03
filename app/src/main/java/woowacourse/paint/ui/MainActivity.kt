@@ -29,5 +29,13 @@ class MainActivity : AppCompatActivity() {
         binding.btnRedo.setOnClickListener { binding.paintingPaper.redo() }
 
         binding.btnClear.setOnClickListener { binding.paintingPaper.clear() }
+
+        binding.paintingPaper.onUndoHistoryChangeListener = {
+            binding.btnUndo.isEnabled = it
+        }
+
+        binding.paintingPaper.onRedoHistoryChangeListener = {
+            binding.btnRedo.isEnabled = it
+        }
     }
 }
