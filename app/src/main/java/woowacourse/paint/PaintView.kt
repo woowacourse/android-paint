@@ -3,6 +3,7 @@ package woowacourse.paint
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -43,8 +44,8 @@ class PaintView(
     }
 
     private fun penDown(event: MotionEvent) {
-        addLine()
-        lines.last().path.moveTo(event.x, event.y)
+        val addedLine = addLine()
+        addedLine.path.moveTo(event.x, event.y)
         penMove(event)
     }
 
@@ -54,8 +55,10 @@ class PaintView(
         lines.last().path.lineTo(pointX, pointY)
     }
 
-    private fun addLine() {
+    private fun addLine(): Line {
         val paint = pen.getPaint()
-        lines.add(Line(Path(), paint))
+        val addLine = Line(Path(), paint)
+        lines.add(addLine)
+        return addLine
     }
 }
