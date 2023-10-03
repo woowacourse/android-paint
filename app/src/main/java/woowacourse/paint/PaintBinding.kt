@@ -21,9 +21,13 @@ fun BoardView.eraseAll(isErasing: Boolean?) {
     if (isErasing) erase()
 }
 
+interface OnSlideListener {
+    fun changeWidth(width: Float)
+}
+
 @BindingAdapter("app:setupSlider")
-fun Slider.setupSlider(viewModel: MainViewModel) {
+fun Slider.setupSlider(onSlideListener: OnSlideListener) {
     this.addOnChangeListener { _, value, _ ->
-        viewModel.changeWidth(value)
+        onSlideListener.changeWidth(value)
     }
 }
