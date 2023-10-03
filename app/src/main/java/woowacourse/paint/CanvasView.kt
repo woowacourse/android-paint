@@ -20,8 +20,6 @@ class CanvasView constructor(context: Context, attr: AttributeSet) : View(contex
     private var yBefore: Float = 0f
 
     init {
-        isFocusable = true
-        isFocusableInTouchMode = true
         setupPaint()
     }
 
