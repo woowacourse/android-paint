@@ -57,6 +57,7 @@ class BoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 path.moveTo(pointX, pointY)
+                path.lineTo(pointX, pointY)
             }
             MotionEvent.ACTION_MOVE -> {
                 path.lineTo(pointX, pointY)
