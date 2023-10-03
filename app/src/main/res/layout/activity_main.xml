@@ -29,7 +29,6 @@
             penToolVisibility="@{mainViewModel.penToolVisibility}"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@id/btn_open_pen_tool"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
