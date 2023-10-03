@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.MarginLayoutParamsCompat
@@ -34,31 +35,42 @@ class PenToolView(
         binding.slider.stepSize = Pen.WIDTH_STEP
 
         binding.slider.addOnChangeListener { slider, value, fromUser ->
-            selectedPen = selectedPen.apply {
-                width = value
-            }
+            selectedPen.width = value
         }
     }
 
     private fun initColorPalette() {
-        PaletteColor.values().forEachIndexed { index, paletteColor ->
-            val container = binding.colorContainer
-            val view = TextView(context)
-            val params = MarginLayoutParams(240, 240)
-            if (index != PaletteColor.values().lastIndex) {
-                MarginLayoutParamsCompat.setMarginEnd(params, 40)
-            }
+        val container = binding.colorContainer
+        val paletteColors = PaletteColor.values().toList()
 
-            view.layoutParams = params
-            view.setBackgroundColor(Color.parseColor(paletteColor.hexCode))
-
-            view.setOnClickListener {
-                selectedPen = selectedPen.apply {
-                    this.paletteColor = paletteColor
-                }
-            }
-
+        repeat(paletteColors.size) { index ->
+            val view = createColorView(paletteColors, index)
             container.addView(view)
         }
+    }
+
+    private fun createColorView(paletteColors: List<PaletteColor>, index: Int): View {
+        val paletteColor = paletteColors[index]
+        val view = TextView(context)
+
+        val params = MarginLayoutParams(COLOR_VIEW_WIDTH, COLOR_VIEW_HEIGHT)
+        if (index != paletteColors.lastIndex) {
+            MarginLayoutParamsCompat.setMarginEnd(params, COLOR_VIEW_MARGIN_BETWEEN)
+        }
+
+        view.layoutParams = params
+        view.setBackgroundColor(Color.parseColor(paletteColor.hexCode))
+
+        view.setOnClickListener {
+            selectedPen.paletteColor = paletteColor
+        }
+
+        return view
+    }
+
+    companion object {
+        private const val COLOR_VIEW_WIDTH = 240
+        private const val COLOR_VIEW_HEIGHT = 240
+        private const val COLOR_VIEW_MARGIN_BETWEEN = 40
     }
 }
