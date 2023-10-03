@@ -1,9 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <data>
+
+        <variable
+            name="viewModel"
+            type="woowacourse.paint.main.MainViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <woowacourse.paint.main.PaintBoard
+            android:id="@+id/ctv_paint_board"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:brushColor="@{viewModel.brushColor}"
+            app:brushSize="@{viewModel.brushSize}"
+            app:layout_constraintBottom_toTopOf="@id/range_slider_brush_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/range_slider_brush_size"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:valueFrom="0"
+            android:valueTo="100"
+            android:value="@{viewModel.brushSize.width}"
+            app:layout_constraintBottom_toTopOf="@id/rv_colors"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ctv_paint_board" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_colors"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/range_slider_brush_size"
+            tools:listitem="@layout/item_color" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
