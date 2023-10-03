@@ -23,7 +23,9 @@
             <com.google.android.material.slider.RangeSlider
                 android:id="@+id/rs_slider"
                 android:layout_width="match_parent"
-                android:layout_height="50dp" />
+                android:layout_height="50dp"
+                android:valueFrom="0.0f"
+                android:valueTo="100.0f" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvColors"
@@ -41,26 +43,26 @@
                     android:id="@+id/btnUndo"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="@string/Main_btnUndo"
                     android:layout_margin="4dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:text="@string/Main_btnUndo" />
 
                 <Button
                     android:id="@+id/btnRedo"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="@string/Main_btnRedo"
                     android:layout_margin="4dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:text="@string/Main_btnRedo" />
 
 
                 <Button
                     android:id="@+id/btnClear"
                     android:layout_width="0dp"
-                    android:text="@string/Main_btnClear"
                     android:layout_height="match_parent"
                     android:layout_margin="4dp"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    android:text="@string/Main_btnClear" />
 
             </LinearLayout>
         </LinearLayout>

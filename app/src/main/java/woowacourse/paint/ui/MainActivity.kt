@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setUpView() {
         binding.rsSlider.addOnChangeListener { _, value, _ ->
-            binding.paintingPaper.brushSize = value * 100
+            binding.paintingPaper.brushSize = value
         }
 
         binding.btnUndo.setOnClickListener { binding.paintingPaper.undo() }
