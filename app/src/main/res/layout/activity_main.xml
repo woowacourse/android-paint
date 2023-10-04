@@ -21,7 +21,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:pen="@{paintViewModel.pen}"
-            app:pens="@{paintViewModel.lines}" />
+            app:inks="@{paintViewModel.lines}" />
 
         <ScrollView
             android:layout_width="0dp"

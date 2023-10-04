@@ -41,6 +41,7 @@ class PaintView(context: Context, attributeSet: AttributeSet) : View(context, at
 
     fun setInks(inks: Inks) {
         this.inks = inks
+        invalidate()
     }
 
     private fun drawInks(canvas: Canvas) {
