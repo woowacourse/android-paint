@@ -23,7 +23,8 @@ class PaintViewModel : ViewModel() {
     private var color: Int = BrushColor.paintColors[0]
     private var strokeWidth: Float = BrushWidth.range.start
 
-    private val _cachedDrawing: MutableLiveData<Drawings> = MutableLiveData(null)
+    private val _redoDrawing: MutableLiveData<Drawings> = MutableLiveData(null)
+    private val _undoDrawing: MutableLiveData<Drawings> = MutableLiveData(null)
     private val _drawings: MutableLiveData<Drawings> = MutableLiveData(Drawings())
     val lines: LiveData<Inks>
         get() = Transformations.map(_drawings) { it.toModel() }
@@ -37,17 +38,22 @@ class PaintViewModel : ViewModel() {
         get() = _pen
 
     fun clearInk() {
-        _cachedDrawing.value = _drawings.value
+        _undoDrawing.value = _drawings.value
         _drawings.value = Drawings()
     }
 
     fun undoInk() {
-        _cachedDrawing.value ?: return
-        _drawings.value = _cachedDrawing.value
-        _cachedDrawing.value = null
+        _undoDrawing.value ?: return
+        _redoDrawing.value = _drawings.value
+        _drawings.value = _undoDrawing.value
+        _undoDrawing.value = null
     }
 
     fun redoInk() {
+        _redoDrawing.value ?: return
+        _undoDrawing.value = _drawings.value
+        _drawings.value = _redoDrawing.value
+        _redoDrawing.value = null
     }
 
     fun updateColor(color: Int) {
@@ -90,7 +96,7 @@ class PaintViewModel : ViewModel() {
     }
 
     private fun addInk(ink: Ink) {
-        _cachedDrawing.value = _drawings.value
+        _undoDrawing.value = _drawings.value
         _drawings.value = _drawings.value?.add(ink.toDomain())
     }
 
