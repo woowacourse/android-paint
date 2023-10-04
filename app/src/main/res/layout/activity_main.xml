@@ -43,6 +43,13 @@
                     tools:listitem="@layout/item_main_colors" />
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/btnEraser"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/ic_baseline_eraser_32"
+                    android:padding="8dp" />
+
+                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnUndo"
                     android:layout_width="48dp"
                     android:layout_height="48dp"

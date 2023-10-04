@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.CornerPathEffect
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -52,11 +53,15 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
     init {
         isFocusable = true
         isFocusableInTouchMode = true
+
+        background = ColorDrawable(Color.WHITE)
     }
 
     var onUndoHistoryChangeListener: (Boolean) -> Unit = {}
 
     var onRedoHistoryChangeListener: (Boolean) -> Unit = {}
+
+    var onEraseModeChangeListener: (Boolean) -> Unit = {}
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -96,5 +101,15 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
         onUndoHistoryChangeListener(brushes.hasHistory)
         onRedoHistoryChangeListener(brushes.hasUndoHistory)
         invalidate()
+    }
+
+    fun drawMode(colorInt: Int) {
+        color = colorInt
+        onEraseModeChangeListener(false)
+    }
+
+    fun eraseMode() {
+        color = (background as ColorDrawable).color
+        onEraseModeChangeListener(true)
     }
 }
