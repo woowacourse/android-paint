@@ -4,6 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
+import androidx.annotation.ColorInt
 
 data class DrawingElement(
     private val path: Path = Path(),
@@ -30,7 +31,7 @@ data class DrawingElement(
         paint.strokeWidth = value
     }
 
-    fun setColor(color: Int) = withNewPath().apply {
+    fun setColor(@ColorInt color: Int) = withNewPath().apply {
         paint.color = color
     }
 

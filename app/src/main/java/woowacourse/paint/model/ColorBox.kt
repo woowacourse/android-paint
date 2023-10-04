@@ -1,6 +1,8 @@
 package woowacourse.paint.model
 
+import androidx.annotation.ColorRes
+
 data class ColorBox(
-    val color: Int,
-    val isSelected: Boolean,
+    @ColorRes val color: Int,
+    val isSelected: Boolean = false,
 )
