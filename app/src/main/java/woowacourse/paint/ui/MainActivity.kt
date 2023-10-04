@@ -14,11 +14,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setOnChangeListener()
+        setRangeSlider()
         setPalette()
     }
 
-    private fun setOnChangeListener() {
+    private fun setRangeSlider() {
         binding.rangeSlider.addOnChangeListener(
             OnChangeListener { _, value, _ ->
                 binding.canvas.setMyStrokeWidth(value)
