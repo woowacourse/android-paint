@@ -1,7 +1,6 @@
 package woowacourse.paint
 
-class Paintings(item: MutableList<Painting> = mutableListOf()) {
-    private val _paintings = item
+class Paintings(private val _paintings: MutableList<Painting> = mutableListOf()) {
     val painting: List<Painting> = _paintings
 
     fun storePainting(painting: Painting) {
