@@ -30,7 +30,8 @@ class EllipsePen(
     }
 
     override fun cacheCurrentPaint() {
-        onAddInk(ink)
+        if (!ink.path.isEmpty)
+            onAddInk(ink)
         ink.path.reset()
     }
 
