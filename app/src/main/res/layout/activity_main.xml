@@ -40,6 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/main_clear"
+                    android:onClick="@{() -> paintViewModel.clearInk()}"
                     app:layout_constraintEnd_toStartOf="@id/main_undo_btn"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -49,6 +50,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/main_undo"
+                    android:onClick="@{() -> paintViewModel.undoInk()}"
                     app:layout_constraintEnd_toStartOf="@id/main_redo_btn"
                     app:layout_constraintStart_toEndOf="@id/main_clear_btn"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -58,6 +60,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/main_redo"
+                    android:onClick="@{() -> paintViewModel.redoInk()}"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/main_undo_btn"
                     app:layout_constraintTop_toTopOf="parent" />

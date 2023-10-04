@@ -9,6 +9,7 @@ import woowacourse.paint.domain.BrushColor
 import woowacourse.paint.domain.BrushWidth
 import woowacourse.paint.domain.Lines
 import woowacourse.paint.view.model.mapper.LineMapper.toDomain
+import woowacourse.paint.view.model.mapper.LineMapper.toModel
 import woowacourse.paint.view.model.mapper.LinesMapper.toModel
 import woowacourse.paint.view.model.pen.EllipsePen
 import woowacourse.paint.view.model.pen.EraserPen
@@ -33,6 +34,15 @@ class PaintViewModel : ViewModel() {
     )
     val pen: LiveData<Pen>
         get() = _pen
+
+    fun clearInk() {
+    }
+
+    fun undoInk() {
+    }
+
+    fun redoInk() {
+    }
 
     fun updateColor(color: Int) {
         this.color = color
@@ -78,8 +88,8 @@ class PaintViewModel : ViewModel() {
     }
 
     private fun getInks(): List<Path> {
-        return lines.value?.data?.map {
-            it.path
+        return _lines.value?.value?.map {
+            it.toModel().path
         } ?: emptyList()
     }
 

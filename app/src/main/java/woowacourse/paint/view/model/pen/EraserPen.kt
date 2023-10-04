@@ -30,9 +30,10 @@ class EraserPen(
         requestPaths().forEachIndexed { index, path ->
             val bounds = RectF()
             path.computeBounds(bounds, false)
+            println(bounds)
             if (bounds.contains(pointX, pointY)) {
                 removePathAt(index)
-                return@forEachIndexed
+                return
             }
         }
     }
