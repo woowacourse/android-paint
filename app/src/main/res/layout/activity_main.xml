@@ -30,17 +30,15 @@
             app:setColorPalette="@{mainViewModel.color}"
             app:setWidth="@{mainViewModel.width}" />
 
-<!--        <com.google.android.material.slider.Slider-->
-<!--            android:id="@+id/range_slider_width"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:valueFrom="0"-->
-<!--            android:valueTo="100"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/board"-->
-<!--            app:setupSlider="@{mainViewModel::changeWidth}" />-->
+        <ImageButton
+            android:id="@+id/btn_erase"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/refresh_24"
+            android:onClick="@{()->mainViewModel.erase()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:id="@+id/layout_menu"
@@ -51,32 +49,21 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <ImageButton
             android:id="@+id/btn_color_selection"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="색상"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/palette_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <androidx.appcompat.widget.AppCompatButton
+        <ImageButton
             android:id="@+id/btn_pen_width"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="굵기"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/line_weight_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/btn_color_selection" />
-
-        <!--        <androidx.appcompat.widget.AppCompatButton-->
-        <!--            android:id="@+id/btn_erase"-->
-        <!--            android:layout_width="0dp"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:onClick="@{()->mainViewModel.erase()}"-->
-        <!--            android:text="@string/btn_erase"-->
-        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toBottomOf="@id/color_red" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
