@@ -1,9 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <data>
+
+        <variable
+            name="mainViewModel"
+            type="woowacourse.paint.MainViewModel" />
+
+        <variable
+            name="palette"
+            type="woowacourse.paint.ColorPalette" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <woowacourse.paint.BoardView
+            android:id="@+id/board"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:eraseAll="@{mainViewModel.isErasing}"
+            app:layout_constraintBottom_toTopOf="@id/btn_color_selection"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:setColorPalette="@{mainViewModel.color}"
+            app:setWidth="@{mainViewModel.width}" />
+
+        <ImageButton
+            android:id="@+id/btn_erase"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_margin="16dp"
+            android:background="@drawable/refresh_24"
+            android:onClick="@{()->mainViewModel.erase()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/layout_menu"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toTopOf="@id/btn_color_selection"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageButton
+            android:id="@+id/btn_color_selection"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/palette_24"
+            android:onClick="@{()->mainViewModel.openColorSelection()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageButton
+            android:id="@+id/btn_pen_width"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/line_weight_24"
+            android:onClick="@{()->mainViewModel.openWidthSelection()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_color_selection" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
