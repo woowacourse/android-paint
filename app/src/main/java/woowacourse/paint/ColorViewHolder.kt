@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.paint.databinding.ItemColorBinding
-import kotlin.properties.Delegates
 
 class ColorViewHolder(
     parent: ViewGroup,
@@ -13,16 +12,14 @@ class ColorViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.item_color, parent, false),
 ) {
     private val binding: ItemColorBinding = ItemColorBinding.bind(itemView)
-    private var itemColor by Delegates.notNull<Int>()
 
     init {
         itemView.setOnClickListener {
-            onColorClicked(itemColor)
+            onColorClicked(adapterPosition)
         }
     }
 
     fun bind(item: Int) {
-        itemColor = item
-        binding.color = itemColor
+        binding.color = item
     }
 }

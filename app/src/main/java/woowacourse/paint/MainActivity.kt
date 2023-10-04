@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         binding.rvColors.adapter = ColorAdapter(PaintBoard.COLORS, ::onColorClicked)
     }
 
-    private fun onColorClicked(color: Int) {
-        binding.pbPaintBoard.changeColor(color)
+    private fun onColorClicked(idx: Int) {
+        binding.pbPaintBoard.changeColor(PaintBoard.COLORS[idx])
     }
 }
