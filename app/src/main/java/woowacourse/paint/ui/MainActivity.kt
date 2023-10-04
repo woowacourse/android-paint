@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     private fun setOnChangeListener() {
         binding.rangeSlider.addOnChangeListener(
             OnChangeListener { _, value, _ ->
-                binding.Canvas.setMyStrokeWidth(value)
+                binding.canvas.setMyStrokeWidth(value)
             },
         )
     }
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
                     getColor(R.color.green),
                     getColor(R.color.blue),
                 ),
-                binding.Canvas::setMyStrokeColor,
+                binding.canvas::setMyStrokeColor,
             )
             setHasFixedSize(true)
         }
