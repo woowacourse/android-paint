@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import woowacourse.paint.model.ColorBox
+import woowacourse.paint.model.PaintColor
 
 class MainViewModel : ViewModel() {
     private val _colors = MutableLiveData<List<ColorBox>>()
@@ -15,22 +16,12 @@ class MainViewModel : ViewModel() {
     }
 
     private fun setColors() {
-        _colors.value = paintColors
+        _colors.value = PaintColor.getColorBoxes(R.color.red)
     }
 
     fun setColorsSelected(colorBox: ColorBox) {
         _colors.value = _colors.value?.map {
             it.copy(isSelected = it == colorBox)
         }
-    }
-
-    companion object {
-        private val paintColors = listOf(
-            ColorBox(R.color.red, true),
-            ColorBox(R.color.orange, false),
-            ColorBox(R.color.yellow, false),
-            ColorBox(R.color.green, false),
-            ColorBox(R.color.blue, false),
-        )
     }
 }
