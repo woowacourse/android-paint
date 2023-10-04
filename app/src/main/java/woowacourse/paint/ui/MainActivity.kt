@@ -2,7 +2,6 @@ package woowacourse.paint.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.slider.RangeSlider.OnChangeListener
 import woowacourse.paint.R
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.ui.recyclerview.PaintAdapter
@@ -19,11 +18,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setRangeSlider() {
-        binding.rangeSlider.addOnChangeListener(
-            OnChangeListener { _, value, _ ->
-                binding.canvas.setMyStrokeWidth(value)
-            },
-        )
+        binding.rangeSlider.addOnChangeListener { _, value, _ ->
+            binding.canvas.setMyStrokeWidth(value)
+        }
     }
 
     private fun setPalette() {
