@@ -12,16 +12,6 @@ import woowacourse.paint.databinding.PaletteBinding
 
 class Palette(context: Context, attrs: AttributeSet? = null) : ConstraintLayout(context, attrs) {
 
-    constructor(
-        context: Context,
-        attrs: AttributeSet? = null,
-        onSelectedColorIdChangedListener: (Int) -> Unit,
-        onStrokeWidthChangedListener: (Float) -> Unit,
-    ) : this(context, attrs) {
-        this.onSelectedColorIdChangedListener = onSelectedColorIdChangedListener
-        this.onStrokeWidthChangedListener = onStrokeWidthChangedListener
-    }
-
     private lateinit var onSelectedColorIdChangedListener: (Int) -> Unit
     private lateinit var onStrokeWidthChangedListener: ((Float) -> Unit)
 
@@ -41,6 +31,16 @@ class Palette(context: Context, attrs: AttributeSet? = null) : ConstraintLayout(
         initColorSelectorRecyclerView()
         initStrokeWidthSelector()
         initStrokeWidthSelectorListener()
+    }
+
+    constructor(
+        context: Context,
+        attrs: AttributeSet? = null,
+        onSelectedColorIdChangedListener: (Int) -> Unit,
+        onStrokeWidthChangedListener: (Float) -> Unit,
+    ) : this(context, attrs) {
+        this.onSelectedColorIdChangedListener = onSelectedColorIdChangedListener
+        this.onStrokeWidthChangedListener = onStrokeWidthChangedListener
     }
 
     private fun initColorSelectorRecyclerView() {
