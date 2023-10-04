@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.google.android.material.slider.RangeSlider
 import woowacourse.paint.databinding.ActivityMainBinding
 
@@ -53,6 +54,21 @@ class MainActivity : AppCompatActivity() {
 
         binding.btChangeThickness.setOnClickListener {
             binding.rsThickness.visibility = View.VISIBLE
+        }
+        binding.btChangeBrush.setOnClickListener {
+            setBrushTypeVisibility(true)
+        }
+        binding.btPen.setOnClickListener {
+            setBrushTypeVisibility(false)
+        }
+    }
+
+    private fun setBrushTypeVisibility(isVisible: Boolean) {
+        with(binding) {
+            btPen.isVisible = isVisible
+            btRectangle.isVisible = isVisible
+            btCircle.isVisible = isVisible
+            btEraser.isVisible = isVisible
         }
     }
 }
