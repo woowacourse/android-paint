@@ -9,15 +9,15 @@ class PaintViewHolder(
     private val binding: ColorBinding,
     private val onColorClick: (color: Int) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(color: Int) {
-        binding.color = color
-        setOnClickListener(color)
-    }
-
-    private fun setOnClickListener(color: Int) {
+    init {
         binding.view.setOnClickListener {
+            val color = binding.color ?: return@setOnClickListener
             onColorClick(color)
         }
+    }
+
+    fun bind(color: Int) {
+        binding.color = color
     }
 
     companion object {
