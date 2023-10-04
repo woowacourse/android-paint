@@ -4,7 +4,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
 class ColorAdapter(
-    private val colors: List<Int>,
+    private val colors: IntArray,
     private val onColorClicked: (Int) -> Unit,
 ) : RecyclerView.Adapter<ColorViewHolder>() {
 

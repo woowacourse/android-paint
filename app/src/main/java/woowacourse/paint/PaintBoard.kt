@@ -11,6 +11,7 @@ import android.view.MotionEvent.ACTION_DOWN
 import android.view.MotionEvent.ACTION_MOVE
 import android.view.MotionEvent.ACTION_UP
 import android.view.View
+import androidx.annotation.ArrayRes
 import androidx.annotation.ColorRes
 
 class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
@@ -80,7 +81,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
         painting.changeSize(value)
     }
 
-    fun changeColor(value: Int) {
+    fun changeColor(@ColorRes value: Int) {
         painting.changeColor(context.getColor(value))
     }
 
@@ -88,7 +89,9 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
         @ColorRes
         private val DEFAULT_COLOR = R.color.blue
         const val DEFAULT_SIZE = 20F
+
+        @ArrayRes
         val COLORS =
-            listOf(R.color.red, R.color.orange, R.color.yellow, R.color.green, R.color.blue)
+            intArrayOf(R.color.red, R.color.orange, R.color.yellow, R.color.green, R.color.blue)
     }
 }
