@@ -92,10 +92,10 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
 
     private fun addStickyPalette() {
         palette = Palette(
-            context,
-            null,
-            ::onSelectedColorIdChangedListener,
-            ::onStrokeWidthChangedListener,
+            context = context,
+            attrs = null,
+            onSelectedColorIdChangedListener = ::onSelectedColorIdChangedListener,
+            onStrokeWidthChangedListener = ::onStrokeWidthChangedListener,
         )
         palette.layoutParams = FrameLayout.LayoutParams(screenWidth, WRAP_CONTENT)
         addView(palette)
