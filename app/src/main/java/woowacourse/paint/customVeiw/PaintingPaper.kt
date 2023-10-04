@@ -51,9 +51,6 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
         }
 
     init {
-        isFocusable = true
-        isFocusableInTouchMode = true
-
         background = ColorDrawable(Color.WHITE)
     }
 
