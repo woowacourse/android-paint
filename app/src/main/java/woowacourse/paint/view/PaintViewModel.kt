@@ -1,5 +1,6 @@
 package woowacourse.paint.view
 
+import android.graphics.Path
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -7,14 +8,15 @@ import androidx.lifecycle.ViewModel
 import woowacourse.paint.domain.BrushColor
 import woowacourse.paint.domain.BrushWidth
 import woowacourse.paint.domain.Lines
-import woowacourse.paint.view.model.pen.ink.Inks
 import woowacourse.paint.view.model.mapper.LineMapper.toDomain
 import woowacourse.paint.view.model.mapper.LinesMapper.toModel
 import woowacourse.paint.view.model.pen.EllipsePen
-import woowacourse.paint.view.model.pen.ink.Ink
+import woowacourse.paint.view.model.pen.EraserPen
 import woowacourse.paint.view.model.pen.LinePen
 import woowacourse.paint.view.model.pen.Pen
 import woowacourse.paint.view.model.pen.RectPen
+import woowacourse.paint.view.model.pen.ink.Ink
+import woowacourse.paint.view.model.pen.ink.Inks
 
 class PaintViewModel : ViewModel() {
     private var color: Int = BrushColor.paintColors[0]
@@ -33,12 +35,14 @@ class PaintViewModel : ViewModel() {
         get() = _pen
 
     fun updateColor(color: Int) {
+        this.color = color
         _pen.value.also {
             it?.setColor(color)
         }
     }
 
     fun updateStrokeWidth(strokeWidth: Float) {
+        this.strokeWidth = strokeWidth
         _pen.value.also {
             it?.setStrokeWidth(strokeWidth)
         }
@@ -63,7 +67,27 @@ class PaintViewModel : ViewModel() {
         }
     }
 
+    fun changeToEraserPen() {
+        _pen.value = EraserPen(
+            requestPaths = ::getInks, removePathAt = ::removeInkAt
+        )
+    }
+
     private fun addInk(ink: Ink) {
         _lines.value = _lines.value?.add(ink.toDomain())
+    }
+
+    private fun getInks(): List<Path> {
+        return lines.value?.data?.map {
+            it.path
+        } ?: emptyList()
+    }
+
+    private fun removeInkAt(index: Int) {
+        _lines.value = Lines(
+            _lines.value?.value?.toMutableList().apply {
+                this?.removeAt(index)
+            } ?: emptyList()
+        )
     }
 }

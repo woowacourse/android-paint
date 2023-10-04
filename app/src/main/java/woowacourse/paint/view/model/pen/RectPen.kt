@@ -31,6 +31,7 @@ class RectPen(
 
     override fun cacheCurrentPaint() {
         onAddInk(ink)
+        ink.path.reset()
     }
 
     override fun setStrokeWidth(strokeWidth: Float) {

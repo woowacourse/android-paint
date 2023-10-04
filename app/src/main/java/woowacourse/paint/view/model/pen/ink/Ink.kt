@@ -5,8 +5,8 @@ import android.graphics.Paint
 import android.graphics.Path
 
 data class Ink(
-    val paint: Paint,
-    val path: Path
+    val paint: Paint = Paint(),
+    val path: Path = Path()
 ) {
     fun draw(canvas: Canvas) {
         canvas.drawPath(path, paint)
