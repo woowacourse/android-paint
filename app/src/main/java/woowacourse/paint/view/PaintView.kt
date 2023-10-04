@@ -39,7 +39,7 @@ class PaintView(context: Context, attributeSet: AttributeSet) : View(context, at
         this.pen = pen
     }
 
-    fun setPens(inks: Inks) {
+    fun setInks(inks: Inks) {
         this.inks = inks
     }
 
