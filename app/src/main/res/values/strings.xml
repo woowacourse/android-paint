@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">Paint</string>
+    <string name="main_color_change_btn_label">색상 변경</string>
+    <string name="main_thickness_change_btn_label">굵기 변경</string>
+    <string name="main_reset_button_label">초기화</string>
 </resources>
