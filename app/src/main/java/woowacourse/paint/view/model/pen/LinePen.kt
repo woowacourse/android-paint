@@ -20,7 +20,7 @@ class LinePen(
 
     override fun startPaint(pointX: Float, pointY: Float) {
         ink.path.moveTo(pointX, pointY)
-        ink.path.lineTo(pointX, pointY)
+        ink.path.lineTo(pointX + EPSILON, pointY + EPSILON)
     }
 
     override fun movePaint(pointX: Float, pointY: Float) {
@@ -37,5 +37,9 @@ class LinePen(
 
     override fun setColor(color: Int) {
         ink.paint.color = color
+    }
+
+    companion object {
+        private const val EPSILON = 0.01F
     }
 }

@@ -6,8 +6,8 @@ import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import woowacourse.paint.view.model.pen.ink.Inks
 import woowacourse.paint.view.model.pen.Pen
+import woowacourse.paint.view.model.pen.ink.Inks
 
 class PaintView(context: Context, attributeSet: AttributeSet) : View(context, attributeSet) {
 
@@ -16,23 +16,16 @@ class PaintView(context: Context, attributeSet: AttributeSet) : View(context, at
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        drawPath(canvas)
+        drawInks(canvas)
     }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> {
-                startPaint(event.x, event.y)
-                movePaint(event.x + EPSILON, event.y + EPSILON)
-            }
-
-            MotionEvent.ACTION_MOVE -> {
-                movePaint(event.x, event.y)
-            }
-
+            MotionEvent.ACTION_DOWN -> pen.startPaint(event.x, event.y)
+            MotionEvent.ACTION_MOVE -> pen.movePaint(event.x, event.y)
             MotionEvent.ACTION_UP -> {
-                cacheCurrentPaint()
+                pen.cacheCurrentPaint()
                 return true
             }
 
@@ -50,24 +43,8 @@ class PaintView(context: Context, attributeSet: AttributeSet) : View(context, at
         this.inks = inks
     }
 
-    private fun startPaint(pointX: Float, pointY: Float) {
-        pen.startPaint(pointX, pointY)
-    }
-
-    private fun movePaint(pointX: Float, pointY: Float) {
-        pen.movePaint(pointX, pointY)
-    }
-
-    private fun cacheCurrentPaint() {
-        pen.cacheCurrentPaint()
-    }
-
-    private fun drawPath(canvas: Canvas) {
+    private fun drawInks(canvas: Canvas) {
         inks.draw(canvas)
         pen.ink.draw(canvas)
-    }
-
-    companion object {
-        private const val EPSILON = 0.01F
     }
 }
