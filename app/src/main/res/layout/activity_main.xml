@@ -21,7 +21,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:pen="@{paintViewModel.pen}"
-            app:richPaths="@{paintViewModel.lines}" />
+            app:pens="@{paintViewModel.lines}" />
 
         <com.google.android.material.slider.Slider
             android:id="@+id/main_width_slider"

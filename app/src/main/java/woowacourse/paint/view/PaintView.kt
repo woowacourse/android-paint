@@ -6,14 +6,13 @@ import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import woowacourse.paint.view.model.RichPaths
+import woowacourse.paint.view.model.Inks
 import woowacourse.paint.view.model.pen.Pen
 
 class PaintView(context: Context, attributeSet: AttributeSet) : View(context, attributeSet) {
 
     private lateinit var pen: Pen
-
-    private var richPaths: RichPaths = RichPaths()
+    private var inks: Inks = Inks()
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -47,8 +46,8 @@ class PaintView(context: Context, attributeSet: AttributeSet) : View(context, at
         this.pen = pen
     }
 
-    fun setRichPaths(richPaths: RichPaths) {
-        this.richPaths = richPaths
+    fun setPens(inks: Inks) {
+        this.inks = inks
     }
 
     private fun startPaint(pointX: Float, pointY: Float) {
@@ -64,10 +63,8 @@ class PaintView(context: Context, attributeSet: AttributeSet) : View(context, at
     }
 
     private fun drawPath(canvas: Canvas) {
-        richPaths.data.forEach {
-            canvas.drawPath(it.first, it.second)
-        }
-        pen.draw(canvas)
+        inks.draw(canvas)
+        pen.ink.draw(canvas)
     }
 
     companion object {

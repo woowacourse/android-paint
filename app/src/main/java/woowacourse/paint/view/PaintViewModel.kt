@@ -6,12 +6,12 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import woowacourse.paint.domain.BrushColor
 import woowacourse.paint.domain.BrushWidth
-import woowacourse.paint.domain.Line
 import woowacourse.paint.domain.Lines
-import woowacourse.paint.view.model.RichPaths
-import woowacourse.paint.view.model.mapper.LineMapper
+import woowacourse.paint.view.model.Inks
+import woowacourse.paint.view.model.mapper.LineMapper.toDomain
 import woowacourse.paint.view.model.mapper.LinesMapper.toModel
 import woowacourse.paint.view.model.pen.EllipsePen
+import woowacourse.paint.view.model.pen.Ink
 import woowacourse.paint.view.model.pen.LinePen
 import woowacourse.paint.view.model.pen.Pen
 import woowacourse.paint.view.model.pen.RectPen
@@ -21,11 +21,11 @@ class PaintViewModel : ViewModel() {
     private var strokeWidth: Float = BrushWidth.range.start
 
     private val _lines: MutableLiveData<Lines> = MutableLiveData(Lines())
-    val lines: LiveData<RichPaths>
+    val lines: LiveData<Inks>
         get() = Transformations.map(_lines) { it.toModel() }
 
     private val _pen: MutableLiveData<Pen> = MutableLiveData(
-        EllipsePen().apply {
+        EllipsePen(onAddInk = ::addPen).apply {
             setColor(color)
         }
     )
@@ -45,22 +45,25 @@ class PaintViewModel : ViewModel() {
     }
 
     fun changeToLinePen() {
-        _pen.value = LinePen { path, paint ->
-            addLine(LineMapper.toLine(path, paint))
-        }.apply {
+        _pen.value = LinePen(onAddInk = ::addPen).apply {
             setColor(color)
             setStrokeWidth(strokeWidth)
+        }
+    }
+
+    fun changeToRectPen() {
+        _pen.value = RectPen(onAddInk = ::addPen).apply {
+            setColor(color)
         }
     }
 
     fun changeToEllipsePen() {
-        _pen.value = EllipsePen().apply {
+        _pen.value = EllipsePen(onAddInk = ::addPen).apply {
             setColor(color)
-            setStrokeWidth(strokeWidth)
         }
     }
 
-    private fun addLine(line: Line) {
-        _lines.value = _lines.value?.add(line)
+    private fun addPen(ink: Ink) {
+        _lines.value = _lines.value?.add(ink.toDomain())
     }
 }

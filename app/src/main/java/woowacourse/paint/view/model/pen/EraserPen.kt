@@ -1,8 +1,6 @@
 package woowacourse.paint.view.model.pen
 
-import android.graphics.Canvas
-
-class EraserPen : Pen {
+class EraserPen(override val ink: Ink) : Pen {
     override fun startPaint(pointX: Float, pointY: Float) {
         TODO("Not yet implemented")
     }
@@ -12,10 +10,6 @@ class EraserPen : Pen {
     }
 
     override fun cacheCurrentPaint() {
-        TODO("Not yet implemented")
-    }
-
-    override fun draw(canvas: Canvas) {
         TODO("Not yet implemented")
     }
 
