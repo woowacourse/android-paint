@@ -9,16 +9,16 @@ import woowacourse.paint.databinding.ViewWidthSelectionBinding
 class WidthSelection(
     context: Context,
     attrs: AttributeSet? = null,
-    listener: (Float) -> Unit,
+    onClickWidthListener: (Float) -> Unit,
     initialValue: Float = 0f,
-) :
-    ConstraintLayout(context, attrs) {
+) : ConstraintLayout(context, attrs) {
+    constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, {})
 
     private val binding: ViewWidthSelectionBinding =
         ViewWidthSelectionBinding.inflate(LayoutInflater.from(context), this, true)
 
     init {
-        binding.listener = listener
+        binding.onClickWidthListener = onClickWidthListener
         binding.initialValue = initialValue
     }
 }

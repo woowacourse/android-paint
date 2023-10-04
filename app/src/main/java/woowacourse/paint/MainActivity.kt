@@ -2,6 +2,7 @@ package woowacourse.paint
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import woowacourse.paint.customView.colorSelection.ColorSelectionView
 import woowacourse.paint.customView.widthSelection.WidthSelection
@@ -17,31 +18,62 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupBinding()
+        setupObserver()
+    }
 
-        binding.btnColorSelection.setOnClickListener {
-            binding.layoutMenu.removeAllViews()
-            binding.layoutMenu.addView(
+    private fun setupBinding() {
+        binding.lifecycleOwner = this
+        binding.mainViewModel = viewModel
+    }
+
+    private fun setupObserver() {
+        initColorSelectionObserveEvent()
+        initWidthSelectionObserveEvent()
+    }
+
+    private fun initColorSelectionObserveEvent() {
+        viewModel.colorSelectionEvent.observe(
+            this,
+            this::setupColorSelection,
+        )
+    }
+
+    private fun setupColorSelection(isClicked: Boolean) {
+        if (isClicked) {
+            addMenu(
                 ColorSelectionView(
                     context = this,
                     click = viewModel::changeColor,
                 ),
             )
         }
+    }
 
-        binding.btnPenWidth.setOnClickListener {
-            binding.layoutMenu.removeAllViews()
-            binding.layoutMenu.addView(
+    private fun initWidthSelectionObserveEvent() {
+        viewModel.widthSelectionEvent.observe(
+            this,
+            this::setupWidthSelection,
+        )
+    }
+
+    private fun setupWidthSelection(isClicked: Boolean) {
+        if (isClicked) {
+            addMenu(
                 WidthSelection(
                     context = this,
-                    listener = viewModel::changeWidth,
-                    initialValue = viewModel.width.value ?: 0f,
+                    onClickWidthListener = viewModel::changeWidth,
+                    initialValue = viewModel.width.value ?: DEFAULT_WIDTH_VALUE,
                 ),
             )
         }
     }
 
-    private fun setupBinding() {
-        binding.lifecycleOwner = this
-        binding.mainViewModel = viewModel
+    private fun addMenu(menu: ConstraintLayout) {
+        binding.layoutMenu.removeAllViews()
+        binding.layoutMenu.addView(menu)
+    }
+
+    companion object {
+        private const val DEFAULT_WIDTH_VALUE = 0f
     }
 }

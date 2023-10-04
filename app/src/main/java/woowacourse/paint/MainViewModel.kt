@@ -15,6 +15,12 @@ class MainViewModel : ViewModel() {
     private val _isErasing = MutableLiveData<Boolean>()
     val isErasing: LiveData<Boolean> = _isErasing
 
+    private val _colorSelectionEvent = MutableLiveData<Boolean>()
+    val colorSelectionEvent: LiveData<Boolean> = _colorSelectionEvent
+
+    private val _widthSelectionEvent = MutableLiveData<Boolean>()
+    val widthSelectionEvent: LiveData<Boolean> = _widthSelectionEvent
+
     fun changeColor(color: ColorPalette) {
         _color.value = color
     }
@@ -25,5 +31,13 @@ class MainViewModel : ViewModel() {
 
     fun erase() {
         _isErasing.value = true
+    }
+
+    fun openColorSelection() {
+        _colorSelectionEvent.value = true
+    }
+
+    fun openWidthSelection() {
+        _widthSelectionEvent.value = true
     }
 }

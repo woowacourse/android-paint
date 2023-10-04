@@ -54,6 +54,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="@drawable/palette_24"
+            android:onClick="@{()->mainViewModel.openColorSelection()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -62,6 +63,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="@drawable/line_weight_24"
+            android:onClick="@{()->mainViewModel.openWidthSelection()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/btn_color_selection" />
 
