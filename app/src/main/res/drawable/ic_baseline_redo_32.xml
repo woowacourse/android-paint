@@ -1,0 +1,4 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:drawable="@drawable/ic_baseline_redo_32_disabled" android:state_enabled="false" />
+    <item android:drawable="@drawable/ic_baseline_redo_32_normal" android:state_enabled="true" />
+</selector>
