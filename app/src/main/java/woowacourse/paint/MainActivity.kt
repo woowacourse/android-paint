@@ -3,6 +3,7 @@ package woowacourse.paint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
+import woowacourse.paint.customView.ColorSelectionView
 import woowacourse.paint.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -15,6 +16,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupBinding()
+
+        binding.btnColorSelection.setOnClickListener {
+            binding.layoutMenu.addView(
+                ColorSelectionView(
+                    context = this,
+                    click = viewModel::changeColor,
+                ),
+            )
+        }
     }
 
     private fun setupBinding() {
