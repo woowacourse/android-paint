@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.slider.RangeSlider
 import woowacourse.paint.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -15,6 +16,22 @@ class MainActivity : AppCompatActivity() {
 
         initAdapter()
         initClickListener()
+        initSlideTouchListener()
+    }
+
+    private fun initSlideTouchListener() {
+        binding.rsThickness.addOnSliderTouchListener(object : RangeSlider.OnSliderTouchListener {
+            override fun onStartTrackingTouch(slider: RangeSlider) = Unit
+            override fun onStopTrackingTouch(slider: RangeSlider) {
+                setPaintThickness()
+            }
+        })
+    }
+
+    private fun setPaintThickness() {
+        binding.rsThickness.visibility = View.GONE
+        val thickness = binding.rsThickness.values.last()
+        binding.fdvBoard.updateThickness(thickness)
     }
 
     private fun initAdapter() {
@@ -33,9 +50,9 @@ class MainActivity : AppCompatActivity() {
         binding.btChangeColor.setOnClickListener {
             binding.rvPalette.visibility = View.VISIBLE
         }
+
         binding.btChangeThickness.setOnClickListener {
-            val thickness = binding.rsThickness.values.last()
-            binding.fdvBoard.updateThickness(thickness)
+            binding.rsThickness.visibility = View.VISIBLE
         }
     }
 }
