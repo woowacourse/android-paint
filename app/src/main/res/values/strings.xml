@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Paint</string>
+    <string name="thickness_change">굵기 변경</string>
+    <string name="color_change">색상 변경</string>
 </resources>
