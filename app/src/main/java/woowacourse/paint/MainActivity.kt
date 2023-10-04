@@ -3,7 +3,8 @@ package woowacourse.paint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import woowacourse.paint.customView.ColorSelectionView
+import woowacourse.paint.customView.colorSelection.ColorSelectionView
+import woowacourse.paint.customView.widthSelection.WidthSelection
 import woowacourse.paint.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -18,10 +19,22 @@ class MainActivity : AppCompatActivity() {
         setupBinding()
 
         binding.btnColorSelection.setOnClickListener {
+            binding.layoutMenu.removeAllViews()
             binding.layoutMenu.addView(
                 ColorSelectionView(
                     context = this,
                     click = viewModel::changeColor,
+                ),
+            )
+        }
+
+        binding.btnPenWidth.setOnClickListener {
+            binding.layoutMenu.removeAllViews()
+            binding.layoutMenu.addView(
+                WidthSelection(
+                    context = this,
+                    listener = viewModel::changeWidth,
+                    initialValue = viewModel.width.value ?: 0f,
                 ),
             )
         }

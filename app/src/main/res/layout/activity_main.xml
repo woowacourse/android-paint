@@ -23,24 +23,24 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:eraseAll="@{mainViewModel.isErasing}"
-            app:layout_constraintBottom_toTopOf="@id/range_slider_width"
+            app:layout_constraintBottom_toTopOf="@id/btn_color_selection"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:setColorPalette="@{mainViewModel.color}"
             app:setWidth="@{mainViewModel.width}" />
 
-        <com.google.android.material.slider.Slider
-            android:id="@+id/range_slider_width"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:valueFrom="0"
-            android:valueTo="100"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/board"
-            app:setupSlider="@{mainViewModel::changeWidth}" />
+<!--        <com.google.android.material.slider.Slider-->
+<!--            android:id="@+id/range_slider_width"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:valueFrom="0"-->
+<!--            android:valueTo="100"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/board"-->
+<!--            app:setupSlider="@{mainViewModel::changeWidth}" />-->
 
         <LinearLayout
             android:id="@+id/layout_menu"
@@ -58,6 +58,14 @@
             android:text="색상"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_pen_width"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="굵기"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_color_selection" />
 
         <!--        <androidx.appcompat.widget.AppCompatButton-->
         <!--            android:id="@+id/btn_erase"-->
