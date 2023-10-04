@@ -14,6 +14,7 @@ import woowacourse.paint.view.model.mapper.LinesMapper.toModel
 import woowacourse.paint.view.model.pen.EllipsePen
 import woowacourse.paint.view.model.pen.LinePen
 import woowacourse.paint.view.model.pen.Pen
+import woowacourse.paint.view.model.pen.RectPen
 
 class PaintViewModel : ViewModel() {
     private var color: Int = BrushColor.paintColors[0]
@@ -24,11 +25,8 @@ class PaintViewModel : ViewModel() {
         get() = Transformations.map(_lines) { it.toModel() }
 
     private val _pen: MutableLiveData<Pen> = MutableLiveData(
-        LinePen { path, paint ->
-            addLine(LineMapper.toLine(path, paint))
-        }.apply {
+        RectPen().apply {
             setColor(color)
-            setStrokeWidth(strokeWidth)
         }
     )
     val pen: LiveData<Pen>
