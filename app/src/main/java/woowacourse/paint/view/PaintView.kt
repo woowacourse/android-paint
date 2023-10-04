@@ -6,7 +6,7 @@ import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import woowacourse.paint.view.model.Inks
+import woowacourse.paint.view.model.pen.ink.Inks
 import woowacourse.paint.view.model.pen.Pen
 
 class PaintView(context: Context, attributeSet: AttributeSet) : View(context, attributeSet) {

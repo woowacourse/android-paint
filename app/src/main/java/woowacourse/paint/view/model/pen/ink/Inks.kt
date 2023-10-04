@@ -1,7 +1,6 @@
-package woowacourse.paint.view.model
+package woowacourse.paint.view.model.pen.ink
 
 import android.graphics.Canvas
-import woowacourse.paint.view.model.pen.Ink
 
 data class Inks(val data: List<Ink> = emptyList()) {
     fun draw(canvas: Canvas) {

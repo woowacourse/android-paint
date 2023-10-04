@@ -1,5 +1,7 @@
 package woowacourse.paint.view.model.pen
 
+import woowacourse.paint.view.model.pen.ink.Ink
+
 class EraserPen(override val ink: Ink) : Pen {
     override fun startPaint(pointX: Float, pointY: Float) {
         TODO("Not yet implemented")

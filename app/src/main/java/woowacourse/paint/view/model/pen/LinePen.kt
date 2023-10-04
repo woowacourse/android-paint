@@ -3,6 +3,7 @@ package woowacourse.paint.view.model.pen
 import android.graphics.CornerPathEffect
 import android.graphics.Paint
 import android.graphics.Path
+import woowacourse.paint.view.model.pen.ink.Ink
 
 class LinePen(
     override val ink: Ink = Ink(

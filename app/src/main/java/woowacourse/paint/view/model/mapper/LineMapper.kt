@@ -5,7 +5,7 @@ import woowacourse.paint.view.model.mapper.BrushMapper.toDomain
 import woowacourse.paint.view.model.mapper.BrushMapper.toModel
 import woowacourse.paint.view.model.mapper.PointsMapper.toDomain
 import woowacourse.paint.view.model.mapper.PointsMapper.toModel
-import woowacourse.paint.view.model.pen.Ink
+import woowacourse.paint.view.model.pen.ink.Ink
 
 object LineMapper {
     fun Ink.toDomain(): Line = Line(

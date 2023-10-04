@@ -1,7 +1,7 @@
 package woowacourse.paint.view.model.mapper
 
 import woowacourse.paint.domain.Lines
-import woowacourse.paint.view.model.Inks
+import woowacourse.paint.view.model.pen.ink.Inks
 import woowacourse.paint.view.model.mapper.LineMapper.toModel
 
 object LinesMapper {

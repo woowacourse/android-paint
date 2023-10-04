@@ -3,6 +3,7 @@ package woowacourse.paint.view.model.pen
 import android.graphics.Paint
 import android.graphics.Path
 import woowacourse.paint.graphics.AutoSortedRect
+import woowacourse.paint.view.model.pen.ink.Ink
 
 class EllipsePen(
     override val ink: Ink = Ink(

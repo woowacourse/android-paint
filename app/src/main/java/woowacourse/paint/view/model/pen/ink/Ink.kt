@@ -1,4 +1,4 @@
-package woowacourse.paint.view.model.pen
+package woowacourse.paint.view.model.pen.ink
 
 import android.graphics.Canvas
 import android.graphics.Paint
