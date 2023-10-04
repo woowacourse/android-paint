@@ -1,29 +1,41 @@
 package woowacourse.paint.view.model.pen
 
 import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.Path
+import woowacourse.paint.graphics.AutoSortedRect
 
 class EllipsePen : Pen {
+    private var paint: Paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
+        style = Paint.Style.FILL
+    }
+    private var path: Path = Path()
+    private var lastPointX: Float = 0F
+    private var lastPointY: Float = 0F
+
     override fun startPaint(pointX: Float, pointY: Float) {
-        TODO("Not yet implemented")
+        lastPointX = pointX
+        lastPointY = pointY
     }
 
     override fun movePaint(pointX: Float, pointY: Float) {
-        TODO("Not yet implemented")
+        path.reset()
+        path.addOval(
+            AutoSortedRect(lastPointX, lastPointY, pointX, pointY).toRectF(), Path.Direction.CCW
+        )
     }
 
     override fun cacheCurrentPaint() {
-        TODO("Not yet implemented")
     }
 
     override fun draw(canvas: Canvas) {
-        TODO("Not yet implemented")
+        canvas.drawPath(path, paint)
     }
 
     override fun setStrokeWidth(strokeWidth: Float) {
-        TODO("Not yet implemented")
     }
 
     override fun setColor(color: Int) {
-        TODO("Not yet implemented")
+        paint.color = color
     }
 }

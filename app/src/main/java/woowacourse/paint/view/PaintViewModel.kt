@@ -25,7 +25,7 @@ class PaintViewModel : ViewModel() {
         get() = Transformations.map(_lines) { it.toModel() }
 
     private val _pen: MutableLiveData<Pen> = MutableLiveData(
-        RectPen().apply {
+        EllipsePen().apply {
             setColor(color)
         }
     )

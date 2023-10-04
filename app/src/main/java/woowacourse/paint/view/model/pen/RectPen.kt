@@ -12,6 +12,7 @@ class RectPen : Pen {
     private var path: Path = Path()
     private var lastPointX: Float = 0F
     private var lastPointY: Float = 0F
+
     override fun startPaint(pointX: Float, pointY: Float) {
         lastPointX = pointX
         lastPointY = pointY
