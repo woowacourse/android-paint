@@ -8,7 +8,7 @@ class PaintAdapter(
     private val onColorClick: (color: Int) -> Unit,
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return PaintViewHolder(PaintViewHolder.getView(parent), onColorClick)
+        return PaintViewHolder.from(parent, onColorClick)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

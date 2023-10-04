@@ -21,9 +21,13 @@ class PaintViewHolder(
     }
 
     companion object {
-        fun getView(parent: ViewGroup): ColorBinding {
-            val layoutInflater = LayoutInflater.from(parent.context)
-            return ColorBinding.inflate(layoutInflater, parent, false)
+        fun from(
+            parent: ViewGroup,
+            onColorClick: (color: Int) -> Unit,
+        ): PaintViewHolder {
+            val binding = ColorBinding
+                .inflate(LayoutInflater.from(parent.context), parent, false)
+            return PaintViewHolder(binding, onColorClick)
         }
     }
 }
