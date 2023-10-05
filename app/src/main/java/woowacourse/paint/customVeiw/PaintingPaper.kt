@@ -6,6 +6,9 @@ import android.graphics.Color
 import android.graphics.CornerPathEffect
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
+import android.graphics.Xfermode
 import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -41,8 +44,11 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
             style = Paint.Style.STROKE
             strokeJoin = Paint.Join.ROUND
             strokeCap = Paint.Cap.ROUND
+            xfermode = _xfermode
             pathEffect = CornerPathEffect(100F)
         }
+
+    private var _xfermode: Xfermode? = null
 
     var color = Color.BLACK
         set(value) {
@@ -60,6 +66,7 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
 
     init {
         background = ColorDrawable(Color.WHITE)
+        setLayerType(LAYER_TYPE_HARDWARE, null)
     }
 
     var onUndoHistoryChangeListener: (Boolean) -> Unit = {}
@@ -124,13 +131,14 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
         invalidate()
     }
 
-    fun drawMode(colorInt: Int) {
-        color = colorInt
+    fun drawMode() {
+        _xfermode = null
         onEraseModeChangeListener(false)
     }
 
     fun eraseMode() {
-        color = (background as ColorDrawable).color
+        _xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+        shape = Shape.LINE
         onEraseModeChangeListener(true)
     }
 }
