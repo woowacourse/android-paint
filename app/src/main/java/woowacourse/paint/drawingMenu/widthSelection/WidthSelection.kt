@@ -1,4 +1,4 @@
-package woowacourse.paint.customView.widthSelection
+package woowacourse.paint.drawingMenu.widthSelection
 
 import android.content.Context
 import android.util.AttributeSet

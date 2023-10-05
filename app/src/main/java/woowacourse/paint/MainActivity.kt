@@ -4,9 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
-import woowacourse.paint.customView.colorSelection.ColorSelectionView
-import woowacourse.paint.customView.widthSelection.WidthSelection
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.drawingMenu.colorSelection.ColorSelectionView
+import woowacourse.paint.drawingMenu.widthSelection.WidthSelection
 
 class MainActivity : AppCompatActivity() {
 

@@ -1,4 +1,4 @@
-package woowacourse.paint.customView.colorSelection
+package woowacourse.paint.drawingMenu.colorSelection
 
 import android.content.Context
 import android.util.AttributeSet
