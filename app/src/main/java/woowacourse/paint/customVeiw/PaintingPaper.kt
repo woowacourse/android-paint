@@ -10,14 +10,14 @@ import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import woowacourse.paint.model.Brush
+import woowacourse.paint.model.BrushPen
 import woowacourse.paint.model.Brushes
 
 class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val brushes: Brushes = Brushes()
 
     private val previewBrush
-        get() = Brush(
+        get() = BrushPen(
             Path().apply {
                 moveTo(100F, 100F)
                 lineTo(200F, 100F)
@@ -73,7 +73,7 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
     }
 
     private fun onActionDown(event: MotionEvent): Boolean {
-        brushes += Brush(path, paint).apply { start(event.x, event.y, ::updatePaper) }
+        brushes += BrushPen(path, paint).apply { start(event.x, event.y, ::updatePaper) }
         return true
     }
 
