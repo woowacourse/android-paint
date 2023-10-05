@@ -2,7 +2,9 @@ package woowacourse.paint.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import woowacourse.paint.R
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.model.Shape
 
 class MainActivity : AppCompatActivity() {
 
@@ -42,6 +44,14 @@ class MainActivity : AppCompatActivity() {
 
         binding.paintingPaper.onEraseModeChangeListener = {
             binding.btnEraser.isSelected = it
+        }
+
+        binding.rgShapes.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.rbPen -> binding.paintingPaper.shape = Shape.LINE
+                R.id.rbRect -> binding.paintingPaper.shape = Shape.RECT
+                R.id.rbCircle -> binding.paintingPaper.shape = Shape.CIRCLE
+            }
         }
     }
 }

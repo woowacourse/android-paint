@@ -10,8 +10,12 @@ import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import woowacourse.paint.model.Brush
+import woowacourse.paint.model.BrushCircle
 import woowacourse.paint.model.BrushPen
+import woowacourse.paint.model.BrushRect
 import woowacourse.paint.model.Brushes
+import woowacourse.paint.model.Shape
 
 class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val brushes: Brushes = Brushes()
@@ -22,15 +26,17 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
                 moveTo(100F, 100F)
                 lineTo(200F, 100F)
             },
-            paint,
+            penPaint,
         )
 
     private val path
         get() = Path()
 
     private val paint
-        get() = Paint().apply {
-            color = this@PaintingPaper.color
+        get() = Paint().apply { color = this@PaintingPaper.color }
+
+    private val penPaint
+        get() = paint.apply {
             strokeWidth = brushSize
             style = Paint.Style.STROKE
             strokeJoin = Paint.Join.ROUND
@@ -49,6 +55,8 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
             field = value
             invalidate()
         }
+
+    var shape = Shape.LINE
 
     init {
         background = ColorDrawable(Color.WHITE)
@@ -73,8 +81,24 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
     }
 
     private fun onActionDown(event: MotionEvent): Boolean {
-        brushes += BrushPen(path, paint).apply { start(event.x, event.y, ::updatePaper) }
+        brushes += when (shape) {
+            Shape.LINE -> createBrushPen(event)
+            Shape.RECT -> createBrushRect(event)
+            Shape.CIRCLE -> createBrushCircle(event)
+        }
         return true
+    }
+
+    private fun createBrushPen(event: MotionEvent): Brush {
+        return BrushPen(path, penPaint).apply { start(event.x, event.y, ::updatePaper) }
+    }
+
+    private fun createBrushRect(event: MotionEvent): Brush {
+        return BrushRect(path, paint).apply { start(event.x, event.y, ::updatePaper) }
+    }
+
+    private fun createBrushCircle(event: MotionEvent): Brush {
+        return BrushCircle(path, paint).apply { start(event.x, event.y, ::updatePaper) }
     }
 
     private fun onActionMove(event: MotionEvent): Boolean {
