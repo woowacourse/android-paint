@@ -46,7 +46,7 @@
             app:layout_constraintBottom_toTopOf="@id/btn_color_change"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:listitem="@layout/item_main_board_color" />
+            tools:listitem="@layout/item_main_brush_color" />
 
         <Button
             android:id="@+id/btn_color_change"

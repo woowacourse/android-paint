@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.databinding.ActivityMainBinding
-import woowacourse.paint.ui.main.color.BoardColorAdapter
+import woowacourse.paint.ui.main.color.BrushColorAdapter
 
 class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy {
@@ -13,8 +13,8 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()
 
-    private val colorAdapter: BoardColorAdapter by lazy {
-        BoardColorAdapter(viewModel::onChangeSelectedColor)
+    private val colorAdapter: BrushColorAdapter by lazy {
+        BrushColorAdapter(viewModel::onChangeSelectedColor)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

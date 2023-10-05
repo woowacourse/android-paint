@@ -3,11 +3,11 @@ package woowacourse.paint.ui.main.color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
-import woowacourse.paint.databinding.ItemMainBoardColorBinding
+import woowacourse.paint.databinding.ItemMainBrushColorBinding
 import woowacourse.paint.model.BrushColorItem
 
-class BoardColorViewHolder(
-    private val binding: ItemMainBoardColorBinding,
+class BrushColorViewHolder(
+    private val binding: ItemMainBrushColorBinding,
     onColorClick: (BrushColorItem) -> Unit,
 ) : ViewHolder(binding.root) {
     init {
@@ -19,10 +19,13 @@ class BoardColorViewHolder(
     }
 
     companion object {
-        fun create(parent: ViewGroup, onColorClick: (BrushColorItem) -> Unit): BoardColorViewHolder {
+        fun create(
+            parent: ViewGroup,
+            onColorClick: (BrushColorItem) -> Unit,
+        ): BrushColorViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
-            val binding = ItemMainBoardColorBinding.inflate(layoutInflater, parent, false)
-            return BoardColorViewHolder(binding, onColorClick)
+            val binding = ItemMainBrushColorBinding.inflate(layoutInflater, parent, false)
+            return BrushColorViewHolder(binding, onColorClick)
         }
     }
 }

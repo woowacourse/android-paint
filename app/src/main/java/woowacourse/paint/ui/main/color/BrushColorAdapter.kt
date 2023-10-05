@@ -5,14 +5,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import woowacourse.paint.model.BrushColorItem
 
-class BoardColorAdapter(
+class BrushColorAdapter(
     private val onColorClick: (BrushColorItem) -> Unit,
-) : ListAdapter<BrushColorItem, BoardColorViewHolder>(boardColorDiffUtil) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BoardColorViewHolder {
-        return BoardColorViewHolder.create(parent, onColorClick)
+) : ListAdapter<BrushColorItem, BrushColorViewHolder>(brushColorDiffUtil) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BrushColorViewHolder {
+        return BrushColorViewHolder.create(parent, onColorClick)
     }
 
-    override fun onBindViewHolder(holder: BoardColorViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: BrushColorViewHolder, position: Int) {
         holder.bind(currentList[position])
     }
 
@@ -21,7 +21,7 @@ class BoardColorAdapter(
     }
 
     companion object {
-        private val boardColorDiffUtil = object : DiffUtil.ItemCallback<BrushColorItem>() {
+        private val brushColorDiffUtil = object : DiffUtil.ItemCallback<BrushColorItem>() {
             override fun areItemsTheSame(
                 oldItem: BrushColorItem,
                 newItem: BrushColorItem,
