@@ -14,7 +14,7 @@ class Canvas @JvmOverloads constructor(context: Context, attrs: AttributeSet? = 
     View(context, attrs) {
     private var path = Path()
     private var paint = Paint()
-    private val pathHistory = PathHistory()
+    private val drawingHistory = DrawingHistory()
 
     init {
         changePaintProperty(Color.RED, DEFAULT_PAINT_WIDTH)
@@ -22,12 +22,12 @@ class Canvas @JvmOverloads constructor(context: Context, attrs: AttributeSet? = 
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        drawPathHistory(canvas)
+        drawDrawingHistory(canvas)
         canvas.drawPath(path, paint)
     }
 
-    private fun drawPathHistory(canvas: Canvas) {
-        pathHistory.paths.forEach { (path: Path, paint: Paint) ->
+    private fun drawDrawingHistory(canvas: Canvas) {
+        drawingHistory.drawings.forEach { (path: Path, paint: Paint) ->
             canvas.drawPath(path, paint)
         }
     }
@@ -45,7 +45,7 @@ class Canvas @JvmOverloads constructor(context: Context, attrs: AttributeSet? = 
             }
 
             MotionEvent.ACTION_UP -> {
-                pathHistory.addPath(PathPaint(path, paint))
+                drawingHistory.addDrawing(Drawing(path, paint))
                 path = Path()
             }
 
