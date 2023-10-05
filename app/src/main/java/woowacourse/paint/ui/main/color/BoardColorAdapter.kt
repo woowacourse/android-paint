@@ -1,4 +1,4 @@
-package woowacourse.paint.ui.main
+package woowacourse.paint.ui.main.color
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil

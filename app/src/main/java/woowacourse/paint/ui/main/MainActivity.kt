@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.ui.main.color.BoardColorAdapter
 
 class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy {
