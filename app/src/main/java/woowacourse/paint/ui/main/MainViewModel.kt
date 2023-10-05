@@ -36,7 +36,7 @@ class MainViewModel : ViewModel() {
     val colors: LiveData<List<BrushColorItem>>
         get() = _colors
 
-    private val brushes = listOf(BrushType.Stroke, BrushType.Eraser)
+    private val brushes = listOf(BrushType.Stroke, BrushType.Rectangle, BrushType.Eraser)
     private val _brushTypes: MutableLiveData<List<BrushTypeItem>> =
         MutableLiveData(getBrushTypeItems(selectedBrushType))
     val brushTypes: LiveData<List<BrushTypeItem>>

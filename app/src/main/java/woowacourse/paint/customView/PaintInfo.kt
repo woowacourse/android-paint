@@ -39,6 +39,7 @@ class PaintInfo {
     fun getPaint(contentType: BrushType): Paint {
         return when (contentType) {
             BrushType.Stroke -> createStrokePaint()
+            BrushType.Rectangle -> createRectanglePaint()
             BrushType.Eraser -> createEraserPaint()
         }
     }
@@ -50,6 +51,12 @@ class PaintInfo {
         strokeJoin = Paint.Join.ROUND
         color = currentColor
         this.strokeWidth = currentStrokeWidth
+    }
+
+    private fun createRectanglePaint() = Paint().apply {
+        isAntiAlias = true
+        style = Paint.Style.FILL
+        color = currentColor
     }
 
     private fun createEraserPaint() = Paint().apply {
