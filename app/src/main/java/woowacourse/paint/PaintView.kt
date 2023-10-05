@@ -43,15 +43,15 @@ class PaintView(
         val pointY: Float = event.y
 
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> penDown(pointX, pointY)
-            MotionEvent.ACTION_MOVE -> penMove(pointX, pointY)
+            MotionEvent.ACTION_DOWN -> touchActionDown(pointX, pointY)
+            MotionEvent.ACTION_MOVE -> touchActionMove(pointX, pointY)
             else -> super.onTouchEvent(event)
         }
 
         return true
     }
 
-    private fun penDown(pointX: Float, pointY: Float) {
+    private fun touchActionDown(pointX: Float, pointY: Float) {
         when (drawMode) {
             DrawMode.LINE -> {
                 val addedLine = addLine(pointX, pointY)
@@ -63,7 +63,7 @@ class PaintView(
         }
     }
 
-    private fun penMove(pointX: Float, pointY: Float) {
+    private fun touchActionMove(pointX: Float, pointY: Float) {
         when (val shape = shapes.last()) {
             is Line -> {
                 val nextX = (lastX + pointX) / 2
