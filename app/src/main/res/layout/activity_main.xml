@@ -7,10 +7,49 @@
 
     <woowacourse.paint.CanvasView
         android:id="@+id/canvasView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/rangeSlider"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/lineBrushButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/lineBrushButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/line_brush"
+        app:layout_constraintBottom_toTopOf="@id/rangeSlider"
+        app:layout_constraintEnd_toStartOf="@id/rectBrushButton"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/rectBrushButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/rectangle_brush"
+        app:layout_constraintBottom_toTopOf="@id/rangeSlider"
+        app:layout_constraintEnd_toStartOf="@id/circleBrushButton"
+        app:layout_constraintStart_toEndOf="@id/lineBrushButton" />
+
+    <Button
+        android:id="@+id/circleBrushButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/circle_brush"
+        app:layout_constraintBottom_toTopOf="@id/rangeSlider"
+        app:layout_constraintEnd_toStartOf="@id/eraserButton"
+        app:layout_constraintStart_toEndOf="@id/rectBrushButton" />
+
+    <Button
+        android:id="@+id/eraserButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/eraser"
+        app:layout_constraintBottom_toTopOf="@id/rangeSlider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/circleBrushButton" />
+
 
     <com.google.android.material.slider.RangeSlider
         android:id="@+id/rangeSlider"
@@ -29,7 +68,7 @@
 
     <Space
         android:id="@+id/spaceBottom"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
