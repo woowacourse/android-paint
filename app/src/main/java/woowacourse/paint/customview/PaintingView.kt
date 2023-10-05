@@ -13,12 +13,8 @@ import androidx.core.content.ContextCompat.getColor
 import androidx.databinding.BindingAdapter
 import woowacourse.paint.R
 
-class PaintingView : View {
-
-    constructor(context: Context) : super(context)
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        setupAttrs(attrs)
-    }
+class PaintingView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
+    View(context, attrs) {
 
     @ColorInt
     private var currentColor: Int = getColor(context, BrushColor.BLUE.colorRes)
@@ -37,6 +33,7 @@ class PaintingView : View {
     init {
         isFocusable = true
         isFocusableInTouchMode = true
+        attrs?.let { setupAttrs(attrs) }
     }
 
     override fun onDraw(canvas: Canvas) {
