@@ -16,7 +16,7 @@ class LinePen(
         Path()
     ),
     val onAddInk: (Ink) -> Unit = { _ -> }
-) : Pen {
+) : DrawablePen {
 
     override fun startPaint(pointX: Float, pointY: Float) {
         ink.path.moveTo(pointX, pointY)

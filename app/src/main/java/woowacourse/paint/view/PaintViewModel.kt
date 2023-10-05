@@ -11,6 +11,7 @@ import woowacourse.paint.domain.Drawings
 import woowacourse.paint.view.model.mapper.DrawingMapper.toDomain
 import woowacourse.paint.view.model.mapper.DrawingMapper.toModel
 import woowacourse.paint.view.model.mapper.DrawingsMapper.toModel
+import woowacourse.paint.view.model.pen.DrawablePen
 import woowacourse.paint.view.model.pen.EllipsePen
 import woowacourse.paint.view.model.pen.EraserPen
 import woowacourse.paint.view.model.pen.LinePen
@@ -58,14 +59,14 @@ class PaintViewModel : ViewModel() {
 
     fun updateColor(color: Int) {
         this.color = color
-        _pen.value.also {
+        (_pen.value as? DrawablePen).also {
             it?.setColor(color)
         }
     }
 
     fun updateStrokeWidth(strokeWidth: Float) {
         this.strokeWidth = strokeWidth
-        _pen.value.also {
+        (_pen.value as? DrawablePen).also {
             it?.setStrokeWidth(strokeWidth)
         }
     }

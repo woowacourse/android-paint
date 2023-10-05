@@ -6,6 +6,7 @@ import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import woowacourse.paint.view.model.pen.DrawablePen
 import woowacourse.paint.view.model.pen.Pen
 import woowacourse.paint.view.model.pen.ink.Inks
 
@@ -25,7 +26,7 @@ class PaintView(context: Context, attributeSet: AttributeSet) : View(context, at
             MotionEvent.ACTION_DOWN -> pen.startPaint(event.x, event.y)
             MotionEvent.ACTION_MOVE -> pen.movePaint(event.x, event.y)
             MotionEvent.ACTION_UP -> {
-                pen.cacheCurrentPaint()
+                (pen as? DrawablePen)?.cacheCurrentPaint()
                 return true
             }
 
@@ -46,6 +47,6 @@ class PaintView(context: Context, attributeSet: AttributeSet) : View(context, at
 
     private fun drawInks(canvas: Canvas) {
         inks.draw(canvas)
-        pen.ink.draw(canvas)
+        (pen as? DrawablePen)?.ink?.draw(canvas)
     }
 }

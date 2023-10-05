@@ -13,7 +13,7 @@ class RectPen(
         Path()
     ),
     val onAddInk: (Ink) -> Unit = { _ -> }
-) : Pen {
+) : DrawablePen {
     private var lastPointX: Float = 0F
     private var lastPointY: Float = 0F
 
