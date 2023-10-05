@@ -24,13 +24,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupColorsView() {
         binding.rvColors.adapter = ColorsAdapter(
-            colors = listOf(
-                getColor(R.color.red),
-                getColor(R.color.orange),
-                getColor(R.color.yellow),
-                getColor(R.color.green),
-                getColor(R.color.blue),
-            ),
+            colors = Color.values().map { it.resId },
             onColorClicked = binding.pv::setBrushColor
         )
         binding.rvColors.setHasFixedSize(true)
