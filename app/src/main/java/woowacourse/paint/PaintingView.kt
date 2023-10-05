@@ -7,22 +7,29 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import woowacourse.paint.painting.Paintings
+import woowacourse.paint.painting.figure.Circle
+import woowacourse.paint.painting.figure.Figure
+import woowacourse.paint.painting.figure.Line
+import woowacourse.paint.painting.figure.Rectangle
 
 class PaintingView(
     context: Context,
     attributeSet: AttributeSet
 ) : View(context, attributeSet) {
 
-    private val painting = Painting()
+    private val paintings = Paintings()
 
-    private var path = Path()
-    private var brush = Paint().apply {
-        style = Paint.Style.STROKE
-        color = context.getColor(R.color.red)
-        isAntiAlias = true
-        strokeCap = Paint.Cap.ROUND
-        strokeJoin = Paint.Join.ROUND
-    }
+    private var figure: Figure = Line(
+        path = Path(),
+        paint = Paint().apply {
+            style = Paint.Style.STROKE
+            color = context.getColor(R.color.red)
+            isAntiAlias = true
+            strokeCap = Paint.Cap.ROUND
+            strokeJoin = Paint.Join.ROUND
+        }
+    )
 
     init {
         isFocusable = true
@@ -32,46 +39,64 @@ class PaintingView(
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        painting.drawOn(canvas)
-        canvas.drawPath(path, brush)
+        paintings.draw(canvas)
+        canvas.drawPath(figure.path, figure.paint)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         with(event) {
             when (action) {
-                MotionEvent.ACTION_DOWN -> path.moveTo(x, y)
+                MotionEvent.ACTION_DOWN -> figure.begin(x, y)
 
-                MotionEvent.ACTION_MOVE -> path.lineTo(x, y)
+                MotionEvent.ACTION_MOVE -> figure.extend(x, y)
 
                 MotionEvent.ACTION_UP -> {
-                    painting.drawLine(Line(path, brush)) {
-                        Line.dot(x, y, brush)
+                    paintings.drawFigure(figure) {
+                        Line.dot(x, y, figure.paint)
                     }
 
-                    path = Path()
+                    figure = figure.copy(Path())
                 }
             }
         }
-
         invalidate()
         return true
     }
 
-    private fun changeBrush(
-        width: Float = brush.strokeWidth,
-        color: Int = brush.color
-    ) {
-        brush = Paint(brush).apply {
-            strokeWidth = width
-            this.color = color
-        }
+    fun setFigureToRectangle() {
+        figure = Rectangle(
+            Path(),
+            Paint(figure.paint)
+        )
+    }
+
+    fun setFigureToLine() {
+        figure = Line(
+            Path(),
+            Paint(figure.paint)
+        )
+    }
+
+    fun setFigureToCircle() {
+        figure = Circle(
+            Path(),
+            Paint(figure.paint)
+        )
     }
 
     fun setBrushColor(color: Int) {
-        changeBrush(color = color)
+        figure = figure.copy(
+            paint = Paint(figure.paint).apply {
+                this.color = color
+            }
+        )
     }
 
     fun setBrushWidth(width: Float) {
-        changeBrush(width = width)
+        figure = figure.copy(
+            paint = Paint(figure.paint).apply {
+                this.strokeWidth = width
+            }
+        )
     }
 }

@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
         setupBinding()
         setupColorsView()
         setupSlider()
+        setupFigureButtonClickListener()
     }
 
     private fun setupBinding() {
@@ -23,11 +24,27 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupColorsView() {
-        binding.rvColors.adapter = ColorsAdapter(
-            colors = Color.values().map { getColor(it.resId) },
-            onColorClicked = binding.pv::setBrushColor
-        )
-        binding.rvColors.setHasFixedSize(true)
+        with(binding) {
+            rvColors.adapter = ColorsAdapter(
+                colors = Color.values().map { getColor(it.resId) },
+                onColorClicked = pv::setBrushColor
+            )
+            rvColors.setHasFixedSize(true)
+        }
+    }
+
+    private fun setupFigureButtonClickListener() {
+        with(binding) {
+            btnSquare.setOnClickListener {
+                pv.setFigureToRectangle()
+            }
+            btnPen.setOnClickListener {
+                pv.setFigureToLine()
+            }
+            btnCircle.setOnClickListener {
+                pv.setFigureToCircle()
+            }
+        }
     }
 
     private fun setupSlider() {
