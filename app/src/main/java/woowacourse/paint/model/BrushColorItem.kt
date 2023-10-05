@@ -1,6 +1,6 @@
 package woowacourse.paint.model
 
-data class BoardColorItem(
-    val color: PaintColor,
+data class BrushColorItem(
+    val color: BrushColor,
     val isSelected: Boolean,
 )

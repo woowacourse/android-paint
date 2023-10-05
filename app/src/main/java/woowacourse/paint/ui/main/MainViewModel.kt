@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import woowacourse.paint.customView.content.BrushType
 import woowacourse.paint.customView.content.Content
-import woowacourse.paint.model.BoardColorItem
-import woowacourse.paint.model.PaintColor
+import woowacourse.paint.model.BrushColor
+import woowacourse.paint.model.BrushColorItem
 
 class MainViewModel : ViewModel() {
     val minStrokeWidth: Float = MIN_STROKE_WIDTH
@@ -14,20 +14,20 @@ class MainViewModel : ViewModel() {
     var selectedStroke: Float = (minStrokeWidth + maxStrokeWidth) / 2
         private set
 
-    var selectedColor: PaintColor = PaintColor.values().first()
+    var selectedColor: BrushColor = BrushColor.values().first()
         private set
 
-    private val _appliedColor: MutableLiveData<PaintColor> = MutableLiveData(selectedColor)
-    val appliedColor: LiveData<PaintColor>
+    private val _appliedColor: MutableLiveData<BrushColor> = MutableLiveData(selectedColor)
+    val appliedColor: LiveData<BrushColor>
         get() = _appliedColor
 
     private val _appliedStroke: MutableLiveData<Float> = MutableLiveData(selectedStroke)
     val appliedStroke: LiveData<Float>
         get() = _appliedStroke
 
-    private val _colors: MutableLiveData<List<BoardColorItem>> =
+    private val _colors: MutableLiveData<List<BrushColorItem>> =
         MutableLiveData(getBoardColorItems(selectedColor))
-    val colors: LiveData<List<BoardColorItem>>
+    val colors: LiveData<List<BrushColorItem>>
         get() = _colors
 
     private val _type: MutableLiveData<BrushType> = MutableLiveData(BrushType.Stroke)
@@ -38,14 +38,14 @@ class MainViewModel : ViewModel() {
     val drawnPaths: List<Content>
         get() = _drawnPaths.map { it.deepCopy() }
 
-    private fun getBoardColorItems(selectedColor: PaintColor): List<BoardColorItem> =
-        PaintColor.values().map {
-            if (it == selectedColor) return@map BoardColorItem(it, true)
-            BoardColorItem(it, false)
+    private fun getBoardColorItems(selectedColor: BrushColor): List<BrushColorItem> =
+        BrushColor.values().map {
+            if (it == selectedColor) return@map BrushColorItem(it, true)
+            BrushColorItem(it, false)
         }
 
-    fun onChangeSelectedColor(boardColorItem: BoardColorItem) {
-        selectedColor = boardColorItem.color
+    fun onChangeSelectedColor(brushColorItem: BrushColorItem) {
+        selectedColor = brushColorItem.color
     }
 
     val onSelectedStrokeChange = { value: Float ->
