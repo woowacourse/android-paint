@@ -1,6 +1,7 @@
 package woowacourse.paint
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.databinding.ActivityMainBinding
@@ -16,10 +17,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        initBinding()
         initPalette()
         setupRangeSliderListener()
         setupChangePaintColorListener()
         setupChangeStrokeSizeListener()
+    }
+
+    private fun initBinding() {
+        binding.vm = mainViewModel
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -31,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     private fun initPalette() {
         binding.rvMain.adapter = PaletteAdapter(mainViewModel.paletteColor) { color ->
             mainViewModel.paintColor = color
+            binding.canvasMain.setPaintColor(color)
         }
         binding.rvMain.setHasFixedSize(true)
     }
@@ -38,18 +45,26 @@ class MainActivity : AppCompatActivity() {
     private fun setupRangeSliderListener() {
         binding.rsMain.addOnChangeListener { _, value, _ ->
             mainViewModel.strokeSize = value
+            binding.canvasMain.setStrokeSize(value)
         }
     }
 
     private fun setupChangePaintColorListener() {
         binding.btnMainChangeColor.setOnClickListener {
-            binding.canvasMain.setPaintColor(mainViewModel.paintColor)
+            binding.rvMain.changeVisibility()
         }
     }
 
     private fun setupChangeStrokeSizeListener() {
         binding.btnMainChangeStrokeSize.setOnClickListener {
-            binding.canvasMain.setStrokeSize(mainViewModel.strokeSize)
+            binding.rsMain.changeVisibility()
+        }
+    }
+
+    private fun View.changeVisibility() {
+        visibility = when (visibility) {
+            View.VISIBLE -> View.GONE
+            else -> View.VISIBLE
         }
     }
 }

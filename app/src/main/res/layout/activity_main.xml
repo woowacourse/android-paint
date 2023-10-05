@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="vm"
+            type="woowacourse.paint.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,6 +31,7 @@
             android:stepSize="5.0"
             android:valueFrom="0.0"
             android:valueTo="100.0"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@id/rv_main"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -40,6 +44,7 @@
             android:layout_marginBottom="16dp"
             android:orientation="horizontal"
             android:overScrollMode="never"
+            android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@id/btn_main_change_color"
             app:layout_constraintEnd_toEndOf="parent"
