@@ -2,6 +2,8 @@ package woowacourse.paint.customView
 
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import androidx.annotation.ColorInt
 import woowacourse.paint.customView.content.BrushType
 
@@ -54,8 +56,7 @@ class PaintInfo {
     }
 
     private fun createRectanglePaint() = Paint().apply {
-        isAntiAlias = true
-        style = Paint.Style.FILL
+        style = Paint.Style.FILL_AND_STROKE
         color = currentColor
     }
 
@@ -64,7 +65,7 @@ class PaintInfo {
         style = Paint.Style.STROKE
         strokeCap = Paint.Cap.ROUND
         strokeJoin = Paint.Join.ROUND
-        color = Color.WHITE
+        xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
         this.strokeWidth = currentStrokeWidth
     }
 

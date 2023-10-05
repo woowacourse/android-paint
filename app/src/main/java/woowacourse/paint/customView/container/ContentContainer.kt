@@ -2,7 +2,7 @@ package woowacourse.paint.customView.container
 
 import android.graphics.Canvas
 import android.graphics.Path
-import android.graphics.PointF
+import android.graphics.RectF
 import android.view.MotionEvent
 import woowacourse.paint.customView.PaintInfo
 import woowacourse.paint.customView.content.BrushType
@@ -39,7 +39,7 @@ class ContentContainer(
         return when (brushType) {
             BrushType.Stroke -> Stroke(Path(), paintInfo.getPaint(brushType))
             BrushType.Eraser -> Eraser(Path(), paintInfo.getPaint(brushType))
-            BrushType.Rectangle -> Rectangle(PointF(), PointF(), paintInfo.getPaint(brushType))
+            BrushType.Rectangle -> Rectangle(RectF(), paintInfo.getPaint(brushType))
         }
     }
 
