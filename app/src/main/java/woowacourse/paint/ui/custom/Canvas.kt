@@ -1,4 +1,4 @@
-package woowacourse.paint
+package woowacourse.paint.ui.custom
 
 import android.content.Context
 import android.graphics.Canvas
@@ -9,6 +9,8 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.ColorInt
+import woowacourse.paint.drawing.Drawing
+import woowacourse.paint.drawing.DrawingHistory
 
 class Canvas @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     View(context, attrs) {

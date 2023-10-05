@@ -1,4 +1,4 @@
-package woowacourse.paint
+package woowacourse.paint.ui.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView

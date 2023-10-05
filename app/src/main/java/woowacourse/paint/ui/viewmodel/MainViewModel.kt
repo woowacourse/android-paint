@@ -1,4 +1,4 @@
-package woowacourse.paint
+package woowacourse.paint.ui.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -1,4 +1,4 @@
-package woowacourse.paint
+package woowacourse.paint.drawing
 
 class DrawingHistory(private val _drawings: MutableList<Drawing> = mutableListOf()) {
     val drawings: List<Drawing> get() = _drawings.deepCopy()

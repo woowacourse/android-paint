@@ -1,11 +1,14 @@
-package woowacourse.paint
+package woowacourse.paint.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import woowacourse.paint.Canvas.Companion.DEFAULT_PAINT_WIDTH
+import woowacourse.paint.R
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.ui.adapter.PaletteAdapter
+import woowacourse.paint.ui.custom.Canvas.Companion.DEFAULT_PAINT_WIDTH
+import woowacourse.paint.ui.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
