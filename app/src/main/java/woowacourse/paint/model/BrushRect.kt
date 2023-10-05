@@ -3,6 +3,7 @@ package woowacourse.paint.model
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
+import woowacourse.paint.util.createRectFOf
 
 class BrushRect(private val path: Path, private val paint: Paint) : Brush {
     private var basePoint = Point(0F, 0F)
@@ -17,12 +18,8 @@ class BrushRect(private val path: Path, private val paint: Paint) : Brush {
     override fun move(x: Float, y: Float, onCommit: () -> Unit) = move(Point(x, y), onCommit)
 
     private fun move(point: Point, onSuccess: () -> Unit = {}) {
-        val minX = minOf(basePoint.x, point.x)
-        val minY = minOf(basePoint.y, point.y)
-        val maxX = maxOf(basePoint.x, point.x)
-        val maxY = maxOf(basePoint.y, point.y)
         path.reset()
-        path.addRect(minX, minY, maxX, maxY, Path.Direction.CCW)
+        path.addRect(createRectFOf(basePoint, point), Path.Direction.CCW)
         onSuccess()
     }
 
