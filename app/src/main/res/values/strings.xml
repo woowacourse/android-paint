@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Paint</string>
+
+    <string name="main_pen">펜</string>
+    <string name="main_square">사각형</string>
+    <string name="main_eraser">지우개</string>
+    <string name="main_circle">원</string>
 </resources>
