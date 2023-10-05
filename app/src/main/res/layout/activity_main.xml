@@ -9,6 +9,9 @@
         <variable
             name="viewModel"
             type="woowacourse.paint.MainViewModel" />
+        <variable
+            name="defaultPaintWidth"
+            type="float" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -28,6 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:valueFrom="0.0"
+            android:value="@{defaultPaintWidth}"
             android:valueTo="100.0"
             android:visibility="@{viewModel.paintWidthControllerVisibility ? View.VISIBLE : View.GONE, default = gone}"
             app:layout_constraintBottom_toTopOf="@+id/main_brush_colors_recycler_view" />

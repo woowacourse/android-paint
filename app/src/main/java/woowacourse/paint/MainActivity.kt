@@ -33,8 +33,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initPaintWidthRangeSlider() {
-        binding.mainBrushWidthSlider.value = DEFAULT_PAINT_WIDTH
-
+        binding.defaultPaintWidth = DEFAULT_PAINT_WIDTH
         binding.mainBrushWidthSlider.addOnChangeListener { _, value, _ ->
             binding.mainCanvas.changePaintWidth(value)
         }
