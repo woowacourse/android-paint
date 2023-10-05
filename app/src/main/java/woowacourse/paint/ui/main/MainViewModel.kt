@@ -51,10 +51,9 @@ class MainViewModel : ViewModel() {
         it.first { brushTypeItem -> brushTypeItem.isSelected }.brushType
     }
 
-    // 임시 저장 컨텐트
-    private val _drawnPaths = mutableListOf<Content>()
-    val drawnPaths: List<Content>
-        get() = _drawnPaths.map { it.deepCopy() }
+    // 양방향 데이터바인딩으로 유지하는 경로 정보
+    val drawnPaths = MutableLiveData<List<Content>>(listOf())
+    private val trashPaths = mutableListOf<Content>()
 
     private fun getBoardColorItems(selectedColor: BrushColor): List<BrushColorItem> =
         BrushColor.values().map {
@@ -99,9 +98,23 @@ class MainViewModel : ViewModel() {
         isVisible.value = isVisible.value != true
     }
 
-    fun saveDrawnPaths(paths: List<Content>) {
-        _drawnPaths.clear()
-        _drawnPaths.addAll(paths)
+    fun onClear() {
+        drawnPaths.value = listOf()
+        trashPaths.clear()
+    }
+
+    fun onUndo() {
+        drawnPaths.value?.let { paths ->
+            if (paths.isEmpty()) return@let
+            trashPaths.add(paths.last())
+            drawnPaths.value = paths.dropLast(1)
+        }
+    }
+
+    fun onRedo() {
+        if (trashPaths.isEmpty()) return
+        drawnPaths.value = (drawnPaths.value ?: listOf()) + trashPaths.last()
+        trashPaths.removeLast()
     }
 
     companion object {

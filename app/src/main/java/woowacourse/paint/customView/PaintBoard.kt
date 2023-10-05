@@ -7,6 +7,9 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.ColorInt
+import androidx.databinding.BindingAdapter
+import androidx.databinding.InverseBindingAdapter
+import androidx.databinding.InverseBindingListener
 import woowacourse.paint.R
 import woowacourse.paint.customView.container.ContentContainer
 import woowacourse.paint.customView.content.BrushType
@@ -17,6 +20,7 @@ class PaintBoard @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
 ) : View(context, attrs) {
+    var onContentsChangeListener: OnContentsChangeListener? = null
     private val contents = ContentContainer()
     val drawnPaths: List<Content>
         get() = contents.getDrawnContents()
@@ -88,10 +92,45 @@ class PaintBoard @JvmOverloads constructor(
         contents.drawOnCanvas(canvas)
     }
 
+    interface OnContentsChangeListener {
+        fun onContentsChange(contents: List<Content>)
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         contents.updateContent(event)
         invalidate()
+        if (event.action == MotionEvent.ACTION_UP) {
+            onContentsChangeListener?.onContentsChange(drawnPaths)
+        }
         return true
+    }
+
+    companion object {
+        @JvmStatic
+        @BindingAdapter("paint_board_drawn_contents")
+        fun PaintBoard.setDrawnContents(contents: List<Content>) {
+            if (drawnPaths == contents) return
+            changeDrawnPaths(contents)
+        }
+
+        @JvmStatic
+        @BindingAdapter("paint_board_drawn_contentsAttrChanged")
+        fun PaintBoard.setDrawnContentsInverseBindingListener(inverseBindingListener: InverseBindingListener) {
+            onContentsChangeListener = object : OnContentsChangeListener {
+                override fun onContentsChange(contents: List<Content>) {
+                    inverseBindingListener.onChange()
+                }
+            }
+        }
+
+        @InverseBindingAdapter(
+            attribute = "paint_board_drawn_contents",
+            event = "paint_board_drawn_contentsAttrChanged",
+        )
+        @JvmStatic
+        fun getContent(view: PaintBoard): List<Content> {
+            return view.drawnPaths
+        }
     }
 }

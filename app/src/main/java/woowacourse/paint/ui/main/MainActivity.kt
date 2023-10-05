@@ -27,7 +27,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.vm = viewModel
         binding.lifecycleOwner = this
-        if (viewModel.drawnPaths.isNotEmpty()) binding.pbBoard.changeDrawnPaths(viewModel.drawnPaths)
         setupAdapter()
         setupViewModel()
     }
@@ -48,6 +47,5 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        if (isFinishing.not()) viewModel.saveDrawnPaths(binding.pbBoard.drawnPaths)
     }
 }

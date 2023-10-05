@@ -34,6 +34,7 @@
                     android:layout_width="40dp"
                     android:layout_height="match_parent"
                     android:contentDescription="@string/main_toolbar_clear"
+                    android:onClick="@{()->vm.onClear()}"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_trash_23_26"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -44,6 +45,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginEnd="8dp"
                     android:contentDescription="@string/main_toolbar_undo"
+                    android:onClick="@{()->vm.onUndo()}"
                     android:scaleType="centerInside"
                     android:src="@drawable/baseline_undo_24"
                     app:layout_constraintEnd_toStartOf="@id/btn_redo" />
@@ -53,6 +55,7 @@
                     android:layout_width="40dp"
                     android:layout_height="match_parent"
                     android:contentDescription="@string/main_toolbar_redo"
+                    android:onClick="@{()->vm.onRedo()}"
                     android:scaleType="centerInside"
                     android:src="@drawable/baseline_redo_24"
                     app:layout_constraintEnd_toEndOf="parent" />
@@ -63,6 +66,7 @@
 
         <woowacourse.paint.customView.PaintBoard
             android:id="@+id/pb_board"
+            paint_board_drawn_contents="@={vm.drawnPaths}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:brushType="@{vm.appliedBrushType}"
