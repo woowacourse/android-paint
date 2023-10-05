@@ -6,10 +6,12 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.slider.RangeSlider
 import woowacourse.paint.DrawingCanvas.Companion.DEFAULT_STROKE_WIDTH
+import woowacourse.paint.adapter.BrushAdapter
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.model.ColorBox
+import woowacourse.paint.model.PaintBrush
 
-class MainActivity : AppCompatActivity(), OnColorClickListener {
+class MainActivity : AppCompatActivity(), OnColorClickListener, OnBrushClickListener {
 
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
@@ -19,8 +21,12 @@ class MainActivity : AppCompatActivity(), OnColorClickListener {
         ViewModelProvider(this)[MainViewModel::class.java]
     }
 
-    private val adapter by lazy {
+    private val colorAdapter by lazy {
         ColorAdapter(this)
+    }
+
+    private val brushAdapter by lazy {
+        BrushAdapter(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +44,8 @@ class MainActivity : AppCompatActivity(), OnColorClickListener {
     }
 
     private fun setAdapter() {
-        binding.rvColor.adapter = adapter
+        binding.rvColor.adapter = colorAdapter
+        binding.rvBrush.adapter = brushAdapter
     }
 
     private fun setListener() {
@@ -55,16 +62,28 @@ class MainActivity : AppCompatActivity(), OnColorClickListener {
         binding.btnStrokeChange.setOnClickListener {
             binding.rangeSlider.isVisible = !binding.rangeSlider.isVisible
         }
+
+        binding.btnBrushChange.setOnClickListener {
+            binding.rvBrush.isVisible = !binding.rvBrush.isVisible
+        }
     }
 
     private fun setObserver() {
         viewModel.colors.observe(this) {
-            adapter.submitList(it)
+            colorAdapter.submitList(it)
             binding.cvPainter.setColor(it.first { colorBox -> colorBox.isSelected }.color)
+        }
+
+        viewModel.paintBrush.observe(this) {
+            brushAdapter.submitList(it)
         }
     }
 
     override fun onColorClick(colorBox: ColorBox) {
         viewModel.setColorsSelected(colorBox)
+    }
+
+    override fun onBrushClick(paintBrush: PaintBrush) {
+        viewModel.setBrushesSelected(paintBrush)
     }
 }
