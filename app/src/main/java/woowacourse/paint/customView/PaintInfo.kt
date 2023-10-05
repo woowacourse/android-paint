@@ -47,11 +47,6 @@ class PaintInfo {
         }
     }
 
-    private fun createCirclePaint() = Paint().apply {
-        style = Paint.Style.FILL
-        color = currentColor
-    }
-
     private fun createStrokePaint() = Paint().apply {
         isAntiAlias = true
         style = Paint.Style.STROKE
@@ -62,6 +57,11 @@ class PaintInfo {
     }
 
     private fun createRectanglePaint() = Paint().apply {
+        style = Paint.Style.FILL
+        color = currentColor
+    }
+
+    private fun createCirclePaint() = Paint().apply {
         style = Paint.Style.FILL
         color = currentColor
     }

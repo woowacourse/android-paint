@@ -51,7 +51,7 @@ class MainViewModel : ViewModel() {
         it.first { brushTypeItem -> brushTypeItem.isSelected }.brushType
     }
 
-    // 양방향 데이터바인딩으로 유지하는 경로 정보
+    // 양방향 데이터바인딩으로 뷰모델에서 유지하는 경로 정보
     val drawnPaths = MutableLiveData<List<Content>>(listOf())
     private val trashPaths = mutableListOf<Content>()
 
@@ -82,17 +82,9 @@ class MainViewModel : ViewModel() {
         _isVisibleStrokeWidth.value = false
     }
 
-    fun onColorVisibleChange() {
-        setVisibleState(_isVisibleColorList)
-    }
-
-    fun onStrokeVisibleChange() {
-        setVisibleState(_isVisibleStrokeWidth)
-    }
-
-    fun onBrushTypeVisibleChange() {
-        setVisibleState(_isVisibleBrushTypeList)
-    }
+    fun onColorVisibleChange() = setVisibleState(_isVisibleColorList)
+    fun onStrokeVisibleChange() = setVisibleState(_isVisibleStrokeWidth)
+    fun onBrushTypeVisibleChange() = setVisibleState(_isVisibleBrushTypeList)
 
     private fun setVisibleState(isVisible: MutableLiveData<Boolean>) {
         isVisible.value = isVisible.value != true
