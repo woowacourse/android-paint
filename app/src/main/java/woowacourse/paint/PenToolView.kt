@@ -30,7 +30,7 @@ class PenToolView(
         initColorPalette()
     }
 
-    fun changeVisibility() {
+    fun toggleVisibility() {
         visibility =
             if (visibility == View.VISIBLE) {
                 View.GONE
