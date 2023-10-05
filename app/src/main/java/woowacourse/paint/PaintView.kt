@@ -9,6 +9,9 @@ import android.view.View
 import woowacourse.paint.model.DrawMode
 import woowacourse.paint.model.pen.Pen
 import woowacourse.paint.model.shape.Line
+import woowacourse.paint.model.shape.Line.Companion.lastX
+import woowacourse.paint.model.shape.Line.Companion.lastY
+import woowacourse.paint.model.shape.Line.Companion.updateLastPoint
 import woowacourse.paint.model.shape.Shapes
 
 class PaintView(
@@ -20,9 +23,6 @@ class PaintView(
 
     private val shapes: Shapes = Shapes()
     var pen: Pen = Pen.createDefaultPenInstance()
-
-    private var lastX: Float = 0f
-    private var lastY: Float = 0f
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -69,8 +69,7 @@ class PaintView(
                 val nextX = (lastX + pointX) / 2
                 val nextY = (lastY + pointY) / 2
                 shape.path.quadTo(lastX, lastY, nextX, nextY)
-                lastX = pointX
-                lastY = pointY
+                updateLastPoint(pointX, pointY)
                 invalidate()
             }
         }
@@ -80,8 +79,7 @@ class PaintView(
         val paint = pen.getPaint()
         val addLine = Line(paint)
         shapes.add(addLine)
-        lastX = pointX
-        lastY = pointY
+        updateLastPoint(pointX, pointY)
         return addLine
     }
 }
