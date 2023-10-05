@@ -34,6 +34,32 @@ class BoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     fun setBrush(brushType: BrushType) {
         this.brushType = brushType
+        setupPaint(brushType)
+    }
+
+    private fun setupPaint(brushType: BrushType) {
+        when (brushType) {
+            BrushType.PEN -> setNotFilledPaint()
+            BrushType.FILLED_CIRCLE, BrushType.FILLED_RECTANGLE -> setFilledPaint()
+            BrushType.CIRCLE, BrushType.RECTANGLE -> setNotFilledPaint()
+            BrushType.ERASER -> {}
+        }
+    }
+
+    private fun setNotFilledPaint() {
+        paint.apply {
+            style = Paint.Style.STROKE
+            strokeCap = Paint.Cap.ROUND
+            strokeJoin = Paint.Join.ROUND
+            isAntiAlias = true
+        }
+    }
+
+    private fun setFilledPaint() {
+        paint.apply {
+            style = Paint.Style.FILL
+            isAntiAlias = true
+        }
     }
 
     fun erase() {
@@ -49,18 +75,8 @@ class BoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        setDefaultPaint()
         canvas.drawBitmap(bitmap, 0f, 0f, null)
         canvas.drawPath(path, paint)
-    }
-
-    private fun setDefaultPaint() {
-        paint.apply {
-            style = Paint.Style.STROKE
-            strokeCap = Paint.Cap.ROUND
-            strokeJoin = Paint.Join.ROUND
-            isAntiAlias = true
-        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -92,12 +108,12 @@ class BoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             BrushType.PEN -> {
                 path.lineTo(event.x, event.y)
             }
-            BrushType.RECTANGLE -> {
+            BrushType.RECTANGLE, BrushType.FILLED_RECTANGLE -> {
                 path.reset()
                 path.addRect(startX, startY, event.x, event.y, Path.Direction.CCW)
                 invalidate()
             }
-            BrushType.CIRCLE -> {
+            BrushType.CIRCLE, BrushType.FILLED_CIRCLE -> {
                 path.reset()
                 path.addCircle(startX, startY, event.x - startX, Path.Direction.CCW)
                 invalidate()
