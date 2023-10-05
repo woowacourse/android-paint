@@ -3,6 +3,7 @@ package woowacourse.paint.ui.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import woowacourse.paint.customView.content.BrushType
 import woowacourse.paint.customView.content.Content
 import woowacourse.paint.model.BrushColor
@@ -12,37 +13,45 @@ import woowacourse.paint.model.BrushTypeItem
 class MainViewModel : ViewModel() {
     val minStrokeWidth: Float = MIN_STROKE_WIDTH
     val maxStrokeWidth: Float = MAX_STROKE_WIDTH
-    var selectedStroke: Float = (minStrokeWidth + maxStrokeWidth) / 2
-        private set
-    var selectedColor: BrushColor = BrushColor.values().first()
-        private set
-    var selectedBrushType: BrushType = BrushType.Stroke
-        private set
 
-    private val _appliedColor: MutableLiveData<BrushColor> = MutableLiveData(selectedColor)
-    val appliedColor: LiveData<BrushColor>
-        get() = _appliedColor
+    private val _isVisibleColorList = MutableLiveData(false)
+    val isVisibleColorList: LiveData<Boolean>
+        get() = _isVisibleColorList
 
-    private val _appliedStroke: MutableLiveData<Float> = MutableLiveData(selectedStroke)
-    val appliedStroke: LiveData<Float>
-        get() = _appliedStroke
+    private val _isVisibleStrokeWidth = MutableLiveData(false)
+    val isVisibleStrokeWidth: LiveData<Boolean>
+        get() = _isVisibleStrokeWidth
 
-    private val _appliedBrushType: MutableLiveData<BrushType> = MutableLiveData(selectedBrushType)
-    val appliedBrushType: LiveData<BrushType>
-        get() = _appliedBrushType
+    private val _isVisibleBrushTypeList = MutableLiveData(false)
+    val isVisibleBrushTypeList: LiveData<Boolean>
+        get() = _isVisibleBrushTypeList
 
-    private val _colors: MutableLiveData<List<BrushColorItem>> =
-        MutableLiveData(getBoardColorItems(selectedColor))
+    // 색상
+    private val _colors = MutableLiveData(getBoardColorItems(BrushColor.values().first()))
     val colors: LiveData<List<BrushColorItem>>
         get() = _colors
 
-    private val brushes =
+    val appliedColor: LiveData<BrushColor> = colors.map {
+        it.first { brushColorItem -> brushColorItem.isSelected }.color
+    }
+
+    // 굵기
+    private val _appliedStroke = MutableLiveData((minStrokeWidth + maxStrokeWidth) / 2)
+    val appliedStroke: LiveData<Float>
+        get() = _appliedStroke
+
+    // 브러시 타입
+    private val usingBrushes =
         listOf(BrushType.Stroke, BrushType.Rectangle, BrushType.Circle, BrushType.Eraser)
-    private val _brushTypes: MutableLiveData<List<BrushTypeItem>> =
-        MutableLiveData(getBrushTypeItems(selectedBrushType))
+    private val _brushTypes = MutableLiveData(getBrushTypeItems(BrushType.Stroke))
     val brushTypes: LiveData<List<BrushTypeItem>>
         get() = _brushTypes
 
+    val appliedBrushType: LiveData<BrushType> = brushTypes.map {
+        it.first { brushTypeItem -> brushTypeItem.isSelected }.brushType
+    }
+
+    // 임시 저장 컨텐트
     private val _drawnPaths = mutableListOf<Content>()
     val drawnPaths: List<Content>
         get() = _drawnPaths.map { it.deepCopy() }
@@ -54,34 +63,40 @@ class MainViewModel : ViewModel() {
         }
 
     private fun getBrushTypeItems(selectedBrushType: BrushType): List<BrushTypeItem> =
-        brushes.map {
+        usingBrushes.map {
             if (it == selectedBrushType) return@map BrushTypeItem(it, true)
             BrushTypeItem(it, false)
         }
 
     fun onChangeSelectedColor(brushColorItem: BrushColorItem) {
-        selectedColor = brushColorItem.color
+        _colors.value = getBoardColorItems(brushColorItem.color)
+        _isVisibleColorList.value = false
     }
 
     fun onChangeSelectedBrushType(brushTypeItem: BrushTypeItem) {
-        selectedBrushType = brushTypeItem.brushType
+        _brushTypes.value = getBrushTypeItems(brushTypeItem.brushType)
+        _isVisibleBrushTypeList.value = false
     }
 
     val onSelectedStrokeChange = { strokeWidth: Float ->
-        selectedStroke = strokeWidth
+        _appliedStroke.value = strokeWidth
+        _isVisibleStrokeWidth.value = false
     }
 
-    fun onAppliedColorChange() {
-        _appliedColor.value = selectedColor
-        _colors.value = getBoardColorItems(selectedColor)
+    fun onColorVisibleChange() {
+        setVisibleState(_isVisibleColorList)
     }
 
-    fun onAppliedStrokeChange() {
-        _appliedStroke.value = selectedStroke
+    fun onStrokeVisibleChange() {
+        setVisibleState(_isVisibleStrokeWidth)
     }
 
-    fun onAppliedBrushTypeChange() {
-        _appliedBrushType.value = selectedBrushType
+    fun onBrushTypeVisibleChange() {
+        setVisibleState(_isVisibleBrushTypeList)
+    }
+
+    private fun setVisibleState(isVisible: MutableLiveData<Boolean>) {
+        isVisible.value = isVisible.value != true
     }
 
     fun saveDrawnPaths(paths: List<Content>) {
