@@ -3,6 +3,7 @@ package woowacourse.paint.customView
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -53,6 +54,7 @@ class PaintBoard @JvmOverloads constructor(
 
     init {
         if (attrs != null) initAttrs(attrs)
+        setBackgroundColor(Color.WHITE)
     }
 
     private fun initAttrs(attrs: AttributeSet) {
