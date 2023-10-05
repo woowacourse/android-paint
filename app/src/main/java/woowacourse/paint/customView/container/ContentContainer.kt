@@ -1,7 +1,6 @@
 package woowacourse.paint.customView.container
 
 import android.graphics.Canvas
-import android.graphics.Paint
 import android.graphics.Path
 import android.view.MotionEvent
 import woowacourse.paint.customView.PaintInfo
@@ -18,7 +17,7 @@ class ContentContainer(
     fun updateContent(event: MotionEvent) {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                val drawingContent = createContent(paintInfo.getPaint())
+                val drawingContent = createContent()
                 drawingContent.action(event)
                 _drawnContents.add(drawingContent)
             }
@@ -33,9 +32,9 @@ class ContentContainer(
         }
     }
 
-    private fun createContent(paint: Paint): Content {
+    private fun createContent(): Content {
         return when (contentType) {
-            ContentType.Stroke -> Stroke(Path(), paint)
+            ContentType.Stroke -> Stroke(Path(), paintInfo.getPaint(contentType))
         }
     }
 

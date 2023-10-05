@@ -3,6 +3,7 @@ package woowacourse.paint.customView
 import android.graphics.Color
 import android.graphics.Paint
 import androidx.annotation.ColorInt
+import woowacourse.paint.customView.content.ContentType
 
 class PaintInfo {
     @ColorInt
@@ -35,7 +36,13 @@ class PaintInfo {
         defaultStrokeWidth = (minStrokeWidth + maxStrokeWidth) / 2
     }
 
-    fun getPaint(): Paint = Paint().apply {
+    fun getPaint(contentType: ContentType): Paint {
+        return when (contentType) {
+            ContentType.Stroke -> createStrokePaint()
+        }
+    }
+
+    private fun createStrokePaint() = Paint().apply {
         isAntiAlias = true
         style = Paint.Style.STROKE
         strokeCap = Paint.Cap.ROUND
