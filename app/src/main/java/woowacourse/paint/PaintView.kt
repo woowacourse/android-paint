@@ -19,6 +19,9 @@ class PaintView(
     private val lines: Lines = Lines()
     var pen: Pen = Pen.createDefaultPenInstance()
 
+    private var lastX: Float = 0f
+    private var lastY: Float = 0f
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         drawCanvas(canvas)
@@ -45,21 +48,26 @@ class PaintView(
     }
 
     private fun penDown(pointX: Float, pointY: Float) {
-        val addedLine = addLine()
+        val addedLine = addLine(pointX, pointY)
         addedLine.path.moveTo(pointX, pointY)
-        penMove(pointX, pointY)
         invalidate()
     }
 
     private fun penMove(pointX: Float, pointY: Float) {
-        lines.last().path.lineTo(pointX, pointY)
+        val nextX = (lastX + pointX) / 2
+        val nextY = (lastY + pointY) / 2
+        lines.last().path.quadTo(lastX, lastY, nextX, nextY)
+        lastX = pointX
+        lastY = pointY
         invalidate()
     }
 
-    private fun addLine(): Line {
+    private fun addLine(pointX: Float, pointY: Float): Line {
         val paint = pen.getPaint()
         val addLine = Line(Path(), paint)
         lines.add(addLine)
+        lastX = pointX
+        lastY = pointY
         return addLine
     }
 }
