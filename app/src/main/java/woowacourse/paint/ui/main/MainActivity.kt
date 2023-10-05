@@ -44,8 +44,4 @@ class MainActivity : AppCompatActivity() {
             brushTypeAdapter.changeTypeList(it)
         }
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
 }

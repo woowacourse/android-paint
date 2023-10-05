@@ -5,17 +5,15 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.view.MotionEvent
 
-data class Rectangle(
+class Rectangle(
+    override val id: Long,
     val rectF: RectF,
     val paint: Paint,
-) : Content {
+) : Content() {
     override val brushType: BrushType = BrushType.Rectangle
 
     override fun deepCopy(): Content {
-        return Rectangle(
-            RectF(rectF),
-            Paint(paint),
-        )
+        return Rectangle(id, RectF(rectF), Paint(paint))
     }
 
     override fun action(event: MotionEvent) {

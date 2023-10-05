@@ -5,13 +5,14 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.view.MotionEvent
 
-data class Stroke(
+class Stroke(
+    override val id: Long,
     val path: Path,
     val paint: Paint,
-) : Content {
+) : Content() {
     override val brushType: BrushType = BrushType.Stroke
     override fun deepCopy(): Content {
-        return Stroke(Path(path), Paint(paint))
+        return Stroke(id, Path(path), Paint(paint))
     }
 
     override fun action(event: MotionEvent) {

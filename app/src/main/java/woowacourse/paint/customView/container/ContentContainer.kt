@@ -38,12 +38,13 @@ class ContentContainer(
     }
 
     private fun createContent(): Content {
+        val id = System.currentTimeMillis()
         val paint = paintInfo.getPaint(brushType)
         return when (brushType) {
-            BrushType.Stroke -> Stroke(Path(), paint)
-            BrushType.Eraser -> Eraser(Path(), paint)
-            BrushType.Rectangle -> Rectangle(RectF(), paint)
-            BrushType.Circle -> Circle(PointF(), 0f, paint)
+            BrushType.Stroke -> Stroke(id, Path(), paint)
+            BrushType.Eraser -> Eraser(id, Path(), paint)
+            BrushType.Rectangle -> Rectangle(id, RectF(), paint)
+            BrushType.Circle -> Circle(id, PointF(), 0f, paint)
         }
     }
 

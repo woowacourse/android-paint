@@ -8,18 +8,19 @@ import android.view.MotionEvent
 import kotlin.math.abs
 import kotlin.math.min
 
-data class Circle(
+class Circle(
+    override val id: Long,
     val centerPointF: PointF,
     private var _radius: Float,
     val paint: Paint,
-) : Content {
+) : Content() {
     val radius: Float
         get() = _radius
     private val rectF: RectF = RectF()
     override val brushType: BrushType = BrushType.Circle
 
     override fun deepCopy(): Content {
-        return Circle(PointF(centerPointF.x, centerPointF.y), radius, Paint(paint))
+        return Circle(id, PointF(centerPointF.x, centerPointF.y), radius, Paint(paint))
     }
 
     override fun action(event: MotionEvent) {

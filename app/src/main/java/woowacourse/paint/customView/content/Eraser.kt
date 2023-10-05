@@ -5,14 +5,15 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.view.MotionEvent
 
-data class Eraser(
+class Eraser(
+    override val id: Long,
     val path: Path,
     val paint: Paint,
-) : Content {
+) : Content() {
     override val brushType: BrushType = BrushType.Eraser
 
     override fun deepCopy(): Content {
-        return Eraser(Path(path), Paint(paint))
+        return Eraser(id, Path(path), Paint(paint))
     }
 
     override fun action(event: MotionEvent) {
