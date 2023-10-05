@@ -6,6 +6,7 @@ import android.view.MotionEvent
 import woowacourse.paint.customView.PaintInfo
 import woowacourse.paint.customView.content.Content
 import woowacourse.paint.customView.content.ContentType
+import woowacourse.paint.customView.content.Eraser
 import woowacourse.paint.customView.content.Stroke
 
 class ContentContainer(
@@ -35,6 +36,7 @@ class ContentContainer(
     private fun createContent(): Content {
         return when (contentType) {
             ContentType.Stroke -> Stroke(Path(), paintInfo.getPaint(contentType))
+            ContentType.Eraser -> Eraser(Path(), paintInfo.getPaint(contentType))
         }
     }
 

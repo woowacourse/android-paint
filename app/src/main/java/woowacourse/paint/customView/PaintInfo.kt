@@ -39,6 +39,7 @@ class PaintInfo {
     fun getPaint(contentType: ContentType): Paint {
         return when (contentType) {
             ContentType.Stroke -> createStrokePaint()
+            ContentType.Eraser -> createEraserPaint()
         }
     }
 
@@ -48,6 +49,15 @@ class PaintInfo {
         strokeCap = Paint.Cap.ROUND
         strokeJoin = Paint.Join.ROUND
         color = currentColor
+        this.strokeWidth = currentStrokeWidth
+    }
+
+    private fun createEraserPaint() = Paint().apply {
+        isAntiAlias = true
+        style = Paint.Style.STROKE
+        strokeCap = Paint.Cap.ROUND
+        strokeJoin = Paint.Join.ROUND
+        color = Color.WHITE
         this.strokeWidth = currentStrokeWidth
     }
 
