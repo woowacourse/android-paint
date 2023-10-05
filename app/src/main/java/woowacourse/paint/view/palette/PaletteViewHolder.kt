@@ -13,6 +13,6 @@ class PaletteViewHolder(private val binding: ViewPaletteBinding, onClickPalette:
     }
 
     fun bind(color: Int) {
-        DrawableCompat.setTint(binding.paletteImageButton.drawable, color)
+        DrawableCompat.setTint(binding.paletteImageButton.drawable.mutate(), color)
     }
 }
