@@ -3,6 +3,7 @@ package woowacourse.paint.view
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import woowacourse.paint.R
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.domain.BrushColor
@@ -26,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initPaintView() {
-        binding.paintViewModel = PaintViewModel()
+        binding.paintViewModel = ViewModelProvider(this)[PaintViewModel::class.java]
     }
 
     private fun initColorButtons() {

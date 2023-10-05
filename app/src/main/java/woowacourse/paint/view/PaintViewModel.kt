@@ -23,9 +23,9 @@ import woowacourse.paint.view.model.pen.ink.Inks
 class PaintViewModel : ViewModel() {
     private var color: Int = BrushColor.paintColors[0]
     private var strokeWidth: Float = BrushWidth.range.start
+    private var _redoDrawings: Drawings? = null
+    private var _undoDrawings: Drawings? = null
 
-    private val _redoDrawing: MutableLiveData<Drawings> = MutableLiveData(null)
-    private val _undoDrawing: MutableLiveData<Drawings> = MutableLiveData(null)
     private val _drawings: MutableLiveData<Drawings> = MutableLiveData(Drawings())
     val lines: LiveData<Inks>
         get() = Transformations.map(_drawings) { it.toModel() }
@@ -39,22 +39,22 @@ class PaintViewModel : ViewModel() {
         get() = _pen
 
     fun clearInk() {
-        _undoDrawing.value = _drawings.value
+        _undoDrawings = _drawings.value
         _drawings.value = Drawings()
     }
 
     fun undoInk() {
-        _undoDrawing.value ?: return
-        _redoDrawing.value = _drawings.value
-        _drawings.value = _undoDrawing.value
-        _undoDrawing.value = null
+        _undoDrawings ?: return
+        _redoDrawings = _drawings.value
+        _drawings.value = _undoDrawings
+        _undoDrawings = null
     }
 
     fun redoInk() {
-        _redoDrawing.value ?: return
-        _undoDrawing.value = _drawings.value
-        _drawings.value = _redoDrawing.value
-        _redoDrawing.value = null
+        _redoDrawings ?: return
+        _undoDrawings = _drawings.value
+        _drawings.value = _redoDrawings
+        _redoDrawings = null
     }
 
     fun updateColor(color: Int) {
@@ -97,7 +97,7 @@ class PaintViewModel : ViewModel() {
     }
 
     private fun addInk(ink: Ink) {
-        _undoDrawing.value = _drawings.value
+        _undoDrawings = _drawings.value
         _drawings.value = _drawings.value?.add(ink.toDomain())
     }
 
