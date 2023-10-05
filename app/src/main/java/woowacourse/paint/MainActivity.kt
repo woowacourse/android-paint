@@ -3,6 +3,7 @@ package woowacourse.paint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.model.DrawMode
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         binding.paintView.pen = selectedPen
         binding.btnOpenPenTool.setOnClickListener {
             binding.penToolView.toggleVisibility()
+            binding.paintView.drawMode = DrawMode.LINE
         }
     }
 }

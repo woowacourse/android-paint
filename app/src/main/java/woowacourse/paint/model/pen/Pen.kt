@@ -2,6 +2,7 @@ package woowacourse.paint.model.pen
 
 import android.graphics.Color
 import android.graphics.Paint
+import woowacourse.paint.model.DrawMode
 import woowacourse.paint.model.PaletteColor
 
 abstract class Pen(
@@ -32,5 +33,7 @@ abstract class Pen(
         val DEFAULT_PALETTE_COLOR = PaletteColor.default
 
         fun createDefaultPenInstance(): Pen = BallpointPen()
+
+        fun getDrawMode(): DrawMode = DrawMode.LINE
     }
 }

@@ -6,16 +6,19 @@ import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import woowacourse.paint.model.line.Line
-import woowacourse.paint.model.line.Lines
+import woowacourse.paint.model.DrawMode
 import woowacourse.paint.model.pen.Pen
+import woowacourse.paint.model.shape.Line
+import woowacourse.paint.model.shape.Shapes
 
 class PaintView(
     context: Context,
     attributeSet: AttributeSet,
 ) : View(context, attributeSet) {
 
-    private val lines: Lines = Lines()
+    var drawMode: DrawMode = Pen.getDrawMode()
+
+    private val shapes: Shapes = Shapes()
     var pen: Pen = Pen.createDefaultPenInstance()
 
     private var lastX: Float = 0f
@@ -27,8 +30,10 @@ class PaintView(
     }
 
     private fun drawCanvas(canvas: Canvas) {
-        lines.value.forEach {
-            canvas.drawPath(it.path, it.paint)
+        shapes.value.forEach {
+            when (it) {
+                is Line -> canvas.drawPath(it.path, it.paint)
+            }
         }
     }
 
@@ -47,24 +52,34 @@ class PaintView(
     }
 
     private fun penDown(pointX: Float, pointY: Float) {
-        val addedLine = addLine(pointX, pointY)
-        addedLine.path.moveTo(pointX, pointY)
-        invalidate()
+        when (drawMode) {
+            DrawMode.LINE -> {
+                val addedLine = addLine(pointX, pointY)
+                addedLine.path.moveTo(pointX, pointY)
+                invalidate()
+            }
+            DrawMode.RECT -> {}
+            DrawMode.CIRCLE -> {}
+        }
     }
 
     private fun penMove(pointX: Float, pointY: Float) {
-        val nextX = (lastX + pointX) / 2
-        val nextY = (lastY + pointY) / 2
-        lines.last().path.quadTo(lastX, lastY, nextX, nextY)
-        lastX = pointX
-        lastY = pointY
-        invalidate()
+        when (val shape = shapes.last()) {
+            is Line -> {
+                val nextX = (lastX + pointX) / 2
+                val nextY = (lastY + pointY) / 2
+                shape.path.quadTo(lastX, lastY, nextX, nextY)
+                lastX = pointX
+                lastY = pointY
+                invalidate()
+            }
+        }
     }
 
     private fun addLine(pointX: Float, pointY: Float): Line {
         val paint = pen.getPaint()
         val addLine = Line(paint)
-        lines.add(addLine)
+        shapes.add(addLine)
         lastX = pointX
         lastY = pointY
         return addLine
