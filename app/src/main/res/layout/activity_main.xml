@@ -19,22 +19,22 @@
             android:id="@+id/main_canvas"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/main_range_slider"
+            app:layout_constraintBottom_toTopOf="@id/main_brush_width_slider"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.slider.RangeSlider
-            android:id="@+id/main_range_slider"
+        <com.google.android.material.slider.Slider
+            android:id="@+id/main_brush_width_slider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:valueFrom="0.0"
             android:valueTo="100.0"
             android:visibility="@{viewModel.paintWidthControllerVisibility ? View.VISIBLE : View.GONE, default = gone}"
-            app:layout_constraintBottom_toTopOf="@+id/main_colors_recycler_view" />
+            app:layout_constraintBottom_toTopOf="@+id/main_brush_colors_recycler_view" />
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/main_colors_recycler_view"
+            android:id="@+id/main_brush_colors_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"

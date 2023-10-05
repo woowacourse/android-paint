@@ -27,15 +27,15 @@ class MainActivity : AppCompatActivity() {
     private fun initPaintColorsRecyclerView() {
         val colors = resources.getIntArray(R.array.palette_colors).toList()
 
-        binding.mainColorsRecyclerView.adapter = PaletteAdapter(colors) { color: Int ->
+        binding.mainBrushColorsRecyclerView.adapter = PaletteAdapter(colors) { color: Int ->
             binding.mainCanvas.changePaintColor(color)
         }
     }
 
     private fun initPaintWidthRangeSlider() {
-        binding.mainRangeSlider.setValues(DEFAULT_PAINT_WIDTH)
+        binding.mainBrushWidthSlider.value = DEFAULT_PAINT_WIDTH
 
-        binding.mainRangeSlider.addOnChangeListener { _, value, _ ->
+        binding.mainBrushWidthSlider.addOnChangeListener { _, value, _ ->
             binding.mainCanvas.changePaintWidth(value)
         }
     }
