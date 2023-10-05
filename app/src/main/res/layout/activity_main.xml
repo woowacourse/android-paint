@@ -18,9 +18,9 @@
 
         <woowacourse.paint.PenToolView
             android:id="@+id/pen_tool_view"
-            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@id/btn_open_pen_tool"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -29,12 +29,33 @@
             android:id="@+id/btn_open_pen_tool"
             android:layout_width="54dp"
             android:layout_height="54dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/ic_pen"
+            android:layout_margin="16dp"
             android:contentDescription="펜 선택 버튼"
+            android:src="@drawable/ic_pen"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_shape_rectangle"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/btn_shape_rectangle"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_shape_rectangle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_shape_circle"
+            app:layout_constraintStart_toEndOf="@+id/btn_open_pen_tool" />
+
+        <ImageView
+            android:id="@+id/btn_shape_circle"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_shape_circle"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/btn_shape_rectangle" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
