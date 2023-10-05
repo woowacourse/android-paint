@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.lifecycle.ViewModelProvider
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.drawingMenu.brushSelection.BrushSelection
 import woowacourse.paint.drawingMenu.colorSelection.ColorSelectionView
 import woowacourse.paint.drawingMenu.widthSelection.WidthSelection
 
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupObserver() {
         initColorSelectionObserveEvent()
         initWidthSelectionObserveEvent()
+        initBrushSelectionObserveEvent()
     }
 
     private fun initColorSelectionObserveEvent() {
@@ -63,6 +65,24 @@ class MainActivity : AppCompatActivity() {
                     context = this,
                     onClickWidthListener = viewModel::changeWidth,
                     initialValue = viewModel.width.value ?: DEFAULT_WIDTH_VALUE,
+                ),
+            )
+        }
+    }
+
+    private fun initBrushSelectionObserveEvent() {
+        viewModel.brushSelectionEvent.observe(
+            this,
+            this::setupBrushSelection,
+        )
+    }
+
+    private fun setupBrushSelection(isClicked: Boolean) {
+        if (isClicked) {
+            addMenu(
+                BrushSelection(
+                    context = this,
+                    onClickBrushListener = viewModel::changeBrush,
                 ),
             )
         }

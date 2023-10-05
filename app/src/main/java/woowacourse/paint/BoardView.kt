@@ -11,6 +11,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.ContextCompat
+import woowacourse.paint.model.ColorPalette
 
 class BoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 

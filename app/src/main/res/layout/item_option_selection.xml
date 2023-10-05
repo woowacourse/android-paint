@@ -10,13 +10,13 @@
         android:layout_height="wrap_content">
 
         <View
-            android:id="@+id/item_color"
+            android:id="@+id/option_item"
             android:layout_width="@dimen/palette_default"
             android:layout_height="@dimen/palette_default"
             android:layout_margin="8dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:background="@color/red" />
+            tools:background="@color/black" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

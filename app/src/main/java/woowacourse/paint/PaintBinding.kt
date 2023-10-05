@@ -2,6 +2,7 @@ package woowacourse.paint
 
 import androidx.databinding.BindingAdapter
 import com.google.android.material.slider.Slider
+import woowacourse.paint.model.ColorPalette
 
 @BindingAdapter("app:setColorPalette")
 fun BoardView.setColorPalette(colorPalette: ColorPalette?) {

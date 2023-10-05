@@ -11,7 +11,7 @@
 
         <variable
             name="palette"
-            type="woowacourse.paint.ColorPalette" />
+            type="woowacourse.paint.model.ColorPalette" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -53,7 +53,7 @@
             android:id="@+id/btn_color_selection"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="@drawable/palette_24"
+            android:background="@drawable/palette"
             android:onClick="@{()->mainViewModel.openColorSelection()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -62,10 +62,19 @@
             android:id="@+id/btn_pen_width"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="@drawable/line_weight_24"
+            android:background="@drawable/width"
             android:onClick="@{()->mainViewModel.openWidthSelection()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/btn_color_selection" />
+
+        <ImageButton
+            android:id="@+id/btn_brush_type"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/brush"
+            android:onClick="@{()->mainViewModel.openBrushSelection()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_pen_width" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

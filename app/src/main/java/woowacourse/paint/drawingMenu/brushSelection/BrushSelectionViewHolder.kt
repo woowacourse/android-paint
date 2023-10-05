@@ -1,33 +1,33 @@
-package woowacourse.paint.drawingMenu.colorSelection
+package woowacourse.paint.drawingMenu.brushSelection
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.paint.databinding.ItemOptionSelectionBinding
-import woowacourse.paint.model.ColorPalette
+import woowacourse.paint.model.BrushType
 
-class ColorSelectionViewHolder(
+class BrushSelectionViewHolder(
     private val binding: ItemOptionSelectionBinding,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(
-        colorPalette: ColorPalette,
-        onClickColorListener: (ColorPalette) -> Unit,
+        brushType: BrushType,
+        onClickBrushListener: (BrushType) -> Unit,
     ) {
         binding.optionItem.background =
-            ContextCompat.getDrawable(binding.root.context, colorPalette.color)
-        binding.optionItem.setOnClickListener { onClickColorListener(colorPalette) }
+            ContextCompat.getDrawable(binding.root.context, brushType.icon)
+        binding.optionItem.setOnClickListener { onClickBrushListener(brushType) }
     }
 
     companion object {
 
         fun from(
             parent: ViewGroup,
-        ): ColorSelectionViewHolder {
+        ): BrushSelectionViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             val binding = ItemOptionSelectionBinding.inflate(layoutInflater, parent, false)
-            return ColorSelectionViewHolder(binding)
+            return BrushSelectionViewHolder(binding)
         }
     }
 }

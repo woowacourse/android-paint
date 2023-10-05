@@ -2,7 +2,7 @@ package woowacourse.paint.drawingMenu.colorSelection
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.paint.ColorPalette
+import woowacourse.paint.model.ColorPalette
 
 class ColorSelectionAdapter(private val onClickColorListener: (ColorPalette) -> Unit) :
     RecyclerView.Adapter<ColorSelectionViewHolder>() {

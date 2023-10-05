@@ -8,11 +8,11 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_color_palette"
+            android:id="@+id/rv_brush_type"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -22,5 +22,4 @@
             tools:listitem="@layout/item_option_selection" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 </layout>

@@ -4,8 +4,8 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
-import woowacourse.paint.ColorPalette
 import woowacourse.paint.databinding.ViewColorSelectionBinding
+import woowacourse.paint.model.ColorPalette
 
 class ColorSelectionView(
     context: Context,
