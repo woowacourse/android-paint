@@ -92,11 +92,17 @@ class BoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             BrushType.PEN -> {
                 path.lineTo(event.x, event.y)
             }
-            else -> {
+            BrushType.RECTANGLE -> {
                 path.reset()
                 path.addRect(startX, startY, event.x, event.y, Path.Direction.CCW)
                 invalidate()
             }
+            BrushType.CIRCLE -> {
+                path.reset()
+                path.addCircle(startX, startY, event.x - startX, Path.Direction.CCW)
+                invalidate()
+            }
+            BrushType.ERASER -> {}
         }
     }
 
