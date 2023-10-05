@@ -7,14 +7,16 @@ import woowacourse.paint.customView.content.BrushType
 import woowacourse.paint.customView.content.Content
 import woowacourse.paint.model.BrushColor
 import woowacourse.paint.model.BrushColorItem
+import woowacourse.paint.model.BrushTypeItem
 
 class MainViewModel : ViewModel() {
     val minStrokeWidth: Float = MIN_STROKE_WIDTH
     val maxStrokeWidth: Float = MAX_STROKE_WIDTH
     var selectedStroke: Float = (minStrokeWidth + maxStrokeWidth) / 2
         private set
-
     var selectedColor: BrushColor = BrushColor.values().first()
+        private set
+    var selectedBrushType: BrushType = BrushType.Stroke
         private set
 
     private val _appliedColor: MutableLiveData<BrushColor> = MutableLiveData(selectedColor)
@@ -25,14 +27,20 @@ class MainViewModel : ViewModel() {
     val appliedStroke: LiveData<Float>
         get() = _appliedStroke
 
+    private val _appliedBrushType: MutableLiveData<BrushType> = MutableLiveData(selectedBrushType)
+    val appliedBrushType: LiveData<BrushType>
+        get() = _appliedBrushType
+
     private val _colors: MutableLiveData<List<BrushColorItem>> =
         MutableLiveData(getBoardColorItems(selectedColor))
     val colors: LiveData<List<BrushColorItem>>
         get() = _colors
 
-    private val _type: MutableLiveData<BrushType> = MutableLiveData(BrushType.Stroke)
-    val type: LiveData<BrushType>
-        get() = _type
+    private val brushes = listOf(BrushType.Stroke, BrushType.Eraser)
+    private val _brushTypes: MutableLiveData<List<BrushTypeItem>> =
+        MutableLiveData(getBrushTypeItems(selectedBrushType))
+    val brushTypes: LiveData<List<BrushTypeItem>>
+        get() = _brushTypes
 
     private val _drawnPaths = mutableListOf<Content>()
     val drawnPaths: List<Content>
@@ -44,12 +52,22 @@ class MainViewModel : ViewModel() {
             BrushColorItem(it, false)
         }
 
+    private fun getBrushTypeItems(selectedBrushType: BrushType): List<BrushTypeItem> =
+        brushes.map {
+            if (it == selectedBrushType) return@map BrushTypeItem(it, true)
+            BrushTypeItem(it, false)
+        }
+
     fun onChangeSelectedColor(brushColorItem: BrushColorItem) {
         selectedColor = brushColorItem.color
     }
 
-    val onSelectedStrokeChange = { value: Float ->
-        selectedStroke = value
+    fun onChangeSelectedBrushType(brushTypeItem: BrushTypeItem) {
+        selectedBrushType = brushTypeItem.brushType
+    }
+
+    val onSelectedStrokeChange = { strokeWidth: Float ->
+        selectedStroke = strokeWidth
     }
 
     fun onAppliedColorChange() {
@@ -59,6 +77,10 @@ class MainViewModel : ViewModel() {
 
     fun onAppliedStrokeChange() {
         _appliedStroke.value = selectedStroke
+    }
+
+    fun onAppliedBrushTypeChange() {
+        _appliedBrushType.value = selectedBrushType
     }
 
     fun saveDrawnPaths(paths: List<Content>) {
