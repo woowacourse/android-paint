@@ -10,8 +10,8 @@ import android.view.View
 import androidx.annotation.ColorInt
 import woowacourse.paint.R
 import woowacourse.paint.customView.container.ContentContainer
+import woowacourse.paint.customView.content.BrushType
 import woowacourse.paint.customView.content.Content
-import woowacourse.paint.customView.content.ContentType
 import woowacourse.paint.util.getEnum
 
 class PaintBoard @JvmOverloads constructor(
@@ -46,11 +46,11 @@ class PaintBoard @JvmOverloads constructor(
         }
         get() = contents.paintInfo.currentStrokeWidth
 
-    var contentType: ContentType
+    var brushType: BrushType
         set(value) {
-            contents.contentType = value
+            contents.brushType = value
         }
-        get() = contents.contentType
+        get() = contents.brushType
 
     init {
         if (attrs != null) initAttrs(attrs)
@@ -75,7 +75,7 @@ class PaintBoard @JvmOverloads constructor(
             R.styleable.PaintBoard_currentStrokeWidth,
             contents.paintInfo.currentStrokeWidth,
         )
-        this.contentType = typedArray.getEnum(R.styleable.PaintBoard_contentType, this.contentType)
+        this.brushType = typedArray.getEnum(R.styleable.PaintBoard_brushType, this.brushType)
         typedArray.recycle()
     }
 

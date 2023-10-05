@@ -3,7 +3,7 @@ package woowacourse.paint.customView
 import android.graphics.Color
 import android.graphics.Paint
 import androidx.annotation.ColorInt
-import woowacourse.paint.customView.content.ContentType
+import woowacourse.paint.customView.content.BrushType
 
 class PaintInfo {
     @ColorInt
@@ -36,10 +36,10 @@ class PaintInfo {
         defaultStrokeWidth = (minStrokeWidth + maxStrokeWidth) / 2
     }
 
-    fun getPaint(contentType: ContentType): Paint {
+    fun getPaint(contentType: BrushType): Paint {
         return when (contentType) {
-            ContentType.Stroke -> createStrokePaint()
-            ContentType.Eraser -> createEraserPaint()
+            BrushType.Stroke -> createStrokePaint()
+            BrushType.Eraser -> createEraserPaint()
         }
     }
 

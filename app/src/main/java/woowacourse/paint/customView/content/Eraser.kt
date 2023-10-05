@@ -9,7 +9,7 @@ data class Eraser(
     val path: Path,
     val paint: Paint,
 ) : Content {
-    override val type: ContentType = ContentType.Eraser
+    override val brushType: BrushType = BrushType.Eraser
 
     override fun deepCopy(): Content {
         return Eraser(Path(path), Paint(paint))

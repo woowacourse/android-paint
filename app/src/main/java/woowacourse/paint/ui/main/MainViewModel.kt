@@ -3,8 +3,8 @@ package woowacourse.paint.ui.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import woowacourse.paint.customView.content.BrushType
 import woowacourse.paint.customView.content.Content
-import woowacourse.paint.customView.content.ContentType
 import woowacourse.paint.model.BoardColorItem
 import woowacourse.paint.model.PaintColor
 
@@ -30,8 +30,8 @@ class MainViewModel : ViewModel() {
     val colors: LiveData<List<BoardColorItem>>
         get() = _colors
 
-    private val _type: MutableLiveData<ContentType> = MutableLiveData(ContentType.Stroke)
-    val type: LiveData<ContentType>
+    private val _type: MutableLiveData<BrushType> = MutableLiveData(BrushType.Stroke)
+    val type: LiveData<BrushType>
         get() = _type
 
     private val _drawnPaths = mutableListOf<Content>()

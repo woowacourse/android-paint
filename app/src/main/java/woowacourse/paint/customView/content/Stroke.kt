@@ -9,7 +9,7 @@ data class Stroke(
     val path: Path,
     val paint: Paint,
 ) : Content {
-    override val type: ContentType = ContentType.Stroke
+    override val brushType: BrushType = BrushType.Stroke
     override fun deepCopy(): Stroke {
         return Stroke(Path(path), Paint(paint))
     }

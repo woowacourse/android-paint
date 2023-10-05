@@ -4,15 +4,15 @@ import android.graphics.Canvas
 import android.graphics.Path
 import android.view.MotionEvent
 import woowacourse.paint.customView.PaintInfo
+import woowacourse.paint.customView.content.BrushType
 import woowacourse.paint.customView.content.Content
-import woowacourse.paint.customView.content.ContentType
 import woowacourse.paint.customView.content.Eraser
 import woowacourse.paint.customView.content.Stroke
 
 class ContentContainer(
     private val _drawnContents: MutableList<Content> = mutableListOf(),
 ) {
-    var contentType: ContentType = ContentType.Stroke
+    var brushType: BrushType = BrushType.Stroke
     val paintInfo = PaintInfo()
 
     fun updateContent(event: MotionEvent) {
@@ -34,9 +34,9 @@ class ContentContainer(
     }
 
     private fun createContent(): Content {
-        return when (contentType) {
-            ContentType.Stroke -> Stroke(Path(), paintInfo.getPaint(contentType))
-            ContentType.Eraser -> Eraser(Path(), paintInfo.getPaint(contentType))
+        return when (brushType) {
+            BrushType.Stroke -> Stroke(Path(), paintInfo.getPaint(brushType))
+            BrushType.Eraser -> Eraser(Path(), paintInfo.getPaint(brushType))
         }
     }
 

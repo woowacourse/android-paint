@@ -1,5 +1,5 @@
 package woowacourse.paint.customView.content
 
-enum class ContentType {
+enum class BrushType {
     Stroke, Eraser
 }

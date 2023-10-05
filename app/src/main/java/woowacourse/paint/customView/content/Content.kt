@@ -4,7 +4,7 @@ import android.graphics.Canvas
 import android.view.MotionEvent
 
 interface Content {
-    val type: ContentType
+    val brushType: BrushType
     fun deepCopy(): Content
     fun action(event: MotionEvent)
 
