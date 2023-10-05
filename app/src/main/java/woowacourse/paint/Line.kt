@@ -9,8 +9,7 @@ data class Line(
     val brush: Paint
 ) {
 
-    val length: Float
-        get() = PathMeasure(path, false).length
+    val length: Float = PathMeasure(path, false).length
 
     companion object {
         fun dot(x: Float, y: Float, brush: Paint): Line {
