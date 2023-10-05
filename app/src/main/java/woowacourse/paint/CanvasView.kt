@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -11,7 +12,7 @@ import android.view.View
 class CanvasView constructor(context: Context, attr: AttributeSet) : View(context, attr) {
 
     private var brush: Brush =
-        LineBrush.of(initialColorRes = context.getColor(Color.values().first().id))
+        LineBrush(paint = Paint().apply { color = context.getColor(Color.values().first().id) })
 
     private val bitmap: Bitmap by lazy {
         Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)

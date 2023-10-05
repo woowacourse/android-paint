@@ -4,7 +4,7 @@ import android.graphics.Paint
 import android.graphics.Path
 import kotlin.math.abs
 
-class LineBrush private constructor(
+class LineBrush(
     override val path: Path = Path(),
     override val paint: Paint = Paint(),
 ) : Brush {
@@ -52,9 +52,5 @@ class LineBrush private constructor(
 
     companion object {
         private const val MOVE_THRESHOLD = 5
-
-        fun of(initialColorRes: Int): LineBrush {
-            return LineBrush().also { it.setColor(initialColorRes) }
-        }
     }
 }
