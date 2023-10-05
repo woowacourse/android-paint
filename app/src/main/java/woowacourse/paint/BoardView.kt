@@ -2,42 +2,49 @@ package woowacourse.paint
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import woowacourse.paint.model.BrushType
 import woowacourse.paint.model.ColorPalette
+import woowacourse.paint.model.Drawing
+import woowacourse.paint.model.DrawingHistory
 
 class BoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
-    private val path = Path()
-    private val paint = Paint()
+    private var path = Path()
+    private var paint = Paint()
+    private val drawingHistory = DrawingHistory()
     private lateinit var brushType: BrushType
     private var startX = DEFAULT_COORDINATE
     private var startY = DEFAULT_COORDINATE
-    private lateinit var storedCanvas: Canvas
-    private lateinit var bitmap: Bitmap
 
     fun changeColor(colorPalette: ColorPalette) {
-        paint.color = ContextCompat.getColor(context, colorPalette.color)
+        val color = ContextCompat.getColor(context, colorPalette.color)
+        setupPaint(selectedColor = color)
     }
 
     fun setWidth(width: Float) {
-        paint.strokeWidth = width
+        setupPaint(selectedWidth = width)
     }
 
     fun setBrush(brushType: BrushType) {
         this.brushType = brushType
-        setupPaint(brushType)
     }
 
-    private fun setupPaint(brushType: BrushType) {
+    private fun setupPaint(
+        @ColorInt selectedColor: Int = paint.color,
+        selectedWidth: Float = paint.strokeWidth,
+    ) {
+        paint = Paint(paint)
+
+        paint.color = selectedColor
+        paint.strokeWidth = selectedWidth
         when (brushType) {
             BrushType.PEN -> setNotFilledPaint()
             BrushType.FILLED_CIRCLE, BrushType.FILLED_RECTANGLE -> setFilledPaint()
@@ -58,24 +65,22 @@ class BoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private fun setFilledPaint() {
         paint.apply {
             style = Paint.Style.FILL
-            isAntiAlias = true
         }
     }
 
     fun erase() {
-        bitmap.eraseColor(Color.TRANSPARENT)
+        drawingHistory.clearAll()
+        path.reset()
         invalidate()
-    }
-
-    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
-        super.onSizeChanged(w, h, oldw, oldh)
-        bitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
-        storedCanvas = Canvas(bitmap)
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvas.drawBitmap(bitmap, 0f, 0f, null)
+
+        drawingHistory.history.forEach { (path: Path, paint: Paint) ->
+            canvas.drawPath(path, paint)
+        }
+        setupPaint()
         canvas.drawPath(path, paint)
     }
 
@@ -123,8 +128,8 @@ class BoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     private fun endDrawing() {
-        storedCanvas.drawPath(path, paint)
-        path.reset()
+        drawingHistory.add(Drawing(path, paint))
+        path = Path()
     }
 
     companion object {
