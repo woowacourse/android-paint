@@ -19,6 +19,8 @@ class ContentContainer(
     var brushType: BrushType = BrushType.Stroke
     val paintInfo = PaintInfo()
 
+    private val trashContents: MutableList<Content> = mutableListOf()
+
     fun updateContent(event: MotionEvent) {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
@@ -61,7 +63,23 @@ class ContentContainer(
         _drawnContents.addAll(contents)
     }
 
-    private fun removeLast() {
-        _drawnContents.removeLast()
+    fun undo(): Boolean {
+        if (_drawnContents.isEmpty()) return false
+        val redoContent = _drawnContents.removeLast()
+        trashContents.add(redoContent)
+        return true
+    }
+
+    fun redo(): Boolean {
+        if (trashContents.isEmpty()) return false
+        trashContents.add(trashContents.removeLast())
+        return true
+    }
+
+    fun clear(): Boolean {
+        if (_drawnContents.isEmpty()) return false
+        _drawnContents.clear()
+        trashContents.clear()
+        return true
     }
 }

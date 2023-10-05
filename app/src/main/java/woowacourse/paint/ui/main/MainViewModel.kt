@@ -113,8 +113,7 @@ class MainViewModel : ViewModel() {
 
     fun onRedo() {
         if (trashPaths.isEmpty()) return
-        drawnPaths.value = (drawnPaths.value ?: listOf()) + trashPaths.last()
-        trashPaths.removeLast()
+        drawnPaths.value = (drawnPaths.value ?: listOf()) + trashPaths.removeLast()
     }
 
     companion object {

@@ -87,13 +87,38 @@ class PaintBoard @JvmOverloads constructor(
         invalidate()
     }
 
-    override fun onDraw(canvas: Canvas) {
-        super.onDraw(canvas)
-        contents.drawOnCanvas(canvas)
+    fun undo() {
+        if (contents.undo()) {
+            invalidate()
+            onContentChangeListener()
+        }
+    }
+
+    fun redo() {
+        if (contents.redo()) {
+            invalidate()
+            onContentChangeListener()
+        }
+    }
+
+    fun clear() {
+        if (contents.clear()) {
+            invalidate()
+            onContentChangeListener()
+        }
+    }
+
+    private fun onContentChangeListener() {
+        onContentsChangeListener?.onContentsChange(drawnPaths)
     }
 
     interface OnContentsChangeListener {
         fun onContentsChange(contents: List<Content>)
+    }
+
+    override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
+        contents.drawOnCanvas(canvas)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -101,7 +126,7 @@ class PaintBoard @JvmOverloads constructor(
         contents.updateContent(event)
         invalidate()
         if (event.action == MotionEvent.ACTION_UP) {
-            onContentsChangeListener?.onContentsChange(drawnPaths)
+            onContentChangeListener()
         }
         return true
     }
