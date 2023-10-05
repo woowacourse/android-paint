@@ -1,4 +1,4 @@
-package woowacourse.paint
+package woowacourse.paint.listener
 
 import woowacourse.paint.model.ColorBox
 

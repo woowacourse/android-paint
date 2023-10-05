@@ -3,8 +3,8 @@ package woowacourse.paint.viewholder
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.paint.OnBrushClickListener
 import woowacourse.paint.databinding.ItemBrushBinding
+import woowacourse.paint.listener.OnBrushClickListener
 import woowacourse.paint.model.PaintBrush
 
 class BrushViewHolder private constructor(

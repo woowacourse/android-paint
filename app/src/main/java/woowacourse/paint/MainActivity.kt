@@ -7,7 +7,10 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.slider.RangeSlider
 import woowacourse.paint.DrawingCanvas.Companion.DEFAULT_STROKE_WIDTH
 import woowacourse.paint.adapter.BrushAdapter
+import woowacourse.paint.adapter.ColorAdapter
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.listener.OnBrushClickListener
+import woowacourse.paint.listener.OnColorClickListener
 import woowacourse.paint.model.ColorBox
 import woowacourse.paint.model.PaintBrush
 
