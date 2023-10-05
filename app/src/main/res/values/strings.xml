@@ -8,4 +8,8 @@
     <string name="brush_type_rectangle">직사각형</string>
     <string name="brush_type_circle">원</string>
     <string name="brush_type_eraser">지우개</string>
+
+    <string name="main_toolbar_clear">전체 지우기</string>
+    <string name="main_toolbar_undo">뒤로가기</string>
+    <string name="main_toolbar_redo">앞으로가기</string>
 </resources>
