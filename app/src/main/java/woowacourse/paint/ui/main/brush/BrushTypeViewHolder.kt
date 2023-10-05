@@ -21,6 +21,7 @@ class BrushTypeViewHolder(
         binding.tvBrushType.text = when (brushTypeItem.brushType) {
             BrushType.Stroke -> binding.root.context.getString(R.string.brush_type_stroke)
             BrushType.Rectangle -> binding.root.context.getString(R.string.brush_type_rectangle)
+            BrushType.Circle -> binding.root.context.getString(R.string.brush_type_circle)
             BrushType.Eraser -> binding.root.context.getString(R.string.brush_type_eraser)
         }
     }

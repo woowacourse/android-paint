@@ -2,10 +2,12 @@ package woowacourse.paint.customView.container
 
 import android.graphics.Canvas
 import android.graphics.Path
+import android.graphics.PointF
 import android.graphics.RectF
 import android.view.MotionEvent
 import woowacourse.paint.customView.PaintInfo
 import woowacourse.paint.customView.content.BrushType
+import woowacourse.paint.customView.content.Circle
 import woowacourse.paint.customView.content.Content
 import woowacourse.paint.customView.content.Eraser
 import woowacourse.paint.customView.content.Rectangle
@@ -36,10 +38,12 @@ class ContentContainer(
     }
 
     private fun createContent(): Content {
+        val paint = paintInfo.getPaint(brushType)
         return when (brushType) {
-            BrushType.Stroke -> Stroke(Path(), paintInfo.getPaint(brushType))
-            BrushType.Eraser -> Eraser(Path(), paintInfo.getPaint(brushType))
-            BrushType.Rectangle -> Rectangle(RectF(), paintInfo.getPaint(brushType))
+            BrushType.Stroke -> Stroke(Path(), paint)
+            BrushType.Eraser -> Eraser(Path(), paint)
+            BrushType.Rectangle -> Rectangle(RectF(), paint)
+            BrushType.Circle -> Circle(PointF(), 0f, paint)
         }
     }
 

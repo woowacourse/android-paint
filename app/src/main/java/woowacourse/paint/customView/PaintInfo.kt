@@ -42,8 +42,14 @@ class PaintInfo {
         return when (contentType) {
             BrushType.Stroke -> createStrokePaint()
             BrushType.Rectangle -> createRectanglePaint()
+            BrushType.Circle -> createCirclePaint()
             BrushType.Eraser -> createEraserPaint()
         }
+    }
+
+    private fun createCirclePaint() = Paint().apply {
+        style = Paint.Style.FILL
+        color = currentColor
     }
 
     private fun createStrokePaint() = Paint().apply {
@@ -56,7 +62,7 @@ class PaintInfo {
     }
 
     private fun createRectanglePaint() = Paint().apply {
-        style = Paint.Style.FILL_AND_STROKE
+        style = Paint.Style.FILL
         color = currentColor
     }
 
