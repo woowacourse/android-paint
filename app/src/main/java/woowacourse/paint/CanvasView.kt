@@ -10,9 +10,9 @@ import android.view.View
 
 class CanvasView constructor(context: Context, attr: AttributeSet) : View(context, attr) {
 
-    private val brush by lazy {
-        Brush.of(initialColorRes = context.getColor(Color.values().first().id))
-    }
+    private var brush: Brush =
+        LineBrush.of(initialColorRes = context.getColor(Color.values().first().id))
+
     private val bitmap: Bitmap by lazy {
         Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
     }
@@ -33,6 +33,10 @@ class CanvasView constructor(context: Context, attr: AttributeSet) : View(contex
 
     fun setStrokeWidth(width: Float) {
         brush.setStrokeWidth(width)
+    }
+
+    fun setBrush(brush: Brush) {
+        this.brush = brush
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -60,7 +64,7 @@ class CanvasView constructor(context: Context, attr: AttributeSet) : View(contex
     }
 
     private fun finishDrawing() {
-        brush.lineToPrevPoint()
+        brush.finishDrawing()
         canvas.drawPath(brush.path, brush.paint)
     }
 }
