@@ -14,7 +14,7 @@ class MainViewModel : ViewModel() {
     private val _width = MutableLiveData<Float>()
     val width: LiveData<Float> = _width
 
-    private val _brushType = MutableLiveData<BrushType>()
+    private val _brushType = MutableLiveData(BrushType.PEN)
     val brushType: LiveData<BrushType> = _brushType
 
     private val _isErasing = MutableLiveData<Boolean>()

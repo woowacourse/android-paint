@@ -11,12 +11,16 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.ContextCompat
+import woowacourse.paint.model.BrushType
 import woowacourse.paint.model.ColorPalette
 
 class BoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private val path = Path()
     private val paint = Paint()
+    private lateinit var brushType: BrushType
+    private var startX = DEFAULT_COORDINATE
+    private var startY = DEFAULT_COORDINATE
     private lateinit var storedCanvas: Canvas
     private lateinit var bitmap: Bitmap
 
@@ -26,6 +30,10 @@ class BoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     fun setWidth(width: Float) {
         paint.strokeWidth = width
+    }
+
+    fun setBrush(brushType: BrushType) {
+        this.brushType = brushType
     }
 
     fun erase() {
@@ -58,25 +66,46 @@ class BoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> startDrawing(event)
-            MotionEvent.ACTION_MOVE -> moveDrawing(event)
+            MotionEvent.ACTION_DOWN -> startDrawing(event, brushType)
+            MotionEvent.ACTION_MOVE -> moveDrawing(event, brushType)
             MotionEvent.ACTION_UP -> endDrawing()
         }
         invalidate()
         return true
     }
 
-    private fun startDrawing(event: MotionEvent) {
-        path.moveTo(event.x, event.y)
-        path.lineTo(event.x, event.y)
+    private fun startDrawing(event: MotionEvent, brushType: BrushType) {
+        when (brushType) {
+            BrushType.PEN -> {
+                path.moveTo(event.x, event.y)
+                path.lineTo(event.x, event.y)
+            }
+            else -> {
+                startX = event.x
+                startY = event.y
+            }
+        }
     }
 
-    private fun moveDrawing(event: MotionEvent) {
-        path.lineTo(event.x, event.y)
+    private fun moveDrawing(event: MotionEvent, brushType: BrushType) {
+        when (brushType) {
+            BrushType.PEN -> {
+                path.lineTo(event.x, event.y)
+            }
+            else -> {
+                path.reset()
+                path.addRect(startX, startY, event.x, event.y, Path.Direction.CCW)
+                invalidate()
+            }
+        }
     }
 
     private fun endDrawing() {
         storedCanvas.drawPath(path, paint)
         path.reset()
+    }
+
+    companion object {
+        private const val DEFAULT_COORDINATE = 0.0f
     }
 }
