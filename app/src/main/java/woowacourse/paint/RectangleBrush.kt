@@ -11,6 +11,10 @@ class RectangleBrush(
     private var startX: Float = 0f
     private var startY: Float = 0f
 
+    init {
+        setupPaint()
+    }
+
     override fun setColor(color: Int) {
         paint.color = color
     }
@@ -33,6 +37,10 @@ class RectangleBrush(
         val top = if (startY <= y) startY else y
         val bottom = if (startY <= y) y else startY
         path.addRect(left, top, right, bottom, Path.Direction.CCW)
+    }
+
+    private fun setupPaint() {
+        paint.style = Paint.Style.FILL
     }
 
     override fun finishDrawing() = Unit

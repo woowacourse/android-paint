@@ -13,6 +13,10 @@ class CircleBrush(
     private var startX: Float = 0f
     private var startY: Float = 0f
 
+    init {
+        setupPaint()
+    }
+
     override fun setColor(color: Int) {
         paint.color = color
     }
@@ -34,6 +38,10 @@ class CircleBrush(
         val dy = startY - y
         val radius = sqrt(dx.pow(2).toDouble() + dy.pow(2).toDouble()).toFloat() / 2
         path.addCircle((startX + x) / 2, (startY + y) / 2, radius, Path.Direction.CCW)
+    }
+
+    private fun setupPaint() {
+        paint.style = Paint.Style.FILL
     }
 
     override fun finishDrawing() = Unit
