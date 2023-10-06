@@ -20,6 +20,7 @@
             android:layout_height="0dp"
             app:brushColor="@{viewModel.brushColor}"
             app:brushSize="@{viewModel.brushSize}"
+            app:drawMode="@{viewModel.drawMode}"
             app:layout_constraintBottom_toTopOf="@id/slider_brush_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

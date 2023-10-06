@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.main.adapter.ColorAdapter
+import woowacourse.paint.model.DrawMode
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
@@ -17,6 +18,7 @@ class MainActivity : AppCompatActivity() {
 
         setColorsRecyclerview()
         setBrushSizeListener()
+        setDrawModeListener()
     }
 
     private fun setViewModel() {
@@ -37,5 +39,11 @@ class MainActivity : AppCompatActivity() {
         binding.sliderBrushSize.addOnChangeListener { _, value, _ ->
             viewModel.setBrushSize(value)
         }
+    }
+
+    private fun setDrawModeListener() {
+        binding.btnBrush.setOnClickListener { viewModel.setDrawMode(DrawMode.BRUSH) }
+        binding.btnSquare.setOnClickListener { viewModel.setDrawMode(DrawMode.SQUARE) }
+        binding.btnCircle.setOnClickListener { viewModel.setDrawMode(DrawMode.CIRCLE) }
     }
 }

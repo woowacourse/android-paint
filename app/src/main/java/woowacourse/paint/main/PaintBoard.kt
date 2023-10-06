@@ -10,12 +10,14 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.ContextCompat
 import woowacourse.paint.model.BrushSize
+import woowacourse.paint.model.DrawMode
 import woowacourse.paint.model.DrawablePath
 import woowacourse.paint.model.DrawablePathHistory
 import woowacourse.paint.model.PaintColor
 
 class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val pathHistory = DrawablePathHistory()
+    private var drawMode = DrawMode.DEFAULT_MODE
     private var currentPath = Path()
     private val currentPaint = Paint()
 
@@ -65,6 +67,10 @@ class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(conte
 
     private fun endDrawing() {
         pathHistory.add(DrawablePath(currentPath, Paint(currentPaint)))
+    }
+
+    fun setDrawMode(mode: DrawMode) {
+        drawMode = mode
     }
 
     fun setBrushSize(size: BrushSize) {
