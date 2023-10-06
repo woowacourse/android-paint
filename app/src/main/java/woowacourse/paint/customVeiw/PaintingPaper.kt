@@ -9,10 +9,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.model.Brush
-import woowacourse.paint.model.BrushCircle
-import woowacourse.paint.model.BrushEraser
 import woowacourse.paint.model.BrushPen
-import woowacourse.paint.model.BrushRect
 import woowacourse.paint.model.BrushShape
 import woowacourse.paint.model.Brushes
 
@@ -62,14 +59,9 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
     }
 
     private fun onActionDown(event: MotionEvent): Boolean {
-        brushes += when (brushShape) {
-            BrushShape.LINE -> BrushPen()
-            BrushShape.RECT -> BrushRect()
-            BrushShape.CIRCLE -> BrushCircle()
-            BrushShape.ERASER -> BrushEraser()
-        }.apply {
-            start(event.x, event.y, ::updatePaper)
+        brushes += Brush.from(brushShape).apply {
             setUpPaint(paint)
+            start(event.x, event.y, ::updatePaper)
         }
         return true
     }
