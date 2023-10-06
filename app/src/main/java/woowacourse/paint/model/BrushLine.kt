@@ -1,13 +1,25 @@
 package woowacourse.paint.model
 
 import android.graphics.Canvas
+import android.graphics.CornerPathEffect
 import android.graphics.Paint
 import android.graphics.Path
 
-abstract class BrushLine(private val paint: Paint) : Brush {
+abstract class BrushLine : Brush {
+    override val paint: Paint = Paint()
+
     private val path = Path()
 
     private var lastPoint = Point(0F, 0F)
+
+    init {
+        paint.apply {
+            style = Paint.Style.STROKE
+            strokeJoin = Paint.Join.ROUND
+            strokeCap = Paint.Cap.ROUND
+            pathEffect = CornerPathEffect(100F)
+        }
+    }
 
     override fun start(x: Float, y: Float, onCommit: () -> Unit) = start(Point(x, y), onCommit)
 

@@ -3,7 +3,6 @@ package woowacourse.paint.customVeiw
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.CornerPathEffect
 import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
@@ -21,21 +20,10 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
     private val brushes: Brushes = Brushes()
 
     private val previewBrush: Brush
-        get() = BrushPen(penPaint).apply {
+        get() = BrushPen().apply {
+            setUpPaint(paint)
             start(100F, 100F)
             move(200F, 100F)
-        }
-
-    private val paint
-        get() = Paint().apply { color = this@PaintingPaper.color }
-
-    private val penPaint
-        get() = paint.apply {
-            strokeWidth = brushSize
-            style = Paint.Style.STROKE
-            strokeJoin = Paint.Join.ROUND
-            strokeCap = Paint.Cap.ROUND
-            pathEffect = CornerPathEffect(100F)
         }
 
     var color = Color.BLACK
@@ -52,14 +40,14 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
 
     var brushShape = BrushShape.LINE
 
+    var onUndoHistoryChangeListener: (Boolean) -> Unit = {}
+
+    var onRedoHistoryChangeListener: (Boolean) -> Unit = {}
+
     init {
         background = ColorDrawable(Color.WHITE)
         setLayerType(LAYER_TYPE_HARDWARE, null)
     }
-
-    var onUndoHistoryChangeListener: (Boolean) -> Unit = {}
-
-    var onRedoHistoryChangeListener: (Boolean) -> Unit = {}
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -75,11 +63,14 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
 
     private fun onActionDown(event: MotionEvent): Boolean {
         brushes += when (brushShape) {
-            BrushShape.LINE -> BrushPen(penPaint)
-            BrushShape.RECT -> BrushRect(paint)
-            BrushShape.CIRCLE -> BrushCircle(paint)
-            BrushShape.ERASER -> BrushEraser(penPaint)
-        }.apply { start(event.x, event.y, ::updatePaper) }
+            BrushShape.LINE -> BrushPen()
+            BrushShape.RECT -> BrushRect()
+            BrushShape.CIRCLE -> BrushCircle()
+            BrushShape.ERASER -> BrushEraser()
+        }.apply {
+            start(event.x, event.y, ::updatePaper)
+            setUpPaint(paint)
+        }
         return true
     }
 
@@ -98,6 +89,13 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
 
     fun clear() {
         brushes.clear(::updatePaper)
+    }
+
+    private fun setUpPaint(paint: Paint) {
+        paint.apply {
+            color = this@PaintingPaper.color
+            strokeWidth = brushSize
+        }
     }
 
     private fun updatePaper() {

@@ -4,7 +4,9 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 
-abstract class BrushFigure(private val paint: Paint) : Brush {
+abstract class BrushFigure : Brush {
+    override val paint: Paint = Paint()
+
     protected val path = Path()
 
     protected var basePoint = Point(0F, 0F)
