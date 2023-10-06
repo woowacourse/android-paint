@@ -18,8 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <woowacourse.paint.ui.custom.Canvas
-            android:id="@+id/main_canvas"
+        <woowacourse.paint.ui.custom.DrawingCanvas
+            android:id="@+id/main_drawing_canvas"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@id/main_brush_width_slider"

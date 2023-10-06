@@ -1,5 +1,6 @@
 package woowacourse.paint.ui.custom
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -12,7 +13,7 @@ import androidx.annotation.ColorInt
 import woowacourse.paint.drawing.Drawing
 import woowacourse.paint.drawing.DrawingHistory
 
-class Canvas @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
+class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     View(context, attrs) {
     private var path = Path()
     private var paint = Paint()
@@ -34,6 +35,7 @@ class Canvas @JvmOverloads constructor(context: Context, attrs: AttributeSet? = 
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         val pointX: Float = event.x
         val pointY: Float = event.y

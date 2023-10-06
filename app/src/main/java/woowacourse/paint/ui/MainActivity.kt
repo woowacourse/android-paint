@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModelProvider
 import woowacourse.paint.R
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.ui.adapter.PaletteAdapter
-import woowacourse.paint.ui.custom.Canvas.Companion.DEFAULT_PAINT_WIDTH
+import woowacourse.paint.ui.custom.DrawingCanvas.Companion.DEFAULT_PAINT_WIDTH
 import woowacourse.paint.ui.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -31,14 +31,14 @@ class MainActivity : AppCompatActivity() {
         val colors = resources.getIntArray(R.array.palette_colors).toList()
 
         binding.mainBrushColorsRecyclerView.adapter = PaletteAdapter(colors) { color: Int ->
-            binding.mainCanvas.changePaintColor(color)
+            binding.mainDrawingCanvas.changePaintColor(color)
         }
     }
 
     private fun initPaintWidthRangeSlider() {
         binding.defaultPaintWidth = DEFAULT_PAINT_WIDTH
         binding.mainBrushWidthSlider.addOnChangeListener { _, value, _ ->
-            binding.mainCanvas.changePaintWidth(value)
+            binding.mainDrawingCanvas.changePaintWidth(value)
         }
     }
 }
