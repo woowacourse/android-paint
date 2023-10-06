@@ -23,7 +23,7 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
             move(200F, 100F)
         }
 
-    var color = Color.BLACK
+    var brushColor = Color.BLACK
         set(value) {
             field = value
             invalidate()
@@ -85,7 +85,7 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
 
     private fun setUpPaint(paint: Paint) {
         paint.apply {
-            color = this@PaintingPaper.color
+            color = this@PaintingPaper.brushColor
             strokeWidth = brushSize
         }
     }

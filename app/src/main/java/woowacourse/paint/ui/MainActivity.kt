@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     private fun setUpBinding() {
         setContentView(binding.root)
         binding.rvColors.adapter = ColorAdapter {
-            binding.paintingPaper.color = it
+            binding.paintingPaper.brushColor = it
         }
     }
 
