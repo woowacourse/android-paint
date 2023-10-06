@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         setUpPaintingColorControllerView()
         initEraseButtonClick()
         initUndoButtonClick()
+        initPenButtonClick()
     }
 
     private fun setUpStrokeWidthControllerView() {
@@ -55,13 +56,19 @@ class MainActivity : AppCompatActivity() {
     private fun initEraseButtonClick() {
         binding.buttonErase.setOnClickListener {
             binding.paintingView.setLayerType(LAYER_TYPE_HARDWARE, null)
-            binding.paintingView.setErase(true)
+            binding.paintingView.setEraseMode()
         }
     }
 
     private fun initUndoButtonClick() {
         binding.buttonUndo.setOnClickListener {
             binding.paintingView.undo()
+        }
+    }
+
+    private fun initPenButtonClick() {
+        binding.buttonPen.setOnClickListener {
+            binding.paintingView.setPenMode()
         }
     }
 

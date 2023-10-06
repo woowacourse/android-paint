@@ -1,30 +1,20 @@
 package woowacourse.paint
 
 import android.graphics.Canvas
-import android.graphics.Paint
 import android.graphics.Path
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffXfermode
+import woowacourse.paint.paintingtools.Eraser
+import woowacourse.paint.paintingtools.PaintingTool
+import woowacourse.paint.paintingtools.Pen
 
 data class Painting(
     private val path: Path,
-    private val paintColor: Int,
-    private val paintWidth: Float,
+    private var paintingTool: PaintingTool,
 ) {
-    private val paint = Paint().apply {
-        strokeWidth = paintWidth
-        color = paintColor
-        style = Paint.Style.STROKE
-        isAntiAlias = true
-        strokeCap = Paint.Cap.ROUND
-        strokeJoin = Paint.Join.ROUND
-    }
 
     fun getInitializedPathPainting(): Painting {
         return copy(
             path = Path(),
-            paintColor = paint.color,
-            paintWidth = paint.strokeWidth,
+            paintingTool = paintingTool.copy(),
         )
     }
 
@@ -37,22 +27,22 @@ data class Painting(
     }
 
     fun changeColor(color: Int) {
-        paint.color = color
+        paintingTool.changeColor(color)
     }
 
     fun changeWidth(width: Float) {
-        paint.strokeWidth = width
+        paintingTool.changeWidth(width)
     }
 
     fun drawOnCanvas(canvas: Canvas) {
-        canvas.drawPath(path, paint)
+        canvas.drawPath(path, paintingTool.paint)
     }
 
-    fun setEraseMode(erase: Boolean) {
-        if (erase) {
-            paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
-        } else {
-            paint.xfermode = null
-        }
+    fun setEraseMode() {
+        paintingTool = Eraser(paintingTool.paintColor, paintingTool.paintWidth)
+    }
+
+    fun setPenMode() {
+        paintingTool = Pen(paintingTool.paintColor, paintingTool.paintWidth)
     }
 }

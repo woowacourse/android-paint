@@ -27,28 +27,47 @@
         android:id="@+id/rv_colors"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
         android:orientation="vertical"
         android:paddingHorizontal="17dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout_painting_tools_container"
         tools:itemCount="5"
         tools:listitem="@layout/item_painting_color"
         tools:spanCount="5" />
 
-    <Button
-        android:id="@+id/button_erase"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/linearLayout_painting_tools_container"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/main_erase_button_text"
+        android:weightSum="3"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
 
-    <Button
-        android:id="@+id/button_undo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/main_undo_button_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_erase" />
+        <Button
+            android:id="@+id/button_erase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginEnd="15dp"
+            android:text="@string/main_erase_button_text" />
+
+        <Button
+            android:id="@+id/button_pen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/main_pen_button_text"
+            android:layout_marginStart="15dp"/>
+
+        <Button
+            android:id="@+id/button_undo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/main_undo_button_text"
+            android:layout_marginStart="15dp"/>
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

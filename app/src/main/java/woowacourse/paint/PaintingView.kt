@@ -6,14 +6,17 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import woowacourse.paint.paintingtools.Pen
 
 class PaintingView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private val paintings: Paintings = Paintings(
         initPresentPainting = Painting(
             path = Path(),
-            paintColor = context.getColor(PaintingColor.RED.colorRes),
-            paintWidth = INIT_STROKE_WIDTH,
+            paintingTool = Pen(
+                paintColor = context.getColor(PaintingColor.RED.colorRes),
+                paintWidth = INIT_STROKE_WIDTH,
+            ),
         ),
     )
 
@@ -50,8 +53,12 @@ class PaintingView(context: Context, attrs: AttributeSet) : View(context, attrs)
         paintings.presentPainting?.changeWidth(width)
     }
 
-    fun setErase(erase: Boolean) {
-        paintings.presentPainting?.setEraseMode(erase)
+    fun setEraseMode() {
+        paintings.presentPainting?.setEraseMode()
+    }
+
+    fun setPenMode() {
+        paintings.presentPainting?.setPenMode()
     }
 
     fun undo() {
