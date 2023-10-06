@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initPenTool()
+        initShapes()
     }
 
     private fun initBinding() {
@@ -28,6 +29,12 @@ class MainActivity : AppCompatActivity() {
         binding.btnOpenPenTool.setOnClickListener {
             binding.penToolView.toggleVisibility()
             binding.paintView.drawMode = DrawMode.LINE
+        }
+    }
+
+    private fun initShapes() {
+        binding.btnShapeRectangle.setOnClickListener {
+            binding.paintView.drawMode = DrawMode.RECT
         }
     }
 }

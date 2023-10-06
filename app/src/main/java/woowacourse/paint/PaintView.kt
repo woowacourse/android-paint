@@ -12,6 +12,7 @@ import woowacourse.paint.model.shape.Line
 import woowacourse.paint.model.shape.Line.Companion.lastX
 import woowacourse.paint.model.shape.Line.Companion.lastY
 import woowacourse.paint.model.shape.Line.Companion.updateLastPoint
+import woowacourse.paint.model.shape.Rectangle
 import woowacourse.paint.model.shape.Shapes
 
 class PaintView(
@@ -33,6 +34,7 @@ class PaintView(
         shapes.value.forEach {
             when (it) {
                 is Line -> canvas.drawPath(it.path, it.paint)
+                is Rectangle -> canvas.drawRect(it.startX, it.startY, it.endX, it.endY, it.paint)
             }
         }
     }
@@ -58,7 +60,17 @@ class PaintView(
                 addedLine.path.moveTo(pointX, pointY)
                 invalidate()
             }
-            DrawMode.RECT -> {}
+            DrawMode.RECT -> {
+                val addedRectangle = Rectangle().apply {
+                    paint.color = pen.color
+                    startX = pointX
+                    startY = pointY
+                    endX = pointX
+                    endY = pointY
+                }
+                shapes.add(addedRectangle)
+                invalidate()
+            }
             DrawMode.CIRCLE -> {}
         }
     }
@@ -73,7 +85,12 @@ class PaintView(
                 updateLastPoint(pointX, pointY)
                 invalidate()
             }
-            DrawMode.RECT -> {}
+            DrawMode.RECT -> {
+                val shape = shapes.last() as Rectangle
+                shape.endX = pointX
+                shape.endY = pointY
+                invalidate()
+            }
             DrawMode.CIRCLE -> {}
         }
     }
