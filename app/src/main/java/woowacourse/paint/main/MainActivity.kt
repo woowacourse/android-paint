@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setBrushSizeListener() {
-        binding.rangeSliderBrushSize.addOnChangeListener { _, value, _ ->
+        binding.sliderBrushSize.addOnChangeListener { _, value, _ ->
             viewModel.setBrushSize(value)
         }
     }
