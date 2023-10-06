@@ -3,6 +3,7 @@ package woowacourse.paint.main
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -11,6 +12,7 @@ import woowacourse.paint.model.BrushSize
 import woowacourse.paint.model.DrawMode
 import woowacourse.paint.model.DrawableHistory
 import woowacourse.paint.model.PaintColor
+import woowacourse.paint.model.drawable.DrawableCircle
 import woowacourse.paint.model.drawable.DrawableElement
 import woowacourse.paint.model.drawable.DrawablePath
 import woowacourse.paint.model.drawable.DrawableSquare
@@ -18,7 +20,7 @@ import woowacourse.paint.model.drawable.DrawableSquare
 class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val pathHistory = DrawableHistory()
     private var drawMode = DrawMode.DEFAULT_MODE
-    private var currentDraw: DrawableElement = DrawablePath()
+    private var currentDraw: DrawableElement = DrawablePath(paint = Paint())
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -54,10 +56,9 @@ class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(conte
     fun setDrawMode(mode: DrawMode) {
         drawMode = mode
         currentDraw = when (mode) {
-            DrawMode.BRUSH -> DrawablePath(paint = currentDraw.paint)
-            DrawMode.SQUARE -> DrawableSquare(paint = currentDraw.paint)
-            // DrawMode.CIRCLE -> currentDraw = DrawableCircle.DEFAULT
-            else -> throw IllegalArgumentException("존재하지 않는 DrawMode입니다: $mode")
+            DrawMode.BRUSH -> DrawablePath(paint = Paint(currentDraw.paint))
+            DrawMode.SQUARE -> DrawableSquare(paint = Paint(currentDraw.paint))
+            DrawMode.CIRCLE -> DrawableCircle(paint = Paint(currentDraw.paint))
         }
     }
 
@@ -68,7 +69,6 @@ class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(conte
     }
 
     fun setBrushColor(color: PaintColor) {
-        currentDraw =
-            currentDraw.changePaintColor(ContextCompat.getColor(context, color.colorRes))
+        currentDraw = currentDraw.changePaintColor(ContextCompat.getColor(context, color.colorRes))
     }
 }

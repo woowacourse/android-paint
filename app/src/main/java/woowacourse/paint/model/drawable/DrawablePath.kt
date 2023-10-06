@@ -8,7 +8,7 @@ import woowacourse.paint.model.BrushSize
 
 data class DrawablePath(
     private val path: Path = Path(),
-    override val paint: Paint = Paint(),
+    override val paint: Paint,
 ) : DrawableElement {
 
     init {
@@ -24,7 +24,7 @@ data class DrawablePath(
         canvas.drawPath(path, paint)
     }
 
-    override fun startDrawing(x: Float, y: Float): DrawablePath {
+    override fun startDrawing(x: Float, y: Float): DrawableElement {
         val newPath = Path().apply {
             moveTo(x, y)
             lineTo(x, y)
@@ -36,13 +36,13 @@ data class DrawablePath(
         path.lineTo(x, y)
     }
 
-    override fun changePaintColor(@ColorInt color: Int): DrawablePath {
+    override fun changePaintColor(@ColorInt color: Int): DrawableElement {
         return copy(
             paint = Paint(paint).apply { this.color = color },
         )
     }
 
-    fun changeBrushSize(brushSize: BrushSize): DrawablePath {
+    fun changeBrushSize(brushSize: BrushSize): DrawableElement {
         return copy(
             paint = Paint(paint).apply { strokeWidth = brushSize.width },
         )

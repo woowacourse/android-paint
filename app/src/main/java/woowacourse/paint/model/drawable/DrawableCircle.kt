@@ -2,10 +2,12 @@ package woowacourse.paint.model.drawable
 
 import android.graphics.Canvas
 import android.graphics.Paint
-import android.graphics.RectF
+import kotlin.math.sqrt
 
-data class DrawableSquare(
-    private val rect: RectF = RectF(),
+data class DrawableCircle(
+    private val cx: Float = 0f,
+    private val cy: Float = 0f,
+    private var radius: Float = 0f,
     override val paint: Paint,
 ) : DrawableElement {
 
@@ -14,24 +16,31 @@ data class DrawableSquare(
     }
 
     override fun drawCurrent(canvas: Canvas) {
-        canvas.drawRect(rect, paint)
+        canvas.drawCircle(cx, cy, radius, paint)
     }
 
     override fun startDrawing(x: Float, y: Float): DrawableElement {
-        return DrawableSquare(
-            RectF(x, y, x, y),
+        return DrawableCircle(
+            cx = x,
+            cy = y,
+            radius = 0f,
             paint = Paint(paint),
         )
     }
 
     override fun keepDrawing(x: Float, y: Float) {
-        rect.right = x
-        rect.bottom = y
+        radius = calculateRadius(x, y)
     }
 
     override fun changePaintColor(color: Int): DrawableElement {
         return copy(
             paint = Paint(paint).apply { this.color = color },
         )
+    }
+
+    private fun calculateRadius(x: Float, y: Float): Float {
+        val dx = x - cx
+        val dy = y - cy
+        return sqrt((dx * dx + dy * dy).toDouble()).toFloat()
     }
 }
