@@ -13,8 +13,10 @@
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
         <woowacourse.paint.PenToolView
             android:id="@+id/pen_tool_view"
@@ -33,9 +35,19 @@
             android:contentDescription="펜 선택 버튼"
             android:src="@drawable/ic_pen"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btn_shape_rectangle"
+            app:layout_constraintEnd_toStartOf="@id/btn_eraser"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/btn_eraser"
+            android:layout_width="54dp"
+            android:layout_height="54dp"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_eraser"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_shape_rectangle"
+            app:layout_constraintStart_toEndOf="@+id/btn_open_pen_tool" />
 
         <ImageView
             android:id="@+id/btn_shape_rectangle"
@@ -45,7 +57,7 @@
             android:src="@drawable/ic_shape_rectangle"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_shape_circle"
-            app:layout_constraintStart_toEndOf="@+id/btn_open_pen_tool" />
+            app:layout_constraintStart_toEndOf="@+id/btn_eraser" />
 
         <ImageView
             android:id="@+id/btn_shape_circle"

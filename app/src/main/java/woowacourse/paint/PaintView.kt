@@ -8,11 +8,11 @@ import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.model.DrawMode
 import woowacourse.paint.model.pen.Pen
-import woowacourse.paint.model.shape.Oval
 import woowacourse.paint.model.shape.Line
 import woowacourse.paint.model.shape.Line.Companion.lastX
 import woowacourse.paint.model.shape.Line.Companion.lastY
 import woowacourse.paint.model.shape.Line.Companion.updateLastPoint
+import woowacourse.paint.model.shape.Oval
 import woowacourse.paint.model.shape.Rectangle
 import woowacourse.paint.model.shape.Shapes
 
@@ -84,6 +84,7 @@ class PaintView(
                 shapes.add(addedOval)
                 invalidate()
             }
+            DrawMode.ERASER -> {}
         }
     }
 
@@ -109,6 +110,7 @@ class PaintView(
                 shape.endY = pointY
                 invalidate()
             }
+            DrawMode.ERASER -> {}
         }
     }
 

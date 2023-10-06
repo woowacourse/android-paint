@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
 
         initPenTool()
         initShapes()
+        initEraser()
     }
 
     private fun initBinding() {
@@ -38,6 +39,12 @@ class MainActivity : AppCompatActivity() {
         }
         binding.btnShapeCircle.setOnClickListener {
             binding.paintView.drawMode = DrawMode.CIRCLE
+        }
+    }
+
+    private fun initEraser() {
+        binding.btnEraser.setOnClickListener {
+            binding.paintView.drawMode = DrawMode.ERASER
         }
     }
 }
