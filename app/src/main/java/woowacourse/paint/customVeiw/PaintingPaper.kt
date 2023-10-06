@@ -10,7 +10,6 @@ import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import woowacourse.paint.model.Brush
 import woowacourse.paint.model.BrushCircle
 import woowacourse.paint.model.BrushEraser
 import woowacourse.paint.model.BrushPen
@@ -82,28 +81,12 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
 
     private fun onActionDown(event: MotionEvent): Boolean {
         brushes += when (brushShape) {
-            BrushShape.LINE -> createBrushPen(event)
-            BrushShape.RECT -> createBrushRect(event)
-            BrushShape.CIRCLE -> createBrushCircle(event)
-            BrushShape.ERASER -> createBrushEraser(event)
-        }
+            BrushShape.LINE -> BrushPen(path, penPaint)
+            BrushShape.RECT -> BrushRect(path, paint)
+            BrushShape.CIRCLE -> BrushCircle(path, paint)
+            BrushShape.ERASER -> BrushEraser(path, penPaint)
+        }.apply { start(event.x, event.y, ::updatePaper) }
         return true
-    }
-
-    private fun createBrushPen(event: MotionEvent): Brush {
-        return BrushPen(path, penPaint).apply { start(event.x, event.y, ::updatePaper) }
-    }
-
-    private fun createBrushRect(event: MotionEvent): Brush {
-        return BrushRect(path, paint).apply { start(event.x, event.y, ::updatePaper) }
-    }
-
-    private fun createBrushCircle(event: MotionEvent): Brush {
-        return BrushCircle(path, paint).apply { start(event.x, event.y, ::updatePaper) }
-    }
-
-    private fun createBrushEraser(event: MotionEvent): Brush {
-        return BrushEraser(path, penPaint).apply { start(event.x, event.y, ::updatePaper) }
     }
 
     private fun onActionMove(event: MotionEvent): Boolean {
