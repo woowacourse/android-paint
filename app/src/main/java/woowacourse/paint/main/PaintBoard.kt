@@ -3,32 +3,28 @@ package woowacourse.paint.main
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.ContextCompat
 import woowacourse.paint.model.BrushSize
 import woowacourse.paint.model.DrawMode
-import woowacourse.paint.model.DrawablePath
-import woowacourse.paint.model.DrawablePathHistory
+import woowacourse.paint.model.DrawableHistory
 import woowacourse.paint.model.PaintColor
+import woowacourse.paint.model.drawable.DrawableElement
+import woowacourse.paint.model.drawable.DrawablePath
+import woowacourse.paint.model.drawable.DrawableSquare
 
 class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    private val pathHistory = DrawablePathHistory()
+    private val pathHistory = DrawableHistory()
     private var drawMode = DrawMode.DEFAULT_MODE
-    private var currentDraw: DrawablePath = DrawablePath(Path(), Paint())
-
-    init {
-        setDefaultPaint()
-    }
+    private var currentDraw: DrawableElement = DrawablePath.from()
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
         pathHistory.drawAll(canvas)
-        currentDraw.drawCurrentPath(canvas)
+        currentDraw.drawCurrent(canvas)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -41,10 +37,6 @@ class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(conte
         }
         invalidate()
         return true
-    }
-
-    private fun setDefaultPaint() {
-        currentDraw.initPaint()
     }
 
     private fun startDrawing(event: MotionEvent) {
@@ -61,13 +53,22 @@ class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(conte
 
     fun setDrawMode(mode: DrawMode) {
         drawMode = mode
+        currentDraw = when (mode) {
+            DrawMode.BRUSH -> DrawablePath.from(currentDraw.paint)
+            DrawMode.SQUARE -> DrawableSquare.from(currentDraw.paint)
+            // DrawMode.CIRCLE -> currentDraw = DrawableCircle.DEFAULT
+            else -> throw IllegalArgumentException("존재하지 않는 DrawMode입니다: $mode")
+        }
     }
 
     fun setBrushSize(size: BrushSize) {
-        currentDraw = currentDraw.changeBrushSize(size)
+        if (currentDraw is DrawablePath) {
+            currentDraw = (currentDraw as DrawablePath).changeBrushSize(size)
+        }
     }
 
     fun setBrushColor(color: PaintColor) {
-        currentDraw = currentDraw.changePaintColor(ContextCompat.getColor(context, color.colorRes))
+        currentDraw =
+            currentDraw.changePaintColor(ContextCompat.getColor(context, color.colorRes))
     }
 }
