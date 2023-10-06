@@ -94,17 +94,11 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
         return true
     }
 
-    fun undo() {
-        brushes.undo(::updatePaper)
-    }
+    fun undo() { brushes.undo(::updatePaper) }
 
-    fun redo() {
-        brushes.redo(::updatePaper)
-    }
+    fun redo() { brushes.redo(::updatePaper) }
 
-    fun clear() {
-        brushes.clear(::updatePaper)
-    }
+    fun clear() { brushes.clear(::updatePaper) }
 
     private fun updatePaper() {
         onUndoHistoryChangeListener(brushes.hasHistory)
