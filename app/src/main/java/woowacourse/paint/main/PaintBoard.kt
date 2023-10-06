@@ -18,8 +18,7 @@ import woowacourse.paint.model.PaintColor
 class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val pathHistory = DrawablePathHistory()
     private var drawMode = DrawMode.DEFAULT_MODE
-    private var currentPath = Path()
-    private val currentPaint = Paint()
+    private var currentDraw: DrawablePath = DrawablePath(Path(), Paint())
 
     init {
         setDefaultPaint()
@@ -28,10 +27,8 @@ class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(conte
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        pathHistory.paths.forEach {
-            canvas.drawPath(it.path, it.paint)
-        }
-        canvas.drawPath(currentPath, currentPaint)
+        pathHistory.drawAll(canvas)
+        currentDraw.drawCurrentPath(canvas)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -47,26 +44,19 @@ class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(conte
     }
 
     private fun setDefaultPaint() {
-        currentPaint.apply {
-            strokeCap = Paint.Cap.ROUND
-            strokeJoin = Paint.Join.ROUND
-            isAntiAlias = true
-            style = Paint.Style.STROKE
-        }
+        currentDraw.initPaint()
     }
 
     private fun startDrawing(event: MotionEvent) {
-        currentPath = Path()
-        currentPath.moveTo(event.x, event.y)
-        currentPath.lineTo(event.x, event.y)
+        currentDraw = currentDraw.startDrawing(event.x, event.y)
     }
 
     private fun moveDrawing(event: MotionEvent) {
-        currentPath.lineTo(event.x, event.y)
+        currentDraw.keepDrawing(event.x, event.y)
     }
 
     private fun endDrawing() {
-        pathHistory.add(DrawablePath(currentPath, Paint(currentPaint)))
+        pathHistory.add(currentDraw)
     }
 
     fun setDrawMode(mode: DrawMode) {
@@ -74,10 +64,10 @@ class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(conte
     }
 
     fun setBrushSize(size: BrushSize) {
-        currentPaint.strokeWidth = size.width
+        currentDraw = currentDraw.changeBrushSize(size)
     }
 
     fun setBrushColor(color: PaintColor) {
-        currentPaint.color = ContextCompat.getColor(context, color.colorRes)
+        currentDraw = currentDraw.changePaintColor(ContextCompat.getColor(context, color.colorRes))
     }
 }
