@@ -42,8 +42,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setDrawModeListener() {
-        binding.btnBrush.setOnClickListener { viewModel.setDrawMode(DrawMode.BRUSH) }
-        binding.btnSquare.setOnClickListener { viewModel.setDrawMode(DrawMode.SQUARE) }
-        binding.btnCircle.setOnClickListener { viewModel.setDrawMode(DrawMode.CIRCLE) }
+        binding.rgDrawMode.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                binding.rbBrush.id -> viewModel.setDrawMode(DrawMode.BRUSH)
+                binding.rbSquare.id -> viewModel.setDrawMode(DrawMode.SQUARE)
+                binding.rbCircle.id -> viewModel.setDrawMode(DrawMode.CIRCLE)
+            }
+        }
     }
 }

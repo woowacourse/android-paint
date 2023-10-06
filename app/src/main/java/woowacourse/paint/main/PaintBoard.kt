@@ -19,7 +19,6 @@ import woowacourse.paint.model.drawable.DrawableSquare
 
 class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val pathHistory = DrawableHistory()
-    private var drawMode = DrawMode.DEFAULT_MODE
     private var currentDraw: DrawableElement = DrawablePath(paint = Paint())
 
     override fun onDraw(canvas: Canvas) {
@@ -54,7 +53,6 @@ class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(conte
     }
 
     fun setDrawMode(mode: DrawMode) {
-        drawMode = mode
         currentDraw = when (mode) {
             DrawMode.BRUSH -> DrawablePath(paint = Paint(currentDraw.paint))
             DrawMode.SQUARE -> DrawableSquare(paint = Paint(currentDraw.paint))
