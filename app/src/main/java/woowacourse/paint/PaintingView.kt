@@ -50,6 +50,15 @@ class PaintingView(context: Context, attrs: AttributeSet) : View(context, attrs)
         paintings.presentPainting?.changeWidth(width)
     }
 
+    fun setErase(erase: Boolean) {
+        paintings.presentPainting?.setEraseMode(erase)
+    }
+
+    fun undo() {
+        paintings.undoPainting()
+        invalidate()
+    }
+
     companion object {
         private const val INIT_STROKE_WIDTH = 0f
     }

@@ -3,6 +3,8 @@ package woowacourse.paint
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 
 data class Painting(
     private val path: Path,
@@ -44,5 +46,13 @@ data class Painting(
 
     fun drawOnCanvas(canvas: Canvas) {
         canvas.drawPath(path, paint)
+    }
+
+    fun setEraseMode(erase: Boolean) {
+        if (erase) {
+            paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+        } else {
+            paint.xfermode = null
+        }
     }
 }

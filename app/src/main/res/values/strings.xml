@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Paint</string>
+    <string name="main_erase_button_text">지우개</string>
+    <string name="main_undo_button_text">되돌리기</string>
 </resources>

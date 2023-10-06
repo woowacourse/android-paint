@@ -1,6 +1,7 @@
 package woowacourse.paint
 
 import android.os.Bundle
+import android.view.View.LAYER_TYPE_HARDWARE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.slider.RangeSlider
@@ -17,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val paintingColorAdapter: PaintingColorAdapter by lazy {
+        binding.rvColors.setHasFixedSize(true)
         PaintingColorAdapter(paintingColors, ::setPaintColor)
     }
 
@@ -25,7 +27,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setUpStrokeWidthControllerView()
         setUpPaintingColorControllerView()
-        binding.rvColors.setHasFixedSize(true)
+        initEraseButtonClick()
+        initUndoButtonClick()
     }
 
     private fun setUpStrokeWidthControllerView() {
@@ -47,6 +50,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun setPaintColor(color: PaintingColor) {
         binding.paintingView.changePaintColor(colorRes = color.colorRes)
+    }
+
+    private fun initEraseButtonClick() {
+        binding.buttonErase.setOnClickListener {
+            binding.paintingView.setLayerType(LAYER_TYPE_HARDWARE, null)
+            binding.paintingView.setErase(true)
+        }
+    }
+
+    private fun initUndoButtonClick() {
+        binding.buttonUndo.setOnClickListener {
+            binding.paintingView.undo()
+        }
     }
 
     companion object {

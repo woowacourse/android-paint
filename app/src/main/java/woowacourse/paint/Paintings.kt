@@ -21,13 +21,16 @@ class Paintings(initPaintings: List<Painting> = emptyList()) {
         paintings.add(presentPainting?.getInitializedPathPainting() ?: return)
     }
 
-    // 나중에 되돌리기 구현할 때 사용
-    fun removeLast() {
-        paintings.removeLastOrNull()
+    fun undoPainting() {
+        if (paintings.size == EMPTY_PREVIOUS_PAINTING_SIZE) {
+            return
+        } else {
+            paintings.removeAt(paintings.size - LATEST_PAINTING_MINUS_NUMBER)
+        }
     }
 
-    // 나중에 전체 지우기 사용할 때 사용
-    fun reset() {
-        paintings.clear()
+    companion object {
+        private const val EMPTY_PREVIOUS_PAINTING_SIZE = 1
+        private const val LATEST_PAINTING_MINUS_NUMBER = 2
     }
 }
