@@ -18,7 +18,7 @@ import woowacourse.paint.model.drawable.DrawableSquare
 class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val pathHistory = DrawableHistory()
     private var drawMode = DrawMode.DEFAULT_MODE
-    private var currentDraw: DrawableElement = DrawablePath.from()
+    private var currentDraw: DrawableElement = DrawablePath()
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -54,8 +54,8 @@ class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(conte
     fun setDrawMode(mode: DrawMode) {
         drawMode = mode
         currentDraw = when (mode) {
-            DrawMode.BRUSH -> DrawablePath.from(currentDraw.paint)
-            DrawMode.SQUARE -> DrawableSquare.from(currentDraw.paint)
+            DrawMode.BRUSH -> DrawablePath(paint = currentDraw.paint)
+            DrawMode.SQUARE -> DrawableSquare(paint = currentDraw.paint)
             // DrawMode.CIRCLE -> currentDraw = DrawableCircle.DEFAULT
             else -> throw IllegalArgumentException("존재하지 않는 DrawMode입니다: $mode")
         }

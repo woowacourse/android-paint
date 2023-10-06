@@ -5,9 +5,13 @@ import android.graphics.Paint
 import android.graphics.RectF
 
 data class DrawableSquare(
-    val rect: RectF,
+    private val rect: RectF = RectF(),
     override val paint: Paint,
 ) : DrawableElement {
+
+    init {
+        paint.apply { style = Paint.Style.FILL }
+    }
 
     override fun drawCurrent(canvas: Canvas) {
         canvas.drawRect(rect, paint)
@@ -15,7 +19,7 @@ data class DrawableSquare(
 
     override fun startDrawing(x: Float, y: Float): DrawableSquare {
         return DrawableSquare(
-            rect = RectF(x, y, x, y),
+            RectF(x, y, x, y),
             paint = Paint(paint),
         )
     }
@@ -28,13 +32,6 @@ data class DrawableSquare(
     override fun changePaintColor(color: Int): DrawableSquare {
         return copy(
             paint = Paint(paint).apply { this.color = color },
-        )
-    }
-
-    companion object {
-        fun from(paint: Paint) = DrawableSquare(
-            rect = RectF(),
-            paint = Paint(paint).apply { style = Paint.Style.FILL },
         )
     }
 }

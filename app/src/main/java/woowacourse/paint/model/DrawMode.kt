@@ -7,6 +7,7 @@ enum class DrawMode {
     ;
 
     companion object {
-        val DEFAULT_MODE = BRUSH
+        val DEFAULT_MODE: DrawMode
+            get() = BRUSH
     }
 }
