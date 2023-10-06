@@ -41,6 +41,15 @@
                     android:orientation="horizontal">
 
                     <RadioButton
+                        android:id="@+id/rbEraser"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/btn_radio_btn"
+                        android:button="@null"
+                        android:text="@string/Main_rbEraser"
+                        android:textSize="13sp" />
+
+                    <RadioButton
                         android:id="@+id/rbPen"
                         android:layout_width="48dp"
                         android:layout_height="48dp"
@@ -87,13 +96,6 @@
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_main_colors" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnEraser"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@drawable/ic_baseline_eraser_32"
-                    android:padding="8dp" />
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnUndo"

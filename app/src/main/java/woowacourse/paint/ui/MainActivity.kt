@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.R
 import woowacourse.paint.databinding.ActivityMainBinding
-import woowacourse.paint.model.Shape
+import woowacourse.paint.model.BrushShape
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,7 +20,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.rvColors.adapter = ColorAdapter {
             binding.paintingPaper.color = it
-            binding.paintingPaper.drawMode()
         }
     }
 
@@ -28,8 +27,6 @@ class MainActivity : AppCompatActivity() {
         binding.rsSlider.addOnChangeListener { _, value, _ ->
             binding.paintingPaper.brushSize = value
         }
-
-        binding.btnEraser.setOnClickListener { binding.paintingPaper.eraseMode() }
 
         binding.btnUndo.setOnClickListener { binding.paintingPaper.undo() }
 
@@ -45,15 +42,12 @@ class MainActivity : AppCompatActivity() {
             binding.btnRedo.isEnabled = it
         }
 
-        binding.paintingPaper.onEraseModeChangeListener = {
-            binding.btnEraser.isSelected = it
-        }
-
         binding.rgShapes.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
-                R.id.rbPen -> binding.paintingPaper.shape = Shape.LINE
-                R.id.rbRect -> binding.paintingPaper.shape = Shape.RECT
-                R.id.rbCircle -> binding.paintingPaper.shape = Shape.CIRCLE
+                R.id.rbPen -> binding.paintingPaper.brushShape = BrushShape.LINE
+                R.id.rbRect -> binding.paintingPaper.brushShape = BrushShape.RECT
+                R.id.rbCircle -> binding.paintingPaper.brushShape = BrushShape.CIRCLE
+                R.id.rbEraser -> binding.paintingPaper.brushShape = BrushShape.ERASER
             }
         }
     }

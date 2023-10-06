@@ -6,19 +6,17 @@ import android.graphics.Color
 import android.graphics.CornerPathEffect
 import android.graphics.Paint
 import android.graphics.Path
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffXfermode
-import android.graphics.Xfermode
 import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.model.Brush
 import woowacourse.paint.model.BrushCircle
+import woowacourse.paint.model.BrushEraser
 import woowacourse.paint.model.BrushPen
 import woowacourse.paint.model.BrushRect
+import woowacourse.paint.model.BrushShape
 import woowacourse.paint.model.Brushes
-import woowacourse.paint.model.Shape
 
 class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val brushes: Brushes = Brushes()
@@ -44,11 +42,8 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
             style = Paint.Style.STROKE
             strokeJoin = Paint.Join.ROUND
             strokeCap = Paint.Cap.ROUND
-            xfermode = _xfermode
             pathEffect = CornerPathEffect(100F)
         }
-
-    private var _xfermode: Xfermode? = null
 
     var color = Color.BLACK
         set(value) {
@@ -62,7 +57,7 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
             invalidate()
         }
 
-    var shape = Shape.LINE
+    var brushShape = BrushShape.LINE
 
     init {
         background = ColorDrawable(Color.WHITE)
@@ -72,8 +67,6 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
     var onUndoHistoryChangeListener: (Boolean) -> Unit = {}
 
     var onRedoHistoryChangeListener: (Boolean) -> Unit = {}
-
-    var onEraseModeChangeListener: (Boolean) -> Unit = {}
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -88,10 +81,11 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
     }
 
     private fun onActionDown(event: MotionEvent): Boolean {
-        brushes += when (shape) {
-            Shape.LINE -> createBrushPen(event)
-            Shape.RECT -> createBrushRect(event)
-            Shape.CIRCLE -> createBrushCircle(event)
+        brushes += when (brushShape) {
+            BrushShape.LINE -> createBrushPen(event)
+            BrushShape.RECT -> createBrushRect(event)
+            BrushShape.CIRCLE -> createBrushCircle(event)
+            BrushShape.ERASER -> createBrushEraser(event)
         }
         return true
     }
@@ -106,6 +100,10 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
 
     private fun createBrushCircle(event: MotionEvent): Brush {
         return BrushCircle(path, paint).apply { start(event.x, event.y, ::updatePaper) }
+    }
+
+    private fun createBrushEraser(event: MotionEvent): Brush {
+        return BrushEraser(path, penPaint).apply { start(event.x, event.y, ::updatePaper) }
     }
 
     private fun onActionMove(event: MotionEvent): Boolean {
@@ -129,16 +127,5 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
         onUndoHistoryChangeListener(brushes.hasHistory)
         onRedoHistoryChangeListener(brushes.hasUndoHistory)
         invalidate()
-    }
-
-    fun drawMode() {
-        _xfermode = null
-        onEraseModeChangeListener(false)
-    }
-
-    fun eraseMode() {
-        _xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
-        shape = Shape.LINE
-        onEraseModeChangeListener(true)
     }
 }
