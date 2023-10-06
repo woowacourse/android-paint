@@ -5,11 +5,11 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.CornerPathEffect
 import android.graphics.Paint
-import android.graphics.Path
 import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import woowacourse.paint.model.Brush
 import woowacourse.paint.model.BrushCircle
 import woowacourse.paint.model.BrushEraser
 import woowacourse.paint.model.BrushPen
@@ -20,17 +20,11 @@ import woowacourse.paint.model.Brushes
 class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val brushes: Brushes = Brushes()
 
-    private val previewBrush
-        get() = BrushPen(
-            Path().apply {
-                moveTo(100F, 100F)
-                lineTo(200F, 100F)
-            },
-            penPaint,
-        )
-
-    private val path
-        get() = Path()
+    private val previewBrush: Brush
+        get() = BrushPen(penPaint).apply {
+            start(100F, 100F)
+            move(200F, 100F)
+        }
 
     private val paint
         get() = Paint().apply { color = this@PaintingPaper.color }
@@ -81,10 +75,10 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
 
     private fun onActionDown(event: MotionEvent): Boolean {
         brushes += when (brushShape) {
-            BrushShape.LINE -> BrushPen(path, penPaint)
-            BrushShape.RECT -> BrushRect(path, paint)
-            BrushShape.CIRCLE -> BrushCircle(path, paint)
-            BrushShape.ERASER -> BrushEraser(path, penPaint)
+            BrushShape.LINE -> BrushPen(penPaint)
+            BrushShape.RECT -> BrushRect(paint)
+            BrushShape.CIRCLE -> BrushCircle(paint)
+            BrushShape.ERASER -> BrushEraser(penPaint)
         }.apply { start(event.x, event.y, ::updatePaper) }
         return true
     }
@@ -94,11 +88,17 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
         return true
     }
 
-    fun undo() { brushes.undo(::updatePaper) }
+    fun undo() {
+        brushes.undo(::updatePaper)
+    }
 
-    fun redo() { brushes.redo(::updatePaper) }
+    fun redo() {
+        brushes.redo(::updatePaper)
+    }
 
-    fun clear() { brushes.clear(::updatePaper) }
+    fun clear() {
+        brushes.clear(::updatePaper)
+    }
 
     private fun updatePaper() {
         onUndoHistoryChangeListener(brushes.hasHistory)

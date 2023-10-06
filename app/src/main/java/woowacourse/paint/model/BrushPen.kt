@@ -4,7 +4,9 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 
-class BrushPen(private val path: Path, private val paint: Paint) : Brush {
+class BrushPen(private val paint: Paint) : Brush {
+    private val path = Path()
+
     private var lastPoint = Point(0F, 0F)
 
     override fun start(x: Float, y: Float, onCommit: () -> Unit) = start(Point(x, y), onCommit)

@@ -6,7 +6,9 @@ import android.graphics.Path
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 
-class BrushEraser(private val path: Path, private val paint: Paint) : Brush {
+class BrushEraser(private val paint: Paint) : Brush {
+    private val path = Path()
+
     private var lastPoint = Point(0F, 0F)
 
     init {
