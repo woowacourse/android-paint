@@ -8,9 +8,8 @@ import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.model.DrawMode
 import woowacourse.paint.model.pen.Pen
+import woowacourse.paint.model.shape.Eraser
 import woowacourse.paint.model.shape.Line
-import woowacourse.paint.model.shape.Line.Companion.lastX
-import woowacourse.paint.model.shape.Line.Companion.lastY
 import woowacourse.paint.model.shape.Line.Companion.updateLastPoint
 import woowacourse.paint.model.shape.Oval
 import woowacourse.paint.model.shape.Rectangle
@@ -37,6 +36,7 @@ class PaintView(
                 is Line -> canvas.drawPath(it.path, it.paint)
                 is Rectangle -> canvas.drawRect(it.startX, it.startY, it.endX, it.endY, it.paint)
                 is Oval -> canvas.drawOval(it.startX, it.startY, it.endX, it.endY, it.paint)
+                is Eraser -> canvas.drawPath(it.path, it.paint)
             }
         }
     }
@@ -84,7 +84,15 @@ class PaintView(
                 shapes.add(addedOval)
                 invalidate()
             }
-            DrawMode.ERASER -> {}
+            DrawMode.ERASER -> {
+                val paint = pen.getPaint()
+                val addEraserLine = Eraser(paint)
+                shapes.add(addEraserLine)
+                Eraser.updateLastPoint(pointX, pointY)
+                addEraserLine.path.moveTo(pointX, pointY)
+                setLayerType(LAYER_TYPE_HARDWARE, null)
+                invalidate()
+            }
         }
     }
 
@@ -92,10 +100,10 @@ class PaintView(
         when (drawMode) {
             DrawMode.LINE -> {
                 val shape = shapes.last() as Line
-                val nextX = (lastX + pointX) / 2
-                val nextY = (lastY + pointY) / 2
-                shape.path.quadTo(lastX, lastY, nextX, nextY)
-                updateLastPoint(pointX, pointY)
+                val nextX = (Line.lastX + pointX) / 2
+                val nextY = (Line.lastY + pointY) / 2
+                shape.path.quadTo(Line.lastX, Line.lastY, nextX, nextY)
+                Line.updateLastPoint(pointX, pointY)
                 invalidate()
             }
             DrawMode.RECT -> {
@@ -110,7 +118,14 @@ class PaintView(
                 shape.endY = pointY
                 invalidate()
             }
-            DrawMode.ERASER -> {}
+            DrawMode.ERASER -> {
+                val shape = shapes.last() as Eraser
+                val nextX = (Eraser.lastX + pointX) / 2
+                val nextY = (Eraser.lastY + pointY) / 2
+                shape.path.quadTo(Eraser.lastX, Eraser.lastY, nextX, nextY)
+                Eraser.updateLastPoint(pointX, pointY)
+                invalidate()
+            }
         }
     }
 
