@@ -23,31 +23,25 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setUpView() {
-        binding.rsSlider.addOnChangeListener { _, value, _ ->
-            binding.paintingPaper.brushSize = value
-        }
+    private fun setUpView() = binding.apply {
+        rsSlider.addOnChangeListener { _, value, _ -> paintingPaper.brushSize = value }
 
-        binding.btnUndo.setOnClickListener { binding.paintingPaper.undo() }
+        btnUndo.setOnClickListener { paintingPaper.undo() }
 
-        binding.btnRedo.setOnClickListener { binding.paintingPaper.redo() }
+        btnRedo.setOnClickListener { paintingPaper.redo() }
 
-        binding.btnClear.setOnClickListener { binding.paintingPaper.clear() }
+        btnClear.setOnClickListener { paintingPaper.clear() }
 
-        binding.paintingPaper.onUndoHistoryChangeListener = {
-            binding.btnUndo.isEnabled = it
-        }
+        paintingPaper.onUndoHistoryChangeListener = { btnUndo.isEnabled = it }
 
-        binding.paintingPaper.onRedoHistoryChangeListener = {
-            binding.btnRedo.isEnabled = it
-        }
+        paintingPaper.onRedoHistoryChangeListener = { btnRedo.isEnabled = it }
 
-        binding.rgShapes.setOnCheckedChangeListener { _, checkedId ->
+        rgShapes.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
-                R.id.rbPen -> binding.paintingPaper.brushShape = BrushShape.LINE
-                R.id.rbRect -> binding.paintingPaper.brushShape = BrushShape.RECT
-                R.id.rbCircle -> binding.paintingPaper.brushShape = BrushShape.CIRCLE
-                R.id.rbEraser -> binding.paintingPaper.brushShape = BrushShape.ERASER
+                R.id.rbPen -> paintingPaper.brushShape = BrushShape.LINE
+                R.id.rbRect -> paintingPaper.brushShape = BrushShape.RECT
+                R.id.rbCircle -> paintingPaper.brushShape = BrushShape.CIRCLE
+                R.id.rbEraser -> paintingPaper.brushShape = BrushShape.ERASER
             }
         }
     }
