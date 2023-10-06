@@ -8,6 +8,7 @@ import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.model.DrawMode
 import woowacourse.paint.model.pen.Pen
+import woowacourse.paint.model.shape.Oval
 import woowacourse.paint.model.shape.Line
 import woowacourse.paint.model.shape.Line.Companion.lastX
 import woowacourse.paint.model.shape.Line.Companion.lastY
@@ -35,6 +36,7 @@ class PaintView(
             when (it) {
                 is Line -> canvas.drawPath(it.path, it.paint)
                 is Rectangle -> canvas.drawRect(it.startX, it.startY, it.endX, it.endY, it.paint)
+                is Oval -> canvas.drawOval(it.startX, it.startY, it.endX, it.endY, it.paint)
             }
         }
     }
@@ -71,7 +73,17 @@ class PaintView(
                 shapes.add(addedRectangle)
                 invalidate()
             }
-            DrawMode.CIRCLE -> {}
+            DrawMode.CIRCLE -> {
+                val addedOval = Oval().apply {
+                    paint.color = pen.color
+                    startX = pointX
+                    startY = pointY
+                    endX = pointX
+                    endY = pointY
+                }
+                shapes.add(addedOval)
+                invalidate()
+            }
         }
     }
 
@@ -91,7 +103,12 @@ class PaintView(
                 shape.endY = pointY
                 invalidate()
             }
-            DrawMode.CIRCLE -> {}
+            DrawMode.CIRCLE -> {
+                val shape = shapes.last() as Oval
+                shape.endX = pointX
+                shape.endY = pointY
+                invalidate()
+            }
         }
     }
 

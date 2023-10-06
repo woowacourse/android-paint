@@ -36,5 +36,8 @@ class MainActivity : AppCompatActivity() {
         binding.btnShapeRectangle.setOnClickListener {
             binding.paintView.drawMode = DrawMode.RECT
         }
+        binding.btnShapeCircle.setOnClickListener {
+            binding.paintView.drawMode = DrawMode.CIRCLE
+        }
     }
 }
