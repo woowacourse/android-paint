@@ -64,14 +64,17 @@ class PaintView(
     }
 
     private fun touchActionMove(pointX: Float, pointY: Float) {
-        when (val shape = shapes.last()) {
-            is Line -> {
+        when (drawMode) {
+            DrawMode.LINE -> {
+                val shape = shapes.last() as Line
                 val nextX = (lastX + pointX) / 2
                 val nextY = (lastY + pointY) / 2
                 shape.path.quadTo(lastX, lastY, nextX, nextY)
                 updateLastPoint(pointX, pointY)
                 invalidate()
             }
+            DrawMode.RECT -> {}
+            DrawMode.CIRCLE -> {}
         }
     }
 
