@@ -18,13 +18,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setRangeSlider() {
-        binding.rangeSlider.addOnChangeListener { _, value, _ ->
-            binding.canvas.setMyStrokeWidth(value)
+        binding.rsStrokeController.addOnChangeListener { _, value, _ ->
+            binding.cvCanvas.setMyStrokeWidth(value)
         }
     }
 
     private fun setPalette() {
-        binding.palette.apply {
+        binding.rvPalette.apply {
             adapter = PaintAdapter(
                 listOf(
                     getColor(R.color.red),
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
                     getColor(R.color.green),
                     getColor(R.color.blue),
                 ),
-                binding.canvas::setMyStrokeColor,
+                binding.cvCanvas::setMyStrokeColor,
             )
             setHasFixedSize(true)
         }

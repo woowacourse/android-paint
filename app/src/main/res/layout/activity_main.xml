@@ -8,26 +8,26 @@
         android:layout_height="match_parent">
 
         <woowacourse.paint.ui.CustomView
-            android:id="@+id/canvas"
+            android:id="@+id/cv_canvas"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/range_slider"
+            app:layout_constraintBottom_toTopOf="@id/rs_stroke_controller"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.slider.RangeSlider
-            android:id="@+id/range_slider"
+            android:id="@+id/rs_stroke_controller"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:valueFrom="0.0f"
             android:valueTo="100.0f"
-            app:layout_constraintBottom_toTopOf="@id/palette"
+            app:layout_constraintBottom_toTopOf="@id/rv_palette"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/palette"
+            android:id="@+id/rv_palette"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -43,7 +43,7 @@
             android:layout_marginStart="52dp"
             android:layout_marginEnd="52dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="@+id/canvas"
+            app:layout_constraintBottom_toBottomOf="@+id/cv_canvas"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent">
