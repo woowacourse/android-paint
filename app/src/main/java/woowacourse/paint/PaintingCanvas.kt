@@ -89,10 +89,6 @@ class PaintingCanvas @JvmOverloads constructor(
         invalidate()
     }
 
-    fun isHistoryEmpty() = paletteHistory.isHistoryEmpty
-
-    fun isRedoHistoryEmpty() = paletteHistory.isRedoHistoryEmpty
-
     companion object {
         const val DEFAULT_STROKE_WIDTH = 50.0f
     }

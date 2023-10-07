@@ -6,12 +6,6 @@ class PaintingHistory {
     private val history = mutableListOf<PaintingElement>()
     private val redoHistory: Stack<PaintingElement> = Stack()
 
-    val isHistoryEmpty
-        get() = history.isEmpty()
-
-    val isRedoHistoryEmpty
-        get() = history.isEmpty()
-
     fun addHistory(track: PaintingElement) {
         history.add(track)
     }
