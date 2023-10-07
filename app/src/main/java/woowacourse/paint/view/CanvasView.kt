@@ -13,9 +13,13 @@ class CanvasView : View {
     private val painterHistory = PathPainterHistory()
     private var pathPainter = PathPainter()
 
-    fun setPaintColor(paletteColor: PaletteColor) {
+    fun setPaletteColor(paletteColor: PaletteColor) {
         pathPainter = pathPainter.setPaintColor(paletteColor)
         painterHistory.add(pathPainter)
+    }
+
+    fun setPaletteShape(paletteShape: PaletteShape) {
+//        painterHistory.add(ShapePainter(paletteShape))
     }
 
     fun setPaintThickness(painterThickness: Float) {

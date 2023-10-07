@@ -11,7 +11,8 @@ class PaletteView : LinearLayout {
 
     private var paintPropertyChangeListener: OnPaintPropertyChangeListener? = null
     var selectedPaintThickness: Float = THICKNESS_SIZE_UNIT
-    var selectedPaintColor: PaletteColor = PaletteColor.values().first()
+    var selectedPaletteColor: PaletteColor = PaletteColor.values().first()
+    var selectedPaletteShape: PaletteShape = PaletteShape.values().first()
 
     private val Float.paintThickness: Float
         get() = this * 100 * THICKNESS_SIZE_UNIT
@@ -20,8 +21,13 @@ class PaletteView : LinearLayout {
 
     init {
         orientation = VERTICAL
+        addShapeScrollView()
         addThicknessRangeSlider()
         addColorScrollView()
+    }
+
+    private fun addShapeScrollView() {
+        addView(ShapeScrollView.create(context, ::setPaletteShape))
     }
 
     private fun addThicknessRangeSlider() {
@@ -35,12 +41,17 @@ class PaletteView : LinearLayout {
     }
 
     private fun addColorScrollView() {
-        addView(ColorScrollView.create(context, ::setPaintColor))
+        addView(ColorScrollView.create(context, ::setPaletteColor))
     }
 
-    private fun setPaintColor(paintColor: PaletteColor) {
-        this.selectedPaintColor = paintColor
-        paintPropertyChangeListener?.onColorSelected(paintColor)
+    private fun setPaletteColor(paletteColor: PaletteColor) {
+        this.selectedPaletteColor = paletteColor
+        paintPropertyChangeListener?.onColorSelected(paletteColor)
+    }
+
+    private fun setPaletteShape(paletteShape: PaletteShape) {
+        this.selectedPaletteShape = paletteShape
+        paintPropertyChangeListener?.onShapeSelected(paletteShape)
     }
 
     fun setOnPropertyChangeListener(listener: OnPaintPropertyChangeListener) {
@@ -52,7 +63,8 @@ class PaletteView : LinearLayout {
     }
 
     interface OnPaintPropertyChangeListener {
-        fun onColorSelected(paintColor: PaletteColor)
+        fun onColorSelected(paletteColor: PaletteColor)
+        fun onShapeSelected(paletteShape: PaletteShape)
         fun onStrokeThicknessChanged(paintThickness: Float)
     }
 }
