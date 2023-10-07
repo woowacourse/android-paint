@@ -34,10 +34,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun setClickListeners() {
         binding.ivPen.setOnClickListener {
-            convertTool(PaintMode.Pen)
+            convertTool(PaintMode.PEN)
         }
         binding.ivEraser.setOnClickListener {
-            convertTool(PaintMode.Eraser)
+            convertTool(PaintMode.ERASER)
         }
         binding.ivRevert.setOnClickListener {
             binding.paintBoard.revertDrawing()
@@ -57,12 +57,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun convertTool(paintMode: PaintMode) {
         when (paintMode) {
-            is PaintMode.Eraser -> {
+            PaintMode.ERASER -> {
                 binding.paintBoard.setEraserMode()
                 convertButtonIsSelected(false)
             }
 
-            is PaintMode.Pen -> {
+            PaintMode.PEN -> {
                 binding.paintBoard.setPenMode()
                 convertButtonIsSelected(true)
                 showPenToolDialog()

@@ -1,6 +1,6 @@
 package woowacourse.paint.paintboard
 
-sealed interface PaintMode {
-    object Eraser : PaintMode
-    object Pen : PaintMode
+enum class PaintMode {
+    ERASER,
+    PEN,
 }
