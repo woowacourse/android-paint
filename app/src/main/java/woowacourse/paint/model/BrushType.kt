@@ -10,4 +10,5 @@ enum class BrushType(@DrawableRes val icon: Int) {
     CIRCLE(R.drawable.circle),
     FILLED_CIRCLE(R.drawable.filled_circle),
     ERASER(R.drawable.eraser),
+    ERASER_LINE(R.drawable.eraser_line),
 }

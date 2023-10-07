@@ -16,5 +16,7 @@ class DrawingHistory {
 
     fun add(drawing: Drawing) = _history.add(drawing)
 
+    fun removeAt(index: Int) = _history.removeAt(index)
+
     fun clearAll() = _history.clear()
 }

@@ -5,6 +5,9 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
+import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -45,11 +48,18 @@ class BoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
         paint.color = selectedColor
         paint.strokeWidth = selectedWidth
+        if (brushType == BrushType.ERASER_LINE) {
+            paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+            setLayerType(LAYER_TYPE_HARDWARE, null)
+        } else {
+            paint.xfermode = null
+        }
         when (brushType) {
             BrushType.PEN -> setNotFilledPaint()
             BrushType.FILLED_CIRCLE, BrushType.FILLED_RECTANGLE -> setFilledPaint()
             BrushType.CIRCLE, BrushType.RECTANGLE -> setNotFilledPaint()
             BrushType.ERASER -> {}
+            BrushType.ERASER_LINE -> setNotFilledPaint()
         }
     }
 
@@ -63,9 +73,7 @@ class BoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     private fun setFilledPaint() {
-        paint.apply {
-            style = Paint.Style.FILL
-        }
+        paint.style = Paint.Style.FILL
     }
 
     fun erase() {
@@ -89,15 +97,42 @@ class BoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> startDrawing(event, brushType)
             MotionEvent.ACTION_MOVE -> moveDrawing(event, brushType)
-            MotionEvent.ACTION_UP -> endDrawing()
+            MotionEvent.ACTION_UP -> endDrawing(brushType)
         }
         invalidate()
         return true
     }
 
+    private fun remove(event: MotionEvent) {
+        val x = event.x
+        val y = event.y
+        val indexes = mutableListOf<Int>()
+
+        drawingHistory.history.forEachIndexed { index, drawing ->
+            val bounds = RectF()
+            drawing.path.computeBounds(bounds, true)
+
+            if (x <= bounds.right && x >= bounds.left && y >= bounds.top && y <= bounds.bottom) {
+                indexes.add(index)
+            }
+        }
+        indexes.reverse()
+        indexes.forEach {
+            drawingHistory.removeAt(it)
+        }
+        invalidate()
+    }
+
     private fun startDrawing(event: MotionEvent, brushType: BrushType) {
         when (brushType) {
             BrushType.PEN -> {
+                path.moveTo(event.x, event.y)
+                path.lineTo(event.x, event.y)
+            }
+            BrushType.ERASER -> {
+                remove(event)
+            }
+            BrushType.ERASER_LINE -> {
                 path.moveTo(event.x, event.y)
                 path.lineTo(event.x, event.y)
             }
@@ -124,12 +159,17 @@ class BoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
                 invalidate()
             }
             BrushType.ERASER -> {}
+            BrushType.ERASER_LINE -> {
+                path.lineTo(event.x, event.y)
+            }
         }
     }
 
-    private fun endDrawing() {
-        drawingHistory.add(Drawing(path, paint))
-        path = Path()
+    private fun endDrawing(brushType: BrushType) {
+        if (brushType != BrushType.ERASER) {
+            drawingHistory.add(Drawing(path, paint))
+            path = Path()
+        }
     }
 
     companion object {

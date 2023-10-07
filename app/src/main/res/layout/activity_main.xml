@@ -18,12 +18,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <View
+            android:id="@+id/board_background"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toTopOf="@id/layout_menu"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <woowacourse.paint.BoardView
             android:id="@+id/board"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:eraseAll="@{mainViewModel.isErasing}"
-            app:layout_constraintBottom_toTopOf="@id/btn_color_selection"
+            app:layout_constraintBottom_toTopOf="@id/layout_menu"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
