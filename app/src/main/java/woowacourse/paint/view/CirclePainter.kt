@@ -12,13 +12,11 @@ data class CirclePainter(
     private var startY: Float = -1F
     private val rect = RectF()
 
-    override fun setPaletteColor(paletteColor: PaletteColor): Painter = CirclePainter(
-        shape = shape,
+    override fun setPaletteColor(paletteColor: PaletteColor): Painter = copy(
         paint = updatePaint(paintColor = paletteColor.color),
     )
 
-    override fun setThickness(thickness: Float): CirclePainter = CirclePainter(
-        shape = shape,
+    override fun setThickness(thickness: Float): CirclePainter = copy(
         paint = updatePaint(thickness = thickness),
     )
 
@@ -46,7 +44,6 @@ data class CirclePainter(
     override fun extract(): Painter = copy()
 
     companion object {
-        private val DEFAULT_PAINT: Paint
-            get() = Paint().softPainter(paintStyle = Paint.Style.FILL)
+        private val DEFAULT_PAINT: Paint = Paint().softPainter(paintStyle = Paint.Style.FILL)
     }
 }

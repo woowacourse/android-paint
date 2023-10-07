@@ -12,13 +12,11 @@ data class RectanglePainter(
     private var startY: Float = -1F
     private val rect = RectF()
 
-    override fun setPaletteColor(paletteColor: PaletteColor): Painter = RectanglePainter(
-        shape = shape,
+    override fun setPaletteColor(paletteColor: PaletteColor): Painter = copy(
         paint = updatePaint(paintColor = paletteColor.color),
     )
 
-    override fun setThickness(thickness: Float): RectanglePainter = RectanglePainter(
-        shape = shape,
+    override fun setThickness(thickness: Float): RectanglePainter = copy(
         paint = updatePaint(thickness = thickness),
     )
 
@@ -47,7 +45,6 @@ data class RectanglePainter(
     override fun extract(): Painter = copy()
 
     companion object {
-        private val DEFAULT_PAINT: Paint
-            get() = Paint().softPainter(paintStyle = Paint.Style.FILL)
+        private val DEFAULT_PAINT: Paint = Paint().softPainter(paintStyle = Paint.Style.FILL)
     }
 }

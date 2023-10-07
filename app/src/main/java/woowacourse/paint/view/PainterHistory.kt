@@ -3,13 +3,12 @@ package woowacourse.paint.view
 import android.graphics.Canvas
 
 class PainterHistory(
-    private val painters: MutableList<Painter> = mutableListOf(),
+    private val undoes: ArrayList<Painter> = ArrayList(),
+    private val redoes: ArrayList<Painter> = ArrayList(),
     private var currentPainter: Painter = BrushPainter(),
 ) {
     fun draw(canvas: Canvas) {
-        painters.forEach { painter ->
-            painter.draw(canvas)
-        }
+        undoes.forEach { painter -> painter.draw(canvas) }
     }
 
     fun setPaletteColor(paletteColor: PaletteColor) {
@@ -29,7 +28,7 @@ class PainterHistory(
     }
 
     fun onActionDown(x: Float, y: Float) {
-        painters.add(currentPainter)
+        undoes.add(currentPainter)
         currentPainter.onActionDown(x, y)
     }
 
@@ -39,5 +38,15 @@ class PainterHistory(
 
     fun onActionUp(x: Float, y: Float) {
         currentPainter = currentPainter.extract()
+    }
+
+    fun undo() {
+        val redo = undoes.removeLastOrNull() ?: return
+        redoes.add(redo)
+    }
+
+    fun redo() {
+        val undo = redoes.removeLastOrNull() ?: return
+        undoes.add(undo)
     }
 }

@@ -1,6 +1,8 @@
 package woowacourse.paint
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
@@ -71,5 +73,18 @@ class MainActivity : AppCompatActivity() {
         setTextColor(getColor(R.color.white))
         setBackgroundColor(getColor(R.color.purple_500))
         setOnClickListener { onClick(mode) }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.undo -> canvasView.undo()
+            R.id.redo -> canvasView.redo()
+        }
+        return true
     }
 }

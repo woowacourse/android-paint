@@ -12,22 +12,6 @@ class CanvasView : View {
 
     private val painterHistory = PainterHistory()
 
-    fun setPaletteColor(paletteColor: PaletteColor) {
-        painterHistory.setPaletteColor(paletteColor)
-    }
-
-    fun setPaintThickness(painterThickness: Float) {
-        painterHistory.setPaintThickness(painterThickness)
-    }
-
-    fun setPaletteShape(paletteShape: PaletteShape) {
-        painterHistory.setPaletteShape(paletteShape)
-    }
-
-    fun changePaletteMode(paletteMode: PaletteMode) {
-        painterHistory.changePaletteMode(paletteMode)
-    }
-
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         painterHistory.draw(canvas)
@@ -44,5 +28,31 @@ class CanvasView : View {
         }
         invalidate()
         return true
+    }
+
+    fun setPaletteColor(paletteColor: PaletteColor) {
+        painterHistory.setPaletteColor(paletteColor)
+    }
+
+    fun setPaintThickness(painterThickness: Float) {
+        painterHistory.setPaintThickness(painterThickness)
+    }
+
+    fun setPaletteShape(paletteShape: PaletteShape) {
+        painterHistory.setPaletteShape(paletteShape)
+    }
+
+    fun changePaletteMode(paletteMode: PaletteMode) {
+        painterHistory.changePaletteMode(paletteMode)
+    }
+
+    fun undo() {
+        painterHistory.undo()
+        invalidate()
+    }
+
+    fun redo() {
+        painterHistory.redo()
+        invalidate()
     }
 }
