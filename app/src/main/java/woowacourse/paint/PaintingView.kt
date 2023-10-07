@@ -6,17 +6,16 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import woowacourse.paint.paintingtools.Pen
+import woowacourse.paint.painting.Line
+import woowacourse.paint.painting.PaintingType
 
 class PaintingView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
-    private val paintings: Paintings = Paintings(
-        initPresentPainting = Painting(
+    private val drawer: Drawer = Drawer(
+        initPresentPainting = Line(
             path = Path(),
-            paintingTool = Pen(
-                paintColor = context.getColor(PaintingColor.RED.colorRes),
-                paintWidth = INIT_STROKE_WIDTH,
-            ),
+            paintColor = context.getColor(PaintingColor.RED.colorRes),
+            paintWidth = INIT_STROKE_WIDTH,
         ),
     )
 
@@ -24,14 +23,12 @@ class PaintingView(context: Context, attrs: AttributeSet) : View(context, attrs)
         val pointX = event.x
         val pointY = event.y
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> {
-                paintings.presentPainting?.movePath(pointX, pointY)
-                paintings.presentPainting?.linePath(pointX, pointY)
-            }
+            MotionEvent.ACTION_DOWN -> drawer.presentPainting.onActionDown(pointX, pointY)
 
-            MotionEvent.ACTION_MOVE -> paintings.presentPainting?.linePath(pointX, pointY)
+            MotionEvent.ACTION_MOVE -> drawer.presentPainting.onActionMove(pointX, pointY)
+
             MotionEvent.ACTION_UP -> {
-                paintings.startNewPainting()
+                drawer.startNewPainting()
                 return true
             }
         }
@@ -42,27 +39,23 @@ class PaintingView(context: Context, attrs: AttributeSet) : View(context, attrs)
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        paintings.drawOnCanvas(canvas)
+        drawer.drawOnCanvas(canvas)
     }
 
     fun changePaintColor(colorRes: Int) {
-        paintings.presentPainting?.changeColor(context.getColor(colorRes))
+        drawer.presentPainting.changeColor(context.getColor(colorRes))
     }
 
     fun changePaintWidth(width: Float) {
-        paintings.presentPainting?.changeWidth(width)
+        drawer.presentPainting.changeWidth(width)
     }
 
-    fun setEraseMode() {
-        paintings.presentPainting?.setEraseMode()
-    }
-
-    fun setPenMode() {
-        paintings.presentPainting?.setPenMode()
+    fun setPaintingType(paintingType: PaintingType) {
+        drawer.setPaintingType(paintingType)
     }
 
     fun undo() {
-        paintings.undoPainting()
+        drawer.removePreviousPainting()
         invalidate()
     }
 

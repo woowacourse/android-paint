@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.slider.RangeSlider
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.painting.PaintingType
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,6 +31,8 @@ class MainActivity : AppCompatActivity() {
         initEraseButtonClick()
         initUndoButtonClick()
         initPenButtonClick()
+        initRectangleButtonClick()
+        initCircleButtonClick()
     }
 
     private fun setUpStrokeWidthControllerView() {
@@ -56,7 +59,7 @@ class MainActivity : AppCompatActivity() {
     private fun initEraseButtonClick() {
         binding.buttonErase.setOnClickListener {
             binding.paintingView.setLayerType(LAYER_TYPE_HARDWARE, null)
-            binding.paintingView.setEraseMode()
+            binding.paintingView.setPaintingType(PaintingType.ERASER)
         }
     }
 
@@ -68,7 +71,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun initPenButtonClick() {
         binding.buttonPen.setOnClickListener {
-            binding.paintingView.setPenMode()
+            binding.paintingView.setPaintingType(PaintingType.LINE)
+        }
+    }
+
+    private fun initRectangleButtonClick() {
+        binding.buttonRectangle.setOnClickListener {
+            binding.paintingView.setPaintingType(PaintingType.RECTANGLE)
+        }
+    }
+
+    private fun initCircleButtonClick() {
+        binding.buttonCircle.setOnClickListener {
+            binding.paintingView.setPaintingType(PaintingType.CIRCLE)
         }
     }
 
