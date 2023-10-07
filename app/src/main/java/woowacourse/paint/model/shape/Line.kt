@@ -10,15 +10,10 @@ data class Line(
     constructor(paint: Paint) : this(Path(), paint)
     constructor() : this(Path(), Paint())
 
-    companion object {
-        var lastX: Float = 0f
-            private set
-        var lastY: Float = 0f
-            private set
-
-        fun updateLastPoint(x: Float, y: Float) {
-            lastX = x
-            lastY = y
-        }
+    fun quadTo(pointX: Float, pointY: Float) {
+        val nextX = (Shapes.lastX + pointX) / 2
+        val nextY = (Shapes.lastY + pointY) / 2
+        path.quadTo(Shapes.lastX, Shapes.lastY, nextX, nextY)
+        Shapes.updateLastPoint(pointX, pointY)
     }
 }
