@@ -9,11 +9,11 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.ColorInt
-import woowacourse.paint.customview.brush.Brush
-import woowacourse.paint.customview.brush.Circle
-import woowacourse.paint.customview.brush.Eraser
-import woowacourse.paint.customview.brush.Pen
-import woowacourse.paint.customview.brush.Rectangle
+import woowacourse.paint.model.brush.Brush
+import woowacourse.paint.model.brush.Circle
+import woowacourse.paint.model.brush.Eraser
+import woowacourse.paint.model.brush.Pen
+import woowacourse.paint.model.brush.Rectangle
 
 class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context, attributeSet) {
 

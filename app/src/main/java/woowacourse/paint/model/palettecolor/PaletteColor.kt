@@ -1,9 +1,10 @@
-package woowacourse.paint
+package woowacourse.paint.model.palettecolor
 
 import android.content.Context
 import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
+import woowacourse.paint.R
 
 enum class PaletteColor(@ColorRes val color: Int) {
     RED(R.color.red),

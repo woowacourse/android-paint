@@ -6,11 +6,12 @@ import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.google.android.material.slider.RangeSlider
-import woowacourse.paint.customview.brush.Circle
-import woowacourse.paint.customview.brush.Eraser
-import woowacourse.paint.customview.brush.Pen
-import woowacourse.paint.customview.brush.Rectangle
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.model.brush.Circle
+import woowacourse.paint.model.brush.Eraser
+import woowacourse.paint.model.brush.Pen
+import woowacourse.paint.model.brush.Rectangle
+import woowacourse.paint.model.palettecolor.PaletteColor
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
