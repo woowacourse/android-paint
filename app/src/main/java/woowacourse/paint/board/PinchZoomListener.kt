@@ -19,18 +19,37 @@ class PinchZoomListener(private val targetView: View) :
     override fun onScale(detector: ScaleGestureDetector): Boolean {
         super.onScale(detector)
         val currentSpan: Float = detector.currentSpan
+        calculateScaleFactor(currentSpan)
+        limitScaleFactor()
+        applyScaleFactorToView()
+        lastSpan = currentSpan
+        return true
+    }
 
-        currentScaleFactor *= 1 + (currentSpan / lastSpan - 1) * 0.2f
-
-        currentScaleFactor = Math.max(0.2f, Math.min(currentScaleFactor, 5.0f))
-
+    private fun applyScaleFactorToView() {
         targetView.animate()
             .scaleX(currentScaleFactor)
             .scaleY(currentScaleFactor)
             .setDuration(0)
             .start()
+    }
 
-        lastSpan = currentSpan
-        return true
+    private fun calculateScaleFactor(currentSpan: Float) {
+        currentScaleFactor *= 1 + (getScaleRatio(currentSpan)) * SCALE_CORRECTION_FACTOR
+    }
+
+    /**
+     * 음수를 반환하면 zoom out, 양수를 반환하면 zoom in 상황을 뜻한다.
+     */
+    private fun getScaleRatio(currentSpan: Float) = currentSpan / lastSpan - 1
+
+    private fun limitScaleFactor() {
+        currentScaleFactor = Math.max(MINIMUM_SCALE_DOWN_VALUE, Math.min(currentScaleFactor, MAXIMUM_SCALE_UP_VALUE))
+    }
+
+    companion object {
+        const val SCALE_CORRECTION_FACTOR = 0.2F
+        const val MINIMUM_SCALE_DOWN_VALUE = 1f / 5f
+        const val MAXIMUM_SCALE_UP_VALUE = 5f
     }
 }
