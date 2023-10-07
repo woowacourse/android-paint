@@ -1,15 +1,19 @@
 package woowacourse.paint
 
 import android.os.Bundle
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
 import woowacourse.paint.view.CanvasView
 import woowacourse.paint.view.PaletteColor
+import woowacourse.paint.view.PaletteMode
 import woowacourse.paint.view.PaletteShape
 import woowacourse.paint.view.PaletteView
 
 class MainActivity : AppCompatActivity() {
     private val canvasView: CanvasView by lazy { findViewById(R.id.canvas_view) }
     private val paletteView: PaletteView by lazy { findViewById(R.id.palette_view) }
+    private val paletteModeView: LinearLayout by lazy { findViewById(R.id.palette_mode_view) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,6 +21,7 @@ class MainActivity : AppCompatActivity() {
 
         setupCanvasView()
         setupPaletteView()
+        setupPaletteModeView()
     }
 
     private fun setupCanvasView() {
@@ -38,5 +43,29 @@ class MainActivity : AppCompatActivity() {
                 canvasView.setPaintThickness(paintThickness)
             }
         })
+    }
+
+    private fun setupPaletteModeView() {
+        PaletteMode.values().forEach { paletteMode ->
+            val modeButton = createModeButton(paletteMode, canvasView::changePaletteMode)
+
+            paletteModeView.addView(modeButton)
+            modeButton.layoutParams = (modeButton.layoutParams as LinearLayout.LayoutParams).apply {
+                weight = 1F
+                marginStart = 10
+                marginEnd = 10
+            }
+        }
+    }
+
+    private fun createModeButton(
+        mode: PaletteMode,
+        onClick: (PaletteMode) -> Unit,
+    ): AppCompatButton = AppCompatButton(this).apply {
+        text = mode.modeName
+        textSize = 20F
+        setTextColor(getColor(R.color.white))
+        setBackgroundColor(getColor(R.color.purple_500))
+        setOnClickListener { onClick(mode) }
     }
 }

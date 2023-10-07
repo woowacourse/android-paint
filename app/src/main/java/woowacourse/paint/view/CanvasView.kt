@@ -12,19 +12,23 @@ class CanvasView : View {
 
     private val painterHistory = PathPainterHistory()
     private var pathPainter = PathPainter()
+    private var paletteMode: PaletteMode = PaletteMode.BRUSH
 
     fun setPaletteColor(paletteColor: PaletteColor) {
         pathPainter = pathPainter.setPaintColor(paletteColor)
         painterHistory.add(pathPainter)
     }
 
-    fun setPaletteShape(paletteShape: PaletteShape) {
-//        painterHistory.add(ShapePainter(paletteShape))
-    }
-
     fun setPaintThickness(painterThickness: Float) {
         pathPainter = pathPainter.setThickness(painterThickness)
         painterHistory.add(pathPainter)
+    }
+
+    fun setPaletteShape(paletteShape: PaletteShape) {
+    }
+
+    fun changePaletteMode(paletteMode: PaletteMode) {
+        this.paletteMode = paletteMode
     }
 
     override fun onDraw(canvas: Canvas) {
