@@ -55,11 +55,11 @@ class MainActivity : AppCompatActivity() {
         when (paintMode) {
             is PaintMode.Eraser -> {
                 binding.paintBoard.setEraserMode()
-                convertToolSelected(false)
+                convertButtonIsSelected(false)
             }
             is PaintMode.Pen -> {
                 binding.paintBoard.setPenMode()
-                convertToolSelected(true)
+                convertButtonIsSelected(true)
                 showPenToolDialog()
             }
         }
@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         penToolDialog.show()
     }
 
-    private fun convertToolSelected(isPenSelected: Boolean) {
+    private fun convertButtonIsSelected(isPenSelected: Boolean) {
         binding.ivPen.isSelected = isPenSelected
         binding.ivEraser.isSelected = !isPenSelected
     }
