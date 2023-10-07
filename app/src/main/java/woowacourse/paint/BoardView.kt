@@ -18,7 +18,7 @@ import woowacourse.paint.model.ColorPalette
 import woowacourse.paint.model.Drawing
 import woowacourse.paint.model.DrawingHistory
 
-class BoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
+class BoardView(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
 
     private var path = Path()
     private var paint = Paint()
@@ -48,18 +48,22 @@ class BoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
         paint.color = selectedColor
         paint.strokeWidth = selectedWidth
-        if (brushType == BrushType.ERASER_LINE) {
-            paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
-            setLayerType(LAYER_TYPE_HARDWARE, null)
-        } else {
-            paint.xfermode = null
-        }
+        setEraseMode()
         when (brushType) {
             BrushType.PEN -> setNotFilledPaint()
             BrushType.FILLED_CIRCLE, BrushType.FILLED_RECTANGLE -> setFilledPaint()
             BrushType.CIRCLE, BrushType.RECTANGLE -> setNotFilledPaint()
             BrushType.ERASER -> {}
             BrushType.ERASER_LINE -> setNotFilledPaint()
+        }
+    }
+
+    private fun setEraseMode() {
+        if (brushType == BrushType.ERASER_LINE) {
+            paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+            setLayerType(LAYER_TYPE_HARDWARE, null)
+        } else {
+            paint.xfermode = null
         }
     }
 
@@ -76,7 +80,7 @@ class BoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         paint.style = Paint.Style.FILL
     }
 
-    fun erase() {
+    fun eraseAll() {
         drawingHistory.clearAll()
         path.reset()
         invalidate()
@@ -103,26 +107,6 @@ class BoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         return true
     }
 
-    private fun remove(event: MotionEvent) {
-        val x = event.x
-        val y = event.y
-        val indexes = mutableListOf<Int>()
-
-        drawingHistory.history.forEachIndexed { index, drawing ->
-            val bounds = RectF()
-            drawing.path.computeBounds(bounds, true)
-
-            if (x <= bounds.right && x >= bounds.left && y >= bounds.top && y <= bounds.bottom) {
-                indexes.add(index)
-            }
-        }
-        indexes.reverse()
-        indexes.forEach {
-            drawingHistory.removeAt(it)
-        }
-        invalidate()
-    }
-
     private fun startDrawing(event: MotionEvent, brushType: BrushType) {
         when (brushType) {
             BrushType.PEN -> {
@@ -130,7 +114,7 @@ class BoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
                 path.lineTo(event.x, event.y)
             }
             BrushType.ERASER -> {
-                remove(event)
+                erasePath(event)
             }
             BrushType.ERASER_LINE -> {
                 path.moveTo(event.x, event.y)
@@ -141,6 +125,24 @@ class BoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
                 startY = event.y
             }
         }
+    }
+
+    private fun erasePath(event: MotionEvent) {
+        val x = event.x
+        val y = event.y
+        val indexesToRemove = mutableListOf<Int>()
+
+        drawingHistory.history.forEachIndexed { index, drawing ->
+            val bounds = RectF()
+            drawing.path.computeBounds(bounds, true)
+            if (bounds.contains(x, y)) indexesToRemove.add(index)
+        }
+
+        indexesToRemove.asReversed().forEach {
+            drawingHistory.removeAt(it)
+        }
+
+        invalidate()
     }
 
     private fun moveDrawing(event: MotionEvent, brushType: BrushType) {

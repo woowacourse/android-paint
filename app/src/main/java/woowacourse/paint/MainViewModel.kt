@@ -3,6 +3,7 @@ package woowacourse.paint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import woowacourse.paint.event.Event
 import woowacourse.paint.model.BrushType
 import woowacourse.paint.model.ColorPalette
 
@@ -20,14 +21,14 @@ class MainViewModel : ViewModel() {
     private val _isErasing = MutableLiveData<Boolean>()
     val isErasing: LiveData<Boolean> = _isErasing
 
-    private val _colorSelectionEvent = MutableLiveData<Boolean>()
-    val colorSelectionEvent: LiveData<Boolean> = _colorSelectionEvent
+    private val _colorSelectionEvent = MutableLiveData<Event<Boolean>>()
+    val colorSelectionEvent: LiveData<Event<Boolean>> = _colorSelectionEvent
 
-    private val _widthSelectionEvent = MutableLiveData<Boolean>()
-    val widthSelectionEvent: LiveData<Boolean> = _widthSelectionEvent
+    private val _widthSelectionEvent = MutableLiveData<Event<Boolean>>()
+    val widthSelectionEvent: LiveData<Event<Boolean>> = _widthSelectionEvent
 
-    private val _brushSelectionEvent = MutableLiveData<Boolean>()
-    val brushSelectionEvent: LiveData<Boolean> = _brushSelectionEvent
+    private val _brushSelectionEvent = MutableLiveData<Event<Boolean>>()
+    val brushSelectionEvent: LiveData<Event<Boolean>> = _brushSelectionEvent
 
     fun changeColor(color: ColorPalette) {
         _color.value = color
@@ -46,14 +47,14 @@ class MainViewModel : ViewModel() {
     }
 
     fun openColorSelection() {
-        _colorSelectionEvent.value = true
+        _colorSelectionEvent.value = Event(true)
     }
 
     fun openWidthSelection() {
-        _widthSelectionEvent.value = true
+        _widthSelectionEvent.value = Event(true)
     }
 
     fun openBrushSelection() {
-        _brushSelectionEvent.value = true
+        _brushSelectionEvent.value = Event(true)
     }
 }

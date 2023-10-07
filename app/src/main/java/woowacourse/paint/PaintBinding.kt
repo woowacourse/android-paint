@@ -26,7 +26,7 @@ fun BoardView.setBrush(brushType: BrushType?) {
 @BindingAdapter("app:eraseAll")
 fun BoardView.eraseAll(isErasing: Boolean?) {
     if (isErasing == null) return
-    if (isErasing) erase()
+    if (isErasing) eraseAll()
 }
 
 interface OnSlideListener {

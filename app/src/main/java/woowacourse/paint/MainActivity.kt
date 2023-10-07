@@ -8,6 +8,7 @@ import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.drawingMenu.brushSelection.BrushSelection
 import woowacourse.paint.drawingMenu.colorSelection.ColorSelectionView
 import woowacourse.paint.drawingMenu.widthSelection.WidthSelection
+import woowacourse.paint.event.EventObserver
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity() {
     private fun initColorSelectionObserveEvent() {
         viewModel.colorSelectionEvent.observe(
             this,
-            this::setupColorSelection,
+            EventObserver(this::setupColorSelection),
         )
     }
 
@@ -54,7 +55,7 @@ class MainActivity : AppCompatActivity() {
     private fun initWidthSelectionObserveEvent() {
         viewModel.widthSelectionEvent.observe(
             this,
-            this::setupWidthSelection,
+            EventObserver(this::setupWidthSelection),
         )
     }
 
@@ -73,7 +74,7 @@ class MainActivity : AppCompatActivity() {
     private fun initBrushSelectionObserveEvent() {
         viewModel.brushSelectionEvent.observe(
             this,
-            this::setupBrushSelection,
+            EventObserver(this::setupBrushSelection),
         )
     }
 
