@@ -10,7 +10,7 @@ class PaletteView : LinearLayout {
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     private var paintPropertyChangeListener: OnPaintPropertyChangeListener? = null
-    var selectedPaintThickness: Float
+    var selectedPaintThickness: Float = THICKNESS_SIZE_UNIT
     var selectedPaintColor: PaletteColor = PaletteColor.values().first()
 
     private val Float.paintThickness: Float
@@ -20,12 +20,21 @@ class PaletteView : LinearLayout {
 
     init {
         orientation = VERTICAL
+        addThicknessRangeSlider()
+        addColorScrollView()
+    }
+
+    private fun addThicknessRangeSlider() {
         val painterThicknessRangeSlider = rangeSlider(context) { value ->
             selectedPaintThickness = value.paintThickness
             paintPropertyChangeListener?.onStrokeThicknessChanged(value.paintThickness)
         }
         selectedPaintThickness = painterThicknessRangeSlider.paintThickness
+
         addView(painterThicknessRangeSlider)
+    }
+
+    private fun addColorScrollView() {
         addView(ColorScrollView.create(context, ::setPaintColor))
     }
 
