@@ -6,17 +6,17 @@ import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import woowacourse.paint.model.DrawingElement
-import woowacourse.paint.model.DrawingHistory
 import woowacourse.paint.model.PaintBrush
+import woowacourse.paint.model.PaintingElement
+import woowacourse.paint.model.PaintingHistory
 
-class DrawingCanvas @JvmOverloads constructor(
+class PaintingCanvas @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
 ) : View(context, attrs) {
 
-    private val paletteHistory = DrawingHistory()
-    private var drawingElement = DrawingElement()
+    private val paletteHistory = PaintingHistory()
+    private var paintingElement = PaintingElement()
     private var previousX = 0f
     private var previousY = 0f
 
@@ -31,7 +31,7 @@ class DrawingCanvas @JvmOverloads constructor(
         paletteHistory.forEach {
             it.draw(canvas)
         }
-        drawingElement.draw(canvas)
+        paintingElement.draw(canvas)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -40,17 +40,17 @@ class DrawingCanvas @JvmOverloads constructor(
         val pointY = event.y
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                drawingElement = drawingElement.movePath(pointX, pointY)
+                paintingElement = paintingElement.movePath(pointX, pointY)
                 previousX = pointX
                 previousY = pointY
             }
 
             MotionEvent.ACTION_MOVE -> {
-                drawingElement.initPath(previousX, previousY, pointX, pointY)
+                paintingElement.initPath(previousX, previousY, pointX, pointY)
             }
 
             MotionEvent.ACTION_UP -> {
-                paletteHistory.addHistory(drawingElement.withNewPaint())
+                paletteHistory.addHistory(paintingElement.withNewPaint())
             }
 
             else -> super.onTouchEvent(event)
@@ -60,32 +60,32 @@ class DrawingCanvas @JvmOverloads constructor(
     }
 
     fun setStroke(value: Float) {
-        drawingElement = drawingElement.setStroke(value)
+        paintingElement = paintingElement.setStroke(value)
     }
 
     fun setColor(color: Int) {
-        drawingElement = drawingElement.setColor(context.getColor(color))
+        paintingElement = paintingElement.setColor(context.getColor(color))
     }
 
     fun setBrush(brush: PaintBrush) {
-        drawingElement = drawingElement.setBrush(brush.brushTool)
+        paintingElement = paintingElement.setBrush(brush.brushTool)
     }
 
     fun undoCanvas() {
         paletteHistory.undo()
-        drawingElement = drawingElement.withNewPathPaint()
+        paintingElement = paintingElement.withNewPathPaint()
         invalidate()
     }
 
     fun redoCanvas() {
         paletteHistory.redo()
-        drawingElement = drawingElement.withNewPathPaint()
+        paintingElement = paintingElement.withNewPathPaint()
         invalidate()
     }
 
     fun resetCanvas() {
         paletteHistory.clear()
-        drawingElement = drawingElement.withNewPathPaint()
+        paintingElement = paintingElement.withNewPathPaint()
         invalidate()
     }
 

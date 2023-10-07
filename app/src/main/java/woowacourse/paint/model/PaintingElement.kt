@@ -10,13 +10,13 @@ import androidx.annotation.ColorInt
 import java.lang.Float.max
 import java.lang.Float.min
 
-data class DrawingElement(
+data class PaintingElement(
     private val brushTool: BrushTool = BrushTool.PEN,
     private val path: Path = Path(),
     private val paint: Paint = initSetupPaint(),
 ) {
 
-    fun movePath(x: Float, y: Float): DrawingElement {
+    fun movePath(x: Float, y: Float): PaintingElement {
         return when (brushTool) {
             BrushTool.PEN, BrushTool.ERASER -> withNewPath().apply {
                 this.path.moveTo(x, y)
@@ -74,15 +74,15 @@ data class DrawingElement(
         path.lineTo(x, y)
     }
 
-    private fun withNewPath(): DrawingElement {
+    private fun withNewPath(): PaintingElement {
         return this.copy(path = Path())
     }
 
-    fun withNewPaint(): DrawingElement {
+    fun withNewPaint(): PaintingElement {
         return this.copy(paint = Paint(paint))
     }
 
-    fun withNewPathPaint(): DrawingElement {
+    fun withNewPathPaint(): PaintingElement {
         return this.copy(path = Path(), paint = Paint(paint))
     }
 

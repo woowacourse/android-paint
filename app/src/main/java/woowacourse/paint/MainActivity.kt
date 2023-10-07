@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.slider.RangeSlider
-import woowacourse.paint.DrawingCanvas.Companion.DEFAULT_STROKE_WIDTH
+import woowacourse.paint.PaintingCanvas.Companion.DEFAULT_STROKE_WIDTH
 import woowacourse.paint.adapter.BrushAdapter
 import woowacourse.paint.adapter.ColorAdapter
 import woowacourse.paint.databinding.ActivityMainBinding

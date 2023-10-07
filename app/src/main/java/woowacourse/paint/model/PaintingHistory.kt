@@ -2,9 +2,9 @@ package woowacourse.paint.model
 
 import java.util.Stack
 
-class DrawingHistory {
-    private val history = mutableListOf<DrawingElement>()
-    private val redoHistory: Stack<DrawingElement> = Stack()
+class PaintingHistory {
+    private val history = mutableListOf<PaintingElement>()
+    private val redoHistory: Stack<PaintingElement> = Stack()
 
     val isHistoryEmpty
         get() = history.isEmpty()
@@ -12,11 +12,11 @@ class DrawingHistory {
     val isRedoHistoryEmpty
         get() = history.isEmpty()
 
-    fun addHistory(track: DrawingElement) {
+    fun addHistory(track: PaintingElement) {
         history.add(track)
     }
 
-    fun forEach(action: (DrawingElement) -> Unit) {
+    fun forEach(action: (PaintingElement) -> Unit) {
         history.forEach(action)
     }
 
