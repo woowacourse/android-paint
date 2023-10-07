@@ -6,7 +6,7 @@ import android.graphics.RectF
 
 data class RectanglePainter(
     private val shape: PaletteShape,
-    private val paint: Paint = RECTANGLE_PAINT,
+    private val paint: Paint = DEFAULT_PAINT,
 ) : Painter {
     private var startX: Float = -1F
     private var startY: Float = -1F
@@ -25,7 +25,7 @@ data class RectanglePainter(
     private fun updatePaint(
         paintColor: Int = paint.color,
         thickness: Float = paint.strokeWidth,
-    ): Paint = RECTANGLE_PAINT.apply {
+    ): Paint = DEFAULT_PAINT.apply {
         color = paintColor
         strokeWidth = thickness
     }
@@ -47,7 +47,7 @@ data class RectanglePainter(
     override fun extract(): Painter = copy()
 
     companion object {
-        private val RECTANGLE_PAINT: Paint
+        private val DEFAULT_PAINT: Paint
             get() = Paint().softPainter(paintStyle = Paint.Style.FILL)
     }
 }
