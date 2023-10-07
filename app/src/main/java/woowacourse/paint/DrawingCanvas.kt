@@ -71,6 +71,12 @@ class DrawingCanvas @JvmOverloads constructor(
         drawingElement = drawingElement.setBrush(brush.brushTool)
     }
 
+    fun resetCanvas() {
+        paletteHistory.clear()
+        drawingElement = DrawingElement()
+        invalidate()
+    }
+
     companion object {
         const val DEFAULT_STROKE_WIDTH = 50.0f
     }

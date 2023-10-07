@@ -10,4 +10,8 @@ class DrawingHistory {
     fun forEach(action: (DrawingElement) -> Unit) {
         history.forEach(action)
     }
+
+    fun clear() {
+        history.clear()
+    }
 }

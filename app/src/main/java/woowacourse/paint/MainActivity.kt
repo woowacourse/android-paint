@@ -1,6 +1,8 @@
 package woowacourse.paint
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
@@ -40,6 +42,26 @@ class MainActivity : AppCompatActivity(), OnColorClickListener, OnBrushClickList
         setAdapter()
         setListener()
         setObserver()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_option, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_undo -> {
+            }
+
+            R.id.menu_redo -> {
+            }
+
+            R.id.menu_canvas -> {
+                binding.cvPainter.resetCanvas()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun setupRangeSlider() {
