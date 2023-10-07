@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity() {
                 binding.paintBoard.setEraserMode()
                 convertButtonIsSelected(false)
             }
+
             is PaintMode.Pen -> {
                 binding.paintBoard.setPenMode()
                 convertButtonIsSelected(true)
@@ -66,8 +67,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showPenToolDialog() {
-        val posY = binding.clCanvasTop.bottom + binding.clCanvasTop.height
-        penToolDialog.setPosY(posY)
+        val coordinateY = binding.clCanvasTop.bottom + binding.clCanvasTop.height
+        penToolDialog.setCoordinateY(coordinateY)
         penToolDialog.show()
     }
 
@@ -84,8 +85,8 @@ class MainActivity : AppCompatActivity() {
         val bitmap = binding.paintBoard.getBitmap()
         var message: String = ""
         bitmapSaver.save(bitmap, name)
-            .onSuccess { message = "이미지 저장에 성공했습니다." }
-            .onFailure { message = "이미지 저장에 실패했습니다." }
+            .onSuccess { message = getString(R.string.image_save_success) }
+            .onFailure { message = getString(R.string.image_save_failure) }
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }

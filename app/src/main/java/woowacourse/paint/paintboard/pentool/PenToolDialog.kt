@@ -63,7 +63,7 @@ class PenToolDialog(
         dialog.window?.setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT)
     }
 
-    fun setPosY(posY: Int) {
+    fun setCoordinateY(posY: Int) {
         val window: Window = requireNotNull(dialog.window) { "PenToolDialog의 window가 null입니다" }
         window.setGravity(Gravity.TOP)
         val params: WindowManager.LayoutParams = window.attributes.apply { y = posY }
