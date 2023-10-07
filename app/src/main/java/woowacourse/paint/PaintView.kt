@@ -60,49 +60,19 @@ class PaintView(
 
     private fun touchActionDown(pointX: Float, pointY: Float) {
         when (drawMode) {
-            DrawMode.LINE -> {
-                addLine(pointX, pointY)
-                invalidate()
-            }
-            DrawMode.RECT -> {
-                addRectangle(pointX, pointY)
-                invalidate()
-            }
-            DrawMode.CIRCLE -> {
-                addCircle(pointX, pointY)
-                invalidate()
-            }
-            DrawMode.ERASER -> {
-                addEraser(pointX, pointY)
-                invalidate()
-            }
+            DrawMode.LINE -> addLine(pointX, pointY)
+            DrawMode.RECT -> addRectangle(pointX, pointY)
+            DrawMode.CIRCLE -> addCircle(pointX, pointY)
+            DrawMode.ERASER -> addEraser(pointX, pointY)
         }
     }
 
     private fun touchActionMove(pointX: Float, pointY: Float) {
         when (drawMode) {
-            DrawMode.LINE -> {
-                val line = shapes.last() as Line
-                line.quadTo(pointX, pointY)
-                invalidate()
-            }
-            DrawMode.RECT -> {
-                val rectangle = shapes.last() as Rectangle
-                rectangle.endX = pointX
-                rectangle.endY = pointY
-                invalidate()
-            }
-            DrawMode.CIRCLE -> {
-                val oval = shapes.last() as Oval
-                oval.endX = pointX
-                oval.endY = pointY
-                invalidate()
-            }
-            DrawMode.ERASER -> {
-                val eraser = shapes.last() as Eraser
-                eraser.quadTo(pointX, pointY)
-                invalidate()
-            }
+            DrawMode.LINE -> moveLine(pointX, pointY)
+            DrawMode.RECT -> moveRectangle(pointX, pointY)
+            DrawMode.CIRCLE -> moveCircle(pointX, pointY)
+            DrawMode.ERASER -> moveEraser(pointX, pointY)
         }
     }
 
@@ -111,6 +81,7 @@ class PaintView(
         val addLine = Line(paint)
         shapes.add(addLine, pointX, pointY)
         addLine.moveTo(pointX, pointY)
+        invalidate()
     }
 
     private fun addRectangle(pointX: Float, pointY: Float) {
@@ -122,6 +93,7 @@ class PaintView(
             endY = pointY
         }
         shapes.add(addedRectangle)
+        invalidate()
     }
 
     private fun addCircle(pointX: Float, pointY: Float) {
@@ -133,6 +105,7 @@ class PaintView(
             endY = pointY
         }
         shapes.add(addedOval)
+        invalidate()
     }
 
     private fun addEraser(pointX: Float, pointY: Float) {
@@ -140,5 +113,32 @@ class PaintView(
         val addEraserLine = Eraser(paint)
         shapes.add(addEraserLine, pointX, pointY)
         addEraserLine.moveTo(pointX, pointY)
+        invalidate()
+    }
+
+    private fun moveLine(pointX: Float, pointY: Float) {
+        val line = shapes.last() as Line
+        line.quadTo(pointX, pointY)
+        invalidate()
+    }
+
+    private fun moveRectangle(pointX: Float, pointY: Float) {
+        val rectangle = shapes.last() as Rectangle
+        rectangle.endX = pointX
+        rectangle.endY = pointY
+        invalidate()
+    }
+
+    private fun moveCircle(pointX: Float, pointY: Float) {
+        val oval = shapes.last() as Oval
+        oval.endX = pointX
+        oval.endY = pointY
+        invalidate()
+    }
+
+    private fun moveEraser(pointX: Float, pointY: Float) {
+        val eraser = shapes.last() as Eraser
+        eraser.quadTo(pointX, pointY)
+        invalidate()
     }
 }
