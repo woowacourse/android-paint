@@ -9,6 +9,8 @@ import woowacourse.paint.painting.figure.Rectangle
 
 class Paintings(private val values: MutableList<Figure> = mutableListOf()) {
 
+    private val cache: MutableList<List<Figure>> = mutableListOf()
+
     fun draw(canvas: Canvas) {
         values.forEach {
             canvas.drawPath(it.path, it.paint)
@@ -36,8 +38,27 @@ class Paintings(private val values: MutableList<Figure> = mutableListOf()) {
     }
 
     private fun erase(eraser: Eraser) {
-        values.removeAll {
+        val figures = values.filter {
             eraser.isOverlapped(it.path)
+        }
+
+        values.removeAll(figures)
+        cache.add(figures)
+    }
+
+    fun undo(onFailure: () -> Unit) {
+        runCatching {
+            cache.add(listOf(values.removeLast()))
+        }.onFailure {
+            onFailure()
+        }
+    }
+
+    fun redo(onFailure: () -> Unit) {
+        runCatching {
+            values.addAll(cache.removeLast())
+        }.onFailure {
+            onFailure()
         }
     }
 

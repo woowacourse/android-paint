@@ -9,67 +9,87 @@
         android:orientation="vertical"
         android:weightSum="1">
 
-        <woowacourse.paint.PaintingView
+        <woowacourse.paint.painting.PaintingView
             android:id="@+id/pv"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.8" />
+            android:layout_weight="0.7" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_colors"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.1"
+            android:layout_weight="0.075"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_color" />
 
         <com.google.android.material.slider.RangeSlider
             android:id="@+id/rs"
-            android:valueFrom="0.0f"
-            android:valueTo="100.0f"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.1" />
+            android:layout_weight="0.075"
+            android:valueFrom="0.0f"
+            android:valueTo="100.0f" />
 
         <LinearLayout
             android:id="@+id/ln_tools"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.075"
             android:orientation="horizontal"
+            android:gravity="center"
             android:weightSum="1">
 
             <Button
                 android:id="@+id/btn_pen"
-                android:layout_margin="5dp"
-                android:text="@string/main_pen"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.25" />
+                android:layout_margin="5dp"
+                android:text="@string/main_pen" />
 
             <Button
                 android:id="@+id/btn_square"
-                android:layout_margin="5dp"
-                android:layout_width="0dp"
-                android:text="@string/main_square"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.25" />
+                android:layout_margin="5dp"
+                android:text="@string/main_square" />
 
             <Button
                 android:id="@+id/btn_circle"
-                android:layout_width="0dp"
-                android:layout_margin="5dp"
-                android:text="@string/main_circle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.25" />
+                android:layout_margin="5dp"
+                android:text="@string/main_circle" />
 
             <Button
                 android:id="@+id/btn_eraser"
-                android:layout_width="0dp"
-                android:layout_margin="5dp"
-                android:text="@string/main_eraser"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.25" />
+                android:layout_margin="5dp"
+                android:text="@string/main_eraser" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.075"
+            android:gravity="center"
+            android:weightSum="1">
+
+            <Button
+                android:id="@+id/btn_undo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:drawableTop="@drawable/ic_undo" />
+
+            <Button
+                android:id="@+id/btn_redo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:drawableTop="@drawable/ic_redo" />
         </LinearLayout>
     </LinearLayout>
 </layout>

@@ -1,4 +1,4 @@
-package woowacourse.paint
+package woowacourse.paint.painting
 
 import android.content.Context
 import android.graphics.Canvas
@@ -7,7 +7,8 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import woowacourse.paint.painting.Paintings
+import android.widget.Toast
+import woowacourse.paint.R
 import woowacourse.paint.painting.figure.Circle
 import woowacourse.paint.painting.figure.Eraser
 import woowacourse.paint.painting.figure.Figure
@@ -62,6 +63,28 @@ class PaintingView(
         }
         invalidate()
         return true
+    }
+
+    fun undo() {
+        paintings.undo {
+            Toast.makeText(
+                context,
+                context.getString(R.string.painting_no_such_element_to_undo),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        invalidate()
+    }
+
+    fun redo() {
+        paintings.redo {
+            Toast.makeText(
+                context,
+                context.getString(R.string.painting_no_such_element_to_redo),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+        invalidate()
     }
 
     fun setFigureToRectangle() {

@@ -5,4 +5,7 @@
     <string name="main_square">사각형</string>
     <string name="main_eraser">지우개</string>
     <string name="main_circle">원</string>
+
+    <string name="painting_no_such_element_to_redo">되돌릴 실행 기록이 없습니다.</string>
+    <string name="painting_no_such_element_to_undo">취소할 실행 기록이 없습니다.</string>
 </resources>

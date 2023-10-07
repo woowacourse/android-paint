@@ -47,6 +47,12 @@ class MainActivity : AppCompatActivity() {
             btnEraser.setOnClickListener {
                 pv.setFigureToEraser()
             }
+            btnUndo.setOnClickListener {
+                pv.undo()
+            }
+            btnRedo.setOnClickListener {
+                pv.redo()
+            }
         }
     }
 
