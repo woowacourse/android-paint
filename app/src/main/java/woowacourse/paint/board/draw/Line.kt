@@ -24,6 +24,7 @@ class Line(override val paint: Paint, strokeWidth: Float, private val invalidate
         when (event.action) {
             MotionEvent.ACTION_DOWN -> path.moveTo(pointX, pointY)
             MotionEvent.ACTION_MOVE -> path.lineTo(pointX, pointY)
+            MotionEvent.ACTION_UP -> path.lineTo(pointX, pointY)
         }
         invalidateView()
         return true
