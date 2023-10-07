@@ -27,13 +27,19 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.vm = viewModel
         binding.lifecycleOwner = this
-        setupAdapter()
+        setupRvColors()
+        setupRvBrushes()
         setupViewModel()
     }
 
-    private fun setupAdapter() {
+    private fun setupRvColors() {
         binding.rvColors.adapter = colorAdapter
+        binding.rvColors.itemAnimator = null
+    }
+
+    private fun setupRvBrushes() {
         binding.rvBrushTypes.adapter = brushTypeAdapter
+        binding.rvBrushTypes.itemAnimator = null
     }
 
     private fun setupViewModel() {
