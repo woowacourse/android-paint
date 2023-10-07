@@ -57,38 +57,19 @@ class PaintView(
     private fun touchActionDown(pointX: Float, pointY: Float) {
         when (drawMode) {
             DrawMode.LINE -> {
-                val addedLine = addLine(pointX, pointY)
-                addedLine.path.moveTo(pointX, pointY)
+                addLine(pointX, pointY)
                 invalidate()
             }
             DrawMode.RECT -> {
-                val addedRectangle = Rectangle().apply {
-                    paint.color = pen.color
-                    startX = pointX
-                    startY = pointY
-                    endX = pointX
-                    endY = pointY
-                }
-                shapes.add(addedRectangle)
+                addRectangle(pointX, pointY)
                 invalidate()
             }
             DrawMode.CIRCLE -> {
-                val addedOval = Oval().apply {
-                    paint.color = pen.color
-                    startX = pointX
-                    startY = pointY
-                    endX = pointX
-                    endY = pointY
-                }
-                shapes.add(addedOval)
+                addCircle(pointX, pointY)
                 invalidate()
             }
             DrawMode.ERASER -> {
-                val paint = pen.getPaint()
-                val addEraserLine = Eraser(paint)
-                shapes.add(addEraserLine, pointX, pointY)
-                addEraserLine.path.moveTo(pointX, pointY)
-                setLayerType(LAYER_TYPE_HARDWARE, null)
+                addEraser(pointX, pointY)
                 invalidate()
             }
         }
@@ -121,10 +102,39 @@ class PaintView(
         }
     }
 
-    private fun addLine(pointX: Float, pointY: Float): Line {
+    private fun addLine(pointX: Float, pointY: Float) {
         val paint = pen.getPaint()
         val addLine = Line(paint)
         shapes.add(addLine, pointX, pointY)
-        return addLine
+        addLine.moveTo(pointX, pointY)
+    }
+
+    private fun addRectangle(pointX: Float, pointY: Float) {
+        val addedRectangle = Rectangle().apply {
+            paint.color = pen.color
+            startX = pointX
+            startY = pointY
+            endX = pointX
+            endY = pointY
+        }
+        shapes.add(addedRectangle)
+    }
+
+    private fun addCircle(pointX: Float, pointY: Float) {
+        val addedOval = Oval().apply {
+            paint.color = pen.color
+            startX = pointX
+            startY = pointY
+            endX = pointX
+            endY = pointY
+        }
+        shapes.add(addedOval)
+    }
+
+    private fun addEraser(pointX: Float, pointY: Float) {
+        val paint = pen.getPaint()
+        val addEraserLine = Eraser(paint)
+        shapes.add(addEraserLine, pointX, pointY)
+        addEraserLine.moveTo(pointX, pointY)
     }
 }

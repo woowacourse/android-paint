@@ -22,4 +22,8 @@ data class Eraser(
         path.quadTo(Shapes.lastX, Shapes.lastY, nextX, nextY)
         Shapes.updateLastPoint(pointX, pointY)
     }
+
+    fun moveTo(pointX: Float, pointY: Float) {
+        path.moveTo(pointX, pointY)
+    }
 }
