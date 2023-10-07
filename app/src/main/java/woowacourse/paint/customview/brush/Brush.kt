@@ -35,6 +35,11 @@ object Circle : Brush() {
     }
 }
 
+object Eraser : Brush() {
+    override fun setStyle() = Unit
+
+}
+
 interface BrushSetting {
     fun setStyle()
 }

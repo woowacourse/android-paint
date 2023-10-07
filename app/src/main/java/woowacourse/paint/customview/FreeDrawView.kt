@@ -4,12 +4,14 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.ColorInt
 import woowacourse.paint.customview.brush.Brush
 import woowacourse.paint.customview.brush.Circle
+import woowacourse.paint.customview.brush.Eraser
 import woowacourse.paint.customview.brush.Pen
 import woowacourse.paint.customview.brush.Rectangle
 
@@ -54,6 +56,17 @@ class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context,
                     is Rectangle, Circle -> {
                         currentPosition = Pair(event.x, event.y)
                     }
+
+                    is Eraser -> {
+                        previousDraw.lastOrNull {
+                            val bounds = RectF()
+                            it.first.computeBounds(bounds, false)
+                            bounds.contains(event.x, event.y)
+                        }?.let {
+                            previousDraw.remove(it)
+                            invalidate()
+                        }
+                    }
                 }
             }
 
@@ -92,6 +105,8 @@ class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context,
                             Paint().apply { set(brush.paint) },
                         )
                     }
+
+                    is Eraser -> {}
                 }
                 invalidate()
             }
@@ -135,6 +150,8 @@ class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context,
                         )
                         invalidate()
                     }
+
+                    is Eraser -> {}
                 }
             }
             else -> super.onTouchEvent(event)
