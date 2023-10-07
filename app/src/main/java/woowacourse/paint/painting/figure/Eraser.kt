@@ -18,6 +18,7 @@ class Eraser(
             },
             Path.Op.INTERSECT
         )
+
         !region.isEmpty
     }
 

@@ -21,7 +21,10 @@ class Line(
     }
 
     override fun extend(x: Float, y: Float) {
-        path.lineTo(x, y)
+        with(path) {
+            lineTo(x, y)
+            checkPoint(x, y)
+        }
     }
 
     override fun copy(path: Path): Figure = Line(
@@ -34,7 +37,18 @@ class Line(
         paint = paint
     )
 
+    private fun checkPoint(x: Float, y: Float) {
+        path.addCircle(
+            x,
+            y,
+            paint.strokeWidth / VALUE_FOR_MINIMIZING_RADIUS,
+            Path.Direction.CW
+        )
+    }
+
     companion object {
+
+        private const val VALUE_FOR_MINIMIZING_RADIUS = 1000
 
         fun dot(x: Float, y: Float, paint: Paint): Line {
             return Line(
