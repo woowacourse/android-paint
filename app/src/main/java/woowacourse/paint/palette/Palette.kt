@@ -20,16 +20,13 @@ class Palette(context: Context, attrs: AttributeSet? = null) : ConstraintLayout(
     @ColorRes
     private var selectedColorId: Int = R.color.black
 
-    private var strokeWidth: Float = 0f
-        get() {
-            return field + 10f
-        }
+    private var strokeWidth: Float = 10f
 
     init {
         binding =
             DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.palette, this, true)
-        initColorSelectorRecyclerView()
         initStrokeWidthSelector()
+        initColorSelectorRecyclerView()
         initStrokeWidthSelectorListener()
     }
 
@@ -43,17 +40,18 @@ class Palette(context: Context, attrs: AttributeSet? = null) : ConstraintLayout(
         this.onStrokeWidthChangedListener = onStrokeWidthChangedListener
     }
 
+    private fun initStrokeWidthSelector() {
+        binding.rangeSliderStrokeWidthSelector.apply {
+            values = listOf(10f)
+            valueFrom = 10.0f
+            valueTo = 40.0f
+        }
+    }
+
     private fun initColorSelectorRecyclerView() {
         binding.rvColorSelector.adapter = ColorSelectorAdapter {
             selectedColorId = it
             onSelectedColorIdChangedListener(it)
-        }
-    }
-
-    private fun initStrokeWidthSelector() {
-        binding.rangeSliderStrokeWidthSelector.apply {
-            valueFrom = 0.0f
-            valueTo = 40.0f
         }
     }
 
