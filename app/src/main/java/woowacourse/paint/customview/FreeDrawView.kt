@@ -36,18 +36,15 @@ class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context,
         val cursorY = event.y
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                brush.onActionDown(cursorX, cursorY)
-                invalidate()
+                brush.onActionDown(cursorX, cursorY) { invalidate() }
             }
 
             MotionEvent.ACTION_MOVE -> {
-                brush.onActionMove(cursorX, cursorY)
-                invalidate()
+                brush.onActionMove(cursorX, cursorY) { invalidate() }
             }
 
             MotionEvent.ACTION_UP -> {
-                brush.onActionUp(cursorX, cursorY)
-                invalidate()
+                brush.onActionUp(cursorX, cursorY) { invalidate() }
             }
             else -> super.onTouchEvent(event)
         }

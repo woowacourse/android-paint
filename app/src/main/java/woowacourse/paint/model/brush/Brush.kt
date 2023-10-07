@@ -3,17 +3,19 @@ package woowacourse.paint.model.brush
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
+import woowacourse.paint.model.brush.Circle.draw
 import woowacourse.paint.model.brush.Circle.drawPreview
 import woowacourse.paint.model.brush.Circle.setCurrentPosition
 import woowacourse.paint.model.brush.Eraser.erase
 import woowacourse.paint.model.brush.Pen.drawLine
 import woowacourse.paint.model.brush.Pen.startDraw
+import woowacourse.paint.model.brush.Rectangle.draw
 import woowacourse.paint.model.brush.Rectangle.drawPreview
 import woowacourse.paint.model.brush.Rectangle.setCurrentPosition
 
 sealed class Brush : BrushSetting {
 
-    fun onActionDown(xCursor: Float, yCursor: Float) {
+    fun onActionDown(xCursor: Float, yCursor: Float, updateView: () -> Unit) {
         when (this) {
             is Pen -> {
                 startDraw(xCursor, yCursor)
@@ -29,41 +31,47 @@ sealed class Brush : BrushSetting {
 
             is Eraser -> {
                 erase(xCursor, yCursor)
+                updateView()
             }
         }
     }
 
-    fun onActionMove(xCursor: Float, yCursor: Float) {
+    fun onActionMove(xCursor: Float, yCursor: Float, updateView: () -> Unit) {
         when (this) {
             is Pen -> {
                 drawLine(xCursor, yCursor)
+                updateView()
             }
 
             is Rectangle -> {
                 drawPreview(xCursor, yCursor)
+                updateView()
             }
 
             is Circle -> {
                 drawPreview(xCursor, yCursor)
+                updateView()
             }
 
-            is Eraser -> {}
+            is Eraser -> Unit
         }
     }
 
-    fun onActionUp(xCursor: Float, yCursor: Float) {
+    fun onActionUp(xCursor: Float, yCursor: Float, updateView: () -> Unit) {
         when (this) {
             is Pen -> Unit
 
             is Rectangle -> {
-                Rectangle.draw(xCursor, yCursor)
+                draw(xCursor, yCursor)
+                updateView()
             }
 
             is Circle -> {
-                Circle.draw(xCursor, yCursor)
+                draw(xCursor, yCursor)
+                updateView()
             }
 
-            is Eraser -> {}
+            is Eraser -> Unit
         }
     }
 
