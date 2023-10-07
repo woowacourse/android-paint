@@ -1,12 +1,9 @@
 package woowacourse.paint.model.palettecolor
 
-import android.content.Context
-import androidx.annotation.ColorInt
 import androidx.annotation.ColorRes
-import androidx.core.content.ContextCompat
 import woowacourse.paint.R
 
-enum class PaletteColor(@ColorRes val color: Int) {
+enum class PaletteColor(@ColorRes val resourceId: Int) {
     RED(R.color.red),
     ORANGE(R.color.orange),
     YELLOW(R.color.yellow),
@@ -14,16 +11,9 @@ enum class PaletteColor(@ColorRes val color: Int) {
     BlUE(R.color.blue),
     ;
 
-    @ColorInt
-    private fun convertToArgb(context: Context): Int {
-        return ContextCompat.getColor(context, color)
-    }
-
     companion object {
-        fun getAllArgb(context: Context): List<Int> {
-            return PaletteColor.values().map {
-                it.convertToArgb(context)
-            }
+        fun getAll(): List<PaletteColor> {
+            return PaletteColor.values().toList()
         }
     }
 }

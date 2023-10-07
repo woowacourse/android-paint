@@ -2,9 +2,9 @@ package woowacourse.paint
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.ColorInt
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.paint.databinding.ItemPaletteBinding
+import woowacourse.paint.model.palettecolor.PaletteColor
 
 class PaletteViewHolder(
     parent: ViewGroup,
@@ -20,7 +20,7 @@ class PaletteViewHolder(
         }
     }
 
-    fun bind(@ColorInt color: Int) {
-        binding.viewPalette.setBackgroundColor(color)
+    fun bind(color: PaletteColor) {
+        binding.viewPalette.setBackgroundColor(itemView.context.getColor(color.resourceId))
     }
 }

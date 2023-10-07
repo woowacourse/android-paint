@@ -2,7 +2,6 @@ package woowacourse.paint
 
 import android.os.Bundle
 import android.view.View
-import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.google.android.material.slider.RangeSlider
@@ -42,12 +41,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun initAdapter() {
         binding.rvPalette.adapter = PaletteAdapter(
-            backgroundColors = PaletteColor.getAllArgb(this),
+            backgroundColors = PaletteColor.getAll(),
             onClick = ::onPaletteClick,
         )
     }
 
-    private fun onPaletteClick(@ColorInt color: Int) {
+    private fun onPaletteClick(color: PaletteColor) {
         binding.rvPalette.visibility = View.GONE
         binding.fdvBoard.updateColor(color)
     }

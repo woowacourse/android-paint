@@ -5,16 +5,15 @@ import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import androidx.annotation.ColorInt
 import woowacourse.paint.model.brush.Brush
 import woowacourse.paint.model.brush.Circle
 import woowacourse.paint.model.brush.Pen
 import woowacourse.paint.model.brush.Rectangle
+import woowacourse.paint.model.palettecolor.PaletteColor
 
 class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context, attributeSet) {
 
     private var brush: Brush = Pen
-    private var currentPosition = Pair(0f, 0f)
 
     init {
         brush.setStyle()
@@ -46,6 +45,7 @@ class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context,
             MotionEvent.ACTION_UP -> {
                 brush.onActionUp(cursorX, cursorY) { invalidate() }
             }
+
             else -> super.onTouchEvent(event)
         }
 
@@ -56,8 +56,8 @@ class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context,
         return super.performClick()
     }
 
-    fun updateColor(@ColorInt color: Int) {
-        Brush.paintInstance.color = color
+    fun updateColor(color: PaletteColor) {
+        Brush.paintInstance.color = context.getColor(color.resourceId)
     }
 
     fun updateThickness(thickness: Float) {
