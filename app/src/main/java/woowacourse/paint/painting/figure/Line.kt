@@ -21,10 +21,8 @@ class Line(
     }
 
     override fun extend(x: Float, y: Float) {
-        with(path) {
-            lineTo(x, y)
-            mark(x, y)
-        }
+        path.lineTo(x, y)
+        mark(x, y)
     }
 
     override fun copy(path: Path): Figure = Line(
