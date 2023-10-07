@@ -32,9 +32,8 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     private val twoPointerDragScaleDetector =
         ScaleGestureDetector(
             context,
-            TwoPointerDragListener(this, screenWidth, screenHeight) {
-                palette.x = -x
-                palette.y = -y
+            TwoPointerDragListener(this, screenWidth, screenHeight).apply {
+                setOnScreenMoveListener(::moveStickyPaletteToFollowBoard)
             },
         )
 
@@ -54,7 +53,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
 
     private fun moveScreenToBoardCenter() {
         moveBoardToCenter()
-        movePaletteToCenter()
+        moveStickyPaletteToFollowBoard()
     }
 
     private fun moveBoardToCenter() {
@@ -62,9 +61,9 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
         y = (-expandedHeight / 2 + screenHeight / 2).toFloat()
     }
 
-    private fun movePaletteToCenter() {
-        palette.x = -(-expandedWidth / 2 + screenWidth / 2).toFloat()
-        palette.y = -(-expandedHeight / 2 + screenHeight / 2).toFloat()
+    private fun moveStickyPaletteToFollowBoard() {
+        palette.x = -x
+        palette.y = -y
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {

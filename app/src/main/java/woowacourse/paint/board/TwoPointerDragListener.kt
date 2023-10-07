@@ -7,11 +7,16 @@ class TwoPointerDragListener(
     private val targetView: View,
     private val screenWidth: Int,
     private val screenHeight: Int,
-    private val onScreenMoveListener: () -> Unit,
 ) : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+
+    private lateinit var onScreenMoveListener: () -> Unit
 
     private var lastFocusX: Float = 0f
     private var lastFocusY: Float = 0f
+
+    fun setOnScreenMoveListener(listener: () -> Unit) {
+        onScreenMoveListener = listener
+    }
 
     override fun onScaleBegin(detector: ScaleGestureDetector): Boolean {
         twoPointerDragOnScaleBegin(detector)
@@ -43,7 +48,7 @@ class TwoPointerDragListener(
             destinationYPreventOverScroll,
         )
 
-        onScreenMoveListener()
+        if (::onScreenMoveListener.isInitialized) onScreenMoveListener()
 
         lastFocusX = currentFocusX
         lastFocusY = currentFocusY
