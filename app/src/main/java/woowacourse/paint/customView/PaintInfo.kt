@@ -38,8 +38,8 @@ class PaintInfo {
         defaultStrokeWidth = (minStrokeWidth + maxStrokeWidth) / 2
     }
 
-    fun getPaint(contentType: BrushType): Paint {
-        return when (contentType) {
+    fun getPaint(brushType: BrushType): Paint {
+        return when (brushType) {
             BrushType.Stroke -> createStrokePaint()
             BrushType.Rectangle -> createRectanglePaint()
             BrushType.Circle -> createCirclePaint()
