@@ -24,7 +24,7 @@
         android:paddingHorizontal="12dp">
 
         <ImageView
-            android:id="@+id/cb_selected"
+            android:id="@+id/iv_selected"
             isVisible="@{item.isSelected}"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -44,7 +44,7 @@
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/cb_selected"
+            app:layout_constraintStart_toEndOf="@id/iv_selected"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="직사각형" />
 
