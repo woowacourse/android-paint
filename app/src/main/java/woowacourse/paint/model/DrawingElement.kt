@@ -16,7 +16,7 @@ data class DrawingElement(
 
     fun movePath(x: Float, y: Float): DrawingElement {
         return when (brushTool) {
-            BrushTool.PEN, BrushTool.ERASER -> copy(path = Path()).apply {
+            BrushTool.PEN, BrushTool.ERASER -> withNewPath().apply {
                 this.path.moveTo(x, y)
             }
 
