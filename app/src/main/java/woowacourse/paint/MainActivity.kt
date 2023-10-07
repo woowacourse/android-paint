@@ -11,7 +11,7 @@ import woowacourse.paint.paintboard.pentool.PenToolDialog
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var penToolDialog: PenToolDialog
+    private val penToolDialog: PenToolDialog by lazy { createPenToolDialog() }
     private lateinit var bitmapSaver: BitmapSaver
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,8 +24,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setView() {
-        penToolDialog = PenToolDialog(this, ::setBrushColor, ::setBrushWidth)
         binding.ivPen.isSelected = true
+    }
+
+    private fun createPenToolDialog(): PenToolDialog {
+        val coordinateY = binding.clCanvasTop.bottom + binding.clCanvasTop.height
+        return PenToolDialog(coordinateY, ::setBrushColor, ::setBrushWidth)
     }
 
     private fun setClickListeners() {
@@ -67,9 +71,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showPenToolDialog() {
-        val coordinateY = binding.clCanvasTop.bottom + binding.clCanvasTop.height
-        penToolDialog.setCoordinateY(coordinateY)
-        penToolDialog.show()
+        penToolDialog.show(supportFragmentManager, PEN_TOOL_DIALOG)
     }
 
     private fun convertButtonIsSelected(isPenSelected: Boolean) {
@@ -88,5 +90,9 @@ class MainActivity : AppCompatActivity() {
             .onSuccess { message = getString(R.string.image_save_success) }
             .onFailure { message = getString(R.string.image_save_failure) }
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    companion object {
+        private const val PEN_TOOL_DIALOG = "penToolDialog"
     }
 }
