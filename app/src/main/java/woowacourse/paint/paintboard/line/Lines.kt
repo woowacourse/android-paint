@@ -4,13 +4,12 @@ import android.graphics.Paint
 import android.graphics.Path
 
 class Lines(initValue: List<Line> = emptyList()) {
-    private val _lines = mutableListOf<Line>().apply { addAll(initValue) }
-    val lines: List<Line> = _lines
-    val currentLine: Line? get() = lines.lastOrNull()
+    private val lines = mutableListOf<Line>().apply { addAll(initValue) }
+    private val currentLine: Line? get() = lines.lastOrNull()
 
     fun startLine(x: Float, y: Float, paint: Paint) {
         val path = Path().apply { moveTo(x, y) }
-        _lines.add(Line(path, paint))
+        lines.add(Line(path, paint))
     }
 
     fun drawingLine(x: Float, y: Float) {
@@ -22,7 +21,7 @@ class Lines(initValue: List<Line> = emptyList()) {
     }
 
     fun revert() {
-        _lines.removeLastOrNull()
+        lines.removeLastOrNull()
     }
 
     fun forEach(action: (Line) -> Unit) {
