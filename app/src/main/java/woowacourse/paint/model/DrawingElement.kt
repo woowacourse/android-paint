@@ -7,6 +7,8 @@ import android.graphics.Path
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 import androidx.annotation.ColorInt
+import java.lang.Float.max
+import java.lang.Float.min
 
 data class DrawingElement(
     private val brushTool: BrushTool = BrushTool.PEN,
@@ -27,7 +29,16 @@ data class DrawingElement(
     fun initPath(prevX: Float, prevY: Float, x: Float, y: Float) {
         when (brushTool) {
             BrushTool.PEN -> drawLine(x, y)
-            BrushTool.RECTANGLE -> drawShape { addRect(prevX, prevY, x, y, Path.Direction.CW) }
+            BrushTool.RECTANGLE -> drawShape {
+                addRect(
+                    min(prevX, x),
+                    min(prevY, y),
+                    max(prevX, x),
+                    max(prevY, y),
+                    Path.Direction.CW,
+                )
+            }
+
             BrushTool.CIRCLE -> drawShape {
                 addOval(
                     prevX,
