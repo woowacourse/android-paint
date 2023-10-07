@@ -24,6 +24,10 @@ class PaintView(
     private val shapes: Shapes = Shapes()
     var pen: Pen = Pen.createDefaultPenInstance()
 
+    init {
+        setLayerType(LAYER_TYPE_HARDWARE, null)
+    }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         drawCanvas(canvas)
