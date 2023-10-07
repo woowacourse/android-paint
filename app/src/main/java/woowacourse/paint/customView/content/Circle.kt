@@ -10,12 +10,10 @@ import kotlin.math.min
 
 class Circle(
     override val id: Long,
-    val centerPointF: PointF,
-    private var _radius: Float,
-    val paint: Paint,
+    private val centerPointF: PointF,
+    private var radius: Float,
+    private val paint: Paint,
 ) : Content() {
-    val radius: Float
-        get() = _radius
     private val rectF: RectF = RectF()
     override val brushType: BrushType = BrushType.Circle
 
@@ -30,7 +28,7 @@ class Circle(
                 rectF.top = event.y
                 rectF.right = event.x
                 rectF.bottom = event.y
-                _radius = 0f
+                radius = 0f
             }
 
             MotionEvent.ACTION_MOVE -> {
@@ -55,24 +53,24 @@ class Circle(
     private fun calculateRadius() {
         val width = abs(rectF.left - rectF.right)
         val height = abs(rectF.top - rectF.bottom)
-        _radius = min(width, height) / 2
+        radius = min(width, height) / 2
     }
 
     private fun calculateCenter() {
         centerPointF.x = if (rectF.left > rectF.right) {
-            rectF.left - _radius
+            rectF.left - radius
         } else {
-            rectF.left + _radius
+            rectF.left + radius
         }
 
         centerPointF.y = if (rectF.top > rectF.bottom) {
-            rectF.top - _radius
+            rectF.top - radius
         } else {
-            rectF.top + _radius
+            rectF.top + radius
         }
     }
 
     override fun draw(canvas: Canvas) {
-        canvas.drawCircle(centerPointF.x, centerPointF.y, _radius, paint)
+        canvas.drawCircle(centerPointF.x, centerPointF.y, radius, paint)
     }
 }

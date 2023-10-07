@@ -7,8 +7,8 @@ import android.view.MotionEvent
 
 class Rectangle(
     override val id: Long,
-    val rectF: RectF,
-    val paint: Paint,
+    private val rectF: RectF,
+    private val paint: Paint,
 ) : Content() {
     override val brushType: BrushType = BrushType.Rectangle
 

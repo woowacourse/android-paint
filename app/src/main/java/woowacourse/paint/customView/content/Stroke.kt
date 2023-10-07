@@ -7,8 +7,8 @@ import android.view.MotionEvent
 
 class Stroke(
     override val id: Long,
-    val path: Path,
-    val paint: Paint,
+    private val path: Path,
+    private val paint: Paint,
 ) : Content() {
     override val brushType: BrushType = BrushType.Stroke
     override fun deepCopy(): Content {

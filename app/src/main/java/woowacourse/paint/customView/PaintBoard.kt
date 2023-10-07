@@ -85,6 +85,7 @@ class PaintBoard @JvmOverloads constructor(
     fun changeDrawnPaths(paths: List<Content>) {
         contents.changeDrawnContents(paths)
         invalidate()
+        onContentChangeListener()
     }
 
     fun undo() {
