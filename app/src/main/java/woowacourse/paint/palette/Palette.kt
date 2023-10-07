@@ -30,16 +30,6 @@ class Palette(context: Context, attrs: AttributeSet? = null) : ConstraintLayout(
         initStrokeWidthSelectorListener()
     }
 
-    constructor(
-        context: Context,
-        attrs: AttributeSet? = null,
-        onSelectedColorIdChangedListener: (Int) -> Unit,
-        onStrokeWidthChangedListener: (Float) -> Unit,
-    ) : this(context, attrs) {
-        this.onSelectedColorIdChangedListener = onSelectedColorIdChangedListener
-        this.onStrokeWidthChangedListener = onStrokeWidthChangedListener
-    }
-
     private fun initStrokeWidthSelector() {
         binding.rangeSliderStrokeWidthSelector.apply {
             values = listOf(10f)
@@ -48,10 +38,20 @@ class Palette(context: Context, attrs: AttributeSet? = null) : ConstraintLayout(
         }
     }
 
+    fun setOnSelectedColorIdChangedListener(listener: (Int) -> Unit) {
+        onSelectedColorIdChangedListener = listener
+    }
+
+    fun setStrokeWidthChangedListener(listener: (Float) -> Unit) {
+        onStrokeWidthChangedListener = listener
+    }
+
     private fun initColorSelectorRecyclerView() {
         binding.rvColorSelector.adapter = ColorSelectorAdapter {
             selectedColorId = it
-            onSelectedColorIdChangedListener(it)
+            if (::onSelectedColorIdChangedListener.isInitialized) {
+                onSelectedColorIdChangedListener(it)
+            }
         }
     }
 
@@ -59,7 +59,9 @@ class Palette(context: Context, attrs: AttributeSet? = null) : ConstraintLayout(
         binding.rangeSliderStrokeWidthSelector.addOnChangeListener(
             RangeSlider.OnChangeListener { _, value, _ ->
                 strokeWidth = value
-                onStrokeWidthChangedListener(strokeWidth)
+                if (::onStrokeWidthChangedListener.isInitialized) {
+                    onStrokeWidthChangedListener(strokeWidth)
+                }
             },
         )
     }

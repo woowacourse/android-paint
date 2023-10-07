@@ -91,22 +91,11 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     }
 
     private fun addStickyPalette() {
-        palette = Palette(
-            context = context,
-            attrs = null,
-            onSelectedColorIdChangedListener = ::onSelectedColorIdChangedListener,
-            onStrokeWidthChangedListener = ::onStrokeWidthChangedListener,
-        )
+        palette = Palette(context, null)
         palette.layoutParams = FrameLayout.LayoutParams(screenWidth, WRAP_CONTENT)
+        palette.setOnSelectedColorIdChangedListener { colorId -> currentSelectedColor = colorId }
+        palette.setStrokeWidthChangedListener { strokeWidth -> currentStrokeWidth = strokeWidth }
         addView(palette)
-    }
-
-    private fun onSelectedColorIdChangedListener(colorId: Int) {
-        currentSelectedColor = colorId
-    }
-
-    private fun onStrokeWidthChangedListener(strokeWidth: Float) {
-        currentStrokeWidth = strokeWidth
     }
 
     companion object {
