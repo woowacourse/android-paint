@@ -8,19 +8,10 @@ import woowacourse.paint.ui.main.brush.BrushTypeAdapter
 import woowacourse.paint.ui.main.color.BrushColorAdapter
 
 class MainActivity : AppCompatActivity() {
-    private val binding: ActivityMainBinding by lazy {
-        ActivityMainBinding.inflate(layoutInflater)
-    }
-
+    private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private val viewModel: MainViewModel by viewModels()
-
-    private val colorAdapter: BrushColorAdapter by lazy {
-        BrushColorAdapter(viewModel::onChangeSelectedColor)
-    }
-
-    private val brushTypeAdapter: BrushTypeAdapter by lazy {
-        BrushTypeAdapter(viewModel::onChangeSelectedBrushType)
-    }
+    private val colorAdapter: BrushColorAdapter by lazy { BrushColorAdapter(viewModel::onChangeSelectedColor) }
+    private val brushTypeAdapter: BrushTypeAdapter by lazy { BrushTypeAdapter(viewModel::onChangeSelectedBrushType) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
