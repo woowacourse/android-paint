@@ -44,6 +44,9 @@ class MainActivity : AppCompatActivity() {
             btnCircle.setOnClickListener {
                 pv.setFigureToCircle()
             }
+            btnEraser.setOnClickListener {
+                pv.setFigureToEraser()
+            }
         }
     }
 

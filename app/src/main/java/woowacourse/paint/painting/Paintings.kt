@@ -2,14 +2,15 @@ package woowacourse.paint.painting
 
 import android.graphics.Canvas
 import woowacourse.paint.painting.figure.Circle
+import woowacourse.paint.painting.figure.Eraser
 import woowacourse.paint.painting.figure.Figure
 import woowacourse.paint.painting.figure.Line
 import woowacourse.paint.painting.figure.Rectangle
 
-class Paintings(private val records: MutableList<Figure> = mutableListOf()) {
+class Paintings(private val values: MutableList<Figure> = mutableListOf()) {
 
     fun draw(canvas: Canvas) {
-        records.forEach {
+        values.forEach {
             canvas.drawPath(it.path, it.paint)
         }
     }
@@ -20,15 +21,23 @@ class Paintings(private val records: MutableList<Figure> = mutableListOf()) {
                 onEmptyLine()
             }
 
-            is Rectangle, is Circle -> records.add(figure)
+            is Rectangle, is Circle -> values.add(figure)
+
+            is Eraser -> erase(figure)
         }
     }
 
     private fun drawLine(line: Line, onEmptyLine: () -> Figure) {
         if (line.length == EMPTY_LINE) {
-            records.add(onEmptyLine())
+            values.add(onEmptyLine())
         } else {
-            records.add(line)
+            values.add(line)
+        }
+    }
+
+    private fun erase(eraser: Eraser) {
+        values.removeAll {
+            eraser.isOverlapped(it.path)
         }
     }
 

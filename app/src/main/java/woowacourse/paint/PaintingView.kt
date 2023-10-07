@@ -9,6 +9,7 @@ import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.painting.Paintings
 import woowacourse.paint.painting.figure.Circle
+import woowacourse.paint.painting.figure.Eraser
 import woowacourse.paint.painting.figure.Figure
 import woowacourse.paint.painting.figure.Line
 import woowacourse.paint.painting.figure.Rectangle
@@ -65,22 +66,29 @@ class PaintingView(
 
     fun setFigureToRectangle() {
         figure = Rectangle(
-            Path(),
-            Paint(figure.paint)
+            path = Path(),
+            paint = Paint(figure.paint)
         )
     }
 
     fun setFigureToLine() {
         figure = Line(
-            Path(),
-            Paint(figure.paint)
+            path = Path(),
+            paint = Paint(figure.paint)
         )
     }
 
     fun setFigureToCircle() {
         figure = Circle(
-            Path(),
-            Paint(figure.paint)
+            path = Path(),
+            paint = Paint(figure.paint)
+        )
+    }
+
+    fun setFigureToEraser() {
+        figure = Eraser(
+            path = Path(),
+            paint = Paint(figure.paint)
         )
     }
 

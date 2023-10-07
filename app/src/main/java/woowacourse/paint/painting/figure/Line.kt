@@ -40,10 +40,10 @@ class Line(
             return Line(
                 path = Path().apply {
                     addOval(
-                        x - paint.strokeWidth / 2,
-                        y - paint.strokeWidth / 2,
-                        x + paint.strokeWidth / 2,
-                        y + paint.strokeWidth / 2,
+                        x - paint.strokeWidth / 6,
+                        y - paint.strokeWidth / 6,
+                        x + paint.strokeWidth / 6,
+                        y + paint.strokeWidth / 6,
                         Path.Direction.CW
                     )
                 },

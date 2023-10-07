@@ -64,7 +64,7 @@
                 android:layout_weight="0.25" />
 
             <Button
-                android:id="@+id/btn_erase"
+                android:id="@+id/btn_eraser"
                 android:layout_width="0dp"
                 android:layout_margin="5dp"
                 android:text="@string/main_eraser"
