@@ -82,6 +82,10 @@ data class DrawingElement(
         return this.copy(paint = Paint(paint))
     }
 
+    fun withNewPathPaint(): DrawingElement {
+        return this.copy(path = Path(), paint = Paint(paint))
+    }
+
     fun setStroke(value: Float) = withNewPath().apply {
         paint.strokeWidth = value
     }

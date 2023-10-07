@@ -71,11 +71,27 @@ class DrawingCanvas @JvmOverloads constructor(
         drawingElement = drawingElement.setBrush(brush.brushTool)
     }
 
-    fun resetCanvas() {
-        paletteHistory.clear()
-        drawingElement = DrawingElement()
+    fun undoCanvas() {
+        paletteHistory.undo()
+        drawingElement = drawingElement.withNewPathPaint()
         invalidate()
     }
+
+    fun redoCanvas() {
+        paletteHistory.redo()
+        drawingElement = drawingElement.withNewPathPaint()
+        invalidate()
+    }
+
+    fun resetCanvas() {
+        paletteHistory.clear()
+        drawingElement = drawingElement.withNewPathPaint()
+        invalidate()
+    }
+
+    fun isHistoryEmpty() = paletteHistory.isHistoryEmpty
+
+    fun isRedoHistoryEmpty() = paletteHistory.isRedoHistoryEmpty
 
     companion object {
         const val DEFAULT_STROKE_WIDTH = 50.0f

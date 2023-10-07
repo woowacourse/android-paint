@@ -52,9 +52,11 @@ class MainActivity : AppCompatActivity(), OnColorClickListener, OnBrushClickList
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.menu_undo -> {
+                binding.cvPainter.undoCanvas()
             }
 
             R.id.menu_redo -> {
+                binding.cvPainter.redoCanvas()
             }
 
             R.id.menu_canvas -> {
