@@ -20,7 +20,7 @@ class PinchZoomListener(private val targetView: View) :
         super.onScale(detector)
         val currentSpan: Float = detector.currentSpan
 
-        currentScaleFactor *= 1 + (lastSpan / currentSpan - 1) * 0.2f
+        currentScaleFactor *= 1 + (currentSpan / lastSpan - 1) * 0.2f
 
         currentScaleFactor = Math.max(0.2f, Math.min(currentScaleFactor, 5.0f))
 
