@@ -23,7 +23,7 @@ class Line(
     override fun extend(x: Float, y: Float) {
         with(path) {
             lineTo(x, y)
-            checkPoint(x, y)
+            mark(x, y)
         }
     }
 
@@ -37,7 +37,7 @@ class Line(
         paint = paint
     )
 
-    private fun checkPoint(x: Float, y: Float) {
+    private fun mark(x: Float, y: Float) {
         path.addCircle(
             x,
             y,
