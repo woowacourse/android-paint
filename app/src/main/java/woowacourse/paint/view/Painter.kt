@@ -19,7 +19,7 @@ interface Painter {
             PaletteMode.SHAPE -> {
                 when (paletteShape) {
                     PaletteShape.RECTANGLE -> RectanglePainter(paletteShape)
-                    PaletteShape.CIRCLE -> RectanglePainter(paletteShape)
+                    PaletteShape.CIRCLE -> CirclePainter(paletteShape)
                 }
             }
 
