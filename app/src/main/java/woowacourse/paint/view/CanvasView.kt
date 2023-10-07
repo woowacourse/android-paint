@@ -15,15 +15,14 @@ class CanvasView : View {
 
     fun setPaletteColor(paletteColor: PaletteColor) {
         currentPainter = currentPainter.setPaletteColor(paletteColor)
-        painterHistory.add(currentPainter)
     }
 
     fun setPaintThickness(painterThickness: Float) {
         currentPainter = currentPainter.setThickness(painterThickness)
-        painterHistory.add(currentPainter)
     }
 
     fun setPaletteShape(paletteShape: PaletteShape) {
+        currentPainter = currentPainter.changePainter(PaletteMode.SHAPE, paletteShape)
     }
 
     fun changePaletteMode(paletteMode: PaletteMode) {
@@ -40,8 +39,13 @@ class CanvasView : View {
         val pointY = event.y
 
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> currentPainter.onTouchDown(pointX, pointY)
-            MotionEvent.ACTION_MOVE -> currentPainter.onTouchMove(pointX, pointY)
+            MotionEvent.ACTION_DOWN -> {
+                painterHistory.add(currentPainter)
+                currentPainter.onActionDown(pointX, pointY)
+            }
+
+            MotionEvent.ACTION_MOVE -> currentPainter.onActionMove(pointX, pointY)
+            MotionEvent.ACTION_UP -> currentPainter = currentPainter.extract()
         }
         invalidate()
         return true

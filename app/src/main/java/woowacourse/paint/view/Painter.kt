@@ -1,21 +1,29 @@
 package woowacourse.paint.view
 
 import android.graphics.Canvas
-import android.graphics.Paint
 
-abstract class Painter(val paint: Paint) {
-    abstract fun onTouchDown(x: Float, y: Float)
-    abstract fun onTouchMove(x: Float, y: Float)
-    abstract fun onTouchUp(x: Float, y: Float)
-    abstract fun draw(canvas: Canvas)
-    abstract fun setPaletteColor(paletteColor: PaletteColor): Painter
-    abstract fun setThickness(thickness: Float): Painter
+interface Painter {
+    fun setPaletteColor(paletteColor: PaletteColor): Painter
+    fun setThickness(thickness: Float): Painter
+    fun onActionDown(x: Float, y: Float)
+    fun onActionMove(x: Float, y: Float)
+    fun draw(canvas: Canvas)
+    fun extract(): Painter
 
-    fun changePainter(paletteMode: PaletteMode): Painter {
+    fun changePainter(
+        paletteMode: PaletteMode,
+        paletteShape: PaletteShape = PaletteShape.values().first(),
+    ): Painter {
         return when (paletteMode) {
-            PaletteMode.BRUSH -> BrushPainter(paint = paint)
+            PaletteMode.BRUSH -> BrushPainter()
+            PaletteMode.SHAPE -> {
+                when (paletteShape) {
+                    PaletteShape.RECTANGLE -> RectanglePainter(paletteShape)
+                    PaletteShape.CIRCLE -> RectanglePainter(paletteShape)
+                }
+            }
+
             else -> throw IllegalArgumentException("")
-            // PaletteMode.SHAPE -> ShapePainter(paint)
             // PaletteMode.ERASER -> EraserPainter(paint)
         }
     }

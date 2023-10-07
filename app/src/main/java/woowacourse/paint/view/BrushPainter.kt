@@ -4,10 +4,10 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 
-class BrushPainter(
+data class BrushPainter(
     private val path: Path = Path(),
-    paint: Paint = Paint().softPainter(),
-) : Painter(paint) {
+    val paint: Paint = Paint().softPainter(),
+) : Painter {
     private var prevX: Float = 0F
     private var prevY: Float = 0F
 
@@ -29,7 +29,7 @@ class BrushPainter(
         strokeWidth = thickness
     }
 
-    override fun onTouchDown(x: Float, y: Float) {
+    override fun onActionDown(x: Float, y: Float) {
         dotTo(x, y)
     }
 
@@ -39,7 +39,7 @@ class BrushPainter(
         updatePrevPoint(x, y)
     }
 
-    override fun onTouchMove(x: Float, y: Float) {
+    override fun onActionMove(x: Float, y: Float) {
         drawLine(x, y)
     }
 
@@ -53,9 +53,9 @@ class BrushPainter(
         prevY = pointY
     }
 
-    override fun onTouchUp(x: Float, y: Float) {}
-
     override fun draw(canvas: Canvas) {
         canvas.drawPath(path, paint)
     }
+
+    override fun extract(): Painter = copy()
 }

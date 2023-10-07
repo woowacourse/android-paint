@@ -43,11 +43,15 @@ class MainActivity : AppCompatActivity() {
                 canvasView.setPaintThickness(paintThickness)
             }
         })
+        paletteView.changePaletteMode(PaletteMode.BRUSH)
     }
 
     private fun setupPaletteModeView() {
         PaletteMode.values().forEach { paletteMode ->
-            val modeButton = createModeButton(paletteMode, canvasView::changePaletteMode)
+            val modeButton = createModeButton(paletteMode) { newPaletteMode ->
+                paletteView.changePaletteMode(newPaletteMode)
+                canvasView.changePaletteMode(newPaletteMode)
+            }
 
             paletteModeView.addView(modeButton)
             modeButton.layoutParams = (modeButton.layoutParams as LinearLayout.LayoutParams).apply {
