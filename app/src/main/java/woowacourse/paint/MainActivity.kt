@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showFileNameDialog() {
-        FileNameDialog(this, ::saveImage).show()
+        FileNameDialog(::saveImage).show(supportFragmentManager, FILE_NAME_DIALOG)
     }
 
     private fun saveImage(name: String) {
@@ -94,5 +94,6 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private const val PEN_TOOL_DIALOG = "penToolDialog"
+        private const val FILE_NAME_DIALOG = "fileNameDialog"
     }
 }

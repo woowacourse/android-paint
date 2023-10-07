@@ -1,29 +1,38 @@
 package woowacourse.paint.paintboard
 
-import android.app.Dialog
-import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.DialogFragment
 import woowacourse.paint.R
 import woowacourse.paint.databinding.DialogFileNameBinding
 
 class FileNameDialog(
-    context: Context,
-    clickPositive: (name: String) -> Unit,
-) {
-    private val dialog = Dialog(context)
-    private val binding = DialogFileNameBinding.inflate(LayoutInflater.from(context))
+    private val clickPositive: (name: String) -> Unit,
+) : DialogFragment() {
+    private lateinit var binding: DialogFileNameBinding
 
-    init {
-        dialog.window?.setBackgroundDrawableResource(R.drawable.rect_radius_12)
-        dialog.setContentView(binding.root)
-        binding.btnFileNamePositive.setOnClickListener {
-            clickPositive(binding.etFileNameContent.text.toString())
-            dialog.dismiss()
-        }
-        binding.btnFileNameNegative.setOnClickListener { dialog.dismiss() }
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View {
+        binding = DialogFileNameBinding.inflate(LayoutInflater.from(context))
+        return binding.root
     }
 
-    fun show() {
-        dialog.show()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        dialog?.window?.setBackgroundDrawableResource(R.drawable.rect_radius_12)
+        setClickListeners()
+    }
+
+    private fun setClickListeners() {
+        binding.btnFileNamePositive.setOnClickListener {
+            clickPositive(binding.etFileNameContent.text.toString())
+            dialog?.dismiss()
+        }
+        binding.btnFileNameNegative.setOnClickListener { dialog?.dismiss() }
     }
 }
