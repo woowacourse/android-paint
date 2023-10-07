@@ -1,6 +1,5 @@
 package woowacourse.paint.paintboard.pentool
 
-import androidx.annotation.ColorRes
 import woowacourse.paint.R
 
 class PenColors {
@@ -18,7 +17,6 @@ class PenColors {
     private val value
         get() = colors.map { PenColor(it) }.toMutableList()
 
-    @ColorRes
     private var currentPosition: Int = 0
     val currentPenColor: Int get() = colors[currentPosition]
 
