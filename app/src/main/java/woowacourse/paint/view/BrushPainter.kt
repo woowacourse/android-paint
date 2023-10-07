@@ -4,19 +4,19 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 
-data class PathPainter(
-    val path: Path = Path(),
-    val paint: Paint = Paint().softPainter(),
-) {
+class BrushPainter(
+    private val path: Path = Path(),
+    paint: Paint = Paint().softPainter(),
+) : Painter(paint) {
     private var prevX: Float = 0F
     private var prevY: Float = 0F
 
-    fun setPaintColor(paletteColor: PaletteColor): PathPainter = copy(
+    override fun setPaletteColor(paletteColor: PaletteColor): Painter = BrushPainter(
         path = Path(),
         paint = updatePaint(paintColor = paletteColor.color),
     )
 
-    fun setThickness(thickness: Float): PathPainter = copy(
+    override fun setThickness(thickness: Float): BrushPainter = BrushPainter(
         path = Path(),
         paint = updatePaint(thickness = thickness),
     )
@@ -29,13 +29,21 @@ data class PathPainter(
         strokeWidth = thickness
     }
 
-    fun dotTo(x: Float, y: Float) {
+    override fun onTouchDown(x: Float, y: Float) {
+        dotTo(x, y)
+    }
+
+    private fun dotTo(x: Float, y: Float) {
         path.moveTo(x, y)
         path.lineTo(x, y)
         updatePrevPoint(x, y)
     }
 
-    fun drawLine(x: Float, y: Float) {
+    override fun onTouchMove(x: Float, y: Float) {
+        drawLine(x, y)
+    }
+
+    private fun drawLine(x: Float, y: Float) {
         path.quadTo(prevX, prevY, (prevX + x) / 2, (prevY + y) / 2)
         updatePrevPoint(x, y)
     }
@@ -45,7 +53,9 @@ data class PathPainter(
         prevY = pointY
     }
 
-    fun drawPath(canvas: Canvas) {
+    override fun onTouchUp(x: Float, y: Float) {}
+
+    override fun draw(canvas: Canvas) {
         canvas.drawPath(path, paint)
     }
 }
