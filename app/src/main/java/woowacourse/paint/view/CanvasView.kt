@@ -11,22 +11,21 @@ class CanvasView : View {
     constructor(context: Context, attrs: AttributeSet) : super(context, attrs)
 
     private val painterHistory = PainterHistory()
-    private var currentPainter: Painter = BrushPainter()
 
     fun setPaletteColor(paletteColor: PaletteColor) {
-        currentPainter = currentPainter.setPaletteColor(paletteColor)
+        painterHistory.setPaletteColor(paletteColor)
     }
 
     fun setPaintThickness(painterThickness: Float) {
-        currentPainter = currentPainter.setThickness(painterThickness)
+        painterHistory.setPaintThickness(painterThickness)
     }
 
     fun setPaletteShape(paletteShape: PaletteShape) {
-        currentPainter = currentPainter.changePainter(PaletteMode.SHAPE, paletteShape)
+        painterHistory.setPaletteShape(paletteShape)
     }
 
     fun changePaletteMode(paletteMode: PaletteMode) {
-        currentPainter = currentPainter.changePainter(paletteMode)
+        painterHistory.changePaletteMode(paletteMode)
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -39,13 +38,9 @@ class CanvasView : View {
         val pointY = event.y
 
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> {
-                painterHistory.add(currentPainter)
-                currentPainter.onActionDown(pointX, pointY)
-            }
-
-            MotionEvent.ACTION_MOVE -> currentPainter.onActionMove(pointX, pointY)
-            MotionEvent.ACTION_UP -> currentPainter = currentPainter.extract()
+            MotionEvent.ACTION_DOWN -> painterHistory.onActionDown(pointX, pointY)
+            MotionEvent.ACTION_MOVE -> painterHistory.onActionMove(pointX, pointY)
+            MotionEvent.ACTION_UP -> painterHistory.onActionUp(pointX, pointY)
         }
         invalidate()
         return true
