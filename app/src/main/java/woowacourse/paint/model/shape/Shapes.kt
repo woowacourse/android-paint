@@ -14,8 +14,8 @@ class Shapes(value: List<Shape> = mutableListOf()) {
         return _value.last()
     }
 
-    fun add(line: Shape) {
-        _value.add(line)
+    fun add(shape: Shape) {
+        _value.add(shape)
     }
 
     private fun throwNoShapeError(): Nothing = throw IllegalArgumentException("도형이 존재하지 않습니다.")

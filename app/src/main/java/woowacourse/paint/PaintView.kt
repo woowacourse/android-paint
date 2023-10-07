@@ -99,30 +99,30 @@ class PaintView(
     private fun touchActionMove(pointX: Float, pointY: Float) {
         when (drawMode) {
             DrawMode.LINE -> {
-                val shape = shapes.last() as Line
+                val line = shapes.last() as Line
                 val nextX = (Line.lastX + pointX) / 2
                 val nextY = (Line.lastY + pointY) / 2
-                shape.path.quadTo(Line.lastX, Line.lastY, nextX, nextY)
+                line.path.quadTo(Line.lastX, Line.lastY, nextX, nextY)
                 Line.updateLastPoint(pointX, pointY)
                 invalidate()
             }
             DrawMode.RECT -> {
-                val shape = shapes.last() as Rectangle
-                shape.endX = pointX
-                shape.endY = pointY
+                val rectangle = shapes.last() as Rectangle
+                rectangle.endX = pointX
+                rectangle.endY = pointY
                 invalidate()
             }
             DrawMode.CIRCLE -> {
-                val shape = shapes.last() as Oval
-                shape.endX = pointX
-                shape.endY = pointY
+                val oval = shapes.last() as Oval
+                oval.endX = pointX
+                oval.endY = pointY
                 invalidate()
             }
             DrawMode.ERASER -> {
-                val shape = shapes.last() as Eraser
+                val eraser = shapes.last() as Eraser
                 val nextX = (Eraser.lastX + pointX) / 2
                 val nextY = (Eraser.lastY + pointY) / 2
-                shape.path.quadTo(Eraser.lastX, Eraser.lastY, nextX, nextY)
+                eraser.path.quadTo(Eraser.lastX, Eraser.lastY, nextX, nextY)
                 Eraser.updateLastPoint(pointX, pointY)
                 invalidate()
             }
