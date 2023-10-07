@@ -6,6 +6,9 @@ import androidx.annotation.ColorInt
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.google.android.material.slider.RangeSlider
+import woowacourse.paint.customview.brush.Circle
+import woowacourse.paint.customview.brush.Pen
+import woowacourse.paint.customview.brush.Rectangle
 import woowacourse.paint.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -60,6 +63,15 @@ class MainActivity : AppCompatActivity() {
         }
         binding.btPen.setOnClickListener {
             setBrushTypeVisibility(false)
+            binding.fdvBoard.setBrushType(Pen)
+        }
+        binding.btRectangle.setOnClickListener {
+            setBrushTypeVisibility(false)
+            binding.fdvBoard.setBrushType(Rectangle)
+        }
+        binding.btCircle.setOnClickListener {
+            setBrushTypeVisibility(false)
+            binding.fdvBoard.setBrushType(Circle)
         }
     }
 

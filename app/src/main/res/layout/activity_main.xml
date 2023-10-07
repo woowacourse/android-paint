@@ -120,7 +120,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/bt_circle" />
 
-    <woowacourse.paint.FreeDrawView
+    <woowacourse.paint.customview.FreeDrawView
         android:id="@+id/fdv_board"
         android:layout_width="0dp"
         android:layout_height="0dp"
