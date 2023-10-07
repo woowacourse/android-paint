@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         setupRangeSliderListener()
         setupChangePaintColorListener()
         setupChangeStrokeSizeListener()
+        setupChangeBrushListener()
     }
 
     private fun initBinding() {
@@ -58,6 +59,12 @@ class MainActivity : AppCompatActivity() {
     private fun setupChangeStrokeSizeListener() {
         binding.btnMainChangeStrokeSize.setOnClickListener {
             binding.rsMain.changeVisibility()
+        }
+    }
+
+    private fun setupChangeBrushListener() {
+        binding.btnMainChangeBrush.setOnClickListener {
+            binding.llMainBrush.changeVisibility()
         }
     }
 

@@ -2,4 +2,9 @@
     <string name="app_name">Paint</string>
     <string name="main_btn_change_color">색상 변경</string>
     <string name="main_btn_change_stroke_size">굵기 변경</string>
+    <string name="main_btn_change_brush">브러쉬 변경</string>
+    <string name="main_btn_change_brush_pen">펜</string>
+    <string name="main_btn_change_brush_rectangle">직사각형</string>
+    <string name="main_btn_change_brush_circle">원</string>
+    <string name="main_btn_change_brush_eraser">지우개</string>
 </resources>
