@@ -79,6 +79,7 @@ class MainActivity : AppCompatActivity(), OnColorClickListener, OnBrushClickList
 
         viewModel.paintBrush.observe(this) {
             brushAdapter.submitList(it)
+            binding.cvPainter.setBrush(it.first { paintBrush -> paintBrush.isSelected })
         }
     }
 

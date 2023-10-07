@@ -4,18 +4,62 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import androidx.annotation.ColorInt
 
 data class DrawingElement(
+    private val brushTool: BrushTool = BrushTool.PEN,
     private val path: Path = Path(),
     private val paint: Paint = initSetupPaint(),
 ) {
 
-    fun movePath(x: Float, y: Float) {
-        path.moveTo(x, y)
+    fun movePath(x: Float, y: Float): DrawingElement {
+        return when (brushTool) {
+            BrushTool.PEN, BrushTool.ERASER -> copy(path = Path()).apply {
+                this.path.moveTo(x, y)
+            }
+
+            BrushTool.CIRCLE, BrushTool.RECTANGLE -> withNewPath()
+        }
     }
 
-    fun initPath(x: Float, y: Float) {
+    fun initPath(prevX: Float, prevY: Float, x: Float, y: Float) {
+        when (brushTool) {
+            BrushTool.PEN -> drawLine(x, y)
+            BrushTool.RECTANGLE -> drawShape { addRect(prevX, prevY, x, y, Path.Direction.CW) }
+            BrushTool.CIRCLE -> drawShape {
+                addOval(
+                    prevX,
+                    prevY,
+                    x,
+                    y,
+                    Path.Direction.CW,
+                )
+            }
+
+            BrushTool.ERASER -> erase(x, y)
+        }
+    }
+
+    private fun drawLine(x: Float, y: Float) {
+        paint.xfermode = null
+        paint.style = Paint.Style.STROKE
+        paint.strokeCap = Paint.Cap.ROUND
+        path.lineTo(x, y)
+    }
+
+    private fun drawShape(drawCommand: Path.() -> Unit) {
+        path.reset()
+        paint.xfermode = null
+        paint.style = Paint.Style.FILL
+        path.drawCommand()
+    }
+
+    private fun erase(x: Float, y: Float) {
+        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+        paint.style = Paint.Style.STROKE
+        paint.strokeCap = Paint.Cap.SQUARE
         path.lineTo(x, y)
     }
 
@@ -35,6 +79,8 @@ data class DrawingElement(
         paint.color = color
     }
 
+    fun setBrush(brushTool: BrushTool) = this.copy(brushTool = brushTool)
+
     fun draw(canvas: Canvas) {
         canvas.drawPath(path, paint)
     }
@@ -42,7 +88,9 @@ data class DrawingElement(
     companion object {
         private fun initSetupPaint(): Paint {
             return Paint().apply {
+                isAntiAlias = true
                 strokeWidth = 50.0f
+                strokeJoin = Paint.Join.ROUND
                 style = Paint.Style.STROKE
                 strokeCap = Paint.Cap.ROUND
                 color = Color.RED
