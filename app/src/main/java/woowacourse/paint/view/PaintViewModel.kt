@@ -101,17 +101,14 @@ class PaintViewModel : ViewModel() {
         _drawings.value = _drawings.value?.add(ink.toDomain())
     }
 
+    private fun removeInkAt(index: Int) {
+        _undoDrawings = _drawings.value
+        _drawings.value = _drawings.value?.removeAt(index)
+    }
+
     private fun getInks(): List<Path> {
         return _drawings.value?.value?.map {
             it.toModel().path
         } ?: emptyList()
-    }
-
-    private fun removeInkAt(index: Int) {
-        _drawings.value = Drawings(
-            _drawings.value?.value?.toMutableList().apply {
-                this?.removeAt(index)
-            } ?: emptyList()
-        )
     }
 }
