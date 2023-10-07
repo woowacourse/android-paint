@@ -156,7 +156,7 @@ class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context,
     }
 
     fun setBrushType(brush: Brush) {
-        this.brush.setStyle(brush.paint.color)
         this.brush = brush
+        this.brush.setStyle()
     }
 }
