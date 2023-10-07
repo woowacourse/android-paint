@@ -3,10 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-    </data>
-
     <woowacourse.paint.board.PaintBoard
         android:id="@+id/paint_board"
         android:background="@drawable/bg_test"
