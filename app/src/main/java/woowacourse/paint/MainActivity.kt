@@ -5,6 +5,7 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.model.Brush
 
 class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy {
@@ -23,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         setupChangePaintColorListener()
         setupChangeStrokeSizeListener()
         setupChangeBrushListener()
+        setupChangeBrush()
     }
 
     private fun initBinding() {
@@ -65,6 +67,20 @@ class MainActivity : AppCompatActivity() {
     private fun setupChangeBrushListener() {
         binding.btnMainChangeBrush.setOnClickListener {
             binding.llMainBrush.changeVisibility()
+        }
+    }
+
+    private fun setupChangeBrush() {
+        binding.btnMainChangeBrushPen.setOnClickListener {
+            binding.canvasMain.setChangeBrush(Brush.PEN)
+        }
+
+        binding.btnMainChangeBrushRectangle.setOnClickListener {
+            binding.canvasMain.setChangeBrush(Brush.RECT)
+        }
+
+        binding.btnMainChangeBrushCircle.setOnClickListener {
+            binding.canvasMain.setChangeBrush(Brush.CIRCLE)
         }
     }
 

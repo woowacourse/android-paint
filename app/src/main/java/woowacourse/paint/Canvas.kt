@@ -8,7 +8,11 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.ColorInt
+import woowacourse.paint.model.Brush
+import woowacourse.paint.model.Circle
 import woowacourse.paint.model.PathPaint
+import woowacourse.paint.model.Rectangle
+import woowacourse.paint.util.drawCircle
 
 class Canvas(
     context: Context,
@@ -20,14 +24,32 @@ class Canvas(
     init {
         isFocusable = true
         isFocusableInTouchMode = true
-        initPaint()
+        setChangeBrush(Brush.PEN)
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
         pathPaints.forEach {
-            canvas.drawPath(it.path, it.paint)
+            canvas.draw(it)
+        }
+    }
+
+    private fun Canvas.draw(pathPaint: PathPaint) {
+        when (pathPaint.brush) {
+            Brush.PEN -> {
+                drawPath(pathPaint.path, pathPaint.paint)
+            }
+
+            Brush.RECT -> {
+                drawRect(pathPaint.shape as Rectangle, pathPaint.paint)
+            }
+
+            Brush.CIRCLE -> {
+                drawCircle(pathPaint.shape as Circle, pathPaint.paint)
+            }
+
+            else -> Unit
         }
     }
 
@@ -37,11 +59,11 @@ class Canvas(
             MotionEvent.ACTION_DOWN -> {
                 pathPaints.add(currentPathPaint)
                 currentPathPaint.moveToPath(event.x, event.y)
-                currentPathPaint.lineToPath(event.x, event.y)
+                currentPathPaint.drawToPath(event.x, event.y)
             }
 
             MotionEvent.ACTION_MOVE -> {
-                currentPathPaint.lineToPath(event.x, event.y)
+                currentPathPaint.drawToPath(event.x, event.y)
             }
 
             MotionEvent.ACTION_UP -> {
@@ -60,7 +82,6 @@ class Canvas(
         currentPathPaint = currentPathPaint.resetPaint().apply {
             with(paint) {
                 isAntiAlias = true
-                style = Paint.Style.STROKE
                 strokeCap = Paint.Cap.ROUND
                 strokeJoin = Paint.Join.ROUND
             }
@@ -73,5 +94,9 @@ class Canvas(
 
     fun setPaintColor(@ColorInt color: Int) {
         currentPathPaint.setPaintColor(color)
+    }
+
+    fun setChangeBrush(brush: Brush) {
+        currentPathPaint.brush = brush
     }
 }
