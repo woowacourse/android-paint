@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.MotionEvent
+import android.view.MotionEvent.*
 import android.view.View
 
 class DrawingPaper(
@@ -31,9 +32,11 @@ class DrawingPaper(
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> painter.drawDot(event)
-            MotionEvent.ACTION_MOVE -> painter.drawLine(event)
-            MotionEvent.ACTION_UP -> painter.savePainting()
+            ACTION_DOWN -> {
+                painter.savePainting()
+                painter.drawDot(event)
+            }
+            ACTION_MOVE -> painter.drawLine(event)
             else -> super.onTouchEvent(event)
         }
 

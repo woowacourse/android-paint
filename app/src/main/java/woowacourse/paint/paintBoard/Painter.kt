@@ -5,18 +5,14 @@ import android.view.MotionEvent
 
 class Painter {
     private var brush = Brush()
-    private val painting: MutableList<Line> = mutableListOf(Line())
+    private val painting: MutableList<Line> = mutableListOf()
 
     fun changeBrush(width: Float) {
         brush = brush.changeBrush(width)
-
-        painting.add(Line(brush = brush))
     }
 
     fun changeBrush(color: Int) {
         brush = brush.changeBrush(color)
-
-        painting.add(Line(brush = brush))
     }
 
     fun drawPainting(canvas: Canvas) {
