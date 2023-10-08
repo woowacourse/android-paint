@@ -3,19 +3,28 @@ package woowacourse.paint.model
 import android.graphics.Canvas
 import woowacourse.paint.model.drawable.DrawableElement
 
-data class DrawableHistory(
-    private val _elements: MutableList<DrawableElement> = mutableListOf(),
-) {
-    val elements: List<DrawableElement>
-        get() = _elements.toList()
+class DrawableHistory {
+    private val undoes: MutableList<DrawableElement> = mutableListOf()
+    private val redoes: MutableList<DrawableElement> = mutableListOf()
 
     fun add(element: DrawableElement) {
-        _elements.add(element)
+        undoes.add(element)
+        redoes.clear()
     }
 
     fun drawAll(canvas: Canvas) {
-        elements.forEach {
+        undoes.forEach {
             it.drawCurrent(canvas)
         }
+    }
+
+    fun undo() {
+        val element = undoes.removeLastOrNull() ?: return
+        redoes.add(element)
+    }
+
+    fun redo() {
+        val element = redoes.removeLastOrNull() ?: return
+        undoes.add(element)
     }
 }

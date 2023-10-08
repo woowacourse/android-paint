@@ -31,7 +31,6 @@ class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(conte
         super.onDraw(canvas)
 
         pathHistory.drawAll(canvas)
-        currentDraw.drawCurrent(canvas)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -39,7 +38,6 @@ class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(conte
         when (event.action) {
             MotionEvent.ACTION_DOWN -> startDrawing(event)
             MotionEvent.ACTION_MOVE -> moveDrawing(event)
-            MotionEvent.ACTION_UP -> endDrawing()
             else -> return super.onTouchEvent(event)
         }
         invalidate()
@@ -48,14 +46,11 @@ class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(conte
 
     private fun startDrawing(event: MotionEvent) {
         currentDraw = currentDraw.startDrawing(event.x, event.y)
+        pathHistory.add(currentDraw)
     }
 
     private fun moveDrawing(event: MotionEvent) {
         currentDraw.keepDrawing(event.x, event.y)
-    }
-
-    private fun endDrawing() {
-        pathHistory.add(currentDraw)
     }
 
     fun setDrawMode(mode: DrawMode) {
@@ -79,5 +74,15 @@ class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(conte
 
     fun setBrushColor(color: PaintColor) {
         currentDraw = currentDraw.changePaintColor(ContextCompat.getColor(context, color.colorRes))
+    }
+
+    fun undo() {
+        pathHistory.undo()
+        invalidate()
+    }
+
+    fun redo() {
+        pathHistory.redo()
+        invalidate()
     }
 }
