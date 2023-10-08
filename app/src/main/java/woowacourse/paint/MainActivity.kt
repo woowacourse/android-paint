@@ -1,6 +1,5 @@
 package woowacourse.paint
 
-import android.graphics.Paint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.databinding.ActivityMainBinding
@@ -15,10 +14,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val defaultPaint = Paint().apply { color = getColor(Color.values().first().id) }
-
         setupRangeSlider()
-        setupButton(defaultPaint)
+        setupButton()
         binding.apply {
             paletteView.onColorSelected = { canvasView.setColor(it) }
         }
@@ -34,16 +31,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupButton(defaultPaint: Paint) {
+    private fun setupButton() {
         binding.apply {
             lineBrushButton.setOnClickListener {
-                canvasView.setBrush(LineBrush(paint = defaultPaint))
+                canvasView.changeBrush(LineBrush())
             }
             rectBrushButton.setOnClickListener {
-                canvasView.setBrush(RectangleBrush(paint = defaultPaint))
+                canvasView.changeBrush(RectangleBrush())
             }
             circleBrushButton.setOnClickListener {
-                canvasView.setBrush(CircleBrush(paint = defaultPaint))
+                canvasView.changeBrush(CircleBrush())
             }
         }
     }

@@ -1,15 +1,12 @@
 package woowacourse.paint
 
-import android.graphics.Paint
-import android.graphics.Path
+import android.graphics.Canvas
 
 interface Brush {
-    val path: Path
-    val paint: Paint
-
-    fun setColor(color: Int)
-    fun setStrokeWidth(width: Float)
+    fun setColor(color: Int): Brush
+    fun setStrokeWidth(width: Float): Brush
     fun startDrawing(x: Float, y: Float)
     fun keepDrawing(x: Float, y: Float)
     fun finishDrawing()
+    fun drawPath(canvas: Canvas)
 }

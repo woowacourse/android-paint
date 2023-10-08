@@ -2,42 +2,40 @@ package woowacourse.paint
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 
 class CanvasView constructor(context: Context, attr: AttributeSet) : View(context, attr) {
 
-    private var brush: Brush =
-        LineBrush(paint = Paint().apply { color = context.getColor(Color.values().first().id) })
+    init {
+        changeBrush(LineBrush())
+    }
 
-    private val bitmap: Bitmap by lazy {
-        Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-    }
-    private val canvas: Canvas by lazy {
-        Canvas(bitmap)
-    }
+    private lateinit var brush: Brush
+
+    private val brushHistory = mutableListOf<Brush>()
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        canvas.drawBitmap(bitmap, 0f, 0f, brush.paint)
-        canvas.drawPath(brush.path, brush.paint)
+        brushHistory.forEach {
+            it.drawPath(canvas)
+        }
     }
 
     fun setColor(color: Color) {
-        brush.setColor(context.getColor(color.id))
+        brush = brush.setColor(context.getColor(color.id))
     }
 
     fun setStrokeWidth(width: Float) {
-        brush.setStrokeWidth(width)
+        brush = brush.setStrokeWidth(width)
     }
 
-    fun setBrush(brush: Brush) {
+    fun changeBrush(brush: Brush) {
         this.brush = brush
+        this.setColor(Color.values().first())
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -46,6 +44,7 @@ class CanvasView constructor(context: Context, attr: AttributeSet) : View(contex
         val pointY = event.y
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
+                brushHistory.add(brush)
                 brush.startDrawing(pointX, pointY)
             }
 
@@ -66,6 +65,5 @@ class CanvasView constructor(context: Context, attr: AttributeSet) : View(contex
 
     private fun finishDrawing() {
         brush.finishDrawing()
-        canvas.drawPath(brush.path, brush.paint)
     }
 }

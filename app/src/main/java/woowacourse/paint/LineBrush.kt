@@ -1,31 +1,35 @@
 package woowacourse.paint
 
+import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 import kotlin.math.abs
 
 class LineBrush(
-    override val path: Path = Path(),
-    override val paint: Paint = Paint(),
+    private var path: Path = Path(),
+    private var paint: Paint = defaultPaint,
 ) : Brush {
 
     private var prevX: Float = 0f
     private var prevY: Float = 0f
 
-    init {
-        setupPaint()
+    override fun setColor(color: Int): Brush {
+        val newPaint = defaultPaint.apply {
+            this.color = color
+            this.strokeWidth = paint.strokeWidth
+        }
+        return LineBrush(Path(), newPaint)
     }
 
-    override fun setColor(color: Int) {
-        paint.color = color
-    }
-
-    override fun setStrokeWidth(width: Float) {
-        paint.strokeWidth = width
+    override fun setStrokeWidth(width: Float): Brush {
+        val newPaint = defaultPaint.apply {
+            this.color = paint.color
+            this.strokeWidth = width
+        }
+        return LineBrush(Path(), newPaint)
     }
 
     override fun startDrawing(x: Float, y: Float) {
-        path.reset()
         path.moveTo(x, y)
         prevX = x
         prevY = y
@@ -43,14 +47,19 @@ class LineBrush(
         path.lineTo(prevX, prevY)
     }
 
-    private fun setupPaint() {
-        setStrokeWidth(10f)
-        paint.isAntiAlias = true
-        paint.style = Paint.Style.STROKE
-        paint.strokeCap = Paint.Cap.ROUND
+    override fun drawPath(canvas: Canvas) {
+        canvas.drawPath(path, paint)
     }
 
     companion object {
         private const val MOVE_THRESHOLD = 5
+
+        private val defaultPaint
+            get() = Paint().apply {
+                strokeWidth = 10f
+                isAntiAlias = true
+                style = Paint.Style.STROKE
+                strokeCap = Paint.Cap.ROUND
+            }
     }
 }
