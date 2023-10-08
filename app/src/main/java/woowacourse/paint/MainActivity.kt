@@ -44,13 +44,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_main_clear -> {
-                binding.canvasMain.clear()
-            }
-
-            R.id.menu_main_undo -> {
-                binding.canvasMain.undo()
-            }
+            R.id.menu_main_clear -> binding.canvasMain.clear()
+            R.id.menu_main_undo -> binding.canvasMain.undo()
+            R.id.menu_main_redo -> binding.canvasMain.redo()
         }
 
         return true

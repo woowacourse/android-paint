@@ -21,6 +21,7 @@ class Canvas(
     private var currentPathPaint: PathPaint = PathPaint()
 
     private val undo: MutableList<Any> = mutableListOf()
+    private val redo: MutableList<Any> = mutableListOf()
 
     init {
         isFocusable = true
@@ -103,6 +104,7 @@ class Canvas(
     fun undo() {
         runCatching {
             processUndo(undo.last())
+            redo.add(undo.last())
             undo.removeLast()
         }
     }
@@ -115,6 +117,27 @@ class Canvas(
 
             is PathPaint -> {
                 pathPaints.removeIf { it.path == action.path }
+            }
+        }
+        invalidate()
+    }
+
+    fun redo() {
+        runCatching {
+            processRedo(redo.last())
+            undo.add(redo.last())
+            redo.removeLast()
+        }
+    }
+
+    private fun processRedo(action: Any) {
+        when (action) {
+            is List<*> -> {
+                pathPaints.clear()
+            }
+
+            is PathPaint -> {
+                pathPaints.add(action)
             }
         }
         invalidate()

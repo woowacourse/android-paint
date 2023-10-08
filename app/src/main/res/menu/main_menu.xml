@@ -7,6 +7,11 @@
         android:title="@string/main_menu_undo" />
 
     <item
+        android:id="@+id/menu_main_redo"
+        android:icon="@drawable/ic_redo"
+        android:title="@string/main_menu_redo" />
+
+    <item
         android:id="@+id/menu_main_clear"
         android:icon="@drawable/ic_clear"
         android:title="@string/main_menu_clear" />
