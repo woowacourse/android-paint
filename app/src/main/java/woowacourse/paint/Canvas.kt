@@ -39,21 +39,10 @@ class Canvas(
 
     private fun Canvas.draw(pathPaint: PathPaint) {
         when (pathPaint.brush) {
-            Brush.PEN -> {
-                drawPath(pathPaint.path, pathPaint.paint)
-            }
-
-            Brush.RECT -> {
-                drawRect(pathPaint.shape as Rectangle, pathPaint.paint)
-            }
-
-            Brush.CIRCLE -> {
-                drawCircle(pathPaint.shape as Circle, pathPaint.paint)
-            }
-
-            Brush.ERASER -> {
-                drawPath(pathPaint.path, pathPaint.paint)
-            }
+            Brush.PEN -> drawPath(pathPaint.path, pathPaint.paint)
+            Brush.RECT -> drawRect(pathPaint.shape as Rectangle, pathPaint.paint)
+            Brush.CIRCLE -> drawCircle(pathPaint.shape as Circle, pathPaint.paint)
+            Brush.ERASER -> drawPath(pathPaint.path, pathPaint.paint)
         }
     }
 
@@ -75,9 +64,7 @@ class Canvas(
                 currentPathPaint = currentPathPaint.resetPaint()
             }
 
-            else -> {
-                return super.onTouchEvent(event)
-            }
+            else -> return super.onTouchEvent(event)
         }
         invalidate()
         return true
@@ -111,13 +98,8 @@ class Canvas(
 
     private fun processUndo(action: Any) {
         when (action) {
-            is List<*> -> {
-                pathPaints.addAll(action.map { it as PathPaint })
-            }
-
-            is PathPaint -> {
-                pathPaints.removeIf { it.path == action.path }
-            }
+            is List<*> -> pathPaints.addAll(action.map { it as PathPaint })
+            is PathPaint -> pathPaints.removeIf { it.path == action.path }
         }
         invalidate()
     }
@@ -132,13 +114,8 @@ class Canvas(
 
     private fun processRedo(action: Any) {
         when (action) {
-            is List<*> -> {
-                pathPaints.clear()
-            }
-
-            is PathPaint -> {
-                pathPaints.add(action)
-            }
+            is List<*> -> pathPaints.clear()
+            is PathPaint -> pathPaints.add(action)
         }
         invalidate()
     }

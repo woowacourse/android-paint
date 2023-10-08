@@ -71,21 +71,10 @@ class PathPaint(
 
     fun drawToPath(x: Float, y: Float) {
         when (brush) {
-            Brush.PEN -> {
-                drawLine(x, y)
-            }
-
-            Brush.RECT -> {
-                drawRect(x, y)
-            }
-
-            Brush.CIRCLE -> {
-                drawCircle(x, y)
-            }
-
-            Brush.ERASER -> {
-                drawLine(x, y)
-            }
+            Brush.PEN -> drawLine(x, y)
+            Brush.RECT -> drawRect(x, y)
+            Brush.CIRCLE -> drawCircle(x, y)
+            Brush.ERASER -> drawLine(x, y)
         }
     }
 
