@@ -6,4 +6,5 @@
     <!-- Toolbar -->
     <string name="tb_undo">뒤로가기</string>
     <string name="tb_redo">되돌리기</string>
+    <string name="tb_delete">전체삭제</string>
 </resources>

@@ -27,4 +27,9 @@ class DrawableHistory {
         val element = redoes.removeLastOrNull() ?: return
         undoes.add(element)
     }
+
+    fun clear() {
+        undoes.clear()
+        redoes.clear()
+    }
 }

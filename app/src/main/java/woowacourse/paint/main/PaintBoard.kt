@@ -85,4 +85,9 @@ class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(conte
         pathHistory.redo()
         invalidate()
     }
+
+    fun deleteAll() {
+        pathHistory.clear()
+        invalidate()
+    }
 }

@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.action_undo -> binding.ctvPaintBoard.undo()
             R.id.action_redo -> binding.ctvPaintBoard.redo()
+            R.id.action_delete_all -> binding.ctvPaintBoard.deleteAll()
         }
         return true
     }
