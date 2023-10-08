@@ -1,6 +1,8 @@
 package woowacourse.paint.main
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +25,7 @@ class MainActivity : AppCompatActivity(), ColorClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupBinding()
+        setSupportActionBar(binding.toolbarMain)
         observeStrokes()
         observeColorBox()
         observePaintMode()
@@ -32,6 +35,20 @@ class MainActivity : AppCompatActivity(), ColorClickListener {
         setupChangeBrushThicknessButtonClickListener()
         setupChangePaintModeButtonClickListener()
         setupPaintModeButtonClickListener()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_paint, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_paint_undo -> {}
+            R.id.menu_paint_redo -> {}
+            R.id.menu_paint_clear -> {}
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onDestroy() {
