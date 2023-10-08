@@ -12,13 +12,6 @@ class RectangleBrush(
     private var startX: Float = 0f
     private var startY: Float = 0f
 
-    override fun setColor(color: Int): Brush {
-        val newPaint = defaultPaint.apply { this.color = color }
-        return RectangleBrush(Path(), newPaint)
-    }
-
-    override fun setStrokeWidth(width: Float): Brush = this
-
     override fun startDrawing(x: Float, y: Float) {
         path.reset()
         path.moveTo(x, y)
@@ -41,8 +34,8 @@ class RectangleBrush(
         canvas.drawPath(path, paint)
     }
 
-    override fun copy(): Brush {
-        val newPaint = defaultPaint.apply { this.color = paint.color }
+    override fun copy(color: Int?, width: Float?): Brush {
+        val newPaint = defaultPaint.apply { this.color = color ?: paint.color }
         return RectangleBrush(Path(), newPaint)
     }
 

@@ -26,11 +26,11 @@ class CanvasView constructor(context: Context, attr: AttributeSet) : View(contex
     }
 
     fun setColor(color: Color) {
-        brush = brush.setColor(context.getColor(color.id))
+        brush = brush.copy(color = context.getColor(color.id))
     }
 
     fun setStrokeWidth(width: Float) {
-        brush = brush.setStrokeWidth(width)
+        brush = brush.copy(width = width)
     }
 
     fun changeBrush(brush: Brush) {

@@ -13,22 +13,6 @@ class LineBrush(
     private var prevX: Float = 0f
     private var prevY: Float = 0f
 
-    override fun setColor(color: Int): Brush {
-        val newPaint = defaultPaint.apply {
-            this.color = color
-            this.strokeWidth = paint.strokeWidth
-        }
-        return LineBrush(Path(), newPaint)
-    }
-
-    override fun setStrokeWidth(width: Float): Brush {
-        val newPaint = defaultPaint.apply {
-            this.color = paint.color
-            this.strokeWidth = width
-        }
-        return LineBrush(Path(), newPaint)
-    }
-
     override fun startDrawing(x: Float, y: Float) {
         path.moveTo(x, y)
         prevX = x
@@ -51,10 +35,10 @@ class LineBrush(
         canvas.drawPath(path, paint)
     }
 
-    override fun copy(): Brush {
+    override fun copy(color: Int?, width: Float?): Brush {
         val newPaint = defaultPaint.apply {
-            this.color = paint.color
-            this.strokeWidth = paint.strokeWidth
+            this.color = color ?: paint.color
+            this.strokeWidth = width ?: paint.strokeWidth
         }
         return LineBrush(Path(), newPaint)
     }
