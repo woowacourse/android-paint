@@ -6,7 +6,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
-import android.view.View
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import woowacourse.paint.model.BrushSize
 import woowacourse.paint.model.DrawMode
@@ -19,7 +19,10 @@ import woowacourse.paint.model.drawable.path.DrawablePath
 import woowacourse.paint.model.drawable.shape.DrawableCircle
 import woowacourse.paint.model.drawable.shape.DrawableSquare
 
-class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(context, attrs) {
+class PaintBoard constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+) : ConstraintLayout(context, attrs) {
     private val pathHistory = DrawableHistory()
     private var currentDraw: DrawableElement = DrawableLine(paint = Paint())
 
