@@ -1,13 +1,14 @@
-package woowacourse.paint.model.drawable
+package woowacourse.paint.model.drawable.shape
 
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
+import woowacourse.paint.model.drawable.DrawableElement
 
 data class DrawableSquare(
     private val rect: RectF = RectF(),
     override val paint: Paint,
-) : DrawableElement {
+) : DrawableShape {
 
     init {
         paint.apply { style = Paint.Style.FILL }

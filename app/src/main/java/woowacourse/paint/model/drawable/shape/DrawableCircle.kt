@@ -1,7 +1,8 @@
-package woowacourse.paint.model.drawable
+package woowacourse.paint.model.drawable.shape
 
 import android.graphics.Canvas
 import android.graphics.Paint
+import woowacourse.paint.model.drawable.DrawableElement
 import kotlin.math.sqrt
 
 data class DrawableCircle(
@@ -9,7 +10,7 @@ data class DrawableCircle(
     private val cy: Float = 0f,
     private var radius: Float = 0f,
     override val paint: Paint,
-) : DrawableElement {
+) : DrawableShape {
 
     init {
         paint.apply { style = Paint.Style.FILL }

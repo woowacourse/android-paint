@@ -1,16 +1,16 @@
-package woowacourse.paint.model.drawable
+package woowacourse.paint.model.drawable.path
 
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffXfermode
+import androidx.annotation.ColorInt
 import woowacourse.paint.model.BrushSize
+import woowacourse.paint.model.drawable.DrawableElement
 
-data class DrawableEraser(
+data class DrawableLine(
     private val path: Path = Path(),
-    override val paint: Paint = Paint(),
-) : DrawableElement {
+    override val paint: Paint,
+) : DrawablePath {
 
     init {
         paint.apply {
@@ -18,12 +18,11 @@ data class DrawableEraser(
             strokeJoin = Paint.Join.ROUND
             isAntiAlias = true
             style = Paint.Style.STROKE
-            paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
         }
     }
 
     override fun drawCurrent(canvas: Canvas) {
-        canvas.drawPath(path, Paint(paint))
+        canvas.drawPath(path, paint)
     }
 
     override fun startDrawing(x: Float, y: Float): DrawableElement {
@@ -31,16 +30,20 @@ data class DrawableEraser(
             moveTo(x, y)
             lineTo(x, y)
         }
-        return DrawableEraser(newPath, paint)
+        return DrawableLine(newPath, Paint(paint))
     }
 
     override fun keepDrawing(x: Float, y: Float) {
         path.lineTo(x, y)
     }
 
-    override fun changePaintColor(color: Int): DrawableElement = this
+    override fun changePaintColor(@ColorInt color: Int): DrawableElement {
+        return copy(
+            paint = Paint(paint).apply { this.color = color },
+        )
+    }
 
-    fun changeBrushSize(brushSize: BrushSize): DrawableElement {
+    override fun changeBrushSize(brushSize: BrushSize): DrawablePath {
         return copy(
             paint = Paint(paint).apply { strokeWidth = brushSize.width },
         )
