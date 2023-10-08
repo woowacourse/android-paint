@@ -1,4 +1,4 @@
-package woowacourse.paint.view
+package woowacourse.paint.view.palette
 
 enum class PaletteMode(val modeName: String) {
     BRUSH("브러시"),

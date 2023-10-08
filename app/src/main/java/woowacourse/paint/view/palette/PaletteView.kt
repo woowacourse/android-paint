@@ -1,10 +1,15 @@
-package woowacourse.paint.view
+package woowacourse.paint.view.palette
 
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import androidx.core.view.isVisible
 import com.google.android.material.slider.RangeSlider
+import woowacourse.paint.common.rangeSlider
+import woowacourse.paint.view.palette.color.ColorScrollView
+import woowacourse.paint.view.palette.color.PaletteColor
+import woowacourse.paint.view.palette.shape.PaletteShape
+import woowacourse.paint.view.palette.shape.ShapeScrollView
 
 class PaletteView : LinearLayout {
     constructor(context: Context) : super(context)

@@ -1,10 +1,12 @@
-package woowacourse.paint.view
+package woowacourse.paint.view.canvas.painter
 
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
+import woowacourse.paint.common.softPainter
+import woowacourse.paint.view.palette.color.PaletteColor
 
 data class PathEraserPainter(
     private val path: Path = Path(),

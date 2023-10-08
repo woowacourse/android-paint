@@ -1,6 +1,11 @@
-package woowacourse.paint.view
+package woowacourse.paint.view.canvas.paintHistory
 
 import android.graphics.Canvas
+import woowacourse.paint.view.canvas.painter.BrushPainter
+import woowacourse.paint.view.canvas.painter.Painter
+import woowacourse.paint.view.palette.color.PaletteColor
+import woowacourse.paint.view.palette.PaletteMode
+import woowacourse.paint.view.palette.shape.PaletteShape
 
 class PainterHistory(
     private val undoes: ArrayList<Painter> = ArrayList(),

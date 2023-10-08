@@ -1,6 +1,7 @@
-package woowacourse.paint.view
+package woowacourse.paint.common
 
 import android.graphics.Paint
+import woowacourse.paint.view.palette.color.PaletteColor
 
 fun Paint.softPainter(
     paletteColor: PaletteColor = PaletteColor.RED,

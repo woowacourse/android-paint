@@ -1,8 +1,10 @@
-package woowacourse.paint.view
+package woowacourse.paint.view.canvas.painter
 
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
+import woowacourse.paint.common.softPainter
+import woowacourse.paint.view.palette.color.PaletteColor
 
 data class BrushPainter(
     private val path: Path = Path(),

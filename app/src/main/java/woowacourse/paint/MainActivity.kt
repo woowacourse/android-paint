@@ -6,11 +6,11 @@ import android.view.MenuItem
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
-import woowacourse.paint.view.CanvasView
-import woowacourse.paint.view.PaletteColor
-import woowacourse.paint.view.PaletteMode
-import woowacourse.paint.view.PaletteShape
-import woowacourse.paint.view.PaletteView
+import woowacourse.paint.view.canvas.CanvasView
+import woowacourse.paint.view.palette.color.PaletteColor
+import woowacourse.paint.view.palette.PaletteMode
+import woowacourse.paint.view.palette.shape.PaletteShape
+import woowacourse.paint.view.palette.PaletteView
 
 class MainActivity : AppCompatActivity() {
     private val canvasView: CanvasView by lazy { findViewById(R.id.canvas_view) }

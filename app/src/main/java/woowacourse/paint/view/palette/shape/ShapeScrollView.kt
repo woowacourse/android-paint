@@ -1,4 +1,4 @@
-package woowacourse.paint.view
+package woowacourse.paint.view.palette.shape
 
 import android.content.Context
 import android.widget.HorizontalScrollView
