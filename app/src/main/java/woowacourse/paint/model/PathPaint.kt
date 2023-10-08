@@ -25,6 +25,15 @@ class PathPaint(
 
     lateinit var shape: Shape
 
+    init {
+        with(paint) {
+            isAntiAlias = true
+            style = Paint.Style.STROKE
+            strokeCap = Paint.Cap.ROUND
+            strokeJoin = Paint.Join.ROUND
+        }
+    }
+
     fun setPaintColor(@ColorInt color: Int) {
         paint.color = color
     }

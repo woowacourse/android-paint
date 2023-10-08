@@ -3,7 +3,6 @@ package woowacourse.paint
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -24,7 +23,6 @@ class Canvas(
     init {
         isFocusable = true
         isFocusableInTouchMode = true
-        setChangeBrush(Brush.PEN)
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -67,7 +65,7 @@ class Canvas(
             }
 
             MotionEvent.ACTION_UP -> {
-                initPaint()
+                currentPathPaint = currentPathPaint.resetPaint()
             }
 
             else -> {
@@ -76,16 +74,6 @@ class Canvas(
         }
         invalidate()
         return true
-    }
-
-    private fun initPaint() {
-        currentPathPaint = currentPathPaint.resetPaint().apply {
-            with(paint) {
-                isAntiAlias = true
-                strokeCap = Paint.Cap.ROUND
-                strokeJoin = Paint.Join.ROUND
-            }
-        }
     }
 
     fun setStrokeSize(size: Float) {
