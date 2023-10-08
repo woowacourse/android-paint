@@ -15,6 +15,7 @@ class Oval(private val ovalColor: Int) : PaintTool {
         return Paint().apply {
             this.color = ovalColor
             style = Paint.Style.FILL
+            isAntiAlias = true
         }
     }
 
