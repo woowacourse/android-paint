@@ -27,7 +27,8 @@ class MainViewModel : ViewModel() {
         get() = _isVisibleBrushTypeList
 
     // 색상
-    private val _colors = MutableLiveData(getBoardColorItems(BrushColor.values().first()))
+    private val _colors =
+        MutableLiveData(BrushColorItem.getBoardColorItems(BrushColor.values().first()))
     val colors: LiveData<List<BrushColorItem>>
         get() = _colors
 
@@ -41,9 +42,7 @@ class MainViewModel : ViewModel() {
         get() = _appliedStroke
 
     // 브러시 타입
-    private val usingBrushes =
-        listOf(BrushType.Stroke, BrushType.Rectangle, BrushType.Circle, BrushType.Eraser)
-    private val _brushTypes = MutableLiveData(getBrushTypeItems(BrushType.Stroke))
+    private val _brushTypes = MutableLiveData(BrushTypeItem.getBrushTypeItems(BrushType.Stroke))
     val brushTypes: LiveData<List<BrushTypeItem>>
         get() = _brushTypes
 
@@ -54,25 +53,13 @@ class MainViewModel : ViewModel() {
     // 양방향 데이터바인딩으로 뷰모델에서 유지하는 경로 정보
     val drawnPaths = MutableLiveData<List<Content>>(listOf())
 
-    private fun getBoardColorItems(selectedColor: BrushColor): List<BrushColorItem> =
-        BrushColor.values().map {
-            if (it == selectedColor) return@map BrushColorItem(it, true)
-            BrushColorItem(it, false)
-        }
-
-    private fun getBrushTypeItems(selectedBrushType: BrushType): List<BrushTypeItem> =
-        usingBrushes.map {
-            if (it == selectedBrushType) return@map BrushTypeItem(it, true)
-            BrushTypeItem(it, false)
-        }
-
     fun onChangeSelectedColor(brushColorItem: BrushColorItem) {
-        _colors.value = getBoardColorItems(brushColorItem.color)
+        _colors.value = BrushColorItem.getBoardColorItems(brushColorItem.color)
         _isVisibleColorList.value = false
     }
 
     fun onChangeSelectedBrushType(brushTypeItem: BrushTypeItem) {
-        _brushTypes.value = getBrushTypeItems(brushTypeItem.brushType)
+        _brushTypes.value = BrushTypeItem.getBrushTypeItems(brushTypeItem.brushType)
         _isVisibleBrushTypeList.value = false
     }
 

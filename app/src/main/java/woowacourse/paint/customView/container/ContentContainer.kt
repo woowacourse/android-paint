@@ -73,7 +73,7 @@ class ContentContainer(
 
     fun redo(): Boolean {
         if (redoAbleContents.isEmpty()) return false
-        redoAbleContents.add(redoAbleContents.removeLast())
+        _drawnContents.add(redoAbleContents.removeLast())
         return true
     }
 
