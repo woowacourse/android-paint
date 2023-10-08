@@ -50,7 +50,7 @@
 
 
             <ImageView
-                android:id="@+id/iv_round"
+                android:id="@+id/iv_circle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -64,7 +64,14 @@
                 app:srcCompat="@drawable/ic_rectangle" />
 
             <ImageView
-                android:id="@+id/eraser"
+                android:id="@+id/iv_pen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_pen" />
+
+            <ImageView
+                android:id="@+id/iv_eraser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"

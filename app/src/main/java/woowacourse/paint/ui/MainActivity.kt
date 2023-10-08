@@ -38,4 +38,13 @@ class MainActivity : AppCompatActivity() {
             setHasFixedSize(true)
         }
     }
+
+    private fun setOnClickListener() {
+        binding.apply {
+            ivCircle.setOnClickListener { }
+            ivRectangle.setOnClickListener { }
+            ivPen.setOnClickListener { }
+            ivEraser.setOnClickListener { }
+        }
+    }
 }
