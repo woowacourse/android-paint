@@ -27,14 +27,15 @@ class MainActivity : AppCompatActivity() {
         setupChangeBrush()
     }
 
-    private fun initBinding() {
-        binding.vm = mainViewModel
-    }
-
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         binding.canvasMain.setPaintColor(mainViewModel.paintColor)
         binding.canvasMain.setStrokeSize(mainViewModel.strokeSize)
+        binding.canvasMain.setChangeBrush(mainViewModel.brush)
         super.onRestoreInstanceState(savedInstanceState)
+    }
+
+    private fun initBinding() {
+        binding.vm = mainViewModel
     }
 
     private fun initPalette() {
@@ -72,14 +73,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupChangeBrush() {
         binding.btnMainChangeBrushPen.setOnClickListener {
+            mainViewModel.brush = Brush.PEN
             binding.canvasMain.setChangeBrush(Brush.PEN)
         }
 
         binding.btnMainChangeBrushRectangle.setOnClickListener {
+            mainViewModel.brush = Brush.RECT
             binding.canvasMain.setChangeBrush(Brush.RECT)
         }
 
         binding.btnMainChangeBrushCircle.setOnClickListener {
+            mainViewModel.brush = Brush.CIRCLE
             binding.canvasMain.setChangeBrush(Brush.CIRCLE)
         }
     }
