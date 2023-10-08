@@ -4,6 +4,7 @@ enum class DrawMode {
     BRUSH,
     SQUARE,
     CIRCLE,
+    ERASER,
     ;
 
     companion object {

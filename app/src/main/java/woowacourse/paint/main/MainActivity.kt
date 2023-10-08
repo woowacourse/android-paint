@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity() {
                 binding.rbBrush.id -> viewModel.setDrawMode(DrawMode.BRUSH)
                 binding.rbSquare.id -> viewModel.setDrawMode(DrawMode.SQUARE)
                 binding.rbCircle.id -> viewModel.setDrawMode(DrawMode.CIRCLE)
+                binding.rbEraser.id -> viewModel.setDrawMode(DrawMode.ERASER)
             }
         }
     }

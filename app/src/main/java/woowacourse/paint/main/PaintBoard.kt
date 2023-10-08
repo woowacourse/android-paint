@@ -14,12 +14,17 @@ import woowacourse.paint.model.DrawableHistory
 import woowacourse.paint.model.PaintColor
 import woowacourse.paint.model.drawable.DrawableCircle
 import woowacourse.paint.model.drawable.DrawableElement
+import woowacourse.paint.model.drawable.DrawableEraser
 import woowacourse.paint.model.drawable.DrawablePath
 import woowacourse.paint.model.drawable.DrawableSquare
 
 class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val pathHistory = DrawableHistory()
     private var currentDraw: DrawableElement = DrawablePath(paint = Paint())
+
+    init {
+        setLayerType(LAYER_TYPE_HARDWARE, null)
+    }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -53,16 +58,23 @@ class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(conte
     }
 
     fun setDrawMode(mode: DrawMode) {
+        val newPaint = Paint().apply {
+            color = currentDraw.paint.color
+            strokeWidth = currentDraw.paint.strokeWidth
+        }
         currentDraw = when (mode) {
-            DrawMode.BRUSH -> DrawablePath(paint = Paint(currentDraw.paint))
-            DrawMode.SQUARE -> DrawableSquare(paint = Paint(currentDraw.paint))
-            DrawMode.CIRCLE -> DrawableCircle(paint = Paint(currentDraw.paint))
+            DrawMode.BRUSH -> DrawablePath(paint = newPaint)
+            DrawMode.SQUARE -> DrawableSquare(paint = newPaint)
+            DrawMode.CIRCLE -> DrawableCircle(paint = newPaint)
+            DrawMode.ERASER -> DrawableEraser(paint = newPaint)
         }
     }
 
     fun setBrushSize(size: BrushSize) {
         if (currentDraw is DrawablePath) {
             currentDraw = (currentDraw as DrawablePath).changeBrushSize(size)
+        } else if (currentDraw is DrawableEraser) {
+            currentDraw = (currentDraw as DrawableEraser).changeBrushSize(size)
         }
     }
 
