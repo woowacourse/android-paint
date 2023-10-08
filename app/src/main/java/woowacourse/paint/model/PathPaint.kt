@@ -1,5 +1,6 @@
 package woowacourse.paint.model
 
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.Path.Direction
@@ -35,7 +36,10 @@ class PathPaint(
     }
 
     fun setPaintColor(@ColorInt color: Int) {
-        paint.color = color
+        when (color == EMPTY_COLOR) {
+            true -> paint.color = Color.BLACK
+            false -> paint.color = color
+        }
     }
 
     fun setPaintStrokeSize(size: Float) {
@@ -82,5 +86,9 @@ class PathPaint(
     private fun drawCircle(x: Float, y: Float) {
         shape = Circle(currentCX, currentCY, x, y)
         path.addCircle(shape as Circle, Direction.CW)
+    }
+
+    companion object {
+        private const val EMPTY_COLOR = 0
     }
 }
