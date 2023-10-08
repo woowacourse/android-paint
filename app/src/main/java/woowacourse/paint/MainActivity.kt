@@ -42,6 +42,9 @@ class MainActivity : AppCompatActivity() {
             circleBrushButton.setOnClickListener {
                 canvasView.changeBrush(CircleBrush())
             }
+            eraserButton.setOnClickListener {
+                canvasView.eraserMode()
+            }
         }
     }
 }

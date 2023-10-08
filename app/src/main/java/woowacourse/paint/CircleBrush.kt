@@ -7,7 +7,7 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 
 class CircleBrush(
-    private var path: Path = Path(),
+    override val path: Path = Path(),
     private val paint: Paint = Paint(),
 ) : Brush {
 

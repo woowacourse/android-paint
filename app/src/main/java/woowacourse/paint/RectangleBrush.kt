@@ -5,7 +5,7 @@ import android.graphics.Paint
 import android.graphics.Path
 
 class RectangleBrush(
-    private var path: Path = Path(),
+    override val path: Path = Path(),
     private val paint: Paint = Paint(),
 ) : Brush {
 

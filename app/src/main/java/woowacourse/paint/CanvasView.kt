@@ -17,6 +17,8 @@ class CanvasView constructor(context: Context, attr: AttributeSet) : View(contex
 
     private val brushHistory = BrushHistory()
 
+    private var eraserMode: Boolean = false
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
@@ -34,6 +36,11 @@ class CanvasView constructor(context: Context, attr: AttributeSet) : View(contex
     fun changeBrush(brush: Brush) {
         this.brush = brush
         this.setColor(Color.values().first())
+        eraserMode = false
+    }
+
+    fun eraserMode() {
+        eraserMode = true
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -42,17 +49,24 @@ class CanvasView constructor(context: Context, attr: AttributeSet) : View(contex
         val pointY = event.y
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
+                if (eraserMode) {
+                    brushHistory.removeAt(pointX, pointY)
+                    invalidate()
+                    return true
+                }
                 brush = brush.copy()
                 brushHistory.add(brush)
                 brush.startDrawing(pointX, pointY)
             }
 
             MotionEvent.ACTION_MOVE -> {
+                if (eraserMode) return true
                 brush.keepDrawing(pointX, pointY)
                 invalidate()
             }
 
             MotionEvent.ACTION_UP -> {
+                if (eraserMode) return true
                 finishDrawing()
                 invalidate()
             }

@@ -6,7 +6,7 @@ import android.graphics.Path
 import kotlin.math.abs
 
 class LineBrush(
-    private var path: Path = Path(),
+    override val path: Path = Path(),
     private var paint: Paint = defaultPaint,
 ) : Brush {
 
