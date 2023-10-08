@@ -4,7 +4,7 @@ import android.graphics.Paint
 import android.graphics.Path
 
 class Oval(private val ovalColor: Int) : PaintTool {
-    override val stroke: Stroke = Stroke(Path(), initPaint())
+    override val painting: Painting = Painting(Path(), initPaint())
 
     private var startPointX = 0f
     private var startPointY = 0f
@@ -20,17 +20,17 @@ class Oval(private val ovalColor: Int) : PaintTool {
     }
 
     override fun prepare(pointX: Float, pointY: Float) {
-        stroke.path.moveTo(pointX, pointY)
+        painting.path.moveTo(pointX, pointY)
         startPointX = pointX
         startPointY = pointY
     }
 
     override fun use(pointX: Float, pointY: Float) {
-        stroke.path.reset()
+        painting.path.reset()
         currentPointX = pointX
         currentPointY = pointY
 
-        stroke.path.addOval(
+        painting.path.addOval(
             startPointX,
             startPointY,
             currentPointX,

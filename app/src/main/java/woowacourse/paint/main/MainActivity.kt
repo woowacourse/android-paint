@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity(), ColorClickListener {
         super.onCreate(savedInstanceState)
         setupBinding()
         setSupportActionBar(binding.toolbarMain)
-        observeStrokes()
+        observePaintings()
         observeColorBox()
         observePaintMode()
         setupBrushColorPaletteAdapter()
@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity(), ColorClickListener {
 
     override fun onDestroy() {
         super.onDestroy()
-        viewModel.updateStrokes(binding.pvMain.strokes)
+        viewModel.updatePaintings(binding.pvMain.paintings)
     }
 
     private fun setupBinding() {
@@ -110,9 +110,9 @@ class MainActivity : AppCompatActivity(), ColorClickListener {
         }
     }
 
-    private fun observeStrokes() {
-        viewModel.strokes.observe(this) {
-            binding.pvMain.setStrokes(it)
+    private fun observePaintings() {
+        viewModel.paintings.observe(this) {
+            binding.pvMain.setPaintings(it)
         }
     }
 

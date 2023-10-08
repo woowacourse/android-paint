@@ -22,16 +22,16 @@ class PaintingView @JvmOverloads constructor(context: Context, attrs: AttributeS
     private var currentThickness: Float = DEFAULT_BRUSH_THICKNESS
     private var currentPaintTool: PaintTool = Pen(currentColor, currentThickness)
 
-    private val _strokes: MutableList<Stroke> = mutableListOf(currentPaintTool.stroke)
-    val strokes: List<Stroke>
-        get() = _strokes.map { stroke ->
+    private val _paintings: MutableList<Painting> = mutableListOf(currentPaintTool.painting)
+    val paintings: List<Painting>
+        get() = _paintings.map { stroke ->
             stroke.copy(
                 path = Path(stroke.path),
                 paint = Paint(stroke.paint),
             )
         }
 
-    private val strokeHistory: Stack<Stroke> = Stack()
+    private val paintingHistory: Stack<Painting> = Stack()
 
     init {
         isFocusable = true
@@ -42,11 +42,11 @@ class PaintingView @JvmOverloads constructor(context: Context, attrs: AttributeS
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        _strokes.forEach { stroke ->
+        _paintings.forEach { stroke ->
             canvas.drawPath(stroke.path, stroke.paint)
         }
 
-        canvas.drawPath(currentPaintTool.stroke.path, currentPaintTool.stroke.paint)
+        canvas.drawPath(currentPaintTool.painting.path, currentPaintTool.painting.paint)
     }
 
     private fun setupAttrs(attrs: AttributeSet) {
@@ -74,16 +74,16 @@ class PaintingView @JvmOverloads constructor(context: Context, attrs: AttributeS
             }
 
             MotionEvent.ACTION_UP -> {
-                _strokes.add(currentPaintTool.stroke)
+                _paintings.add(currentPaintTool.painting)
             }
 
             MotionEvent.ACTION_CANCEL -> {
-                _strokes.add(currentPaintTool.stroke)
+                _paintings.add(currentPaintTool.painting)
             }
 
             else -> super.onTouchEvent(event)
         }
-        strokeHistory.clear()
+        paintingHistory.clear()
         invalidate()
         return true
     }
@@ -96,9 +96,9 @@ class PaintingView @JvmOverloads constructor(context: Context, attrs: AttributeS
         currentThickness = thickness
     }
 
-    fun setStrokes(strokes: List<Stroke>) {
-        _strokes.clear()
-        _strokes.addAll(strokes)
+    fun setPaintings(paintings: List<Painting>) {
+        _paintings.clear()
+        _paintings.addAll(paintings)
         invalidate()
     }
 
@@ -112,20 +112,20 @@ class PaintingView @JvmOverloads constructor(context: Context, attrs: AttributeS
     }
 
     fun undo() {
-        strokeHistory.add(_strokes.lastOrNull() ?: return)
-        _strokes.removeLast()
+        paintingHistory.add(_paintings.lastOrNull() ?: return)
+        _paintings.removeLast()
         currentPaintTool = currentPaintTool.newInstance()
         invalidate()
     }
 
     fun redo() {
-        if (strokeHistory.empty()) return
-        _strokes.add(strokeHistory.pop())
+        if (paintingHistory.empty()) return
+        _paintings.add(paintingHistory.pop())
         invalidate()
     }
 
     fun clear() {
-        _strokes.clear()
+        _paintings.clear()
         currentPaintTool = currentPaintTool.newInstance()
         invalidate()
     }

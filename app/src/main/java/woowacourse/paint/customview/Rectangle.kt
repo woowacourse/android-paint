@@ -7,7 +7,7 @@ import java.lang.Float.min
 
 class Rectangle(private val rectangleColor: Int) : PaintTool {
 
-    override val stroke: Stroke = Stroke(Path(), initPaint())
+    override val painting: Painting = Painting(Path(), initPaint())
 
     private var startPointX = 0f
     private var startPointY = 0f
@@ -22,13 +22,13 @@ class Rectangle(private val rectangleColor: Int) : PaintTool {
     }
 
     override fun prepare(pointX: Float, pointY: Float) {
-        stroke.path.moveTo(pointX, pointY)
+        painting.path.moveTo(pointX, pointY)
         startPointX = pointX
         startPointY = pointY
     }
 
     override fun use(pointX: Float, pointY: Float) {
-        stroke.path.reset()
+        painting.path.reset()
         currentPointX = pointX
         currentPointY = pointY
 
@@ -37,7 +37,7 @@ class Rectangle(private val rectangleColor: Int) : PaintTool {
         val top = min(startPointY, currentPointY)
         val bottom = max(startPointY, currentPointY)
 
-        stroke.path.addRect(
+        painting.path.addRect(
             left,
             top,
             right,

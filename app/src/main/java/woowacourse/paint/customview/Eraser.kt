@@ -6,7 +6,7 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 
 class Eraser(private val thickness: Float) : PaintTool {
-    override val stroke: Stroke = Stroke(Path(), initPaint())
+    override val painting: Painting = Painting(Path(), initPaint())
 
     private fun initPaint(): Paint {
         return Paint().apply {
@@ -19,10 +19,10 @@ class Eraser(private val thickness: Float) : PaintTool {
     }
 
     override fun prepare(pointX: Float, pointY: Float) {
-        stroke.path.moveTo(pointX, pointY)
+        painting.path.moveTo(pointX, pointY)
     }
 
     override fun use(pointX: Float, pointY: Float) {
-        stroke.path.lineTo(pointX, pointY)
+        painting.path.lineTo(pointX, pointY)
     }
 }
