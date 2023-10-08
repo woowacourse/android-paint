@@ -1,4 +1,6 @@
-package woowacourse.paint
+package woowacourse.paint.model
+
+import woowacourse.paint.R
 
 enum class Color(val colorRes: Int) {
     RED(R.color.red),
