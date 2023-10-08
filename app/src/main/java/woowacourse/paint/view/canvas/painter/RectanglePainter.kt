@@ -45,9 +45,12 @@ data class RectanglePainter(
         canvas.drawRect(rect, paint)
     }
 
-    override fun extract(): Painter = copy()
+    override fun extract(): Painter = copy(
+        paint = Paint(paint),
+    )
 
     companion object {
-        private val DEFAULT_PAINT: Paint = Paint().softPainter(paintStyle = Paint.Style.FILL)
+        private val DEFAULT_PAINT: Paint
+            get() = Paint().softPainter(paintStyle = Paint.Style.FILL)
     }
 }

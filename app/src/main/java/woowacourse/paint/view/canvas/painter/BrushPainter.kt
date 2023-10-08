@@ -59,5 +59,8 @@ data class BrushPainter(
         canvas.drawPath(path, paint)
     }
 
-    override fun extract(): Painter = copy(path = Path())
+    override fun extract(): Painter = copy(
+        path = Path(),
+        paint = Paint(paint),
+    )
 }

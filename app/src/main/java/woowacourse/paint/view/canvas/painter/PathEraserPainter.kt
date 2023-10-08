@@ -4,13 +4,12 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.PorterDuff
-import android.graphics.PorterDuffXfermode
 import woowacourse.paint.common.softPainter
 import woowacourse.paint.view.palette.color.PaletteColor
 
 data class PathEraserPainter(
     private val path: Path = Path(),
-    private val paint: Paint = DEFAULT_PAINT,
+    private val paint: Paint = Paint().softPainter(porterDuffMode = PorterDuff.Mode.CLEAR),
 ) : Painter {
     private var prevX: Float = 0F
     private var prevY: Float = 0F
@@ -58,11 +57,8 @@ data class PathEraserPainter(
         canvas.drawPath(path, paint)
     }
 
-    override fun extract(): Painter = copy(path = Path())
-
-    companion object {
-        private val DEFAULT_PAINT: Paint = Paint().softPainter().apply {
-            xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
-        }
-    }
+    override fun extract(): Painter = copy(
+        path = Path(),
+        paint = Paint(paint),
+    )
 }

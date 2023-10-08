@@ -44,9 +44,12 @@ data class CirclePainter(
         canvas.drawArc(rect, 0F, 360F, true, paint)
     }
 
-    override fun extract(): Painter = copy()
+    override fun extract(): Painter = copy(
+        paint = Paint(paint),
+    )
 
     companion object {
-        private val DEFAULT_PAINT: Paint = Paint().softPainter(paintStyle = Paint.Style.FILL)
+        private val DEFAULT_PAINT: Paint
+            get() = Paint().softPainter(paintStyle = Paint.Style.FILL)
     }
 }
