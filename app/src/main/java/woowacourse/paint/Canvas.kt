@@ -27,6 +27,7 @@ class Canvas(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+        setLayerType(LAYER_TYPE_SOFTWARE, null)
 
         pathPaints.forEach {
             canvas.draw(it)
@@ -47,7 +48,9 @@ class Canvas(
                 drawCircle(pathPaint.shape as Circle, pathPaint.paint)
             }
 
-            else -> Unit
+            Brush.ERASER -> {
+                drawPath(pathPaint.path, pathPaint.paint)
+            }
         }
     }
 

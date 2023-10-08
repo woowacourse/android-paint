@@ -86,6 +86,11 @@ class MainActivity : AppCompatActivity() {
             mainViewModel.brush = Brush.CIRCLE
             binding.canvasMain.setChangeBrush(Brush.CIRCLE)
         }
+
+        binding.btnMainChangeBrushEraser.setOnClickListener {
+            mainViewModel.brush = Brush.ERASER
+            binding.canvasMain.setChangeBrush(Brush.ERASER)
+        }
     }
 
     private fun View.changeVisibility() {

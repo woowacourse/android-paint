@@ -4,6 +4,8 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.Path.Direction
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import android.graphics.RectF
 import androidx.annotation.ColorInt
 import woowacourse.paint.util.addCircle
@@ -18,8 +20,20 @@ class PathPaint(
     var brush: Brush = Brush.PEN
         set(value) {
             when (value) {
-                Brush.PEN -> paint.style = Paint.Style.STROKE
-                else -> paint.style = Paint.Style.FILL
+                Brush.PEN -> {
+                    paint.style = Paint.Style.STROKE
+                    paint.xfermode = null
+                }
+
+                Brush.ERASER -> {
+                    paint.style = Paint.Style.STROKE
+                    paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+                }
+
+                else -> {
+                    paint.xfermode = null
+                    paint.style = Paint.Style.FILL
+                }
             }
             field = value
         }
@@ -70,6 +84,7 @@ class PathPaint(
             }
 
             Brush.ERASER -> {
+                drawLine(x, y)
             }
         }
     }
