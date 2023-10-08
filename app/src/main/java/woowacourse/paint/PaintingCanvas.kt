@@ -6,17 +6,19 @@ import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import woowacourse.paint.model.PaintBrush
 import woowacourse.paint.model.PaintingElement
-import woowacourse.paint.model.PaintingHistory
 
 class PaintingCanvas @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
 ) : View(context, attrs) {
 
-    private val paletteHistory = PaintingHistory()
-    private var paintingElement = PaintingElement()
+    private val viewModel: MainViewModel by lazy {
+        ViewModelProvider(findViewTreeViewModelStoreOwner()!!)[MainViewModel::class.java]
+    }
     private var previousX = 0f
     private var previousY = 0f
 
@@ -28,10 +30,10 @@ class PaintingCanvas @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        paletteHistory.forEach {
+        viewModel.paletteHistory.forEach {
             it.draw(canvas)
         }
-        paintingElement.draw(canvas)
+        viewModel.paintingElement.draw(canvas)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -40,17 +42,19 @@ class PaintingCanvas @JvmOverloads constructor(
         val pointY = event.y
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                paintingElement = paintingElement.movePath(pointX, pointY)
+                viewModel.updatePaintingElement {
+                    it.movePath(pointX, pointY)
+                }
                 previousX = pointX
                 previousY = pointY
             }
 
             MotionEvent.ACTION_MOVE -> {
-                paintingElement.initPath(previousX, previousY, pointX, pointY)
+                viewModel.paintingElement.initPath(previousX, previousY, pointX, pointY)
             }
 
             MotionEvent.ACTION_UP -> {
-                paletteHistory.addHistory(paintingElement.withNewPaint())
+                viewModel.paletteHistory.addHistory(viewModel.paintingElement.withNewPaint())
             }
 
             else -> super.onTouchEvent(event)
@@ -60,32 +64,46 @@ class PaintingCanvas @JvmOverloads constructor(
     }
 
     fun setStroke(value: Float) {
-        paintingElement = paintingElement.setStroke(value)
+        viewModel.updatePaintingElement {
+            it.setStroke(value)
+        }
     }
 
     fun setColor(color: Int) {
-        paintingElement = paintingElement.setColor(context.getColor(color))
+        viewModel.updatePaintingElement {
+            it.setColor(context.getColor(color))
+        }
     }
 
     fun setBrush(brush: PaintBrush) {
-        paintingElement = paintingElement.setBrush(brush.brushTool)
+        viewModel.updatePaintingElement {
+            it.setBrush(brush.brushTool)
+        }
     }
 
     fun undoCanvas() {
-        paletteHistory.undo()
-        paintingElement = paintingElement.withNewPathPaint()
-        invalidate()
+        updateCanvasState {
+            viewModel.paletteHistory.undo()
+        }
     }
 
     fun redoCanvas() {
-        paletteHistory.redo()
-        paintingElement = paintingElement.withNewPathPaint()
-        invalidate()
+        updateCanvasState {
+            viewModel.paletteHistory.redo()
+        }
     }
 
     fun resetCanvas() {
-        paletteHistory.clear()
-        paintingElement = paintingElement.withNewPathPaint()
+        updateCanvasState {
+            viewModel.paletteHistory.clear()
+        }
+    }
+
+    private inline fun updateCanvasState(crossinline action: (PaintingElement) -> Unit) {
+        viewModel.updatePaintingElement {
+            action(it)
+            it.withNewPathPaint()
+        }
         invalidate()
     }
 
