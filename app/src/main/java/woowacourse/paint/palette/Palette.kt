@@ -1,0 +1,68 @@
+package woowacourse.paint.palette
+
+import android.content.Context
+import android.util.AttributeSet
+import android.view.LayoutInflater
+import androidx.annotation.ColorRes
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.databinding.DataBindingUtil
+import com.google.android.material.slider.RangeSlider
+import woowacourse.paint.R
+import woowacourse.paint.databinding.PaletteBinding
+
+class Palette(context: Context, attrs: AttributeSet? = null) : ConstraintLayout(context, attrs) {
+
+    private lateinit var onSelectedColorIdChangedListener: (Int) -> Unit
+    private lateinit var onStrokeWidthChangedListener: ((Float) -> Unit)
+
+    private val binding: PaletteBinding
+
+    @ColorRes
+    private var selectedColorId: Int = R.color.black
+
+    private var strokeWidth: Float = 0f
+        get() {
+            return field + 10f
+        }
+
+    init {
+        binding =
+            DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.palette, this, true)
+        initColorSelectorRecyclerView()
+        initStrokeWidthSelector()
+        initStrokeWidthSelectorListener()
+    }
+
+    constructor(
+        context: Context,
+        attrs: AttributeSet? = null,
+        onSelectedColorIdChangedListener: (Int) -> Unit,
+        onStrokeWidthChangedListener: (Float) -> Unit,
+    ) : this(context, attrs) {
+        this.onSelectedColorIdChangedListener = onSelectedColorIdChangedListener
+        this.onStrokeWidthChangedListener = onStrokeWidthChangedListener
+    }
+
+    private fun initColorSelectorRecyclerView() {
+        binding.rvColorSelector.adapter = ColorSelectorAdapter {
+            selectedColorId = it
+            onSelectedColorIdChangedListener(it)
+        }
+    }
+
+    private fun initStrokeWidthSelector() {
+        binding.rangeSliderStrokeWidthSelector.apply {
+            valueFrom = 0.0f
+            valueTo = 40.0f
+        }
+    }
+
+    private fun initStrokeWidthSelectorListener() {
+        binding.rangeSliderStrokeWidthSelector.addOnChangeListener(
+            RangeSlider.OnChangeListener { _, value, _ ->
+                strokeWidth = value
+                onStrokeWidthChangedListener(strokeWidth)
+            },
+        )
+    }
+}
