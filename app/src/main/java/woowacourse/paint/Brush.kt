@@ -9,4 +9,5 @@ interface Brush {
     fun keepDrawing(x: Float, y: Float)
     fun finishDrawing()
     fun drawPath(canvas: Canvas)
+    fun copy(): Brush
 }

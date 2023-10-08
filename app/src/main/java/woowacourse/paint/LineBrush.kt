@@ -51,6 +51,14 @@ class LineBrush(
         canvas.drawPath(path, paint)
     }
 
+    override fun copy(): Brush {
+        val newPaint = defaultPaint.apply {
+            this.color = paint.color
+            this.strokeWidth = paint.strokeWidth
+        }
+        return LineBrush(Path(), newPaint)
+    }
+
     companion object {
         private const val MOVE_THRESHOLD = 5
 

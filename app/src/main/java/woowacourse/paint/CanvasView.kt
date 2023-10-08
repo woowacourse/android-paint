@@ -44,6 +44,7 @@ class CanvasView constructor(context: Context, attr: AttributeSet) : View(contex
         val pointY = event.y
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
+                brush = brush.copy()
                 brushHistory.add(brush)
                 brush.startDrawing(pointX, pointY)
             }
