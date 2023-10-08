@@ -53,7 +53,6 @@ class MainViewModel : ViewModel() {
 
     // 양방향 데이터바인딩으로 뷰모델에서 유지하는 경로 정보
     val drawnPaths = MutableLiveData<List<Content>>(listOf())
-    private val trashPaths = mutableListOf<Content>()
 
     private fun getBoardColorItems(selectedColor: BrushColor): List<BrushColorItem> =
         BrushColor.values().map {
@@ -88,24 +87,6 @@ class MainViewModel : ViewModel() {
 
     private fun setVisibleState(isVisible: MutableLiveData<Boolean>) {
         isVisible.value = isVisible.value != true
-    }
-
-    fun onClear() {
-        drawnPaths.value = listOf()
-        trashPaths.clear()
-    }
-
-    fun onUndo() {
-        drawnPaths.value?.let { paths ->
-            if (paths.isEmpty()) return@let
-            trashPaths.add(paths.last())
-            drawnPaths.value = paths.dropLast(1)
-        }
-    }
-
-    fun onRedo() {
-        if (trashPaths.isEmpty()) return
-        drawnPaths.value = (drawnPaths.value ?: listOf()) + trashPaths.removeLast()
     }
 
     companion object {

@@ -19,7 +19,7 @@ class ContentContainer(
     var brushType: BrushType = BrushType.Stroke
     val paintInfo = PaintInfo()
 
-    private val trashContents: MutableList<Content> = mutableListOf()
+    private val redoAbleContents: MutableList<Content> = mutableListOf()
 
     fun updateContent(event: MotionEvent) {
         when (event.action) {
@@ -27,6 +27,7 @@ class ContentContainer(
                 val drawingContent = createContent()
                 drawingContent.action(event)
                 _drawnContents.add(drawingContent)
+                redoAbleContents.clear() // undo를 한 상태에서 뒤로가기를 누르면, redo를 할 수 있는 것들이 모두 지워진다.
             }
 
             MotionEvent.ACTION_MOVE -> {
@@ -66,20 +67,20 @@ class ContentContainer(
     fun undo(): Boolean {
         if (_drawnContents.isEmpty()) return false
         val redoContent = _drawnContents.removeLast()
-        trashContents.add(redoContent)
+        redoAbleContents.add(redoContent)
         return true
     }
 
     fun redo(): Boolean {
-        if (trashContents.isEmpty()) return false
-        trashContents.add(trashContents.removeLast())
+        if (redoAbleContents.isEmpty()) return false
+        redoAbleContents.add(redoAbleContents.removeLast())
         return true
     }
 
     fun clear(): Boolean {
         if (_drawnContents.isEmpty()) return false
         _drawnContents.clear()
-        trashContents.clear()
+        redoAbleContents.clear()
         return true
     }
 }

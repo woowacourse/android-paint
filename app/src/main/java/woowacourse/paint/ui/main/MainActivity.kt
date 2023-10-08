@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         setupRvColors()
         setupRvBrushes()
         setupViewModel()
+        setupPaintBoard()
     }
 
     private fun setupRvColors() {
@@ -34,11 +35,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupViewModel() {
-        viewModel.colors.observe(this) {
-            colorAdapter.changeColorList(it)
-        }
-        viewModel.brushTypes.observe(this) {
-            brushTypeAdapter.changeTypeList(it)
-        }
+        viewModel.colors.observe(this) { colorAdapter.changeColorList(it) }
+        viewModel.brushTypes.observe(this) { brushTypeAdapter.changeTypeList(it) }
+    }
+
+    private fun setupPaintBoard() {
+        binding.btnClear.setOnClickListener { binding.pbBoard.clear() }
+        binding.btnUndo.setOnClickListener { binding.pbBoard.undo() }
+        binding.btnRedo.setOnClickListener { binding.pbBoard.redo() }
     }
 }
