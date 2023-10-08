@@ -12,6 +12,7 @@ import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat.getColor
 import androidx.databinding.BindingAdapter
 import woowacourse.paint.R
+import java.util.Stack
 
 class PaintingView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     View(context, attrs) {
@@ -29,6 +30,8 @@ class PaintingView @JvmOverloads constructor(context: Context, attrs: AttributeS
                 paint = Paint(stroke.paint),
             )
         }
+
+    private val strokeHistory: Stack<Stroke> = Stack()
 
     init {
         isFocusable = true
@@ -80,6 +83,7 @@ class PaintingView @JvmOverloads constructor(context: Context, attrs: AttributeS
 
             else -> super.onTouchEvent(event)
         }
+        strokeHistory.clear()
         invalidate()
         return true
     }
@@ -105,6 +109,25 @@ class PaintingView @JvmOverloads constructor(context: Context, attrs: AttributeS
             PaintMode.OVAL -> Oval(currentColor)
             PaintMode.ERASER -> Eraser(currentThickness)
         }
+    }
+
+    fun undo() {
+        strokeHistory.add(_strokes.lastOrNull() ?: return)
+        _strokes.removeLast()
+        currentPaintTool = currentPaintTool.newInstance()
+        invalidate()
+    }
+
+    fun redo() {
+        if (strokeHistory.empty()) return
+        _strokes.add(strokeHistory.pop())
+        invalidate()
+    }
+
+    fun clear() {
+        _strokes.clear()
+        currentPaintTool = currentPaintTool.newInstance()
+        invalidate()
     }
 
     private fun PaintTool.newInstance() = when (this) {

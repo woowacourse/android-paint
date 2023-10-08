@@ -44,9 +44,9 @@ class MainActivity : AppCompatActivity(), ColorClickListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_paint_undo -> {}
-            R.id.menu_paint_redo -> {}
-            R.id.menu_paint_clear -> {}
+            R.id.menu_paint_undo -> binding.pvMain.undo()
+            R.id.menu_paint_redo -> binding.pvMain.redo()
+            R.id.menu_paint_clear -> binding.pvMain.clear()
         }
         return super.onOptionsItemSelected(item)
     }
