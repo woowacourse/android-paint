@@ -37,17 +37,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menu.add(0, MENU_ID_CLEAR, 0, R.string.main_menu_clear).also {
-            it.setIcon(R.drawable.ic_clear)
-        }
+        menuInflater.inflate(R.menu.main_menu, menu)
 
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            MENU_ID_CLEAR -> {
+            R.id.menu_main_clear -> {
                 binding.canvasMain.clear()
+            }
+
+            R.id.menu_main_undo -> {
+                binding.canvasMain.undo()
             }
         }
 
@@ -118,9 +120,5 @@ class MainActivity : AppCompatActivity() {
             View.VISIBLE -> View.GONE
             else -> View.VISIBLE
         }
-    }
-
-    companion object {
-        private const val MENU_ID_CLEAR = 1
     }
 }

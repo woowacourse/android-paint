@@ -20,6 +20,8 @@ class Canvas(
     private val pathPaints: MutableList<PathPaint> = mutableListOf()
     private var currentPathPaint: PathPaint = PathPaint()
 
+    private val undo: MutableList<Any> = mutableListOf()
+
     init {
         isFocusable = true
         isFocusableInTouchMode = true
@@ -68,6 +70,7 @@ class Canvas(
             }
 
             MotionEvent.ACTION_UP -> {
+                undo.add(currentPathPaint)
                 currentPathPaint = currentPathPaint.resetPaint()
             }
 
@@ -92,7 +95,28 @@ class Canvas(
     }
 
     fun clear() {
+        undo.add(pathPaints.toList())
         pathPaints.clear()
+        invalidate()
+    }
+
+    fun undo() {
+        runCatching {
+            processUndo(undo.last())
+            undo.removeLast()
+        }
+    }
+
+    private fun processUndo(action: Any) {
+        when (action) {
+            is List<*> -> {
+                pathPaints.addAll(action.map { it as PathPaint })
+            }
+
+            is PathPaint -> {
+                pathPaints.removeIf { it.path == action.path }
+            }
+        }
         invalidate()
     }
 }
