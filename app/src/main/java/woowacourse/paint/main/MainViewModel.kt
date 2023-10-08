@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import woowacourse.paint.customview.BrushColor
+import woowacourse.paint.customview.PaintMode
 import woowacourse.paint.customview.Stroke
 import woowacourse.paint.main.model.BrushColorBox
 
@@ -17,6 +18,9 @@ class MainViewModel : ViewModel() {
 
     private val _strokes: MutableLiveData<List<Stroke>> = MutableLiveData()
     val strokes: LiveData<List<Stroke>> get() = _strokes
+
+    private val _paintMode: MutableLiveData<PaintMode> = MutableLiveData(PaintMode.PEN)
+    val paintMode: LiveData<PaintMode> get() = _paintMode
 
     private val _brushColorBoxes: MutableLiveData<List<BrushColorBox>> = MutableLiveData(
         BrushColor.getColorBoxes(
@@ -42,6 +46,10 @@ class MainViewModel : ViewModel() {
 
         _brushColor.value = clickedColor
         _brushColorBoxes.value = BrushColor.getColorBoxes(clickedColor)
+    }
+
+    fun updatePaintMode(newPaintMode: PaintMode) {
+        _paintMode.value = newPaintMode
     }
 
     companion object {

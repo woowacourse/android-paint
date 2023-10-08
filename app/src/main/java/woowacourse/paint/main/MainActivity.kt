@@ -8,6 +8,7 @@ import androidx.databinding.DataBindingUtil
 import com.google.android.material.slider.Slider
 import woowacourse.paint.R
 import woowacourse.paint.customview.BrushColor
+import woowacourse.paint.customview.PaintMode
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.main.adapter.BrushColorPaletteAdapter
 
@@ -24,10 +25,13 @@ class MainActivity : AppCompatActivity(), ColorClickListener {
         setupBinding()
         observeStrokes()
         observeColorBox()
+        observePaintMode()
         setupBrushColorPaletteAdapter()
         setupBrushThicknessRangeSliderChangeListener()
         setupChangeBrushColorPaletteButtonClickListener()
         setupChangeBrushThicknessButtonClickListener()
+        setupChangePaintModeButtonClickListener()
+        setupPaintModeButtonClickListener()
     }
 
     override fun onDestroy() {
@@ -65,6 +69,30 @@ class MainActivity : AppCompatActivity(), ColorClickListener {
         }
     }
 
+    private fun setupChangePaintModeButtonClickListener() {
+        binding.btnMainChangePaintMode.setOnClickListener {
+            binding.btnMainPaintModePen.toggleVisibleOrGone()
+            binding.btnMainPaintModeRectangle.toggleVisibleOrGone()
+            binding.btnMainPaintModeOval.toggleVisibleOrGone()
+            binding.btnMainPaintModeEraser.toggleVisibleOrGone()
+        }
+    }
+
+    private fun setupPaintModeButtonClickListener() {
+        binding.btnMainPaintModePen.setOnClickListener {
+            viewModel.updatePaintMode(PaintMode.PEN)
+        }
+        binding.btnMainPaintModeRectangle.setOnClickListener {
+            viewModel.updatePaintMode(PaintMode.RECTANGLE)
+        }
+        binding.btnMainPaintModeOval.setOnClickListener {
+            viewModel.updatePaintMode(PaintMode.OVAL)
+        }
+        binding.btnMainPaintModeEraser.setOnClickListener {
+            viewModel.updatePaintMode(PaintMode.ERASER)
+        }
+    }
+
     private fun observeStrokes() {
         viewModel.strokes.observe(this) {
             binding.pvMain.setStrokes(it)
@@ -74,6 +102,12 @@ class MainActivity : AppCompatActivity(), ColorClickListener {
     private fun observeColorBox() {
         viewModel.brushColorBoxes.observe(this) {
             brushColorPaletteAdapter.submitList(it)
+        }
+    }
+
+    private fun observePaintMode() {
+        viewModel.paintMode.observe(this) {
+            binding.pvMain.setPaintMode(it)
         }
     }
 

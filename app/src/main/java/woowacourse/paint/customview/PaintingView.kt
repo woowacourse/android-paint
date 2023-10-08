@@ -17,11 +17,11 @@ class PaintingView @JvmOverloads constructor(context: Context, attrs: AttributeS
     View(context, attrs) {
 
     @ColorInt
-    private var currentColor: Int = getColor(context, BrushColor.BLUE.colorRes)
+    private var currentColor: Int = getColor(context, BrushColor.RED.colorRes)
     private var currentThickness: Float = DEFAULT_BRUSH_THICKNESS
-    private var currentStroke: Stroke = Stroke(Path(), createInitializedPaint())
+    private var currentPaintTool: PaintTool = Pen(currentColor, currentThickness)
 
-    private val _strokes: MutableList<Stroke> = mutableListOf(currentStroke)
+    private val _strokes: MutableList<Stroke> = mutableListOf(currentPaintTool.stroke)
     val strokes: List<Stroke>
         get() = _strokes.map { stroke ->
             stroke.copy(
@@ -33,6 +33,7 @@ class PaintingView @JvmOverloads constructor(context: Context, attrs: AttributeS
     init {
         isFocusable = true
         isFocusableInTouchMode = true
+        setLayerType(LAYER_TYPE_HARDWARE, null)
         attrs?.let { setupAttrs(attrs) }
     }
 
@@ -42,7 +43,7 @@ class PaintingView @JvmOverloads constructor(context: Context, attrs: AttributeS
             canvas.drawPath(stroke.path, stroke.paint)
         }
 
-        canvas.drawPath(currentStroke.path, currentStroke.paint)
+        canvas.drawPath(currentPaintTool.stroke.path, currentPaintTool.stroke.paint)
     }
 
     private fun setupAttrs(attrs: AttributeSet) {
@@ -57,38 +58,30 @@ class PaintingView @JvmOverloads constructor(context: Context, attrs: AttributeS
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        val pointX = event.x
-        val pointY = event.y
+        val pointX: Float = event.x
+        val pointY: Float = event.y
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                currentStroke = Stroke(Path(), createInitializedPaint())
-                currentStroke.path.moveTo(pointX, pointY)
+                currentPaintTool = currentPaintTool.newInstance()
+                currentPaintTool.prepare(pointX, pointY)
             }
 
             MotionEvent.ACTION_MOVE -> {
-                currentStroke.path.lineTo(pointX, pointY)
+                currentPaintTool.use(pointX, pointY)
             }
 
             MotionEvent.ACTION_UP -> {
-                currentStroke.path.lineTo(pointX, pointY)
-                _strokes.add(currentStroke)
+                _strokes.add(currentPaintTool.stroke)
+            }
+
+            MotionEvent.ACTION_CANCEL -> {
+                _strokes.add(currentPaintTool.stroke)
             }
 
             else -> super.onTouchEvent(event)
         }
         invalidate()
         return true
-    }
-
-    private fun createInitializedPaint(): Paint {
-        return Paint().apply {
-            color = currentColor
-            isAntiAlias = true
-            strokeWidth = currentThickness
-            strokeJoin = Paint.Join.ROUND
-            strokeCap = Paint.Cap.ROUND
-            style = Paint.Style.STROKE
-        }
     }
 
     fun setBrushColor(brushColor: BrushColor) {
@@ -103,6 +96,25 @@ class PaintingView @JvmOverloads constructor(context: Context, attrs: AttributeS
         _strokes.clear()
         _strokes.addAll(strokes)
         invalidate()
+    }
+
+    fun setPaintMode(paintMode: PaintMode) {
+        currentPaintTool = when (paintMode) {
+            PaintMode.PEN -> Pen(currentColor, currentThickness)
+            PaintMode.RECTANGLE -> Rectangle(currentColor)
+            PaintMode.OVAL -> Oval(currentColor)
+            PaintMode.ERASER -> Eraser(currentThickness)
+        }
+    }
+
+    private fun PaintTool.newInstance() = when (this) {
+        is Pen -> Pen(currentColor, currentThickness)
+
+        is Oval -> Oval(currentColor)
+
+        is Rectangle -> Rectangle(currentColor)
+
+        is Eraser -> Eraser(currentThickness)
     }
 
     companion object {
