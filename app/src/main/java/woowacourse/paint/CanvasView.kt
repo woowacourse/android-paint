@@ -15,14 +15,12 @@ class CanvasView constructor(context: Context, attr: AttributeSet) : View(contex
 
     private lateinit var brush: Brush
 
-    private val brushHistory = mutableListOf<Brush>()
+    private val brushHistory = BrushHistory()
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        brushHistory.forEach {
-            it.drawPath(canvas)
-        }
+        brushHistory.drawPath(canvas)
     }
 
     fun setColor(color: Color) {
