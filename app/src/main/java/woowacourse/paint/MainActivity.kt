@@ -84,6 +84,7 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.undo -> canvasView.undo()
             R.id.redo -> canvasView.redo()
+            R.id.reset -> canvasView.reset()
         }
         return true
     }

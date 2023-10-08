@@ -55,4 +55,9 @@ class CanvasView : View {
         painterHistory.redo()
         invalidate()
     }
+
+    fun reset() {
+        painterHistory.clear()
+        invalidate()
+    }
 }

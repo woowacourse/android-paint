@@ -49,4 +49,9 @@ class PainterHistory(
         val undo = redoes.removeLastOrNull() ?: return
         undoes.add(undo)
     }
+
+    fun clear() {
+        undoes.clear()
+        redoes.clear()
+    }
 }
