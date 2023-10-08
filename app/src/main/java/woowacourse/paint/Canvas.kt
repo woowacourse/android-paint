@@ -90,4 +90,9 @@ class Canvas(
     fun setChangeBrush(brush: Brush) {
         currentPathPaint.brush = brush
     }
+
+    fun clear() {
+        pathPaints.clear()
+        invalidate()
+    }
 }

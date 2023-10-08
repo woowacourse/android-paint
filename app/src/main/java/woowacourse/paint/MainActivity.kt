@@ -1,6 +1,8 @@
 package woowacourse.paint
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -32,6 +34,24 @@ class MainActivity : AppCompatActivity() {
         binding.canvasMain.setStrokeSize(mainViewModel.strokeSize)
         binding.canvasMain.setChangeBrush(mainViewModel.brush)
         super.onRestoreInstanceState(savedInstanceState)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menu.add(0, MENU_ID_CLEAR, 0, R.string.main_menu_clear).also {
+            it.setIcon(R.drawable.ic_clear)
+        }
+
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            MENU_ID_CLEAR -> {
+                binding.canvasMain.clear()
+            }
+        }
+
+        return true
     }
 
     private fun initBinding() {
@@ -98,5 +118,9 @@ class MainActivity : AppCompatActivity() {
             View.VISIBLE -> View.GONE
             else -> View.VISIBLE
         }
+    }
+
+    companion object {
+        private const val MENU_ID_CLEAR = 1
     }
 }
