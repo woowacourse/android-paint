@@ -23,6 +23,10 @@ enum class DrawingToolModel(@DrawableRes val image: Int, val paint: Paint) {
             isAntiAlias = true
         },
     ),
+    SHAPE(
+        R.drawable.ic_shape_100,
+        Paint(),
+    ),
     ERASER(
         R.drawable.ic_eraser_100,
         Paint().apply {

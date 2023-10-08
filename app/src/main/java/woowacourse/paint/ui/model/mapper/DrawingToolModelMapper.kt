@@ -7,6 +7,7 @@ fun DrawingTool.toDrawingToolModel(): DrawingToolModel {
     return when (this) {
         DrawingTool.PEN -> DrawingToolModel.PEN
         DrawingTool.HIGHLIGHTER -> DrawingToolModel.HIGHLIGHTER
+        DrawingTool.SHAPE -> DrawingToolModel.SHAPE
         DrawingTool.ERASER -> DrawingToolModel.ERASER
     }
 }
@@ -15,6 +16,7 @@ fun DrawingToolModel.toDrawingTool(): DrawingTool {
     return when (this) {
         DrawingToolModel.PEN -> DrawingTool.PEN
         DrawingToolModel.HIGHLIGHTER -> DrawingTool.HIGHLIGHTER
+        DrawingToolModel.SHAPE -> DrawingTool.SHAPE
         DrawingToolModel.ERASER -> DrawingTool.ERASER
     }
 }
