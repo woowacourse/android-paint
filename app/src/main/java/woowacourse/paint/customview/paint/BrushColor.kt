@@ -1,4 +1,4 @@
-package woowacourse.paint.customview
+package woowacourse.paint.customview.paint
 
 import androidx.annotation.ColorRes
 import woowacourse.paint.R

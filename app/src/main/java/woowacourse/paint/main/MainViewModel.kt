@@ -3,9 +3,9 @@ package woowacourse.paint.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import woowacourse.paint.customview.BrushColor
-import woowacourse.paint.customview.PaintMode
-import woowacourse.paint.customview.Painting
+import woowacourse.paint.customview.paint.BrushColor
+import woowacourse.paint.customview.paint.PaintMode
+import woowacourse.paint.customview.paint.Painting
 import woowacourse.paint.main.model.BrushColorBox
 
 class MainViewModel : ViewModel() {

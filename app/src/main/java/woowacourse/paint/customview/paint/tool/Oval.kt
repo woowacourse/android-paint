@@ -1,12 +1,10 @@
-package woowacourse.paint.customview
+package woowacourse.paint.customview.paint.tool
 
 import android.graphics.Paint
 import android.graphics.Path
-import java.lang.Float.max
-import java.lang.Float.min
+import woowacourse.paint.customview.paint.Painting
 
-class Rectangle(private val rectangleColor: Int) : PaintTool {
-
+class Oval(private val ovalColor: Int) : PaintTool {
     override val painting: Painting = Painting(Path(), initPaint())
 
     private var startPointX = 0f
@@ -16,8 +14,9 @@ class Rectangle(private val rectangleColor: Int) : PaintTool {
 
     private fun initPaint(): Paint {
         return Paint().apply {
-            this.color = rectangleColor
+            this.color = ovalColor
             style = Paint.Style.FILL
+            isAntiAlias = true
         }
     }
 
@@ -32,17 +31,13 @@ class Rectangle(private val rectangleColor: Int) : PaintTool {
         currentPointX = pointX
         currentPointY = pointY
 
-        val left = min(startPointX, currentPointX)
-        val right = max(startPointX, currentPointX)
-        val top = min(startPointY, currentPointY)
-        val bottom = max(startPointY, currentPointY)
-
-        painting.path.addRect(
-            left,
-            top,
-            right,
-            bottom,
+        painting.path.addOval(
+            startPointX,
+            startPointY,
+            currentPointX,
+            currentPointY,
             Path.Direction.CW,
         )
     }
+
 }

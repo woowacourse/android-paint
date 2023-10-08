@@ -1,4 +1,4 @@
-package woowacourse.paint.customview
+package woowacourse.paint.customview.paint
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -12,6 +12,11 @@ import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat.getColor
 import androidx.databinding.BindingAdapter
 import woowacourse.paint.R
+import woowacourse.paint.customview.paint.tool.Eraser
+import woowacourse.paint.customview.paint.tool.Oval
+import woowacourse.paint.customview.paint.tool.PaintTool
+import woowacourse.paint.customview.paint.tool.Pen
+import woowacourse.paint.customview.paint.tool.Rectangle
 import java.util.Stack
 
 class PaintingView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :

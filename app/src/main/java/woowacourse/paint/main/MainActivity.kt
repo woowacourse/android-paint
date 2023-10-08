@@ -9,8 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.slider.Slider
 import woowacourse.paint.R
-import woowacourse.paint.customview.BrushColor
-import woowacourse.paint.customview.PaintMode
+import woowacourse.paint.customview.paint.BrushColor
+import woowacourse.paint.customview.paint.PaintMode
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.main.adapter.BrushColorPaletteAdapter
 
