@@ -13,7 +13,7 @@ class PaletteView : LinearLayout {
     private var paintPropertyChangeListener: OnPaintPropertyChangeListener? = null
     var selectedPaintThickness: Float = THICKNESS_SIZE_UNIT
     var selectedPaletteColor: PaletteColor = PaletteColor.values().first()
-    var selectedPaletteShape: PaletteShape = PaletteShape.values().first()
+    private var selectedPaletteShape: PaletteShape = PaletteShape.values().first()
 
     private val shapeScrollView by lazy { ShapeScrollView.create(context, ::setPaletteShape) }
     private val colorScrollView by lazy { ColorScrollView.create(context, ::setPaletteColor) }
@@ -61,21 +61,21 @@ class PaletteView : LinearLayout {
 
     fun changePaletteMode(paletteMode: PaletteMode) {
         when (paletteMode) {
-            PaletteMode.SHAPE -> {
-                colorScrollView.isVisible = true
-                shapeScrollView.isVisible = true
-                painterThicknessRangeSlider.isVisible = false
-            }
-
             PaletteMode.BRUSH -> {
                 colorScrollView.isVisible = true
                 painterThicknessRangeSlider.isVisible = true
                 shapeScrollView.isVisible = false
             }
 
-            PaletteMode.ERASER -> {
-                colorScrollView.isVisible = false
+            PaletteMode.SHAPE -> {
+                colorScrollView.isVisible = true
+                shapeScrollView.isVisible = true
                 painterThicknessRangeSlider.isVisible = false
+            }
+
+            PaletteMode.ERASER -> {
+                painterThicknessRangeSlider.isVisible = true
+                colorScrollView.isVisible = false
                 shapeScrollView.isVisible = false
             }
         }

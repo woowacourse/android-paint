@@ -12,6 +12,10 @@ class CanvasView : View {
 
     private val painterHistory = PainterHistory()
 
+    init {
+        setLayerType(LAYER_TYPE_HARDWARE, null)
+    }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         painterHistory.draw(canvas)

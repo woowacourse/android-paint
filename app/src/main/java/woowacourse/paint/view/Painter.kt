@@ -16,15 +16,15 @@ interface Painter {
     ): Painter {
         return when (paletteMode) {
             PaletteMode.BRUSH -> BrushPainter()
-            PaletteMode.SHAPE -> {
-                when (paletteShape) {
-                    PaletteShape.RECTANGLE -> RectanglePainter(paletteShape)
-                    PaletteShape.CIRCLE -> CirclePainter(paletteShape)
-                }
-            }
-
-            else -> throw IllegalArgumentException("")
-            // PaletteMode.ERASER -> EraserPainter(paint)
+            PaletteMode.SHAPE -> getShapePainter(paletteShape)
+            PaletteMode.ERASER -> PathEraserPainter()
         }
+    }
+
+    private fun getShapePainter(
+        paletteShape: PaletteShape,
+    ): Painter = when (paletteShape) {
+        PaletteShape.RECTANGLE -> RectanglePainter(paletteShape)
+        PaletteShape.CIRCLE -> CirclePainter(paletteShape)
     }
 }
