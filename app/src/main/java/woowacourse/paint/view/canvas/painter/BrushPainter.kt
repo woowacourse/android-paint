@@ -8,7 +8,7 @@ import woowacourse.paint.view.palette.color.PaletteColor
 
 data class BrushPainter(
     private val path: Path = Path(),
-    val paint: Paint = DEFAULT_PAINT,
+    val paint: Paint = Paint().softPainter(),
 ) : Painter {
     private var prevX: Float = 0F
     private var prevY: Float = 0F
@@ -26,7 +26,7 @@ data class BrushPainter(
     private fun updatePaint(
         paintColor: Int = paint.color,
         thickness: Float = paint.strokeWidth,
-    ): Paint = DEFAULT_PAINT.apply {
+    ): Paint = Paint().softPainter().apply {
         color = paintColor
         strokeWidth = thickness
     }
@@ -60,8 +60,4 @@ data class BrushPainter(
     }
 
     override fun extract(): Painter = copy(path = Path())
-
-    companion object {
-        private val DEFAULT_PAINT = Paint().softPainter()
-    }
 }
