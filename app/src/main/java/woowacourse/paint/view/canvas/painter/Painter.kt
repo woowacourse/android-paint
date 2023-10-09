@@ -16,12 +16,10 @@ interface Painter {
     fun changePainter(
         paletteMode: PaletteMode,
         paletteShape: PaletteShape = PaletteShape.values().first(),
-    ): Painter {
-        return when (paletteMode) {
-            PaletteMode.BRUSH -> BrushPainter()
-            PaletteMode.SHAPE -> getShapePainter(paletteShape)
-            PaletteMode.ERASER -> PathEraserPainter()
-        }
+    ): Painter = when (paletteMode) {
+        PaletteMode.BRUSH -> BrushPainter()
+        PaletteMode.SHAPE -> getShapePainter(paletteShape)
+        PaletteMode.ERASER -> PathEraserPainter()
     }
 
     private fun getShapePainter(
