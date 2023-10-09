@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         setRangeSlider()
         setPalette()
+        setOnClickListener()
     }
 
     private fun setRangeSlider() {
@@ -41,9 +42,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun setOnClickListener() {
         binding.apply {
-            ivCircle.setOnClickListener { }
-            ivRectangle.setOnClickListener { }
-            ivPen.setOnClickListener { }
+            ivCircle.setOnClickListener { cvCanvas.setupCircle() }
+            ivRectangle.setOnClickListener { cvCanvas.setupRectangle() }
+            ivPen.setOnClickListener { cvCanvas.setupPen() }
             ivEraser.setOnClickListener { }
         }
     }
