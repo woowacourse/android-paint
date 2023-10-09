@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import woowacourse.paint.domain.model.Brush
 import woowacourse.paint.domain.model.BrushColor
+import woowacourse.paint.domain.model.BrushType
 import woowacourse.paint.domain.model.BrushWidth
 import woowacourse.paint.presentation.ui.model.BrushColorModel
 import woowacourse.paint.presentation.ui.model.BrushModel
@@ -34,7 +35,11 @@ class MainViewModel : ViewModel() {
         _brush.value = _brush.value.changeWidth(BrushWidth(width))
     }
 
+    fun changeBrushType(type: BrushType) {
+        _brush.value = _brush.value.changeType(type)
+    }
+
     companion object {
-        private val INITIAL_BRUSH = Brush(BrushColor.RED, BrushWidth(30f))
+        private val INITIAL_BRUSH = Brush(BrushColor.RED, BrushWidth(30f), BrushType.PEN)
     }
 }
