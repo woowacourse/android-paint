@@ -1,4 +1,4 @@
-package woowacourse.paint.view.canvas.paintHistory
+package woowacourse.paint.view.canvas
 
 import android.graphics.Canvas
 import woowacourse.paint.view.canvas.painter.BrushPainter

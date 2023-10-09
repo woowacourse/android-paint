@@ -1,4 +1,4 @@
-package woowacourse.paint.view.canvas.paintHistory
+package woowacourse.paint.view.canvas
 
 import woowacourse.paint.view.palette.color.PaletteColor
 import woowacourse.paint.view.palette.shape.PaletteShape
