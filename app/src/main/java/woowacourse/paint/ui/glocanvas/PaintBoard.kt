@@ -11,6 +11,7 @@ import android.view.View
 import woowacourse.paint.ui.glocanvas.drawing.Circle
 import woowacourse.paint.ui.glocanvas.drawing.DrawingPath
 import woowacourse.paint.ui.glocanvas.drawing.Drawings
+import woowacourse.paint.ui.glocanvas.drawing.Rectangle
 import woowacourse.paint.ui.model.DrawingToolModel
 
 class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
@@ -41,7 +42,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
                 DrawingToolModel.CIRCLE -> createCircle()
 
-                else -> return super.onTouchEvent(event)
+                DrawingToolModel.RECTANGLE -> createRectangle()
             }
             drawings.addLast(drawing)
             savedDrawings.clear()
@@ -65,6 +66,11 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private fun createCircle(): Circle {
         val paint = createPaint()
         return Circle(paint, this::invalidate)
+    }
+
+    private fun createRectangle(): Rectangle {
+        val paint = createPaint()
+        return Rectangle(paint, this::invalidate)
     }
 
     fun setThickness(thickness: Float) {
