@@ -32,13 +32,13 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
 
     private val drawingsCanceled = mutableListOf<Drawing>()
 
+    init {
+        setLayerType(LAYER_TYPE_HARDWARE, null)
+    }
+
     fun initPaint(width: Float, selectedColor: PaletteColor) {
         setupWidth(width)
         setupColor(selectedColor)
-    }
-
-    init {
-        setLayerType(LAYER_TYPE_HARDWARE, null)
     }
 
     override fun onDraw(canvas: Canvas) {
