@@ -12,12 +12,14 @@ import android.view.View
 import androidx.annotation.ColorInt
 import woowacourse.paint.drawing.Drawing
 import woowacourse.paint.drawing.DrawingHistory
+import woowacourse.paint.ui.PaintMode
 
 class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     View(context, attrs) {
     private var path = Path()
     private var paint = Paint()
     private val drawingHistory = DrawingHistory()
+    private var paintMode = PaintMode.PEN
 
     init {
         changePaintProperty(Color.RED, DEFAULT_PAINT_WIDTH)
@@ -67,6 +69,10 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
     fun changePaintWidth(width: Float) {
         paint = Paint(paint)
         changePaintProperty(width = width)
+    }
+
+    fun changePaintMode(paintMode: PaintMode) {
+        this.paintMode = paintMode
     }
 
     private fun changePaintProperty(
