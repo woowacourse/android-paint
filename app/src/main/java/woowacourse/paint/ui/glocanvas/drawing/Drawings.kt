@@ -1,4 +1,4 @@
-package woowacourse.paint.ui.model
+package woowacourse.paint.ui.glocanvas.drawing
 
 class Drawings(private val _items: ArrayDeque<Drawing> = ArrayDeque()) {
     val items: ArrayDeque<Drawing>

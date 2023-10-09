@@ -8,9 +8,9 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import woowacourse.paint.ui.model.DrawingPath
+import woowacourse.paint.ui.glocanvas.drawing.DrawingPath
+import woowacourse.paint.ui.glocanvas.drawing.Drawings
 import woowacourse.paint.ui.model.DrawingToolModel
-import woowacourse.paint.ui.model.Drawings
 
 class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val drawings: Drawings = Drawings()
