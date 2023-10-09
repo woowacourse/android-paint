@@ -25,10 +25,11 @@ class Circle(override val paint: Paint, override val invalidate: () -> Unit) : D
             }
 
             MotionEvent.ACTION_MOVE, MotionEvent.ACTION_UP -> {
-                val distance = event.x - prevX
-                radius = abs(distance) / 2
-                cx = if (distance < 0) prevX - radius else prevX + radius
-                cy = if (distance < 0) prevY - radius else prevY + radius
+                val isToLeft = (event.x - prevX) < 0
+                val isToTop = (event.y - prevY) < 0
+                radius = abs(event.x - prevX) / 2
+                cx = if (isToLeft) prevX - radius else prevX + radius
+                cy = if (isToTop) prevY - radius else prevY + radius
                 invalidate()
                 true
             }
