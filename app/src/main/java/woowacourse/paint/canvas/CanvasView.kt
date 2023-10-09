@@ -13,10 +13,12 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
     context,
     attr,
 ) {
-    private var path = Path()
+    private var brush = Brush.PEN
     private var paint = Paint()
+    private var path = Path()
+
     private var startPoint: Point = Point(0f, 0f)
-    private val lines = mutableListOf<Line>()
+    private val drawings = mutableListOf<Drawing>()
 
     fun initPaint(width: Float, color: PaletteColor) {
         paint = getPaint(width, color.colorCode)
@@ -24,22 +26,32 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        lines.forEach { line ->
+        drawings.forEach { line ->
             canvas.drawPath(line.path, line.paint)
         }
         canvas.drawPath(path, paint)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
+        when (brush) {
+            Brush.PEN -> drawByPen(event)
+            Brush.RECTANGLE -> drawRect(event)
+            Brush.CIRCLE -> drawCircle(event)
+            Brush.ERASER -> TODO()
+        }
+        return true
+    }
+
+    private fun drawByPen(event: MotionEvent) {
         val x = event.x
         val y = event.y
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> drawDot(x, y)
             MotionEvent.ACTION_MOVE -> drawLine(x, y)
+            MotionEvent.ACTION_UP -> addDrawing()
             else -> super.onTouchEvent(event)
         }
-        return true
     }
 
     private fun drawDot(x: Float, y: Float) {
@@ -56,26 +68,71 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
         invalidate()
     }
 
+    private fun drawRect(event: MotionEvent) {
+        val x = event.x
+        val y = event.y
+
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                startPoint = Point(x, y)
+            }
+
+            MotionEvent.ACTION_MOVE -> {
+                path.reset()
+                path.addRect(startPoint.x, startPoint.y, x, y, Path.Direction.CW)
+                invalidate()
+            }
+
+            MotionEvent.ACTION_UP -> addDrawing()
+            else -> super.onTouchEvent(event)
+        }
+    }
+
+    private fun drawCircle(event: MotionEvent) {
+        val x = event.x
+        val y = event.y
+
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                startPoint = Point(x, y)
+            }
+
+            MotionEvent.ACTION_MOVE -> {
+                path.reset()
+                path.addOval(startPoint.x, startPoint.y, x, y, Path.Direction.CW)
+                invalidate()
+            }
+
+            MotionEvent.ACTION_UP -> addDrawing()
+            else -> super.onTouchEvent(event)
+        }
+    }
+
+    private fun erasePath() {
+    }
+
+    fun setupBrush(selectedBrush: Brush) {
+        brush = selectedBrush
+    }
+
     fun setupWidth(width: Float) {
-        addLine()
         paint = getPaint(width, paint.color)
     }
 
     fun setupColor(color: PaletteColor) {
-        addLine()
         paint = getPaint(paint.strokeWidth, color.colorCode)
     }
 
-    private fun addLine() {
+    private fun addDrawing() {
         if (path.isEmpty) return
-        lines.add(Line(path, paint))
+        drawings.add(Drawing(path, paint))
         path = Path()
     }
 
     private fun getPaint(width: Float, @ColorInt selectedColor: Int): Paint {
         return Paint().apply {
             isAntiAlias = true
-            style = Paint.Style.STROKE
+            style = Paint.Style.FILL_AND_STROKE
             strokeJoin = Paint.Join.ROUND
             color = selectedColor
             strokeWidth = width

@@ -70,7 +70,7 @@ class MainViewModel : ViewModel() {
     }
 
     companion object {
-        const val DEFAULT_WIDTH = 0F
+        const val DEFAULT_WIDTH = 1F
         val DEFAULT_SELECTED_COLOR = PaletteColor.RED
     }
 }

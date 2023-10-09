@@ -40,6 +40,9 @@ class MainActivity : AppCompatActivity() {
                 adapter.submitList(colors)
             }
         }
+        viewModel.selectedBrush.observe(this) { brush ->
+            canvasView.setupBrush(brush)
+        }
     }
 
     private fun setupCanvas() {
@@ -69,6 +72,7 @@ class MainActivity : AppCompatActivity() {
     private fun setupWidthSlider() {
         binding.rsThicknessChanger.valueFrom = minWidth
         binding.rsThicknessChanger.valueTo = maxWidth
+        binding.rsThicknessChanger.setValues(viewModel.width.value)
         binding.rsThicknessChanger.addOnChangeListener(
             RangeSlider.OnChangeListener { _, value, _ ->
                 viewModel.pickWidth(value)
@@ -77,7 +81,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val minWidth = 0f
+        private const val minWidth = 1f
         private const val maxWidth = 100f
     }
 }
