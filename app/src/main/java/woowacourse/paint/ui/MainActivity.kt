@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         initPaintColorsRecyclerView()
         initPaintWidthRangeSlider()
         initPaintModeRecyclerView()
+        initDeleteButton()
     }
 
     private fun initBinding() {
@@ -57,6 +58,12 @@ class MainActivity : AppCompatActivity() {
         }
         binding.paintModeAdapter =
             PaintModeAdapter(paintModeModels) { viewModel.updatePaintMode(it.paintMode) }
+    }
+
+    private fun initDeleteButton() {
+        binding.mainBtnDeleteAll.setOnClickListener {
+            binding.mainDrawingCanvas.removeAllDrawings()
+        }
     }
 
     companion object {

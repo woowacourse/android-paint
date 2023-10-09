@@ -28,7 +28,7 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
 
     private val drawingRectangle = DrawingRectangle()
     private val drawingCircle = DrawingCircle()
-    private val eraser = Eraser()
+    private val eraser = Eraser(drawingHistory)
 
     init {
         changePaintProperty(Color.RED, DEFAULT_PAINT_WIDTH)
@@ -43,7 +43,11 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
                 canvas, paint
             )
 
-            PaintMode.CIRCLE, PaintMode.FILL_CIRCLE -> drawingCircle.drawShapeOnCanvas(canvas, paint)
+            PaintMode.CIRCLE, PaintMode.FILL_CIRCLE -> drawingCircle.drawShapeOnCanvas(
+                canvas,
+                paint
+            )
+
             PaintMode.ERASER -> {}
         }
     }
@@ -102,7 +106,8 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
                     pointY
                 )
             )
-            PaintMode.ERASER -> eraser.erase(drawingHistory, PathPoint(pointX, pointY))
+
+            PaintMode.ERASER -> eraser.erasePath(PathPoint(pointX, pointY))
         }
     }
 
@@ -129,6 +134,11 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
 
     fun changePaintMode(paintMode: PaintMode) {
         this.paintMode = paintMode
+    }
+
+    fun removeAllDrawings() {
+        drawingHistory.removeAll()
+        invalidate()
     }
 
     private fun changePaintStyle(style: Paint.Style) {

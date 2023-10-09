@@ -40,6 +40,15 @@
             app:paintMode="@{viewModel.paintMode}"
             tools:layout_editor_absoluteX="-206dp" />
 
+        <ImageView
+            android:id="@+id/main_btn_delete_all"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/delete"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <com.google.android.material.slider.Slider
             android:id="@+id/main_brush_width_slider"
             android:layout_width="match_parent"
@@ -68,9 +77,9 @@
             android:id="@+id/main_paint_mode_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
             android:layout_marginVertical="10dp"
             android:adapter="@{paintModeAdapter}"
+            android:background="@color/white"
             android:orientation="horizontal"
             android:visibility="@{viewModel.paintModeControllerVisibility ? View.VISIBLE : View.GONE, default = gone}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

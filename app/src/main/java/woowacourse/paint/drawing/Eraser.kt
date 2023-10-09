@@ -3,13 +3,13 @@ package woowacourse.paint.drawing
 import android.graphics.RectF
 import woowacourse.paint.ui.PathPoint
 
-class Eraser {
-    fun erase(drawingHistory: DrawingHistory, point: PathPoint) {
+class Eraser(private val drawingHistory: DrawingHistory) {
+    fun erasePath(pathPoint: PathPoint) {
         val erasedIndex: List<Int> =
             drawingHistory.drawings.mapIndexedNotNull { index, drawing ->
                 val rect = RectF()
                 drawing.path.computeBounds(rect, true)
-                if ((point.x in rect.left..rect.right) && (point.y in rect.top..rect.bottom)) {
+                if ((pathPoint.x in rect.left..rect.right) && (pathPoint.y in rect.top..rect.bottom)) {
                     index
                 } else null
             }
