@@ -32,7 +32,7 @@ class LinePen(
         ink.path.reset()
     }
 
-    override fun setStrokeWidth(strokeWidth: Float) {
+    fun setStrokeWidth(strokeWidth: Float) {
         ink.paint.strokeWidth = strokeWidth
     }
 
