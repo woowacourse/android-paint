@@ -1,15 +1,12 @@
 package woowacourse.paint.view
 
-import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import woowacourse.paint.R
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.domain.BrushColor
-import woowacourse.paint.domain.BrushWidth
-import woowacourse.paint.view.model.mapper.LineMapper.toLine
-import woowacourse.paint.view.model.mapper.LinesMapper.toModel
 import woowacourse.paint.view.palette.PaletteAdapter
 
 class MainActivity : AppCompatActivity() {
@@ -30,28 +27,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initPaintView() {
-        binding.color = Color.RED
-        binding.width = 3F
-        binding.paintViewModel = PaintViewModel()
-        binding.mainPaintView.setOnAddLine { path, paint ->
-            binding.paintViewModel?.addLine(toLine(path, paint))
-        }
-        binding.paintViewModel?.lines?.observe(this) {
-            binding.mainPaintView.setRichPaths(it.toModel())
-        }
+        binding.paintViewModel = ViewModelProvider(this)[PaintViewModel::class.java]
     }
 
     private fun initColorButtons() {
         binding.mainPalettes.adapter = PaletteAdapter(BrushColor.paintColors) {
-            binding.color = it
+            binding.paintViewModel?.updateColor(it)
         }
     }
 
     private fun initWidthRangeSlider() {
-        binding.mainWidthRangeSlider.valueFrom = BrushWidth.range.start
-        binding.mainWidthRangeSlider.valueTo = BrushWidth.range.endInclusive
-        binding.mainWidthRangeSlider.addOnChangeListener { _, value, _ ->
-            binding.width = value
+        binding.mainWidthSlider.addOnChangeListener { _, value, _ ->
+            binding.paintViewModel?.updateStrokeWidth(value)
         }
     }
 }

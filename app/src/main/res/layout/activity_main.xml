@@ -7,14 +7,6 @@
         <variable
             name="paintViewModel"
             type="woowacourse.paint.view.PaintViewModel" />
-
-        <variable
-            name="color"
-            type="Integer" />
-
-        <variable
-            name="width"
-            type="Float" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,29 +17,117 @@
             android:id="@+id/main_paint_view"
             android:layout_width="match_parent"
             android:layout_height="500dp"
-            app:color="@{color}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:width="@{width}" />
+            app:pen="@{paintViewModel.pen}"
+            app:inks="@{paintViewModel.lines}" />
 
-        <com.google.android.material.slider.RangeSlider
-            android:id="@+id/main_width_range_slider"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/main_paint_view" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/main_palettes"
+        <ScrollView
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/main_width_range_slider" />
+            app:layout_constraintTop_toBottomOf="@id/main_paint_view">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/main_clear_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/main_clear"
+                    android:onClick="@{() -> paintViewModel.clearInk()}"
+                    app:layout_constraintEnd_toStartOf="@id/main_undo_btn"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/main_undo_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/main_undo"
+                    android:onClick="@{() -> paintViewModel.undoInk()}"
+                    app:layout_constraintEnd_toStartOf="@id/main_redo_btn"
+                    app:layout_constraintStart_toEndOf="@id/main_clear_btn"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/main_redo_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/main_redo"
+                    android:onClick="@{() -> paintViewModel.redoInk()}"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/main_undo_btn"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/main_line_pen_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> paintViewModel.changeToLinePen()}"
+                    android:text="@string/main_line_pen"
+                    app:layout_constraintEnd_toStartOf="@+id/main_rect_pen_btn"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/main_clear_btn" />
+
+                <Button
+                    android:id="@+id/main_rect_pen_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> paintViewModel.changeToRectPen()}"
+                    android:text="@string/main_rect_pen"
+                    app:layout_constraintEnd_toStartOf="@+id/main_ellipse_pen_btn"
+                    app:layout_constraintStart_toEndOf="@+id/main_line_pen_btn"
+                    app:layout_constraintTop_toBottomOf="@id/main_clear_btn" />
+
+                <Button
+                    android:id="@+id/main_ellipse_pen_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> paintViewModel.changeToEllipsePen()}"
+                    android:text="@string/main_ellipse_pen"
+                    app:layout_constraintEnd_toStartOf="@+id/main_eraser_pen_btn"
+                    app:layout_constraintStart_toEndOf="@+id/main_rect_pen_btn"
+                    app:layout_constraintTop_toBottomOf="@id/main_clear_btn" />
+
+                <Button
+                    android:id="@+id/main_eraser_pen_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="@{() -> paintViewModel.changeToEraserPen()}"
+                    android:text="@string/main_eraser_pen"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/main_ellipse_pen_btn"
+                    app:layout_constraintTop_toBottomOf="@id/main_clear_btn" />
+
+                <com.google.android.material.slider.Slider
+                    android:id="@+id/main_width_slider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:valueFrom="0"
+                    android:valueTo="100"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/main_line_pen_btn" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/main_palettes"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/main_width_slider" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
