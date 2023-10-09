@@ -13,7 +13,7 @@ class Brushes() {
     val hasUndoHistory: Boolean
         get() = undoHistory.isNotEmpty()
 
-    operator fun <T : Brush> plusAssign(brush: T) {
+    operator fun plusAssign(brush: Brush) {
         history.add(brush)
         undoHistory.clear()
     }
