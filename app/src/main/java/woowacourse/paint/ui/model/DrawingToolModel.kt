@@ -23,9 +23,19 @@ enum class DrawingToolModel(@DrawableRes val image: Int, val paint: Paint) {
             isAntiAlias = true
         },
     ),
-    SHAPE(
-        R.drawable.ic_shape_100,
-        Paint(),
+    CIRCLE(
+        R.drawable.ic_circle_100,
+        Paint().apply {
+            style = Paint.Style.FILL_AND_STROKE
+            isAntiAlias = true
+        },
+    ),
+    RECTANGLE(
+        R.drawable.ic_rectangle_100,
+        Paint().apply {
+            style = Paint.Style.FILL_AND_STROKE
+            isAntiAlias = true
+        },
     ),
     ERASER(
         R.drawable.ic_eraser_100,
