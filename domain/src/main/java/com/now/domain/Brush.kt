@@ -11,7 +11,7 @@ data class Brush(val brushColor: BrushColor, val brushWidth: BrushWidth) {
 
     companion object {
         fun fromDefault(): Brush {
-            return Brush(brushColor = BrushColor.RED, brushWidth = BrushWidth(1f))
+            return Brush(brushColor = BrushColor.RED, brushWidth = BrushWidth(5f))
         }
     }
 }
