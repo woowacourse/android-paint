@@ -31,4 +31,8 @@ class Drawings(private val _items: ArrayDeque<Drawing> = ArrayDeque()) {
     fun clear() {
         _items.clear()
     }
+
+    fun getLastDrawing(): Drawing {
+        return _items.last()
+    }
 }

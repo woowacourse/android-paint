@@ -5,65 +5,57 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.R
-import woowacourse.paint.ui.model.Drawing
+import woowacourse.paint.ui.model.DrawingPath
 import woowacourse.paint.ui.model.DrawingToolModel
 import woowacourse.paint.ui.model.Drawings
 
 class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val drawings: Drawings = Drawings()
     private val savedDrawings: Drawings = Drawings()
-    private lateinit var path: Path
     private lateinit var drawingTool: DrawingToolModel
     private var thickness = DEFAULT_THICKNESS
     private var paintColor = DEFAULT_PAINT_COLOR
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        drawings.items.forEach { (path, paint) ->
-            canvas.drawPath(path, paint)
+        drawings.items.forEach {
+            it.onDraw(canvas)
         }
     }
 
     @SuppressLint("ClickableViewAccessibility")
-    override fun onTouchEvent(event: MotionEvent?): Boolean {
-        return when (event?.action) {
-            MotionEvent.ACTION_DOWN -> {
-                setupDrawing()
-                path.moveTo(event.x, event.y)
-                invalidate()
-                true
-            }
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        if (event.action == MotionEvent.ACTION_DOWN) {
+            when (drawingTool) {
+                DrawingToolModel.PEN, DrawingToolModel.HIGHLIGHTER, DrawingToolModel.ERASER -> {
+                    createPath()
+                }
 
-            MotionEvent.ACTION_MOVE -> {
-                path.lineTo(event.x, event.y)
-                invalidate()
-                true
+                else -> return super.onTouchEvent(event)
             }
-
-            MotionEvent.ACTION_UP -> {
-                path.lineTo(event.x, event.y)
-                invalidate()
-                true
-            }
-
-            else -> super.onTouchEvent(event)
         }
+        return drawings.getLastDrawing().onTouchEvent(event)
     }
 
-    private fun setupDrawing() {
-        path = Path()
-        val paint = Paint(drawingTool.paint).apply {
+    private fun createPath(): DrawingPath {
+        val paint = createPaint()
+        val path = DrawingPath(paint, this::invalidate)
+        drawings.addLast(path)
+        savedDrawings.clear()
+        return path
+    }
+
+    private fun createPaint(): Paint {
+        return Paint(drawingTool.paint).apply {
             strokeWidth = thickness
-            color = if (drawingTool == DrawingToolModel.ERASER) context.getColor(R.color.canvas_color) else paintColor
+            color =
+                if (drawingTool == DrawingToolModel.ERASER) context.getColor(R.color.canvas_color) else paintColor
             if (drawingTool == DrawingToolModel.HIGHLIGHTER) alpha = HIGHLIGHTER_OPACITY
         }
-        drawings.addLast(Drawing(path, paint))
-        savedDrawings.clear()
     }
 
     fun setThickness(thickness: Float) {
@@ -74,8 +66,8 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
         paintColor = color
     }
 
-    fun setDrawingTool(brush: DrawingToolModel) {
-        this.drawingTool = brush
+    fun setDrawingTool(drawingTool: DrawingToolModel) {
+        this.drawingTool = drawingTool
     }
 
     fun goToPreviousDrawing() {

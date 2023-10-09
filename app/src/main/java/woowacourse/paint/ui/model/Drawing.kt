@@ -1,9 +1,12 @@
 package woowacourse.paint.ui.model
 
+import android.graphics.Canvas
 import android.graphics.Paint
-import android.graphics.Path
+import android.view.MotionEvent
 
-data class Drawing(
-    val path: Path,
-    val paint: Paint,
-)
+interface Drawing {
+    val paint: Paint
+    val invalidate: () -> Unit
+    fun onDraw(canvas: Canvas)
+    fun onTouchEvent(event: MotionEvent): Boolean
+}
