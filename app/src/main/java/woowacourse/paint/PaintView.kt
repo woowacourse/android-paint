@@ -151,4 +151,9 @@ class PaintView(
         shapes.redo()
         invalidate()
     }
+
+    fun clear() {
+        shapes.clear()
+        invalidate()
+    }
 }

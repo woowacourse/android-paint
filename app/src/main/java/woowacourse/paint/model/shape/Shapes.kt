@@ -44,6 +44,10 @@ class Shapes(value: List<Shape> = mutableListOf()) {
         _value.add(lastUndo)
     }
 
+    fun clear() {
+        _value.clear()
+    }
+
     private fun throwNoShapeError(): Nothing = throw IllegalArgumentException("도형이 존재하지 않습니다.")
 
     companion object {

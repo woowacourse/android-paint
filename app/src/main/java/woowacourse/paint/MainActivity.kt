@@ -19,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         initEraser()
         initUndo()
         initRedo()
+        initClear()
     }
 
     private fun initBinding() {
@@ -59,6 +60,12 @@ class MainActivity : AppCompatActivity() {
     private fun initRedo() = with(binding) {
         btnRedo.setOnClickListener {
             paintView.redo()
+        }
+    }
+
+    private fun initClear() = with(binding) {
+        btnAllCancel.setOnClickListener {
+            paintView.clear()
         }
     }
 }
