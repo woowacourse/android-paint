@@ -4,19 +4,19 @@
 
     <item
         android:id="@+id/go_to_previous_drawing"
-        android:icon="@drawable/ic_left_100"
+        android:icon="@drawable/ic_undo_100"
         android:title="@string/menu_item_go_to_previous_drawing"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/go_to_next_drawing"
-        android:icon="@drawable/ic_right_100"
+        android:icon="@drawable/ic_redo_100"
         android:title="@string/menu_item_go_to_next_drawing"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/new_canvas"
         android:icon="@drawable/ic_flipboard_100"
         android:title="@string/menu_item_new_canvas"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
 </menu>
