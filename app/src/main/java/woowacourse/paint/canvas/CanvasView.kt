@@ -4,6 +4,8 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -24,6 +26,10 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
         paint = getPaint(width, color.colorCode)
     }
 
+    init {
+        setLayerType(LAYER_TYPE_HARDWARE, null)
+    }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         drawings.forEach { line ->
@@ -34,14 +40,13 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (brush) {
-            Brush.PEN -> drawByPen(event)
+            Brush.PEN, Brush.ERASER -> drawLine(event)
             Brush.RECTANGLE, Brush.CIRCLE -> drawShape(event)
-            Brush.ERASER -> TODO()
         }
         return true
     }
 
-    private fun drawByPen(event: MotionEvent) {
+    private fun drawLine(event: MotionEvent) {
         val x = event.x
         val y = event.y
 
@@ -89,11 +94,9 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
         invalidate()
     }
 
-    private fun erasePath() {
-    }
-
     fun setupBrush(selectedBrush: Brush) {
         brush = selectedBrush
+        paint = getPaint(paint.strokeWidth, paint.color)
     }
 
     fun setupWidth(width: Float) {
@@ -114,10 +117,14 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
         return Paint().apply {
             isAntiAlias = true
             style = Paint.Style.FILL_AND_STROKE
-            strokeJoin = Paint.Join.ROUND
             color = selectedColor
             strokeWidth = width
             strokeCap = Paint.Cap.ROUND
+            xfermode = if (brush == Brush.ERASER) {
+                PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+            } else {
+                null
+            }
         }
     }
 }
