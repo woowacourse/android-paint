@@ -3,11 +3,6 @@ package woowacourse.paint.ui
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Path
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffXfermode
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -17,20 +12,20 @@ import com.example.domain.BrushType.LINE
 import com.example.domain.BrushType.RECTANGLE
 import woowacourse.paint.Painting
 import woowacourse.paint.Paintings
+import woowacourse.paint.ui.brushtype.BrushType
+import woowacourse.paint.ui.brushtype.Circle
+import woowacourse.paint.ui.brushtype.Eraser
+import woowacourse.paint.ui.brushtype.Line
+import woowacourse.paint.ui.brushtype.Rectangle
 
 class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    private var path = Path()
-    private var paint = Paint()
-
     private val paintings = Paintings()
+    private var brush: BrushType = Line()
 
     private var brushType = LINE
 
-    private var startPointX = START_DEFAULT_COORDINATE
-    private var startPointY = START_DEFAULT_COORDINATE
-
     init {
-        setupPaint()
+        brush.setupPaint()
         setLayerType(LAYER_TYPE_HARDWARE, null)
     }
 
@@ -39,7 +34,7 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         paintings.painting.forEach { painting ->
             canvas.drawPath(painting.path, painting.paint)
         }
-        canvas.drawPath(path, paint)
+        canvas.drawPath(brush.getPath(), brush.getPaint())
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -49,12 +44,10 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                startPointX = pointX
-                startPointY = pointY
-                doActionDown(pointX, pointY)
+                brush.doActionDown(pointX, pointY)
             }
             MotionEvent.ACTION_MOVE -> {
-                doActionMove(pointX, pointY)
+                brush.doActionMove(pointX, pointY)
             }
             MotionEvent.ACTION_UP -> {
                 doActionUp(pointX, pointY)
@@ -65,102 +58,65 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         return true
     }
 
-    private fun setupPaint(width: Float = 0F, color: Int = Color.BLACK) {
-        path = Path()
-        paint = Paint()
-
-        paint.isAntiAlias = true
-        paint.color = color
-        paint.style = Paint.Style.STROKE
-        paint.strokeCap = Paint.Cap.ROUND
-        paint.strokeJoin = Paint.Join.ROUND
-        paint.strokeWidth = width
-    }
-
     fun setupPen() {
-        setupPaint(paint.strokeWidth, paint.color)
-        paint.xfermode = null
+        val paint = brush.getPaint()
+        brush = Line()
+        brush.setupPaint(paint.strokeWidth, paint.color)
         brushType = LINE
     }
 
     fun setupCircle() {
-        setupPaint(paint.strokeWidth, paint.color)
-        paint.style = Paint.Style.FILL
-        paint.xfermode = null
+        val paint = brush.getPaint()
+        brush = Circle()
+        brush.setupPaint(paint.strokeWidth, paint.color)
         brushType = CIRCLE
     }
 
     fun setupRectangle() {
-        setupPaint(paint.strokeWidth, paint.color)
-        paint.style = Paint.Style.FILL
-        paint.xfermode = null
+        val paint = brush.getPaint()
+        brush = Rectangle()
+        brush.setupPaint(paint.strokeWidth, paint.color)
         brushType = RECTANGLE
     }
 
     fun setupEraser() {
-        setupPaint(paint.strokeWidth)
-        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+        val paint = brush.getPaint()
+        brush = Eraser()
+        brush.setupPaint(paint.strokeWidth, paint.color)
         brushType = ERASER
     }
 
     fun setMyStrokeWidth(width: Float) {
-        paint.strokeWidth = width
+        brush.setStrokeWidth(width)
     }
 
     fun setMyStrokeColor(color: Int) {
-        paint.color = color
-    }
-
-    private fun doActionDown(pointX: Float, pointY: Float) {
-        when (brushType) {
-            LINE -> path.moveTo(pointX, pointY)
-            ERASER -> path.moveTo(pointX, pointY)
-            else -> {
-                startPointX = pointX
-                startPointY = pointY
-            }
-        }
-    }
-
-    private fun doActionMove(pointX: Float, pointY: Float) {
-        when (brushType) {
-            CIRCLE -> {
-                path.reset()
-                path.addArc(startPointX, startPointY, pointX, pointY, 0f, 360f)
-            }
-            RECTANGLE -> {
-                path.reset()
-                path.addRect(startPointX, startPointY, pointX, pointY, Path.Direction.CCW)
-            }
-            LINE -> path.lineTo(pointX, pointY)
-            ERASER -> path.lineTo(pointX, pointY)
-        }
+        brush.setStrokeColor(color)
     }
 
     private fun doActionUp(pointX: Float, pointY: Float) {
         when (brushType) {
             CIRCLE -> {
-                paintings.storePainting(Painting(paint, path))
+                paintings.storePainting(Painting(brush.getPaint(), brush.getPath()))
                 setupCircle()
             }
+
             RECTANGLE -> {
-                paintings.storePainting(Painting(paint, path))
+                paintings.storePainting(Painting(brush.getPaint(), brush.getPath()))
                 setupRectangle()
             }
+
             LINE -> {
-                path.lineTo(pointX, pointY)
-                paintings.storePainting(Painting(paint, path))
-                setupPaint(paint.strokeWidth, paint.color)
+                (brush as Line).doActionUp(pointX, pointY)
+                paintings.storePainting(Painting(brush.getPaint(), brush.getPath()))
+                setupPen()
             }
+
             ERASER -> {
-                path.lineTo(pointX, pointY)
-                paintings.storePainting(Painting(paint, path))
+                (brush as Eraser).doActionUp(pointX, pointY)
+                paintings.storePainting(Painting(brush.getPaint(), brush.getPath()))
                 setupEraser()
             }
         }
-    }
-
-    companion object {
-        private const val START_DEFAULT_COORDINATE = 0f
     }
 }
