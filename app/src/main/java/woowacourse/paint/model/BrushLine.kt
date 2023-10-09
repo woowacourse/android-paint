@@ -21,16 +21,16 @@ abstract class BrushLine : Brush {
         }
     }
 
-    override fun start(x: Float, y: Float, onCommit: () -> Unit) = start(Point(x, y), onCommit)
+    override fun start(x: Float, y: Float, onSuccess: () -> Unit) = start(Point(x, y), onSuccess)
 
-    private fun start(point: Point, onCommit: () -> Unit) {
+    private fun start(point: Point, onSuccess: () -> Unit) {
         path.moveTo(point.x + ADJUSTMENT, point.y + ADJUSTMENT)
         path.lineTo(point.x, point.y)
         lastPoint = point
-        onCommit()
+        onSuccess()
     }
 
-    override fun move(x: Float, y: Float, onCommit: () -> Unit) = move(Point(x, y), onCommit)
+    override fun move(x: Float, y: Float, onSuccess: () -> Unit) = move(Point(x, y), onSuccess)
 
     private fun move(point: Point, onSuccess: () -> Unit = {}) {
         if (isDrawable(point)) {
