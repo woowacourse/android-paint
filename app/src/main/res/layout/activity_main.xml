@@ -14,6 +14,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/undoIv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:padding="8dp"
+        android:src="@drawable/ic_undo"
+        app:layout_constraintBottom_toTopOf="@id/lineBrushButton"
+        app:layout_constraintStart_toStartOf="@id/lineBrushButton" />
+
+    <ImageView
+        android:id="@+id/redoIv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:padding="8dp"
+        android:src="@drawable/ic_redo"
+        app:layout_constraintBottom_toBottomOf="@id/undoIv"
+        app:layout_constraintStart_toEndOf="@id/undoIv"
+        app:layout_constraintTop_toTopOf="@id/undoIv" />
+
     <Button
         android:id="@+id/lineBrushButton"
         android:layout_width="wrap_content"

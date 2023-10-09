@@ -47,6 +47,16 @@ class CanvasView constructor(context: Context, attr: AttributeSet) : View(contex
         eraserMode = true
     }
 
+    fun undo() {
+        brushHistory.undo()
+        invalidate()
+    }
+
+    fun redo() {
+        brushHistory.redo()
+        invalidate()
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         val pointX = event.x

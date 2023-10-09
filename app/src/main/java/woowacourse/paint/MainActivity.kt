@@ -45,6 +45,12 @@ class MainActivity : AppCompatActivity() {
             eraserButton.setOnClickListener {
                 canvasView.eraserMode()
             }
+            undoIv.setOnClickListener {
+                canvasView.undo()
+            }
+            redoIv.setOnClickListener {
+                canvasView.redo()
+            }
         }
     }
 }
