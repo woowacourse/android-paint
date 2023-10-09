@@ -17,7 +17,6 @@ import woowacourse.paint.customview.paint.tool.Oval
 import woowacourse.paint.customview.paint.tool.PaintTool
 import woowacourse.paint.customview.paint.tool.Pen
 import woowacourse.paint.customview.paint.tool.Rectangle
-import java.util.Stack
 
 class PaintingView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     View(context, attrs) {
@@ -36,7 +35,14 @@ class PaintingView @JvmOverloads constructor(context: Context, attrs: AttributeS
             )
         }
 
-    private val paintingHistory: Stack<Painting> = Stack()
+    private val _paintingHistory: MutableList<Painting> = mutableListOf()
+    val paintingHistory: List<Painting>
+        get() = _paintingHistory.map { painting ->
+            painting.copy(
+                path = Path(painting.path),
+                paint = Paint(painting.paint),
+            )
+        }
 
     init {
         isFocusable = true
@@ -88,7 +94,7 @@ class PaintingView @JvmOverloads constructor(context: Context, attrs: AttributeS
 
             else -> super.onTouchEvent(event)
         }
-        paintingHistory.clear()
+        _paintingHistory.clear()
         invalidate()
         return true
     }
@@ -116,16 +122,21 @@ class PaintingView @JvmOverloads constructor(context: Context, attrs: AttributeS
         }
     }
 
+    fun setPaintingHistory(newPaintHistory: List<Painting>) {
+        _paintingHistory.clear()
+        _paintingHistory.addAll(newPaintHistory)
+    }
+
     fun undo() {
-        paintingHistory.add(_paintings.lastOrNull() ?: return)
+        _paintingHistory.add(_paintings.lastOrNull() ?: return)
         _paintings.removeLast()
         currentPaintTool = currentPaintTool.newInstance()
         invalidate()
     }
 
     fun redo() {
-        if (paintingHistory.empty()) return
-        _paintings.add(paintingHistory.pop())
+        _paintings.add(_paintingHistory.lastOrNull() ?: return)
+        _paintingHistory.removeLast()
         invalidate()
     }
 

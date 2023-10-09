@@ -30,6 +30,9 @@ class MainViewModel : ViewModel() {
     )
     val brushColorBoxes: LiveData<List<BrushColorBox>> get() = _brushColorBoxes
 
+    private val _paintingHistory: MutableLiveData<List<Painting>> = MutableLiveData()
+    val paintingHistory: LiveData<List<Painting>> get() = _paintingHistory
+
     fun updateBrushThickness(value: Float) {
         _brushThickness.value = value
     }
@@ -50,6 +53,10 @@ class MainViewModel : ViewModel() {
 
     fun updatePaintMode(newPaintMode: PaintMode) {
         _paintMode.value = newPaintMode
+    }
+
+    fun updatePaintHistory(newPaintingHistory: List<Painting>) {
+        _paintingHistory.value = newPaintingHistory
     }
 
     companion object {

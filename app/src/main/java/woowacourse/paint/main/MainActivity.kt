@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity(), ColorClickListener {
         observePaintings()
         observeColorBox()
         observePaintMode()
+        observePaintingHistory()
         setupBrushColorPaletteAdapter()
         setupBrushThicknessRangeSliderChangeListener()
         setupChangeBrushColorPaletteButtonClickListener()
@@ -54,6 +55,7 @@ class MainActivity : AppCompatActivity(), ColorClickListener {
     override fun onDestroy() {
         super.onDestroy()
         viewModel.updatePaintings(binding.pvMain.paintings)
+        viewModel.updatePaintHistory(binding.pvMain.paintingHistory)
     }
 
     private fun setupBinding() {
@@ -125,6 +127,12 @@ class MainActivity : AppCompatActivity(), ColorClickListener {
     private fun observePaintMode() {
         viewModel.paintMode.observe(this) {
             binding.pvMain.setPaintMode(it)
+        }
+    }
+
+    private fun observePaintingHistory() {
+        viewModel.paintingHistory.observe(this) {
+            binding.pvMain.setPaintingHistory(it)
         }
     }
 
