@@ -10,7 +10,7 @@ import woowacourse.paint.model.ColorUiModel
 
 class MainViewModel : ViewModel() {
     private val _paintChangingState =
-        MutableLiveData<PaintChangingState>(PaintChangingState.Nothing)
+        MutableLiveData(PaintChangingState.Nothing)
     val paintChangingState: LiveData<PaintChangingState>
         get() = _paintChangingState
 
@@ -32,28 +32,12 @@ class MainViewModel : ViewModel() {
     val width: LiveData<Float>
         get() = _width
 
-    fun setBrushSettingState() {
-        if (_paintChangingState.value == PaintChangingState.BrushChanging) {
+    fun setSettingState(state: PaintChangingState) {
+        if (_paintChangingState.value == state) {
             _paintChangingState.value = PaintChangingState.Nothing
             return
         }
-        _paintChangingState.value = PaintChangingState.BrushChanging
-    }
-
-    fun setColorSettingState() {
-        if (_paintChangingState.value == PaintChangingState.ColorChanging) {
-            _paintChangingState.value = PaintChangingState.Nothing
-            return
-        }
-        _paintChangingState.value = PaintChangingState.ColorChanging
-    }
-
-    fun setWidthSettingState() {
-        if (_paintChangingState.value == PaintChangingState.WidthChanging) {
-            _paintChangingState.value = PaintChangingState.Nothing
-            return
-        }
-        _paintChangingState.value = PaintChangingState.WidthChanging
+        _paintChangingState.value = state
     }
 
     fun pickBrush(brush: Brush) {
@@ -71,6 +55,8 @@ class MainViewModel : ViewModel() {
 
     companion object {
         const val DEFAULT_WIDTH = 1F
+        const val MIN_WIDTH = 1f
+        const val MAX_WIDTH = 100f
         val DEFAULT_SELECTED_COLOR = PaletteColor.RED
     }
 }

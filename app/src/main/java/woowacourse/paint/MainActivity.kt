@@ -84,18 +84,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupWidthSlider() {
-        binding.rsThicknessChanger.valueFrom = minWidth
-        binding.rsThicknessChanger.valueTo = maxWidth
+        binding.rsThicknessChanger.valueFrom = MainViewModel.MIN_WIDTH
+        binding.rsThicknessChanger.valueTo = MainViewModel.MAX_WIDTH
         binding.rsThicknessChanger.setValues(viewModel.width.value)
         binding.rsThicknessChanger.addOnChangeListener(
             RangeSlider.OnChangeListener { _, value, _ ->
                 viewModel.pickWidth(value)
             },
         )
-    }
-
-    companion object {
-        private const val minWidth = 1f
-        private const val maxWidth = 100f
     }
 }
