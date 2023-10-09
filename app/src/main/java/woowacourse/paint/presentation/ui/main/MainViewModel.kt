@@ -27,11 +27,11 @@ class MainViewModel : ViewModel() {
             initialValue = _brush.value.toPresentation(),
         )
 
-    fun changeLineColor(color: BrushColorModel) {
+    fun changeBrushColor(color: BrushColorModel) {
         _brush.value = _brush.value.changeColor(color.toBrushColor())
     }
 
-    fun changeLineWidth(width: Float) {
+    fun changeBrushWidth(width: Float) {
         _brush.value = _brush.value.changeWidth(BrushWidth(width))
     }
 

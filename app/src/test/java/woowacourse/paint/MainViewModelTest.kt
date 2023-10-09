@@ -50,7 +50,7 @@ class MainViewModelTest {
     fun `붓 색을 주황으로 바꾸면 주황으로 바뀐다`() {
         // given
         // when
-        viewModel.changeLineColor(BrushColorModel.ORANGE)
+        viewModel.changeBrushColor(BrushColorModel.ORANGE)
 
         // then
         val actual = viewModel.brush.value
@@ -63,7 +63,7 @@ class MainViewModelTest {
     fun `붓 두께를 50으로 바꾸면 50으로 바뀐다`() {
         // given
         // when
-        viewModel.changeLineWidth(50f)
+        viewModel.changeBrushWidth(50f)
 
         // then
         val actual = viewModel.brush.value

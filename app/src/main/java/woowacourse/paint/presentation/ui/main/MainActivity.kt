@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     private fun initRangeSliderBrushWidth() {
         val brush = viewModel.brush.value
         val rangeSliderClickListener = RangeSlider.OnChangeListener { _, value, _ ->
-            viewModel.changeLineWidth(value)
+            viewModel.changeBrushWidth(value)
         }
         with(binding.rsBrushWidth) {
             valueFrom = brush.minWidth
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
     private fun initColorAdapter() {
         val itemColors = BrushColorModel.values()
             .map { brushColor ->
-                ItemColor(brushColor, viewModel::changeLineColor)
+                ItemColor(brushColor, viewModel::changeBrushColor)
             }
         binding.rvBrushColors.adapter = ColorsAdapter(itemColors)
         binding.rvBrushColors.setHasFixedSize(true)
