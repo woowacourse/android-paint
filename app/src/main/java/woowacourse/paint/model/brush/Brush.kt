@@ -79,7 +79,7 @@ sealed class Brush : BrushSetting {
         val paintInstance = Paint().apply {
             color = Color.RED
         }
-        val previousDraw: MutableList<Pair<Path, Paint>> = mutableListOf()
+        val previousDrawings: MutableList<Pair<Path, Paint>> = mutableListOf()
         var previewDraw: Pair<Path, Paint> = Pair(Path(), Paint())
     }
 }

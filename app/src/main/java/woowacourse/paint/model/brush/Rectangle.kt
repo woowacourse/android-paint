@@ -14,34 +14,31 @@ object Rectangle : Brush() {
     }
 
     fun drawPreview(x: Float, y: Float) {
-        previewDraw = Pair(
-            Path().apply {
-                addRect(
-                    beforePosition.first,
-                    beforePosition.second,
-                    x,
-                    y,
-                    Path.Direction.CW,
-                )
-            },
-            Paint().apply { set(paintInstance) },
-        )
+        val path = Path().apply {
+            addRect(
+                beforePosition.first,
+                beforePosition.second,
+                x,
+                y,
+                Path.Direction.CW,
+            )
+        }
+        val paint = Paint().apply { set(paintInstance) }
+        previewDraw = path to paint
     }
 
     fun draw(xCursor: Float, yCursor: Float) {
-        previousDraw.add(
-            Pair(
-                Path().apply {
-                    addRect(
-                        beforePosition.first,
-                        beforePosition.second,
-                        xCursor,
-                        yCursor,
-                        Path.Direction.CCW,
-                    )
-                },
-                Paint().apply { set(paintInstance) },
-            ),
-        )
+        val path = Path().apply {
+            addRect(
+                beforePosition.first,
+                beforePosition.second,
+                xCursor,
+                yCursor,
+                Path.Direction.CCW,
+            )
+        }
+
+        val paint = Paint().apply { set(paintInstance) }
+        previousDrawings.add(path to paint)
     }
 }

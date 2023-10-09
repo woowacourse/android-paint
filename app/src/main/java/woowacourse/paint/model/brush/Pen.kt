@@ -13,17 +13,14 @@ object Pen : Brush() {
     }
 
     fun startDraw(x: Float, y: Float) {
-        previousDraw.add(
-            Pair(
-                Path().apply { moveTo(x, y) },
-                Paint().apply {
-                    set(paintInstance)
-                },
-            ),
-        )
+        val path = Path().apply { moveTo(x, y) }
+        val paint = Paint().apply {
+            set(paintInstance)
+        }
+        previousDrawings.add(path to paint)
     }
 
     fun drawLine(x: Float, y: Float) {
-        previousDraw.last().first.lineTo(x, y)
+        previousDrawings.last().first.lineTo(x, y)
     }
 }

@@ -21,7 +21,7 @@ class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context,
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        Brush.previousDraw.forEach { (path, paint) ->
+        Brush.previousDrawings.forEach { (path, paint) ->
             canvas.drawPath(path, paint)
         }
         if (brush == Circle || brush == Rectangle) {

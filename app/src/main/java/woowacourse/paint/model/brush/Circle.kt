@@ -14,32 +14,28 @@ object Circle : Brush() {
     }
 
     fun drawPreview(xCursor: Float, yCursor: Float) {
-        previewDraw = Pair(
-            Path().apply {
-                addCircle(
-                    beforePosition.first + ((xCursor - beforePosition.first) / 2),
-                    beforePosition.second + ((xCursor - beforePosition.first) / 2),
-                    (xCursor - beforePosition.first) / 2,
-                    Path.Direction.CW,
-                )
-            },
-            Paint().apply { set(paintInstance) },
-        )
+        val path = Path().apply {
+            addCircle(
+                beforePosition.first + ((xCursor - beforePosition.first) / 2),
+                beforePosition.second + ((xCursor - beforePosition.first) / 2),
+                (xCursor - beforePosition.first) / 2,
+                Path.Direction.CW,
+            )
+        }
+        val paint = Paint().apply { set(paintInstance) }
+        previewDraw = path to paint
     }
 
     fun draw(xCursor: Float, yCursor: Float) {
-        previousDraw.add(
-            Pair(
-                Path().apply {
-                    addCircle(
-                        beforePosition.first + ((xCursor - beforePosition.first) / 2),
-                        beforePosition.second + ((xCursor - beforePosition.first) / 2),
-                        (xCursor - beforePosition.first) / 2,
-                        Path.Direction.CW,
-                    )
-                },
-                Paint().apply { set(paintInstance) },
-            ),
-        )
+        val path = Path().apply {
+            addCircle(
+                beforePosition.first + ((xCursor - beforePosition.first) / 2),
+                beforePosition.second + ((xCursor - beforePosition.first) / 2),
+                (xCursor - beforePosition.first) / 2,
+                Path.Direction.CW,
+            )
+        }
+        val paint = Paint().apply { set(paintInstance) }
+        previousDrawings.add(path to paint)
     }
 }
