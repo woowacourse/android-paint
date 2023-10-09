@@ -40,8 +40,6 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:layout_marginStart="52dp"
-            android:layout_marginEnd="52dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="@+id/cv_canvas"
             app:layout_constraintEnd_toEndOf="parent"
@@ -76,6 +74,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/ic_eraser" />
+
+            <ImageView
+                android:id="@+id/iv_reset"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:srcCompat="@drawable/ic_reset" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

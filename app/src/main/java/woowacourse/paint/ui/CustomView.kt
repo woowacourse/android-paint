@@ -121,4 +121,9 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             }
         }
     }
+
+    fun resetCanvas() {
+        paintings.removeAllPaintings()
+        invalidate()
+    }
 }

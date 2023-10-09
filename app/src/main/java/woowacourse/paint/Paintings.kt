@@ -6,4 +6,8 @@ class Paintings(private val _paintings: MutableList<Painting> = mutableListOf())
     fun storePainting(painting: Painting) {
         _paintings.add(painting)
     }
+
+    fun removeAllPaintings() {
+        _paintings.clear()
+    }
 }
