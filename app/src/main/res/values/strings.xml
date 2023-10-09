@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Paint</string>
+    <string name="app_name">둘리의 캔버스</string>
     <string name="main_change_color">색상 변경</string>
     <string name="main_change_thickness">굵기 변경</string>
     <string name="main_change_brush">브러쉬 변경</string>

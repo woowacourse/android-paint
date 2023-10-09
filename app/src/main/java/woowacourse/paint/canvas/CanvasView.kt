@@ -30,6 +30,8 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
     private var startPoint: Point = Point(0f, 0f)
     private val drawings = mutableListOf<Drawing>()
 
+    private val drawingsCanceled = mutableListOf<Drawing>()
+
     fun initPaint(width: Float, selectedColor: PaletteColor) {
         setupWidth(width)
         setupColor(selectedColor)
@@ -81,6 +83,12 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
         invalidate()
     }
 
+    private fun addDrawing() {
+        if (path.isEmpty) return
+        drawings.add(Drawing.of(path, paint))
+        path.reset()
+    }
+
     private fun drawShape(event: MotionEvent) {
         val x = event.x
         val y = event.y
@@ -120,9 +128,26 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
         paint.color = color.colorCode
     }
 
-    private fun addDrawing() {
-        if (path.isEmpty) return
-        drawings.add(Drawing.of(path, paint))
+    fun eraseAll() {
+        drawings.clear()
+        drawingsCanceled.clear()
         path.reset()
+        invalidate()
+    }
+
+    fun undo() {
+        val drawing = drawings.removeLastOrNull()
+        if (drawing != null) {
+            drawingsCanceled.add(drawing)
+            invalidate()
+        }
+    }
+
+    fun redo() {
+        val drawing = drawingsCanceled.removeLastOrNull()
+        if (drawing != null) {
+            drawings.add(drawing)
+            invalidate()
+        }
     }
 }

@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setupBinding()
         setupViewModel()
+        setupToolbar()
         setupCanvas()
         setupColors()
         setupWidthSlider()
@@ -42,6 +43,19 @@ class MainActivity : AppCompatActivity() {
         }
         viewModel.selectedBrush.observe(this) { brush ->
             canvasView.setupBrush(brush)
+        }
+    }
+
+    private fun setupToolbar() {
+        setSupportActionBar(binding.tbPaint)
+        binding.ivRedo.setOnClickListener {
+            canvasView.redo()
+        }
+        binding.ivUndo.setOnClickListener {
+            canvasView.undo()
+        }
+        binding.ivClear.setOnClickListener {
+            canvasView.eraseAll()
         }
     }
 
