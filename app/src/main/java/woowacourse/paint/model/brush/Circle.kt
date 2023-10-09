@@ -10,7 +10,7 @@ object Circle : Brush() {
     }
 
     fun setCurrentPosition(xCursor: Float, yCursor: Float) {
-        beforePosition = Pair(xCursor, yCursor)
+        beforePosition = xCursor to yCursor
     }
 
     fun drawPreview(xCursor: Float, yCursor: Float) {

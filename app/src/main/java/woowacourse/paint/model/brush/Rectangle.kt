@@ -10,7 +10,7 @@ object Rectangle : Brush() {
     }
 
     fun setCurrentPosition(xCursor: Float, yCursor: Float) {
-        beforePosition = Pair(xCursor, yCursor)
+        beforePosition = xCursor to yCursor
     }
 
     fun drawPreview(x: Float, y: Float) {
