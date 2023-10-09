@@ -35,8 +35,7 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (brush) {
             Brush.PEN -> drawByPen(event)
-            Brush.RECTANGLE -> drawRect(event)
-            Brush.CIRCLE -> drawCircle(event)
+            Brush.RECTANGLE, Brush.CIRCLE -> drawShape(event)
             Brush.ERASER -> TODO()
         }
         return true
@@ -68,44 +67,26 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
         invalidate()
     }
 
-    private fun drawRect(event: MotionEvent) {
+    private fun drawShape(event: MotionEvent) {
         val x = event.x
         val y = event.y
 
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> {
-                startPoint = Point(x, y)
-            }
-
-            MotionEvent.ACTION_MOVE -> {
-                path.reset()
-                path.addRect(startPoint.x, startPoint.y, x, y, Path.Direction.CW)
-                invalidate()
-            }
-
+            MotionEvent.ACTION_DOWN -> startPoint = Point(x, y)
+            MotionEvent.ACTION_MOVE -> drawPreview(x, y)
             MotionEvent.ACTION_UP -> addDrawing()
             else -> super.onTouchEvent(event)
         }
     }
 
-    private fun drawCircle(event: MotionEvent) {
-        val x = event.x
-        val y = event.y
-
-        when (event.action) {
-            MotionEvent.ACTION_DOWN -> {
-                startPoint = Point(x, y)
-            }
-
-            MotionEvent.ACTION_MOVE -> {
-                path.reset()
-                path.addOval(startPoint.x, startPoint.y, x, y, Path.Direction.CW)
-                invalidate()
-            }
-
-            MotionEvent.ACTION_UP -> addDrawing()
-            else -> super.onTouchEvent(event)
+    private fun drawPreview(x: Float, y: Float) {
+        path.reset()
+        when (brush) {
+            Brush.RECTANGLE -> path.addRect(startPoint.x, startPoint.y, x, y, Path.Direction.CW)
+            Brush.CIRCLE -> path.addOval(startPoint.x, startPoint.y, x, y, Path.Direction.CW)
+            else -> return
         }
+        invalidate()
     }
 
     private fun erasePath() {
