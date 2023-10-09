@@ -8,7 +8,6 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import woowacourse.paint.R
 import woowacourse.paint.ui.model.DrawingPath
 import woowacourse.paint.ui.model.DrawingToolModel
 import woowacourse.paint.ui.model.Drawings
@@ -19,6 +18,10 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private lateinit var drawingTool: DrawingToolModel
     private var thickness = DEFAULT_THICKNESS
     private var paintColor = DEFAULT_PAINT_COLOR
+
+    init {
+        setLayerType(LAYER_TYPE_HARDWARE, null)
+    }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -52,8 +55,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private fun createPaint(): Paint {
         return Paint(drawingTool.paint).apply {
             strokeWidth = thickness
-            color =
-                if (drawingTool == DrawingToolModel.ERASER) context.getColor(R.color.canvas_color) else paintColor
+            color = paintColor
             if (drawingTool == DrawingToolModel.HIGHLIGHTER) alpha = HIGHLIGHTER_OPACITY
         }
     }
