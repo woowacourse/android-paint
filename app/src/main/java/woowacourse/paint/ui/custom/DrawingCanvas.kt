@@ -14,6 +14,7 @@ import woowacourse.paint.drawing.Drawing
 import woowacourse.paint.drawing.DrawingCircle
 import woowacourse.paint.drawing.DrawingHistory
 import woowacourse.paint.drawing.DrawingRectangle
+import woowacourse.paint.drawing.Eraser
 import woowacourse.paint.ui.PaintMode
 import woowacourse.paint.ui.PathPoint
 
@@ -27,6 +28,7 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
 
     private val drawingRectangle = DrawingRectangle()
     private val drawingCircle = DrawingCircle()
+    private val eraser = Eraser()
 
     init {
         changePaintProperty(Color.RED, DEFAULT_PAINT_WIDTH)
@@ -100,8 +102,7 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
                     pointY
                 )
             )
-
-            else -> {}
+            PaintMode.ERASER -> eraser.erase(drawingHistory, PathPoint(pointX, pointY))
         }
     }
 
@@ -112,7 +113,7 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
             PaintMode.CIRCLE, PaintMode.FILL_CIRCLE -> drawingCircle.addShape(path)
             PaintMode.ERASER -> {}
         }
-        drawingHistory.addDrawing(Drawing(path, paint))
+        if (paintMode != PaintMode.ERASER) drawingHistory.addDrawing(Drawing(path, paint))
         path = Path()
     }
 
