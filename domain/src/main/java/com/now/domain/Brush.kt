@@ -1,17 +1,29 @@
 package com.now.domain
 
-data class Brush(val brushColor: BrushColor, val brushWidth: BrushWidth) {
-    fun changeColor(brushColor: BrushColor): Brush {
-        return copy(brushColor = brushColor)
+data class Brush(
+    val brushType: BrushType,
+    val brushColor: BrushColor,
+    val brushWidth: BrushWidth,
+) {
+    fun changeType(type: BrushType): Brush {
+        return copy(brushType = type)
     }
 
-    fun changeWidth(brushWidth: BrushWidth): Brush {
-        return copy(brushWidth = brushWidth)
+    fun changeColor(color: BrushColor): Brush {
+        return copy(brushColor = color)
+    }
+
+    fun changeWidth(width: BrushWidth): Brush {
+        return copy(brushWidth = width)
     }
 
     companion object {
         fun fromDefault(): Brush {
-            return Brush(brushColor = BrushColor.RED, brushWidth = BrushWidth(5f))
+            return Brush(
+                brushType = BrushType.PEN,
+                brushColor = BrushColor.RED,
+                brushWidth = BrushWidth(5f),
+            )
         }
     }
 }
