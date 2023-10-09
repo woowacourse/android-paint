@@ -3,8 +3,8 @@ package woowacourse.paint.view.canvas.paintHistory
 import android.graphics.Canvas
 import woowacourse.paint.view.canvas.painter.BrushPainter
 import woowacourse.paint.view.canvas.painter.Painter
-import woowacourse.paint.view.palette.color.PaletteColor
 import woowacourse.paint.view.palette.PaletteMode
+import woowacourse.paint.view.palette.color.PaletteColor
 import woowacourse.paint.view.palette.shape.PaletteShape
 
 class PainterHistory(
@@ -41,7 +41,7 @@ class PainterHistory(
         currentPainter.onActionMove(x, y)
     }
 
-    fun onActionUp(x: Float, y: Float) {
+    fun onActionUp() {
         currentPainter = currentPainter.extract()
     }
 

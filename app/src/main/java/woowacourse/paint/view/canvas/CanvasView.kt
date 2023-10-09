@@ -32,7 +32,7 @@ class CanvasView : View {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> painterHistory.onActionDown(pointX, pointY)
             MotionEvent.ACTION_MOVE -> painterHistory.onActionMove(pointX, pointY)
-            MotionEvent.ACTION_UP -> painterHistory.onActionUp(pointX, pointY)
+            MotionEvent.ACTION_UP -> painterHistory.onActionUp()
         }
         invalidate()
         return true
