@@ -17,6 +17,7 @@
             android:id="@+id/main_paint_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:backgroundTint="?colorOnPrimary"
             app:inks="@{paintViewModel.lines}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -27,6 +28,7 @@
             android:layout_width="@dimen/tool_width"
             android:layout_height="wrap_content"
             android:paddingHorizontal="10dp"
+            android:background="?colorOnPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
