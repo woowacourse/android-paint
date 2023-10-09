@@ -1,9 +1,13 @@
 package woowacourse.paint.model.shape
 
+import java.util.Stack
+
 class Shapes(value: List<Shape> = mutableListOf()) {
 
     private var _value: MutableList<Shape>
     val value: List<Shape> get() = _value.toList()
+
+    private val undoStack: Stack<Shape> = Stack()
 
     init {
         this._value = value.toMutableList()
@@ -16,6 +20,7 @@ class Shapes(value: List<Shape> = mutableListOf()) {
 
     fun add(shape: Shape) {
         _value.add(shape)
+        undoStack.clear()
     }
 
     /*
@@ -24,6 +29,19 @@ class Shapes(value: List<Shape> = mutableListOf()) {
     fun add(shape: Shape, pointX: Float, pointY: Float) {
         _value.add(shape)
         updateLastPoint(pointX, pointY)
+        undoStack.clear()
+    }
+
+    fun undo() {
+        if (_value.isEmpty()) return
+        val removed = _value.removeAt(_value.lastIndex)
+        undoStack.add(removed)
+    }
+
+    fun redo() {
+        if (undoStack.isEmpty()) return
+        val lastUndo = undoStack.pop()
+        _value.add(lastUndo)
     }
 
     private fun throwNoShapeError(): Nothing = throw IllegalArgumentException("도형이 존재하지 않습니다.")

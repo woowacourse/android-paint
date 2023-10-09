@@ -141,4 +141,14 @@ class PaintView(
         eraser.quadTo(pointX, pointY)
         invalidate()
     }
+
+    fun undo() {
+        shapes.undo()
+        invalidate()
+    }
+
+    fun redo() {
+        shapes.redo()
+        invalidate()
+    }
 }

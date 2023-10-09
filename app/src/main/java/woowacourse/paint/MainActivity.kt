@@ -17,6 +17,8 @@ class MainActivity : AppCompatActivity() {
         initPenTool()
         initShapes()
         initEraser()
+        initUndo()
+        initRedo()
     }
 
     private fun initBinding() {
@@ -45,6 +47,18 @@ class MainActivity : AppCompatActivity() {
     private fun initEraser() {
         binding.btnEraser.setOnClickListener {
             binding.paintView.drawMode = DrawMode.ERASER
+        }
+    }
+
+    private fun initUndo() = with(binding) {
+        btnUndo.setOnClickListener {
+            paintView.undo()
+        }
+    }
+
+    private fun initRedo() = with(binding) {
+        btnRedo.setOnClickListener {
+            paintView.redo()
         }
     }
 }
