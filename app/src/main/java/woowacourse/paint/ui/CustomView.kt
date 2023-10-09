@@ -95,26 +95,28 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     private fun doActionUp(pointX: Float, pointY: Float) {
+        val currentPaint = brush.getPaint()
+        val currentPath = brush.getPath()
         when (brushType) {
             CIRCLE -> {
-                paintings.storePainting(Painting(brush.getPaint(), brush.getPath()))
+                paintings.storePainting(Painting(currentPaint, currentPath))
                 setupCircle()
             }
 
             RECTANGLE -> {
-                paintings.storePainting(Painting(brush.getPaint(), brush.getPath()))
+                paintings.storePainting(Painting(currentPaint, currentPath))
                 setupRectangle()
             }
 
             LINE -> {
                 (brush as Line).doActionUp(pointX, pointY)
-                paintings.storePainting(Painting(brush.getPaint(), brush.getPath()))
+                paintings.storePainting(Painting(currentPaint, currentPath))
                 setupPen()
             }
 
             ERASER -> {
                 (brush as Eraser).doActionUp(pointX, pointY)
-                paintings.storePainting(Painting(brush.getPaint(), brush.getPath()))
+                paintings.storePainting(Painting(currentPaint, currentPath))
                 setupEraser()
             }
         }
