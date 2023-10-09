@@ -24,6 +24,8 @@ class GloCanvasActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+
         setupViewModel()
         setupDrawingToolSettings()
         setupThicknessSettings()
