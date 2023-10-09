@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity(), OnColorClickListener, OnBrushClickList
     }
 
     private fun setupRangeSlider() {
-        binding.rangeSlider.setValues(DEFAULT_STROKE_WIDTH)
+        binding.rsWidthChange.setValues(DEFAULT_STROKE_WIDTH)
     }
 
     private fun setAdapter() {
@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity(), OnColorClickListener, OnBrushClickList
     }
 
     private fun setListener() {
-        binding.rangeSlider.addOnChangeListener(
+        binding.rsWidthChange.addOnChangeListener(
             RangeSlider.OnChangeListener { _, value, _ ->
                 binding.cvPainter.setStroke(value)
             },
@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity(), OnColorClickListener, OnBrushClickList
         }
 
         binding.btnStrokeChange.setOnClickListener {
-            binding.rangeSlider.isVisible = !binding.rangeSlider.isVisible
+            binding.rsWidthChange.isVisible = !binding.rsWidthChange.isVisible
         }
 
         binding.btnBrushChange.setOnClickListener {
@@ -110,7 +110,7 @@ class MainActivity : AppCompatActivity(), OnColorClickListener, OnBrushClickList
                 cvPainter.setBrush(selectedBrush)
                 rvColor.isVisible = selectedBrush.brushTool != BrushTool.ERASER
                 btnColorChange.isEnabled = selectedBrush.brushTool != BrushTool.ERASER
-                rangeSlider.isVisible =
+                rsWidthChange.isVisible =
                     selectedBrush.brushTool !in listOf(BrushTool.CIRCLE, BrushTool.RECTANGLE)
                 btnStrokeChange.isEnabled =
                     selectedBrush.brushTool !in listOf(BrushTool.CIRCLE, BrushTool.RECTANGLE)
