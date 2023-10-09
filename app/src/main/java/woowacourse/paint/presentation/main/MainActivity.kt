@@ -5,7 +5,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.mapper.toBrushColorUiModel
-import woowacourse.paint.palette.PaletteAdapter
+import woowacourse.paint.presentation.main.palette.PaletteAdapter
 import woowacourse.paint.presentation.uimodel.BrushColorUiModel
 
 class MainActivity : AppCompatActivity() {
