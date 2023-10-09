@@ -1,4 +1,4 @@
-package woowacourse.paint.presentation.ui.main
+package woowacourse.paint.presentation.ui.main.colors
 
 import woowacourse.paint.presentation.ui.model.BrushColorModel
 

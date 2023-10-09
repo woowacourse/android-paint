@@ -9,6 +9,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.slider.RangeSlider
 import kotlinx.coroutines.launch
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.presentation.ui.main.colors.ColorsAdapter
+import woowacourse.paint.presentation.ui.main.colors.ItemColor
 import woowacourse.paint.presentation.ui.model.BrushColorModel
 
 class MainActivity : AppCompatActivity() {
