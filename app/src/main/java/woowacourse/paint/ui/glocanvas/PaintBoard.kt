@@ -8,6 +8,7 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import woowacourse.paint.ui.glocanvas.drawing.Circle
 import woowacourse.paint.ui.glocanvas.drawing.DrawingPath
 import woowacourse.paint.ui.glocanvas.drawing.Drawings
 import woowacourse.paint.ui.model.DrawingToolModel
@@ -33,23 +34,24 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
-            when (drawingTool) {
+            val drawing = when (drawingTool) {
                 DrawingToolModel.PEN, DrawingToolModel.HIGHLIGHTER, DrawingToolModel.ERASER -> {
                     createPath()
                 }
 
+                DrawingToolModel.CIRCLE -> createCircle()
+
                 else -> return super.onTouchEvent(event)
             }
+            drawings.addLast(drawing)
+            savedDrawings.clear()
         }
         return drawings.getLastDrawing().onTouchEvent(event)
     }
 
     private fun createPath(): DrawingPath {
         val paint = createPaint()
-        val path = DrawingPath(paint, this::invalidate)
-        drawings.addLast(path)
-        savedDrawings.clear()
-        return path
+        return DrawingPath(paint, this::invalidate)
     }
 
     private fun createPaint(): Paint {
@@ -58,6 +60,11 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
             color = paintColor
             if (drawingTool == DrawingToolModel.HIGHLIGHTER) alpha = HIGHLIGHTER_OPACITY
         }
+    }
+
+    private fun createCircle(): Circle {
+        val paint = createPaint()
+        return Circle(paint, this::invalidate)
     }
 
     fun setThickness(thickness: Float) {

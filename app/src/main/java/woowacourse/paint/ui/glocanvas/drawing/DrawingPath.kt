@@ -19,16 +19,13 @@ class DrawingPath(override val paint: Paint, override val invalidate: () -> Unit
                 invalidate()
                 true
             }
-            MotionEvent.ACTION_MOVE -> {
+
+            MotionEvent.ACTION_MOVE, MotionEvent.ACTION_UP -> {
                 path.lineTo(event.x, event.y)
                 invalidate()
                 true
             }
-            MotionEvent.ACTION_UP -> {
-                path.lineTo(event.x, event.y)
-                invalidate()
-                true
-            }
+
             else -> false
         }
     }
