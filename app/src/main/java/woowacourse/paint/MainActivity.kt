@@ -26,27 +26,27 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
     }
 
-    private fun initPenTool() {
-        val selectedPen = binding.penToolView.selectedPen
-        binding.paintView.pen = selectedPen
-        binding.btnOpenPenTool.setOnClickListener {
-            binding.penToolView.toggleVisibility()
-            binding.paintView.drawMode = DrawMode.LINE
+    private fun initPenTool() = with(binding) {
+        val selectedPen = penToolView.selectedPen
+        paintView.pen = selectedPen
+        btnOpenPenTool.setOnClickListener {
+            penToolView.toggleVisibility()
+            paintView.drawMode = DrawMode.LINE
         }
     }
 
-    private fun initShapes() {
-        binding.btnShapeRectangle.setOnClickListener {
-            binding.paintView.drawMode = DrawMode.RECT
+    private fun initShapes() = with(binding) {
+        btnShapeRectangle.setOnClickListener {
+            paintView.drawMode = DrawMode.RECT
         }
-        binding.btnShapeCircle.setOnClickListener {
-            binding.paintView.drawMode = DrawMode.CIRCLE
+        btnShapeCircle.setOnClickListener {
+            paintView.drawMode = DrawMode.CIRCLE
         }
     }
 
-    private fun initEraser() {
-        binding.btnEraser.setOnClickListener {
-            binding.paintView.drawMode = DrawMode.ERASER
+    private fun initEraser() = with(binding) {
+        btnEraser.setOnClickListener {
+            paintView.drawMode = DrawMode.ERASER
         }
     }
 
