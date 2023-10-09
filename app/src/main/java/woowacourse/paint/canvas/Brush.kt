@@ -1,5 +1,5 @@
 package woowacourse.paint.canvas
 
-enum class Brushes {
+enum class Brush {
     PEN, RECTANGLE, CIRCLE, ERASER
 }

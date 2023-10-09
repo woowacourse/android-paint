@@ -9,6 +9,8 @@
 
         <import type="woowacourse.paint.PaintChangingState" />
 
+        <import type="woowacourse.paint.canvas.Brush" />
+
         <import type="android.view.View" />
     </data>
 
@@ -43,10 +45,74 @@
             android:orientation="horizontal"
             android:visibility="@{viewModel.paintChangingState instanceof PaintChangingState.ColorChanging ? View.VISIBLE : View.GONE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/ll_brushes"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rs_thickness_changer"
             tools:listitem="@layout/item_color_palette" />
+
+        <LinearLayout
+            android:id="@+id/ll_brushes"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:visibility="@{viewModel.paintChangingState instanceof PaintChangingState.BrushChanging ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/btn_change_brush"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <Button
+                android:id="@+id/btn_pen"
+                isSelected="@{viewModel.selectedBrush == Brush.PEN}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:backgroundTint="@color/brush_selected"
+                android:onClick="@{() -> viewModel.pickBrush(Brush.PEN)}"
+                android:text="@string/pen" />
+
+            <Button
+                android:id="@+id/btn_rectangle"
+                isSelected="@{viewModel.selectedBrush == Brush.RECTANGLE}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:backgroundTint="@color/brush_selected"
+                android:onClick="@{() -> viewModel.pickBrush(Brush.RECTANGLE)}"
+                android:text="@string/rectangle" />
+
+            <Button
+                android:id="@+id/btn_circle"
+                isSelected="@{viewModel.selectedBrush == Brush.CIRCLE}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:backgroundTint="@color/brush_selected"
+                android:onClick="@{() -> viewModel.pickBrush(Brush.CIRCLE)}"
+                android:text="@string/circle" />
+
+            <Button
+                android:id="@+id/btn_eraser"
+                isSelected="@{viewModel.selectedBrush == Brush.ERASER}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:backgroundTint="@color/brush_selected"
+                android:onClick="@{() -> viewModel.pickBrush(Brush.ERASER)}"
+                android:text="@string/eraser" />
+        </LinearLayout>
+
+
+        <Button
+            android:id="@+id/btn_change_brush"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:onClick="@{() -> viewModel.setBrushSettingState()}"
+            android:text="@string/main_change_brush"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_change_color"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/btn_change_color"
@@ -58,7 +124,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_change_thickness"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toEndOf="@id/btn_change_brush" />
 
         <Button
             android:id="@+id/btn_change_thickness"
@@ -69,8 +135,7 @@
             android:text="@string/main_change_thickness"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/btn_change_color"
-            app:layout_constraintTop_toBottomOf="@id/rv_colors" />
+            app:layout_constraintStart_toEndOf="@id/btn_change_color" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
