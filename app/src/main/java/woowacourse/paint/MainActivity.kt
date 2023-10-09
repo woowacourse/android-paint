@@ -84,10 +84,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupWidthSlider() {
-        binding.rsThicknessChanger.valueFrom = MainViewModel.MIN_WIDTH
-        binding.rsThicknessChanger.valueTo = MainViewModel.MAX_WIDTH
-        binding.rsThicknessChanger.setValues(viewModel.width.value)
-        binding.rsThicknessChanger.addOnChangeListener(
+        binding.rsWidthChanger.valueFrom = MainViewModel.MIN_WIDTH
+        binding.rsWidthChanger.valueTo = MainViewModel.MAX_WIDTH
+        binding.rsWidthChanger.setValues(viewModel.width.value)
+        binding.rsWidthChanger.addOnChangeListener(
             RangeSlider.OnChangeListener { _, value, _ ->
                 viewModel.pickWidth(value)
             },

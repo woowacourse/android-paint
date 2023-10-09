@@ -63,13 +63,13 @@
             android:id="@+id/cv_canvas"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/rs_thickness_changer"
+            app:layout_constraintBottom_toTopOf="@id/rs_width_changer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tb_paint" />
 
         <com.google.android.material.slider.RangeSlider
-            android:id="@+id/rs_thickness_changer"
+            android:id="@+id/rs_width_changer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:visibility="@{viewModel.paintChangingState == PaintChangingState.WidthChanging ? View.VISIBLE : View.GONE}"
