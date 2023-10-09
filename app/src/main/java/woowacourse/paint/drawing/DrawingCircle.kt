@@ -9,7 +9,7 @@ class DrawingCircle : DrawingShape {
     private var startPoint: PathPoint = PathPoint(0f, 0f)
     private var endPoint: PathPoint = PathPoint(0f, 0f)
 
-    override fun drawShape(canvas: Canvas, paint: Paint) {
+    override fun drawShapeOnCanvas(canvas: Canvas, paint: Paint) {
         processDirectionalLogic { startX, startY, radius ->
             canvas.drawCircle(
                 startX, startY, radius, paint
@@ -17,7 +17,7 @@ class DrawingCircle : DrawingShape {
         }
     }
 
-    override fun addShape(path: Path) {
+    override fun addShapeToPath(path: Path) {
         processDirectionalLogic { startX, startY, radius ->
             path.addCircle(
                 startX, startY, radius, Path.Direction.CW

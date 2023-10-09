@@ -10,6 +10,10 @@ class DrawingHistory(private val _drawings: MutableList<Drawing> = mutableListOf
         _drawings.add(pathPaint)
     }
 
+    fun removeAt(index: Int) {
+        _drawings.removeAt(index)
+    }
+
     private fun List<Drawing>.deepCopy() =
         map { it.copy(path = Path(it.path), paint = Paint(it.paint)) }
 }

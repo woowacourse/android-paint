@@ -39,11 +39,11 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
         drawDrawingHistory(canvas)
         when (paintMode) {
             PaintMode.PEN -> canvas.drawPath(path, paint)
-            PaintMode.RECTANGLE, PaintMode.FILL_RECTANGLE -> drawingRectangle.drawShape(
+            PaintMode.RECTANGLE, PaintMode.FILL_RECTANGLE -> drawingRectangle.drawShapeOnCanvas(
                 canvas, paint
             )
 
-            PaintMode.CIRCLE, PaintMode.FILL_CIRCLE -> drawingCircle.drawShape(canvas, paint)
+            PaintMode.CIRCLE, PaintMode.FILL_CIRCLE -> drawingCircle.drawShapeOnCanvas(canvas, paint)
             PaintMode.ERASER -> {}
         }
     }
@@ -109,8 +109,8 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
     private fun endDrawing() {
         when (paintMode) {
             PaintMode.PEN -> {}
-            PaintMode.RECTANGLE, PaintMode.FILL_RECTANGLE -> drawingRectangle.addShape(path)
-            PaintMode.CIRCLE, PaintMode.FILL_CIRCLE -> drawingCircle.addShape(path)
+            PaintMode.RECTANGLE, PaintMode.FILL_RECTANGLE -> drawingRectangle.addShapeToPath(path)
+            PaintMode.CIRCLE, PaintMode.FILL_CIRCLE -> drawingCircle.addShapeToPath(path)
             PaintMode.ERASER -> {}
         }
         if (paintMode != PaintMode.ERASER) drawingHistory.addDrawing(Drawing(path, paint))

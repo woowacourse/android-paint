@@ -9,11 +9,11 @@ class DrawingRectangle : DrawingShape {
     private var startPoint: PathPoint = PathPoint(0f, 0f)
     private var endPoint: PathPoint = PathPoint(0f, 0f)
 
-    override fun drawShape(canvas: Canvas, paint: Paint) {
+    override fun drawShapeOnCanvas(canvas: Canvas, paint: Paint) {
         canvas.drawRect(startPoint.x, startPoint.y, endPoint.x, endPoint.y, paint)
     }
 
-    override fun addShape(path: Path) {
+    override fun addShapeToPath(path: Path) {
         if (startPoint.x < endPoint.x) {
             path.addRect(startPoint.x, startPoint.y, endPoint.x, endPoint.y, Path.Direction.CW)
         } else {
