@@ -7,29 +7,22 @@ import woowacourse.paint.common.softPainter
 import woowacourse.paint.view.palette.color.PaletteColor
 
 data class BrushPainter(
-    private val path: Path = Path(),
-    private val paint: Paint = Paint().softPainter(),
-) : Painter {
+    private val paletteColor: PaletteColor = PaletteColor.values().first(),
+    private val thickness: Float,
+) : Painter(
+    Paint().softPainter(paletteColor = paletteColor, thickness = thickness),
+) {
+    private val path: Path = Path()
     private var prevX: Float = 0F
     private var prevY: Float = 0F
 
-    override fun setPaletteColor(paletteColor: PaletteColor): Painter = BrushPainter(
-        path = Path(),
-        paint = updatePaint(paintColor = paletteColor.color),
+    override fun setPaletteColor(paletteColor: PaletteColor): Painter = copy(
+        paletteColor = paletteColor,
     )
 
-    override fun setThickness(thickness: Float): BrushPainter = BrushPainter(
-        path = Path(),
-        paint = updatePaint(thickness = thickness),
+    override fun setThickness(thickness: Float): BrushPainter = copy(
+        thickness = thickness,
     )
-
-    private fun updatePaint(
-        paintColor: Int = paint.color,
-        thickness: Float = paint.strokeWidth,
-    ): Paint = Paint().softPainter().apply {
-        color = paintColor
-        strokeWidth = thickness
-    }
 
     override fun onActionDown(x: Float, y: Float) {
         dotTo(x, y)
@@ -59,8 +52,5 @@ data class BrushPainter(
         canvas.drawPath(path, paint)
     }
 
-    override fun extract(): Painter = copy(
-        path = Path(),
-        paint = Paint(paint),
-    )
+    override fun extract(): Painter = copy()
 }

@@ -8,26 +8,19 @@ import woowacourse.paint.common.softPainter
 import woowacourse.paint.view.palette.color.PaletteColor
 
 data class PathEraserPainter(
-    private val path: Path = Path(),
-    private val paint: Paint = Paint().softPainter(porterDuffMode = PorterDuff.Mode.CLEAR),
-) : Painter {
+    private val thickness: Float,
+) : Painter(
+    Paint().softPainter(thickness = thickness, porterDuffMode = PorterDuff.Mode.CLEAR),
+) {
+    private val path: Path = Path()
     private var prevX: Float = 0F
     private var prevY: Float = 0F
 
-    override fun setPaletteColor(paletteColor: PaletteColor): Painter = copy(
-        path = Path(),
-    )
+    override fun setPaletteColor(paletteColor: PaletteColor): Painter = copy()
 
     override fun setThickness(thickness: Float): PathEraserPainter = copy(
-        path = Path(),
-        paint = updatePaint(thickness = thickness),
+        thickness = thickness,
     )
-
-    private fun updatePaint(
-        thickness: Float = paint.strokeWidth,
-    ): Paint = paint.apply {
-        strokeWidth = thickness
-    }
 
     override fun onActionDown(x: Float, y: Float) {
         eraseDotTo(x, y)
@@ -57,8 +50,5 @@ data class PathEraserPainter(
         canvas.drawPath(path, paint)
     }
 
-    override fun extract(): Painter = copy(
-        path = Path(),
-        paint = Paint(paint),
-    )
+    override fun extract(): Painter = copy()
 }

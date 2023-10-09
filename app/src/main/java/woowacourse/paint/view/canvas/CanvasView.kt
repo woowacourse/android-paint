@@ -6,8 +6,8 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.view.canvas.paintHistory.PainterHistory
-import woowacourse.paint.view.palette.color.PaletteColor
 import woowacourse.paint.view.palette.PaletteMode
+import woowacourse.paint.view.palette.color.PaletteColor
 import woowacourse.paint.view.palette.shape.PaletteShape
 
 class CanvasView : View {

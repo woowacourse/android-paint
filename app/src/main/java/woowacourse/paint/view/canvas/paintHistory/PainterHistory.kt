@@ -10,26 +10,43 @@ import woowacourse.paint.view.palette.shape.PaletteShape
 class PainterHistory(
     private val undoes: ArrayList<Painter> = ArrayList(),
     private val redoes: ArrayList<Painter> = ArrayList(),
-    private var currentPainter: Painter = BrushPainter(),
 ) {
+    private var paletteColor: PaletteColor = PaletteColor.values().first()
+    private var paletteShape: PaletteShape = PaletteShape.values().first()
+    private var thickness: Float = 0F
+    private var currentPainter: Painter = BrushPainter(thickness = thickness)
+
     fun draw(canvas: Canvas) {
         undoes.forEach { painter -> painter.draw(canvas) }
     }
 
-    fun setPaletteColor(paletteColor: PaletteColor) {
+    fun setPaletteColor(newPaletteColor: PaletteColor) {
+        paletteColor = newPaletteColor
         currentPainter = currentPainter.setPaletteColor(paletteColor)
     }
 
     fun setPaintThickness(painterThickness: Float) {
-        currentPainter = currentPainter.setThickness(painterThickness)
+        thickness = painterThickness
+        currentPainter = currentPainter.setThickness(thickness)
     }
 
-    fun setPaletteShape(paletteShape: PaletteShape) {
-        currentPainter = currentPainter.changePainter(PaletteMode.SHAPE, paletteShape)
+    fun setPaletteShape(newPaletteShape: PaletteShape) {
+        paletteShape = newPaletteShape
+        currentPainter = currentPainter.changePainter(
+            paletteMode = PaletteMode.SHAPE,
+            paletteShape = newPaletteShape,
+            paletteColor = paletteColor,
+            thickness = thickness,
+        )
     }
 
     fun changePaletteMode(paletteMode: PaletteMode) {
-        currentPainter = currentPainter.changePainter(paletteMode)
+        currentPainter = currentPainter.changePainter(
+            paletteMode = paletteMode,
+            paletteShape = paletteShape,
+            paletteColor = paletteColor,
+            thickness = thickness,
+        )
     }
 
     fun onActionDown(x: Float, y: Float) {

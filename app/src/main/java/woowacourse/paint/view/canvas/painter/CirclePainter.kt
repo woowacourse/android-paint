@@ -9,27 +9,17 @@ import woowacourse.paint.view.palette.shape.PaletteShape
 
 data class CirclePainter(
     private val shape: PaletteShape,
-    private val paint: Paint = DEFAULT_PAINT,
-) : Painter {
+    private val paletteColor: PaletteColor = PaletteColor.values().first(),
+) : Painter(getDefaultPaint(paletteColor)) {
     private var startX: Float = -1F
     private var startY: Float = -1F
     private val rect = RectF()
 
     override fun setPaletteColor(paletteColor: PaletteColor): Painter = copy(
-        paint = updatePaint(paintColor = paletteColor.color),
+        paletteColor = paletteColor,
     )
 
-    override fun setThickness(thickness: Float): CirclePainter = copy(
-        paint = updatePaint(thickness = thickness),
-    )
-
-    private fun updatePaint(
-        paintColor: Int = paint.color,
-        thickness: Float = paint.strokeWidth,
-    ): Paint = DEFAULT_PAINT.apply {
-        color = paintColor
-        strokeWidth = thickness
-    }
+    override fun setThickness(thickness: Float): CirclePainter = copy()
 
     override fun onActionDown(x: Float, y: Float) {
         startX = x
@@ -44,12 +34,14 @@ data class CirclePainter(
         canvas.drawOval(rect, paint)
     }
 
-    override fun extract(): Painter = copy(
-        paint = Paint(paint),
-    )
+    override fun extract(): Painter = copy()
 
     companion object {
-        private val DEFAULT_PAINT: Paint
-            get() = Paint().softPainter(paintStyle = Paint.Style.FILL)
+        private fun getDefaultPaint(
+            paletteColor: PaletteColor = PaletteColor.values().first(),
+        ): Paint = Paint().softPainter(
+            paletteColor = paletteColor,
+            paintStyle = Paint.Style.FILL,
+        )
     }
 }

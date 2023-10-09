@@ -7,13 +7,15 @@ import woowacourse.paint.view.palette.color.PaletteColor
 
 fun Paint.softPainter(
     paletteColor: PaletteColor = PaletteColor.RED,
+    thickness: Float = 0.1F,
     paintStyle: Paint.Style = Paint.Style.STROKE,
     porterDuffMode: PorterDuff.Mode = PorterDuff.Mode.SRC_OVER,
 ): Paint = apply {
     isAntiAlias = true
-    style = paintStyle
     strokeJoin = Paint.Join.ROUND
     strokeCap = Paint.Cap.ROUND
     color = paletteColor.color
+    strokeWidth = thickness
+    style = paintStyle
     xfermode = PorterDuffXfermode(porterDuffMode)
 }
