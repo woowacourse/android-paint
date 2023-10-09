@@ -16,7 +16,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <woowacourse.paint.PenToolView
+        <woowacourse.paint.tool.PenToolView
             android:id="@+id/pen_tool_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

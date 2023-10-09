@@ -1,4 +1,4 @@
-package woowacourse.paint
+package woowacourse.paint.tool
 
 import android.content.Context
 import android.graphics.Color
@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.MarginLayoutParamsCompat
 import com.google.android.material.slider.Slider
+import woowacourse.paint.R
 import woowacourse.paint.model.PaletteColor
 import woowacourse.paint.model.pen.Pen
 
