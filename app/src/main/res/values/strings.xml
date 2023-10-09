@@ -4,4 +4,6 @@
     <string name="rectangle_brush">직사각형</string>
     <string name="circle_brush">원</string>
     <string name="eraser">지우개</string>
+    <string name="undo">Undo</string>
+    <string name="redo">Redo</string>
 </resources>

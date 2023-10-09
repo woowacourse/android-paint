@@ -1,6 +1,8 @@
 package woowacourse.paint
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.databinding.ActivityMainBinding
 
@@ -46,16 +48,31 @@ class MainActivity : AppCompatActivity() {
             eraserButton.setOnClickListener {
                 canvasView.eraserMode()
             }
-            undoIv.setOnClickListener {
-                canvasView.undo()
-            }
-            redoIv.setOnClickListener {
-                canvasView.redo()
-            }
         }
     }
 
     private fun setupToolbar() {
         setSupportActionBar(binding.toolbar)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.toolbar_action, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.undoAction -> {
+                binding.canvasView.undo()
+                true
+            }
+
+            R.id.redoAction -> {
+                binding.canvasView.redo()
+                true
+            }
+
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }
