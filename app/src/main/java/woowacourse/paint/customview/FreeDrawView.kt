@@ -30,11 +30,11 @@ class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context,
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        performClick()
         val cursorX = event.x
         val cursorY = event.y
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
+                performClick()
                 brush.onActionDown(cursorX, cursorY) { invalidate() }
             }
 
