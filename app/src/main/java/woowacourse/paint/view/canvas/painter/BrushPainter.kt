@@ -8,7 +8,7 @@ import woowacourse.paint.view.palette.color.PaletteColor
 
 data class BrushPainter(
     private val path: Path = Path(),
-    val paint: Paint = Paint().softPainter(),
+    private val paint: Paint = Paint().softPainter(),
 ) : Painter {
     private var prevX: Float = 0F
     private var prevY: Float = 0F
