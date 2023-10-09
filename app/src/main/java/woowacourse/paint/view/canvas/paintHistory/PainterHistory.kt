@@ -11,42 +11,33 @@ class PainterHistory(
     private val undoes: ArrayList<Painter> = ArrayList(),
     private val redoes: ArrayList<Painter> = ArrayList(),
 ) {
-    private var paletteColor: PaletteColor = PaletteColor.values().first()
-    private var paletteShape: PaletteShape = PaletteShape.values().first()
-    private var thickness: Float = 0F
-    private var currentPainter: Painter = BrushPainter(thickness = thickness)
+    private var painterState = PainterState()
+    private var currentPainter: Painter = BrushPainter(
+        paletteColor = painterState.paletteColor,
+        thickness = painterState.thickness,
+    )
 
     fun draw(canvas: Canvas) {
         undoes.forEach { painter -> painter.draw(canvas) }
     }
 
-    fun setPaletteColor(newPaletteColor: PaletteColor) {
-        paletteColor = newPaletteColor
+    fun setPaletteColor(paletteColor: PaletteColor) {
+        painterState = painterState.copy(paletteColor = paletteColor)
         currentPainter = currentPainter.setPaletteColor(paletteColor)
     }
 
-    fun setPaintThickness(painterThickness: Float) {
-        thickness = painterThickness
+    fun setPaintThickness(thickness: Float) {
+        painterState = painterState.copy(thickness = thickness)
         currentPainter = currentPainter.setThickness(thickness)
     }
 
-    fun setPaletteShape(newPaletteShape: PaletteShape) {
-        paletteShape = newPaletteShape
-        currentPainter = currentPainter.changePainter(
-            paletteMode = PaletteMode.SHAPE,
-            paletteShape = newPaletteShape,
-            paletteColor = paletteColor,
-            thickness = thickness,
-        )
+    fun setPaletteShape(paletteShape: PaletteShape) {
+        painterState = painterState.copy(paletteShape = paletteShape)
+        currentPainter = currentPainter.changePainter(PaletteMode.SHAPE, painterState)
     }
 
     fun changePaletteMode(paletteMode: PaletteMode) {
-        currentPainter = currentPainter.changePainter(
-            paletteMode = paletteMode,
-            paletteShape = paletteShape,
-            paletteColor = paletteColor,
-            thickness = thickness,
-        )
+        currentPainter = currentPainter.changePainter(paletteMode, painterState)
     }
 
     fun onActionDown(x: Float, y: Float) {

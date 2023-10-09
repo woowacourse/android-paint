@@ -2,6 +2,7 @@ package woowacourse.paint.view.canvas.painter
 
 import android.graphics.Canvas
 import android.graphics.Paint
+import woowacourse.paint.view.canvas.paintHistory.PainterState
 import woowacourse.paint.view.palette.PaletteMode
 import woowacourse.paint.view.palette.color.PaletteColor
 import woowacourse.paint.view.palette.shape.PaletteShape
@@ -16,13 +17,11 @@ abstract class Painter(protected val paint: Paint) {
 
     fun changePainter(
         paletteMode: PaletteMode,
-        paletteShape: PaletteShape = PaletteShape.values().first(),
-        paletteColor: PaletteColor = PaletteColor.values().first(),
-        thickness: Float,
+        painterState: PainterState,
     ): Painter = when (paletteMode) {
-        PaletteMode.BRUSH -> BrushPainter(paletteColor = paletteColor, thickness = thickness)
-        PaletteMode.SHAPE -> getShapePainter(paletteShape, paletteColor)
-        PaletteMode.ERASER -> PathEraserPainter(thickness = thickness)
+        PaletteMode.BRUSH -> BrushPainter(painterState.paletteColor, painterState.thickness)
+        PaletteMode.SHAPE -> getShapePainter(painterState.paletteShape, painterState.paletteColor)
+        PaletteMode.ERASER -> PathEraserPainter(painterState.thickness)
     }
 
     private fun getShapePainter(

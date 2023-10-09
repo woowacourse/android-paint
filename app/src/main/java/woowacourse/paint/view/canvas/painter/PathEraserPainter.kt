@@ -7,9 +7,7 @@ import android.graphics.PorterDuff
 import woowacourse.paint.common.softPainter
 import woowacourse.paint.view.palette.color.PaletteColor
 
-data class PathEraserPainter(
-    private val thickness: Float,
-) : Painter(
+data class PathEraserPainter(private val thickness: Float) : Painter(
     Paint().softPainter(thickness = thickness, porterDuffMode = PorterDuff.Mode.CLEAR),
 ) {
     private val path: Path = Path()
