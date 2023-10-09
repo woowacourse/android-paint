@@ -41,7 +41,7 @@ data class CirclePainter(
     }
 
     override fun draw(canvas: Canvas) {
-        canvas.drawArc(rect, 0F, 360F, true, paint)
+        canvas.drawOval(rect, paint)
     }
 
     override fun extract(): Painter = copy(
