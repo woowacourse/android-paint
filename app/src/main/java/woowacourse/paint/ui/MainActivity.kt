@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
             ivCircle.setOnClickListener { cvCanvas.setupCircle() }
             ivRectangle.setOnClickListener { cvCanvas.setupRectangle() }
             ivPen.setOnClickListener { cvCanvas.setupPen() }
-            ivEraser.setOnClickListener { }
+            ivEraser.setOnClickListener { cvCanvas.setupEraser() }
         }
     }
 }

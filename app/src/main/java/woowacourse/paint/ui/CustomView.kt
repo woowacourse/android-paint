@@ -6,6 +6,8 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -24,11 +26,12 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private var brushType = LINE
 
-    private var startPointX = START_DEFAULT_X_COORDINATE
-    private var startPointY = START_DEFAULT_Y_COORDINATE
+    private var startPointX = START_DEFAULT_COORDINATE
+    private var startPointY = START_DEFAULT_COORDINATE
 
     init {
         setupPaint()
+        setLayerType(LAYER_TYPE_HARDWARE, null)
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -76,19 +79,28 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     fun setupPen() {
         setupPaint(paint.strokeWidth, paint.color)
+        paint.xfermode = null
         brushType = LINE
     }
 
     fun setupCircle() {
         setupPaint(paint.strokeWidth, paint.color)
         paint.style = Paint.Style.FILL
+        paint.xfermode = null
         brushType = CIRCLE
     }
 
     fun setupRectangle() {
         setupPaint(paint.strokeWidth, paint.color)
         paint.style = Paint.Style.FILL
+        paint.xfermode = null
         brushType = RECTANGLE
+    }
+
+    fun setupEraser() {
+        setupPaint(paint.strokeWidth)
+        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+        brushType = ERASER
     }
 
     fun setMyStrokeWidth(width: Float) {
@@ -102,7 +114,7 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private fun doActionDown(pointX: Float, pointY: Float) {
         when (brushType) {
             LINE -> path.moveTo(pointX, pointY)
-            ERASER -> { }
+            ERASER -> path.moveTo(pointX, pointY)
             else -> {
                 startPointX = pointX
                 startPointY = pointY
@@ -121,7 +133,7 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
                 path.addRect(startPointX, startPointY, pointX, pointY, Path.Direction.CCW)
             }
             LINE -> path.lineTo(pointX, pointY)
-            ERASER -> { }
+            ERASER -> path.lineTo(pointX, pointY)
         }
     }
 
@@ -140,12 +152,15 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
                 paintings.storePainting(Painting(paint, path))
                 setupPaint(paint.strokeWidth, paint.color)
             }
-            ERASER -> { }
+            ERASER -> {
+                path.lineTo(pointX, pointY)
+                paintings.storePainting(Painting(paint, path))
+                setupEraser()
+            }
         }
     }
 
     companion object {
-        private const val START_DEFAULT_X_COORDINATE = 0f
-        private const val START_DEFAULT_Y_COORDINATE = 0f
+        private const val START_DEFAULT_COORDINATE = 0f
     }
 }
