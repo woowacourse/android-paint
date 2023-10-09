@@ -7,12 +7,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.slider.RangeSlider
-import woowacourse.paint.PaintingCanvas.Companion.DEFAULT_STROKE_WIDTH
 import woowacourse.paint.adapter.BrushAdapter
 import woowacourse.paint.adapter.ColorAdapter
+import woowacourse.paint.customview.PaintingCanvas.Companion.DEFAULT_STROKE_WIDTH
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.listener.OnBrushClickListener
 import woowacourse.paint.listener.OnColorClickListener
+import woowacourse.paint.model.BrushTool
 import woowacourse.paint.model.ColorBox
 import woowacourse.paint.model.PaintBrush
 
@@ -101,9 +102,19 @@ class MainActivity : AppCompatActivity(), OnColorClickListener, OnBrushClickList
             binding.cvPainter.setColor(it.first { colorBox -> colorBox.isSelected }.color)
         }
 
-        viewModel.paintBrush.observe(this) {
-            brushAdapter.submitList(it)
-            binding.cvPainter.setBrush(it.first { paintBrush -> paintBrush.isSelected })
+        viewModel.paintBrush.observe(this) { brushList ->
+            val selectedBrush = brushList.first { it.isSelected }
+            brushAdapter.submitList(brushList)
+
+            with(binding) {
+                cvPainter.setBrush(selectedBrush)
+                rvColor.isVisible = selectedBrush.brushTool != BrushTool.ERASER
+                btnColorChange.isEnabled = selectedBrush.brushTool != BrushTool.ERASER
+                rangeSlider.isVisible =
+                    selectedBrush.brushTool !in listOf(BrushTool.CIRCLE, BrushTool.RECTANGLE)
+                btnStrokeChange.isEnabled =
+                    selectedBrush.brushTool !in listOf(BrushTool.CIRCLE, BrushTool.RECTANGLE)
+            }
         }
     }
 

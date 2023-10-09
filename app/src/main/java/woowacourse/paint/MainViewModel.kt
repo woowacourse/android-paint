@@ -7,8 +7,9 @@ import woowacourse.paint.model.BrushTool
 import woowacourse.paint.model.ColorBox
 import woowacourse.paint.model.PaintBrush
 import woowacourse.paint.model.PaintColor
-import woowacourse.paint.model.PaintingElement
+import woowacourse.paint.model.Painting
 import woowacourse.paint.model.PaintingHistory
+import woowacourse.paint.model.PenPainting
 
 class MainViewModel : ViewModel() {
     private val _colors = MutableLiveData<List<ColorBox>>()
@@ -20,9 +21,9 @@ class MainViewModel : ViewModel() {
         get() = _paintBrush
 
     val paletteHistory = PaintingHistory()
-    private var _paintingElement = PaintingElement()
-    val paintingElement
-        get() = _paintingElement
+    private var _painting: Painting = PenPainting()
+    val painting
+        get() = _painting
 
     init {
         setColors()
@@ -49,7 +50,7 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun updatePaintingElement(updateFunction: (PaintingElement) -> PaintingElement) {
-        _paintingElement = updateFunction(_paintingElement)
+    fun updatePaintingElement(updateFunction: (Painting) -> Painting) {
+        _painting = updateFunction(_painting)
     }
 }

@@ -1,4 +1,4 @@
-package woowacourse.paint
+package woowacourse.paint.customview
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -8,8 +8,9 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.findViewTreeViewModelStoreOwner
+import woowacourse.paint.MainViewModel
 import woowacourse.paint.model.PaintBrush
-import woowacourse.paint.model.PaintingElement
+import woowacourse.paint.model.Painting
 
 class PaintingCanvas @JvmOverloads constructor(
     context: Context,
@@ -33,7 +34,7 @@ class PaintingCanvas @JvmOverloads constructor(
         viewModel.paletteHistory.forEach {
             it.draw(canvas)
         }
-        viewModel.paintingElement.draw(canvas)
+        viewModel.painting.draw(canvas)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -50,11 +51,11 @@ class PaintingCanvas @JvmOverloads constructor(
             }
 
             MotionEvent.ACTION_MOVE -> {
-                viewModel.paintingElement.initPath(previousX, previousY, pointX, pointY)
+                viewModel.painting.initPath(previousX, previousY, pointX, pointY)
             }
 
             MotionEvent.ACTION_UP -> {
-                viewModel.paletteHistory.addHistory(viewModel.paintingElement.withNewPaint())
+                viewModel.paletteHistory.addHistory(viewModel.painting)
             }
 
             else -> super.onTouchEvent(event)
@@ -77,7 +78,7 @@ class PaintingCanvas @JvmOverloads constructor(
 
     fun setBrush(brush: PaintBrush) {
         viewModel.updatePaintingElement {
-            it.setBrush(brush.brushTool)
+            it.setPaintBrush(brush.brushTool)
         }
     }
 
@@ -99,10 +100,10 @@ class PaintingCanvas @JvmOverloads constructor(
         }
     }
 
-    private inline fun updateCanvasState(crossinline action: (PaintingElement) -> Unit) {
+    private inline fun updateCanvasState(crossinline action: (Painting) -> Unit) {
         viewModel.updatePaintingElement {
             action(it)
-            it.withNewPathPaint()
+            it.getNewPainting()
         }
         invalidate()
     }
