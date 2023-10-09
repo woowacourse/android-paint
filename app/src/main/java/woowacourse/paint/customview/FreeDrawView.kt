@@ -16,7 +16,7 @@ class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context,
     private var brush: Brush = Pen
 
     init {
-        brush.setStyle()
+        brush.updateStyle()
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -66,6 +66,6 @@ class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context,
 
     fun setBrushType(brush: Brush) {
         this.brush = brush
-        this.brush.setStyle()
+        this.brush.updateStyle()
     }
 }

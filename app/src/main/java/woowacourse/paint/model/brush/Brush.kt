@@ -14,8 +14,8 @@ import woowacourse.paint.model.brush.Rectangle.drawPreview
 import woowacourse.paint.model.brush.Rectangle.setCurrentPosition
 
 sealed class Brush {
-    open fun setStyle() {
-        this.setStyle()
+    open fun updateStyle() {
+        updateStyle()
     }
 
     fun onActionDown(xCursor: Float, yCursor: Float, updateView: () -> Unit) {

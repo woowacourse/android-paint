@@ -5,7 +5,7 @@ import android.graphics.Path
 
 object Circle : Brush() {
     private var beforePosition = Pair(0f, 0f)
-    override fun setStyle() {
+    override fun updateStyle() {
         paintInstance.style = Paint.Style.FILL
     }
 

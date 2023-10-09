@@ -4,7 +4,7 @@ import android.graphics.Paint
 import android.graphics.Path
 
 object Pen : Brush() {
-    override fun setStyle() {
+    override fun updateStyle() {
         paintInstance.apply {
             style = Paint.Style.STROKE
             strokeCap = Paint.Cap.ROUND
