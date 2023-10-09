@@ -9,15 +9,18 @@ import android.view.View
 
 class CanvasView constructor(context: Context, attr: AttributeSet) : View(context, attr) {
 
-    init {
-        changeBrush(LineBrush())
-    }
-
     private lateinit var brush: Brush
 
     private val brushHistory = BrushHistory()
 
     private var eraserMode: Boolean = false
+
+    private var prevColor: Color = Color.values().first()
+    private var prevStrokeWidth: Float = 10f
+
+    init {
+        changeBrush(LineBrush())
+    }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -26,16 +29,17 @@ class CanvasView constructor(context: Context, attr: AttributeSet) : View(contex
     }
 
     fun setColor(color: Color) {
+        prevColor = color
         brush = brush.copy(color = context.getColor(color.id))
     }
 
     fun setStrokeWidth(width: Float) {
+        prevStrokeWidth = width
         brush = brush.copy(width = width)
     }
 
     fun changeBrush(brush: Brush) {
-        this.brush = brush
-        this.setColor(Color.values().first())
+        this.brush = brush.copy(color = context.getColor(prevColor.id), width = prevStrokeWidth)
         eraserMode = false
     }
 
