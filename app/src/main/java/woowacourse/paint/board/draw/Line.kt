@@ -6,7 +6,7 @@ import android.graphics.Path
 import android.view.MotionEvent
 
 class Line(override val paint: Paint, strokeWidth: Float, private val invalidateView: () -> Unit) :
-    GraphicObject {
+    GraphicObject() {
 
     private val path = Path()
 

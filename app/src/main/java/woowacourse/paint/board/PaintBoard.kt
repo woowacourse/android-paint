@@ -7,11 +7,13 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import androidx.annotation.ColorRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import woowacourse.paint.R
 import woowacourse.paint.board.draw.GraphicObject
+import woowacourse.paint.board.draw.GraphicObjectType
 import woowacourse.paint.board.draw.Line
 import woowacourse.paint.palette.Palette
 
@@ -22,6 +24,10 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     private val expandedHeight = screenHeight * BOARD_HEIGHT_EXPANSION_RATE
 
     private val graphicObjects: MutableList<GraphicObject> = mutableListOf()
+
+    private var currentGraphicObjectType: GraphicObjectType = GraphicObjectType.LINE
+
+    private var currentGraphicObject: GraphicObject? = null
 
     @ColorRes
     private var currentSelectedColor: Int = R.color.black
@@ -53,7 +59,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
 
     private fun moveScreenToBoardCenter() {
         moveBoardToCenter()
-        moveStickyPaletteToFollowBoard()
+        moveStickyPaletteToBoardCenter()
     }
 
     private fun moveBoardToCenter() {
@@ -61,9 +67,24 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
         y = (-expandedHeight / 2 + screenHeight / 2).toFloat()
     }
 
+    private fun moveStickyPaletteToBoardCenter() {
+        val palettePreDrawListener: ViewTreeObserver.OnPreDrawListener =
+            object : ViewTreeObserver.OnPreDrawListener {
+                override fun onPreDraw(): Boolean {
+                    palette.viewTreeObserver.removeOnPreDrawListener(this)
+                    moveStickyPaletteToFollowBoard()
+                    return true
+                }
+            }
+
+        palette.viewTreeObserver.apply {
+            addOnPreDrawListener(palettePreDrawListener)
+        }
+    }
+
     private fun moveStickyPaletteToFollowBoard() {
         palette.x = -x
-        palette.y = -y
+        palette.y = -y + screenHeight - palette.height - PALETTE_BOTTOM_MARGIN_PIXEL
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -100,5 +121,6 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     companion object {
         private const val BOARD_HEIGHT_EXPANSION_RATE = 5
         private const val BOARD_WIDTH_EXPANSION_RATE = 15
+        private const val PALETTE_BOTTOM_MARGIN_PIXEL = 100
     }
 }
