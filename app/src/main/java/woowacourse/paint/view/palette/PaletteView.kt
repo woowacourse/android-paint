@@ -17,7 +17,9 @@ class PaletteView : LinearLayout {
 
     private var paintPropertyChangeListener: OnPaintPropertyChangeListener? = null
     var selectedPaintThickness: Float = THICKNESS_SIZE_UNIT
+        private set
     var selectedPaletteColor: PaletteColor = PaletteColor.values().first()
+        private set
     private var selectedPaletteShape: PaletteShape = PaletteShape.values().first()
 
     private val shapeScrollView by lazy { ShapeScrollView.create(context, ::setPaletteShape) }
