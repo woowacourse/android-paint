@@ -27,7 +27,7 @@ class ContentContainer(
                 val drawingContent = createContent()
                 drawingContent.action(event)
                 _drawnContents.add(drawingContent)
-                redoAbleContents.clear() // undo를 한 상태에서 뒤로가기를 누르면, redo를 할 수 있는 것들이 모두 지워진다.
+                redoAbleContents.clear() // undo를 한 상태에서 다른 그림이 추가되면, redo를 할 수 있는 것들이 모두 지워진다.
             }
 
             MotionEvent.ACTION_MOVE -> {
