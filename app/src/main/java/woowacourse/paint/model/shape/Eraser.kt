@@ -23,6 +23,10 @@ data class Eraser(
         Shapes.updateLastPoint(pointX, pointY)
     }
 
+    fun addRect(width: Float, height: Float) {
+        path.addRect(0f, 0f, width, height, Path.Direction.CW)
+    }
+
     fun moveTo(pointX: Float, pointY: Float) {
         path.moveTo(pointX, pointY)
     }

@@ -1,6 +1,5 @@
 package woowacourse.paint.model.shape
 
-import android.graphics.Path
 import android.view.View
 import java.util.Stack
 
@@ -48,7 +47,7 @@ class Shapes(value: List<Shape> = mutableListOf()) {
 
     fun clear(view: View) {
         val eraser = Eraser().apply {
-            path.addRect(0f, 0f, view.width.toFloat(), view.height.toFloat(), Path.Direction.CW)
+            addRect(view.width.toFloat(), view.height.toFloat())
         }
         _value.add(eraser)
         undoStack.clear()
