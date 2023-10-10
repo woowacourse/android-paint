@@ -17,6 +17,12 @@ class Rectangle(palette: Palette) : PaintTool(palette, null) {
 
     override fun nextPath(): PaintTool = Rectangle(this.palette)
 
+    override fun onDownEvent(pointX: Float, pointY: Float) {
+        preX = pointX
+        preY = pointY
+        path.moveTo(pointX, pointY)
+    }
+
     override fun onMoveEvent(pointX: Float, pointY: Float) {
         path.reset()
         val left = minOf(preX, pointX)
@@ -24,12 +30,6 @@ class Rectangle(palette: Palette) : PaintTool(palette, null) {
         val bottom = maxOf(preY, pointY)
         val right = maxOf(preX, pointX)
         path.addRect(left, top, right, bottom, Path.Direction.CW)
-    }
-
-    override fun onDownEvent(pointX: Float, pointY: Float) {
-        preX = pointX
-        preY = pointY
-        path.moveTo(pointX, pointY)
     }
 
     companion object {

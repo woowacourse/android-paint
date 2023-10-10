@@ -23,7 +23,7 @@ abstract class PaintTool(
 
     abstract fun changePalette(palette: Palette): PaintTool
 
-    abstract fun onMoveEvent(pointX: Float, pointY: Float)
-
     abstract fun onDownEvent(pointX: Float, pointY: Float)
+
+    abstract fun onMoveEvent(pointX: Float, pointY: Float)
 }

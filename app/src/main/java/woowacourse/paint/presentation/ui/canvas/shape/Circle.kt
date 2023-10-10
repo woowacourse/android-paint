@@ -15,19 +15,19 @@ class Circle(
         palette.paint.style = Paint.Style.FILL
     }
 
-    override fun changePalette(palette: Palette): PaintTool = Circle(palette)
-
     override fun nextPath(): PaintTool = Circle(this.palette)
 
-    override fun onMoveEvent(pointX: Float, pointY: Float) {
-        path.reset()
-        path.addOval(preX, preY, pointX, pointY, Path.Direction.CW)
-    }
+    override fun changePalette(palette: Palette): PaintTool = Circle(palette)
 
     override fun onDownEvent(pointX: Float, pointY: Float) {
         preX = pointX
         preY = pointY
         path.moveTo(pointX, pointY)
+    }
+
+    override fun onMoveEvent(pointX: Float, pointY: Float) {
+        path.reset()
+        path.addOval(preX, preY, pointX, pointY, Path.Direction.CW)
     }
 
     companion object {
