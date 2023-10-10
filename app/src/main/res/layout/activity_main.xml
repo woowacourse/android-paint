@@ -25,19 +25,20 @@
             app:pen="@{paintViewModel.pen}" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="@dimen/tool_width"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="10dp"
             android:background="?colorOnPrimary"
+            android:paddingHorizontal="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_max="500dp">
 
             <Button
                 android:id="@+id/main_clear_btn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/tool_button_margin"
+                android:layout_marginEnd="16dp"
                 android:onClick="@{() -> paintViewModel.clearInk()}"
                 android:text="@string/main_clear"
                 android:textSize="12sp"
@@ -49,7 +50,7 @@
                 android:id="@+id/main_undo_btn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/tool_button_margin"
+                android:layout_marginEnd="16dp"
                 android:onClick="@{() -> paintViewModel.undoInk()}"
                 android:text="@string/main_undo"
                 android:textSize="12sp"
@@ -72,7 +73,7 @@
                 android:id="@+id/main_line_pen_btn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/tool_button_margin"
+                android:layout_marginEnd="16dp"
                 android:onClick="@{() -> paintViewModel.changeToLinePen()}"
                 android:text="@string/main_line_pen"
                 app:layout_constraintBottom_toTopOf="@id/main_width_slider"
@@ -83,7 +84,7 @@
                 android:id="@+id/main_rect_pen_btn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/tool_button_margin"
+                android:layout_marginEnd="16dp"
                 android:onClick="@{() -> paintViewModel.changeToRectPen()}"
                 android:text="@string/main_rect_pen"
                 app:layout_constraintBottom_toTopOf="@id/main_width_slider"
@@ -94,7 +95,7 @@
                 android:id="@+id/main_ellipse_pen_btn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/tool_button_margin"
+                android:layout_marginEnd="16dp"
                 android:onClick="@{() -> paintViewModel.changeToEllipsePen()}"
                 android:text="@string/main_ellipse_pen"
                 app:layout_constraintBottom_toTopOf="@id/main_width_slider"
