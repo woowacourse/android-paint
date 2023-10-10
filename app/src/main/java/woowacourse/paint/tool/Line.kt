@@ -4,10 +4,10 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 
-class Pen(private val path: Path = Path()) : Tool {
+class Line(private val path: Path = Path()) : Tool {
 
-    override fun copy(): Pen {
-        return Pen(Path())
+    override fun copy(): Line {
+        return Line()
     }
 
     override fun startDraw(pointX: Float, pointY: Float) {

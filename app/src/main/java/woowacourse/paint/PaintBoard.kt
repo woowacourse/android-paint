@@ -12,7 +12,7 @@ import android.view.MotionEvent.ACTION_UP
 import android.view.View
 import androidx.annotation.ArrayRes
 import androidx.annotation.ColorRes
-import woowacourse.paint.tool.Pen
+import woowacourse.paint.tool.Circle
 
 class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
@@ -25,7 +25,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private fun setupPaintSetting() {
         painting = Painting(
-            tool = Pen(),
+            tool = Circle(),
             paint = Paint().apply {
                 isAntiAlias = true
                 style = Paint.Style.STROKE
@@ -74,7 +74,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private fun savePath() {
         history.add(painting)
-        painting = Painting(tool = painting.tool.copy(), paint = Paint(painting.paint))
+        painting = painting.copy()
     }
 
     fun changeSize(value: Float) {

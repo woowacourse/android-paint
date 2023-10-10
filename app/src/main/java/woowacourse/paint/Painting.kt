@@ -27,4 +27,8 @@ class Painting(
     fun changeColor(value: Int) {
         paint.color = value
     }
+
+    fun copy(): Painting {
+        return Painting(tool.copy(), Paint(paint))
+    }
 }
