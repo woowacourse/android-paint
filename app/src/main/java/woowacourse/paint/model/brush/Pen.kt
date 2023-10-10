@@ -3,9 +3,10 @@ package woowacourse.paint.model.brush
 import android.graphics.Paint
 import android.graphics.Path
 
-object Pen : Brush() {
-    override fun updateStyle() {
+class Pen(override val paintInstance: Paint = Paint()) : Brush() {
+    override fun updateStyle(paint: Paint) {
         paintInstance.apply {
+            set(paint)
             style = Paint.Style.STROKE
             strokeCap = Paint.Cap.ROUND
             strokeJoin = Paint.Join.ROUND
@@ -22,7 +23,15 @@ object Pen : Brush() {
     }
 
     override fun onActionUp(xCursor: Float, yCursor: Float, updateView: () -> Unit) = Unit
+    override fun updateColor(color: Int) {
+        paintInstance.color = color
+    }
 
+    override fun updateThickness(thickness: Float) {
+        paintInstance.strokeWidth = thickness
+    }
+
+    override fun copyPaint(): Paint = Paint().apply { set(paintInstance) }
     private fun startDraw(x: Float, y: Float) {
         val path = Path().apply { moveTo(x, y) }
         val paint = Paint().apply {

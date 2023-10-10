@@ -64,19 +64,19 @@ class MainActivity : AppCompatActivity() {
         }
         binding.btPen.setOnClickListener {
             setBrushTypeVisibility(false)
-            binding.fdvBoard.setBrushType(Pen)
+            binding.fdvBoard.setBrushType(Pen())
         }
         binding.btRectangle.setOnClickListener {
             setBrushTypeVisibility(false)
-            binding.fdvBoard.setBrushType(Rectangle)
+            binding.fdvBoard.setBrushType(Rectangle())
         }
         binding.btCircle.setOnClickListener {
             setBrushTypeVisibility(false)
-            binding.fdvBoard.setBrushType(Circle)
+            binding.fdvBoard.setBrushType(Circle())
         }
         binding.btEraser.setOnClickListener {
             setBrushTypeVisibility(false)
-            binding.fdvBoard.setBrushType(Eraser)
+            binding.fdvBoard.setBrushType(Eraser())
         }
     }
 

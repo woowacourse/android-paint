@@ -3,9 +3,10 @@ package woowacourse.paint.model.brush
 import android.graphics.Paint
 import android.graphics.Path
 
-object Rectangle : Brush() {
+class Rectangle(override val paintInstance: Paint = Paint()) : Brush() {
     private var beforePosition = Pair(0f, 0f)
-    override fun updateStyle() {
+    override fun updateStyle(paint: Paint) {
+        paintInstance.set(paint)
         paintInstance.style = Paint.Style.FILL
     }
 
@@ -22,6 +23,16 @@ object Rectangle : Brush() {
         draw(xCursor, yCursor)
         updateView()
     }
+
+    override fun updateColor(color: Int) {
+        paintInstance.color = color
+    }
+
+    override fun updateThickness(thickness: Float) {
+        paintInstance.strokeWidth = thickness
+    }
+
+    override fun copyPaint(): Paint = Paint().apply { set(paintInstance) }
 
     private fun setCurrentPosition(xCursor: Float, yCursor: Float) {
         beforePosition = xCursor to yCursor
