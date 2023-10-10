@@ -4,15 +4,18 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.paint.model.Tool
 import woowacourse.paint.model.Tool.CIRCLE_PEN
-import woowacourse.paint.model.Tool.ERASER
+import woowacourse.paint.model.Tool.LINE_ERASER
 import woowacourse.paint.model.Tool.NORMAL_PEN
+import woowacourse.paint.model.Tool.PATH_ERASER
 import woowacourse.paint.model.Tool.RECTANGLE_PEN
 
 class ToolAdapter(
     private val onToolsClick: (tool: Tool) -> Unit,
 ) : RecyclerView.Adapter<ToolViewHolder>() {
 
-    private val tools: List<Tool> = listOf(NORMAL_PEN, RECTANGLE_PEN, CIRCLE_PEN, ERASER)
+    private val tools: List<Tool> = listOf(
+        NORMAL_PEN, RECTANGLE_PEN, CIRCLE_PEN, PATH_ERASER, LINE_ERASER
+    )
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ToolViewHolder =
         ToolViewHolder.from(parent, onToolsClick)

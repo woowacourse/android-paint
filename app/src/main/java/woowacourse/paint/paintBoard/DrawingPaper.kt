@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.MotionEvent.*
 import android.view.View
@@ -30,6 +29,8 @@ class DrawingPaper(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+        setLayerType(LAYER_TYPE_HARDWARE, null)
+
         painting.forEach { line -> canvas.drawPath(line.path, line.brush.paint) }
     }
 

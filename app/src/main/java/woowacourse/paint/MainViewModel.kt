@@ -8,13 +8,15 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import woowacourse.paint.model.Tool
 import woowacourse.paint.model.Tool.CIRCLE_PEN
-import woowacourse.paint.model.Tool.ERASER
+import woowacourse.paint.model.Tool.LINE_ERASER
 import woowacourse.paint.model.Tool.NORMAL_PEN
+import woowacourse.paint.model.Tool.PATH_ERASER
 import woowacourse.paint.model.Tool.RECTANGLE_PEN
 import woowacourse.paint.paintBoard.Line
 import woowacourse.paint.paintBoard.tools.CirclePen
-import woowacourse.paint.paintBoard.tools.Eraser
+import woowacourse.paint.paintBoard.tools.LineEraser
 import woowacourse.paint.paintBoard.tools.NormalPen
+import woowacourse.paint.paintBoard.tools.PathEraser
 import woowacourse.paint.paintBoard.tools.RectanglePen
 import woowacourse.paint.paintBoard.tools.Tools
 
@@ -60,8 +62,10 @@ class MainViewModel : ViewModel() {
         setWidth(width)
     }
 
-    private fun setEraser(): Eraser =
-        Eraser(::removeLines, (painting.value ?: emptyList()).toMutableList())
+    private fun setPathEraser(): PathEraser =
+        PathEraser(::removeLines, (painting.value ?: emptyList()).toMutableList())
+
+    private fun setLineEraser(): LineEraser = LineEraser(::saveLine).apply { setWidth(width) }
 
     private fun saveLine(line: Line) {
         _painting.value = painting.value?.plus(line)
@@ -76,7 +80,8 @@ class MainViewModel : ViewModel() {
             NORMAL_PEN -> setNormalPen()
             CIRCLE_PEN -> setCirclePen()
             RECTANGLE_PEN -> setRectanglePen()
-            ERASER -> setEraser()
+            PATH_ERASER -> setPathEraser()
+            LINE_ERASER -> setLineEraser()
         }
     }
 

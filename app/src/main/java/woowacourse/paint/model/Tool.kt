@@ -4,7 +4,8 @@ enum class Tool(val toolName: String) {
     NORMAL_PEN("펜"),
     RECTANGLE_PEN("직사각형"),
     CIRCLE_PEN("원"),
-    ERASER("지우개"),
+    PATH_ERASER("지우개1"),
+    LINE_ERASER("지우개2")
     ;
 
 
