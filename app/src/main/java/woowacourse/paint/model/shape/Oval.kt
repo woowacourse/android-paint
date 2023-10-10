@@ -7,7 +7,7 @@ data class Oval(
     val paint: Paint = Paint(),
 ) : Shape {
 
-    val rectF: RectF = RectF(0f, 0f, 0f, 0f)
+    val rectF: RectF = RectF()
 
     fun updatePosition(
         left: Float? = null,
