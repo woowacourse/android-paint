@@ -13,7 +13,9 @@ class Rectangle(palette: Palette) : PaintTool(palette, null) {
         palette.paint.style = Paint.Style.FILL
     }
 
-    override fun changePalette(palette: Palette): PaintTool = Rectangle(palette)
+    override fun changePalette(palette: Palette?): PaintTool {
+        return Rectangle(palette ?: this.palette.copy())
+    }
 
     override fun nextPath(): PaintTool = Rectangle(this.palette)
 

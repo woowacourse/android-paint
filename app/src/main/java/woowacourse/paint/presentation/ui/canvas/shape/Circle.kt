@@ -17,7 +17,9 @@ class Circle(
 
     override fun nextPath(): PaintTool = Circle(this.palette)
 
-    override fun changePalette(palette: Palette): PaintTool = Circle(palette)
+    override fun changePalette(palette: Palette?): PaintTool {
+        return Circle(palette ?: this.palette.copy())
+    }
 
     override fun onDownEvent(pointX: Float, pointY: Float) {
         preX = pointX

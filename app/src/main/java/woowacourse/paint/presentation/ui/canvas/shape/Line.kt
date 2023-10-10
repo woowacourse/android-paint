@@ -11,7 +11,9 @@ class Line(palette: Palette) : PaintTool(palette, null) {
 
     override fun nextPath(): PaintTool = Line(this.palette)
 
-    override fun changePalette(palette: Palette): PaintTool = Line(palette)
+    override fun changePalette(palette: Palette?): PaintTool {
+        return Line(palette ?: this.palette.copy())
+    }
 
     override fun onDownEvent(pointX: Float, pointY: Float) {
         path.moveTo(pointX, pointY)

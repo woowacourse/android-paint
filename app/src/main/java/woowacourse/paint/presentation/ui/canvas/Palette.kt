@@ -27,4 +27,11 @@ class Palette(val paint: Paint = Paint()) {
             this.color = paint.color
         },
     )
+
+    fun copy() = Palette(
+        Paint().apply {
+            this.strokeWidth = paint.strokeWidth
+            this.color = paint.color
+        },
+    )
 }

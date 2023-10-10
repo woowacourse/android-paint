@@ -15,7 +15,9 @@ class Eraser(
 
     override fun nextPath(): PaintTool = Eraser(this.palette)
 
-    override fun changePalette(palette: Palette): PaintTool = Eraser(palette)
+    override fun changePalette(palette: Palette?): PaintTool {
+        return Eraser(palette ?: this.palette.copy())
+    }
 
     override fun onDownEvent(pointX: Float, pointY: Float) {
         path.moveTo(pointX, pointY)

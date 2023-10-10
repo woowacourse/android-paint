@@ -26,17 +26,17 @@ class Painting {
         changePalette(palette)
     }
 
-    fun changeType(brushType: BrushType) {
-        drawingTool = when (brushType) {
-            BrushType.LINE -> Line(drawingTool.palette)
-            BrushType.CIRCLE -> Circle(drawingTool.palette)
-            BrushType.RECTANGLE -> Rectangle(drawingTool.palette)
-            BrushType.ERASER -> Eraser(drawingTool.palette)
-        }
-    }
-
     private fun changePalette(palette: Palette) {
         drawingTool = drawingTool.changePalette(palette)
+    }
+
+    fun changeType(brushType: BrushType) {
+        drawingTool = when (brushType) {
+            BrushType.LINE -> Line(drawingTool.palette.copy())
+            BrushType.CIRCLE -> Circle(drawingTool.palette.copy())
+            BrushType.RECTANGLE -> Rectangle(drawingTool.palette.copy())
+            BrushType.ERASER -> Eraser(drawingTool.palette.copy())
+        }
     }
 
     fun drawLine(pointX: Float, pointY: Float) {

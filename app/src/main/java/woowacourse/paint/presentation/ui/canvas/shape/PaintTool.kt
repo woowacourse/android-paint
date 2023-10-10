@@ -21,7 +21,7 @@ abstract class PaintTool(
 
     abstract fun nextPath(): PaintTool
 
-    abstract fun changePalette(palette: Palette): PaintTool
+    abstract fun changePalette(palette: Palette?): PaintTool
 
     abstract fun onDownEvent(pointX: Float, pointY: Float)
 
