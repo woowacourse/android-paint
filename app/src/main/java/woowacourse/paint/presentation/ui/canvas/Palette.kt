@@ -9,7 +9,6 @@ class Palette(val paint: Paint = Paint()) {
     }
 
     private fun initPaint() {
-        paint.style = Paint.Style.STROKE
         paint.strokeJoin = Paint.Join.ROUND
         paint.strokeCap = Paint.Cap.ROUND
         paint.isAntiAlias = true
