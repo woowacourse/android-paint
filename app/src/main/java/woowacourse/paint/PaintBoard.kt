@@ -19,6 +19,7 @@ import woowacourse.paint.tool.Line
 import woowacourse.paint.tool.Rectangle
 import woowacourse.paint.tool.Tools
 import woowacourse.paint.tool.Tools.CIRCLE
+import woowacourse.paint.tool.Tools.ERASER
 import woowacourse.paint.tool.Tools.LINE
 import woowacourse.paint.tool.Tools.RECTANGLE
 
@@ -32,6 +33,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     private fun setupPaintSetting() {
+        setLayerType(LAYER_TYPE_HARDWARE, null)
         painting = Painting(
             tool = Line(),
             paint = Paint().apply {
@@ -90,11 +92,11 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     fun changeTool(value: Tools) {
-        when (value) {
-            LINE -> painting = painting.changeTool(Line(), STROKE)
-            CIRCLE -> painting = painting.changeTool(Circle(), FILL)
-            RECTANGLE -> painting = painting.changeTool(Rectangle(), FILL)
-            else -> {}
+        painting = when (value) {
+            LINE -> painting.changeTool(Line(), STROKE)
+            CIRCLE -> painting.changeTool(Circle(), FILL)
+            RECTANGLE -> painting.changeTool(Rectangle(), FILL)
+            ERASER -> painting.changeTool(Line(), STROKE, true)
         }
     }
 

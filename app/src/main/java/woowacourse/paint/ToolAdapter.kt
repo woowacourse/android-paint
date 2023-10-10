@@ -13,6 +13,6 @@ class ToolAdapter(private val tools: Array<Tools>, private val onToolClicked: (I
     override fun getItemCount(): Int = tools.size
 
     override fun onBindViewHolder(holder: ToolViewHolder, position: Int) {
-        holder.bind(tools[position])
+        holder.bind()
     }
 }

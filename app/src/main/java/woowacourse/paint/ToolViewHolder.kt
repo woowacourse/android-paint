@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.paint.databinding.ItemToolBinding
-import woowacourse.paint.tool.Tools
 
 class ToolViewHolder(private val parent: ViewGroup, onToolClicked: (Int) -> Unit) :
     RecyclerView.ViewHolder(
@@ -19,7 +18,7 @@ class ToolViewHolder(private val parent: ViewGroup, onToolClicked: (Int) -> Unit
         }
     }
 
-    fun bind(tools: Tools) {
+    fun bind() {
         binding.tvTool.text = parent.resources.getStringArray(R.array.toolNames)[adapterPosition]
     }
 }

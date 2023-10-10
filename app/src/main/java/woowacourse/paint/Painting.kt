@@ -2,6 +2,8 @@ package woowacourse.paint
 
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import woowacourse.paint.tool.Tool
 
 class Painting(
@@ -32,7 +34,11 @@ class Painting(
         return Painting(tool.copy(), Paint(paint))
     }
 
-    fun changeTool(tool: Tool, style: Paint.Style): Painting {
+    fun changeTool(tool: Tool, style: Paint.Style, isEraser: Boolean = false): Painting {
+        when (isEraser) {
+            true -> paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+            else -> paint.xfermode = null
+        }
         paint.style = style
         return Painting(tool, paint)
     }
