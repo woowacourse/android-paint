@@ -9,21 +9,19 @@ import woowacourse.paint.model.PaintBrush
 import woowacourse.paint.model.PaintColor
 import woowacourse.paint.model.Painting
 import woowacourse.paint.model.PaintingHistory
-import woowacourse.paint.model.PenPainting
 
 class MainViewModel : ViewModel() {
     private val _colors = MutableLiveData(paintColors)
     val colors: LiveData<List<ColorBox>>
         get() = _colors
 
-    private val _paintBrush = MutableLiveData<List<PaintBrush>>(paintBrushes)
+    private val _paintBrush = MutableLiveData(paintBrushes)
     val paintBrush: LiveData<List<PaintBrush>>
         get() = _paintBrush
 
-    val paletteHistory = PaintingHistory()
-    private var _painting: Painting = PenPainting()
-    val painting
-        get() = _painting
+    private val _paintingHistory = MutableLiveData(PaintingHistory())
+    val paintingHistory: LiveData<PaintingHistory>
+        get() = _paintingHistory
 
     fun setColorsSelected(colorBox: ColorBox) {
         _colors.value = _colors.value?.map {
@@ -37,8 +35,20 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun updatePaintingElement(updateFunction: (Painting) -> Painting) {
-        _painting = updateFunction(_painting)
+    fun addHistory(painting: Painting) {
+        _paintingHistory.value?.addHistory(painting)
+    }
+
+    fun undoHistory() {
+        _paintingHistory.value?.undo()
+    }
+
+    fun redoHistory() {
+        _paintingHistory.value?.redo()
+    }
+
+    fun clearHistory() {
+        _paintingHistory.value?.clear()
     }
 
     companion object {

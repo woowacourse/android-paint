@@ -6,20 +6,22 @@ import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.findViewTreeViewModelStoreOwner
-import woowacourse.paint.MainViewModel
+import woowacourse.paint.model.CirclePainting
+import woowacourse.paint.model.EraserPainting
 import woowacourse.paint.model.PaintBrush
 import woowacourse.paint.model.Painting
+import woowacourse.paint.model.PaintingHistory
+import woowacourse.paint.model.PenPainting
+import woowacourse.paint.model.RectanglePainting
 
 class PaintingCanvas @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
 ) : View(context, attrs) {
 
-    private val viewModel: MainViewModel by lazy {
-        ViewModelProvider(findViewTreeViewModelStoreOwner()!!)[MainViewModel::class.java]
-    }
+    var canvasCallback: CanvasCallback? = null
+    lateinit var history: PaintingHistory
+    private var painting: Painting = PenPainting()
     private var previousX = 0f
     private var previousY = 0f
 
@@ -31,10 +33,10 @@ class PaintingCanvas @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        viewModel.paletteHistory.forEach {
+        history.forEach {
             it.draw(canvas)
         }
-        viewModel.painting.draw(canvas)
+        painting.draw(canvas)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -43,19 +45,17 @@ class PaintingCanvas @JvmOverloads constructor(
         val pointY = event.y
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                viewModel.updatePaintingElement {
-                    it.movePath(pointX, pointY)
-                }
+                painting = painting.movePath(pointX, pointY)
                 previousX = pointX
                 previousY = pointY
             }
 
             MotionEvent.ACTION_MOVE -> {
-                viewModel.painting.initPath(previousX, previousY, pointX, pointY)
+                painting.initPath(previousX, previousY, pointX, pointY)
             }
 
             MotionEvent.ACTION_UP -> {
-                viewModel.paletteHistory.addHistory(viewModel.painting)
+                canvasCallback?.onActionUp(painting)
             }
 
             else -> super.onTouchEvent(event)
@@ -65,46 +65,36 @@ class PaintingCanvas @JvmOverloads constructor(
     }
 
     fun setStroke(value: Float) {
-        viewModel.updatePaintingElement {
-            it.setStroke(value)
+        if (painting is PenPainting || painting is EraserPainting) {
+            painting = painting.setStroke(value)
         }
     }
 
     fun setColor(color: Int) {
-        viewModel.updatePaintingElement {
-            it.setColor(context.getColor(color))
+        if (painting is PenPainting || painting is RectanglePainting || painting is CirclePainting) {
+            painting = painting.setColor(context.getColor(color))
         }
     }
 
     fun setBrush(brush: PaintBrush) {
-        viewModel.updatePaintingElement {
-            it.setPaintBrush(brush.brushTool)
-        }
+        painting = painting.setPaintBrush(brush.brushTool)
     }
 
     fun undoCanvas() {
-        updateCanvasState {
-            viewModel.paletteHistory.undo()
-        }
+        canvasCallback?.onUndoHistory()
+        painting = painting.getNewPainting()
+        invalidate()
     }
 
     fun redoCanvas() {
-        updateCanvasState {
-            viewModel.paletteHistory.redo()
-        }
+        canvasCallback?.onRedoHistory()
+        painting = painting.getNewPainting()
+        invalidate()
     }
 
     fun resetCanvas() {
-        updateCanvasState {
-            viewModel.paletteHistory.clear()
-        }
-    }
-
-    private inline fun updateCanvasState(crossinline action: (Painting) -> Unit) {
-        viewModel.updatePaintingElement {
-            action(it)
-            it.getNewPainting()
-        }
+        canvasCallback?.onClearHistory()
+        painting = painting.getNewPainting()
         invalidate()
     }
 

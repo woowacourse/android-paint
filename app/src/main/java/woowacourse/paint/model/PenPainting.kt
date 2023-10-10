@@ -12,7 +12,7 @@ class PenPainting(
 ) : Painting() {
 
     override val paint: Paint
-        get() = _paint
+        get() = Paint(_paint)
 
     init {
         _paint.apply {
@@ -51,6 +51,6 @@ class PenPainting(
     )
 
     override fun getNewPainting(): Painting {
-        return PenPainting(_paint = paint)
+        return PenPainting(_paint = _paint)
     }
 }

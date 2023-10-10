@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.slider.RangeSlider
 import woowacourse.paint.adapter.BrushAdapter
 import woowacourse.paint.adapter.ColorAdapter
+import woowacourse.paint.customview.CanvasCallback
 import woowacourse.paint.customview.PaintingCanvas.Companion.DEFAULT_STROKE_WIDTH
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.listener.OnBrushClickListener
@@ -16,8 +17,13 @@ import woowacourse.paint.listener.OnColorClickListener
 import woowacourse.paint.model.BrushTool
 import woowacourse.paint.model.ColorBox
 import woowacourse.paint.model.PaintBrush
+import woowacourse.paint.model.Painting
 
-class MainActivity : AppCompatActivity(), OnColorClickListener, OnBrushClickListener {
+class MainActivity :
+    AppCompatActivity(),
+    OnColorClickListener,
+    OnBrushClickListener,
+    CanvasCallback {
 
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
@@ -43,6 +49,8 @@ class MainActivity : AppCompatActivity(), OnColorClickListener, OnBrushClickList
         setAdapter()
         setListener()
         setObserver()
+
+        binding.cvPainter.canvasCallback = this
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -116,6 +124,10 @@ class MainActivity : AppCompatActivity(), OnColorClickListener, OnBrushClickList
                     selectedBrush.brushTool !in listOf(BrushTool.CIRCLE, BrushTool.RECTANGLE)
             }
         }
+
+        viewModel.paintingHistory.observe(this) {
+            binding.cvPainter.history = it
+        }
     }
 
     override fun onColorClick(colorBox: ColorBox) {
@@ -124,5 +136,21 @@ class MainActivity : AppCompatActivity(), OnColorClickListener, OnBrushClickList
 
     override fun onBrushClick(paintBrush: PaintBrush) {
         viewModel.setBrushesSelected(paintBrush)
+    }
+
+    override fun onActionUp(painting: Painting) {
+        viewModel.addHistory(painting)
+    }
+
+    override fun onUndoHistory() {
+        viewModel.undoHistory()
+    }
+
+    override fun onRedoHistory() {
+        viewModel.redoHistory()
+    }
+
+    override fun onClearHistory() {
+        viewModel.clearHistory()
     }
 }
