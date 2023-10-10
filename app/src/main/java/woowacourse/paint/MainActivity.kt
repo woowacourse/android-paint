@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
                 adapter.submitList(colors)
             }
         }
-        viewModel.selectedBrush.observe(this) { brush ->
+        viewModel.selectedTool.observe(this) { brush ->
             canvasView.setupBrush(brush)
         }
     }

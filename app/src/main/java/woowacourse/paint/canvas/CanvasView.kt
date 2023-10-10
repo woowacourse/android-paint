@@ -14,12 +14,12 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
     context,
     attr,
 ) {
-    private var brush = Brush.PEN
+    private var tool = Tool.PEN
     private val paint = Paint().apply {
         isAntiAlias = true
         style = Paint.Style.FILL_AND_STROKE
         strokeCap = Paint.Cap.ROUND
-        xfermode = if (brush == Brush.ERASER) {
+        xfermode = if (tool == Tool.ERASER) {
             PorterDuffXfermode(PorterDuff.Mode.CLEAR)
         } else {
             null
@@ -50,9 +50,9 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        when (brush) {
-            Brush.PEN, Brush.ERASER -> drawLine(event)
-            Brush.RECTANGLE, Brush.CIRCLE -> drawShape(event)
+        when (tool) {
+            Tool.PEN, Tool.ERASER -> drawLine(event)
+            Tool.RECTANGLE, Tool.CIRCLE -> drawShape(event)
         }
         return true
     }
@@ -103,17 +103,17 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
 
     private fun drawPreview(x: Float, y: Float) {
         path.reset()
-        when (brush) {
-            Brush.RECTANGLE -> path.addRect(startPoint.x, startPoint.y, x, y, Path.Direction.CW)
-            Brush.CIRCLE -> path.addOval(startPoint.x, startPoint.y, x, y, Path.Direction.CW)
+        when (tool) {
+            Tool.RECTANGLE -> path.addRect(startPoint.x, startPoint.y, x, y, Path.Direction.CW)
+            Tool.CIRCLE -> path.addOval(startPoint.x, startPoint.y, x, y, Path.Direction.CW)
             else -> return
         }
         invalidate()
     }
 
-    fun setupBrush(selectedBrush: Brush) {
-        brush = selectedBrush
-        if (brush == Brush.ERASER) {
+    fun setupBrush(selectedTool: Tool) {
+        tool = selectedTool
+        if (tool == Tool.ERASER) {
             paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
             return
         }

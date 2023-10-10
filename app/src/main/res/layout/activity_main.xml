@@ -9,7 +9,7 @@
 
         <import type="woowacourse.paint.PaintChangingState" />
 
-        <import type="woowacourse.paint.canvas.Brush" />
+        <import type="woowacourse.paint.canvas.Tool" />
 
         <import type="android.view.View" />
     </data>
@@ -102,42 +102,42 @@
 
             <Button
                 android:id="@+id/btn_pen"
-                isSelected="@{viewModel.selectedBrush == Brush.PEN}"
+                isSelected="@{viewModel.selectedTool == Tool.PEN}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:backgroundTint="@color/brush_selected"
-                android:onClick="@{() -> viewModel.pickBrush(Brush.PEN)}"
+                android:onClick="@{() -> viewModel.pickBrush(Tool.PEN)}"
                 android:text="@string/pen" />
 
             <Button
                 android:id="@+id/btn_rectangle"
-                isSelected="@{viewModel.selectedBrush == Brush.RECTANGLE}"
+                isSelected="@{viewModel.selectedTool == Tool.RECTANGLE}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:backgroundTint="@color/brush_selected"
-                android:onClick="@{() -> viewModel.pickBrush(Brush.RECTANGLE)}"
+                android:onClick="@{() -> viewModel.pickBrush(Tool.RECTANGLE)}"
                 android:text="@string/rectangle" />
 
             <Button
                 android:id="@+id/btn_circle"
-                isSelected="@{viewModel.selectedBrush == Brush.CIRCLE}"
+                isSelected="@{viewModel.selectedTool == Tool.CIRCLE}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:backgroundTint="@color/brush_selected"
-                android:onClick="@{() -> viewModel.pickBrush(Brush.CIRCLE)}"
+                android:onClick="@{() -> viewModel.pickBrush(Tool.CIRCLE)}"
                 android:text="@string/circle" />
 
             <Button
                 android:id="@+id/btn_eraser"
-                isSelected="@{viewModel.selectedBrush == Brush.ERASER}"
+                isSelected="@{viewModel.selectedTool == Tool.ERASER}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:backgroundTint="@color/brush_selected"
-                android:onClick="@{() -> viewModel.pickBrush(Brush.ERASER)}"
+                android:onClick="@{() -> viewModel.pickBrush(Tool.ERASER)}"
                 android:text="@string/eraser" />
         </LinearLayout>
 

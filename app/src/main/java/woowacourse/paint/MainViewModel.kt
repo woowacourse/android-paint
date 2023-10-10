@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import woowacourse.paint.canvas.Brush
+import woowacourse.paint.canvas.Tool
 import woowacourse.paint.canvas.PaletteColor
 import woowacourse.paint.model.ColorUiModel
 
@@ -19,9 +19,9 @@ class MainViewModel : ViewModel() {
     val colors: LiveData<List<ColorUiModel>>
         get() = _colors
 
-    private var _selectedBrush = MutableLiveData(Brush.PEN)
-    val selectedBrush: LiveData<Brush>
-        get() = _selectedBrush
+    private var _selectedTool = MutableLiveData(Tool.PEN)
+    val selectedTool: LiveData<Tool>
+        get() = _selectedTool
 
     val selectedColor: LiveData<PaletteColor>
         get() = Transformations.map(_colors) { colors ->
@@ -40,8 +40,8 @@ class MainViewModel : ViewModel() {
         _paintChangingState.value = state
     }
 
-    fun pickBrush(brush: Brush) {
-        _selectedBrush.value = brush
+    fun pickBrush(tool: Tool) {
+        _selectedTool.value = tool
     }
 
     fun pickColor(model: ColorUiModel) {
