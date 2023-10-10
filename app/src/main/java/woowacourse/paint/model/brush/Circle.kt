@@ -9,11 +9,25 @@ object Circle : Brush() {
         paintInstance.style = Paint.Style.FILL
     }
 
-    fun setCurrentPosition(xCursor: Float, yCursor: Float) {
+    override fun onActionDown(xCursor: Float, yCursor: Float, updateView: () -> Unit) {
+        setCurrentPosition(xCursor, yCursor)
+    }
+
+    override fun onActionMove(xCursor: Float, yCursor: Float, updateView: () -> Unit) {
+        drawPreview(xCursor, yCursor)
+        updateView()
+    }
+
+    override fun onActionUp(xCursor: Float, yCursor: Float, updateView: () -> Unit) {
+        draw(xCursor)
+        updateView()
+    }
+
+    private fun setCurrentPosition(xCursor: Float, yCursor: Float) {
         beforePosition = xCursor to yCursor
     }
 
-    fun drawPreview(xCursor: Float, yCursor: Float) {
+    private fun drawPreview(xCursor: Float, yCursor: Float) {
         val path = Path().apply {
             addCircle(
                 beforePosition.first + ((xCursor - beforePosition.first) / 2),
@@ -26,7 +40,7 @@ object Circle : Brush() {
         previewDraw = path to paint
     }
 
-    fun draw(xCursor: Float, yCursor: Float) {
+    private fun draw(xCursor: Float) {
         val path = Path().apply {
             addCircle(
                 beforePosition.first + ((xCursor - beforePosition.first) / 2),

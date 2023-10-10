@@ -12,7 +12,18 @@ object Pen : Brush() {
         }
     }
 
-    fun startDraw(x: Float, y: Float) {
+    override fun onActionDown(xCursor: Float, yCursor: Float, updateView: () -> Unit) {
+        startDraw(xCursor, yCursor)
+    }
+
+    override fun onActionMove(xCursor: Float, yCursor: Float, updateView: () -> Unit) {
+        drawLine(xCursor, yCursor)
+        updateView()
+    }
+
+    override fun onActionUp(xCursor: Float, yCursor: Float, updateView: () -> Unit) = Unit
+
+    private fun startDraw(x: Float, y: Float) {
         val path = Path().apply { moveTo(x, y) }
         val paint = Paint().apply {
             set(paintInstance)
@@ -20,7 +31,7 @@ object Pen : Brush() {
         previousDrawings.add(path to paint)
     }
 
-    fun drawLine(x: Float, y: Float) {
+    private fun drawLine(x: Float, y: Float) {
         previousDrawings.last().first.lineTo(x, y)
     }
 }

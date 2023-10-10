@@ -9,11 +9,25 @@ object Rectangle : Brush() {
         paintInstance.style = Paint.Style.FILL
     }
 
-    fun setCurrentPosition(xCursor: Float, yCursor: Float) {
+    override fun onActionDown(xCursor: Float, yCursor: Float, updateView: () -> Unit) {
+        setCurrentPosition(xCursor, yCursor)
+    }
+
+    override fun onActionMove(xCursor: Float, yCursor: Float, updateView: () -> Unit) {
+        drawPreview(xCursor, yCursor)
+        updateView()
+    }
+
+    override fun onActionUp(xCursor: Float, yCursor: Float, updateView: () -> Unit) {
+        draw(xCursor, yCursor)
+        updateView()
+    }
+
+    private fun setCurrentPosition(xCursor: Float, yCursor: Float) {
         beforePosition = xCursor to yCursor
     }
 
-    fun drawPreview(x: Float, y: Float) {
+    private fun drawPreview(x: Float, y: Float) {
         val path = Path().apply {
             addRect(
                 beforePosition.first,
@@ -27,7 +41,7 @@ object Rectangle : Brush() {
         previewDraw = path to paint
     }
 
-    fun draw(xCursor: Float, yCursor: Float) {
+    private fun draw(xCursor: Float, yCursor: Float) {
         val path = Path().apply {
             addRect(
                 beforePosition.first,
