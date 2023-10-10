@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <woowacourse.paint.view.CanvasView
+    <woowacourse.paint.view.canvas.CanvasView
         android:id="@+id/canvas_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -13,11 +13,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <woowacourse.paint.view.PaletteView
+    <woowacourse.paint.view.palette.PaletteView
         android:id="@+id/palette_view"
         android:layout_width="0dp"
-        android:layout_height="140dp"
+        android:layout_height="120dp"
         android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@id/palette_mode_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/palette_mode_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="12dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

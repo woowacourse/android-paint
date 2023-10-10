@@ -1,4 +1,4 @@
-package woowacourse.paint.view
+package woowacourse.paint.view.palette.color
 
 import android.content.Context
 import android.graphics.Canvas
@@ -10,19 +10,12 @@ class ColorView private constructor(
 ) : View(context) {
     private val paint = Paint()
 
-    private var onColorSelected: (PaletteColor) -> Unit = {}
     private var paletteColor: PaletteColor = PaletteColor.values().first()
         set(value) {
             field = value
             paint.color = paletteColor.color
             invalidate()
         }
-
-    init {
-        setOnClickListener {
-            onColorSelected(paletteColor)
-        }
-    }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
@@ -51,7 +44,7 @@ class ColorView private constructor(
             onColorSelected: (PaletteColor) -> Unit,
         ): ColorView = ColorView(context).also { view ->
             view.paletteColor = paletteColor
-            view.onColorSelected = onColorSelected
+            view.setOnClickListener { onColorSelected(paletteColor) }
         }
     }
 }

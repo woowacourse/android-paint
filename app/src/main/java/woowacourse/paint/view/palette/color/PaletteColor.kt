@@ -1,4 +1,4 @@
-package woowacourse.paint.view
+package woowacourse.paint.view.palette.color
 
 enum class PaletteColor(val color: Int) {
     RED(0xFFFF0000.toInt()),

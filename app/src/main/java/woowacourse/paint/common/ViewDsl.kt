@@ -1,4 +1,4 @@
-package woowacourse.paint.view
+package woowacourse.paint.common
 
 import android.content.Context
 import com.google.android.material.slider.RangeSlider
