@@ -46,4 +46,9 @@ class CanvasView(
         }
         this.brush = brush
     }
+
+    fun clear() {
+        painting.clear()
+        invalidate()
+    }
 }

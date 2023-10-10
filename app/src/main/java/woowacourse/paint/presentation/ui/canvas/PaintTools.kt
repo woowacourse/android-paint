@@ -13,4 +13,8 @@ class PaintTools(value: List<PaintTool> = listOf()) {
     fun draw(canvas: Canvas) {
         _value.forEach { shape -> shape.draw(canvas) }
     }
+
+    fun clear() {
+        _value.clear()
+    }
 }

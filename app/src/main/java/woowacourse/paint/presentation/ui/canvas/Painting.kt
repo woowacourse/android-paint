@@ -48,4 +48,8 @@ class Painting {
         drawnTools.add(drawingTool)
         drawingTool.onDownEvent(pointX, pointY)
     }
+
+    fun clear() {
+        drawnTools.clear()
+    }
 }
