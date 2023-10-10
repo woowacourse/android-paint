@@ -1,21 +1,32 @@
 package woowacourse.paint.paintBoard.tools
 
+import android.graphics.RectF
 import woowacourse.paint.paintBoard.Line
 
 class Eraser(
-    val onSave: (line: Line) -> Unit,
-    override val line: Line
+    private val onRemove: (Line) -> Unit,
+    private val painting: MutableList<Line>,
+    override val line: Line = Line()
 ) : Tools {
 
     override fun startPainting(pointX: Float, pointY: Float) {
-        TODO("Not yet implemented")
+        erase(pointX, pointY)
     }
 
     override fun drawPainting(pointX: Float, pointY: Float) {
-        TODO("Not yet implemented")
+        erase(pointX, pointY)
     }
 
-    override fun finishPainting() {
-        TODO("Not yet implemented")
+    private fun erase(pointX: Float, pointY: Float) {
+        painting.forEach { line ->
+            val bounds = RectF()
+            line.path.computeBounds(bounds, true)
+            if (bounds.contains(pointX, pointY)) {
+                onRemove(line)
+                return
+            }
+        }
     }
+
+    override fun finishPainting() {}
 }

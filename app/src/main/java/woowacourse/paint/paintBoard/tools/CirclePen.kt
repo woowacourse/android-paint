@@ -5,9 +5,10 @@ import woowacourse.paint.paintBoard.Line
 import kotlin.math.sqrt
 
 class CirclePen(
+    reset: () -> Unit,
     override val onSave: (line: Line) -> Unit,
     override val line: Line
-) : ShapePen(onSave) {
+) : ShapePen(reset, onSave) {
 
     override fun draw(pointX: Float, pointY: Float) {
         line.path.addCircle(pointX, pointY, getRadius(pointX, pointY), Path.Direction.CCW)

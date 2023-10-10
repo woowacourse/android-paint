@@ -9,10 +9,6 @@ import woowacourse.paint.adapter.color.ColorAdapter
 import woowacourse.paint.adapter.tool.ToolAdapter
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.model.Tool
-import woowacourse.paint.model.Tool.CIRCLE_PEN
-import woowacourse.paint.model.Tool.ERASER
-import woowacourse.paint.model.Tool.NORMAL_PEN
-import woowacourse.paint.model.Tool.RECTANGLE_PEN
 
 class MainActivity : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels { MainViewModel.Factory }
@@ -40,12 +36,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun observeViewModel() {
         viewModel.tool.observe(this) { tool ->
-            when (tool) {
-                NORMAL_PEN -> binding.dpMain.setTool(viewModel.setNormalPen())
-                CIRCLE_PEN -> binding.dpMain.setTool(viewModel.setCirclePen())
-                RECTANGLE_PEN -> binding.dpMain.setTool(viewModel.setRectanglePen())
-                ERASER -> binding.dpMain.setTool(viewModel.setEraser())
-            }
+           binding.dpMain.setTool(tool)
         }
 
         viewModel.painting.observe(this) { lines ->

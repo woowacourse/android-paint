@@ -4,9 +4,10 @@ import android.graphics.Path
 import woowacourse.paint.paintBoard.Line
 
 class RectanglePen(
-    override val onSave: (line: Line) -> Unit,
+    reset: () -> Unit,
+    override val onSave: (Line) -> Unit,
     override val line: Line
-) : ShapePen(onSave) {
+) : ShapePen(reset, onSave) {
 
     override fun draw(pointX: Float, pointY: Float) {
         val left = minOf(startingPointX, pointX)

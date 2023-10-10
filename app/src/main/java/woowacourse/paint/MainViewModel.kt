@@ -7,25 +7,33 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import woowacourse.paint.model.Tool
+import woowacourse.paint.model.Tool.CIRCLE_PEN
+import woowacourse.paint.model.Tool.ERASER
 import woowacourse.paint.model.Tool.NORMAL_PEN
+import woowacourse.paint.model.Tool.RECTANGLE_PEN
 import woowacourse.paint.paintBoard.Brush
 import woowacourse.paint.paintBoard.Line
 import woowacourse.paint.paintBoard.tools.CirclePen
 import woowacourse.paint.paintBoard.tools.Eraser
 import woowacourse.paint.paintBoard.tools.NormalPen
 import woowacourse.paint.paintBoard.tools.RectanglePen
+import woowacourse.paint.paintBoard.tools.Tools
 
 class MainViewModel : ViewModel() {
+
     private var color = R.color.black
     private var width = 0f
-    private val _painting: MutableLiveData<List<Line>> = MutableLiveData(listOf(Line()))
+    private var tools: Tool = NORMAL_PEN
+
+    private val _painting: MutableLiveData<List<Line>> = MutableLiveData(listOf())
     val painting: LiveData<List<Line>> get() = _painting
 
-    private val _tool: MutableLiveData<Tool> = MutableLiveData(NORMAL_PEN)
-    val tool: LiveData<Tool> get() = _tool
+    private val _tool: MutableLiveData<Tools> = MutableLiveData(setNormalPen())
+    val tool: LiveData<Tools> get() = _tool
 
     fun updateToolState(tool: Tool) {
-        _tool.value = tool
+        tools = tool
+        renewTools()
     }
 
     fun updateWidth(width: Float) {
@@ -36,7 +44,8 @@ class MainViewModel : ViewModel() {
         this.color = color
     }
 
-    fun setNormalPen(): NormalPen = NormalPen(
+    private fun setNormalPen(): NormalPen = NormalPen(
+        ::renewTools,
         ::saveLine,
         Line(brush = Brush().apply {
             changeBrush(color)
@@ -44,24 +53,39 @@ class MainViewModel : ViewModel() {
         })
     )
 
-    fun setRectanglePen(): RectanglePen = RectanglePen(
+    private fun setRectanglePen(): RectanglePen = RectanglePen(
+        ::renewTools,
         ::saveLine,
         Line(brush = Brush().apply {
             changeBrush(color)
         })
     )
 
-    fun setCirclePen(): CirclePen = CirclePen(
+    private fun setCirclePen(): CirclePen = CirclePen(
+        ::renewTools,
         ::saveLine,
         Line(brush = Brush().apply {
             changeBrush(color)
         })
     )
 
-    fun setEraser(): Eraser = Eraser(::saveLine, Line())
+    private fun setEraser(): Eraser = Eraser(::removeLines, (painting.value ?: emptyList()).toMutableList())
 
     private fun saveLine(line: Line) {
-        _painting.value = _painting.value?.plus(line)
+        _painting.value = painting.value?.plus(line)
+    }
+
+    private fun removeLines(line: Line) {
+        _painting.value = painting.value?.minus(line)
+    }
+
+    private fun renewTools() {
+        _tool.value = when (tools) {
+            NORMAL_PEN -> setNormalPen()
+            CIRCLE_PEN -> setCirclePen()
+            RECTANGLE_PEN -> setRectanglePen()
+            ERASER -> setEraser()
+        }
     }
 
     companion object {

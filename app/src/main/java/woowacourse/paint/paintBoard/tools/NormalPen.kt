@@ -3,11 +3,13 @@ package woowacourse.paint.paintBoard.tools
 import woowacourse.paint.paintBoard.Line
 
 class NormalPen(
-    val onSave: (Line) -> Unit,
+    private val reset: () -> Unit,
+    private val onSave: (Line) -> Unit,
     override val line: Line
 ) : Tools {
 
     override fun startPainting(pointX: Float, pointY: Float) {
+        onSave(line)
         line.path.moveTo(pointX, pointY)
         line.path.lineTo(pointX, pointY)
     }
@@ -17,6 +19,6 @@ class NormalPen(
     }
 
     override fun finishPainting() {
-        onSave(line)
+        reset.invoke()
     }
 }
