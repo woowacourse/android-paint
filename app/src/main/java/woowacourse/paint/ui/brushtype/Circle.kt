@@ -27,7 +27,7 @@ class Circle : BrushType {
 
     override fun doActionMove(pointX: Float, pointY: Float) {
         path.reset()
-        path.addArc(startPointX, startPointY, pointX, pointY, 0f, 360f)
+        path.addOval(startPointX, startPointY, pointX, pointY, Path.Direction.CCW)
     }
 
     override fun getPath(): Path {
