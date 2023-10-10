@@ -2,7 +2,7 @@ package woowacourse.paint.model
 
 import android.graphics.Canvas
 
-class Brushes() {
+class BrushHistory {
     private val history = mutableListOf<Brush>()
 
     private val undoHistory = mutableListOf<Brush>()
@@ -20,10 +20,6 @@ class Brushes() {
 
     fun drawOn(canvas: Canvas) {
         history.forEach { brush -> brush.drawOn(canvas) }
-    }
-
-    fun last(): Brush {
-        return history.last()
     }
 
     fun undo(onSuccess: () -> Unit = {}) {

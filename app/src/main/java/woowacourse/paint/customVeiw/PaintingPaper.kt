@@ -9,12 +9,14 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.model.Brush
+import woowacourse.paint.model.BrushHistory
 import woowacourse.paint.model.BrushPen
 import woowacourse.paint.model.BrushShape
-import woowacourse.paint.model.Brushes
 
 class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    private val brushes: Brushes = Brushes()
+    private val brushHistory: BrushHistory = BrushHistory()
+
+    private var brush: Brush? = null
 
     private val previewBrush: Brush
         get() = BrushPen().apply {
@@ -48,18 +50,19 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        brushes.drawOn(canvas)
+        brushHistory.drawOn(canvas)
         previewBrush.drawOn(canvas)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean = when (event.action) {
         MotionEvent.ACTION_DOWN -> onActionDown(event)
         MotionEvent.ACTION_MOVE -> onActionMove(event)
+        MotionEvent.ACTION_UP -> onActionUp(event)
         else -> super.onTouchEvent(event)
     }
 
     private fun onActionDown(event: MotionEvent): Boolean {
-        brushes += Brush.from(brushShape).apply {
+        brush = Brush.from(brushShape).apply {
             setUpPaint(paint)
             start(event.x, event.y, ::updatePaper)
         }
@@ -67,20 +70,27 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
     }
 
     private fun onActionMove(event: MotionEvent): Boolean {
-        brushes.last().move(event.x, event.y, ::updatePaper)
+        brush?.move(event.x, event.y, ::updatePaper)
+        return true
+    }
+
+    private fun onActionUp(event: MotionEvent): Boolean {
+        brush?.let { brushHistory += it }
+        brush = null
+        updatePaper()
         return true
     }
 
     fun undo() {
-        brushes.undo(::updatePaper)
+        brushHistory.undo(::updatePaper)
     }
 
     fun redo() {
-        brushes.redo(::updatePaper)
+        brushHistory.redo(::updatePaper)
     }
 
     fun clear() {
-        brushes.clear(::updatePaper)
+        brushHistory.clear(::updatePaper)
     }
 
     private fun setUpPaint(paint: Paint) {
@@ -91,8 +101,8 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
     }
 
     private fun updatePaper() {
-        onUndoHistoryChangeListener(brushes.hasHistory)
-        onRedoHistoryChangeListener(brushes.hasUndoHistory)
+        onUndoHistoryChangeListener(brushHistory.hasHistory)
+        onRedoHistoryChangeListener(brushHistory.hasUndoHistory)
         invalidate()
     }
 }
