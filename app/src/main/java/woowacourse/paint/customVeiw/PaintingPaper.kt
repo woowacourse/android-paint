@@ -51,6 +51,7 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         brushHistory.drawOn(canvas)
+        brush?.drawOn(canvas)
         previewBrush.drawOn(canvas)
     }
 
