@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
-import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.MotionEvent.ACTION_DOWN
@@ -13,6 +12,7 @@ import android.view.MotionEvent.ACTION_UP
 import android.view.View
 import androidx.annotation.ArrayRes
 import androidx.annotation.ColorRes
+import woowacourse.paint.tool.Pen
 
 class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
@@ -25,7 +25,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private fun setupPaintSetting() {
         painting = Painting(
-            path = Path(),
+            tool = Pen(),
             paint = Paint().apply {
                 isAntiAlias = true
                 style = Paint.Style.STROKE
@@ -42,13 +42,13 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
         canvas.apply {
             drawHistory()
-            drawPath(painting.path, painting.paint)
+            painting.drawPath(this)
         }
     }
 
     private fun Canvas.drawHistory() {
         history.paintings.forEach { painting ->
-            drawPath(painting.path, painting.paint)
+            painting.drawPath(this)
         }
     }
 
@@ -74,7 +74,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private fun savePath() {
         history.add(painting)
-        painting = Painting(path = Path(), paint = Paint(painting.paint))
+        painting = Painting(tool = painting.tool.copy(), paint = Paint(painting.paint))
     }
 
     fun changeSize(value: Float) {

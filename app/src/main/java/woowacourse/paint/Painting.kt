@@ -1,19 +1,23 @@
 package woowacourse.paint
 
+import android.graphics.Canvas
 import android.graphics.Paint
-import android.graphics.Path
+import woowacourse.paint.tool.Tool
 
 class Painting(
-    val path: Path,
+    val tool: Tool,
     val paint: Paint,
 ) {
     fun startDraw(pointX: Float, pointY: Float) {
-        path.moveTo(pointX, pointY)
-        path.lineTo(pointX, pointY)
+        tool.startDraw(pointX, pointY)
     }
 
     fun onDraw(pointX: Float, pointY: Float) {
-        path.lineTo(pointX, pointY)
+        tool.onDraw(pointX, pointY)
+    }
+
+    fun drawPath(canvas: Canvas) {
+        tool.drawPath(canvas, paint)
     }
 
     fun changeSize(value: Float) {
