@@ -25,6 +25,7 @@ class MainViewModel : ViewModel() {
     private var color = R.color.black
     private var width = 0f
     private var tool: Tool = NORMAL_PEN
+    private var paintingBackup: MutableList<List<Line>> = mutableListOf()
 
     private val _painting: MutableLiveData<List<Line>> = MutableLiveData(listOf())
     val painting: LiveData<List<Line>> get() = _painting
@@ -48,7 +49,26 @@ class MainViewModel : ViewModel() {
     }
 
     fun resetPaintings() {
+        if (paintingBackup.size == BACKUP_MAX_SIZE) return
+
+        paintingBackup.add(painting.value ?: emptyList())
         _painting.value = emptyList()
+    }
+
+    fun redoPaintings() {
+        if (paintingBackup.isEmpty()) return
+
+        _painting.value = (painting.value ?: emptyList()) + paintingBackup.last()
+        paintingBackup.removeLast()
+    }
+
+    fun undoPaintings() {
+        if (painting.value.isNullOrEmpty() or (paintingBackup.size == BACKUP_MAX_SIZE)) return
+
+        val latestLine = painting.value!!.last()
+
+        paintingBackup.add(listOf(latestLine))
+        _painting.value = painting.value?.minus(latestLine)
     }
 
     private fun setNormalPen(): NormalPen = NormalPen(::renewTools, ::saveLine).apply {
@@ -90,6 +110,8 @@ class MainViewModel : ViewModel() {
     }
 
     companion object {
+        private const val BACKUP_MAX_SIZE = 3
+
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 MainViewModel()

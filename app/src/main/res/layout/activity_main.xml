@@ -95,5 +95,23 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/btn_main_color" />
 
+    <Button
+        android:id="@+id/btn_main_redo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_main_redo"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_main_reset"
+        app:layout_constraintEnd_toEndOf="@+id/btn_main_width"
+        app:layout_constraintStart_toStartOf="@+id/btn_main_width" />
+
+    <Button
+        android:id="@+id/btn_main_undo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_main_undo"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_main_redo"
+        app:layout_constraintEnd_toEndOf="@+id/btn_main_tools"
+        app:layout_constraintStart_toStartOf="@+id/btn_main_tools" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

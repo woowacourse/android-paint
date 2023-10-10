@@ -58,6 +58,8 @@ class MainActivity : AppCompatActivity() {
         binding.btnMainWidth.setOnClickListener { setVisibility(binding.rsMainWidth) }
         binding.btnMainTools.setOnClickListener { setVisibility(binding.rvMainTools) }
         binding.btnMainReset.setOnClickListener { viewModel.resetPaintings() }
+        binding.btnMainUndo.setOnClickListener { viewModel.undoPaintings() }
+        binding.btnMainRedo.setOnClickListener { viewModel.redoPaintings() }
     }
 
     private fun setVisibility(view: View) {
