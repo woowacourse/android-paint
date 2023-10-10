@@ -1,6 +1,8 @@
 package woowacourse.paint
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.slider.RangeSlider
 import woowacourse.paint.adapter.ColorAdapter
@@ -53,5 +55,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun onColorClicked(idx: Int) {
         binding.pbPaintBoard.changeColor(PaintBoard.COLORS[idx])
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_activity, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_clear -> {
+                binding.pbPaintBoard.clear()
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 }

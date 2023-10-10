@@ -8,4 +8,8 @@
     <string name="item_rectangle">직사각형</string>
     <string name="item_circle">원</string>
     <string name="item_eraser">지우개</string>
+
+    <string name="refresh_icon_clear">새로고침</string>
+    <string name="undo_icon_description">뒤로가기</string>
+    <string name="redo_icon_description">앞으로가기</string>
 </resources>

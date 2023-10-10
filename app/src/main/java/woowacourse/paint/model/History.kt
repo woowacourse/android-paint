@@ -8,4 +8,8 @@ class History {
     fun add(newPainting: Painting) {
         _paintings.add(newPainting)
     }
+
+    fun clear() {
+        _paintings.clear()
+    }
 }

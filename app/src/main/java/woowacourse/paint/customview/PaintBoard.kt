@@ -107,6 +107,11 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
         painting.changeColor(context.getColor(value))
     }
 
+    fun clear() {
+        history.clear()
+        invalidate()
+    }
+
     companion object {
         @ColorRes
         private val DEFAULT_COLOR = R.color.blue
