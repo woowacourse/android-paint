@@ -20,8 +20,8 @@ import woowacourse.paint.ui.PathPoint
 
 class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     View(context, attrs) {
-    private var path = Path()
-    private var paint = Paint()
+    private var drawing = Drawing(Path(), Paint())
+
     private val drawingHistory = DrawingHistory()
 
     private var paintMode = PaintMode.PEN
@@ -38,14 +38,14 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
         super.onDraw(canvas)
         drawDrawingHistory(canvas)
         when (paintMode) {
-            PaintMode.PEN -> canvas.drawPath(path, paint)
+            PaintMode.PEN -> canvas.drawPath(drawing.path, drawing.paint)
             PaintMode.RECTANGLE, PaintMode.FILL_RECTANGLE -> drawingRectangle.drawShapeOnCanvas(
-                canvas, paint
+                canvas, drawing.paint
             )
 
             PaintMode.CIRCLE, PaintMode.FILL_CIRCLE -> drawingCircle.drawShapeOnCanvas(
                 canvas,
-                paint
+                drawing.paint
             )
 
             PaintMode.ERASER -> {}
@@ -76,7 +76,7 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
         when (paintMode) {
             PaintMode.PEN -> {
                 changePaintStyle(Paint.Style.STROKE)
-                path.moveTo(pointX, pointY)
+                drawing.path.moveTo(pointX, pointY)
             }
 
             PaintMode.RECTANGLE, PaintMode.FILL_RECTANGLE -> {
@@ -95,7 +95,7 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
 
     private fun doDrawing(pointX: Float, pointY: Float) {
         when (paintMode) {
-            PaintMode.PEN -> path.lineTo(pointX, pointY)
+            PaintMode.PEN -> drawing.path.lineTo(pointX, pointY)
             PaintMode.RECTANGLE, PaintMode.FILL_RECTANGLE -> drawingRectangle.updateEndPoint(
                 PathPoint(pointX, pointY)
             )
@@ -114,21 +114,21 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
     private fun endDrawing() {
         when (paintMode) {
             PaintMode.PEN -> {}
-            PaintMode.RECTANGLE, PaintMode.FILL_RECTANGLE -> drawingRectangle.addShapeToPath(path)
-            PaintMode.CIRCLE, PaintMode.FILL_CIRCLE -> drawingCircle.addShapeToPath(path)
+            PaintMode.RECTANGLE, PaintMode.FILL_RECTANGLE -> drawingRectangle.addShapeToPath(drawing.path)
+            PaintMode.CIRCLE, PaintMode.FILL_CIRCLE -> drawingCircle.addShapeToPath(drawing.path)
             PaintMode.ERASER -> {}
         }
-        if (paintMode != PaintMode.ERASER) drawingHistory.addDrawing(Drawing(path, paint))
-        path = Path()
+        if (paintMode != PaintMode.ERASER) drawingHistory.addDrawing(Drawing(drawing.path, drawing.paint))
+        drawing.path = Path()
     }
 
     fun changePaintColor(@ColorInt color: Int) {
-        paint = Paint(paint)
+        drawing.paint = Paint(drawing.paint)
         changePaintProperty(color = color)
     }
 
     fun changePaintWidth(width: Float) {
-        paint = Paint(paint)
+        drawing.paint = Paint(drawing.paint)
         changePaintProperty(width = width)
     }
 
@@ -142,21 +142,21 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
     }
 
     private fun changePaintStyle(style: Paint.Style) {
-        paint = Paint(paint)
+        drawing.paint = Paint(drawing.paint)
         changePaintProperty(style = style)
     }
 
     private fun changePaintProperty(
-        @ColorInt color: Int = paint.color,
-        width: Float = paint.strokeWidth,
-        style: Paint.Style = paint.style
+        @ColorInt color: Int = drawing.paint.color,
+        width: Float = drawing.paint.strokeWidth,
+        style: Paint.Style = drawing.paint.style
     ) {
-        paint.isAntiAlias = true
-        paint.strokeJoin = Paint.Join.ROUND
-        paint.strokeCap = Paint.Cap.ROUND
-        paint.strokeWidth = width
-        paint.color = color
-        paint.style = style
+        drawing.paint.isAntiAlias = true
+        drawing.paint.strokeJoin = Paint.Join.ROUND
+        drawing.paint.strokeCap = Paint.Cap.ROUND
+        drawing.paint.strokeWidth = width
+        drawing.paint.color = color
+        drawing.paint.style = style
     }
 
     companion object {
