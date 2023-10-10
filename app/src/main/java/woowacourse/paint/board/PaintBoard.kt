@@ -16,11 +16,11 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import woowacourse.paint.R
 import woowacourse.paint.board.draw.GraphicObject
 import woowacourse.paint.board.draw.GraphicObjectType
-import woowacourse.paint.board.draw.GraphicObjectType.*
 import woowacourse.paint.board.draw.Line
 import woowacourse.paint.board.draw.Oval
 import woowacourse.paint.board.draw.Rectangle
 import woowacourse.paint.palette.Palette
+import woowacourse.paint.palette.Tool
 
 class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
     private val screenWidth = resources.displayMetrics.widthPixels
@@ -32,7 +32,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
 
     private var eraseMode: Boolean = false
 
-    private var currentGraphicObjectType: GraphicObjectType = LINE
+    private var currentGraphicObjectType: GraphicObjectType = GraphicObjectType.LINE
 
     private var currentGraphicObject: GraphicObject? = null
 
@@ -123,9 +123,9 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
 
     private fun registerCurrentGraphicObject() {
         currentGraphicObject = when (currentGraphicObjectType) {
-            LINE -> getLineInstance()
-            RECTANGLE -> getRectangleInstance()
-            OVAL -> getOvalInstance()
+            GraphicObjectType.LINE -> getLineInstance()
+            GraphicObjectType.RECTANGLE -> getRectangleInstance()
+            GraphicObjectType.OVAL -> getOvalInstance()
         }
     }
 
@@ -165,7 +165,37 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
         palette.layoutParams = FrameLayout.LayoutParams(screenWidth, WRAP_CONTENT)
         palette.setOnSelectedColorIdChangedListener { colorId -> currentSelectedColor = colorId }
         palette.setStrokeWidthChangedListener { strokeWidth -> currentStrokeWidth = strokeWidth }
+        palette.setToolChangedListener(::toolChangedListener)
         addView(palette)
+    }
+
+    private fun toolChangedListener(tool: Tool) {
+        when (tool) {
+            Tool.LINE -> lineSelectedListener()
+            Tool.OVAL -> ovalSelectedListener()
+            Tool.RECTANGLE -> rectangleSelectedListener()
+            Tool.ERASE -> eraseSelectedListener()
+        }
+    }
+
+    private fun eraseSelectedListener() {
+        eraseMode = true
+        currentGraphicObjectType = GraphicObjectType.LINE
+    }
+
+    private fun rectangleSelectedListener() {
+        eraseMode = false
+        currentGraphicObjectType = GraphicObjectType.RECTANGLE
+    }
+
+    private fun ovalSelectedListener() {
+        eraseMode = false
+        currentGraphicObjectType = GraphicObjectType.OVAL
+    }
+
+    private fun lineSelectedListener() {
+        eraseMode = false
+        currentGraphicObjectType = GraphicObjectType.LINE
     }
 
     companion object {
