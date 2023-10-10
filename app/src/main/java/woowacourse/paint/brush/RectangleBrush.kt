@@ -1,12 +1,10 @@
-package woowacourse.paint
+package woowacourse.paint.brush
 
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
-import kotlin.math.pow
-import kotlin.math.sqrt
 
-class CircleBrush(
+class RectangleBrush(
     override val path: Path = Path(),
     private val paint: Paint = Paint(),
 ) : Brush {
@@ -23,10 +21,11 @@ class CircleBrush(
 
     override fun keepDrawing(x: Float, y: Float) {
         path.reset()
-        val dx = startX - x
-        val dy = startY - y
-        val radius = sqrt(dx.pow(2).toDouble() + dy.pow(2).toDouble()).toFloat() / 2
-        path.addCircle((startX + x) / 2, (startY + y) / 2, radius, Path.Direction.CCW)
+        val left = if (startX <= x) startX else x
+        val right = if (startX <= x) x else startX
+        val top = if (startY <= y) startY else y
+        val bottom = if (startY <= y) y else startY
+        path.addRect(left, top, right, bottom, Path.Direction.CCW)
     }
 
     override fun finishDrawing() = Unit
@@ -37,7 +36,7 @@ class CircleBrush(
 
     override fun copy(color: Int?, width: Float?): Brush {
         val newPaint = defaultPaint.apply { this.color = color ?: paint.color }
-        return CircleBrush(Path(), newPaint)
+        return RectangleBrush(Path(), newPaint)
     }
 
     companion object {

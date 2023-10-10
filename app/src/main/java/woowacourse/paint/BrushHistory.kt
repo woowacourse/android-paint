@@ -2,6 +2,7 @@ package woowacourse.paint
 
 import android.graphics.Canvas
 import android.graphics.RectF
+import woowacourse.paint.brush.Brush
 
 class BrushHistory(
     private var history: MutableList<Brush> = mutableListOf(),

@@ -4,6 +4,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import woowacourse.paint.brush.CircleBrush
+import woowacourse.paint.brush.LineBrush
+import woowacourse.paint.brush.RectangleBrush
 import woowacourse.paint.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
