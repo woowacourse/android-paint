@@ -5,8 +5,7 @@ import woowacourse.paint.paintBoard.Line
 
 class RectanglePen(
     reset: () -> Unit,
-    override val onSave: (Line) -> Unit,
-    override val line: Line
+    onSave: (Line) -> Unit
 ) : ShapePen(reset, onSave) {
 
     override fun draw(pointX: Float, pointY: Float) {

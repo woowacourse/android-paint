@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
-        viewModel.tool.observe(this) { tool ->
+        viewModel.tools.observe(this) { tool ->
            binding.dpMain.setTool(tool)
         }
 

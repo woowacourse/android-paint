@@ -11,7 +11,6 @@ import woowacourse.paint.model.Tool.CIRCLE_PEN
 import woowacourse.paint.model.Tool.ERASER
 import woowacourse.paint.model.Tool.NORMAL_PEN
 import woowacourse.paint.model.Tool.RECTANGLE_PEN
-import woowacourse.paint.paintBoard.Brush
 import woowacourse.paint.paintBoard.Line
 import woowacourse.paint.paintBoard.tools.CirclePen
 import woowacourse.paint.paintBoard.tools.Eraser
@@ -23,53 +22,46 @@ class MainViewModel : ViewModel() {
 
     private var color = R.color.black
     private var width = 0f
-    private var tools: Tool = NORMAL_PEN
+    private var tool: Tool = NORMAL_PEN
 
     private val _painting: MutableLiveData<List<Line>> = MutableLiveData(listOf())
     val painting: LiveData<List<Line>> get() = _painting
 
-    private val _tool: MutableLiveData<Tools> = MutableLiveData(setNormalPen())
-    val tool: LiveData<Tools> get() = _tool
+    private val _tools: MutableLiveData<Tools> = MutableLiveData(setNormalPen())
+    val tools: LiveData<Tools> get() = _tools
 
     fun updateToolState(tool: Tool) {
-        tools = tool
+        this.tool = tool
         renewTools()
     }
 
     fun updateWidth(width: Float) {
         this.width = width
+        renewTools()
     }
 
     fun updateColor(color: Int) {
         this.color = color
+        renewTools()
     }
 
-    private fun setNormalPen(): NormalPen = NormalPen(
-        ::renewTools,
-        ::saveLine,
-        Line(brush = Brush().apply {
-            changeBrush(color)
-            changeBrush(width)
-        })
-    )
+    private fun setNormalPen(): NormalPen = NormalPen(::renewTools, ::saveLine).apply {
+        setColor(color)
+        setWidth(width)
+    }
 
-    private fun setRectanglePen(): RectanglePen = RectanglePen(
-        ::renewTools,
-        ::saveLine,
-        Line(brush = Brush().apply {
-            changeBrush(color)
-        })
-    )
+    private fun setRectanglePen(): RectanglePen = RectanglePen(::renewTools, ::saveLine).apply {
+        setColor(color)
+        setWidth(width)
+    }
 
-    private fun setCirclePen(): CirclePen = CirclePen(
-        ::renewTools,
-        ::saveLine,
-        Line(brush = Brush().apply {
-            changeBrush(color)
-        })
-    )
+    private fun setCirclePen(): CirclePen = CirclePen(::renewTools, ::saveLine).apply {
+        setColor(color)
+        setWidth(width)
+    }
 
-    private fun setEraser(): Eraser = Eraser(::removeLines, (painting.value ?: emptyList()).toMutableList())
+    private fun setEraser(): Eraser =
+        Eraser(::removeLines, (painting.value ?: emptyList()).toMutableList())
 
     private fun saveLine(line: Line) {
         _painting.value = painting.value?.plus(line)
@@ -80,7 +72,7 @@ class MainViewModel : ViewModel() {
     }
 
     private fun renewTools() {
-        _tool.value = when (tools) {
+        _tools.value = when (tool) {
             NORMAL_PEN -> setNormalPen()
             CIRCLE_PEN -> setCirclePen()
             RECTANGLE_PEN -> setRectanglePen()

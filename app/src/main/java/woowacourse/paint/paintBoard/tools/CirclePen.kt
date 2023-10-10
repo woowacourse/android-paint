@@ -6,8 +6,7 @@ import kotlin.math.sqrt
 
 class CirclePen(
     reset: () -> Unit,
-    override val onSave: (line: Line) -> Unit,
-    override val line: Line
+    onSave: (line: Line) -> Unit
 ) : ShapePen(reset, onSave) {
 
     override fun draw(pointX: Float, pointY: Float) {

@@ -8,7 +8,7 @@ class Eraser(
     private val painting: MutableList<Line>,
     override val line: Line = Line()
 ) : Tools {
-
+    
     override fun startPainting(pointX: Float, pointY: Float) {
         erase(pointX, pointY)
     }
@@ -29,4 +29,8 @@ class Eraser(
     }
 
     override fun finishPainting() {}
+
+    override fun setWidth(width: Float) {}
+
+    override fun setColor(color: Int) {}
 }
