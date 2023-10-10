@@ -2,9 +2,9 @@ package woowacourse.paint.view.model.pen.ink
 
 import android.graphics.Canvas
 
-data class Inks(val data: List<Ink> = emptyList()) {
+data class Inks(val value: List<Ink> = emptyList()) {
     fun draw(canvas: Canvas) {
-        data.forEach {
+        value.forEach {
             it.draw(canvas)
         }
     }
