@@ -6,20 +6,16 @@ import android.graphics.Paint
 import android.graphics.Path
 
 abstract class BrushLine : Brush {
-    override val paint: Paint = Paint()
+    override val paint: Paint = Paint().apply {
+        style = Paint.Style.STROKE
+        strokeJoin = Paint.Join.ROUND
+        strokeCap = Paint.Cap.ROUND
+        pathEffect = CornerPathEffect(100F)
+    }
 
     private val path = Path()
 
     private var lastPoint = Point(0F, 0F)
-
-    init {
-        paint.apply {
-            style = Paint.Style.STROKE
-            strokeJoin = Paint.Join.ROUND
-            strokeCap = Paint.Cap.ROUND
-            pathEffect = CornerPathEffect(100F)
-        }
-    }
 
     override fun start(x: Float, y: Float, onSuccess: () -> Unit) = start(Point(x, y), onSuccess)
 
