@@ -1,10 +1,10 @@
-package woowacourse.paint.tool
+package woowacourse.paint.shape
 
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 
-class Line(private val path: Path = Path()) : Tool {
+class Line(private val path: Path = Path()) : Shape {
 
     override fun copy(): Line {
         return Line()

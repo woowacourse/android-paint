@@ -1,11 +1,11 @@
-package woowacourse.paint.tool
+package woowacourse.paint.shape
 
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
 
-class Rectangle(private val rect: RectF = RectF()) : Tool {
-    override fun copy(): Tool {
+class Rectangle(private val rect: RectF = RectF()) : Shape {
+    override fun copy(): Shape {
         return Rectangle()
     }
 

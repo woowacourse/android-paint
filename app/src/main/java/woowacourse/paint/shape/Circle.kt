@@ -1,4 +1,4 @@
-package woowacourse.paint.tool
+package woowacourse.paint.shape
 
 import android.graphics.Canvas
 import android.graphics.Paint
@@ -6,7 +6,7 @@ import android.graphics.RectF
 import java.lang.Float.max
 import kotlin.math.abs
 
-class Circle(private val circle: RectF = RectF()) : Tool {
+class Circle(private val circle: RectF = RectF()) : Shape {
     private val centerX
         get() = (circle.left + circle.right) / 2
     private val centerY
@@ -14,7 +14,7 @@ class Circle(private val circle: RectF = RectF()) : Tool {
     private val radius
         get() = max(abs(circle.left - centerX), abs(circle.top - centerY))
 
-    override fun copy(): Tool {
+    override fun copy(): Shape {
         return Circle()
     }
 

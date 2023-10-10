@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.slider.RangeSlider
 import woowacourse.paint.databinding.ActivityMainBinding
-import woowacourse.paint.tool.Tools
 
 class MainActivity : AppCompatActivity() {
 

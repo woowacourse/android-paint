@@ -14,14 +14,13 @@ import android.view.MotionEvent.ACTION_UP
 import android.view.View
 import androidx.annotation.ArrayRes
 import androidx.annotation.ColorRes
-import woowacourse.paint.tool.Circle
-import woowacourse.paint.tool.Line
-import woowacourse.paint.tool.Rectangle
-import woowacourse.paint.tool.Tools
-import woowacourse.paint.tool.Tools.CIRCLE
-import woowacourse.paint.tool.Tools.ERASER
-import woowacourse.paint.tool.Tools.LINE
-import woowacourse.paint.tool.Tools.RECTANGLE
+import woowacourse.paint.Tools.CIRCLE
+import woowacourse.paint.Tools.ERASER
+import woowacourse.paint.Tools.LINE
+import woowacourse.paint.Tools.RECTANGLE
+import woowacourse.paint.shape.Circle
+import woowacourse.paint.shape.Line
+import woowacourse.paint.shape.Rectangle
 
 class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
@@ -35,7 +34,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private fun setupPaintSetting() {
         setLayerType(LAYER_TYPE_HARDWARE, null)
         painting = Painting(
-            tool = Line(),
+            shape = Line(),
             paint = Paint().apply {
                 isAntiAlias = true
                 style = Paint.Style.STROKE
@@ -93,10 +92,10 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     fun changeTool(value: Tools) {
         painting = when (value) {
-            LINE -> painting.changeTool(Line(), STROKE)
-            CIRCLE -> painting.changeTool(Circle(), FILL)
-            RECTANGLE -> painting.changeTool(Rectangle(), FILL)
-            ERASER -> painting.changeTool(Line(), STROKE, true)
+            LINE -> painting.changeShape(Line(), STROKE)
+            CIRCLE -> painting.changeShape(Circle(), FILL)
+            RECTANGLE -> painting.changeShape(Rectangle(), FILL)
+            ERASER -> painting.changeShape(Line(), STROKE, true)
         }
     }
 
