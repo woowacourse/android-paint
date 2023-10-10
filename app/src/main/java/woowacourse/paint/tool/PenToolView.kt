@@ -43,8 +43,7 @@ class PenToolView(
     private fun initView() {
         val inflateService = Context.LAYOUT_INFLATER_SERVICE
         val layoutInflater = context.getSystemService(inflateService) as LayoutInflater
-        val v: View = layoutInflater.inflate(R.layout.view_pen_tool, this, false)
-        addView(v)
+        layoutInflater.inflate(R.layout.view_pen_tool, this, true)
 
         slider = findViewById(R.id.slider_pen_tool_pen_width)
         colorContainer = findViewById(R.id.linear_layout_pen_tool_color_container)
