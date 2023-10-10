@@ -3,7 +3,6 @@ package woowacourse.paint.custom.view
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
@@ -16,6 +15,7 @@ import woowacourse.paint.custom.view.model.CurveLine
 import woowacourse.paint.custom.view.model.CurveLines
 import woowacourse.paint.presentation.uimodel.BrushColorUiModel
 import woowacourse.paint.presentation.uimodel.BrushTypeUiModel
+import woowacourse.paint.presentation.uimodel.BrushUiModel
 import kotlin.math.abs
 import kotlin.math.sqrt
 
@@ -24,9 +24,10 @@ class CanvasView(
     attributeSet: AttributeSet,
 ) : View(context, attributeSet) {
 
-    private var type = BrushTypeUiModel.PEN
+    private var brushUiModel = BrushUiModel.fromDefault()
+
     private val curveLines = CurveLines()
-    private var curveLine = CurveLine(Path(), Paint())
+    private var curveLine = CurveLine(Path(), brushUiModel.fromPaint())
     private var rectF = RectF()
     private val recFs = mutableListOf<RectF>()
     var centerX = 0f
@@ -37,9 +38,9 @@ class CanvasView(
         super.onDraw(canvas)
         curveLines.draw(canvas)
         recFs.forEach {
-            canvas.drawRect(it, curveLine.paint)
+            canvas.drawRect(it, brushUiModel.fromPaint())
         }
-        canvas.drawCircle(centerX, centerY, radius, curveLine.paint)
+        canvas.drawCircle(centerX, centerY, radius, brushUiModel.fromPaint())
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -62,8 +63,9 @@ class CanvasView(
     }
 
     private fun startDrawing(x: Float, y: Float) {
-        when (type) {
+        when (brushUiModel.brushType) {
             BrushTypeUiModel.PEN -> {
+                curveLine = CurveLine(Path(), brushUiModel.fromPaint())
                 curveLines.add(curveLine)
                 curveLine.moveTo(x, y)
             }
@@ -77,6 +79,7 @@ class CanvasView(
                 radius = 0f
             }
             BrushTypeUiModel.ERASER -> {
+                curveLine = CurveLine(Path(), brushUiModel.fromPaint())
                 curveLine.paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
                 setLayerType(LAYER_TYPE_HARDWARE, null)
                 curveLines.add(curveLine)
@@ -86,7 +89,7 @@ class CanvasView(
     }
 
     private fun keepDrawing(x: Float, y: Float) {
-        when (type) {
+        when (brushUiModel.brushType) {
             BrushTypeUiModel.PEN -> {
                 curveLine.quadTo(x, y)
             }
@@ -104,14 +107,14 @@ class CanvasView(
     }
 
     fun changeStrokeWidth(new: BrushWidth) {
-        curveLine = curveLine.changeStrokeWidth(new)
+        brushUiModel = brushUiModel.changeWidth(new)
     }
 
     fun changeColor(new: BrushColorUiModel) {
-        curveLine = curveLine.changeColor(new)
+        brushUiModel = brushUiModel.changeColor(new)
     }
 
-    fun changeType(newType: BrushTypeUiModel) {
-        type = newType
+    fun changeType(new: BrushTypeUiModel) {
+        brushUiModel = brushUiModel.changeType(new)
     }
 }
