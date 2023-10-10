@@ -1,15 +1,19 @@
 package woowacourse.paint.painting
 
 import android.graphics.Canvas
+import woowacourse.paint.painting.cache.Action
+import woowacourse.paint.painting.cache.PaintingCache
+import woowacourse.paint.painting.cache.PaintingHistory
 import woowacourse.paint.painting.figure.Circle
 import woowacourse.paint.painting.figure.Eraser
 import woowacourse.paint.painting.figure.Figure
 import woowacourse.paint.painting.figure.Line
 import woowacourse.paint.painting.figure.Rectangle
 
-class Paintings(private val values: MutableList<Figure> = mutableListOf()) {
+class Paintings {
 
-    private val cache: MutableList<List<Figure>> = mutableListOf()
+    private val cache = PaintingCache()
+    private val values: MutableList<Figure> = mutableListOf()
 
     fun draw(canvas: Canvas) {
         values.forEach {
@@ -23,7 +27,10 @@ class Paintings(private val values: MutableList<Figure> = mutableListOf()) {
                 onEmptyLine()
             }
 
-            is Rectangle, is Circle -> values.add(figure)
+            is Rectangle, is Circle -> {
+                values.add(figure)
+                cache.add(PaintingHistory.added(figure))
+            }
 
             is Eraser -> erase(figure)
         }
@@ -31,8 +38,10 @@ class Paintings(private val values: MutableList<Figure> = mutableListOf()) {
 
     private fun drawLine(line: Line, onEmptyLine: () -> Figure) {
         if (line.length == EMPTY_LINE) {
+            cache.add(PaintingHistory.added(onEmptyLine()))
             values.add(onEmptyLine())
         } else {
+            cache.add(PaintingHistory.added(line))
             values.add(line)
         }
     }
@@ -42,23 +51,29 @@ class Paintings(private val values: MutableList<Figure> = mutableListOf()) {
             eraser.isOverlapped(it.path)
         }
 
-        values.removeAll(figures)
-        cache.add(figures)
+        values.removeAll { figures.contains(it) }
+        cache.add(PaintingHistory.removed(*figures.toTypedArray()))
     }
 
     fun undo(onFailure: () -> Unit) {
-        runCatching {
-            cache.add(listOf(values.removeLast()))
-        }.onFailure {
-            onFailure()
-        }
+        cache.undo(
+            onSuccess = ::drawHistory,
+            onFailure = onFailure
+        )
     }
 
     fun redo(onFailure: () -> Unit) {
-        runCatching {
-            values.addAll(cache.removeLast())
-        }.onFailure {
-            onFailure()
+        cache.redo(
+            onSuccess = ::drawHistory,
+            onFailure = onFailure
+        )
+    }
+
+    private fun drawHistory(history: PaintingHistory) {
+        if (history.action == Action.REMOVE) {
+            values.removeAll { history.figures.contains(it) }
+        } else {
+            values.addAll(history.figures)
         }
     }
 
