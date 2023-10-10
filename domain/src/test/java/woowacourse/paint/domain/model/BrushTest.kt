@@ -36,7 +36,7 @@ class BrushTest {
     @Test
     fun `붓 종류를 팬에서 원으로 변경하면 붓 종류만 원으로 변경된다`() {
         // given
-        val brush = BrushFixture.getBrush(brushType = BrushType.PEN)
+        val brush = BrushFixture.getBrush(brushType = BrushType.LINE)
 
         // when
         val actual = brush.changeType(type = BrushType.CIRCLE)

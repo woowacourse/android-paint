@@ -40,6 +40,6 @@ class MainViewModel : ViewModel() {
     }
 
     companion object {
-        private val INITIAL_BRUSH = Brush(BrushColor.RED, BrushWidth(30f), BrushType.PEN)
+        private val INITIAL_BRUSH = Brush(BrushColor.RED, BrushWidth(30f), BrushType.LINE)
     }
 }

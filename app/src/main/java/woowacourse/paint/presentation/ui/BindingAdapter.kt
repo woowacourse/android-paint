@@ -14,7 +14,7 @@ fun View.setColor(color: Int) {
 @BindingAdapter("setBrushTypeText")
 fun TextView.setBrushTypeText(brushType: BrushType) {
     val resId = when (brushType) {
-        BrushType.PEN -> R.string.brush_type_pen
+        BrushType.LINE -> R.string.brush_type_pen
         BrushType.RECTANGLE -> R.string.brush_type_rectangle
         BrushType.CIRCLE -> R.string.brush_type_circle
         BrushType.ERASER -> R.string.brush_type_eraser

@@ -41,7 +41,7 @@ class MainViewModelTest {
 
         // then
         val expected =
-            BrushFixture.getBrush(BrushColor.RED, BrushWidth(30f), BrushType.PEN).toPresentation()
+            BrushFixture.getBrush(BrushColor.RED, BrushWidth(30f), BrushType.LINE).toPresentation()
 
         assertThat(actual).isEqualTo(expected)
     }
