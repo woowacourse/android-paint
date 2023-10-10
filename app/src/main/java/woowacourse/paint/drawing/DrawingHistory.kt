@@ -3,7 +3,8 @@ package woowacourse.paint.drawing
 import android.graphics.Paint
 import android.graphics.Path
 
-class DrawingHistory(private val _drawings: MutableList<Drawing> = mutableListOf()) {
+class DrawingHistory(drawings: MutableList<Drawing> = mutableListOf()) {
+    private val _drawings = drawings.deepCopy().toMutableList()
     val drawings: List<Drawing> get() = _drawings.deepCopy()
 
     fun addDrawing(drawing: Drawing) {
