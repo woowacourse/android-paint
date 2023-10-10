@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             app:setBrushTypeText="@{itemBrushType.brushType}"
-            android:onClick="@{() -> itemBrushType.onBrushTypeClick.invoke(itemBrushType)}"
+            android:onClick="@{() -> itemBrushType.onBrushTypeClick.invoke(itemBrushType.brushType)}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
