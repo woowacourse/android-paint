@@ -33,11 +33,11 @@ class PainterHistory(
 
     fun setPaletteShape(paletteShape: PaletteShape) {
         painterState = painterState.copy(paletteShape = paletteShape)
-        currentPainter = currentPainter.changePainter(PaletteMode.SHAPE, painterState)
+        currentPainter = Painter.create(PaletteMode.SHAPE, painterState)
     }
 
     fun changePaletteMode(paletteMode: PaletteMode) {
-        currentPainter = currentPainter.changePainter(paletteMode, painterState)
+        currentPainter = Painter.create(paletteMode, painterState)
     }
 
     fun onActionDown(x: Float, y: Float) {

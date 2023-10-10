@@ -15,20 +15,26 @@ abstract class Painter(protected val paint: Paint) {
     abstract fun draw(canvas: Canvas)
     abstract fun extract(): Painter
 
-    fun changePainter(
-        paletteMode: PaletteMode,
-        painterState: PainterState,
-    ): Painter = when (paletteMode) {
-        PaletteMode.BRUSH -> BrushPainter(painterState.paletteColor, painterState.thickness)
-        PaletteMode.SHAPE -> getShapePainter(painterState.paletteShape, painterState.paletteColor)
-        PaletteMode.ERASER -> PathEraserPainter(painterState.thickness)
-    }
+    companion object {
+        fun create(
+            paletteMode: PaletteMode,
+            painterState: PainterState,
+        ): Painter = when (paletteMode) {
+            PaletteMode.BRUSH -> BrushPainter(painterState.paletteColor, painterState.thickness)
+            PaletteMode.SHAPE -> getShapePainter(
+                painterState.paletteShape,
+                painterState.paletteColor,
+            )
 
-    private fun getShapePainter(
-        paletteShape: PaletteShape,
-        paletteColor: PaletteColor,
-    ): Painter = when (paletteShape) {
-        PaletteShape.RECTANGLE -> RectanglePainter(paletteShape, paletteColor)
-        PaletteShape.CIRCLE -> CirclePainter(paletteShape, paletteColor)
+            PaletteMode.ERASER -> PathEraserPainter(painterState.thickness)
+        }
+
+        private fun getShapePainter(
+            paletteShape: PaletteShape,
+            paletteColor: PaletteColor,
+        ): Painter = when (paletteShape) {
+            PaletteShape.RECTANGLE -> RectanglePainter(paletteShape, paletteColor)
+            PaletteShape.CIRCLE -> CirclePainter(paletteShape, paletteColor)
+        }
     }
 }
