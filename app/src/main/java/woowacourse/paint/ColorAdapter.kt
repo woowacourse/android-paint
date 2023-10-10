@@ -1,10 +1,11 @@
 package woowacourse.paint
 
 import android.view.ViewGroup
+import androidx.annotation.ArrayRes
 import androidx.recyclerview.widget.RecyclerView
 
 class ColorAdapter(
-    private val colors: IntArray,
+    @ArrayRes private val colors: IntArray,
     private val onColorClicked: (Int) -> Unit,
 ) : RecyclerView.Adapter<ColorViewHolder>() {
 

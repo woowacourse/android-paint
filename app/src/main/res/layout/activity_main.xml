@@ -42,7 +42,34 @@
             android:valueTo="100"
             app:layout_constraintBottom_toTopOf="@id/rv_tools"
             app:layout_constraintEnd_toEndOf="parent"
+            android:layout_margin="10dp"
             app:layout_constraintStart_toEndOf="@id/tv_size_description" />
+
+        <TextView
+            android:id="@+id/tv_tool_description"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginHorizontal="20dp"
+            android:gravity="center_vertical"
+            android:text="@string/tools_description"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/rv_tools"
+            app:layout_constraintTop_toTopOf="@id/rv_tools"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_tools"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/rv_colors"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_tool_description"
+            tools:itemCount="4"
+            tools:listitem="@layout/item_tool"/>
 
         <TextView
             android:id="@+id/tv_color_description"
@@ -61,8 +88,7 @@
             android:id="@+id/rv_colors"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginVertical="10dp"
+            android:layout_margin="10dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"

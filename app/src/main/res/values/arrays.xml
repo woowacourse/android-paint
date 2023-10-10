@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="toolNames">
+        <item>@string/item_pen</item>
+        <item>@string/item_rectangle</item>
+        <item>@string/item_circle</item>
+        <item>@string/item_eraser</item>
+    </string-array>
+</resources>

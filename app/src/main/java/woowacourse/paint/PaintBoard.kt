@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.Paint.Style.FILL
+import android.graphics.Paint.Style.STROKE
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.MotionEvent.ACTION_DOWN
@@ -13,6 +15,12 @@ import android.view.View
 import androidx.annotation.ArrayRes
 import androidx.annotation.ColorRes
 import woowacourse.paint.tool.Circle
+import woowacourse.paint.tool.Line
+import woowacourse.paint.tool.Rectangle
+import woowacourse.paint.tool.Tools
+import woowacourse.paint.tool.Tools.CIRCLE
+import woowacourse.paint.tool.Tools.LINE
+import woowacourse.paint.tool.Tools.RECTANGLE
 
 class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
@@ -25,7 +33,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private fun setupPaintSetting() {
         painting = Painting(
-            tool = Circle(),
+            tool = Line(),
             paint = Paint().apply {
                 isAntiAlias = true
                 style = Paint.Style.STROKE
@@ -79,6 +87,15 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     fun changeSize(value: Float) {
         painting.changeSize(value)
+    }
+
+    fun changeTool(value: Tools) {
+        when (value) {
+            LINE -> painting = painting.changeTool(Line(), STROKE)
+            CIRCLE -> painting = painting.changeTool(Circle(), FILL)
+            RECTANGLE -> painting = painting.changeTool(Rectangle(), FILL)
+            else -> {}
+        }
     }
 
     fun changeColor(@ColorRes value: Int) {

@@ -31,4 +31,9 @@ class Painting(
     fun copy(): Painting {
         return Painting(tool.copy(), Paint(paint))
     }
+
+    fun changeTool(tool: Tool, style: Paint.Style): Painting {
+        paint.style = style
+        return Painting(tool, paint)
+    }
 }

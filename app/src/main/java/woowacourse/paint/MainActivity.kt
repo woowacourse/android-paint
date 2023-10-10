@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.slider.RangeSlider
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.tool.Tools
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,6 +17,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupSizeSelector()
+        setupToolSelector()
         setUpColorSelector()
     }
 
@@ -32,6 +34,14 @@ class MainActivity : AppCompatActivity() {
                 binding.pbPaintBoard.changeSize(value)
             },
         )
+    }
+
+    private fun setupToolSelector() {
+        binding.rvTools.adapter = ToolAdapter(Tools.values(), ::onToolClicked)
+    }
+
+    private fun onToolClicked(idx: Int) {
+        binding.pbPaintBoard.changeTool(Tools.values()[idx])
     }
 
     private fun setUpColorSelector() {
