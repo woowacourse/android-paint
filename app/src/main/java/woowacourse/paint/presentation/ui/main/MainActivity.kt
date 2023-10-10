@@ -43,6 +43,9 @@ class MainActivity : AppCompatActivity() {
         initRangeSliderBrushWidth()
         initColorAdapter()
         initBrushTypesAdapter()
+        initUndo()
+        initRedo()
+        initClear()
     }
 
     private fun initRangeSliderBrushWidth() {
@@ -74,5 +77,25 @@ class MainActivity : AppCompatActivity() {
             }
         binding.rvBrushTypes.adapter = BrushTypesAdapter(itemBrushTypes)
         binding.rvBrushTypes.setHasFixedSize(true)
+    }
+
+    private fun initUndo() {
+        binding.ivClear.setOnClickListener {
+            binding.cvCanvas.clear()
+        }
+
+        binding.ivUndo.setOnClickListener {
+            binding.cvCanvas.undo()
+        }
+
+        binding.ivRedo.setOnClickListener {
+            binding.cvCanvas.redo()
+        }
+    }
+
+    private fun initRedo() {
+    }
+
+    private fun initClear() {
     }
 }
