@@ -8,8 +8,8 @@ class Circle(
     palette: Palette,
 ) : PaintTool(palette, null) {
 
-    private var preX = 0f
-    private var preY = 0f
+    private var preX = INITIAL_X
+    private var preY = INITIAL_Y
 
     init {
         palette.paint.style = Paint.Style.FILL
@@ -28,5 +28,10 @@ class Circle(
         preX = pointX
         preY = pointY
         path.moveTo(pointX, pointY)
+    }
+
+    companion object {
+        private const val INITIAL_X = 0f
+        private const val INITIAL_Y = 0f
     }
 }
