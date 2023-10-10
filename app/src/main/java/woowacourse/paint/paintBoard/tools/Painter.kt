@@ -1,6 +1,6 @@
 package woowacourse.paint.paintBoard.tools
 
-interface Painter2 {
+interface Painter {
 
     fun startPainting(pointX: Float, pointY: Float)
 
