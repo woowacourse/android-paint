@@ -89,8 +89,16 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
+        when (event.actionMasked) {
+            MotionEvent.ACTION_POINTER_DOWN -> multiTouchActionPointerDownEventListener()
+        }
         twoPointerDragScaleDetector.onTouchEvent(event)
-        return twoPointerDragScaleDetector.isInProgress || graphicObjectEvent(event)
+        graphicObjectEvent(event)
+        return true
+    }
+
+    private fun multiTouchActionPointerDownEventListener() {
+        currentGraphicObject = null
     }
 
     private fun graphicObjectEvent(event: MotionEvent): Boolean {
