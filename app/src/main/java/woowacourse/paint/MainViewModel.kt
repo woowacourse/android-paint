@@ -10,7 +10,7 @@ import woowacourse.paint.model.ColorUiModel
 
 class MainViewModel : ViewModel() {
     private val _paintChangingState =
-        MutableLiveData(PaintChangingState.Nothing)
+        MutableLiveData(PaintChangingState.NOTHING)
     val paintChangingState: LiveData<PaintChangingState>
         get() = _paintChangingState
 
@@ -34,7 +34,7 @@ class MainViewModel : ViewModel() {
 
     fun setSettingState(state: PaintChangingState) {
         if (_paintChangingState.value == state) {
-            _paintChangingState.value = PaintChangingState.Nothing
+            _paintChangingState.value = PaintChangingState.NOTHING
             return
         }
         _paintChangingState.value = state

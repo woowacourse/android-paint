@@ -1,5 +1,5 @@
 package woowacourse.paint
 
 enum class PaintChangingState {
-    Nothing, ColorChanging, WidthChanging, BrushChanging
+    NOTHING, COLOR_CHANGING, WIDTH_CHANGING, TOOL_CHANGING
 }
