@@ -14,8 +14,10 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import woowacourse.paint.R
 import woowacourse.paint.board.draw.GraphicObject
 import woowacourse.paint.board.draw.GraphicObjectType
-import woowacourse.paint.board.draw.GraphicObjectType.LINE
+import woowacourse.paint.board.draw.GraphicObjectType.*
 import woowacourse.paint.board.draw.Line
+import woowacourse.paint.board.draw.Oval
+import woowacourse.paint.board.draw.Rectangle
 import woowacourse.paint.palette.Palette
 
 class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
@@ -114,6 +116,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
         currentGraphicObject = when (currentGraphicObjectType) {
             LINE -> getLineInstance()
             RECTANGLE -> getRectangleInstance()
+            OVAL -> getOvalInstance()
         }
     }
 
@@ -124,6 +127,11 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     )
 
     private fun getRectangleInstance(): Rectangle = Rectangle(
+        Paint().apply { color = context.getColor(currentSelectedColor) },
+        ::invalidate,
+    )
+
+    private fun getOvalInstance(): Oval = Oval(
         Paint().apply { color = context.getColor(currentSelectedColor) },
         ::invalidate,
     )
