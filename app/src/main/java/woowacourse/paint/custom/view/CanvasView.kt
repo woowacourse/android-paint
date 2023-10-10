@@ -13,6 +13,7 @@ import android.view.View
 import com.now.domain.BrushWidth
 import woowacourse.paint.custom.view.model.CurveLines
 import woowacourse.paint.custom.view.model.Line
+import woowacourse.paint.custom.view.model.Rectangle
 import woowacourse.paint.presentation.uimodel.BrushColorUiModel
 import woowacourse.paint.presentation.uimodel.BrushTypeUiModel
 import woowacourse.paint.presentation.uimodel.BrushUiModel
@@ -28,8 +29,10 @@ class CanvasView(
 
     private val curveLines = CurveLines()
     private var line = Line(Path(), brushUiModel.fromPaint())
-    private var rectF = RectF()
-    private val recFs = mutableListOf<RectF>()
+
+    private var rectangle = Rectangle(RectF(), brushUiModel.fromPaint())
+    private val rectangles = mutableListOf<Rectangle>()
+
     var centerX = 0f
     var centerY = 0f
     var radius = 0f
@@ -37,8 +40,8 @@ class CanvasView(
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         curveLines.draw(canvas)
-        recFs.forEach {
-            canvas.drawRect(it, brushUiModel.fromPaint())
+        rectangles.forEach {
+            canvas.drawRect(it.rectF, brushUiModel.fromPaint())
         }
         canvas.drawCircle(centerX, centerY, radius, brushUiModel.fromPaint())
     }
@@ -70,8 +73,8 @@ class CanvasView(
                 line.moveTo(x, y)
             }
             BrushTypeUiModel.RECTANGLE -> {
-                rectF = RectF(x, y, x, y)
-                recFs.add(rectF)
+                rectangle = rectangle.setStartPoint(x, y)
+                rectangles.add(rectangle)
             }
             BrushTypeUiModel.CIRCLE -> {
                 centerX = x
@@ -94,8 +97,7 @@ class CanvasView(
                 line.quadTo(x, y)
             }
             BrushTypeUiModel.RECTANGLE -> {
-                rectF.right = x
-                rectF.bottom = y
+                rectangle = rectangle.setEndPoint(x, y)
             }
             BrushTypeUiModel.CIRCLE -> {
                 radius = sqrt(abs(centerX - x) * abs(centerX - x) + abs(centerY - y) + abs(centerY - y))
