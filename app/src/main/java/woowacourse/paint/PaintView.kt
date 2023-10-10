@@ -37,8 +37,8 @@ class PaintView(
         shapes.value.forEach {
             when (it) {
                 is Line -> canvas.drawPath(it.path, it.paint)
-                is Rectangle -> canvas.drawRect(it.startX, it.startY, it.endX, it.endY, it.paint)
-                is Oval -> canvas.drawOval(it.startX, it.startY, it.endX, it.endY, it.paint)
+                is Rectangle -> canvas.drawRect(it.rectF, it.paint)
+                is Oval -> canvas.drawOval(it.rectF, it.paint)
                 is Eraser -> canvas.drawPath(it.path, it.paint)
             }
         }
@@ -87,10 +87,7 @@ class PaintView(
     private fun addRectangle(pointX: Float, pointY: Float) {
         val addedRectangle = Rectangle().apply {
             paint.color = pen.color
-            startX = pointX
-            startY = pointY
-            endX = pointX
-            endY = pointY
+            updatePosition(pointX, pointY, pointX, pointY)
         }
         shapes.add(addedRectangle)
         invalidate()
@@ -99,10 +96,7 @@ class PaintView(
     private fun addCircle(pointX: Float, pointY: Float) {
         val addedOval = Oval().apply {
             paint.color = pen.color
-            startX = pointX
-            startY = pointY
-            endX = pointX
-            endY = pointY
+            updatePosition(pointX, pointY, pointX, pointY)
         }
         shapes.add(addedOval)
         invalidate()
@@ -124,15 +118,13 @@ class PaintView(
 
     private fun moveRectangle(pointX: Float, pointY: Float) {
         val rectangle = shapes.last() as Rectangle
-        rectangle.endX = pointX
-        rectangle.endY = pointY
+        rectangle.updatePosition(right = pointX, bottom = pointY)
         invalidate()
     }
 
     private fun moveCircle(pointX: Float, pointY: Float) {
         val oval = shapes.last() as Oval
-        oval.endX = pointX
-        oval.endY = pointY
+        oval.updatePosition(right = pointX, bottom = pointY)
         invalidate()
     }
 
