@@ -3,47 +3,50 @@ package woowacourse.paint
 import android.graphics.Canvas
 import android.graphics.RectF
 import woowacourse.paint.brush.Brush
+import java.util.Stack
 
-class BrushHistory(
-    private var history: MutableList<Brush> = mutableListOf(),
-) {
+class BrushHistory {
 
-    private var last = 0
+    private val undoes = Stack<Brush>()
+    private val redoes = Stack<Brush>()
 
     fun drawPath(canvas: Canvas) {
-        (0 until last).forEach { i ->
-            history[i].drawPath(canvas)
+        undoes.forEach { brush ->
+            brush.drawPath(canvas)
         }
     }
 
     fun add(brush: Brush) {
-        history = history.subList(0, last++)
-        history.add(brush)
+        redoes.clear()
+        undoes.add(brush)
     }
 
     fun removeAt(x: Float, y: Float) {
-        (last - 1 downTo 0).forEach { index ->
+        (undoes.size - 1 downTo 0).forEach { index ->
             val bounds = RectF()
-            val currentBrush = history[index]
+            val currentBrush = undoes[index]
             currentBrush.path.computeBounds(bounds, true)
             if (bounds.contains(x, y)) {
-                last--
-                history.removeAt(index)
+                undoes.removeAt(index)
                 return
             }
         }
     }
 
     fun undo() {
-        if (last > 0) --last
+        if (undoes.isNotEmpty()) {
+            redoes.add(undoes.pop())
+        }
     }
 
     fun redo() {
-        if (history.size > last) last++
+        if (redoes.isNotEmpty()) {
+            undoes.add(redoes.pop())
+        }
     }
 
     fun clear() {
-        history.clear()
-        last = 0
+        undoes.clear()
+        redoes.clear()
     }
 }
