@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
     }
 
-    private fun setUpView() = binding.apply {
+    private fun setUpView() = with(binding) {
         binding.rvColors.adapter = ColorAdapter { binding.paintingPaper.brushColor = it }
 
         rsSlider.addOnChangeListener { _, value, _ -> paintingPaper.brushSize = value }
