@@ -3,4 +3,5 @@
     <string name="btn_main_width">굵기 변경</string>
     <string name="btn_main_color">색상 변경</string>
     <string name="btn_main_tools">도구 변경</string>
+    <string name="btn_main_reset">초기화</string>
 </resources>

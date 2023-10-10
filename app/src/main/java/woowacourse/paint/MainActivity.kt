@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun observeViewModel() {
         viewModel.tools.observe(this) { tool ->
-           binding.dpMain.setTool(tool)
+            binding.dpMain.setTool(tool)
         }
 
         viewModel.painting.observe(this) { lines ->
@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity() {
         binding.btnMainColor.setOnClickListener { setVisibility(binding.rvMainColor) }
         binding.btnMainWidth.setOnClickListener { setVisibility(binding.rsMainWidth) }
         binding.btnMainTools.setOnClickListener { setVisibility(binding.rvMainTools) }
+        binding.btnMainReset.setOnClickListener { viewModel.resetPaintings() }
     }
 
     private fun setVisibility(view: View) {

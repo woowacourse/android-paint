@@ -28,9 +28,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:visibility="gone"
         android:valueFrom="0"
         android:valueTo="100"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/rv_main_color"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -49,13 +49,12 @@
     <Button
         android:id="@+id/btn_main_color"
         android:layout_width="0dp"
-        android:paddingHorizontal="4dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="20dp"
+        android:paddingHorizontal="4dp"
         android:text="@string/btn_main_color"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btn_main_reset"
         app:layout_constraintEnd_toStartOf="@+id/btn_main_width"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintHorizontal_chainStyle="packed"
@@ -64,8 +63,8 @@
     <Button
         android:id="@+id/btn_main_width"
         android:layout_width="0dp"
-        android:paddingHorizontal="4dp"
         android:layout_height="wrap_content"
+        android:paddingHorizontal="4dp"
         android:text="@string/btn_main_width"
         app:layout_constraintBottom_toBottomOf="@+id/btn_main_color"
         app:layout_constraintEnd_toStartOf="@+id/btn_main_tools"
@@ -76,16 +75,25 @@
     <Button
         android:id="@+id/btn_main_tools"
         android:layout_width="0dp"
-        android:paddingHorizontal="4dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:paddingHorizontal="4dp"
         android:text="@string/btn_main_tools"
         app:layout_constraintBottom_toBottomOf="@+id/btn_main_width"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btn_main_width"
         app:layout_constraintTop_toTopOf="@+id/btn_main_width" />
+
+    <Button
+        android:id="@+id/btn_main_reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:text="@string/btn_main_reset"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/btn_main_color" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

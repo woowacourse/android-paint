@@ -47,6 +47,10 @@ class MainViewModel : ViewModel() {
         renewTools()
     }
 
+    fun resetPaintings() {
+        _painting.value = emptyList()
+    }
+
     private fun setNormalPen(): NormalPen = NormalPen(::renewTools, ::saveLine).apply {
         setColor(color)
         setWidth(width)
