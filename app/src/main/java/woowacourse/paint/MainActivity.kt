@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupSizeSelector() {
-        binding.rsSize.apply {
+        binding.rvSize.apply {
             setValues(PaintBoard.DEFAULT_SIZE)
             setupSizeChangeListener()
         }
