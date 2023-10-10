@@ -17,18 +17,20 @@ abstract class BrushLine : Brush {
 
     private var lastPoint = Point(0F, 0F)
 
-    override fun start(x: Float, y: Float, onSuccess: () -> Unit) = start(Point(x, y), onSuccess)
+    override fun startDrawing(x: Float, y: Float, onSuccess: () -> Unit) =
+        startDrawing(Point(x, y), onSuccess)
 
-    private fun start(point: Point, onSuccess: () -> Unit) {
+    private fun startDrawing(point: Point, onSuccess: () -> Unit) {
         path.moveTo(point.x + ADJUSTMENT, point.y + ADJUSTMENT)
         path.lineTo(point.x, point.y)
         lastPoint = point
         onSuccess()
     }
 
-    override fun move(x: Float, y: Float, onSuccess: () -> Unit) = move(Point(x, y), onSuccess)
+    override fun continueDrawing(x: Float, y: Float, onSuccess: () -> Unit) =
+        continueDrawing(Point(x, y), onSuccess)
 
-    private fun move(point: Point, onSuccess: () -> Unit = {}) {
+    private fun continueDrawing(point: Point, onSuccess: () -> Unit = {}) {
         if (isDrawable(point)) {
             path.lineTo(point.x, point.y)
             lastPoint = point

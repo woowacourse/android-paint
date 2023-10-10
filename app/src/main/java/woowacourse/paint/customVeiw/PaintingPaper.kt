@@ -21,8 +21,8 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
     private val previewBrush: Brush
         get() = BrushPen().apply {
             setUpPaint(paint)
-            start(100F, 100F)
-            move(200F, 100F)
+            startDrawing(100F, 100F)
+            continueDrawing(200F, 100F)
         }
 
     var brushColor = Color.BLACK
@@ -65,13 +65,13 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
     private fun onActionDown(event: MotionEvent): Boolean {
         brush = Brush.from(brushShape).apply {
             setUpPaint(paint)
-            start(event.x, event.y) { updatePaper() }
+            startDrawing(event.x, event.y) { updatePaper() }
         }
         return true
     }
 
     private fun onActionMove(event: MotionEvent): Boolean {
-        brush?.move(event.x, event.y) { updatePaper() }
+        brush?.continueDrawing(event.x, event.y) { updatePaper() }
         return true
     }
 

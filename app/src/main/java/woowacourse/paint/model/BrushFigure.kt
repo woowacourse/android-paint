@@ -11,14 +11,14 @@ abstract class BrushFigure : Brush {
 
     protected var basePoint = Point(0F, 0F)
 
-    override fun start(x: Float, y: Float, onSuccess: () -> Unit) = start(Point(x, y), onSuccess)
+    override fun startDrawing(x: Float, y: Float, onSuccess: () -> Unit) = start(Point(x, y), onSuccess)
 
     private fun start(point: Point, onSuccess: () -> Unit) {
         basePoint = point
         onSuccess()
     }
 
-    override fun move(x: Float, y: Float, onSuccess: () -> Unit) = move(Point(x, y), onSuccess)
+    override fun continueDrawing(x: Float, y: Float, onSuccess: () -> Unit) = move(Point(x, y), onSuccess)
 
     private fun move(point: Point, onSuccess: () -> Unit = {}) {
         path.reset()
