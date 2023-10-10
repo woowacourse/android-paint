@@ -65,13 +65,13 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
     private fun onActionDown(event: MotionEvent): Boolean {
         brush = Brush.from(brushShape).apply {
             setUpPaint(paint)
-            start(event.x, event.y, ::updatePaper)
+            start(event.x, event.y) { updatePaper() }
         }
         return true
     }
 
     private fun onActionMove(event: MotionEvent): Boolean {
-        brush?.move(event.x, event.y, ::updatePaper)
+        brush?.move(event.x, event.y) { updatePaper() }
         return true
     }
 
@@ -83,15 +83,15 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
     }
 
     fun undo() {
-        brushHistory.undo(::updatePaper)
+        brushHistory.undo { updatePaper() }
     }
 
     fun redo() {
-        brushHistory.redo(::updatePaper)
+        brushHistory.redo { updatePaper() }
     }
 
     fun clear() {
-        brushHistory.clear(::updatePaper)
+        brushHistory.clear { updatePaper() }
     }
 
     private fun setUpPaint(paint: Paint) {
