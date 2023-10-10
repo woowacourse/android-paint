@@ -8,6 +8,10 @@ data class Line(
     val paint: Paint = Paint(),
 ) : Shape {
 
+    override fun move(pointX: Float, pointY: Float) {
+        quadTo(pointX, pointY)
+    }
+
     fun quadTo(pointX: Float, pointY: Float) {
         val nextX = (Shapes.lastX + pointX) / 2
         val nextY = (Shapes.lastY + pointY) / 2

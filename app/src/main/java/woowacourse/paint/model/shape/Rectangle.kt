@@ -9,6 +9,10 @@ data class Rectangle(
 
     val rectF: RectF = RectF()
 
+    override fun move(pointX: Float, pointY: Float) {
+        updatePosition(right = pointX, bottom = pointY)
+    }
+
     fun updatePosition(
         left: Float? = null,
         top: Float? = null,

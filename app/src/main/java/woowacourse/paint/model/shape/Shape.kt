@@ -1,3 +1,6 @@
 package woowacourse.paint.model.shape
 
-sealed interface Shape
+sealed interface Shape {
+
+    fun move(pointX: Float, pointY: Float)
+}
