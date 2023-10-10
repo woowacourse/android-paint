@@ -62,7 +62,7 @@ class PaintView(
         when (drawMode) {
             DrawMode.LINE -> addLine(pointX, pointY)
             DrawMode.RECT -> addRectangle(pointX, pointY)
-            DrawMode.CIRCLE -> addCircle(pointX, pointY)
+            DrawMode.Oval -> addOval(pointX, pointY)
             DrawMode.ERASER -> addEraser(pointX, pointY)
         }
     }
@@ -71,7 +71,7 @@ class PaintView(
         when (drawMode) {
             DrawMode.LINE -> moveLine(pointX, pointY)
             DrawMode.RECT -> moveRectangle(pointX, pointY)
-            DrawMode.CIRCLE -> moveCircle(pointX, pointY)
+            DrawMode.Oval -> moveOval(pointX, pointY)
             DrawMode.ERASER -> moveEraser(pointX, pointY)
         }
     }
@@ -93,7 +93,7 @@ class PaintView(
         invalidate()
     }
 
-    private fun addCircle(pointX: Float, pointY: Float) {
+    private fun addOval(pointX: Float, pointY: Float) {
         val addedOval = Oval().apply {
             paint.color = pen.color
             updatePosition(pointX, pointY, pointX, pointY)
@@ -122,7 +122,7 @@ class PaintView(
         invalidate()
     }
 
-    private fun moveCircle(pointX: Float, pointY: Float) {
+    private fun moveOval(pointX: Float, pointY: Float) {
         val oval = shapes.last() as Oval
         oval.updatePosition(right = pointX, bottom = pointY)
         invalidate()
