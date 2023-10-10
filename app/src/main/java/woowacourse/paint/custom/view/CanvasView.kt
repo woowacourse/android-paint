@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -12,23 +13,25 @@ import com.now.domain.BrushWidth
 import woowacourse.paint.custom.model.CurveLine
 import woowacourse.paint.custom.model.CurveLines
 import woowacourse.paint.presentation.uimodel.BrushColorUiModel
+import woowacourse.paint.presentation.uimodel.BrushTypeUiModel
 
 class CanvasView(
     context: Context,
     attributeSet: AttributeSet,
 ) : View(context, attributeSet) {
 
+    private var type = BrushTypeUiModel.PEN
     private val curveLines = CurveLines()
     private var curveLine = CurveLine(Path(), Paint())
-
-    init {
-        isFocusable = true
-        isFocusableInTouchMode = true
-    }
+    private var rectF = RectF()
+    private val recFs = mutableListOf<RectF>()
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         curveLines.draw(canvas)
+        recFs.forEach {
+            canvas.drawRect(it, curveLine.paint)
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -51,12 +54,30 @@ class CanvasView(
     }
 
     private fun startDrawing(x: Float, y: Float) {
-        curveLines.add(curveLine)
-        curveLine.moveTo(x, y)
+        when (type) {
+            BrushTypeUiModel.PEN -> {
+                curveLines.add(curveLine)
+                curveLine.moveTo(x, y)
+            }
+            BrushTypeUiModel.RECTANGLE -> {
+                rectF = RectF(x, y, x, y)
+                recFs.add(rectF)
+            }
+            else -> {}
+        }
     }
 
     private fun keepDrawing(x: Float, y: Float) {
-        curveLine.quadTo(x, y)
+        when (type) {
+            BrushTypeUiModel.PEN -> {
+                curveLine.quadTo(x, y)
+            }
+            BrushTypeUiModel.RECTANGLE -> {
+                rectF.right = x
+                rectF.bottom = y
+            }
+            else -> {}
+        }
     }
 
     fun changeStrokeWidth(new: BrushWidth) {
@@ -65,5 +86,9 @@ class CanvasView(
 
     fun changeColor(new: BrushColorUiModel) {
         curveLine = curveLine.changeColor(new)
+    }
+
+    fun changeType(newType: BrushTypeUiModel) {
+        type = newType
     }
 }

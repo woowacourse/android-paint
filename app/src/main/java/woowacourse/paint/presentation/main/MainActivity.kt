@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.mapper.toBrushColorUiModel
+import woowacourse.paint.mapper.toBrushTypeUiModel
 import woowacourse.paint.presentation.main.recyclerview.ItemAdapter
 import woowacourse.paint.presentation.uimodel.BrushColorUiModel
 import woowacourse.paint.presentation.uimodel.BrushTypeUiModel
@@ -35,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.brush.observe(this) {
             viewBinding.customCanvas.changeColor(it.brushColor.toBrushColorUiModel())
             viewBinding.customCanvas.changeStrokeWidth(it.brushWidth)
+            viewBinding.customCanvas.changeType(it.brushType.toBrushTypeUiModel())
         }
     }
 
