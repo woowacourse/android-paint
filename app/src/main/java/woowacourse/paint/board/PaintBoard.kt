@@ -3,6 +3,8 @@ package woowacourse.paint.board
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
@@ -28,6 +30,8 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
 
     private val graphicObjects: MutableList<GraphicObject> = mutableListOf()
 
+    private var eraseMode: Boolean = false
+
     private var currentGraphicObjectType: GraphicObjectType = LINE
 
     private var currentGraphicObject: GraphicObject? = null
@@ -48,6 +52,11 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
 
     init {
         addStickyPalette()
+        initEraserSetting()
+    }
+
+    private fun initEraserSetting() {
+        setLayerType(LAYER_TYPE_HARDWARE, null)
     }
 
     override fun onAttachedToWindow() {
@@ -120,11 +129,14 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
         }
     }
 
-    private fun getLineInstance(): Line = Line(
-        Paint().apply { color = context.getColor(currentSelectedColor) },
-        currentStrokeWidth,
-        ::invalidate,
-    )
+    private fun getLineInstance(): Line {
+        val paint: Paint = if (eraseMode) {
+            Paint().apply { xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR) }
+        } else {
+            Paint().apply { color = context.getColor(currentSelectedColor) }
+        }
+        return Line(paint, currentStrokeWidth, ::invalidate)
+    }
 
     private fun getRectangleInstance(): Rectangle = Rectangle(
         Paint().apply { color = context.getColor(currentSelectedColor) },
