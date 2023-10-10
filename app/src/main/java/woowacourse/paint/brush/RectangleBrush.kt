@@ -43,6 +43,7 @@ class RectangleBrush(
         private val defaultPaint
             get() = Paint().apply {
                 style = Paint.Style.FILL
+                isAntiAlias = true
             }
     }
 }
