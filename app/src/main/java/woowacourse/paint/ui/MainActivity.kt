@@ -23,12 +23,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun setUpBinding() {
         setContentView(binding.root)
-        binding.rvColors.adapter = ColorAdapter {
-            binding.paintingPaper.brushColor = it
-        }
     }
 
     private fun setUpView() = binding.apply {
+        binding.rvColors.adapter = ColorAdapter { binding.paintingPaper.brushColor = it }
+
         rsSlider.addOnChangeListener { _, value, _ -> paintingPaper.brushSize = value }
 
         paintingPaper.onUndoHistoryChangeListener = { btnUndo.isEnabled = it }
