@@ -5,6 +5,8 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -74,7 +76,12 @@ class CanvasView(
                 centerY = y
                 radius = 0f
             }
-            else -> {}
+            BrushTypeUiModel.ERASER -> {
+                curveLine.paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+                setLayerType(LAYER_TYPE_HARDWARE, null)
+                curveLines.add(curveLine)
+                curveLine.moveTo(x, y)
+            }
         }
     }
 
@@ -90,7 +97,9 @@ class CanvasView(
             BrushTypeUiModel.CIRCLE -> {
                 radius = sqrt(abs(centerX - x) * abs(centerX - x) + abs(centerY - y) + abs(centerY - y))
             }
-            else -> {}
+            BrushTypeUiModel.ERASER -> {
+                curveLine.quadTo(x, y)
+            }
         }
     }
 
