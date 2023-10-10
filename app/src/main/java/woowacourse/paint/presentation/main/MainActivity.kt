@@ -5,8 +5,9 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.mapper.toBrushColorUiModel
-import woowacourse.paint.presentation.main.palette.PaletteAdapter
+import woowacourse.paint.presentation.main.recyclerview.ItemAdapter
 import woowacourse.paint.presentation.uimodel.BrushColorUiModel
+import woowacourse.paint.presentation.uimodel.BrushTypeUiModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityMainBinding
@@ -23,8 +24,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun initRecyclerView() {
         val colors = BrushColorUiModel.values().toList()
-        val adapter = PaletteAdapter(colors) { viewModel.changeBrushColor(it) }
-        viewBinding.rvColor.adapter = adapter
+        val types = BrushTypeUiModel.values().toList()
+        viewBinding.rvType.adapter = ItemAdapter(types) { }
+        viewBinding.rvType.setHasFixedSize(true)
+        viewBinding.rvColor.adapter = ItemAdapter(colors) { viewModel.changeBrushColor(it) }
         viewBinding.rvColor.setHasFixedSize(true)
     }
 

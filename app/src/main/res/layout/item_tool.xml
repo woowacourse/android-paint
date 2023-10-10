@@ -5,7 +5,7 @@
     android:layout_height="wrap_content">
 
     <Button
-        android:id="@+id/palette"
+        android:id="@+id/btn_item_tool"
         android:layout_width="56dp"
         android:layout_height="56dp"
         android:layout_margin="16dp"

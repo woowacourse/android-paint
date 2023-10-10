@@ -18,13 +18,26 @@
         android:id="@+id/range_slider"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/rv_color"
+        app:layout_constraintBottom_toTopOf="@id/rv_type"
         app:layout_constraintEnd_toEndOf="parent"
         android:valueFrom="0"
         android:valueTo="100"
         android:stepSize="5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/custom_canvas" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_type"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/rv_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/range_slider"
+        tools:itemCount="5"
+        tools:listitem="@layout/item_tool" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_color"
@@ -35,8 +48,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/range_slider"
+        app:layout_constraintTop_toBottomOf="@id/rv_type"
         tools:itemCount="5"
-        tools:listitem="@layout/item_palette" />
+        tools:listitem="@layout/item_tool" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
