@@ -41,6 +41,8 @@ class MainActivity : AppCompatActivity() {
 
         paintingPaper.onRedoHistoryChangeListener = { btnRedo.isEnabled = it }
 
+        paintingPaper.brushHistory = vm.brushHistory
+
         rgShapes.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.rbPen -> paintingPaper.brushShape = BrushShape.LINE

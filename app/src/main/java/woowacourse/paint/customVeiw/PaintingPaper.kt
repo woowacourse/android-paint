@@ -14,7 +14,7 @@ import woowacourse.paint.model.BrushPen
 import woowacourse.paint.model.BrushShape
 
 class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    private val brushHistory: BrushHistory = BrushHistory()
+    var brushHistory: BrushHistory = BrushHistory()
 
     private var brush: Brush? = null
 
