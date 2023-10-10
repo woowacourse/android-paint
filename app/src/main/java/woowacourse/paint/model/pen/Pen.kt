@@ -14,7 +14,7 @@ abstract class Pen(
     abstract val cap: Paint.Cap
     abstract val join: Paint.Join
 
-    fun getPaint(): Paint {
+    fun createPaint(): Paint {
         return Paint().apply {
             color = this@Pen.color
             style = this@Pen.style
@@ -34,6 +34,6 @@ abstract class Pen(
 
         fun createDefaultPenInstance(): Pen = BallpointPen()
 
-        fun getDrawMode(): DrawMode = DrawMode.LINE
+        fun getDefaultDrawMode(): DrawMode = DrawMode.LINE
     }
 }

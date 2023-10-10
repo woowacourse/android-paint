@@ -19,7 +19,7 @@ class PaintView(
     attributeSet: AttributeSet,
 ) : View(context, attributeSet) {
 
-    var drawMode: DrawMode = Pen.getDrawMode()
+    var drawMode: DrawMode = Pen.getDefaultDrawMode()
 
     private val shapes: Shapes = Shapes()
     var pen: Pen = Pen.createDefaultPenInstance()
@@ -50,15 +50,15 @@ class PaintView(
         val pointY: Float = event.y
 
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> touchActionDown(pointX, pointY)
-            MotionEvent.ACTION_MOVE -> touchActionMove(pointX, pointY)
+            MotionEvent.ACTION_DOWN -> addShape(pointX, pointY)
+            MotionEvent.ACTION_MOVE -> moveShape(pointX, pointY)
             else -> super.onTouchEvent(event)
         }
 
         return true
     }
 
-    private fun touchActionDown(pointX: Float, pointY: Float) {
+    private fun addShape(pointX: Float, pointY: Float) {
         when (drawMode) {
             DrawMode.LINE -> addLine(pointX, pointY)
             DrawMode.RECT -> addRectangle(pointX, pointY)
@@ -67,7 +67,7 @@ class PaintView(
         }
     }
 
-    private fun touchActionMove(pointX: Float, pointY: Float) {
+    private fun moveShape(pointX: Float, pointY: Float) {
         when (drawMode) {
             DrawMode.LINE -> moveLine(pointX, pointY)
             DrawMode.RECT -> moveRectangle(pointX, pointY)
@@ -77,10 +77,10 @@ class PaintView(
     }
 
     private fun addLine(pointX: Float, pointY: Float) {
-        val paint = pen.getPaint()
-        val addLine = Line(paint)
-        shapes.add(addLine, pointX, pointY)
-        addLine.moveTo(pointX, pointY)
+        val paint = pen.createPaint()
+        val addedLine = Line(paint)
+        shapes.add(addedLine, pointX, pointY)
+        addedLine.moveTo(pointX, pointY)
         invalidate()
     }
 
@@ -109,10 +109,10 @@ class PaintView(
     }
 
     private fun addEraser(pointX: Float, pointY: Float) {
-        val paint = pen.getPaint()
-        val addEraserLine = Eraser(paint)
-        shapes.add(addEraserLine, pointX, pointY)
-        addEraserLine.moveTo(pointX, pointY)
+        val paint = pen.createPaint()
+        val addedEraserLine = Eraser(paint)
+        shapes.add(addedEraserLine, pointX, pointY)
+        addedEraserLine.moveTo(pointX, pointY)
         invalidate()
     }
 
