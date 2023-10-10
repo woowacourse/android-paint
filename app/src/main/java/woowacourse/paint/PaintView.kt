@@ -65,15 +65,17 @@ class PaintView(
             DrawMode.Oval -> addOval(pointX, pointY)
             DrawMode.ERASER -> addEraser(pointX, pointY)
         }
+        invalidate()
     }
 
     private fun moveShape(pointX: Float, pointY: Float) {
-        when (drawMode) {
-            DrawMode.LINE -> moveLine(pointX, pointY)
-            DrawMode.RECT -> moveRectangle(pointX, pointY)
-            DrawMode.Oval -> moveOval(pointX, pointY)
-            DrawMode.ERASER -> moveEraser(pointX, pointY)
+        when (shapes.last()) {
+            is Line -> moveLine(pointX, pointY)
+            is Rectangle -> moveRectangle(pointX, pointY)
+            is Oval -> moveOval(pointX, pointY)
+            is Eraser -> moveEraser(pointX, pointY)
         }
+        invalidate()
     }
 
     private fun addLine(pointX: Float, pointY: Float) {
@@ -81,7 +83,6 @@ class PaintView(
         val addedLine = Line(paint = paint)
         shapes.add(addedLine, pointX, pointY)
         addedLine.moveTo(pointX, pointY)
-        invalidate()
     }
 
     private fun addRectangle(pointX: Float, pointY: Float) {
@@ -90,7 +91,6 @@ class PaintView(
             updatePosition(pointX, pointY, pointX, pointY)
         }
         shapes.add(addedRectangle)
-        invalidate()
     }
 
     private fun addOval(pointX: Float, pointY: Float) {
@@ -99,7 +99,6 @@ class PaintView(
             updatePosition(pointX, pointY, pointX, pointY)
         }
         shapes.add(addedOval)
-        invalidate()
     }
 
     private fun addEraser(pointX: Float, pointY: Float) {
@@ -107,31 +106,26 @@ class PaintView(
         val addedEraserLine = Eraser(paint = paint)
         shapes.add(addedEraserLine, pointX, pointY)
         addedEraserLine.moveTo(pointX, pointY)
-        invalidate()
     }
 
     private fun moveLine(pointX: Float, pointY: Float) {
         val line = shapes.last() as Line
         line.quadTo(pointX, pointY)
-        invalidate()
     }
 
     private fun moveRectangle(pointX: Float, pointY: Float) {
         val rectangle = shapes.last() as Rectangle
         rectangle.updatePosition(right = pointX, bottom = pointY)
-        invalidate()
     }
 
     private fun moveOval(pointX: Float, pointY: Float) {
         val oval = shapes.last() as Oval
         oval.updatePosition(right = pointX, bottom = pointY)
-        invalidate()
     }
 
     private fun moveEraser(pointX: Float, pointY: Float) {
         val eraser = shapes.last() as Eraser
         eraser.quadTo(pointX, pointY)
-        invalidate()
     }
 
     fun undo() {
