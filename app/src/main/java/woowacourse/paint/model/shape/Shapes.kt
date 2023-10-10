@@ -1,5 +1,7 @@
 package woowacourse.paint.model.shape
 
+import android.graphics.Path
+import android.view.View
 import java.util.Stack
 
 class Shapes(value: List<Shape> = mutableListOf()) {
@@ -44,8 +46,12 @@ class Shapes(value: List<Shape> = mutableListOf()) {
         _value.add(lastUndo)
     }
 
-    fun clear() {
-        _value.clear()
+    fun clear(view: View) {
+        val eraser = Eraser().apply {
+            path.addRect(0f, 0f, view.width.toFloat(), view.height.toFloat(), Path.Direction.CW)
+        }
+        _value.add(eraser)
+        undoStack.clear()
     }
 
     private fun throwNoShapeError(): Nothing = throw IllegalArgumentException("도형이 존재하지 않습니다.")

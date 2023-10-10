@@ -153,7 +153,7 @@ class PaintView(
     }
 
     fun clear() {
-        shapes.clear()
+        shapes.clear(this)
         invalidate()
     }
 }
