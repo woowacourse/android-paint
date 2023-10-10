@@ -31,12 +31,6 @@ class MainActivity : AppCompatActivity() {
     private fun setUpView() = binding.apply {
         rsSlider.addOnChangeListener { _, value, _ -> paintingPaper.brushSize = value }
 
-        btnUndo.setOnClickListener { paintingPaper.undo() }
-
-        btnRedo.setOnClickListener { paintingPaper.redo() }
-
-        btnClear.setOnClickListener { paintingPaper.clear() }
-
         paintingPaper.onUndoHistoryChangeListener = { btnUndo.isEnabled = it }
 
         paintingPaper.onRedoHistoryChangeListener = { btnRedo.isEnabled = it }
