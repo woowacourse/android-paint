@@ -86,7 +86,7 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
 
     private fun addDrawing() {
         if (path.isEmpty) return
-        drawings.add(Drawing.of(path, paint, tool))
+        drawings.add(tool.draw(path, paint))
         path.reset()
     }
 
