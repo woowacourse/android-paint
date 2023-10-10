@@ -13,6 +13,11 @@ class CanvasView(
 ) : View(context, attributeSet) {
 
     private val painting = Painting()
+    private var brush: BrushModel? = null
+
+    init {
+        setLayerType(LAYER_TYPE_HARDWARE, null)
+    }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -30,7 +35,15 @@ class CanvasView(
     }
 
     fun changeBrush(brush: BrushModel) {
-        painting.changeColor(brush.color.value)
-        painting.changeWidth(brush.width)
+        if (this.brush?.width != brush.width) {
+            painting.changeWidth(brush.width)
+        }
+        if (this.brush?.color != brush.color) {
+            painting.changeColor(brush.color.value)
+        }
+        if (this.brush?.type != brush.type) {
+            painting.changeType(brush.type)
+        }
+        this.brush = brush
     }
 }
