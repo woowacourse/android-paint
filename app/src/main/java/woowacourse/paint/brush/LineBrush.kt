@@ -36,7 +36,7 @@ class LineBrush(
     }
 
     override fun copy(color: Int?, width: Float?): Brush {
-        val newPaint = defaultPaint.apply {
+        val newPaint = Paint(paint).apply {
             this.color = color ?: paint.color
             this.strokeWidth = width ?: paint.strokeWidth
         }

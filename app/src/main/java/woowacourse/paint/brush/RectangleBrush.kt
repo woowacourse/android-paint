@@ -6,7 +6,7 @@ import android.graphics.Path
 
 class RectangleBrush(
     override val path: Path = Path(),
-    private val paint: Paint = Paint(),
+    private val paint: Paint = defaultPaint,
 ) : Brush {
 
     private var startX: Float = 0f
@@ -35,7 +35,7 @@ class RectangleBrush(
     }
 
     override fun copy(color: Int?, width: Float?): Brush {
-        val newPaint = defaultPaint.apply { this.color = color ?: paint.color }
+        val newPaint = Paint(paint).apply { this.color = color ?: paint.color }
         return RectangleBrush(Path(), newPaint)
     }
 
