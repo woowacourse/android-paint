@@ -1,8 +1,9 @@
-package woowacourse.paint
+package woowacourse.paint.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import woowacourse.paint.R
 import woowacourse.paint.databinding.ItemToolBinding
 
 class ToolViewHolder(private val parent: ViewGroup, onToolClicked: (Int) -> Unit) :

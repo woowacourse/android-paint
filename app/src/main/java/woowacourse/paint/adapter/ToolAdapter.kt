@@ -1,7 +1,8 @@
-package woowacourse.paint
+package woowacourse.paint.adapter
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import woowacourse.paint.model.Tools
 
 class ToolAdapter(private val tools: Array<Tools>, private val onToolClicked: (Int) -> Unit) :
     RecyclerView.Adapter<ToolViewHolder>() {

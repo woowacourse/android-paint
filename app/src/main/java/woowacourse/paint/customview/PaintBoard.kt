@@ -1,4 +1,4 @@
-package woowacourse.paint
+package woowacourse.paint.customview
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -14,10 +14,14 @@ import android.view.MotionEvent.ACTION_UP
 import android.view.View
 import androidx.annotation.ArrayRes
 import androidx.annotation.ColorRes
-import woowacourse.paint.Tools.CIRCLE
-import woowacourse.paint.Tools.ERASER
-import woowacourse.paint.Tools.LINE
-import woowacourse.paint.Tools.RECTANGLE
+import woowacourse.paint.R
+import woowacourse.paint.model.History
+import woowacourse.paint.model.Painting
+import woowacourse.paint.model.Tools
+import woowacourse.paint.model.Tools.CIRCLE
+import woowacourse.paint.model.Tools.ERASER
+import woowacourse.paint.model.Tools.LINE
+import woowacourse.paint.model.Tools.RECTANGLE
 import woowacourse.paint.shape.Circle
 import woowacourse.paint.shape.Line
 import woowacourse.paint.shape.Rectangle
@@ -37,7 +41,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
             shape = Line(),
             paint = Paint().apply {
                 isAntiAlias = true
-                style = Paint.Style.STROKE
+                style = STROKE
                 strokeWidth = DEFAULT_SIZE
                 strokeCap = Paint.Cap.ROUND
                 strokeJoin = Paint.Join.ROUND

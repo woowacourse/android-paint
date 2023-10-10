@@ -1,4 +1,4 @@
-package woowacourse.paint
+package woowacourse.paint.adapter
 
 import android.view.ViewGroup
 import androidx.annotation.ArrayRes

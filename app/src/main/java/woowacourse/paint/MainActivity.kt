@@ -3,7 +3,11 @@ package woowacourse.paint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.slider.RangeSlider
+import woowacourse.paint.adapter.ColorAdapter
+import woowacourse.paint.adapter.ToolAdapter
+import woowacourse.paint.customview.PaintBoard
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.model.Tools
 
 class MainActivity : AppCompatActivity() {
 
