@@ -9,6 +9,7 @@ import android.graphics.PorterDuffXfermode
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import woowacourse.paint.canvas.drawing.Drawing
 
 class CanvasView(context: Context, attr: AttributeSet) : View(
     context,
@@ -85,7 +86,7 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
 
     private fun addDrawing() {
         if (path.isEmpty) return
-        drawings.add(Drawing.of(path, paint))
+        drawings.add(Drawing.of(path, paint, tool))
         path.reset()
     }
 
