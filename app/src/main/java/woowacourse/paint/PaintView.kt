@@ -19,7 +19,7 @@ class PaintView(
     attributeSet: AttributeSet,
 ) : View(context, attributeSet) {
 
-    var drawMode: DrawMode = Pen.getDefaultDrawMode()
+    var drawMode: DrawMode = DrawMode.getDefaultDrawMode()
 
     private val shapes: Shapes = Shapes()
     var pen: Pen = Pen.createDefaultPenInstance()
