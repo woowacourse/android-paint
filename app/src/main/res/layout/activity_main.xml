@@ -5,8 +5,6 @@
 
     <data>
 
-        <import type="androidx.core.content.ContextCompat" />
-
         <variable
             name="vm"
             type="woowacourse.paint.ui.main.MainViewModel" />
@@ -16,70 +14,140 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tb_main_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="12dp">
+
+                <ImageView
+                    android:id="@+id/btn_clear"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/main_toolbar_clear"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_trash_23_26"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <ImageView
+                    android:id="@+id/btn_undo"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="8dp"
+                    android:contentDescription="@string/main_toolbar_undo"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/baseline_undo_24"
+                    app:layout_constraintEnd_toStartOf="@id/btn_redo" />
+
+                <ImageView
+                    android:id="@+id/btn_redo"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/main_toolbar_redo"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/baseline_redo_24"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
         <woowacourse.paint.customView.PaintBoard
             android:id="@+id/pb_board"
+            paint_board_drawn_contents="@={vm.drawnPaths}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:contentType="@{vm.type}"
-            app:currentColor="@{ContextCompat.getColor(context, vm.appliedColor.colorRes)}"
+            app:brushType="@{vm.appliedBrushType}"
+            app:currentColor="@{context.getColor(vm.appliedColor.colorRes)}"
             app:currentStrokeWidth="@{vm.appliedStroke}"
-            app:layout_constraintBottom_toTopOf="@id/slider_pen_stroke_width"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/ll_change_btn_group"
+            app:layout_constraintTop_toBottomOf="@id/tb_main_toolbar"
             app:maxStrokeWidth="@{vm.maxStrokeWidth}"
             app:minStrokeWidth="@{vm.minStrokeWidth}" />
 
         <com.google.android.material.slider.Slider
             android:id="@+id/slider_pen_stroke_width"
-            registerSliderChangeListener="@{vm.onSelectedStrokeChange}"
+            isVisible="@{vm.isVisibleStrokeWidth()}"
+            registerSliderOnTouchListener="@{vm.onSelectedStrokeChange}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:value="@{vm.selectedStroke}"
+            android:value="@{vm.appliedStroke}"
             android:valueFrom="@{vm.minStrokeWidth}"
             android:valueTo="@{vm.maxStrokeWidth}"
             app:layout_constraintBottom_toTopOf="@id/rv_colors" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_colors"
+            isVisible="@{vm.isVisibleColorList()}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@id/btn_color_change"
+            app:layout_constraintBottom_toTopOf="@id/rv_brush_types"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:listitem="@layout/item_main_board_color" />
+            tools:listitem="@layout/item_main_brush_color" />
 
-        <Button
-            android:id="@+id/btn_color_change"
-            android:layout_width="0dp"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_brush_types"
+            isVisible="@{vm.isVisibleBrushTypeList()}"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="4dp"
-            android:onClick="@{()->vm.onAppliedColorChange()}"
-            android:text="@string/main_pen_color_change"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/gl_center_guide_line"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Button
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="8dp"
-            android:onClick="@{()->vm.onAppliedStrokeChange()}"
-            android:text="@string/main_pen_stroke_change"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="12dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/ll_change_btn_group"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/gl_center_guide_line" />
+            app:layout_constraintStart_toStartOf="parent"
+            tools:listitem="@layout/item_main_brush_type" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/gl_center_guide_line"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/ll_change_btn_group"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.5" />
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent">
 
+            <Button
+                android:id="@+id/btn_color_change"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="4dp"
+                android:layout_weight="1"
+                android:onClick="@{()->vm.onColorVisibleChange()}"
+                android:text="@string/main_pen_color_change" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:onClick="@{()->vm.onStrokeVisibleChange()}"
+                android:text="@string/main_pen_stroke_change" />
+
+            <Button
+                android:id="@+id/btn_brush_type_change"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:onClick="@{()->vm.onBrushTypeVisibleChange()}"
+                android:text="@string/main_brush_type_change" />
+
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

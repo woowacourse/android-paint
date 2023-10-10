@@ -4,40 +4,44 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.ui.main.brush.BrushTypeAdapter
+import woowacourse.paint.ui.main.color.BrushColorAdapter
 
 class MainActivity : AppCompatActivity() {
-    private val binding: ActivityMainBinding by lazy {
-        ActivityMainBinding.inflate(layoutInflater)
-    }
-
+    private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private val viewModel: MainViewModel by viewModels()
-
-    private val colorAdapter: BoardColorAdapter by lazy {
-        BoardColorAdapter(viewModel::onChangeSelectedColor)
-    }
+    private val colorAdapter: BrushColorAdapter by lazy { BrushColorAdapter(viewModel::onChangeSelectedColor) }
+    private val brushTypeAdapter: BrushTypeAdapter by lazy { BrushTypeAdapter(viewModel::onChangeSelectedBrushType) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         binding.vm = viewModel
         binding.lifecycleOwner = this
-        if (viewModel.drawnPaths.isNotEmpty()) binding.pbBoard.changeDrawnPaths(viewModel.drawnPaths)
-        setupAdapter()
+        setupRvColors()
+        setupRvBrushes()
         setupViewModel()
+        setupPaintBoard()
     }
 
-    private fun setupAdapter() {
+    private fun setupRvColors() {
         binding.rvColors.adapter = colorAdapter
+        binding.rvColors.itemAnimator = null
+    }
+
+    private fun setupRvBrushes() {
+        binding.rvBrushTypes.adapter = brushTypeAdapter
+        binding.rvBrushTypes.itemAnimator = null
     }
 
     private fun setupViewModel() {
-        viewModel.colors.observe(this) {
-            colorAdapter.changeColorList(it)
-        }
+        viewModel.colors.observe(this) { colorAdapter.changeColorList(it) }
+        viewModel.brushTypes.observe(this) { brushTypeAdapter.changeTypeList(it) }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        if (isFinishing.not()) viewModel.saveDrawnPaths(binding.pbBoard.drawnPaths)
+    private fun setupPaintBoard() {
+        binding.btnClear.setOnClickListener { binding.pbBoard.clear() }
+        binding.btnUndo.setOnClickListener { binding.pbBoard.undo() }
+        binding.btnRedo.setOnClickListener { binding.pbBoard.redo() }
     }
 }

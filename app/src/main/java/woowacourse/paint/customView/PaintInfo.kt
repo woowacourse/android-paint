@@ -2,7 +2,10 @@ package woowacourse.paint.customView
 
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import androidx.annotation.ColorInt
+import woowacourse.paint.customView.content.BrushType
 
 class PaintInfo {
     @ColorInt
@@ -35,12 +38,40 @@ class PaintInfo {
         defaultStrokeWidth = (minStrokeWidth + maxStrokeWidth) / 2
     }
 
-    fun getPaint(): Paint = Paint().apply {
+    fun getPaint(brushType: BrushType): Paint {
+        return when (brushType) {
+            BrushType.Stroke -> createStrokePaint()
+            BrushType.Rectangle -> createRectanglePaint()
+            BrushType.Circle -> createCirclePaint()
+            BrushType.Eraser -> createEraserPaint()
+        }
+    }
+
+    private fun createStrokePaint() = Paint().apply {
         isAntiAlias = true
         style = Paint.Style.STROKE
         strokeCap = Paint.Cap.ROUND
         strokeJoin = Paint.Join.ROUND
         color = currentColor
+        this.strokeWidth = currentStrokeWidth
+    }
+
+    private fun createRectanglePaint() = Paint().apply {
+        style = Paint.Style.FILL
+        color = currentColor
+    }
+
+    private fun createCirclePaint() = Paint().apply {
+        style = Paint.Style.FILL
+        color = currentColor
+    }
+
+    private fun createEraserPaint() = Paint().apply {
+        isAntiAlias = true
+        style = Paint.Style.STROKE
+        strokeCap = Paint.Cap.ROUND
+        strokeJoin = Paint.Join.ROUND
+        xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
         this.strokeWidth = currentStrokeWidth
     }
 

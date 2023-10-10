@@ -2,36 +2,42 @@ package woowacourse.paint.customView.content
 
 import android.graphics.Canvas
 import android.graphics.Paint
-import android.graphics.Path
+import android.graphics.RectF
 import android.view.MotionEvent
 
-class Stroke(
+class Rectangle(
     override val id: Long,
-    private val path: Path,
+    private val rectF: RectF,
     private val paint: Paint,
 ) : Content() {
-    override val brushType: BrushType = BrushType.Stroke
+    override val brushType: BrushType = BrushType.Rectangle
+
     override fun deepCopy(): Content {
-        return Stroke(id, Path(path), Paint(paint))
+        return Rectangle(id, RectF(rectF), Paint(paint))
     }
 
     override fun action(event: MotionEvent) {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                path.moveTo(event.x, event.y)
+                rectF.left = event.x
+                rectF.top = event.y
+                rectF.right = event.x
+                rectF.bottom = event.y
             }
 
             MotionEvent.ACTION_MOVE -> {
-                path.lineTo(event.x, event.y)
+                rectF.right = event.x
+                rectF.bottom = event.y
             }
 
             MotionEvent.ACTION_UP -> {
-                path.lineTo(event.x, event.y)
+                rectF.right = event.x
+                rectF.bottom = event.y
             }
         }
     }
 
     override fun draw(canvas: Canvas) {
-        canvas.drawPath(path, paint)
+        canvas.drawRect(rectF, paint)
     }
 }
