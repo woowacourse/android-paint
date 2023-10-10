@@ -3,10 +3,10 @@ package woowacourse.paint.custom.view.model
 import android.graphics.Canvas
 
 class CurveLines {
-    private val lines = mutableListOf<CurveLine>()
+    private val lines = mutableListOf<Line>()
 
-    fun add(curveLine: CurveLine) {
-        lines.add(curveLine)
+    fun add(line: Line) {
+        lines.add(line)
     }
 
     fun draw(canvas: Canvas) {

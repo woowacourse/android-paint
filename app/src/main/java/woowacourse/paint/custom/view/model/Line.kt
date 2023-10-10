@@ -3,7 +3,7 @@ package woowacourse.paint.custom.view.model
 import android.graphics.Paint
 import android.graphics.Path
 
-data class CurveLine(
+data class Line(
     val path: Path,
     val paint: Paint,
 ) {

@@ -11,8 +11,8 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import com.now.domain.BrushWidth
-import woowacourse.paint.custom.view.model.CurveLine
 import woowacourse.paint.custom.view.model.CurveLines
+import woowacourse.paint.custom.view.model.Line
 import woowacourse.paint.presentation.uimodel.BrushColorUiModel
 import woowacourse.paint.presentation.uimodel.BrushTypeUiModel
 import woowacourse.paint.presentation.uimodel.BrushUiModel
@@ -27,7 +27,7 @@ class CanvasView(
     private var brushUiModel = BrushUiModel.fromDefault()
 
     private val curveLines = CurveLines()
-    private var curveLine = CurveLine(Path(), brushUiModel.fromPaint())
+    private var line = Line(Path(), brushUiModel.fromPaint())
     private var rectF = RectF()
     private val recFs = mutableListOf<RectF>()
     var centerX = 0f
@@ -65,9 +65,9 @@ class CanvasView(
     private fun startDrawing(x: Float, y: Float) {
         when (brushUiModel.brushType) {
             BrushTypeUiModel.PEN -> {
-                curveLine = CurveLine(Path(), brushUiModel.fromPaint())
-                curveLines.add(curveLine)
-                curveLine.moveTo(x, y)
+                line = Line(Path(), brushUiModel.fromPaint())
+                curveLines.add(line)
+                line.moveTo(x, y)
             }
             BrushTypeUiModel.RECTANGLE -> {
                 rectF = RectF(x, y, x, y)
@@ -79,11 +79,11 @@ class CanvasView(
                 radius = 0f
             }
             BrushTypeUiModel.ERASER -> {
-                curveLine = CurveLine(Path(), brushUiModel.fromPaint())
-                curveLine.paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+                line = Line(Path(), brushUiModel.fromPaint())
+                line.paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
                 setLayerType(LAYER_TYPE_HARDWARE, null)
-                curveLines.add(curveLine)
-                curveLine.moveTo(x, y)
+                curveLines.add(line)
+                line.moveTo(x, y)
             }
         }
     }
@@ -91,7 +91,7 @@ class CanvasView(
     private fun keepDrawing(x: Float, y: Float) {
         when (brushUiModel.brushType) {
             BrushTypeUiModel.PEN -> {
-                curveLine.quadTo(x, y)
+                line.quadTo(x, y)
             }
             BrushTypeUiModel.RECTANGLE -> {
                 rectF.right = x
@@ -101,7 +101,7 @@ class CanvasView(
                 radius = sqrt(abs(centerX - x) * abs(centerX - x) + abs(centerY - y) + abs(centerY - y))
             }
             BrushTypeUiModel.ERASER -> {
-                curveLine.quadTo(x, y)
+                line.quadTo(x, y)
             }
         }
     }
