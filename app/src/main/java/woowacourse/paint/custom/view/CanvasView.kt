@@ -14,6 +14,8 @@ import woowacourse.paint.custom.model.CurveLine
 import woowacourse.paint.custom.model.CurveLines
 import woowacourse.paint.presentation.uimodel.BrushColorUiModel
 import woowacourse.paint.presentation.uimodel.BrushTypeUiModel
+import kotlin.math.abs
+import kotlin.math.sqrt
 
 class CanvasView(
     context: Context,
@@ -25,6 +27,9 @@ class CanvasView(
     private var curveLine = CurveLine(Path(), Paint())
     private var rectF = RectF()
     private val recFs = mutableListOf<RectF>()
+    var centerX = 0f
+    var centerY = 0f
+    var radius = 0f
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -32,6 +37,7 @@ class CanvasView(
         recFs.forEach {
             canvas.drawRect(it, curveLine.paint)
         }
+        canvas.drawCircle(centerX, centerY, radius, curveLine.paint)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -63,6 +69,11 @@ class CanvasView(
                 rectF = RectF(x, y, x, y)
                 recFs.add(rectF)
             }
+            BrushTypeUiModel.CIRCLE -> {
+                centerX = x
+                centerY = y
+                radius = 0f
+            }
             else -> {}
         }
     }
@@ -75,6 +86,9 @@ class CanvasView(
             BrushTypeUiModel.RECTANGLE -> {
                 rectF.right = x
                 rectF.bottom = y
+            }
+            BrushTypeUiModel.CIRCLE -> {
+                radius = sqrt(abs(centerX - x) * abs(centerX - x) + abs(centerY - y) + abs(centerY - y))
             }
             else -> {}
         }
