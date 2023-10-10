@@ -4,11 +4,9 @@ import android.graphics.Paint
 import android.graphics.Path
 
 data class Line(
-    val path: Path,
-    val paint: Paint,
+    val path: Path = Path(),
+    val paint: Paint = Paint(),
 ) : Shape {
-    constructor(paint: Paint) : this(Path(), paint)
-    constructor() : this(Path(), Paint())
 
     fun quadTo(pointX: Float, pointY: Float) {
         val nextX = (Shapes.lastX + pointX) / 2

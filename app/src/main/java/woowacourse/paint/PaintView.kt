@@ -78,7 +78,7 @@ class PaintView(
 
     private fun addLine(pointX: Float, pointY: Float) {
         val paint = pen.createPaint()
-        val addedLine = Line(paint)
+        val addedLine = Line(paint = paint)
         shapes.add(addedLine, pointX, pointY)
         addedLine.moveTo(pointX, pointY)
         invalidate()
@@ -110,7 +110,7 @@ class PaintView(
 
     private fun addEraser(pointX: Float, pointY: Float) {
         val paint = pen.createPaint()
-        val addedEraserLine = Eraser(paint)
+        val addedEraserLine = Eraser(paint = paint)
         shapes.add(addedEraserLine, pointX, pointY)
         addedEraserLine.moveTo(pointX, pointY)
         invalidate()
