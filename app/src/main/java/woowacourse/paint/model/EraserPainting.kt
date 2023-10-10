@@ -5,15 +5,14 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
-import androidx.annotation.ColorInt
 
 class EraserPainting(
     private val path: Path = Path(),
     private val _paint: Paint,
-) : Painting {
+) : Painting() {
 
     override val paint: Paint
-        get() = _paint
+        get() = Paint(_paint)
 
     init {
         _paint.apply {
@@ -41,13 +40,6 @@ class EraserPainting(
         path = Path(),
         _paint = Paint(_paint).apply {
             this.strokeWidth = value
-        },
-    )
-
-    override fun setColor(@ColorInt color: Int): Painting = EraserPainting(
-        path = Path(),
-        _paint = Paint(_paint).apply {
-            this.color = color
         },
     )
 

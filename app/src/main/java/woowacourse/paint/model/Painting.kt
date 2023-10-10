@@ -4,15 +4,15 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import androidx.annotation.ColorInt
 
-interface Painting {
-    val paint: Paint
-    fun movePath(x: Float, y: Float): Painting
-    fun initPath(prevX: Float, prevY: Float, x: Float, y: Float)
-    fun draw(canvas: Canvas)
-    fun setStroke(value: Float): Painting
-    fun setColor(@ColorInt color: Int): Painting
+abstract class Painting {
+    abstract val paint: Paint
+    abstract fun movePath(x: Float, y: Float): Painting
+    abstract fun initPath(prevX: Float, prevY: Float, x: Float, y: Float)
+    abstract fun draw(canvas: Canvas)
+    open fun setStroke(value: Float): Painting = PenPainting()
+    open fun setColor(@ColorInt color: Int): Painting = PenPainting()
 
-    fun getNewPainting(): Painting
+    abstract fun getNewPainting(): Painting
 
     fun setPaintBrush(brushTool: BrushTool): Painting {
         return when (brushTool) {

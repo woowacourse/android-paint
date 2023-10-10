@@ -3,15 +3,14 @@ package woowacourse.paint.model
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
-import androidx.annotation.ColorInt
 
 class CirclePainting(
     private val path: Path = Path(),
     private val _paint: Paint,
-) : Painting {
+) : Painting() {
 
     override val paint: Paint
-        get() = _paint
+        get() = Paint(_paint)
 
     init {
         _paint.apply {
@@ -39,17 +38,11 @@ class CirclePainting(
         canvas.drawPath(path, _paint)
     }
 
-    override fun setStroke(value: Float): Painting = CirclePainting(
-        _paint = Paint(_paint).apply {
-            this.strokeWidth = value
-        },
-    )
-
-    override fun setColor(@ColorInt color: Int): Painting = CirclePainting(
-        _paint = Paint(_paint).apply {
-            this.color = color
-        },
-    )
+    /* override fun setColor(@ColorInt color: Int): Painting = CirclePainting(
+         _paint = Paint(_paint).apply {
+             this.color = color
+         },
+     )*/
 
     override fun getNewPainting(): Painting {
         return CirclePainting(_paint = _paint)

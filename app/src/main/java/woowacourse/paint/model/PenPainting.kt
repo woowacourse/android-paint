@@ -9,7 +9,7 @@ import woowacourse.paint.util.applyPaintSetting
 class PenPainting(
     private val path: Path = Path(),
     private val _paint: Paint = Paint().applyPaintSetting(),
-) : Painting {
+) : Painting() {
 
     override val paint: Paint
         get() = _paint
