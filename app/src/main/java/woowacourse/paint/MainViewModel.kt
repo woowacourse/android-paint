@@ -49,8 +49,9 @@ class MainViewModel : ViewModel() {
     }
 
     fun resetPaintings() {
-        if (paintingBackup.size == BACKUP_MAX_SIZE) return
+        if (painting.value.isNullOrEmpty()) return
 
+        paintingBackup.clear()
         paintingBackup.add(painting.value ?: emptyList())
         _painting.value = emptyList()
     }
