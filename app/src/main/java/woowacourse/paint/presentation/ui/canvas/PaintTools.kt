@@ -5,6 +5,7 @@ import woowacourse.paint.presentation.ui.canvas.shape.PaintTool
 
 class PaintTools(value: List<PaintTool> = listOf()) {
     private val _value = value.toMutableList()
+    private val history = mutableListOf<PaintTool>()
 
     fun add(shape: PaintTool) {
         _value.add(shape)
@@ -13,6 +14,10 @@ class PaintTools(value: List<PaintTool> = listOf()) {
     fun draw(canvas: Canvas) {
         _value.forEach { shape -> shape.draw(canvas) }
     }
+
+    fun undo() = _value.removeLastOrNull()?.let { history.add(it) }
+
+    fun redo() = history.removeLastOrNull()?.let { _value.add(it) }
 
     fun clear() {
         _value.clear()

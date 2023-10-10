@@ -51,4 +51,14 @@ class CanvasView(
         painting.clear()
         invalidate()
     }
+
+    fun undo() {
+        painting.undo()
+        invalidate()
+    }
+
+    fun redo() {
+        painting.redo()
+        invalidate()
+    }
 }

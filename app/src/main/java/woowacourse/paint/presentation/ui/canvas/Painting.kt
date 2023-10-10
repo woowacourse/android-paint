@@ -52,4 +52,12 @@ class Painting {
     fun clear() {
         drawnTools.clear()
     }
+
+    fun undo() {
+        drawnTools.undo()
+    }
+
+    fun redo() {
+        drawnTools.redo()
+    }
 }
