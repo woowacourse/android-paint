@@ -1,5 +1,6 @@
 package woowacourse.paint.model.shape
 
+import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.PorterDuff
@@ -12,6 +13,10 @@ data class Eraser(
 
     init {
         paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+    }
+
+    override fun draw(canvas: Canvas) {
+        canvas.drawPath(path, paint)
     }
 
     override fun move(pointX: Float, pointY: Float) {

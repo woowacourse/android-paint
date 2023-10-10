@@ -1,5 +1,6 @@
 package woowacourse.paint.model.shape
 
+import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
 
@@ -8,6 +9,10 @@ data class Rectangle(
 ) : Shape {
 
     val rectF: RectF = RectF()
+
+    override fun draw(canvas: Canvas) {
+        canvas.drawRect(rectF, paint)
+    }
 
     override fun move(pointX: Float, pointY: Float) {
         updatePosition(right = pointX, bottom = pointY)

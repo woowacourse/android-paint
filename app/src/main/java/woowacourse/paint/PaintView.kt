@@ -35,12 +35,7 @@ class PaintView(
 
     private fun drawCanvas(canvas: Canvas) {
         shapes.value.forEach {
-            when (it) {
-                is Line -> canvas.drawPath(it.path, it.paint)
-                is Rectangle -> canvas.drawRect(it.rectF, it.paint)
-                is Oval -> canvas.drawOval(it.rectF, it.paint)
-                is Eraser -> canvas.drawPath(it.path, it.paint)
-            }
+            it.draw(canvas)
         }
     }
 

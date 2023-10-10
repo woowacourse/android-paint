@@ -1,5 +1,6 @@
 package woowacourse.paint.model.shape
 
+import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 
@@ -7,6 +8,10 @@ data class Line(
     val path: Path = Path(),
     val paint: Paint = Paint(),
 ) : Shape {
+
+    override fun draw(canvas: Canvas) {
+        canvas.drawPath(path, paint)
+    }
 
     override fun move(pointX: Float, pointY: Float) {
         quadTo(pointX, pointY)
