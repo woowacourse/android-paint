@@ -14,6 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import woowacourse.paint.R
 import woowacourse.paint.board.draw.GraphicObject
 import woowacourse.paint.board.draw.GraphicObjectType
+import woowacourse.paint.board.draw.GraphicObjectType.LINE
 import woowacourse.paint.board.draw.Line
 import woowacourse.paint.palette.Palette
 
@@ -25,7 +26,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
 
     private val graphicObjects: MutableList<GraphicObject> = mutableListOf()
 
-    private var currentGraphicObjectType: GraphicObjectType = GraphicObjectType.LINE
+    private var currentGraphicObjectType: GraphicObjectType = LINE
 
     private var currentGraphicObject: GraphicObject? = null
 
@@ -89,25 +90,40 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         twoPointerDragScaleDetector.onTouchEvent(event)
-        return twoPointerDragScaleDetector.isInProgress || lineEvent(event)
+        return twoPointerDragScaleDetector.isInProgress || graphicObjectEvent(event)
     }
 
-    private fun lineEvent(event: MotionEvent): Boolean {
-        if (event.action == MotionEvent.ACTION_DOWN) {
-            val line: Line = Line(
-                Paint().apply { color = context.getColor(currentSelectedColor) },
-                currentStrokeWidth,
-                ::invalidate,
-            )
-            graphicObjects.add(line)
+    private fun graphicObjectEvent(event: MotionEvent): Boolean {
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> registerCurrentGraphicObject()
+            MotionEvent.ACTION_UP -> addCurrentGraphicObjectToGraphicObjects()
         }
-        graphicObjects.last().onTouchEventAction(event)
+        currentGraphicObject?.onTouchEventAction(event)
         return true
+    }
+
+    private fun registerCurrentGraphicObject() {
+        currentGraphicObject = when (currentGraphicObjectType) {
+            LINE -> getLineInstance()
+        }
+    }
+
+    private fun getLineInstance(): Line = Line(
+        Paint().apply { color = context.getColor(currentSelectedColor) },
+        currentStrokeWidth,
+        ::invalidate,
+    )
+
+    private fun addCurrentGraphicObjectToGraphicObjects() {
+        if (currentGraphicObject != null) {
+            graphicObjects.add(currentGraphicObject!!)
+        }
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         graphicObjects.forEach { it.onDrawAction(canvas) }
+        currentGraphicObject?.onDrawAction(canvas)
     }
 
     private fun addStickyPalette() {
