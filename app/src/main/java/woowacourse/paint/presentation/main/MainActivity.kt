@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
     private fun initRecyclerView() {
         val colors = BrushColorUiModel.values().toList()
         val types = BrushTypeUiModel.values().toList()
-        viewBinding.rvType.adapter = ItemAdapter(types) { }
+        viewBinding.rvType.adapter = ItemAdapter(types) { viewModel.changeBrushType(it) }
         viewBinding.rvType.setHasFixedSize(true)
         viewBinding.rvColor.adapter = ItemAdapter(colors) { viewModel.changeBrushColor(it) }
         viewBinding.rvColor.setHasFixedSize(true)
