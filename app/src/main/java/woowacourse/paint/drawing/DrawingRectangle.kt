@@ -4,6 +4,8 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 import woowacourse.paint.ui.PathPoint
+import kotlin.math.max
+import kotlin.math.min
 
 class DrawingRectangle : DrawingShape {
     private var startPoint: PathPoint = PathPoint(0f, 0f)
@@ -14,11 +16,11 @@ class DrawingRectangle : DrawingShape {
     }
 
     override fun addShapeToPath(path: Path) {
-        if (startPoint.x < endPoint.x) {
-            path.addRect(startPoint.x, startPoint.y, endPoint.x, endPoint.y, Path.Direction.CW)
-        } else {
-            path.addRect(endPoint.x, endPoint.y, startPoint.x, startPoint.y, Path.Direction.CW)
-        }
+        val minX = min(startPoint.x, endPoint.x)
+        val maxX = max(startPoint.x, endPoint.x)
+        val minY = min(startPoint.y, endPoint.y)
+        val maxY = max(startPoint.y, endPoint.y)
+        path.addRect(minX, minY, maxX, maxY, Path.Direction.CW)
     }
 
     fun initPoint(value: PathPoint) {
