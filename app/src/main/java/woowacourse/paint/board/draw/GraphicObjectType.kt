@@ -2,6 +2,7 @@ package woowacourse.paint.board.draw
 
 enum class GraphicObjectType(val javaClassName: String) {
     LINE("Line"),
+    RECTANGLE("rectangle"),
     ;
 
     companion object {

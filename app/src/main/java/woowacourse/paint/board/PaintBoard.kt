@@ -113,12 +113,18 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     private fun registerCurrentGraphicObject() {
         currentGraphicObject = when (currentGraphicObjectType) {
             LINE -> getLineInstance()
+            RECTANGLE -> getRectangleInstance()
         }
     }
 
     private fun getLineInstance(): Line = Line(
         Paint().apply { color = context.getColor(currentSelectedColor) },
         currentStrokeWidth,
+        ::invalidate,
+    )
+
+    private fun getRectangleInstance(): Rectangle = Rectangle(
+        Paint().apply { color = context.getColor(currentSelectedColor) },
         ::invalidate,
     )
 
