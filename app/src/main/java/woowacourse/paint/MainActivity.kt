@@ -64,9 +64,9 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_clear -> {
-                binding.pbPaintBoard.clear()
-            }
+            R.id.menu_clear -> binding.pbPaintBoard.clear()
+            R.id.menu_undo -> binding.pbPaintBoard.undo()
+            R.id.menu_redo -> binding.pbPaintBoard.redo()
         }
 
         return super.onOptionsItemSelected(item)

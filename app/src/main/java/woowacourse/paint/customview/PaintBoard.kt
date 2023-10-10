@@ -112,6 +112,16 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
         invalidate()
     }
 
+    fun undo() {
+        history.undo()
+        invalidate()
+    }
+
+    fun redo() {
+        history.redo()
+        invalidate()
+    }
+
     companion object {
         @ColorRes
         private val DEFAULT_COLOR = R.color.blue
