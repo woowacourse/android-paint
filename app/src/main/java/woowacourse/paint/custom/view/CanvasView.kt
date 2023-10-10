@@ -10,8 +10,8 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import com.now.domain.BrushWidth
-import woowacourse.paint.custom.model.CurveLine
-import woowacourse.paint.custom.model.CurveLines
+import woowacourse.paint.custom.view.model.CurveLine
+import woowacourse.paint.custom.view.model.CurveLines
 import woowacourse.paint.presentation.uimodel.BrushColorUiModel
 import woowacourse.paint.presentation.uimodel.BrushTypeUiModel
 import kotlin.math.abs
