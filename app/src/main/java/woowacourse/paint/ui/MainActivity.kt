@@ -2,13 +2,17 @@ package woowacourse.paint.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
 import woowacourse.paint.R
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.model.BrushShape
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
+
+    private val vm by lazy { MainViewModel() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
