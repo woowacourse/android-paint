@@ -6,8 +6,8 @@ import android.graphics.Path
 class DrawingHistory(private val _drawings: MutableList<Drawing> = mutableListOf()) {
     val drawings: List<Drawing> get() = _drawings.deepCopy()
 
-    fun addDrawing(pathPaint: Drawing) {
-        _drawings.add(pathPaint)
+    fun addDrawing(drawing: Drawing) {
+        _drawings.add(drawing)
     }
 
     fun removeAt(index: Int) {
