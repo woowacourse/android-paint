@@ -22,9 +22,7 @@ class MainActivity : AppCompatActivity() {
         setupRangeSlider()
         setupButton()
         setupToolbar()
-        binding.apply {
-            paletteView.onColorSelected = { canvasView.setColor(it) }
-        }
+        setupPaletteView()
     }
 
     private fun setupRangeSlider() {
@@ -56,6 +54,12 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupToolbar() {
         setSupportActionBar(binding.toolbar)
+    }
+
+    private fun setupPaletteView() {
+        binding.apply {
+            paletteView.onColorSelected = { canvasView.setColor(it) }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
