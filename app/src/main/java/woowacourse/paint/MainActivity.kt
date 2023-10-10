@@ -79,6 +79,11 @@ class MainActivity : AppCompatActivity() {
                 true
             }
 
+            R.id.clearAction -> {
+                binding.canvasView.clear()
+                true
+            }
+
             else -> super.onOptionsItemSelected(item)
         }
     }

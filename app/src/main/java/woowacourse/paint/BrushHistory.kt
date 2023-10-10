@@ -41,4 +41,9 @@ class BrushHistory(
     fun redo() {
         if (history.size > last) last++
     }
+
+    fun clear() {
+        history.clear()
+        last = 0
+    }
 }

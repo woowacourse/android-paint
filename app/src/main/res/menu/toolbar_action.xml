@@ -11,5 +11,11 @@
         android:id="@+id/redoAction"
         android:icon="@drawable/ic_redo"
         android:title="@string/redo"
-        app:showAsAction="always" />
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/clearAction"
+        android:icon="@drawable/ic_clear"
+        android:title="@string/clear"
+        app:showAsAction="ifRoom" />
 </menu>

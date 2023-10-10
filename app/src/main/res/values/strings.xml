@@ -6,4 +6,5 @@
     <string name="eraser">지우개</string>
     <string name="undo">Undo</string>
     <string name="redo">Redo</string>
+    <string name="clear">Clear</string>
 </resources>
