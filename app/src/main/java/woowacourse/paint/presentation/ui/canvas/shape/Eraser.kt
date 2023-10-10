@@ -13,7 +13,7 @@ class Eraser(
         palette.paint.style = Paint.Style.STROKE
     }
 
-    override fun nextPath(): PaintTool = Eraser(this.palette)
+    override fun nextPath(): PaintTool = Eraser(palette)
 
     override fun changePalette(palette: Palette?): PaintTool {
         return Eraser(palette ?: this.palette.copy())

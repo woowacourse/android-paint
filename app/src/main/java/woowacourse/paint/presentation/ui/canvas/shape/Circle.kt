@@ -15,7 +15,7 @@ class Circle(
         palette.paint.style = Paint.Style.FILL
     }
 
-    override fun nextPath(): PaintTool = Circle(this.palette)
+    override fun nextPath(): PaintTool = Circle(palette)
 
     override fun changePalette(palette: Palette?): PaintTool {
         return Circle(palette ?: this.palette.copy())

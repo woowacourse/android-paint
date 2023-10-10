@@ -13,11 +13,11 @@ class Rectangle(palette: Palette) : PaintTool(palette, null) {
         palette.paint.style = Paint.Style.FILL
     }
 
+    override fun nextPath(): PaintTool = Rectangle(palette)
+
     override fun changePalette(palette: Palette?): PaintTool {
         return Rectangle(palette ?: this.palette.copy())
     }
-
-    override fun nextPath(): PaintTool = Rectangle(this.palette)
 
     override fun onDownEvent(pointX: Float, pointY: Float) {
         preX = pointX

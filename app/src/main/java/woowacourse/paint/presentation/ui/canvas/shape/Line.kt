@@ -9,7 +9,7 @@ class Line(palette: Palette) : PaintTool(palette, null) {
         palette.paint.style = Paint.Style.STROKE
     }
 
-    override fun nextPath(): PaintTool = Line(this.palette)
+    override fun nextPath(): PaintTool = Line(palette)
 
     override fun changePalette(palette: Palette?): PaintTool {
         return Line(palette ?: this.palette.copy())
