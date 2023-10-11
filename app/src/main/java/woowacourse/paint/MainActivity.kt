@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         viewModel.selectedTool.observe(this) { tool ->
-            canvasView.setupBrush(tool)
+            canvasView.setupTools(tool)
             changeSelectedTool(tool)
         }
     }
@@ -73,7 +73,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupTools() {
         viewModel.tools.forEach { toolAssigned ->
-            val toolButtonBinding = ItemToolBinding.inflate(layoutInflater, binding.llBrushes, true)
+            val toolButtonBinding = ItemToolBinding.inflate(layoutInflater, binding.llTools, true)
             with(toolButtonBinding) {
                 onClick = viewModel::pickTool
                 tool = toolAssigned
