@@ -48,22 +48,18 @@ class BoardView(context: Context, attrs: AttributeSet? = null) : View(context, a
 
         paint.color = selectedColor
         paint.strokeWidth = selectedWidth
-        setEraseMode()
+        paint.xfermode = null
+
         when (brushType) {
             BrushType.PEN -> setNotFilledPaint()
             BrushType.FILLED_CIRCLE, BrushType.FILLED_RECTANGLE -> setFilledPaint()
             BrushType.CIRCLE, BrushType.RECTANGLE -> setNotFilledPaint()
-            BrushType.ERASER -> {}
-            BrushType.ERASER_LINE -> setNotFilledPaint()
-        }
-    }
-
-    private fun setEraseMode() {
-        if (brushType == BrushType.ERASER_LINE) {
-            paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
-            setLayerType(LAYER_TYPE_HARDWARE, null)
-        } else {
-            paint.xfermode = null
+            BrushType.ERASER -> Unit
+            BrushType.ERASER_LINE -> {
+                setNotFilledPaint()
+                paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+                setLayerType(LAYER_TYPE_HARDWARE, null)
+            }
         }
     }
 
@@ -82,7 +78,6 @@ class BoardView(context: Context, attrs: AttributeSet? = null) : View(context, a
 
     fun eraseAll() {
         drawingHistory.clearAll()
-        path.reset()
         invalidate()
     }
 
@@ -160,7 +155,7 @@ class BoardView(context: Context, attrs: AttributeSet? = null) : View(context, a
                 path.addCircle(startX, startY, event.x - startX, Path.Direction.CCW)
                 invalidate()
             }
-            BrushType.ERASER -> {}
+            BrushType.ERASER -> Unit
             BrushType.ERASER_LINE -> {
                 path.lineTo(event.x, event.y)
             }
