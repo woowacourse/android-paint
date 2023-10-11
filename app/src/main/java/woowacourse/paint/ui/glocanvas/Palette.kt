@@ -3,25 +3,7 @@ package woowacourse.paint.ui.glocanvas
 import android.graphics.Paint
 import woowacourse.paint.ui.model.DrawingToolModel
 
-class Palette(drawingTool: DrawingToolModel, thickness: Float, paintColor: Int) {
-    var drawingTool = drawingTool
-        private set
-    var thickness = thickness
-        private set
-    var paintColor = paintColor
-        private set
-
-    fun setDrawingTool(drawingTool: DrawingToolModel) {
-        this.drawingTool = drawingTool
-    }
-
-    fun setThickness(thickness: Float) {
-        this.thickness = thickness
-    }
-
-    fun setPaintColor(color: Int) {
-        paintColor = color
-    }
+class Palette(var drawingTool: DrawingToolModel, var thickness: Float, var paintColor: Int) {
 
     fun getPaint(): Paint {
         return Paint(drawingTool.paint).apply {

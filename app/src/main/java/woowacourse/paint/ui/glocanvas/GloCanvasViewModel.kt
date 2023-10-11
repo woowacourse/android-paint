@@ -60,7 +60,7 @@ class GloCanvasViewModel @Inject constructor(
 
     fun selectDrawingTool(drawingTool: DrawingToolModel) {
         drawingKitRepository.changeDrawingTool(drawingTool.toDrawingTool())
-        palette.setDrawingTool(drawingTool)
+        palette.drawingTool = drawingTool
         _drawingTools.value?.let {
             _drawingTools.value = it.map { drawingToolModel ->
                 val isSelected = drawingToolModel.drawingTool == drawingTool
@@ -71,12 +71,12 @@ class GloCanvasViewModel @Inject constructor(
 
     fun setThickness(thickness: Float) {
         drawingKitRepository.changeThickness(thickness)
-        palette.setThickness(thickness)
+        palette.thickness = thickness
     }
 
     fun selectPaintColor(color: Int) {
         drawingKitRepository.changePaintColor(PaintColor.of(color))
-        palette.setPaintColor(color)
+        palette.paintColor = color
         _paintColors.value?.let {
             _paintColors.value = it.map { paintColor ->
                 val isSelected = paintColor.color == color
