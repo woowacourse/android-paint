@@ -11,7 +11,7 @@ data class DrawableSquare(
 ) : DrawableShape {
 
     init {
-        paint.apply { style = Paint.Style.FILL }
+        paint.style = Paint.Style.FILL
     }
 
     override fun drawCurrent(canvas: Canvas) {
