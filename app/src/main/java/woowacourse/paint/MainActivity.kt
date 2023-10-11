@@ -7,10 +7,10 @@ import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import woowacourse.paint.view.canvas.CanvasView
-import woowacourse.paint.view.palette.color.PaletteColor
 import woowacourse.paint.view.palette.PaletteMode
-import woowacourse.paint.view.palette.shape.PaletteShape
 import woowacourse.paint.view.palette.PaletteView
+import woowacourse.paint.view.palette.color.PaletteColor
+import woowacourse.paint.view.palette.shape.PaletteShape
 
 class MainActivity : AppCompatActivity() {
     private val canvasView: CanvasView by lazy { findViewById(R.id.canvas_view) }
@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         text = mode.modeName
         textSize = 20F
         setTextColor(getColor(R.color.white))
-        setBackgroundColor(getColor(R.color.purple_500))
+        setBackgroundColor(getColor(R.color.button_color))
         setOnClickListener { onClick(mode) }
     }
 
