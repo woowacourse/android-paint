@@ -8,7 +8,7 @@ import android.graphics.PorterDuffXfermode
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import woowacourse.paint.canvas.drawing.Drawing
+import woowacourse.paint.canvas.drawing.Drawings
 
 class CanvasView(context: Context, attr: AttributeSet) : View(
     context,
@@ -25,9 +25,7 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
             null
         }
     }
-    private val drawings = mutableListOf<Drawing>()
-
-    private val drawingsCanceled = mutableListOf<Drawing>()
+    private val drawings = Drawings()
 
     init {
         setLayerType(LAYER_TYPE_HARDWARE, null)
@@ -40,28 +38,16 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        drawings.forEach { drawing ->
-            drawing.onDraw(canvas)
-        }
+        drawings.drawAll(canvas)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> {
-                drawingsCanceled.clear()
-                drawings.add(drawingTool.draw(paint, ::invalidate))
-                drawings.last().onTouchEvent(event)
-            }
-
-            MotionEvent.ACTION_UP -> {
-                drawings.lastOrNull()?.let { drawing ->
-                    if (drawing.path.isEmpty) drawings.remove(drawing)
-                }
-            }
-
-            else -> drawings.last().onTouchEvent(event)
+            MotionEvent.ACTION_DOWN -> drawings.add(drawingTool.draw(paint, ::invalidate))
+            MotionEvent.ACTION_UP -> drawings.checkLastDrawingEmpty()
+            else -> super.onTouchEvent(event)
         }
-        return true
+        return drawings.onDrawingTouchEvent(event)
     }
 
     fun setupTools(selectedDrawingTool: DrawingTool) {
@@ -83,21 +69,16 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
 
     fun eraseAll() {
         drawings.clear()
-        drawingsCanceled.clear()
         invalidate()
     }
 
     fun undo() {
-        drawings.removeLastOrNull()?.let { drawing ->
-            drawingsCanceled.add(drawing)
-            invalidate()
-        }
+        drawings.undo()
+        invalidate()
     }
 
     fun redo() {
-        drawingsCanceled.removeLastOrNull()?.let { drawing ->
-            drawings.add(drawing)
-            invalidate()
-        }
+        drawings.redo()
+        invalidate()
     }
 }
