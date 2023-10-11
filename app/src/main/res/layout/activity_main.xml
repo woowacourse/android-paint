@@ -24,13 +24,10 @@
             android:id="@+id/tb_paint"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize"
-            android:theme="?attr/actionBarTheme"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:titleTextColor="@color/white">
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/iv_redo"
@@ -63,10 +60,10 @@
             android:id="@+id/cv_canvas"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/rs_width_changer"
+            app:layout_constraintTop_toBottomOf="@id/tb_paint"
+            app:layout_constraintBottom_toTopOf="@id/ll_tools"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tb_paint" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.slider.RangeSlider
             android:id="@+id/rs_width_changer"

@@ -12,5 +12,11 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+        <item name="toolbarStyle">@style/ActionBar</item>
+    </style>
+
+    <style name="ActionBar" parent="Widget.AppCompat.ActionBar">
+        <item name="android:background">@color/purple_500</item>
+        <item name="titleTextColor">@color/white</item>
     </style>
 </resources>
