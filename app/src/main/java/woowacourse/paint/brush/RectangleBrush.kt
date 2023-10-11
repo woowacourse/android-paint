@@ -3,9 +3,10 @@ package woowacourse.paint.brush
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.RectF
 
 class RectangleBrush(
-    override val path: Path = Path(),
+    private val path: Path = Path(),
     private val paint: Paint = defaultPaint,
 ) : Brush {
 
@@ -37,6 +38,12 @@ class RectangleBrush(
     override fun copy(color: Int?, width: Float?): Brush {
         val newPaint = Paint(paint).apply { this.color = color ?: paint.color }
         return RectangleBrush(Path(), newPaint)
+    }
+
+    override fun getBounds(): RectF {
+        val bounds = RectF()
+        path.computeBounds(bounds, true)
+        return bounds
     }
 
     companion object {

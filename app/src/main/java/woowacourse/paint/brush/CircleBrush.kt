@@ -3,11 +3,12 @@ package woowacourse.paint.brush
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.RectF
 import kotlin.math.pow
 import kotlin.math.sqrt
 
 class CircleBrush(
-    override val path: Path = Path(),
+    private val path: Path = Path(),
     private val paint: Paint = defaultPaint,
 ) : Brush {
 
@@ -38,6 +39,12 @@ class CircleBrush(
     override fun copy(color: Int?, width: Float?): Brush {
         val newPaint = Paint(paint).apply { this.color = color ?: paint.color }
         return CircleBrush(Path(), newPaint)
+    }
+
+    override fun getBounds(): RectF {
+        val bounds = RectF()
+        path.computeBounds(bounds, true)
+        return bounds
     }
 
     companion object {

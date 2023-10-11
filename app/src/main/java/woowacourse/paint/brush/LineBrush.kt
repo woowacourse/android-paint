@@ -3,10 +3,11 @@ package woowacourse.paint.brush
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.RectF
 import kotlin.math.abs
 
 class LineBrush(
-    override val path: Path = Path(),
+    private val path: Path = Path(),
     private var paint: Paint = defaultPaint,
 ) : Brush {
 
@@ -41,6 +42,12 @@ class LineBrush(
             this.strokeWidth = width ?: paint.strokeWidth
         }
         return LineBrush(Path(), newPaint)
+    }
+
+    override fun getBounds(): RectF {
+        val bounds = RectF()
+        path.computeBounds(bounds, true)
+        return bounds
     }
 
     companion object {

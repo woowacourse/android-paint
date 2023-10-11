@@ -1,7 +1,6 @@
 package woowacourse.paint
 
 import android.graphics.Canvas
-import android.graphics.RectF
 import woowacourse.paint.brush.Brush
 import java.util.Stack
 
@@ -23,9 +22,8 @@ class BrushHistory {
 
     fun removeAt(x: Float, y: Float) {
         (undoes.size - 1 downTo 0).forEach { index ->
-            val bounds = RectF()
             val currentBrush = undoes[index]
-            currentBrush.path.computeBounds(bounds, true)
+            val bounds = currentBrush.getBounds()
             if (bounds.contains(x, y)) {
                 undoes.removeAt(index)
                 return
