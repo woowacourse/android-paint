@@ -25,6 +25,7 @@ class EraserPainting(
     override fun movePath(x: Float, y: Float): Painting {
         return EraserPainting(path = Path(), _paint = _paint).apply {
             this.path.moveTo(x, y)
+            this.path.lineTo(x, y)
         }
     }
 
