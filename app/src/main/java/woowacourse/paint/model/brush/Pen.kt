@@ -4,14 +4,9 @@ import android.graphics.Paint
 import android.graphics.Path
 import woowacourse.paint.customview.FreeDrawView
 
-class Pen(override val paintInstance: Paint = Paint()) : Brush() {
+class Pen(private val paintInstance: BrushPaint = BrushPaint()) : Brush(paintInstance) {
     override fun updateStyle(paint: Paint) {
-        paintInstance.apply {
-            set(paint)
-            style = Paint.Style.STROKE
-            strokeCap = Paint.Cap.ROUND
-            strokeJoin = Paint.Join.ROUND
-        }
+        paintInstance.setPenBrush(paint)
     }
 
     override fun onActionDown(xCursor: Float, yCursor: Float) {
@@ -33,10 +28,7 @@ class Pen(override val paintInstance: Paint = Paint()) : Brush() {
 
     private fun startDraw(x: Float, y: Float) {
         val path = Path().apply { moveTo(x, y) }
-        val paint = Paint().apply {
-            set(paintInstance)
-        }
-        FreeDrawView.previousDrawings.add(path to paint)
+        FreeDrawView.previousDrawings.add(path to paintInstance)
     }
 
     private fun drawLine(x: Float, y: Float) {

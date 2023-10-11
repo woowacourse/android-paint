@@ -10,6 +10,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.model.brush.Brush
+import woowacourse.paint.model.brush.BrushPaint
 import woowacourse.paint.model.brush.Circle
 import woowacourse.paint.model.brush.Eraser
 import woowacourse.paint.model.brush.Pen
@@ -18,7 +19,7 @@ import woowacourse.paint.model.palettecolor.PaletteColor
 
 class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context, attributeSet) {
 
-    private var brush: Brush = Pen(Paint().apply { color = Color.RED })
+    private var brush: Brush = Pen(BrushPaint().apply { color = Color.RED })
 
     init {
         brush.updateStyle(brush.copyPaint())

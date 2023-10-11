@@ -4,7 +4,7 @@ import android.graphics.Paint
 import android.graphics.Path
 import woowacourse.paint.customview.FreeDrawView
 
-class Rectangle(override val paintInstance: Paint = Paint()) : Brush() {
+class Rectangle(private val paintInstance: BrushPaint = BrushPaint()) : Brush(paintInstance) {
     private var beforePosition = Pair(0f, 0f)
     override fun updateStyle(paint: Paint) {
         paintInstance.set(paint)

@@ -4,10 +4,8 @@ import android.graphics.Paint
 import android.graphics.RectF
 import woowacourse.paint.customview.FreeDrawView
 
-class Eraser(override val paintInstance: Paint = Paint()) : Brush() {
-    override fun updateStyle(paint: Paint) {
-        paintInstance.set(paint)
-    }
+class Eraser(private val paintInstance: BrushPaint = BrushPaint()) : Brush(paintInstance) {
+    override fun updateStyle(paint: Paint) = Unit
 
     override fun onActionDown(xCursor: Float, yCursor: Float) {
         erase(xCursor, yCursor)
