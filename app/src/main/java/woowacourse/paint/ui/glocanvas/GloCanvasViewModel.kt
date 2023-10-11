@@ -45,22 +45,16 @@ class GloCanvasViewModel @Inject constructor(
     private fun setupDrawingTools() {
         _drawingTools.value = drawingKitRepository.getAllDrawingTools()
             .map {
-                if (it.toDrawingToolModel() == palette.drawingTool) {
-                    it.toSelectableDrawingToolModel(true)
-                } else {
-                    it.toSelectableDrawingToolModel(false)
-                }
+                val isSelected = it.toDrawingToolModel() == palette.drawingTool
+                it.toSelectableDrawingToolModel(isSelected)
             }
     }
 
     private fun setupPaintColors() {
         _paintColors.value = drawingKitRepository.getAllPaintColors()
             .map {
-                if (Color.parseColor(it.color) == palette.paintColor) {
-                    it.toPaintColorModel(true)
-                } else {
-                    it.toPaintColorModel(false)
-                }
+                val isSelected = Color.parseColor(it.color) == palette.paintColor
+                it.toPaintColorModel(isSelected)
             }
     }
 
@@ -69,11 +63,8 @@ class GloCanvasViewModel @Inject constructor(
         palette.setDrawingTool(drawingTool)
         _drawingTools.value?.let {
             _drawingTools.value = it.map { drawingToolModel ->
-                if (drawingToolModel.drawingTool == drawingTool) {
-                    drawingToolModel.copy(isSelected = true)
-                } else {
-                    drawingToolModel.copy(isSelected = false)
-                }
+                val isSelected = drawingToolModel.drawingTool == drawingTool
+                drawingToolModel.copy(isSelected = isSelected)
             }
         }
     }
@@ -88,11 +79,8 @@ class GloCanvasViewModel @Inject constructor(
         palette.setPaintColor(color)
         _paintColors.value?.let {
             _paintColors.value = it.map { paintColor ->
-                if (paintColor.color == color) {
-                    paintColor.copy(isSelected = true)
-                } else {
-                    paintColor.copy(isSelected = false)
-                }
+                val isSelected = paintColor.color == color
+                paintColor.copy(isSelected = isSelected)
             }
         }
     }
