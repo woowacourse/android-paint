@@ -15,7 +15,6 @@ abstract class FillingPaintTool(
     protected var preY = INITIAL_Y
 
     init {
-        palette.paint.xfermode = null
         palette.paint.style = Paint.Style.FILL
     }
 
