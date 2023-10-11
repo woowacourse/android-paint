@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Paint</string>
+    <string name="main_erase_button_text">지우개</string>
+    <string name="main_undo_button_text">되돌리기</string>
+    <string name="main_pen_button_text">펜</string>
+    <string name="main_rectangle_buton_text">직사각형</string>
+    <string name="main_circle_button_text">원</string>
+    <string name="eraser">지우개</string>
+    <string name="pen">팬</string>
+    <string name="rectangle">직사각형</string>
+    <string name="circle">원</string>
 </resources>

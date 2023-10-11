@@ -14,6 +14,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Button
+        android:id="@+id/button_undo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/main_undo_button_text"
+        android:layout_marginStart="17dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <com.google.android.material.slider.RangeSlider
         android:id="@+id/rs_stroke_controller"
         android:layout_width="0dp"
@@ -27,12 +36,25 @@
         android:id="@+id/rv_colors"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
         android:orientation="vertical"
         android:paddingHorizontal="17dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/rv_painting_types"
         tools:itemCount="5"
         tools:listitem="@layout/item_painting_color"
         tools:spanCount="5" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_painting_types"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        android:paddingHorizontal="17dp"
+        android:orientation="vertical"
+        tools:listitem="@layout/item_tool"
+        tools:itemCount="4"
+        app:spanCount="4"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
