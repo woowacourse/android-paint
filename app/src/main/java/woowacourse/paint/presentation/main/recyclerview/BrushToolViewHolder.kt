@@ -2,6 +2,7 @@ package woowacourse.paint.presentation.main.recyclerview
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.paint.R
 import woowacourse.paint.databinding.ItemToolBinding
@@ -21,7 +22,7 @@ class BrushToolViewHolder(
     }
 
     fun bind(brushTypeUiModel: BrushTypeUiModel) {
-        binding.btnItemTool.text = brushTypeUiModel.description
+        binding.btnItemTool.background = getDrawable(itemView.context, brushTypeUiModel.description)
     }
 
     fun bind(brushColorUiModel: BrushColorUiModel) {
