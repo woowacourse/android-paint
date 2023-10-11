@@ -6,8 +6,8 @@ import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import woowacourse.paint.brush.BrushAdapter
 import woowacourse.paint.databinding.ActivityMainBinding
-import woowacourse.paint.model.Brush
 import woowacourse.paint.palette.PaletteAdapter
 
 class MainActivity : AppCompatActivity() {
@@ -23,11 +23,11 @@ class MainActivity : AppCompatActivity() {
 
         initBinding()
         initPalette()
+        initBrush()
         setupRangeSliderListener()
         setupChangePaintColorListener()
         setupChangeStrokeSizeListener()
         setupChangeBrushListener()
-        setupChangeBrush()
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -58,11 +58,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initPalette() {
-        binding.rvMain.adapter = PaletteAdapter(mainViewModel.paletteColor) { color ->
+        binding.rvMainPalette.adapter = PaletteAdapter(mainViewModel.paletteColor) { color ->
             mainViewModel.paintColor = color
             binding.canvasMain.setPaintColor(color)
         }
-        binding.rvMain.setHasFixedSize(true)
+        binding.rvMainPalette.setHasFixedSize(true)
+    }
+
+    private fun initBrush() {
+        binding.rvMainBrush.adapter = BrushAdapter(mainViewModel.brushes) { brush ->
+            mainViewModel.brush = brush
+            binding.canvasMain.setChangeBrush(brush)
+        }
+        binding.rvMainBrush.setHasFixedSize(true)
     }
 
     private fun setupRangeSliderListener() {
@@ -74,7 +82,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupChangePaintColorListener() {
         binding.btnMainChangeColor.setOnClickListener {
-            binding.rvMain.changeVisibility()
+            binding.rvMainPalette.changeVisibility()
         }
     }
 
@@ -86,29 +94,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupChangeBrushListener() {
         binding.btnMainChangeBrush.setOnClickListener {
-            binding.llMainBrush.changeVisibility()
-        }
-    }
-
-    private fun setupChangeBrush() {
-        binding.btnMainChangeBrushPen.setOnClickListener {
-            mainViewModel.brush = Brush.PEN
-            binding.canvasMain.setChangeBrush(Brush.PEN)
-        }
-
-        binding.btnMainChangeBrushRectangle.setOnClickListener {
-            mainViewModel.brush = Brush.RECT
-            binding.canvasMain.setChangeBrush(Brush.RECT)
-        }
-
-        binding.btnMainChangeBrushCircle.setOnClickListener {
-            mainViewModel.brush = Brush.CIRCLE
-            binding.canvasMain.setChangeBrush(Brush.CIRCLE)
-        }
-
-        binding.btnMainChangeBrushEraser.setOnClickListener {
-            mainViewModel.brush = Brush.ERASER
-            binding.canvasMain.setChangeBrush(Brush.ERASER)
+            binding.rvMainBrush.changeVisibility()
         }
     }
 

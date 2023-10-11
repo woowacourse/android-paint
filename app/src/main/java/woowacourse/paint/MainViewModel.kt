@@ -6,6 +6,7 @@ import woowacourse.paint.model.PaletteColor
 
 class MainViewModel : ViewModel() {
     val paletteColor: List<Int> = PaletteColor.values().map { it.color }
+    val brushes: List<Brush> = Brush.values().toList()
     var strokeSize: Float = 0.0f
     var paintColor: Int = 0
     var brush: Brush = Brush.PEN
