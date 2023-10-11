@@ -9,12 +9,21 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.model.Brush
-import woowacourse.paint.model.BrushHistory
+import woowacourse.paint.model.BrushCareTaker
+import woowacourse.paint.model.BrushMemento
 import woowacourse.paint.model.BrushPen
 import woowacourse.paint.model.BrushShape
+import woowacourse.paint.model.Brushes
 
 class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    var brushHistory: BrushHistory = BrushHistory()
+    var brushCareTaker = BrushCareTaker()
+        set(value) {
+            brushes = value.currentMemento.brushes
+            field = value
+            updatePaper()
+        }
+
+    private var brushes = Brushes()
 
     private var brush: Brush? = null
 
@@ -50,7 +59,7 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        brushHistory.drawOn(canvas)
+        brushes.drawOn(canvas)
         brush?.drawOn(canvas)
         previewBrush.drawOn(canvas)
     }
@@ -76,22 +85,33 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
     }
 
     private fun onActionUp(event: MotionEvent): Boolean {
-        brush?.let { brushHistory += it }
+        brush?.let {
+            brushes += it
+            brushCareTaker.save(BrushMemento(brushes))
+        }
         brush = null
         updatePaper()
         return true
     }
 
     fun undo() {
-        brushHistory.undo { updatePaper() }
+        brushCareTaker.undo {
+            brushes = it
+            updatePaper()
+        }
     }
 
     fun redo() {
-        brushHistory.redo { updatePaper() }
+        brushCareTaker.redo {
+            brushes = it
+            updatePaper()
+        }
     }
 
     fun clear() {
-        brushHistory.clear { updatePaper() }
+        brushes = Brushes()
+        brushCareTaker.save(BrushMemento(brushes))
+        updatePaper()
     }
 
     private fun setUpPaint(paint: Paint) {
@@ -102,8 +122,8 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
     }
 
     private fun updatePaper() {
-        onUndoHistoryChangeListener(brushHistory.hasHistory)
-        onRedoHistoryChangeListener(brushHistory.hasUndoHistory)
+        onUndoHistoryChangeListener(brushCareTaker.hasHistory)
+        onRedoHistoryChangeListener(brushCareTaker.hasUndoHistory)
         invalidate()
     }
 }
