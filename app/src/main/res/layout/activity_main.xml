@@ -60,25 +60,24 @@
             android:id="@+id/cv_canvas"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/tb_paint"
             app:layout_constraintBottom_toTopOf="@id/ll_tools"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tb_paint" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_start"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="@dimen/drawing_options_start_margin_percent"
-            />
+            app:layout_constraintGuide_percent="@dimen/drawing_options_start_margin_percent" />
+
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/gl_end"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="@dimen/drawing_options_end_margin_percent"
-            />
+            app:layout_constraintGuide_percent="@dimen/drawing_options_end_margin_percent" />
 
         <com.google.android.material.slider.RangeSlider
             android:id="@+id/rs_width_changer"
@@ -86,8 +85,8 @@
             android:layout_height="wrap_content"
             android:visibility="@{viewModel.paintChangingState == PaintChangingState.WIDTH_CHANGING &amp;&amp; viewModel.selectedDrawingTool.hasWidth ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toTopOf="@id/btn_change_width"
-            app:layout_constraintEnd_toEndOf="@id/gl_end"
-            app:layout_constraintStart_toStartOf="@id/gl_start" />
+            app:layout_constraintEnd_toStartOf="@id/gl_end"
+            app:layout_constraintStart_toEndOf="@id/gl_start" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_colors"
@@ -97,8 +96,8 @@
             android:visibility="@{viewModel.paintChangingState == PaintChangingState.COLOR_CHANGING &amp;&amp; viewModel.selectedDrawingTool.hasColor ? View.VISIBLE : View.GONE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@id/btn_change_color"
-            app:layout_constraintEnd_toEndOf="@id/gl_end"
-            app:layout_constraintStart_toStartOf="@id/gl_start"
+            app:layout_constraintEnd_toStartOf="@id/gl_end"
+            app:layout_constraintStart_toEndOf="@id/gl_start"
             tools:listitem="@layout/item_color_palette" />
 
         <Button
@@ -111,7 +110,7 @@
             android:visibility="@{viewModel.selectedDrawingTool.hasColor ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toTopOf="@id/ll_tools"
             app:layout_constraintEnd_toStartOf="@id/btn_change_width"
-            app:layout_constraintStart_toStartOf="@id/gl_start"/>
+            app:layout_constraintStart_toEndOf="@id/gl_start" />
 
         <Button
             android:id="@+id/btn_change_width"
@@ -122,7 +121,7 @@
             android:text="@string/main_change_thickness"
             android:visibility="@{viewModel.selectedDrawingTool.hasWidth ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toTopOf="@id/ll_tools"
-            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintEnd_toStartOf="@id/gl_end"
             app:layout_constraintStart_toEndOf="@id/btn_change_color" />
 
         <LinearLayout
@@ -132,8 +131,8 @@
             android:gravity="center_horizontal"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@id/gl_end"
-            app:layout_constraintStart_toStartOf="@id/gl_start" />
+            app:layout_constraintEnd_toStartOf="@id/gl_end"
+            app:layout_constraintStart_toEndOf="@id/gl_start" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

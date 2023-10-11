@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:layout_weight="1"
+        android:textSize="12sp"
         android:backgroundTint="@color/brush_selected"
         android:onClick="@{() -> onClick.invoke(drawingTool)}"
         android:text="@{name}" />
