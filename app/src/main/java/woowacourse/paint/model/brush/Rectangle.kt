@@ -12,7 +12,7 @@ class Rectangle(override val paintInstance: Paint = Paint()) : Brush() {
     }
 
     override fun onActionDown(xCursor: Float, yCursor: Float) {
-        setCurrentPosition(xCursor, yCursor)
+        beforePosition = xCursor to yCursor
     }
 
     override fun onActionMove(xCursor: Float, yCursor: Float) {
