@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -25,11 +26,11 @@ class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context,
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        Brush.previousDrawings.forEach { (path, paint) ->
+        previousDrawings.forEach { (path, paint) ->
             canvas.drawPath(path, paint)
         }
         if (brush is Circle || brush is Rectangle) {
-            canvas.drawPath(Brush.previewDraw.first, Brush.previewDraw.second)
+            canvas.drawPath(previewDraw.first, previewDraw.second)
         }
     }
 
@@ -77,5 +78,10 @@ class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context,
         val paint = this.brush.copyPaint()
         this.brush = brush
         this.brush.updateStyle(paint)
+    }
+
+    companion object {
+        val previousDrawings: MutableList<Pair<Path, Paint>> = mutableListOf()
+        var previewDraw: Pair<Path, Paint> = Pair(Path(), Paint())
     }
 }

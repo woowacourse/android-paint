@@ -2,6 +2,7 @@ package woowacourse.paint.model.brush
 
 import android.graphics.Paint
 import android.graphics.Path
+import woowacourse.paint.customview.FreeDrawView
 
 class Circle(override val paintInstance: Paint = Paint()) : Brush() {
     private var beforePosition = Pair(0f, 0f)
@@ -46,7 +47,7 @@ class Circle(override val paintInstance: Paint = Paint()) : Brush() {
             )
         }
         val paint = Paint().apply { set(paintInstance) }
-        previewDraw = path to paint
+        FreeDrawView.previewDraw = path to paint
     }
 
     private fun draw(xCursor: Float) {
@@ -59,6 +60,6 @@ class Circle(override val paintInstance: Paint = Paint()) : Brush() {
             )
         }
         val paint = Paint().apply { set(paintInstance) }
-        previousDrawings.add(path to paint)
+        FreeDrawView.previousDrawings.add(path to paint)
     }
 }

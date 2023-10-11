@@ -2,6 +2,7 @@ package woowacourse.paint.model.brush
 
 import android.graphics.Paint
 import android.graphics.Path
+import woowacourse.paint.customview.FreeDrawView
 
 class Pen(override val paintInstance: Paint = Paint()) : Brush() {
     override fun updateStyle(paint: Paint) {
@@ -36,10 +37,10 @@ class Pen(override val paintInstance: Paint = Paint()) : Brush() {
         val paint = Paint().apply {
             set(paintInstance)
         }
-        previousDrawings.add(path to paint)
+        FreeDrawView.previousDrawings.add(path to paint)
     }
 
     private fun drawLine(x: Float, y: Float) {
-        previousDrawings.last().first.lineTo(x, y)
+        FreeDrawView.previousDrawings.last().first.lineTo(x, y)
     }
 }

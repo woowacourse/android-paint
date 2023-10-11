@@ -2,6 +2,7 @@ package woowacourse.paint.model.brush
 
 import android.graphics.Paint
 import android.graphics.RectF
+import woowacourse.paint.customview.FreeDrawView
 
 class Eraser(override val paintInstance: Paint = Paint()) : Brush() {
     override fun updateStyle(paint: Paint) {
@@ -22,12 +23,12 @@ class Eraser(override val paintInstance: Paint = Paint()) : Brush() {
     override fun updateThickness(thickness: Float) = Unit
 
     private fun erase(cursorX: Float, cursorY: Float) {
-        previousDrawings.lastOrNull {
+        FreeDrawView.previousDrawings.lastOrNull {
             val bounds = RectF()
             it.first.computeBounds(bounds, false)
             bounds.contains(cursorX, cursorY)
         }?.let {
-            previousDrawings.remove(it)
+            FreeDrawView.previousDrawings.remove(it)
         }
     }
 }
