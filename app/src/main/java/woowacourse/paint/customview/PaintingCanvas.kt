@@ -71,19 +71,16 @@ class PaintingCanvas @JvmOverloads constructor(
 
     fun undoCanvas() {
         canvasCallback?.onUndoHistory()
-        painting = painting.newDrawingPainting()
         invalidate()
     }
 
     fun redoCanvas() {
         canvasCallback?.onRedoHistory()
-        painting = painting.newDrawingPainting()
         invalidate()
     }
 
     fun resetCanvas() {
         canvasCallback?.onClearHistory()
-        painting = painting.newDrawingPainting()
         invalidate()
     }
 
