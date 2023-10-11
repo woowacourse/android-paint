@@ -9,15 +9,11 @@ import woowacourse.paint.ui.model.SelectableDrawingToolModel
 
 class DrawingToolSettingsViewHolder private constructor(
     private val binding: ItemDrawingToolBinding,
-    onDrawingToolChanged: (DrawingToolModel) -> Unit,
+    onItemClick: (DrawingToolModel) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {
-        binding.ivDrawingTool.setOnClickListener {
-            binding.drawingTool?.let {
-                onDrawingToolChanged(it)
-            }
-        }
+        binding.onItemClick = onItemClick
     }
 
     fun bind(drawingToolModel: SelectableDrawingToolModel) {
@@ -28,11 +24,11 @@ class DrawingToolSettingsViewHolder private constructor(
     companion object {
         fun create(
             parent: ViewGroup,
-            onDrawingToolChanged: (DrawingToolModel) -> Unit,
+            onItemClick: (DrawingToolModel) -> Unit,
         ): DrawingToolSettingsViewHolder {
             val layoutInflater = LayoutInflater.from(parent.context)
             val binding = ItemDrawingToolBinding.inflate(layoutInflater, parent, false)
-            return DrawingToolSettingsViewHolder(binding, onDrawingToolChanged)
+            return DrawingToolSettingsViewHolder(binding, onItemClick)
         }
     }
 }

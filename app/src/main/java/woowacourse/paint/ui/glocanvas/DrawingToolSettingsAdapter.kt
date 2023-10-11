@@ -7,10 +7,10 @@ import woowacourse.paint.ui.model.DrawingToolModel
 import woowacourse.paint.ui.model.SelectableDrawingToolModel
 
 class DrawingToolSettingsAdapter(
-    private val onBrushChanged: (DrawingToolModel) -> Unit,
+    private val onItemClick: (DrawingToolModel) -> Unit,
 ) : ListAdapter<SelectableDrawingToolModel, DrawingToolSettingsViewHolder>(BrushDiffUtil) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DrawingToolSettingsViewHolder {
-        return DrawingToolSettingsViewHolder.create(parent, onBrushChanged)
+        return DrawingToolSettingsViewHolder.create(parent, onItemClick)
     }
 
     override fun onBindViewHolder(holder: DrawingToolSettingsViewHolder, position: Int) {

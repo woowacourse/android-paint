@@ -20,97 +20,67 @@ import javax.inject.Inject
 class GloCanvasViewModel @Inject constructor(
     private val drawingKitRepository: DrawingKitRepository,
 ) : ViewModel() {
-    private var _currentDrawingTool: MutableLiveData<DrawingToolModel> = MutableLiveData()
-    val currentDrawingTool: LiveData<DrawingToolModel>
-        get() = _currentDrawingTool
+    lateinit var palette: Palette
+        private set
     private var _drawingTools: MutableLiveData<List<SelectableDrawingToolModel>> = MutableLiveData()
     val drawingTools: LiveData<List<SelectableDrawingToolModel>>
         get() = _drawingTools
-    private var _thickness: MutableLiveData<Float> = MutableLiveData()
-    val thickness: LiveData<Float>
-        get() = _thickness
-    private var _currentPaintColor: MutableLiveData<Int> = MutableLiveData()
-    val currentPaintColor: LiveData<Int>
-        get() = _currentPaintColor
     private var _paintColors: MutableLiveData<List<PaintColorModel>> = MutableLiveData()
     val paintColors: LiveData<List<PaintColorModel>>
         get() = _paintColors
 
     init {
-        setupDrawingTool()
+        setupPalette()
         setupDrawingTools()
-        setupThickness()
-        setupPaintColor()
         setupPaintColors()
     }
 
-    private fun setupDrawingTool() {
-        _currentDrawingTool.value = drawingKitRepository.getDrawingTool().toDrawingToolModel()
+    private fun setupPalette() {
+        val drawingTool = drawingKitRepository.getDrawingTool().toDrawingToolModel()
+        val thickness = drawingKitRepository.getThickness()
+        val paintColor = Color.parseColor(drawingKitRepository.getPaintColor().color)
+        palette = Palette(drawingTool, thickness, paintColor)
     }
 
     private fun setupDrawingTools() {
-        _currentDrawingTool.value?.let { selectedDrawingTool ->
-            _drawingTools.value = drawingKitRepository.getAllDrawingTools()
-                .map {
-                    if (it.toDrawingToolModel() == selectedDrawingTool) {
-                        it.toSelectableDrawingToolModel(true)
-                    } else {
-                        it.toSelectableDrawingToolModel(false)
-                    }
-                }
-        }
-    }
-
-    private fun setupThickness() {
-        _thickness.value = drawingKitRepository.getThickness()
-    }
-
-    private fun setupPaintColor() {
-        _currentPaintColor.value = Color.parseColor(drawingKitRepository.getPaintColor().color)
+        _drawingTools.value = drawingKitRepository.getAllDrawingTools()
+            .map {
+                val isSelected = it.toDrawingToolModel() == palette.drawingTool
+                it.toSelectableDrawingToolModel(isSelected)
+            }
     }
 
     private fun setupPaintColors() {
-        _currentPaintColor.value?.let { selectedPaintColor ->
-            _paintColors.value = drawingKitRepository.getAllPaintColors()
-                .map {
-                    if (Color.parseColor(it.color) == selectedPaintColor) {
-                        it.toPaintColorModel(true)
-                    } else {
-                        it.toPaintColorModel(false)
-                    }
-                }
-        }
+        _paintColors.value = drawingKitRepository.getAllPaintColors()
+            .map {
+                val isSelected = Color.parseColor(it.color) == palette.paintColor
+                it.toPaintColorModel(isSelected)
+            }
     }
 
     fun selectDrawingTool(drawingTool: DrawingToolModel) {
         drawingKitRepository.changeDrawingTool(drawingTool.toDrawingTool())
-        _currentDrawingTool.value = drawingTool
+        palette.drawingTool = drawingTool
         _drawingTools.value?.let {
             _drawingTools.value = it.map { drawingToolModel ->
-                if (drawingToolModel.drawingTool == drawingTool) {
-                    drawingToolModel.copy(isSelected = true)
-                } else {
-                    drawingToolModel.copy(isSelected = false)
-                }
+                val isSelected = drawingToolModel.drawingTool == drawingTool
+                drawingToolModel.copy(isSelected = isSelected)
             }
         }
     }
 
     fun setThickness(thickness: Float) {
         drawingKitRepository.changeThickness(thickness)
-        _thickness.value = thickness
+        palette.thickness = thickness
     }
 
     fun selectPaintColor(color: Int) {
         drawingKitRepository.changePaintColor(PaintColor.of(color))
-        _currentPaintColor.value = color
+        palette.paintColor = color
         _paintColors.value?.let {
             _paintColors.value = it.map { paintColor ->
-                if (paintColor.color == color) {
-                    paintColor.copy(isSelected = true)
-                } else {
-                    paintColor.copy(isSelected = false)
-                }
+                val isSelected = paintColor.color == color
+                paintColor.copy(isSelected = isSelected)
             }
         }
     }

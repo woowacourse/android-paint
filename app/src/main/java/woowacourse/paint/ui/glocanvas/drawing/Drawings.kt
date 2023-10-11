@@ -1,4 +1,4 @@
-package woowacourse.paint.ui.model
+package woowacourse.paint.ui.glocanvas.drawing
 
 class Drawings(private val _items: ArrayDeque<Drawing> = ArrayDeque()) {
     val items: ArrayDeque<Drawing>
@@ -30,5 +30,9 @@ class Drawings(private val _items: ArrayDeque<Drawing> = ArrayDeque()) {
 
     fun clear() {
         _items.clear()
+    }
+
+    fun getLastDrawing(): Drawing {
+        return _items.last()
     }
 }

@@ -24,17 +24,17 @@ class GloCanvasActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+
         setupViewModel()
         setupDrawingToolSettings()
         setupThicknessSettings()
         setupPaintColorPalette()
+        binding.vPaintBoard.setupPalette(viewModel.palette)
     }
 
     private fun setupViewModel() {
-        viewModel.currentDrawingTool.observe(this) { binding.vPaintBoard.setDrawingTool(it) }
         viewModel.drawingTools.observe(this) { drawingToolSettingsAdapter.updateDrawingTools(it) }
-        viewModel.thickness.observe(this) { binding.vPaintBoard.setThickness(it) }
-        viewModel.currentPaintColor.observe(this) { binding.vPaintBoard.setPaintColor(it) }
         viewModel.paintColors.observe(this) { paintColorPaletteAdapter.updateColors(it) }
     }
 

@@ -6,10 +6,10 @@ import androidx.recyclerview.widget.ListAdapter
 import woowacourse.paint.ui.model.PaintColorModel
 
 class PaintColorPaletteAdapter(
-    private val onColorChanged: (Int) -> Unit,
+    private val onItemClick: (Int) -> Unit,
 ) : ListAdapter<PaintColorModel, PaintColorPaletteViewHolder>(PaintColorDiffUtil) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PaintColorPaletteViewHolder {
-        return PaintColorPaletteViewHolder.create(parent, onColorChanged)
+        return PaintColorPaletteViewHolder.create(parent, onItemClick)
     }
 
     override fun onBindViewHolder(holder: PaintColorPaletteViewHolder, position: Int) {
