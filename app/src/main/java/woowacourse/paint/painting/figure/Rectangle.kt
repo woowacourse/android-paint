@@ -21,8 +21,15 @@ data class Rectangle(
     }
 
     override fun extend(x: Float, y: Float) {
+        val (left, top, right, bottom) = listOf(
+            minOf(standardX, x),
+            minOf(standardY, y),
+            maxOf(standardX, x),
+            maxOf(standardY, y)
+        )
+
         path.reset()
-        path.addRect(standardX, standardY, x, y, Path.Direction.CW)
+        path.addRect(left, top, right, bottom, Path.Direction.CW)
     }
 
     override fun copy(path: Path): Figure = Rectangle(
