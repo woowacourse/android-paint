@@ -94,20 +94,8 @@ class MainActivity : AppCompatActivity() {
     private fun setupColors() {
         binding.rvColors.adapter = adapter
         binding.rvColors.setHasFixedSize(true)
-        binding.rvColors.addItemDecoration(SpaceItemDecoration(getSpace()))
+        binding.rvColors.addItemDecoration(SpaceItemDecoration(25))
     }
-
-    private fun getSpace(): Int {
-        val colorWidth = resources.getDimensionPixelSize(R.dimen.color_item_size)
-        val display = this.applicationContext?.resources?.displayMetrics
-        val deviceWidth = display?.widthPixels
-
-        deviceWidth?.let {
-            return (deviceWidth - (colorWidth * 5)) / 4
-        }
-        return 10
-    }
-
     private fun setupWidthSlider() {
         binding.rsWidthChanger.valueFrom = MainViewModel.MIN_WIDTH
         binding.rsWidthChanger.valueTo = MainViewModel.MAX_WIDTH
