@@ -1,7 +1,6 @@
 package woowacourse.paint
 
 import android.os.Bundle
-import android.view.View.LAYER_TYPE_HARDWARE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.slider.RangeSlider
@@ -58,7 +57,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun initEraseButtonClick() {
         binding.buttonErase.setOnClickListener {
-            binding.paintingView.setLayerType(LAYER_TYPE_HARDWARE, null)
             binding.paintingView.setPaintingType(PaintingType.ERASER)
         }
     }

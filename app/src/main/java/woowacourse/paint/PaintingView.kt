@@ -11,6 +11,10 @@ import woowacourse.paint.painting.PaintingType
 
 class PaintingView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
+    init {
+        setLayerType(LAYER_TYPE_HARDWARE, null)
+    }
+
     private val drawer: Drawer = Drawer(
         initPresentPainting = Line(
             path = Path(),
