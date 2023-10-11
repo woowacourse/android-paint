@@ -26,4 +26,8 @@ class Painted {
             drawable.add(history.pop())
         }
     }
+
+    fun clear() {
+        drawable.removeAll(drawable)
+    }
 }

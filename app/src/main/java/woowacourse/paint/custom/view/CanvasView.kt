@@ -111,4 +111,9 @@ class CanvasView(
         painted.undo()
         invalidate()
     }
+
+    fun clear() {
+        painted.clear()
+        invalidate()
+    }
 }

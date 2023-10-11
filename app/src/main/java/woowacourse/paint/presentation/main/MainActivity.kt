@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.menu_undo -> { viewBinding.customCanvas.undo() }
             R.id.menu_redo -> { viewBinding.customCanvas.redo() }
-            R.id.menu_remove -> {}
+            R.id.menu_remove -> { viewBinding.customCanvas.clear() }
         }
         return super.onOptionsItemSelected(item)
     }
