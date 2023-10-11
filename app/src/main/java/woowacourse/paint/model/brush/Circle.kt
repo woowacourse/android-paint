@@ -4,12 +4,8 @@ import android.graphics.Paint
 import android.graphics.Path
 import woowacourse.paint.customview.FreeDrawView
 
-class Circle(private val paintInstance: BrushPaint = BrushPaint()) : Brush(paintInstance) {
+class Circle(private val paintInstance: BrushPaint = BrushPaint()) : Figure(paintInstance) {
     private var beforePosition = Pair(0f, 0f)
-    override fun updateStyle(paint: Paint) {
-        paintInstance.setFigureBrush(paint)
-    }
-
     override fun onActionDown(xCursor: Float, yCursor: Float) {
         beforePosition = xCursor to yCursor
     }
@@ -21,15 +17,6 @@ class Circle(private val paintInstance: BrushPaint = BrushPaint()) : Brush(paint
     override fun onActionUp(xCursor: Float, yCursor: Float) {
         draw(xCursor)
     }
-
-    override fun updateColor(color: Int) {
-        paintInstance.color = color
-    }
-
-    override fun updateThickness(thickness: Float) {
-        paintInstance.strokeWidth = thickness
-    }
-
     private fun drawPreview(xCursor: Float, yCursor: Float) {
         val path = Path().apply {
             addCircle(

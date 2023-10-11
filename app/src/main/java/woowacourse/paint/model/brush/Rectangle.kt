@@ -4,16 +4,8 @@ import android.graphics.Paint
 import android.graphics.Path
 import woowacourse.paint.customview.FreeDrawView
 
-class Rectangle(private val paintInstance: BrushPaint = BrushPaint()) : Brush(paintInstance) {
+class Rectangle(private val paintInstance: BrushPaint = BrushPaint()) : Figure(paintInstance) {
     private var beforePosition = Pair(0f, 0f)
-    override fun updateStyle(paint: Paint) {
-        paintInstance.set(paint)
-        paintInstance.style = Paint.Style.FILL
-    }
-
-    override fun onActionDown(xCursor: Float, yCursor: Float) {
-        beforePosition = xCursor to yCursor
-    }
 
     override fun onActionMove(xCursor: Float, yCursor: Float) {
         drawPreview(xCursor, yCursor)
@@ -23,15 +15,7 @@ class Rectangle(private val paintInstance: BrushPaint = BrushPaint()) : Brush(pa
         draw(xCursor, yCursor)
     }
 
-    override fun updateColor(color: Int) {
-        paintInstance.color = color
-    }
-
-    override fun updateThickness(thickness: Float) {
-        paintInstance.strokeWidth = thickness
-    }
-
-    private fun setCurrentPosition(xCursor: Float, yCursor: Float) {
+    override fun onActionDown(xCursor: Float, yCursor: Float) {
         beforePosition = xCursor to yCursor
     }
 
