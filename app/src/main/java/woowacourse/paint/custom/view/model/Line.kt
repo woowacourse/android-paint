@@ -3,11 +3,23 @@ package woowacourse.paint.custom.view.model
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
+import woowacourse.paint.presentation.uimodel.BrushTypeUiModel
 
 data class Line(
+    val type: BrushTypeUiModel,
     val path: Path,
     val paint: Paint,
 ) : Drawable {
+
+    init {
+        when (type) {
+            BrushTypeUiModel.ERASER -> { paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR) }
+            else -> {}
+        }
+    }
+
     private var lastX = 0f
     private var lastY = 0f
 

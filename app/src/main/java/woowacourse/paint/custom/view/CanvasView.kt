@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Path
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffXfermode
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -27,7 +25,7 @@ class CanvasView(
     private var brushUiModel = BrushUiModel.fromDefault()
 
     private val painted = Painted()
-    private var line = Line(Path(), brushUiModel.fromPaint())
+    private var line = Line(BrushTypeUiModel.PEN, Path(), brushUiModel.fromPaint())
     private var rectangle = Rectangle(RectF(), brushUiModel.fromPaint())
     private var circle = Circle(0f, 0f, 0f, brushUiModel.fromPaint())
 
@@ -58,7 +56,7 @@ class CanvasView(
     private fun startDrawing(x: Float, y: Float) {
         when (brushUiModel.brushType) {
             BrushTypeUiModel.PEN -> {
-                line = Line(Path(), brushUiModel.fromPaint())
+                line = Line(BrushTypeUiModel.PEN, Path(), brushUiModel.fromPaint())
                 painted.add(line)
                 line.moveTo(x, y)
             }
@@ -71,8 +69,7 @@ class CanvasView(
                 painted.add(circle)
             }
             BrushTypeUiModel.ERASER -> {
-                line = Line(Path(), brushUiModel.fromPaint())
-                line.paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+                line = Line(BrushTypeUiModel.ERASER, Path(), brushUiModel.fromPaint())
                 setLayerType(LAYER_TYPE_HARDWARE, null)
                 painted.add(line)
                 line.moveTo(x, y)
