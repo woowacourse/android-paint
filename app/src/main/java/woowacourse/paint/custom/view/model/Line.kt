@@ -23,7 +23,7 @@ data class Line(
         lastY = y
     }
 
-    fun draw(canvas: Canvas) {
+    override fun draw(canvas: Canvas) {
         canvas.drawPath(path, paint)
     }
 }

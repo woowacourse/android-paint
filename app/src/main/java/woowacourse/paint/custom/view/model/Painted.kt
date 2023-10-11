@@ -5,15 +5,11 @@ import android.graphics.Canvas
 class Painted {
     private val drawable = mutableListOf<Drawable>()
 
-    fun add(line: Line) {
-        drawable.add(line)
+    fun add(drawable: Drawable) {
+        this.drawable.add(drawable)
     }
 
     fun draw(canvas: Canvas) {
-        drawable.forEach {
-            when (it) {
-                is Line -> it.draw(canvas)
-            }
-        }
+        drawable.forEach { it.draw(canvas) }
     }
 }

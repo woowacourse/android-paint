@@ -31,7 +31,6 @@ class CanvasView(
     private var line = Line(Path(), brushUiModel.fromPaint())
 
     private var rectangle = Rectangle(RectF(), brushUiModel.fromPaint())
-    private val rectangles = mutableListOf<Rectangle>()
 
     var centerX = 0f
     var centerY = 0f
@@ -40,9 +39,6 @@ class CanvasView(
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         painted.draw(canvas)
-        rectangles.forEach {
-            canvas.drawRect(it.rectF, brushUiModel.fromPaint())
-        }
         canvas.drawCircle(centerX, centerY, radius, brushUiModel.fromPaint())
     }
 
@@ -73,8 +69,8 @@ class CanvasView(
                 line.moveTo(x, y)
             }
             BrushTypeUiModel.RECTANGLE -> {
-                rectangle = rectangle.setStartPoint(x, y)
-                rectangles.add(rectangle)
+                rectangle = Rectangle(RectF(x, y, x, y), brushUiModel.fromPaint())
+                painted.add(rectangle)
             }
             BrushTypeUiModel.CIRCLE -> {
                 centerX = x
