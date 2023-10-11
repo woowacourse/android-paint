@@ -19,6 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/main_undo_button_text"
+        android:layout_marginStart="17dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,50 +39,22 @@
         android:orientation="vertical"
         android:paddingHorizontal="17dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout_painting_tools_container"
+        app:layout_constraintBottom_toTopOf="@+id/rv_painting_types"
         tools:itemCount="5"
         tools:listitem="@layout/item_painting_color"
         tools:spanCount="5" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout_painting_tools_container"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_painting_types"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:weightSum="4"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <Button
-            android:id="@+id/button_pen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/main_pen_button_text" />
-
-        <Button
-            android:id="@+id/button_rectangle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_weight="1"
-            android:text="@string/main_rectangle_buton_text" />
-
-        <Button
-            android:id="@+id/button_circle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_weight="1"
-            android:text="@string/main_circle_button_text" />
-
-        <Button
-            android:id="@+id/button_erase"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_weight="1"
-            android:text="@string/main_erase_button_text" />
-    </LinearLayout>
-
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        android:paddingHorizontal="17dp"
+        android:orientation="vertical"
+        tools:listitem="@layout/item_tool"
+        tools:itemCount="4"
+        app:spanCount="4"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
