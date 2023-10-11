@@ -25,9 +25,9 @@ class CanvasView(
     private var brushUiModel = BrushUiModel.fromDefault()
 
     private val painted = Painted()
-    private var line = Line(BrushTypeUiModel.PEN, Path(), brushUiModel.fromPaint())
-    private var rectangle = Rectangle(RectF(), brushUiModel.fromPaint())
-    private var circle = Circle(0f, 0f, 0f, brushUiModel.fromPaint())
+    private lateinit var line: Line
+    private lateinit var rectangle: Rectangle
+    private lateinit var circle: Circle
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
