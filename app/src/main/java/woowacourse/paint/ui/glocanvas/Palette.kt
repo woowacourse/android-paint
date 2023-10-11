@@ -6,7 +6,7 @@ import woowacourse.paint.ui.model.DrawingToolModel
 class Palette(var drawingTool: DrawingToolModel, var thickness: Float, var paintColor: Int) {
 
     fun getPaint(): Paint {
-        return Paint(drawingTool.paint).apply {
+        return Paint(drawingTool.drawingPaint.paint).apply {
             strokeWidth = thickness
             color = paintColor
             if (drawingTool == DrawingToolModel.HIGHLIGHTER) alpha = HIGHLIGHTER_OPACITY

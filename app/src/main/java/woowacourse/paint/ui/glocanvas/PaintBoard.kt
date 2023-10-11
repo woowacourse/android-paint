@@ -6,11 +6,7 @@ import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import woowacourse.paint.ui.glocanvas.drawing.Circle
-import woowacourse.paint.ui.glocanvas.drawing.DrawingPath
 import woowacourse.paint.ui.glocanvas.drawing.Drawings
-import woowacourse.paint.ui.glocanvas.drawing.Rectangle
-import woowacourse.paint.ui.model.DrawingToolModel
 
 class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val drawings: Drawings = Drawings()
@@ -35,34 +31,12 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         if (event.action == MotionEvent.ACTION_DOWN) {
-            val drawing = when (palette.drawingTool) {
-                DrawingToolModel.PEN, DrawingToolModel.HIGHLIGHTER, DrawingToolModel.ERASER -> {
-                    createPath()
-                }
-
-                DrawingToolModel.CIRCLE -> createCircle()
-
-                DrawingToolModel.RECTANGLE -> createRectangle()
-            }
+            val paint = palette.getPaint()
+            val drawing = palette.drawingTool.createDrawing(paint, this::invalidate)
             drawings.addLast(drawing)
             savedDrawings.clear()
         }
         return drawings.getLastDrawing().onTouchEvent(event)
-    }
-
-    private fun createPath(): DrawingPath {
-        val paint = palette.getPaint()
-        return DrawingPath(paint, this::invalidate)
-    }
-
-    private fun createCircle(): Circle {
-        val paint = palette.getPaint()
-        return Circle(paint, this::invalidate)
-    }
-
-    private fun createRectangle(): Rectangle {
-        val paint = palette.getPaint()
-        return Rectangle(paint, this::invalidate)
     }
 
     fun goToPreviousDrawing() {
