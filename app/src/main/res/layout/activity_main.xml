@@ -9,6 +9,8 @@
 
         <import type="woowacourse.paint.PaintChangingState" />
 
+        <import type="woowacourse.paint.canvas.DrawingTool" />
+
         <import type="android.view.View" />
     </data>
 
@@ -18,21 +20,60 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tb_paint"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:titleTextColor="@color/white">
+
+            <ImageView
+                android:id="@+id/iv_redo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="18dp"
+                android:src="@drawable/ic_redo_24" />
+
+            <ImageView
+                android:id="@+id/iv_undo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="14dp"
+                android:src="@drawable/ic_undo_24" />
+
+            <ImageView
+                android:id="@+id/iv_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="20dp"
+                android:src="@drawable/ic_clear_24" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+
         <woowacourse.paint.canvas.CanvasView
             android:id="@+id/cv_canvas"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/rs_thickness_changer"
+            app:layout_constraintBottom_toTopOf="@id/rs_width_changer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/tb_paint" />
 
         <com.google.android.material.slider.RangeSlider
-            android:id="@+id/rs_thickness_changer"
+            android:id="@+id/rs_width_changer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:visibility="@{viewModel.paintChangingState instanceof PaintChangingState.WidthChanging ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toTopOf="@id/rv_colors"
+            android:visibility="@{viewModel.paintChangingState == PaintChangingState.WIDTH_CHANGING &amp;&amp; viewModel.selectedDrawingTool.hasWidth ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/btn_change_width"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -41,37 +82,46 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:visibility="@{viewModel.paintChangingState instanceof PaintChangingState.ColorChanging ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.paintChangingState == PaintChangingState.COLOR_CHANGING &amp;&amp; viewModel.selectedDrawingTool.hasColor ? View.VISIBLE : View.GONE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/btn_change_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rs_thickness_changer"
             tools:listitem="@layout/item_color_palette" />
 
         <Button
             android:id="@+id/btn_change_color"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:onClick="@{() -> viewModel.setColorSettingState()}"
+            android:layout_margin="5dp"
+            android:onClick="@{() -> viewModel.setSettingState(PaintChangingState.COLOR_CHANGING)}"
             android:text="@string/main_change_color"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btn_change_thickness"
-            app:layout_constraintHorizontal_chainStyle="packed"
+            android:visibility="@{viewModel.selectedDrawingTool.hasColor ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/ll_tools"
+            app:layout_constraintEnd_toStartOf="@id/btn_change_width"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
-            android:id="@+id/btn_change_thickness"
+            android:id="@+id/btn_change_width"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:onClick="@{() -> viewModel.setWidthSettingState()}"
+            android:layout_margin="5dp"
+            android:onClick="@{() -> viewModel.setSettingState(PaintChangingState.WIDTH_CHANGING)}"
             android:text="@string/main_change_thickness"
+            android:visibility="@{viewModel.selectedDrawingTool.hasWidth ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/ll_tools"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_change_color" />
+
+        <LinearLayout
+            android:id="@+id/ll_tools"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/btn_change_color"
-            app:layout_constraintTop_toBottomOf="@id/rv_colors" />
-
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -3,83 +3,82 @@ package woowacourse.paint.canvas
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
-import android.graphics.Path
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import androidx.annotation.ColorInt
+import woowacourse.paint.canvas.drawing.Drawings
 
 class CanvasView(context: Context, attr: AttributeSet) : View(
     context,
     attr,
 ) {
-    private var path = Path()
-    private var paint = Paint()
-    private var startPoint: Point = Point(0f, 0f)
-    private val lines = mutableListOf<Line>()
+    private var drawingTool = DrawingTool.PEN
+    private val paint = Paint().apply {
+        isAntiAlias = true
+        style = Paint.Style.FILL_AND_STROKE
+        strokeCap = Paint.Cap.ROUND
+        xfermode = if (drawingTool == DrawingTool.ERASER) {
+            PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+        } else {
+            null
+        }
+    }
+    private val drawings = Drawings()
 
-    fun initPaint(width: Float, color: PaletteColor) {
-        paint = getPaint(width, color.colorCode)
+    init {
+        setLayerType(LAYER_TYPE_HARDWARE, null)
+    }
+
+    fun initPaint(width: Float, selectedColor: PaletteColor) {
+        setupWidth(width)
+        setupColor(selectedColor)
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        lines.forEach { line ->
-            canvas.drawPath(line.path, line.paint)
-        }
-        canvas.drawPath(path, paint)
+        drawings.drawAll(canvas)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        val x = event.x
-        val y = event.y
-
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> drawDot(x, y)
-            MotionEvent.ACTION_MOVE -> drawLine(x, y)
+            MotionEvent.ACTION_DOWN -> drawings.add(drawingTool.draw(paint, ::invalidate))
+            MotionEvent.ACTION_UP -> drawings.checkLastDrawingEmpty()
             else -> super.onTouchEvent(event)
         }
-        return true
+        return drawings.onDrawingTouchEvent(event)
     }
 
-    private fun drawDot(x: Float, y: Float) {
-        startPoint = Point(x, y)
-        path.moveTo(startPoint.x, startPoint.y)
-        path.lineTo(x, y)
-        invalidate()
-    }
-
-    private fun drawLine(x: Float, y: Float) {
-        path.moveTo(startPoint.x, startPoint.y)
-        path.lineTo(x, y)
-        startPoint = Point(x, y)
-        invalidate()
+    fun setupTools(selectedDrawingTool: DrawingTool) {
+        drawingTool = selectedDrawingTool
+        if (drawingTool == DrawingTool.ERASER) {
+            paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+            return
+        }
+        paint.xfermode = null
     }
 
     fun setupWidth(width: Float) {
-        addLine()
-        paint = getPaint(width, paint.color)
+        paint.strokeWidth = width
     }
 
     fun setupColor(color: PaletteColor) {
-        addLine()
-        paint = getPaint(paint.strokeWidth, color.colorCode)
+        paint.color = color.colorCode
     }
 
-    private fun addLine() {
-        if (path.isEmpty) return
-        lines.add(Line(path, paint))
-        path = Path()
+    fun eraseAll() {
+        drawings.clear()
+        invalidate()
     }
 
-    private fun getPaint(width: Float, @ColorInt selectedColor: Int): Paint {
-        return Paint().apply {
-            isAntiAlias = true
-            style = Paint.Style.STROKE
-            strokeJoin = Paint.Join.ROUND
-            color = selectedColor
-            strokeWidth = width
-            strokeCap = Paint.Cap.ROUND
-        }
+    fun undo() {
+        drawings.undo()
+        invalidate()
+    }
+
+    fun redo() {
+        drawings.redo()
+        invalidate()
     }
 }

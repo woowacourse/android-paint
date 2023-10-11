@@ -7,6 +7,7 @@ plugins {
     val kotlinVersion = "1.8.10"
     kotlin("android") version kotlinVersion apply false
     kotlin("jvm") version kotlinVersion apply false
+    kotlin("kapt") version "1.9.10" apply false
     id("org.jlleitschuh.gradle.ktlint") version "10.3.0" apply false
 }
 

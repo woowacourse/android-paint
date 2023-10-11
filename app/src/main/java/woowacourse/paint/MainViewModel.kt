@@ -4,12 +4,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import woowacourse.paint.canvas.DrawingTool
 import woowacourse.paint.canvas.PaletteColor
 import woowacourse.paint.model.ColorUiModel
 
 class MainViewModel : ViewModel() {
     private val _paintChangingState =
-        MutableLiveData<PaintChangingState>(PaintChangingState.Nothing)
+        MutableLiveData(PaintChangingState.NOTHING)
     val paintChangingState: LiveData<PaintChangingState>
         get() = _paintChangingState
 
@@ -17,6 +18,12 @@ class MainViewModel : ViewModel() {
         MutableLiveData(PaletteColor.getAllColors().map { ColorUiModel(it, it.ordinal == 0) })
     val colors: LiveData<List<ColorUiModel>>
         get() = _colors
+
+    val drawingTools = DrawingTool.values().toList()
+
+    private var _selectedTool = MutableLiveData(drawingTools.first())
+    val selectedDrawingTool: LiveData<DrawingTool>
+        get() = _selectedTool
 
     val selectedColor: LiveData<PaletteColor>
         get() = Transformations.map(_colors) { colors ->
@@ -27,20 +34,16 @@ class MainViewModel : ViewModel() {
     val width: LiveData<Float>
         get() = _width
 
-    fun setColorSettingState() {
-        if (_paintChangingState.value == PaintChangingState.ColorChanging) {
-            _paintChangingState.value = PaintChangingState.Nothing
+    fun setSettingState(state: PaintChangingState) {
+        if (_paintChangingState.value == state) {
+            _paintChangingState.value = PaintChangingState.NOTHING
             return
         }
-        _paintChangingState.value = PaintChangingState.ColorChanging
+        _paintChangingState.value = state
     }
 
-    fun setWidthSettingState() {
-        if (_paintChangingState.value == PaintChangingState.WidthChanging) {
-            _paintChangingState.value = PaintChangingState.Nothing
-            return
-        }
-        _paintChangingState.value = PaintChangingState.WidthChanging
+    fun pickTool(drawingTool: DrawingTool) {
+        _selectedTool.value = drawingTool
     }
 
     fun pickColor(model: ColorUiModel) {
@@ -53,7 +56,9 @@ class MainViewModel : ViewModel() {
     }
 
     companion object {
-        const val DEFAULT_WIDTH = 0F
+        const val DEFAULT_WIDTH = 1F
+        const val MIN_WIDTH = 1f
+        const val MAX_WIDTH = 100f
         val DEFAULT_SELECTED_COLOR = PaletteColor.RED
     }
 }
