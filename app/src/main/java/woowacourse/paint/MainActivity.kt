@@ -13,7 +13,7 @@ import woowacourse.paint.customview.CanvasCallback
 import woowacourse.paint.customview.PaintingCanvas.Companion.DEFAULT_STROKE_WIDTH
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.model.BrushTool
-import woowacourse.paint.model.Painting
+import woowacourse.paint.model.DrawingTool
 
 class MainActivity : AppCompatActivity(), CanvasCallback {
 
@@ -122,8 +122,8 @@ class MainActivity : AppCompatActivity(), CanvasCallback {
         }
     }
 
-    override fun onActionUp(painting: Painting) {
-        viewModel.addHistory(painting)
+    override fun onActionUp(drawingTool: DrawingTool) {
+        viewModel.addHistory(drawingTool)
     }
 
     override fun onUndoHistory() {

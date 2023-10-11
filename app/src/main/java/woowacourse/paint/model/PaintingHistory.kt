@@ -3,14 +3,14 @@ package woowacourse.paint.model
 import java.util.Stack
 
 class PaintingHistory {
-    private val undoHistory = mutableListOf<Painting>()
-    private val redoHistory: Stack<Painting> = Stack()
+    private val undoHistory = mutableListOf<DrawingTool>()
+    private val redoHistory: Stack<DrawingTool> = Stack()
 
-    fun addHistory(track: Painting) {
+    fun addHistory(track: DrawingTool) {
         undoHistory.add(track)
     }
 
-    fun forEach(action: (Painting) -> Unit) {
+    fun forEach(action: (DrawingTool) -> Unit) {
         undoHistory.forEach(action)
     }
 

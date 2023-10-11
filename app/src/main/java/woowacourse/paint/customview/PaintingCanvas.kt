@@ -6,13 +6,9 @@ import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import woowacourse.paint.model.CirclePainting
-import woowacourse.paint.model.EraserPainting
+import woowacourse.paint.model.DrawingTool
 import woowacourse.paint.model.PaintBrush
-import woowacourse.paint.model.Painting
 import woowacourse.paint.model.PaintingHistory
-import woowacourse.paint.model.PenPainting
-import woowacourse.paint.model.RectanglePainting
 
 class PaintingCanvas @JvmOverloads constructor(
     context: Context,
@@ -21,7 +17,7 @@ class PaintingCanvas @JvmOverloads constructor(
 
     var canvasCallback: CanvasCallback? = null
     lateinit var history: PaintingHistory
-    private var painting: Painting = PenPainting()
+    private var painting: DrawingTool = DrawingTool()
 
     init {
         isFocusable = true
@@ -43,7 +39,7 @@ class PaintingCanvas @JvmOverloads constructor(
         val pointY = event.y
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                painting = painting.movePath(pointX, pointY)
+                painting.movePath(pointX, pointY)
             }
 
             MotionEvent.ACTION_MOVE -> {
@@ -52,6 +48,7 @@ class PaintingCanvas @JvmOverloads constructor(
 
             MotionEvent.ACTION_UP -> {
                 canvasCallback?.onActionUp(painting)
+                painting = painting.newDrawingPainting()
             }
 
             else -> super.onTouchEvent(event)
@@ -61,42 +58,32 @@ class PaintingCanvas @JvmOverloads constructor(
     }
 
     fun setStroke(value: Float) {
-        painting = when (painting) {
-            is PenPainting -> (painting as PenPainting).setStroke(value)
-            is EraserPainting -> (painting as EraserPainting).setStroke(value)
-            else -> return
-        }
+        painting.setStrokeWidth(value)
     }
 
     fun setColor(color: Int) {
-        val paintColor = context.getColor(color)
-        painting = when (painting) {
-            is PenPainting -> (painting as PenPainting).setColor(paintColor)
-            is RectanglePainting -> (painting as RectanglePainting).setColor(paintColor)
-            is CirclePainting -> (painting as CirclePainting).setColor(paintColor)
-            else -> return
-        }
+        painting.setColor(context.getColor(color))
     }
 
     fun setBrush(brush: PaintBrush) {
-        painting = painting.from(brush.brushTool)
+        painting = painting.setPainting(brush.brushTool)
     }
 
     fun undoCanvas() {
         canvasCallback?.onUndoHistory()
-        painting = painting.getNewPainting()
+        painting = painting.newDrawingPainting()
         invalidate()
     }
 
     fun redoCanvas() {
         canvasCallback?.onRedoHistory()
-        painting = painting.getNewPainting()
+        painting = painting.newDrawingPainting()
         invalidate()
     }
 
     fun resetCanvas() {
         canvasCallback?.onClearHistory()
-        painting = painting.getNewPainting()
+        painting = painting.newDrawingPainting()
         invalidate()
     }
 

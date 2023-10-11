@@ -1,9 +1,9 @@
 package woowacourse.paint.customview
 
-import woowacourse.paint.model.Painting
+import woowacourse.paint.model.DrawingTool
 
 interface CanvasCallback {
-    fun onActionUp(painting: Painting)
+    fun onActionUp(drawingTool: DrawingTool)
     fun onUndoHistory()
     fun onRedoHistory()
     fun onClearHistory()

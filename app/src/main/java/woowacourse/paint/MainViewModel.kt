@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import woowacourse.paint.model.BrushTool
 import woowacourse.paint.model.ColorBox
+import woowacourse.paint.model.DrawingTool
 import woowacourse.paint.model.PaintBrush
 import woowacourse.paint.model.PaintColor
-import woowacourse.paint.model.Painting
 import woowacourse.paint.model.PaintingHistory
 
 class MainViewModel : ViewModel() {
@@ -35,7 +35,7 @@ class MainViewModel : ViewModel() {
         }
     }
 
-    fun addHistory(painting: Painting) {
+    fun addHistory(painting: DrawingTool) {
         _paintingHistory.value?.addHistory(painting)
     }
 
