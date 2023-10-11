@@ -11,8 +11,8 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import com.now.domain.BrushWidth
-import woowacourse.paint.custom.view.model.CurveLines
 import woowacourse.paint.custom.view.model.Line
+import woowacourse.paint.custom.view.model.Painted
 import woowacourse.paint.custom.view.model.Rectangle
 import woowacourse.paint.presentation.uimodel.BrushColorUiModel
 import woowacourse.paint.presentation.uimodel.BrushTypeUiModel
@@ -27,7 +27,7 @@ class CanvasView(
 
     private var brushUiModel = BrushUiModel.fromDefault()
 
-    private val curveLines = CurveLines()
+    private val painted = Painted()
     private var line = Line(Path(), brushUiModel.fromPaint())
 
     private var rectangle = Rectangle(RectF(), brushUiModel.fromPaint())
@@ -39,7 +39,7 @@ class CanvasView(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        curveLines.draw(canvas)
+        painted.draw(canvas)
         rectangles.forEach {
             canvas.drawRect(it.rectF, brushUiModel.fromPaint())
         }
@@ -69,7 +69,7 @@ class CanvasView(
         when (brushUiModel.brushType) {
             BrushTypeUiModel.PEN -> {
                 line = Line(Path(), brushUiModel.fromPaint())
-                curveLines.add(line)
+                painted.add(line)
                 line.moveTo(x, y)
             }
             BrushTypeUiModel.RECTANGLE -> {
@@ -85,7 +85,7 @@ class CanvasView(
                 line = Line(Path(), brushUiModel.fromPaint())
                 line.paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
                 setLayerType(LAYER_TYPE_HARDWARE, null)
-                curveLines.add(line)
+                painted.add(line)
                 line.moveTo(x, y)
             }
         }
