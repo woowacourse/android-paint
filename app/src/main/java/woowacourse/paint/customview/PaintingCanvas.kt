@@ -79,7 +79,7 @@ class PaintingCanvas @JvmOverloads constructor(
     }
 
     fun setBrush(brush: PaintBrush) {
-        painting = painting.setPaintBrush(brush.brushTool)
+        painting = painting.from(brush.brushTool)
     }
 
     fun undoCanvas() {

@@ -10,7 +10,7 @@ interface Painting {
     fun draw(canvas: Canvas)
     fun getNewPainting(): Painting
 
-    fun setPaintBrush(brushTool: BrushTool): Painting {
+    fun from(brushTool: BrushTool): Painting {
         return when (brushTool) {
             BrushTool.PEN -> PenPainting(_paint = Paint(paint))
             BrushTool.RECTANGLE -> RectanglePainting(_paint = Paint(paint))
