@@ -12,6 +12,7 @@ import woowacourse.paint.R
 import woowacourse.paint.painting.figure.Circle
 import woowacourse.paint.painting.figure.Eraser
 import woowacourse.paint.painting.figure.Figure
+import woowacourse.paint.painting.figure.FigureType
 import woowacourse.paint.painting.figure.Line
 import woowacourse.paint.painting.figure.Rectangle
 
@@ -87,32 +88,13 @@ class PaintingView(
         invalidate()
     }
 
-    fun setFigureToRectangle() {
-        figure = Rectangle(
-            path = Path(),
-            paint = Paint(figure.paint)
-        )
-    }
-
-    fun setFigureToLine() {
-        figure = Line(
-            path = Path(),
-            paint = Paint(figure.paint)
-        )
-    }
-
-    fun setFigureToCircle() {
-        figure = Circle(
-            path = Path(),
-            paint = Paint(figure.paint)
-        )
-    }
-
-    fun setFigureToEraser() {
-        figure = Eraser(
-            path = Path(),
-            paint = Paint(figure.paint)
-        )
+    fun setFigureType(type: FigureType) {
+        figure = when (type) {
+            FigureType.LINE -> Line(Path(), Paint(figure.paint))
+            FigureType.RECTANGLE -> Rectangle(Path(), Paint(figure.paint))
+            FigureType.CIRCLE -> Circle(Path(), Paint(figure.paint))
+            FigureType.ERASER -> Eraser(Path(), Paint(figure.paint))
+        }
     }
 
     fun setBrushColor(color: Int) {

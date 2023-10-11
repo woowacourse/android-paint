@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.slider.RangeSlider
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.painting.figure.FigureType
 
 class MainActivity : AppCompatActivity() {
 
@@ -35,17 +36,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupFigureButtonClickListener() {
         with(binding) {
-            btnSquare.setOnClickListener {
-                pv.setFigureToRectangle()
+            btnRectangle.setOnClickListener {
+                pv.setFigureType(FigureType.RECTANGLE)
             }
             btnPen.setOnClickListener {
-                pv.setFigureToLine()
+                pv.setFigureType(FigureType.LINE)
             }
             btnCircle.setOnClickListener {
-                pv.setFigureToCircle()
+                pv.setFigureType(FigureType.CIRCLE)
             }
             btnEraser.setOnClickListener {
-                pv.setFigureToEraser()
+                pv.setFigureType(FigureType.ERASER)
             }
             btnUndo.setOnClickListener {
                 pv.undo()
