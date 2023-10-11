@@ -23,7 +23,7 @@ import woowacourse.paint.paintBoard.tools.Tools
 class MainViewModel : ViewModel() {
 
     private var color = R.color.black
-    private var width = 0f
+    private var width = DEFAULT_PEN_SIZE
     private var tool: Tool = NORMAL_PEN
     private var paintingBackup: MutableList<List<Line>> = mutableListOf()
 
@@ -111,6 +111,7 @@ class MainViewModel : ViewModel() {
     }
 
     companion object {
+        private const val DEFAULT_PEN_SIZE = 0f
         private const val BACKUP_MAX_SIZE = 3
 
         val Factory: ViewModelProvider.Factory = viewModelFactory {
