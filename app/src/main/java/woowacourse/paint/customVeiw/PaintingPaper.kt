@@ -12,7 +12,6 @@ import woowacourse.paint.model.Brush
 import woowacourse.paint.model.BrushCareTaker
 import woowacourse.paint.model.BrushMemento
 import woowacourse.paint.model.BrushPen
-import woowacourse.paint.model.BrushShape
 import woowacourse.paint.model.Brushes
 
 class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(context, attrs) {
@@ -46,7 +45,7 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
             invalidate()
         }
 
-    var brushShape = BrushShape.LINE
+    var brushGenerator: () -> Brush = ::BrushPen
 
     var onUndoHistoryChangeListener: (Boolean) -> Unit = {}
 
@@ -72,7 +71,7 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
     }
 
     private fun onActionDown(event: MotionEvent): Boolean {
-        brush = Brush.from(brushShape).apply {
+        brush = brushGenerator().apply {
             setUpPaint(paint)
             startDrawing(event.x, event.y) { updatePaper() }
         }

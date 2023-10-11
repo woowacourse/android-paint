@@ -6,7 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 import woowacourse.paint.R
 import woowacourse.paint.databinding.ActivityMainBinding
-import woowacourse.paint.model.BrushShape
+import woowacourse.paint.model.BrushCircle
+import woowacourse.paint.model.BrushEraser
+import woowacourse.paint.model.BrushPen
+import woowacourse.paint.model.BrushRect
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -38,10 +41,10 @@ class MainActivity : AppCompatActivity() {
 
         rgShapes.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
-                R.id.rbPen -> paintingPaper.brushShape = BrushShape.LINE
-                R.id.rbRect -> paintingPaper.brushShape = BrushShape.RECT
-                R.id.rbCircle -> paintingPaper.brushShape = BrushShape.CIRCLE
-                R.id.rbEraser -> paintingPaper.brushShape = BrushShape.ERASER
+                R.id.rbPen -> paintingPaper.brushGenerator = ::BrushPen
+                R.id.rbRect -> paintingPaper.brushGenerator = ::BrushRect
+                R.id.rbCircle -> paintingPaper.brushGenerator = ::BrushCircle
+                R.id.rbEraser -> paintingPaper.brushGenerator = ::BrushEraser
             }
         }
     }
