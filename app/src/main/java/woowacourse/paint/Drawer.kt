@@ -39,7 +39,7 @@ class Drawer(initPaintings: List<Painting>) {
     }
 
     fun setPaintingType(paintingType: PaintingType) {
-       paintings[lastIndex] = when (paintingType) {
+        paintings[lastIndex] = when (paintingType) {
             ERASER -> Eraser(
                 paintColor = presentPainting.paint.color,
                 paintWidth = presentPainting.paint.strokeWidth,
@@ -60,13 +60,11 @@ class Drawer(initPaintings: List<Painting>) {
                 paintWidth = presentPainting.paint.strokeWidth,
             )
         }
+    }
 
     fun removePreviousPainting() {
-        if (paintings.size == EMPTY_PREVIOUS_PAINTING_SIZE) {
-            return
-        } else {
-            paintings.removeAt(paintings.size - LATEST_PAINTING_Position)
-        }
+        if (paintings.size == EMPTY_PREVIOUS_PAINTING_SIZE) return
+        paintings.removeAt(paintings.size - LATEST_PAINTING_Position)
     }
 
     companion object {
