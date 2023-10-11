@@ -121,48 +121,7 @@
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
-
-            <Button
-                android:id="@+id/btn_pen"
-                isSelected="@{viewModel.selectedTool == Tool.PEN}"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:backgroundTint="@color/brush_selected"
-                android:onClick="@{() -> viewModel.pickBrush(Tool.PEN)}"
-                android:text="@string/pen" />
-
-            <Button
-                android:id="@+id/btn_rectangle"
-                isSelected="@{viewModel.selectedTool == Tool.RECTANGLE}"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:backgroundTint="@color/brush_selected"
-                android:onClick="@{() -> viewModel.pickBrush(Tool.RECTANGLE)}"
-                android:text="@string/rectangle" />
-
-            <Button
-                android:id="@+id/btn_circle"
-                isSelected="@{viewModel.selectedTool == Tool.CIRCLE}"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:backgroundTint="@color/brush_selected"
-                android:onClick="@{() -> viewModel.pickBrush(Tool.CIRCLE)}"
-                android:text="@string/circle" />
-
-            <Button
-                android:id="@+id/btn_eraser"
-                isSelected="@{viewModel.selectedTool == Tool.ERASER}"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:backgroundTint="@color/brush_selected"
-                android:onClick="@{() -> viewModel.pickBrush(Tool.ERASER)}"
-                android:text="@string/eraser" />
-        </LinearLayout>
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

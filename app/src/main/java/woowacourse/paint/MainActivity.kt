@@ -4,7 +4,10 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.slider.RangeSlider
+import woowacourse.paint.canvas.Tool
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.databinding.ItemToolBinding
+import woowacourse.paint.utils.toUiModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -13,6 +16,7 @@ class MainActivity : AppCompatActivity() {
     private val adapter = ColorsAdapter { model ->
         viewModel.pickColor(model)
     }
+    private val toolButtons = mutableListOf<ItemToolBinding>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +24,7 @@ class MainActivity : AppCompatActivity() {
         setupViewModel()
         setupToolbar()
         setupCanvas()
+        setupTools()
         setupColors()
         setupWidthSlider()
     }
@@ -41,8 +46,15 @@ class MainActivity : AppCompatActivity() {
                 adapter.submitList(colors)
             }
         }
-        viewModel.selectedTool.observe(this) { brush ->
-            canvasView.setupBrush(brush)
+        viewModel.selectedTool.observe(this) { tool ->
+            canvasView.setupBrush(tool)
+            changeSelectedTool(tool)
+        }
+    }
+
+    private fun changeSelectedTool(tool: Tool) {
+        toolButtons.forEach { button ->
+            button.root.isSelected = button.tool == tool
         }
     }
 
@@ -56,6 +68,18 @@ class MainActivity : AppCompatActivity() {
         }
         binding.ivClear.setOnClickListener {
             canvasView.eraseAll()
+        }
+    }
+
+    private fun setupTools() {
+        viewModel.tools.forEach { toolAssigned ->
+            val toolButtonBinding = ItemToolBinding.inflate(layoutInflater, binding.llBrushes, true)
+            with(toolButtonBinding) {
+                onClick = viewModel::pickTool
+                tool = toolAssigned
+                name = getString(toolAssigned.toUiModel().name)
+            }
+            toolButtons.add(toolButtonBinding)
         }
     }
 
