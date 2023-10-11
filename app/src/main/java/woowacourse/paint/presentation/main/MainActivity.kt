@@ -33,8 +33,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.menu_undo -> {}
-            R.id.menu_redo -> {}
+            R.id.menu_undo -> { viewBinding.customCanvas.undo() }
+            R.id.menu_redo -> { viewBinding.customCanvas.redo() }
             R.id.menu_remove -> {}
         }
         return super.onOptionsItemSelected(item)

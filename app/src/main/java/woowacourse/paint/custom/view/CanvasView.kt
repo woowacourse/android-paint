@@ -101,4 +101,14 @@ class CanvasView(
     fun changeType(new: BrushTypeUiModel) {
         brushUiModel = brushUiModel.changeType(new)
     }
+
+    fun redo() {
+        painted.redo()
+        invalidate()
+    }
+
+    fun undo() {
+        painted.undo()
+        invalidate()
+    }
 }
