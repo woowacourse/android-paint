@@ -157,7 +157,7 @@
                 app:layout_constraintTop_toTopOf="@+id/view_select_red" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.google.android.material.slider.RangeSlider
+        <com.google.android.material.slider.Slider
             android:id="@+id/rs_thickness_setting_bar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -167,7 +167,7 @@
             app:layout_constraintBottom_toTopOf="@+id/tv_thickness_change_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:onValueChange="@{(slider, value, fromUser) -> pbvPaintBoardView.setStrokeWidth(value)}"
+            app:onValueChange="@{(value) -> pbvPaintBoardView.setStrokeWidth(value)}"
             app:visible="@{vm.uiState.settingMode == SettingMode.THICKNESS}" />
 
         <TextView
