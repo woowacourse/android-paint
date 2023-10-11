@@ -1,5 +1,6 @@
 package woowacourse.paint.customview
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
@@ -31,12 +32,12 @@ class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context,
         }
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         val cursorX = event.x
         val cursorY = event.y
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                performClick()
                 brush.onActionDown(cursorX, cursorY) { invalidate() }
             }
 
@@ -52,10 +53,6 @@ class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context,
         }
 
         return true
-    }
-
-    override fun performClick(): Boolean {
-        return super.performClick()
     }
 
     fun updateColor(color: PaletteColor) {
