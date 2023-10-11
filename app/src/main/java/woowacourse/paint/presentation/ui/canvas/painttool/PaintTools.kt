@@ -1,7 +1,6 @@
-package woowacourse.paint.presentation.ui.canvas
+package woowacourse.paint.presentation.ui.canvas.painttool
 
 import android.graphics.Canvas
-import woowacourse.paint.presentation.ui.canvas.painttool.PaintTool
 
 class PaintTools(value: List<PaintTool> = listOf()) {
     private val _value = value.toMutableList()

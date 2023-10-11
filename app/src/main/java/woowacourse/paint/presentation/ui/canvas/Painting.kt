@@ -3,6 +3,7 @@ package woowacourse.paint.presentation.ui.canvas
 import android.graphics.Canvas
 import woowacourse.paint.domain.model.BrushType
 import woowacourse.paint.presentation.ui.canvas.painttool.PaintTool
+import woowacourse.paint.presentation.ui.canvas.painttool.PaintTools
 import woowacourse.paint.presentation.ui.canvas.painttool.filling.Circle
 import woowacourse.paint.presentation.ui.canvas.painttool.filling.Rectangle
 import woowacourse.paint.presentation.ui.canvas.painttool.stroking.Eraser
