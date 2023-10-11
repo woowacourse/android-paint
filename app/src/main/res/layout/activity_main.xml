@@ -72,8 +72,8 @@
             android:id="@+id/rs_width_changer"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:visibility="@{viewModel.paintChangingState == PaintChangingState.WIDTH_CHANGING ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toTopOf="@id/rv_colors"
+            android:visibility="@{viewModel.paintChangingState == PaintChangingState.WIDTH_CHANGING &amp;&amp; viewModel.selectedTool.hasWidth ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/btn_change_width"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -82,12 +82,36 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:visibility="@{viewModel.paintChangingState == PaintChangingState.COLOR_CHANGING ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.paintChangingState == PaintChangingState.COLOR_CHANGING &amp;&amp; viewModel.selectedTool.hasColor ? View.VISIBLE : View.GONE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@id/ll_brushes"
+            app:layout_constraintBottom_toTopOf="@id/btn_change_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:listitem="@layout/item_color_palette" />
+
+        <Button
+            android:id="@+id/btn_change_color"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:onClick="@{() -> viewModel.setSettingState(PaintChangingState.COLOR_CHANGING)}"
+            android:text="@string/main_change_color"
+            android:visibility="@{viewModel.selectedTool.hasColor ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/ll_brushes"
+            app:layout_constraintEnd_toStartOf="@id/btn_change_width"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btn_change_width"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:onClick="@{() -> viewModel.setSettingState(PaintChangingState.WIDTH_CHANGING)}"
+            android:text="@string/main_change_thickness"
+            android:visibility="@{viewModel.selectedTool.hasWidth ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/ll_brushes"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_change_color" />
 
         <LinearLayout
             android:id="@+id/ll_brushes"
@@ -95,8 +119,7 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="horizontal"
-            android:visibility="@{viewModel.paintChangingState == PaintChangingState.TOOL_CHANGING ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toTopOf="@id/btn_change_brush"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
@@ -140,42 +163,6 @@
                 android:onClick="@{() -> viewModel.pickBrush(Tool.ERASER)}"
                 android:text="@string/eraser" />
         </LinearLayout>
-
-
-        <Button
-            android:id="@+id/btn_change_brush"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:onClick="@{() -> viewModel.setSettingState(PaintChangingState.TOOL_CHANGING)}"
-            android:text="@string/main_change_brush"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btn_change_color"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Button
-            android:id="@+id/btn_change_color"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:onClick="@{() -> viewModel.setSettingState(PaintChangingState.COLOR_CHANGING)}"
-            android:text="@string/main_change_color"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btn_change_thickness"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toEndOf="@id/btn_change_brush" />
-
-        <Button
-            android:id="@+id/btn_change_thickness"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:onClick="@{() -> viewModel.setSettingState(PaintChangingState.WIDTH_CHANGING)}"
-            android:text="@string/main_change_thickness"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/btn_change_color" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
