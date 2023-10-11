@@ -80,22 +80,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initUndo() {
-        binding.ivClear.setOnClickListener {
-            binding.cvCanvas.clear()
-        }
-
         binding.ivUndo.setOnClickListener {
             binding.cvCanvas.undo()
         }
+    }
 
+    private fun initRedo() {
         binding.ivRedo.setOnClickListener {
             binding.cvCanvas.redo()
         }
     }
 
-    private fun initRedo() {
-    }
-
     private fun initClear() {
+        binding.ivClear.setOnClickListener {
+            binding.cvCanvas.clear()
+        }
     }
 }
