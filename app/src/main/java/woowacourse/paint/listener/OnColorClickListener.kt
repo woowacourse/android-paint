@@ -2,6 +2,6 @@ package woowacourse.paint.listener
 
 import woowacourse.paint.model.ColorBox
 
-interface OnColorClickListener {
+fun interface OnColorClickListener {
     fun onColorClick(colorBox: ColorBox)
 }

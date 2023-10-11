@@ -12,18 +12,10 @@ import woowacourse.paint.adapter.ColorAdapter
 import woowacourse.paint.customview.CanvasCallback
 import woowacourse.paint.customview.PaintingCanvas.Companion.DEFAULT_STROKE_WIDTH
 import woowacourse.paint.databinding.ActivityMainBinding
-import woowacourse.paint.listener.OnBrushClickListener
-import woowacourse.paint.listener.OnColorClickListener
 import woowacourse.paint.model.BrushTool
-import woowacourse.paint.model.ColorBox
-import woowacourse.paint.model.PaintBrush
 import woowacourse.paint.model.Painting
 
-class MainActivity :
-    AppCompatActivity(),
-    OnColorClickListener,
-    OnBrushClickListener,
-    CanvasCallback {
+class MainActivity : AppCompatActivity(), CanvasCallback {
 
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
@@ -34,11 +26,11 @@ class MainActivity :
     }
 
     private val colorAdapter by lazy {
-        ColorAdapter(this)
+        ColorAdapter { viewModel.setColorsSelected(it) }
     }
 
     private val brushAdapter by lazy {
-        BrushAdapter(this)
+        BrushAdapter { viewModel.setBrushesSelected(it) }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -128,14 +120,6 @@ class MainActivity :
         viewModel.paintingHistory.observe(this) {
             binding.cvPainter.history = it
         }
-    }
-
-    override fun onColorClick(colorBox: ColorBox) {
-        viewModel.setColorsSelected(colorBox)
-    }
-
-    override fun onBrushClick(paintBrush: PaintBrush) {
-        viewModel.setBrushesSelected(paintBrush)
     }
 
     override fun onActionUp(painting: Painting) {
