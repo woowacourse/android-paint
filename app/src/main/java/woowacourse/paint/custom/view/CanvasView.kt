@@ -10,6 +10,7 @@ import android.view.MotionEvent
 import android.view.View
 import com.now.domain.BrushWidth
 import woowacourse.paint.custom.view.model.Circle
+import woowacourse.paint.custom.view.model.Drawable
 import woowacourse.paint.custom.view.model.Line
 import woowacourse.paint.custom.view.model.Painted
 import woowacourse.paint.custom.view.model.Rectangle
@@ -25,9 +26,7 @@ class CanvasView(
     private var brushUiModel = BrushUiModel.fromDefault()
 
     private val painted = Painted()
-    private lateinit var line: Line
-    private lateinit var rectangle: Rectangle
-    private lateinit var circle: Circle
+    private lateinit var drawable: Drawable
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -56,40 +55,37 @@ class CanvasView(
     private fun startDrawing(x: Float, y: Float) {
         when (brushUiModel.brushType) {
             BrushTypeUiModel.PEN -> {
-                line = Line(BrushTypeUiModel.PEN, Path(), brushUiModel.fromPaint())
-                painted.add(line)
-                line.moveTo(x, y)
+                drawable = Line(BrushTypeUiModel.PEN, Path(), brushUiModel.fromPaint())
+                (drawable as Line).moveTo(x, y)
             }
             BrushTypeUiModel.RECTANGLE -> {
-                rectangle = Rectangle(RectF(x, y, x, y), brushUiModel.fromPaint())
-                painted.add(rectangle)
+                drawable = Rectangle(RectF(x, y, x, y), brushUiModel.fromPaint())
             }
             BrushTypeUiModel.CIRCLE -> {
-                circle = Circle(x, y, 0f, brushUiModel.fromPaint())
-                painted.add(circle)
+                drawable = Circle(x, y, 0f, brushUiModel.fromPaint())
             }
             BrushTypeUiModel.ERASER -> {
-                line = Line(BrushTypeUiModel.ERASER, Path(), brushUiModel.fromPaint())
+                drawable = Line(BrushTypeUiModel.ERASER, Path(), brushUiModel.fromPaint())
                 setLayerType(LAYER_TYPE_HARDWARE, null)
-                painted.add(line)
-                line.moveTo(x, y)
+                (drawable as Line).moveTo(x, y)
             }
         }
+        painted.add(drawable)
     }
 
     private fun keepDrawing(x: Float, y: Float) {
         when (brushUiModel.brushType) {
             BrushTypeUiModel.PEN -> {
-                line.quadTo(x, y)
+                (drawable as Line).quadTo(x, y)
             }
             BrushTypeUiModel.RECTANGLE -> {
-                rectangle = rectangle.setEndPoint(x, y)
+                drawable = (drawable as Rectangle).setEndPoint(x, y)
             }
             BrushTypeUiModel.CIRCLE -> {
-                circle.changeRadius(x, y)
+                (drawable as Circle).changeRadius(x, y)
             }
             BrushTypeUiModel.ERASER -> {
-                line.quadTo(x, y)
+                (drawable as Line).quadTo(x, y)
             }
         }
     }
