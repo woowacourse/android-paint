@@ -2,11 +2,11 @@ package woowacourse.paint.presentation.ui.canvas
 
 import android.graphics.Canvas
 import woowacourse.paint.domain.model.BrushType
-import woowacourse.paint.presentation.ui.canvas.painttool.Circle
-import woowacourse.paint.presentation.ui.canvas.painttool.Eraser
-import woowacourse.paint.presentation.ui.canvas.painttool.Line
 import woowacourse.paint.presentation.ui.canvas.painttool.PaintTool
-import woowacourse.paint.presentation.ui.canvas.painttool.Rectangle
+import woowacourse.paint.presentation.ui.canvas.painttool.filling.Circle
+import woowacourse.paint.presentation.ui.canvas.painttool.filling.Rectangle
+import woowacourse.paint.presentation.ui.canvas.painttool.stroking.Eraser
+import woowacourse.paint.presentation.ui.canvas.painttool.stroking.Line
 
 class Painting {
     private val drawnTools: PaintTools = PaintTools()

@@ -1,10 +1,11 @@
-package woowacourse.paint.presentation.ui.canvas.painttool
+package woowacourse.paint.presentation.ui.canvas.painttool.stroking
 
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 import woowacourse.paint.presentation.ui.canvas.Palette
+import woowacourse.paint.presentation.ui.canvas.painttool.PaintTool
 
-class Eraser(palette: Palette) : StrokePaintTool(palette) {
+class Eraser(palette: Palette) : StrokingPaintTool(palette) {
 
     init {
         palette.paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)

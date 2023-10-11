@@ -1,7 +1,8 @@
-package woowacourse.paint.presentation.ui.canvas.painttool
+package woowacourse.paint.presentation.ui.canvas.painttool.filling
 
 import android.graphics.Path
 import woowacourse.paint.presentation.ui.canvas.Palette
+import woowacourse.paint.presentation.ui.canvas.painttool.PaintTool
 
 class Rectangle(palette: Palette) : FillingPaintTool(palette) {
 

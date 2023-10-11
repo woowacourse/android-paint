@@ -3,7 +3,7 @@ package woowacourse.paint.presentation.ui.canvas.painttool
 import android.graphics.Canvas
 import woowacourse.paint.presentation.ui.canvas.Palette
 
-sealed interface PaintTool {
+interface PaintTool {
 
     val palette: Palette
 

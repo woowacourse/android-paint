@@ -1,9 +1,10 @@
-package woowacourse.paint.presentation.ui.canvas.painttool
+package woowacourse.paint.presentation.ui.canvas.painttool.filling
 
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 import woowacourse.paint.presentation.ui.canvas.Palette
+import woowacourse.paint.presentation.ui.canvas.painttool.PaintTool
 
 abstract class FillingPaintTool(
     final override val palette: Palette = Palette(),
