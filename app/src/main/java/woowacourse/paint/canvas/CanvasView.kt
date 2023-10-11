@@ -52,6 +52,7 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
                 drawings.add(tool.draw(paint, ::invalidate))
                 drawings.last().onTouchEvent(event)
             }
+
             else -> drawings.last().onTouchEvent(event)
         }
         return true
@@ -81,16 +82,14 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
     }
 
     fun undo() {
-        val drawing = drawings.removeLastOrNull()
-        if (drawing != null) {
+        drawings.removeLastOrNull()?.let { drawing ->
             drawingsCanceled.add(drawing)
             invalidate()
         }
     }
 
     fun redo() {
-        val drawing = drawingsCanceled.removeLastOrNull()
-        if (drawing != null) {
+        drawingsCanceled.removeLastOrNull()?.let { drawing ->
             drawings.add(drawing)
             invalidate()
         }
