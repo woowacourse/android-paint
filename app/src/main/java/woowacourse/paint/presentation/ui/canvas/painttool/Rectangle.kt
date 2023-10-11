@@ -1,28 +1,14 @@
 package woowacourse.paint.presentation.ui.canvas.painttool
 
-import android.graphics.Paint
 import android.graphics.Path
 import woowacourse.paint.presentation.ui.canvas.Palette
 
-class Rectangle(palette: Palette) : PaintTool(palette, null) {
-
-    private var preX = INITIAL_X
-    private var preY = INITIAL_Y
-
-    init {
-        palette.paint.style = Paint.Style.FILL
-    }
+class Rectangle(palette: Palette) : FillingPaintTool(palette) {
 
     override fun nextPath(): PaintTool = Rectangle(palette)
 
     override fun changePalette(palette: Palette?): PaintTool {
         return Rectangle(palette ?: this.palette.copy())
-    }
-
-    override fun onDownEvent(pointX: Float, pointY: Float) {
-        preX = pointX
-        preY = pointY
-        path.moveTo(pointX, pointY)
     }
 
     override fun onMoveEvent(pointX: Float, pointY: Float) {
@@ -32,10 +18,5 @@ class Rectangle(palette: Palette) : PaintTool(palette, null) {
         val bottom = maxOf(preY, pointY)
         val right = maxOf(preX, pointX)
         path.addRect(left, top, right, bottom, Path.Direction.CW)
-    }
-
-    companion object {
-        private const val INITIAL_X = 0f
-        private const val INITIAL_Y = 0f
     }
 }
