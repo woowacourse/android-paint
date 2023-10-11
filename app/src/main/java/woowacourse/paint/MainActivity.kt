@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity() {
         toolButtons.forEach { button ->
             button.root.isSelected = button.tool == tool
         }
+        viewModel.setSettingState(PaintChangingState.NOTHING)
     }
 
     private fun setupToolbar() {
