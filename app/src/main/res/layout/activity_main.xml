@@ -20,18 +20,19 @@
             android:layout_height="0dp"
             app:brushColor="@{viewModel.brushColor}"
             app:brushSize="@{viewModel.brushSize}"
-            app:layout_constraintBottom_toTopOf="@id/range_slider_brush_size"
+            app:drawMode="@{viewModel.drawMode}"
+            app:layout_constraintBottom_toTopOf="@id/slider_brush_size"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.slider.Slider
-            android:id="@+id/range_slider_brush_size"
+            android:id="@+id/slider_brush_size"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:value="@{viewModel.brushSize.width}"
             android:valueFrom="0"
             android:valueTo="100"
-            android:value="@{viewModel.brushSize.width}"
             app:layout_constraintBottom_toTopOf="@id/rv_colors"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -45,11 +46,77 @@
             android:layout_marginHorizontal="8dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/rg_draw_mode"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/slider_brush_size"
+            tools:itemCount="4"
+            tools:listitem="@layout/item_color" />
+
+        <RadioGroup
+            android:id="@+id/rg_draw_mode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/range_slider_brush_size"
-            tools:listitem="@layout/item_color" />
+            android:layout_marginBottom="10dp"
+            android:gravity="center">
+
+            <RadioButton
+                android:id="@+id/rb_brush"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:background="@drawable/selector_draw_mode"
+                android:button="@null"
+                android:checked="true"
+                android:foreground="@drawable/ic_brush"
+                android:foregroundGravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/rb_square"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <RadioButton
+                android:id="@+id/rb_square"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:background="@drawable/selector_draw_mode"
+                android:button="@null"
+                android:foreground="@drawable/ic_square"
+                android:foregroundGravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/rb_circle"
+                app:layout_constraintStart_toEndOf="@id/rb_brush" />
+
+            <RadioButton
+                android:id="@+id/rb_circle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:background="@drawable/selector_draw_mode"
+                android:button="@null"
+                android:foreground="@drawable/ic_circle"
+                android:foregroundGravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/rb_eraser"
+                app:layout_constraintStart_toEndOf="@id/rb_square" />
+
+            <RadioButton
+                android:id="@+id/rb_eraser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:background="@drawable/selector_draw_mode"
+                android:button="@null"
+                android:foreground="@drawable/ic_eraser"
+                android:foregroundGravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/rb_circle" />
+        </RadioGroup>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

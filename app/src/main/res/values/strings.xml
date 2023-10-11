@@ -3,4 +3,8 @@
     <!-- Main -->
     <string name="main_change_color">색상 변경</string>
     <string name="main_change_brush_size">굵기 변경</string>
+    <!-- Toolbar -->
+    <string name="tb_undo">뒤로가기</string>
+    <string name="tb_redo">되돌리기</string>
+    <string name="tb_delete">전체삭제</string>
 </resources>

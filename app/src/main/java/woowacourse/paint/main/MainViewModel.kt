@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import woowacourse.paint.model.BrushSize
+import woowacourse.paint.model.DrawMode
 import woowacourse.paint.model.PaintColor
 
 class MainViewModel : ViewModel() {
@@ -15,9 +16,14 @@ class MainViewModel : ViewModel() {
     val brushColor: LiveData<PaintColor>
         get() = _brushColor
 
+    private val _drawMode = MutableLiveData<DrawMode>()
+    val drawMode: LiveData<DrawMode>
+        get() = _drawMode
+
     init {
         _brushSize.value = BrushSize(BrushSize.DEFAULT_SIZE)
         _brushColor.value = PaintColor.DEFAULT_COLOR
+        _drawMode.value = DrawMode.DEFAULT_MODE
     }
 
     fun setBrushSize(size: Float) {
@@ -26,5 +32,9 @@ class MainViewModel : ViewModel() {
 
     fun setBrushColor(color: PaintColor) {
         _brushColor.value = color
+    }
+
+    fun setDrawMode(mode: DrawMode) {
+        _drawMode.value = mode
     }
 }

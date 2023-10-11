@@ -4,32 +4,36 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
-import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.ContextCompat
 import woowacourse.paint.model.BrushSize
-import woowacourse.paint.model.DrawablePath
-import woowacourse.paint.model.DrawablePathHistory
+import woowacourse.paint.model.DrawMode
+import woowacourse.paint.model.DrawableHistory
 import woowacourse.paint.model.PaintColor
+import woowacourse.paint.model.drawable.DrawableElement
+import woowacourse.paint.model.drawable.path.DrawableEraser
+import woowacourse.paint.model.drawable.path.DrawableLine
+import woowacourse.paint.model.drawable.path.DrawablePath
+import woowacourse.paint.model.drawable.shape.DrawableCircle
+import woowacourse.paint.model.drawable.shape.DrawableSquare
 
-class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    private val pathHistory = DrawablePathHistory()
-    private var currentPath = Path()
-    private val currentPaint = Paint()
+class PaintBoard constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+) : View(context, attrs) {
+    private val pathHistory = DrawableHistory()
+    private var currentDraw: DrawableElement = DrawableLine(paint = Paint())
 
     init {
-        setDefaultPaint()
+        setLayerType(LAYER_TYPE_HARDWARE, null)
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        pathHistory.paths.forEach {
-            canvas.drawPath(it.path, it.paint)
-        }
-        canvas.drawPath(currentPath, currentPaint)
+        pathHistory.drawAll(canvas)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -37,41 +41,56 @@ class PaintBoard constructor(context: Context, attrs: AttributeSet) : View(conte
         when (event.action) {
             MotionEvent.ACTION_DOWN -> startDrawing(event)
             MotionEvent.ACTION_MOVE -> moveDrawing(event)
-            MotionEvent.ACTION_UP -> endDrawing()
             else -> return super.onTouchEvent(event)
         }
         invalidate()
         return true
     }
 
-    private fun setDefaultPaint() {
-        currentPaint.apply {
-            strokeCap = Paint.Cap.ROUND
-            strokeJoin = Paint.Join.ROUND
-            isAntiAlias = true
-            style = Paint.Style.STROKE
-        }
-    }
-
     private fun startDrawing(event: MotionEvent) {
-        currentPath = Path()
-        currentPath.moveTo(event.x, event.y)
-        currentPath.lineTo(event.x, event.y)
+        currentDraw = currentDraw.startDrawing(event.x, event.y)
+        pathHistory.add(currentDraw)
     }
 
     private fun moveDrawing(event: MotionEvent) {
-        currentPath.lineTo(event.x, event.y)
+        currentDraw.keepDrawing(event.x, event.y)
     }
 
-    private fun endDrawing() {
-        pathHistory.add(DrawablePath(currentPath, Paint(currentPaint)))
+    fun setDrawMode(mode: DrawMode) {
+        val newPaint = Paint().apply {
+            color = currentDraw.paint.color
+            strokeWidth = currentDraw.paint.strokeWidth
+        }
+        currentDraw = when (mode) {
+            DrawMode.BRUSH -> DrawableLine(paint = newPaint)
+            DrawMode.SQUARE -> DrawableSquare(paint = newPaint)
+            DrawMode.CIRCLE -> DrawableCircle(paint = newPaint)
+            DrawMode.ERASER -> DrawableEraser(paint = newPaint)
+        }
     }
 
     fun setBrushSize(size: BrushSize) {
-        currentPaint.strokeWidth = size.width
+        if (currentDraw is DrawablePath) {
+            currentDraw = (currentDraw as DrawablePath).changeBrushSize(size)
+        }
     }
 
     fun setBrushColor(color: PaintColor) {
-        currentPaint.color = ContextCompat.getColor(context, color.colorRes)
+        currentDraw = currentDraw.changePaintColor(ContextCompat.getColor(context, color.colorRes))
+    }
+
+    fun undo() {
+        pathHistory.undo()
+        invalidate()
+    }
+
+    fun redo() {
+        pathHistory.redo()
+        invalidate()
+    }
+
+    fun deleteAll() {
+        pathHistory.clear()
+        invalidate()
     }
 }
