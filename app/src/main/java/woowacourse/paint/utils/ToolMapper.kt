@@ -1,14 +1,14 @@
 package woowacourse.paint.utils
 
 import woowacourse.paint.R
-import woowacourse.paint.canvas.Tool
+import woowacourse.paint.canvas.DrawingTool
 import woowacourse.paint.model.ToolUiModel
 
-fun Tool.toUiModel(): ToolUiModel {
+fun DrawingTool.toUiModel(): ToolUiModel {
     return when (this) {
-        Tool.PEN -> ToolUiModel(R.string.pen)
-        Tool.RECTANGLE -> ToolUiModel(R.string.rectangle)
-        Tool.CIRCLE -> ToolUiModel(R.string.circle)
-        Tool.ERASER -> ToolUiModel(R.string.eraser)
+        DrawingTool.PEN -> ToolUiModel(R.string.pen)
+        DrawingTool.RECTANGLE -> ToolUiModel(R.string.rectangle)
+        DrawingTool.CIRCLE -> ToolUiModel(R.string.circle)
+        DrawingTool.ERASER -> ToolUiModel(R.string.eraser)
     }
 }

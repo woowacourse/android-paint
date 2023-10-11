@@ -6,7 +6,7 @@ import woowacourse.paint.canvas.drawing.Drawing
 import woowacourse.paint.canvas.drawing.Line
 import woowacourse.paint.canvas.drawing.Rectangle
 
-enum class Tool(val hasWidth: Boolean, val hasColor: Boolean) {
+enum class DrawingTool(val hasWidth: Boolean, val hasColor: Boolean) {
     PEN(true, true) {
         override fun draw(paint: Paint, invalidate: () -> Unit): Drawing =
             Line.of(paint, invalidate)

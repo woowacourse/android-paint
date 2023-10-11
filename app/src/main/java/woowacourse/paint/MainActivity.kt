@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.slider.RangeSlider
-import woowacourse.paint.canvas.Tool
+import woowacourse.paint.canvas.DrawingTool
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.databinding.ItemToolBinding
 import woowacourse.paint.utils.toUiModel
@@ -46,15 +46,15 @@ class MainActivity : AppCompatActivity() {
                 adapter.submitList(colors)
             }
         }
-        viewModel.selectedTool.observe(this) { tool ->
+        viewModel.selectedDrawingTool.observe(this) { tool ->
             canvasView.setupTools(tool)
             changeButtonSelectedStatus(tool)
         }
     }
 
-    private fun changeButtonSelectedStatus(tool: Tool) {
+    private fun changeButtonSelectedStatus(drawingTool: DrawingTool) {
         toolButtons.forEach { button ->
-            button.root.isSelected = button.tool == tool
+            button.root.isSelected = button.drawingTool == drawingTool
         }
         viewModel.setSettingState(PaintChangingState.NOTHING)
     }
@@ -73,11 +73,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupTools() {
-        viewModel.tools.forEach { toolAssigned ->
+        viewModel.drawingTools.forEach { toolAssigned ->
             val toolButtonBinding = ItemToolBinding.inflate(layoutInflater, binding.llTools, true)
             with(toolButtonBinding) {
                 onClick = viewModel::pickTool
-                tool = toolAssigned
+                drawingTool = toolAssigned
                 name = getString(toolAssigned.toUiModel().name)
             }
             toolButtons.add(toolButtonBinding)

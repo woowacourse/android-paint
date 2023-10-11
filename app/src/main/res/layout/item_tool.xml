@@ -3,8 +3,8 @@
 
     <data>
         <variable
-            name="tool"
-            type="woowacourse.paint.canvas.Tool" />
+            name="drawingTool"
+            type="woowacourse.paint.canvas.DrawingTool" />
 
         <variable
             name="name"
@@ -21,6 +21,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:backgroundTint="@color/brush_selected"
-        android:onClick="@{() -> onClick.invoke(tool)}"
+        android:onClick="@{() -> onClick.invoke(drawingTool)}"
         android:text="@{name}" />
 </layout>

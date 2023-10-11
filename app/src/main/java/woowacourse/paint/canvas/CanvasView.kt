@@ -14,12 +14,12 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
     context,
     attr,
 ) {
-    private var tool = Tool.PEN
+    private var drawingTool = DrawingTool.PEN
     private val paint = Paint().apply {
         isAntiAlias = true
         style = Paint.Style.FILL_AND_STROKE
         strokeCap = Paint.Cap.ROUND
-        xfermode = if (tool == Tool.ERASER) {
+        xfermode = if (drawingTool == DrawingTool.ERASER) {
             PorterDuffXfermode(PorterDuff.Mode.CLEAR)
         } else {
             null
@@ -49,7 +49,7 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 drawingsCanceled.clear()
-                drawings.add(tool.draw(paint, ::invalidate))
+                drawings.add(drawingTool.draw(paint, ::invalidate))
                 drawings.last().onTouchEvent(event)
             }
 
@@ -64,9 +64,9 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
         return true
     }
 
-    fun setupTools(selectedTool: Tool) {
-        tool = selectedTool
-        if (tool == Tool.ERASER) {
+    fun setupTools(selectedDrawingTool: DrawingTool) {
+        drawingTool = selectedDrawingTool
+        if (drawingTool == DrawingTool.ERASER) {
             paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
             return
         }
