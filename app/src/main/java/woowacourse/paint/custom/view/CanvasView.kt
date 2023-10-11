@@ -11,14 +11,13 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import com.now.domain.BrushWidth
+import woowacourse.paint.custom.view.model.Circle
 import woowacourse.paint.custom.view.model.Line
 import woowacourse.paint.custom.view.model.Painted
 import woowacourse.paint.custom.view.model.Rectangle
 import woowacourse.paint.presentation.uimodel.BrushColorUiModel
 import woowacourse.paint.presentation.uimodel.BrushTypeUiModel
 import woowacourse.paint.presentation.uimodel.BrushUiModel
-import kotlin.math.abs
-import kotlin.math.sqrt
 
 class CanvasView(
     context: Context,
@@ -29,17 +28,12 @@ class CanvasView(
 
     private val painted = Painted()
     private var line = Line(Path(), brushUiModel.fromPaint())
-
     private var rectangle = Rectangle(RectF(), brushUiModel.fromPaint())
-
-    var centerX = 0f
-    var centerY = 0f
-    var radius = 0f
+    private var circle = Circle(0f, 0f, 0f, brushUiModel.fromPaint())
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         painted.draw(canvas)
-        canvas.drawCircle(centerX, centerY, radius, brushUiModel.fromPaint())
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -73,9 +67,8 @@ class CanvasView(
                 painted.add(rectangle)
             }
             BrushTypeUiModel.CIRCLE -> {
-                centerX = x
-                centerY = y
-                radius = 0f
+                circle = Circle(x, y, 0f, brushUiModel.fromPaint())
+                painted.add(circle)
             }
             BrushTypeUiModel.ERASER -> {
                 line = Line(Path(), brushUiModel.fromPaint())
@@ -96,7 +89,7 @@ class CanvasView(
                 rectangle = rectangle.setEndPoint(x, y)
             }
             BrushTypeUiModel.CIRCLE -> {
-                radius = sqrt(abs(centerX - x) * abs(centerX - x) + abs(centerY - y) + abs(centerY - y))
+                circle.changeRadius(x, y)
             }
             BrushTypeUiModel.ERASER -> {
                 line.quadTo(x, y)
