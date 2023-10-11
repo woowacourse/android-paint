@@ -48,11 +48,11 @@ class MainActivity : AppCompatActivity() {
         }
         viewModel.selectedTool.observe(this) { tool ->
             canvasView.setupTools(tool)
-            changeSelectedTool(tool)
+            changeButtonSelectedStatus(tool)
         }
     }
 
-    private fun changeSelectedTool(tool: Tool) {
+    private fun changeButtonSelectedStatus(tool: Tool) {
         toolButtons.forEach { button ->
             button.root.isSelected = button.tool == tool
         }
