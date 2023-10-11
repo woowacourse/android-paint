@@ -1,8 +1,11 @@
 package woowacourse.paint.presentation.main
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import woowacourse.paint.R
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.mapper.toBrushColorUiModel
 import woowacourse.paint.mapper.toBrushTypeUiModel
@@ -21,6 +24,20 @@ class MainActivity : AppCompatActivity() {
         initRecyclerView()
         subscribe()
         setListener()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_activity_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_undo -> {}
+            R.id.menu_redo -> {}
+            R.id.menu_remove -> {}
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun initRecyclerView() {
