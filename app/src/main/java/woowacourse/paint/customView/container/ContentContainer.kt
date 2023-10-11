@@ -7,11 +7,12 @@ import android.graphics.RectF
 import android.view.MotionEvent
 import woowacourse.paint.customView.PaintInfo
 import woowacourse.paint.customView.content.BrushType
-import woowacourse.paint.customView.content.Circle
 import woowacourse.paint.customView.content.Content
-import woowacourse.paint.customView.content.Eraser
-import woowacourse.paint.customView.content.Rectangle
-import woowacourse.paint.customView.content.Stroke
+import woowacourse.paint.customView.content.circle.Circle
+import woowacourse.paint.customView.content.circle.MendelCircle
+import woowacourse.paint.customView.content.eraser.Eraser
+import woowacourse.paint.customView.content.rectangle.Rectangle
+import woowacourse.paint.customView.content.stroke.Stroke
 
 class ContentContainer(
     private val _drawnContents: MutableList<Content> = mutableListOf(),
@@ -22,32 +23,21 @@ class ContentContainer(
     private val redoAbleContents: MutableList<Content> = mutableListOf()
 
     fun updateContent(event: MotionEvent) {
-        when (event.action) {
-            MotionEvent.ACTION_DOWN -> {
-                val drawingContent = createContent()
-                drawingContent.action(event)
-                _drawnContents.add(drawingContent)
-                redoAbleContents.clear() // undo를 한 상태에서 다른 그림이 추가되면, redo를 할 수 있는 것들이 모두 지워진다.
-            }
-
-            MotionEvent.ACTION_MOVE -> {
-                _drawnContents.lastOrNull()?.action(event)
-            }
-
-            MotionEvent.ACTION_UP -> {
-                _drawnContents.lastOrNull()?.action(event)
-            }
+        if (event.action == MotionEvent.ACTION_DOWN) {
+            _drawnContents.add(createContent(PointF(event.x, event.y)))
+            redoAbleContents.clear() // undo를 한 상태에서 다른 그림이 추가되면, redo를 할 수 있는 것들이 모두 지워진다.
         }
+        _drawnContents.lastOrNull()?.action(event)
     }
 
-    private fun createContent(): Content {
+    private fun createContent(point: PointF): Content {
         val id = System.currentTimeMillis()
         val paint = paintInfo.getPaint(brushType)
         return when (brushType) {
             BrushType.Stroke -> Stroke(id, Path(), paint)
             BrushType.Eraser -> Eraser(id, Path(), paint)
-            BrushType.Rectangle -> Rectangle(id, RectF(), paint)
-            BrushType.Circle -> Circle(id, PointF(), 0f, paint)
+            BrushType.Rectangle -> Rectangle(id, RectF(point.x, point.y, point.x, point.y), paint)
+            BrushType.Circle -> Circle(id, MendelCircle(point), paint)
         }
     }
 
@@ -66,8 +56,7 @@ class ContentContainer(
 
     fun undo(): Boolean {
         if (_drawnContents.isEmpty()) return false
-        val redoContent = _drawnContents.removeLast()
-        redoAbleContents.add(redoContent)
+        redoAbleContents.add(_drawnContents.removeLast())
         return true
     }
 

@@ -1,9 +1,11 @@
-package woowacourse.paint.customView.content
+package woowacourse.paint.customView.content.rectangle
 
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
 import android.view.MotionEvent
+import woowacourse.paint.customView.content.BrushType
+import woowacourse.paint.customView.content.Content
 
 class Rectangle(
     override val id: Long,
@@ -18,19 +20,7 @@ class Rectangle(
 
     override fun action(event: MotionEvent) {
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> {
-                rectF.left = event.x
-                rectF.top = event.y
-                rectF.right = event.x
-                rectF.bottom = event.y
-            }
-
-            MotionEvent.ACTION_MOVE -> {
-                rectF.right = event.x
-                rectF.bottom = event.y
-            }
-
-            MotionEvent.ACTION_UP -> {
+            MotionEvent.ACTION_MOVE, MotionEvent.ACTION_UP -> {
                 rectF.right = event.x
                 rectF.bottom = event.y
             }
