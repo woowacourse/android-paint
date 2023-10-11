@@ -16,8 +16,13 @@ class Rectangle private constructor(paint: Paint, private val invalidate: () -> 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> startPoint = Point(x, y)
             MotionEvent.ACTION_MOVE -> {
+                val left = if (startPoint.x < x) startPoint.x else x
+                val top = if (startPoint.y > y) y else startPoint.y
+                val right = if (startPoint.x < x) x else startPoint.x
+                val bottom = if (startPoint.y > y) startPoint.y else y
+
                 path.reset()
-                path.addRect(startPoint.x, startPoint.y, x, y, Path.Direction.CW)
+                path.addRect(left, top, right, bottom, Path.Direction.CW)
                 invalidate()
             }
 

@@ -53,12 +53,18 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
                 drawings.last().onTouchEvent(event)
             }
 
+            MotionEvent.ACTION_UP -> {
+                drawings.lastOrNull()?.let { drawing ->
+                    if (drawing.path.isEmpty) drawings.remove(drawing)
+                }
+            }
+
             else -> drawings.last().onTouchEvent(event)
         }
         return true
     }
 
-    fun setupBrush(selectedTool: Tool) {
+    fun setupTools(selectedTool: Tool) {
         tool = selectedTool
         if (tool == Tool.ERASER) {
             paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
