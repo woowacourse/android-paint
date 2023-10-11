@@ -5,8 +5,8 @@ import android.graphics.Path
 import android.view.MotionEvent
 import woowacourse.paint.canvas.Point
 
-class Rectangle private constructor(paint: Paint, private val invalidate: () -> Unit) :
-    Drawing(paint) {
+class Rectangle(paint: Paint, private val invalidate: () -> Unit) :
+    Drawing(Paint(paint)) {
     private lateinit var startPoint: Point
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -29,10 +29,5 @@ class Rectangle private constructor(paint: Paint, private val invalidate: () -> 
             else -> return true
         }
         return true
-    }
-
-    companion object {
-        fun of(paint: Paint, invalidate: () -> Unit) =
-            Rectangle(Paint(paint), invalidate)
     }
 }

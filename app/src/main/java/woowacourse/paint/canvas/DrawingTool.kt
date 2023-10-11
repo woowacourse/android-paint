@@ -9,19 +9,19 @@ import woowacourse.paint.canvas.drawing.Rectangle
 enum class DrawingTool(val hasWidth: Boolean, val hasColor: Boolean) {
     PEN(true, true) {
         override fun draw(paint: Paint, invalidate: () -> Unit): Drawing =
-            Line.of(paint, invalidate)
+            Line(paint, invalidate)
     },
     RECTANGLE(false, true) {
         override fun draw(paint: Paint, invalidate: () -> Unit): Drawing =
-            Rectangle.of(paint, invalidate)
+            Rectangle(paint, invalidate)
     },
     CIRCLE(false, true) {
         override fun draw(paint: Paint, invalidate: () -> Unit): Drawing =
-            Circle.of(paint, invalidate)
+            Circle(paint, invalidate)
     },
     ERASER(true, false) {
         override fun draw(paint: Paint, invalidate: () -> Unit): Drawing =
-            Line.of(paint, invalidate)
+            Line(paint, invalidate)
     }, ;
 
     abstract fun draw(paint: Paint, invalidate: () -> Unit): Drawing

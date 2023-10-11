@@ -4,7 +4,7 @@ import android.graphics.Paint
 import android.view.MotionEvent
 import woowacourse.paint.canvas.Point
 
-class Line private constructor(paint: Paint, val invalidate: () -> Unit) : Drawing(paint) {
+class Line(paint: Paint, val invalidate: () -> Unit) : Drawing(Paint(paint)) {
     private lateinit var startPoint: Point
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -29,9 +29,5 @@ class Line private constructor(paint: Paint, val invalidate: () -> Unit) : Drawi
             else -> return true
         }
         return true
-    }
-
-    companion object {
-        fun of(paint: Paint, invalidate: () -> Unit) = Line(Paint(paint), invalidate)
     }
 }

@@ -5,8 +5,8 @@ import android.graphics.Path
 import android.view.MotionEvent
 import woowacourse.paint.canvas.Point
 
-class Circle private constructor(paint: Paint, private val invalidate: () -> Unit) :
-    Drawing(paint) {
+class Circle(paint: Paint, private val invalidate: () -> Unit) :
+    Drawing(Paint(paint)) {
     private lateinit var startPoint: Point
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -24,9 +24,5 @@ class Circle private constructor(paint: Paint, private val invalidate: () -> Uni
             else -> return true
         }
         return true
-    }
-
-    companion object {
-        fun of(paint: Paint, invalidate: () -> Unit) = Circle(Paint(paint), invalidate)
     }
 }
