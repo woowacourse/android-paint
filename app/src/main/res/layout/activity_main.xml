@@ -69,7 +69,7 @@
             app:brushType="@{vm.appliedBrushType}"
             app:currentColor="@{context.getColor(vm.appliedColor.colorRes)}"
             app:currentStrokeWidth="@{vm.appliedStroke}"
-            app:layout_constraintBottom_toTopOf="@id/ll_change_btn_group"
+            app:layout_constraintBottom_toTopOf="@id/btn_color_change"
             app:layout_constraintTop_toBottomOf="@id/tb_main_toolbar"
             app:maxStrokeWidth="@{vm.maxStrokeWidth}"
             app:minStrokeWidth="@{vm.minStrokeWidth}" />
@@ -106,48 +106,49 @@
             android:layout_marginBottom="12dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@id/ll_change_btn_group"
+            app:layout_constraintBottom_toTopOf="@id/btn_color_change"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:listitem="@layout/item_main_brush_type" />
 
-        <LinearLayout
-            android:id="@+id/ll_change_btn_group"
-            android:layout_width="match_parent"
+
+        <Button
+            android:id="@+id/btn_color_change"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent">
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="4dp"
+            android:onClick="@{()->vm.onColorVisibleChange()}"
+            android:text="@string/main_pen_color_change"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_stroke_change"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toStartOf="parent" />
 
-            <Button
-                android:id="@+id/btn_color_change"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="4dp"
-                android:layout_weight="1"
-                android:onClick="@{()->vm.onColorVisibleChange()}"
-                android:text="@string/main_pen_color_change" />
+        <Button
+            android:id="@+id/btn_stroke_change"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:onClick="@{()->vm.onStrokeVisibleChange()}"
+            android:text="@string/main_pen_stroke_change"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/btn_brush_type_change"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/btn_color_change" />
 
-            <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="1"
-                android:onClick="@{()->vm.onStrokeVisibleChange()}"
-                android:text="@string/main_pen_stroke_change" />
-
-            <Button
-                android:id="@+id/btn_brush_type_change"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="1"
-                android:onClick="@{()->vm.onBrushTypeVisibleChange()}"
-                android:text="@string/main_brush_type_change" />
-
-        </LinearLayout>
+        <Button
+            android:id="@+id/btn_brush_type_change"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="8dp"
+            android:onClick="@{()->vm.onBrushTypeVisibleChange()}"
+            android:text="@string/main_brush_type_change"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintStart_toEndOf="@+id/btn_stroke_change" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
