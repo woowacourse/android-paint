@@ -25,8 +25,8 @@ class Circle(
         path.addOval(
             standardX,
             standardY,
-            standardX + x / 2,
-            standardY + y / 2,
+            x,
+            y,
             Path.Direction.CW
         )
     }
