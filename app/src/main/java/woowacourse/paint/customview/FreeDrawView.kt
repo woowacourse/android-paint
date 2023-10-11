@@ -10,6 +10,7 @@ import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.model.brush.Brush
 import woowacourse.paint.model.brush.Circle
+import woowacourse.paint.model.brush.Eraser
 import woowacourse.paint.model.brush.Pen
 import woowacourse.paint.model.brush.Rectangle
 import woowacourse.paint.model.palettecolor.PaletteColor
@@ -38,15 +39,24 @@ class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context,
         val cursorY = event.y
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                brush.onActionDown(cursorX, cursorY) { invalidate() }
+                brush.onActionDown(cursorX, cursorY)
+                if (brush is Eraser) {
+                    invalidate()
+                }
             }
 
             MotionEvent.ACTION_MOVE -> {
-                brush.onActionMove(cursorX, cursorY) { invalidate() }
+                brush.onActionMove(cursorX, cursorY)
+                if (brush !is Eraser) {
+                    invalidate()
+                }
             }
 
             MotionEvent.ACTION_UP -> {
-                brush.onActionUp(cursorX, cursorY) { invalidate() }
+                brush.onActionUp(cursorX, cursorY)
+                if (brush is Rectangle || brush is Circle) {
+                    invalidate()
+                }
             }
 
             else -> super.onTouchEvent(event)

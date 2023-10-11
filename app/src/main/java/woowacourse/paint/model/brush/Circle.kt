@@ -10,18 +10,16 @@ class Circle(override val paintInstance: Paint = Paint()) : Brush() {
         paintInstance.style = Paint.Style.FILL
     }
 
-    override fun onActionDown(xCursor: Float, yCursor: Float, updateView: () -> Unit) {
+    override fun onActionDown(xCursor: Float, yCursor: Float) {
         setCurrentPosition(xCursor, yCursor)
     }
 
-    override fun onActionMove(xCursor: Float, yCursor: Float, updateView: () -> Unit) {
+    override fun onActionMove(xCursor: Float, yCursor: Float) {
         drawPreview(xCursor, yCursor)
-        updateView()
     }
 
-    override fun onActionUp(xCursor: Float, yCursor: Float, updateView: () -> Unit) {
+    override fun onActionUp(xCursor: Float, yCursor: Float) {
         draw(xCursor)
-        updateView()
     }
 
     override fun updateColor(color: Int) {

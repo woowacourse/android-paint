@@ -13,16 +13,15 @@ class Pen(override val paintInstance: Paint = Paint()) : Brush() {
         }
     }
 
-    override fun onActionDown(xCursor: Float, yCursor: Float, updateView: () -> Unit) {
+    override fun onActionDown(xCursor: Float, yCursor: Float) {
         startDraw(xCursor, yCursor)
     }
 
-    override fun onActionMove(xCursor: Float, yCursor: Float, updateView: () -> Unit) {
+    override fun onActionMove(xCursor: Float, yCursor: Float) {
         drawLine(xCursor, yCursor)
-        updateView()
     }
 
-    override fun onActionUp(xCursor: Float, yCursor: Float, updateView: () -> Unit) = Unit
+    override fun onActionUp(xCursor: Float, yCursor: Float) = Unit
     override fun updateColor(color: Int) {
         paintInstance.color = color
     }
