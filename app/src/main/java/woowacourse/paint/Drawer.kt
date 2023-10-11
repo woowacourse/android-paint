@@ -39,40 +39,27 @@ class Drawer(initPaintings: List<Painting>) {
     }
 
     fun setPaintingType(paintingType: PaintingType) {
-        when (paintingType) {
-            ERASER -> setPresentPainting(
-                Eraser(
-                    paintColor = presentPainting.paint.color,
-                    paintWidth = presentPainting.paint.strokeWidth,
-                ),
+       paintings[lastIndex] = when (paintingType) {
+            ERASER -> Eraser(
+                paintColor = presentPainting.paint.color,
+                paintWidth = presentPainting.paint.strokeWidth,
             )
 
-            LINE -> setPresentPainting(
-                Line(
-                    paintColor = presentPainting.paint.color,
-                    paintWidth = presentPainting.paint.strokeWidth,
-                ),
+            LINE -> Line(
+                paintColor = presentPainting.paint.color,
+                paintWidth = presentPainting.paint.strokeWidth,
             )
 
-            RECTANGLE -> setPresentPainting(
-                Rectangle(
-                    paintColor = presentPainting.paint.color,
-                    paintWidth = presentPainting.paint.strokeWidth,
-                ),
+            RECTANGLE -> Rectangle(
+                paintColor = presentPainting.paint.color,
+                paintWidth = presentPainting.paint.strokeWidth,
             )
 
-            CIRCLE -> setPresentPainting(
-                Circle(
-                    paintColor = presentPainting.paint.color,
-                    paintWidth = presentPainting.paint.strokeWidth,
-                ),
+            CIRCLE -> Circle(
+                paintColor = presentPainting.paint.color,
+                paintWidth = presentPainting.paint.strokeWidth,
             )
         }
-    }
-
-    private fun setPresentPainting(painting: Painting) {
-        paintings[lastIndex] = painting
-    }
 
     fun removePreviousPainting() {
         if (paintings.size == EMPTY_PREVIOUS_PAINTING_SIZE) {
