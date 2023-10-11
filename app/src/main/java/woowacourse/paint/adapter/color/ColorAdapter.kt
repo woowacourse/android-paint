@@ -1,13 +1,14 @@
-package woowacourse.paint
+package woowacourse.paint.adapter.color
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.paint.Color.BLACK
-import woowacourse.paint.Color.BLUE
-import woowacourse.paint.Color.GREEN
-import woowacourse.paint.Color.ORANGE
-import woowacourse.paint.Color.RED
-import woowacourse.paint.Color.YELLOW
+import woowacourse.paint.model.Color
+import woowacourse.paint.model.Color.BLACK
+import woowacourse.paint.model.Color.BLUE
+import woowacourse.paint.model.Color.GREEN
+import woowacourse.paint.model.Color.ORANGE
+import woowacourse.paint.model.Color.RED
+import woowacourse.paint.model.Color.YELLOW
 
 class ColorAdapter(
     private val onPaletteClick: (color: Int) -> Unit,

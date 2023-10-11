@@ -5,36 +5,46 @@ import android.content.Context
 import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.MotionEvent
+import android.view.MotionEvent.*
 import android.view.View
+import woowacourse.paint.paintBoard.tools.Tools
 
 class DrawingPaper(
     context: Context,
     attributeSet: AttributeSet
 ) : View(context, attributeSet) {
+    private lateinit var painter: Tools
+    private val painting: MutableList<Line> = mutableListOf()
 
-    private val painter = Painter()
-
-    fun changeWidth(width: Float) {
-        painter.changeBrush(width)
+    fun setTool(tool: Tools) {
+        painter = tool
     }
 
-    fun changeColor(color: Int) {
-        painter.changeBrush(context.getColor(color))
+    fun setPainting(lines: List<Line>) {
+        painting.clear()
+        painting.addAll(lines)
+
+        invalidate()
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
+        setLayerType(LAYER_TYPE_HARDWARE, null)
 
-        painter.drawPainting(canvas)
+        painting.forEach { line -> canvas.drawPath(line.path, line.brush.paint) }
     }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> painter.drawDot(event)
-            MotionEvent.ACTION_MOVE -> painter.drawLine(event)
-            MotionEvent.ACTION_UP -> painter.savePainting()
-            else -> super.onTouchEvent(event)
+            ACTION_DOWN -> painter.startPainting(event.x, event.y)
+            ACTION_MOVE -> painter.drawPainting(event.x, event.y)
+            ACTION_UP -> {
+                painter.finishPainting()
+                return true
+            }
+
+            else -> return super.onTouchEvent(event)
         }
 
         invalidate()
