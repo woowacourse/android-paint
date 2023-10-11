@@ -4,8 +4,11 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
+import com.example.domain.BrushType.ERASER
 
 class Eraser : BrushType {
+    override var type = ERASER
+
     private var path = Path()
     private var paint = Paint()
 

@@ -2,8 +2,11 @@ package woowacourse.paint.ui.brushtype
 
 import android.graphics.Paint
 import android.graphics.Path
+import com.example.domain.BrushType.RECTANGLE
 
 class Rectangle : BrushType {
+    override var type = RECTANGLE
+
     private var path = Path()
     private var paint = Paint()
 
@@ -27,7 +30,7 @@ class Rectangle : BrushType {
 
     override fun doActionMove(pointX: Float, pointY: Float) {
         path.reset()
-        path.addRect(startPointX, startPointY, pointX, pointY, Path.Direction.CW)
+        path.addRect(startPointX, startPointY, pointX, pointY, Path.Direction.CCW)
     }
 
     override fun getPath(): Path {

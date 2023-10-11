@@ -2,8 +2,11 @@ package woowacourse.paint.ui.brushtype
 
 import android.graphics.Paint
 import android.graphics.Path
+import com.example.domain.BrushType.CIRCLE
 
 class Circle : BrushType {
+    override var type = CIRCLE
+
     private var path = Path()
     private var paint = Paint()
 

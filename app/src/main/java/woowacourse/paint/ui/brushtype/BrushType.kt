@@ -3,8 +3,11 @@ package woowacourse.paint.ui.brushtype
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
+import com.example.domain.BrushType
 
 interface BrushType {
+    var type: BrushType
+
     fun setupPaint(width: Float = 0F, color: Int = Color.BLACK)
     fun doActionDown(pointX: Float, pointY: Float)
     fun doActionMove(pointX: Float, pointY: Float)

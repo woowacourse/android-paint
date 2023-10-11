@@ -22,8 +22,6 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val paintings = Paintings()
     private var brush: BrushType = Line()
 
-    private var brushType = LINE
-
     init {
         brush.setupPaint()
         setLayerType(LAYER_TYPE_HARDWARE, null)
@@ -62,28 +60,24 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         val paint = brush.getPaint()
         brush = Line()
         brush.setupPaint(paint.strokeWidth, paint.color)
-        brushType = LINE
     }
 
     fun setupCircle() {
         val paint = brush.getPaint()
         brush = Circle()
         brush.setupPaint(paint.strokeWidth, paint.color)
-        brushType = CIRCLE
     }
 
     fun setupRectangle() {
         val paint = brush.getPaint()
         brush = Rectangle()
         brush.setupPaint(paint.strokeWidth, paint.color)
-        brushType = RECTANGLE
     }
 
     fun setupEraser() {
         val paint = brush.getPaint()
         brush = Eraser()
         brush.setupPaint(paint.strokeWidth, paint.color)
-        brushType = ERASER
     }
 
     fun setMyStrokeWidth(width: Float) {
@@ -97,7 +91,7 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private fun doActionUp(pointX: Float, pointY: Float) {
         val currentPaint = brush.getPaint()
         val currentPath = brush.getPath()
-        when (brushType) {
+        when (brush.type) {
             CIRCLE -> {
                 paintings.storePainting(Painting(currentPaint, currentPath))
                 setupCircle()
