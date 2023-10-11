@@ -13,6 +13,10 @@ class MainActivity : AppCompatActivity() {
         PaintingColor.values().toList()
     }
 
+    private val paintingTypes: List<PaintingType> by lazy {
+        PaintingType.values().toList()
+    }
+
     private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
@@ -22,16 +26,18 @@ class MainActivity : AppCompatActivity() {
         PaintingColorAdapter(paintingColors, ::setPaintColor)
     }
 
+    private val paintingTypeAdapter: PaintingTypeAdapter by lazy {
+        binding.rvPaintingTypes.setHasFixedSize(true)
+        PaintingTypeAdapter(paintingTypes, ::setPaintingType)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setUpStrokeWidthControllerView()
         setUpPaintingColorControllerView()
-        initEraseButtonClick()
+        setUpPaintingTypeControllerView()
         initUndoButtonClick()
-        initPenButtonClick()
-        initRectangleButtonClick()
-        initCircleButtonClick()
     }
 
     private fun setUpStrokeWidthControllerView() {
@@ -51,37 +57,22 @@ class MainActivity : AppCompatActivity() {
         binding.rvColors.layoutManager = GridLayoutManager(this, paintingColors.size)
     }
 
+    private fun setUpPaintingTypeControllerView() {
+        binding.rvPaintingTypes.adapter = paintingTypeAdapter
+        binding.rvPaintingTypes.layoutManager = GridLayoutManager(this, paintingTypes.size)
+    }
+
     private fun setPaintColor(color: PaintingColor) {
         binding.paintingView.changePaintColor(colorRes = color.colorRes)
     }
 
-    private fun initEraseButtonClick() {
-        binding.buttonErase.setOnClickListener {
-            binding.paintingView.setPaintingType(PaintingType.ERASER)
-        }
+    private fun setPaintingType(paintingType: PaintingType) {
+        binding.paintingView.setPaintingType(paintingType)
     }
 
     private fun initUndoButtonClick() {
         binding.buttonUndo.setOnClickListener {
             binding.paintingView.undo()
-        }
-    }
-
-    private fun initPenButtonClick() {
-        binding.buttonPen.setOnClickListener {
-            binding.paintingView.setPaintingType(PaintingType.LINE)
-        }
-    }
-
-    private fun initRectangleButtonClick() {
-        binding.buttonRectangle.setOnClickListener {
-            binding.paintingView.setPaintingType(PaintingType.RECTANGLE)
-        }
-    }
-
-    private fun initCircleButtonClick() {
-        binding.buttonCircle.setOnClickListener {
-            binding.paintingView.setPaintingType(PaintingType.CIRCLE)
         }
     }
 
