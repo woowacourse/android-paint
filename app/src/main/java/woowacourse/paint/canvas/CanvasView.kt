@@ -3,7 +3,6 @@ package woowacourse.paint.canvas
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
-import android.graphics.Path
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 import android.util.AttributeSet
@@ -26,9 +25,6 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
             null
         }
     }
-    private val path = Path()
-
-    private var startPoint: Point = Point(0f, 0f)
     private val drawings = mutableListOf<Drawing>()
 
     private val drawingsCanceled = mutableListOf<Drawing>()
@@ -44,72 +40,21 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        drawings.forEach { line ->
-            canvas.drawPath(line.path, line.paint)
+        drawings.forEach { drawing ->
+            drawing.onDraw(canvas)
         }
-        canvas.drawPath(path, paint)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        when (tool) {
-            Tool.PEN, Tool.ERASER -> drawLine(event)
-            Tool.RECTANGLE, Tool.CIRCLE -> drawShape(event)
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                drawingsCanceled.clear()
+                drawings.add(tool.draw(paint, ::invalidate))
+                drawings.last().onTouchEvent(event)
+            }
+            else -> drawings.last().onTouchEvent(event)
         }
         return true
-    }
-
-    private fun drawLine(event: MotionEvent) {
-        val x = event.x
-        val y = event.y
-
-        when (event.action) {
-            MotionEvent.ACTION_DOWN -> drawDot(x, y)
-            MotionEvent.ACTION_MOVE -> drawLine(x, y)
-            MotionEvent.ACTION_UP -> addDrawing()
-            else -> super.onTouchEvent(event)
-        }
-    }
-
-    private fun drawDot(x: Float, y: Float) {
-        startPoint = Point(x, y)
-        path.moveTo(startPoint.x, startPoint.y)
-        path.lineTo(x, y)
-        invalidate()
-    }
-
-    private fun drawLine(x: Float, y: Float) {
-        path.moveTo(startPoint.x, startPoint.y)
-        path.lineTo(x, y)
-        startPoint = Point(x, y)
-        invalidate()
-    }
-
-    private fun addDrawing() {
-        if (path.isEmpty) return
-        drawings.add(tool.draw(path, paint))
-        path.reset()
-    }
-
-    private fun drawShape(event: MotionEvent) {
-        val x = event.x
-        val y = event.y
-
-        when (event.action) {
-            MotionEvent.ACTION_DOWN -> startPoint = Point(x, y)
-            MotionEvent.ACTION_MOVE -> drawPreview(x, y)
-            MotionEvent.ACTION_UP -> addDrawing()
-            else -> super.onTouchEvent(event)
-        }
-    }
-
-    private fun drawPreview(x: Float, y: Float) {
-        path.reset()
-        when (tool) {
-            Tool.RECTANGLE -> path.addRect(startPoint.x, startPoint.y, x, y, Path.Direction.CW)
-            Tool.CIRCLE -> path.addOval(startPoint.x, startPoint.y, x, y, Path.Direction.CW)
-            else -> return
-        }
-        invalidate()
     }
 
     fun setupBrush(selectedTool: Tool) {
@@ -132,7 +77,6 @@ class CanvasView(context: Context, attr: AttributeSet) : View(
     fun eraseAll() {
         drawings.clear()
         drawingsCanceled.clear()
-        path.reset()
         invalidate()
     }
 
