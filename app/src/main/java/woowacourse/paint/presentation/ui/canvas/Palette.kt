@@ -9,9 +9,11 @@ class Palette(val paint: Paint = Paint()) {
     }
 
     private fun initPaint() {
-        paint.strokeJoin = Paint.Join.ROUND
-        paint.strokeCap = Paint.Cap.ROUND
-        paint.isAntiAlias = true
+        with(paint) {
+            strokeJoin = Paint.Join.ROUND
+            strokeCap = Paint.Cap.ROUND
+            isAntiAlias = true
+        }
     }
 
     fun changeColor(color: Int): Palette = Palette(
