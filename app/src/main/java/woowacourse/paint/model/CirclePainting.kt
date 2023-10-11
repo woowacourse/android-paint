@@ -8,7 +8,7 @@ import androidx.annotation.ColorInt
 class CirclePainting(
     private val path: Path = Path(),
     private val _paint: Paint,
-) : Painting() {
+) : Painting {
 
     override val paint: Paint
         get() = Paint(_paint)
@@ -39,7 +39,7 @@ class CirclePainting(
         canvas.drawPath(path, _paint)
     }
 
-    override fun setColor(@ColorInt color: Int): Painting = CirclePainting(
+    fun setColor(@ColorInt color: Int): Painting = CirclePainting(
         _paint = Paint(_paint).apply {
             this.color = color
         },

@@ -8,7 +8,7 @@ import androidx.annotation.ColorInt
 class RectanglePainting(
     private val path: Path = Path(),
     private val _paint: Paint,
-) : Painting() {
+) : Painting {
 
     override val paint: Paint
         get() = Paint(_paint)
@@ -39,7 +39,7 @@ class RectanglePainting(
         canvas.drawPath(path, _paint)
     }
 
-    override fun setColor(@ColorInt color: Int): Painting = RectanglePainting(
+    fun setColor(@ColorInt color: Int): Painting = RectanglePainting(
         _paint = Paint(_paint).apply {
             this.color = color
         },

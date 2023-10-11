@@ -9,7 +9,7 @@ import woowacourse.paint.util.applyPaintSetting
 class PenPainting(
     private val path: Path = Path(),
     private val _paint: Paint = Paint().applyPaintSetting(),
-) : Painting() {
+) : Painting {
 
     override val paint: Paint
         get() = Paint(_paint)
@@ -36,14 +36,14 @@ class PenPainting(
         canvas.drawPath(path, _paint)
     }
 
-    override fun setStroke(value: Float): Painting = PenPainting(
+    fun setStroke(value: Float): Painting = PenPainting(
         path = Path(),
         _paint = Paint(_paint).apply {
             this.strokeWidth = value
         },
     )
 
-    override fun setColor(@ColorInt color: Int): Painting = PenPainting(
+    fun setColor(@ColorInt color: Int): Painting = PenPainting(
         path = Path(),
         _paint = Paint(_paint).apply {
             this.color = color

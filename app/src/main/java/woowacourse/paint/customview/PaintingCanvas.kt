@@ -65,14 +65,20 @@ class PaintingCanvas @JvmOverloads constructor(
     }
 
     fun setStroke(value: Float) {
-        if (painting is PenPainting || painting is EraserPainting) {
-            painting = painting.setStroke(value)
+        painting = when (painting) {
+            is PenPainting -> (painting as PenPainting).setStroke(value)
+            is EraserPainting -> (painting as EraserPainting).setStroke(value)
+            else -> return
         }
     }
 
     fun setColor(color: Int) {
-        if (painting is PenPainting || painting is RectanglePainting || painting is CirclePainting) {
-            painting = painting.setColor(context.getColor(color))
+        val paintColor = context.getColor(color)
+        painting = when (painting) {
+            is PenPainting -> (painting as PenPainting).setColor(paintColor)
+            is RectanglePainting -> (painting as RectanglePainting).setColor(paintColor)
+            is CirclePainting -> (painting as CirclePainting).setColor(paintColor)
+            else -> return
         }
     }
 

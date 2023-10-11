@@ -9,7 +9,7 @@ import android.graphics.PorterDuffXfermode
 class EraserPainting(
     private val path: Path = Path(),
     private val _paint: Paint,
-) : Painting() {
+) : Painting {
 
     override val paint: Paint
         get() = Paint(_paint)
@@ -36,7 +36,7 @@ class EraserPainting(
         canvas.drawPath(path, _paint)
     }
 
-    override fun setStroke(value: Float): Painting = EraserPainting(
+    fun setStroke(value: Float): Painting = EraserPainting(
         path = Path(),
         _paint = Paint(_paint).apply {
             this.strokeWidth = value
