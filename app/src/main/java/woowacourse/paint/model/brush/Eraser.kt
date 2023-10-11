@@ -13,8 +13,6 @@ class Eraser(override val paintInstance: Paint = Paint()) : Brush() {
         erase(xCursor, yCursor)
     }
 
-    override fun copyPaint(): Paint = Paint().apply { set(paintInstance) }
-
     override fun onActionMove(xCursor: Float, yCursor: Float) = Unit
 
     override fun onActionUp(xCursor: Float, yCursor: Float) = Unit

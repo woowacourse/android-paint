@@ -31,7 +31,6 @@ class Pen(override val paintInstance: Paint = Paint()) : Brush() {
         paintInstance.strokeWidth = thickness
     }
 
-    override fun copyPaint(): Paint = Paint().apply { set(paintInstance) }
     private fun startDraw(x: Float, y: Float) {
         val path = Path().apply { moveTo(x, y) }
         val paint = Paint().apply {

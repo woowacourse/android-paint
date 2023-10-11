@@ -31,8 +31,6 @@ class Rectangle(override val paintInstance: Paint = Paint()) : Brush() {
         paintInstance.strokeWidth = thickness
     }
 
-    override fun copyPaint(): Paint = Paint().apply { set(paintInstance) }
-
     private fun setCurrentPosition(xCursor: Float, yCursor: Float) {
         beforePosition = xCursor to yCursor
     }

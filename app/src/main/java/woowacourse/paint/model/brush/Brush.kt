@@ -16,6 +16,5 @@ sealed class Brush {
     abstract fun updateColor(@ColorInt color: Int)
 
     abstract fun updateThickness(thickness: Float)
-
-    abstract fun copyPaint(): Paint
+    fun copyPaint(): Paint = Paint().apply { set(paintInstance) }
 }
