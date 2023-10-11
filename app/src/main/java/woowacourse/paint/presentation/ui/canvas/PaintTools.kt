@@ -7,8 +7,9 @@ class PaintTools(value: List<PaintTool> = listOf()) {
     private val _value = value.toMutableList()
     private val history = mutableListOf<PaintTool>()
 
-    fun add(shape: PaintTool) {
-        _value.add(shape)
+    fun add(paintTool: PaintTool) {
+        history.clear()
+        _value.add(paintTool)
     }
 
     fun draw(canvas: Canvas) {
