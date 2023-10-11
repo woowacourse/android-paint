@@ -1,7 +1,7 @@
 package woowacourse.paint.presentation.ui.canvas
 
 import android.graphics.Canvas
-import woowacourse.paint.presentation.ui.canvas.shape.PaintTool
+import woowacourse.paint.presentation.ui.canvas.painttool.PaintTool
 
 class PaintTools(value: List<PaintTool> = listOf()) {
     private val _value = value.toMutableList()
@@ -13,7 +13,7 @@ class PaintTools(value: List<PaintTool> = listOf()) {
     }
 
     fun draw(canvas: Canvas) {
-        _value.forEach { shape -> shape.draw(canvas) }
+        _value.forEach { paintTool -> paintTool.draw(canvas) }
     }
 
     fun undo() = _value.removeLastOrNull()?.let { history.add(it) }

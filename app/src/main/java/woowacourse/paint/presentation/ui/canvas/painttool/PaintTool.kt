@@ -1,4 +1,4 @@
-package woowacourse.paint.presentation.ui.canvas.shape
+package woowacourse.paint.presentation.ui.canvas.painttool
 
 import android.graphics.Canvas
 import android.graphics.Path
