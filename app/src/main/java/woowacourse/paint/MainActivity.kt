@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupRangeSlider() {
-        binding.apply {
+        with(binding) {
             rangeSlider.setValues(10f)
 
             rangeSlider.addOnChangeListener { _, value, _ ->
@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupButton() {
-        binding.apply {
+        with(binding) {
             lineBrushButton.setOnClickListener {
                 canvasView.changeBrush(LineBrush())
             }
@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupPaletteView() {
-        binding.apply {
+        with(binding) {
             paletteView.onColorSelected = { canvasView.setColor(it) }
         }
     }
