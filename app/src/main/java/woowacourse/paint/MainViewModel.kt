@@ -21,7 +21,7 @@ class MainViewModel : ViewModel() {
 
     val tools = Tool.values().toList()
 
-    private var _selectedTool = MutableLiveData(Tool.PEN)
+    private var _selectedTool = MutableLiveData(tools.first())
     val selectedTool: LiveData<Tool>
         get() = _selectedTool
 
