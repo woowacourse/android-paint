@@ -1,9 +1,10 @@
-package woowacourse.paint
+package woowacourse.paint.customview
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
+import woowacourse.paint.Color
 
 class ColorView private constructor(
     context: Context,

@@ -1,8 +1,9 @@
-package woowacourse.paint
+package woowacourse.paint.customview
 
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
+import woowacourse.paint.Color
 
 class PaletteView constructor(
     context: Context,
