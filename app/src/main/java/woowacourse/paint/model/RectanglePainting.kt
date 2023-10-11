@@ -12,6 +12,8 @@ class RectanglePainting(
 
     override val paint: Paint
         get() = Paint(_paint)
+    private var prevX: Float = 0F
+    private var prevY: Float = 0F
 
     init {
         _paint.apply {
@@ -21,10 +23,13 @@ class RectanglePainting(
     }
 
     override fun movePath(x: Float, y: Float): Painting {
-        return RectanglePainting(path = Path(), _paint = _paint)
+        return RectanglePainting(path = Path(), _paint = _paint).apply {
+            prevX = x
+            prevY = y
+        }
     }
 
-    override fun initPath(prevX: Float, prevY: Float, x: Float, y: Float) {
+    override fun initPath(x: Float, y: Float) {
         path.reset()
         path.addRect(
             java.lang.Float.min(prevX, x),

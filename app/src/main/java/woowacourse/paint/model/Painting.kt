@@ -6,7 +6,7 @@ import android.graphics.Paint
 interface Painting {
     val paint: Paint
     fun movePath(x: Float, y: Float): Painting
-    fun initPath(prevX: Float, prevY: Float, x: Float, y: Float)
+    fun initPath(x: Float, y: Float)
     fun draw(canvas: Canvas)
     fun getNewPainting(): Painting
 

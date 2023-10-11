@@ -22,8 +22,6 @@ class PaintingCanvas @JvmOverloads constructor(
     var canvasCallback: CanvasCallback? = null
     lateinit var history: PaintingHistory
     private var painting: Painting = PenPainting()
-    private var previousX = 0f
-    private var previousY = 0f
 
     init {
         isFocusable = true
@@ -46,12 +44,10 @@ class PaintingCanvas @JvmOverloads constructor(
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 painting = painting.movePath(pointX, pointY)
-                previousX = pointX
-                previousY = pointY
             }
 
             MotionEvent.ACTION_MOVE -> {
-                painting.initPath(previousX, previousY, pointX, pointY)
+                painting.initPath(pointX, pointY)
             }
 
             MotionEvent.ACTION_UP -> {

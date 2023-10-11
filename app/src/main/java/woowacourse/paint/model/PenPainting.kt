@@ -28,7 +28,7 @@ class PenPainting(
         }
     }
 
-    override fun initPath(prevX: Float, prevY: Float, x: Float, y: Float) {
+    override fun initPath(x: Float, y: Float) {
         path.lineTo(x, y)
     }
 
