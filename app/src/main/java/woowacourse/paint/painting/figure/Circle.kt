@@ -23,10 +23,10 @@ class Circle(
     override fun extend(x: Float, y: Float) {
         path.reset()
         path.addOval(
-            standardX - x / 4,
-            standardY - y / 4,
-            standardX + x / 4,
-            standardY + y / 4,
+            standardX,
+            standardY,
+            standardX + x / 2,
+            standardY + y / 2,
             Path.Direction.CW
         )
     }
