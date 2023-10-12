@@ -10,7 +10,7 @@
             android:id="@+id/v_paint_board"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@color/white"
+            android:background="@color/paint_board"
             app:layout_constraintBottom_toTopOf="@id/rs_thickness_settings"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
