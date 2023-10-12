@@ -28,10 +28,10 @@ class PaintingView @JvmOverloads constructor(context: Context, attrs: AttributeS
 
     private val _paintings: MutableList<Painting> = mutableListOf(currentPaintTool.painting)
     val paintings: List<Painting>
-        get() = _paintings.map { stroke ->
-            stroke.copy(
-                path = Path(stroke.path),
-                paint = Paint(stroke.paint),
+        get() = _paintings.map { painting ->
+            painting.copy(
+                path = Path(painting.path),
+                paint = Paint(painting.paint),
             )
         }
 
@@ -53,8 +53,8 @@ class PaintingView @JvmOverloads constructor(context: Context, attrs: AttributeS
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        _paintings.forEach { stroke ->
-            canvas.drawPath(stroke.path, stroke.paint)
+        _paintings.forEach { painting ->
+            canvas.drawPath(painting.path, painting.paint)
         }
 
         canvas.drawPath(currentPaintTool.painting.path, currentPaintTool.painting.paint)
