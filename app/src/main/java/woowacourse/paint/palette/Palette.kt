@@ -9,23 +9,34 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.ConcatAdapter
 import com.google.android.material.slider.RangeSlider
 import woowacourse.paint.R
+import woowacourse.paint.board.draw.GraphicObjectType
 import woowacourse.paint.databinding.PaletteBinding
+import woowacourse.paint.palette.Tool.ERASE
 import woowacourse.paint.palette.Tool.LINE
+import woowacourse.paint.palette.Tool.OVAL
+import woowacourse.paint.palette.Tool.RECTANGLE
 
 class Palette(context: Context, attrs: AttributeSet? = null) : ConstraintLayout(context, attrs) {
-
-    private lateinit var onSelectedColorIdChangedListener: (Int) -> Unit
-    private lateinit var onStrokeWidthChangedListener: (Float) -> Unit
-    private lateinit var onToolChangedListener: (Tool) -> Unit
 
     private val binding: PaletteBinding
 
     @ColorRes
-    private var selectedColorId: Int = R.color.black
+    var selectedColorId: Int = R.color.black
 
-    private var strokeWidth: Float = 10f
+    var strokeWidth: Float = 10f
 
-    private var currentTool: Tool = LINE
+    var currentTool: Tool = LINE
+
+    val eraseMode: Boolean
+        get() = currentTool == ERASE
+
+    val currentGraphicObjectType: GraphicObjectType
+        get() = when (currentTool) {
+            LINE -> GraphicObjectType.LINE
+            ERASE -> GraphicObjectType.LINE
+            OVAL -> GraphicObjectType.OVAL
+            RECTANGLE -> GraphicObjectType.RECTANGLE
+        }
 
     init {
         binding =
@@ -43,46 +54,25 @@ class Palette(context: Context, attrs: AttributeSet? = null) : ConstraintLayout(
         }
     }
 
-    fun setOnSelectedColorIdChangedListener(listener: (Int) -> Unit) {
-        onSelectedColorIdChangedListener = listener
-    }
-
-    fun setStrokeWidthChangedListener(listener: (Float) -> Unit) {
-        onStrokeWidthChangedListener = listener
-    }
-
-    fun setToolChangedListener(listener: (Tool) -> Unit) {
-        onToolChangedListener = listener
-    }
-
     private fun initColorSelectorRecyclerView() {
         binding.rvColorSelector.adapter = ConcatAdapter(
             initColorSelectorAdapter(),
-            initToolSelectorAdapter()
+            initToolSelectorAdapter(),
         )
     }
 
     private fun initColorSelectorAdapter() = ColorSelectorAdapter { colorId ->
         selectedColorId = colorId
-        if (::onSelectedColorIdChangedListener.isInitialized) {
-            onSelectedColorIdChangedListener(colorId)
-        }
     }
 
     private fun initToolSelectorAdapter() = ToolSelectorAdapter { tool ->
         currentTool = tool
-        if (::onToolChangedListener.isInitialized) {
-            onToolChangedListener(tool)
-        }
     }
 
     private fun initStrokeWidthSelectorListener() {
         binding.rangeSliderStrokeWidthSelector.addOnChangeListener(
             RangeSlider.OnChangeListener { _, value, _ ->
                 strokeWidth = value
-                if (::onStrokeWidthChangedListener.isInitialized) {
-                    onStrokeWidthChangedListener(strokeWidth)
-                }
             },
         )
     }

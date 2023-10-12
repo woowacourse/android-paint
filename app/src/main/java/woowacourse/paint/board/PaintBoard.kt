@@ -11,16 +11,13 @@ import android.view.ScaleGestureDetector
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.view.ViewTreeObserver
 import android.widget.FrameLayout
-import androidx.annotation.ColorRes
 import androidx.constraintlayout.widget.ConstraintLayout
-import woowacourse.paint.R
 import woowacourse.paint.board.draw.GraphicObject
 import woowacourse.paint.board.draw.GraphicObjectType
 import woowacourse.paint.board.draw.Line
 import woowacourse.paint.board.draw.Oval
 import woowacourse.paint.board.draw.Rectangle
 import woowacourse.paint.palette.Palette
-import woowacourse.paint.palette.Tool
 
 class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
     private val screenWidth = resources.displayMetrics.widthPixels
@@ -30,15 +27,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
 
     private val graphicObjects: MutableList<GraphicObject> = mutableListOf()
 
-    private var eraseMode: Boolean = false
-
-    private var currentGraphicObjectType: GraphicObjectType = GraphicObjectType.LINE
-
     private var currentGraphicObject: GraphicObject? = null
-
-    @ColorRes
-    private var currentSelectedColor: Int = R.color.black
-    private var currentStrokeWidth: Float = 10f
 
     private lateinit var palette: Palette
 
@@ -122,7 +111,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     }
 
     private fun registerCurrentGraphicObject() {
-        currentGraphicObject = when (currentGraphicObjectType) {
+        currentGraphicObject = when (palette.currentGraphicObjectType) {
             GraphicObjectType.LINE -> getLineInstance()
             GraphicObjectType.RECTANGLE -> getRectangleInstance()
             GraphicObjectType.OVAL -> getOvalInstance()
@@ -130,21 +119,21 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     }
 
     private fun getLineInstance(): Line {
-        val paint: Paint = if (eraseMode) {
+        val paint: Paint = if (palette.eraseMode) {
             Paint().apply { xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR) }
         } else {
-            Paint().apply { color = context.getColor(currentSelectedColor) }
+            Paint().apply { color = context.getColor(palette.selectedColorId) }
         }
-        return Line(paint, currentStrokeWidth, ::invalidate)
+        return Line(paint, palette.strokeWidth, ::invalidate)
     }
 
     private fun getRectangleInstance(): Rectangle = Rectangle(
-        Paint().apply { color = context.getColor(currentSelectedColor) },
+        Paint().apply { color = context.getColor(palette.selectedColorId) },
         ::invalidate,
     )
 
     private fun getOvalInstance(): Oval = Oval(
-        Paint().apply { color = context.getColor(currentSelectedColor) },
+        Paint().apply { color = context.getColor(palette.selectedColorId) },
         ::invalidate,
     )
 
@@ -163,39 +152,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     private fun addStickyPalette() {
         palette = Palette(context, null)
         palette.layoutParams = FrameLayout.LayoutParams(screenWidth, WRAP_CONTENT)
-        palette.setOnSelectedColorIdChangedListener { colorId -> currentSelectedColor = colorId }
-        palette.setStrokeWidthChangedListener { strokeWidth -> currentStrokeWidth = strokeWidth }
-        palette.setToolChangedListener(::toolChangedListener)
         addView(palette)
-    }
-
-    private fun toolChangedListener(tool: Tool) {
-        when (tool) {
-            Tool.LINE -> lineSelectedListener()
-            Tool.OVAL -> ovalSelectedListener()
-            Tool.RECTANGLE -> rectangleSelectedListener()
-            Tool.ERASE -> eraseSelectedListener()
-        }
-    }
-
-    private fun eraseSelectedListener() {
-        eraseMode = true
-        currentGraphicObjectType = GraphicObjectType.LINE
-    }
-
-    private fun rectangleSelectedListener() {
-        eraseMode = false
-        currentGraphicObjectType = GraphicObjectType.RECTANGLE
-    }
-
-    private fun ovalSelectedListener() {
-        eraseMode = false
-        currentGraphicObjectType = GraphicObjectType.OVAL
-    }
-
-    private fun lineSelectedListener() {
-        eraseMode = false
-        currentGraphicObjectType = GraphicObjectType.LINE
     }
 
     companion object {
