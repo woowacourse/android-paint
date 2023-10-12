@@ -2,6 +2,8 @@ package woowacourse.paint
 
 import androidx.databinding.BindingAdapter
 import com.google.android.material.slider.Slider
+import woowacourse.paint.model.ColorPalette
+import woowacourse.paint.model.brush.BrushType
 
 @BindingAdapter("app:setColorPalette")
 fun BoardView.setColorPalette(colorPalette: ColorPalette?) {
@@ -15,10 +17,16 @@ fun BoardView.setWidth(width: Float?) {
     setWidth(width)
 }
 
+@BindingAdapter("app:setBrush")
+fun BoardView.setBrush(brushType: BrushType?) {
+    if (brushType == null) return
+    setBrush(brushType)
+}
+
 @BindingAdapter("app:eraseAll")
 fun BoardView.eraseAll(isErasing: Boolean?) {
     if (isErasing == null) return
-    if (isErasing) erase()
+    if (isErasing) eraseAll()
 }
 
 interface OnSlideListener {
