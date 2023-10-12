@@ -10,13 +10,13 @@ import com.example.domain.BrushType.CIRCLE
 import com.example.domain.BrushType.ERASER
 import com.example.domain.BrushType.LINE
 import com.example.domain.BrushType.RECTANGLE
-import woowacourse.paint.Painting
-import woowacourse.paint.Paintings
 import woowacourse.paint.ui.brushtype.BrushType
 import woowacourse.paint.ui.brushtype.Circle
 import woowacourse.paint.ui.brushtype.Eraser
 import woowacourse.paint.ui.brushtype.Line
 import woowacourse.paint.ui.brushtype.Rectangle
+import woowacourse.paint.ui.model.Painting
+import woowacourse.paint.ui.model.Paintings
 
 class PaintingPaper(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val paintings = Paintings()

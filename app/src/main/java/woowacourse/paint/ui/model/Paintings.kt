@@ -1,4 +1,4 @@
-package woowacourse.paint
+package woowacourse.paint.ui.model
 
 class Paintings(private val _paintings: MutableList<Painting> = mutableListOf()) {
     val painting: List<Painting> = _paintings
