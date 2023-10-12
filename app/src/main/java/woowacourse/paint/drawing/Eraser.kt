@@ -5,16 +5,10 @@ import woowacourse.paint.ui.PathPoint
 
 class Eraser(private val drawingHistory: DrawingHistory) {
     fun erasePath(pathPoint: PathPoint) {
-        val erasedIndex: List<Int> =
-            drawingHistory.drawings.mapIndexedNotNull { index, drawing ->
-                val rect = RectF()
-                drawing.path.computeBounds(rect, true)
-                if ((pathPoint.x in rect.left..rect.right) && (pathPoint.y in rect.top..rect.bottom)) {
-                    index
-                } else null
-            }
-        erasedIndex.forEach {
-            drawingHistory.removeAt(it)
-        }
+        drawingHistory.drawings.firstOrNull { drawing ->
+            val rect = RectF()
+            drawing.path.computeBounds(rect, false)
+            rect.contains(pathPoint.x, pathPoint.y)
+        }.also { drawing -> drawingHistory.remove(drawing ?: return) }
     }
 }

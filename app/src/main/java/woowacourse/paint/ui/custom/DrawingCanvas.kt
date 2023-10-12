@@ -44,8 +44,7 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
             )
 
             PaintMode.CIRCLE, PaintMode.FILL_CIRCLE -> drawingCircle.drawShapeOnCanvas(
-                canvas,
-                drawing.paint
+                canvas, drawing.paint
             )
 
             PaintMode.ERASER -> {}
@@ -89,7 +88,9 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
                 changePaintStyle(if (paintMode == PaintMode.CIRCLE) Paint.Style.STROKE else Paint.Style.FILL)
             }
 
-            PaintMode.ERASER -> {}
+            PaintMode.ERASER -> {
+                eraser.erasePath(PathPoint(pointX, pointY))
+            }
         }
     }
 
@@ -101,10 +102,7 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
             )
 
             PaintMode.CIRCLE, PaintMode.FILL_CIRCLE -> drawingCircle.updateEndPoint(
-                PathPoint(
-                    pointX,
-                    pointY
-                )
+                PathPoint(pointX, pointY)
             )
 
             PaintMode.ERASER -> eraser.erasePath(PathPoint(pointX, pointY))
@@ -118,7 +116,11 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
             PaintMode.CIRCLE, PaintMode.FILL_CIRCLE -> drawingCircle.addShapeToPath(drawing.path)
             PaintMode.ERASER -> {}
         }
-        if (paintMode != PaintMode.ERASER) drawingHistory.addDrawing(Drawing(drawing.path, drawing.paint))
+        if (paintMode != PaintMode.ERASER) drawingHistory.addDrawing(
+            Drawing(
+                drawing.path, drawing.paint
+            )
+        )
         drawing.path = Path()
     }
 
