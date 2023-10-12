@@ -3,6 +3,7 @@ package woowacourse.paint.presentation.ui
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import woowacourse.paint.data.model.Brush
 import woowacourse.paint.data.model.Color
 import woowacourse.paint.data.model.SettingMode
 import woowacourse.paint.presentation.ui.uiState.MainUiState
@@ -30,5 +31,9 @@ class MainViewModel : ViewModel() {
 
     fun setColor(color: Color) {
         _uiState.value = _uiState.value!!.copy(color = color)
+    }
+
+    fun setBrush(brush: Brush) {
+        _uiState.value = _uiState.value!!.copy(brush = brush)
     }
 }

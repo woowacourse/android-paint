@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <import type="woowacourse.paint.data.model.SettingMode" />
 
         <import type="woowacourse.paint.data.model.Color" />
+
+        <import type="woowacourse.paint.data.model.Brush" />
 
         <variable
             name="vm"
@@ -36,7 +39,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:background="@{vm.uiState.settingMode == SettingMode.COLOR ? @drawable/bg_selected_button : @drawable/bg_unselected_button}"
+            android:background="@{vm.uiState.settingMode == SettingMode.COLOR ? @drawable/bg_primary_selected_button : @drawable/bg_primary_unselected_button}"
             android:gravity="center"
             android:onClick="@{() -> onColorChangeButtonClick.invoke()}"
             android:paddingVertical="10dp"
@@ -51,7 +54,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
-            android:background="@{vm.uiState.settingMode == SettingMode.THICKNESS ? @drawable/bg_selected_button : @drawable/bg_unselected_button}"
+            android:background="@{vm.uiState.settingMode == SettingMode.THICKNESS ? @drawable/bg_primary_selected_button : @drawable/bg_primary_unselected_button}"
             android:gravity="center"
             android:onClick="@{() -> onThicknessChangeButtonClick.invoke()}"
             android:paddingVertical="10dp"
@@ -66,7 +69,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
-            android:background="@{vm.uiState.settingMode == SettingMode.BRUSH ? @drawable/bg_selected_button : @drawable/bg_unselected_button}"
+            android:background="@{vm.uiState.settingMode == SettingMode.BRUSH ? @drawable/bg_primary_selected_button : @drawable/bg_primary_unselected_button}"
             android:gravity="center"
             android:onClick="@{() -> onBrushChangeButtonClick.invoke()}"
             android:paddingVertical="10dp"
@@ -98,7 +101,8 @@
             app:layout_constraintBottom_toTopOf="@id/tv_color_change_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:visible="@{vm.uiState.settingMode == SettingMode.COLOR}">
+            app:visible="@{vm.uiState.settingMode == SettingMode.COLOR}"
+            tools:visibility="gone">
 
             <View
                 android:id="@+id/view_select_red"
@@ -187,7 +191,65 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:onValueChange="@{(value) -> pbvPaintBoardView.setStrokeWidth(value)}"
-            app:visible="@{vm.uiState.settingMode == SettingMode.THICKNESS}" />
+            app:visible="@{vm.uiState.settingMode == SettingMode.THICKNESS}"
+            tools:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/ll_brush_select_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            android:paddingHorizontal="10dp"
+            app:layout_constraintBottom_toTopOf="@id/tv_brush_change_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:visible="@{vm.uiState.settingMode == SettingMode.BRUSH}">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@{vm.uiState.brush == Brush.PEN ? @drawable/bg_secondary_selected_button : @drawable/bg_secondary_unselected_button}"
+                android:gravity="center"
+                android:layout_marginEnd="10dp"
+                android:onClick="@{() -> vm.setBrush(Brush.PEN)}"
+                android:paddingVertical="10dp"
+                android:text="@string/main_pen_select_button_label" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@{vm.uiState.brush == Brush.RECTANGLE ? @drawable/bg_secondary_selected_button : @drawable/bg_secondary_unselected_button}"
+                android:gravity="center"
+                android:layout_marginEnd="10dp"
+                android:onClick="@{() -> vm.setBrush(Brush.RECTANGLE)}"
+                android:paddingVertical="10dp"
+                android:text="@string/main_rectangle_select_button_label" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@{vm.uiState.brush == Brush.CIRCLE ? @drawable/bg_secondary_selected_button : @drawable/bg_secondary_unselected_button}"
+                android:gravity="center"
+                android:layout_marginEnd="10dp"
+                android:onClick="@{() -> vm.setBrush(Brush.CIRCLE)}"
+                android:paddingVertical="10dp"
+                android:text="@string/main_circle_select_button_label" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@{vm.uiState.brush == Brush.ERASER ? @drawable/bg_secondary_selected_button : @drawable/bg_secondary_unselected_button}"
+                android:gravity="center"
+                android:onClick="@{() -> vm.setBrush(Brush.ERASER)}"
+                android:paddingVertical="10dp"
+                android:text="@string/main_eraser_select_button_label" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_clear_btn"
@@ -195,7 +257,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            android:background="@drawable/bg_unselected_button"
+            android:background="@drawable/bg_primary_unselected_button"
             android:onClick="@{() -> pbvPaintBoardView.reset()}"
             android:padding="10dp"
             android:text="@string/main_reset_button_label"

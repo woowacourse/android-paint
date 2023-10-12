@@ -4,4 +4,8 @@
     <string name="main_thickness_change_btn_label">굵기 변경</string>
     <string name="main_reset_button_label">초기화</string>
     <string name="main_bruch_change_button_label">브러쉬 변경</string>
+    <string name="main_pen_select_button_label">펜</string>
+    <string name="main_rectangle_select_button_label">직사각형</string>
+    <string name="main_circle_select_button_label">원</string>
+    <string name="main_eraser_select_button_label">지우개</string>
 </resources>
