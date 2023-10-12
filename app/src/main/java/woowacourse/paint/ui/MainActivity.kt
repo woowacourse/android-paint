@@ -31,13 +31,7 @@ class MainActivity : AppCompatActivity() {
     private fun setPalette() {
         binding.rvPalette.apply {
             adapter = PaintAdapter(
-                listOf(
-                    getColor(R.color.red),
-                    getColor(R.color.orange),
-                    getColor(R.color.yellow),
-                    getColor(R.color.green),
-                    getColor(R.color.blue),
-                ),
+                resources.getIntArray(R.array.colors),
                 binding.cvCanvas::setMyStrokeColor,
             )
             setHasFixedSize(true)
