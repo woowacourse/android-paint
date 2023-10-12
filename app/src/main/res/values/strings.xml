@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Paint</string>
-    <string name="Main_btnClear">초기화</string>
-    <string name="Main_btnUndo">되돌리기</string>
-    <string name="Main_btnRedo">취소</string>
+    <string name="Main_rbPen">펜</string>
+    <string name="Main_rbRect">직사각형</string>
+    <string name="Main_rbCircle">원</string>
+    <string name="Main_rbEraser">지우개</string>
 </resources>

@@ -21,12 +21,67 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <com.google.android.material.slider.RangeSlider
-                android:id="@+id/rs_slider"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:valueFrom="0.0f"
-                android:valueTo="100.0f" />
+                android:gravity="end">
+
+                <com.google.android.material.slider.RangeSlider
+                    android:id="@+id/rs_slider"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:valueFrom="0.0f"
+                    android:valueTo="100.0f" />
+
+                <RadioGroup
+                    android:id="@+id/rgShapes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rbEraser"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/btn_radio_btn"
+                        android:button="@null"
+                        android:text="@string/Main_rbEraser"
+                        android:textSize="13sp" />
+
+                    <RadioButton
+                        android:id="@+id/rbPen"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/btn_radio_btn"
+                        android:button="@null"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:text="@string/Main_rbPen"
+                        android:textSize="16sp" />
+
+                    <RadioButton
+                        android:id="@+id/rbRect"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/btn_radio_btn"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="@string/Main_rbRect"
+                        android:textSize="11sp" />
+
+                    <RadioButton
+                        android:id="@+id/rbCircle"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:background="@drawable/btn_radio_btn"
+                        android:button="@null"
+                        android:gravity="center"
+                        android:text="@string/Main_rbCircle"
+                        android:textSize="16sp" />
+                </RadioGroup>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -43,18 +98,12 @@
                     tools:listitem="@layout/item_main_colors" />
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/btnEraser"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:background="@drawable/ic_baseline_eraser_32"
-                    android:padding="8dp" />
-
-                <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/btnUndo"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:background="@drawable/ic_baseline_undo_32"
                     android:enabled="false"
+                    android:onClick="@{() -> paintingPaper.undo()}"
                     android:padding="8dp" />
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -63,6 +112,7 @@
                     android:layout_height="48dp"
                     android:background="@drawable/ic_baseline_redo_32"
                     android:enabled="false"
+                    android:onClick="@{() -> paintingPaper.redo()}"
                     android:padding="8dp" />
 
                 <androidx.appcompat.widget.AppCompatButton
@@ -70,6 +120,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:background="@drawable/ic_baseline_clear_32"
+                    android:onClick="@{() -> paintingPaper.clear()}"
                     android:padding="8dp" />
 
             </LinearLayout>

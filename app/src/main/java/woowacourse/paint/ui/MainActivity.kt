@@ -2,8 +2,15 @@ package woowacourse.paint.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
+import woowacourse.paint.R
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.model.BrushCircle
+import woowacourse.paint.model.BrushEraser
+import woowacourse.paint.model.BrushPen
+import woowacourse.paint.model.BrushRect
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
@@ -16,32 +23,24 @@ class MainActivity : AppCompatActivity() {
 
     private fun setUpBinding() {
         setContentView(binding.root)
-        binding.rvColors.adapter = ColorAdapter { binding.paintingPaper.drawMode(it) }
     }
 
-    private fun setUpView() {
-        binding.rsSlider.addOnChangeListener { _, value, _ ->
-            binding.paintingPaper.brushSize = value
-        }
+    private fun setUpView() = with(binding) {
+        binding.rvColors.adapter = ColorAdapter { binding.paintingPaper.brushColor = it }
 
-        binding.btnEraser.setOnClickListener { binding.paintingPaper.eraseMode() }
+        rsSlider.addOnChangeListener { _, value, _ -> paintingPaper.brushSize = value }
 
-        binding.btnUndo.setOnClickListener { binding.paintingPaper.undo() }
+        paintingPaper.onUndoHistoryChangeListener = { btnUndo.isEnabled = it }
 
-        binding.btnRedo.setOnClickListener { binding.paintingPaper.redo() }
+        paintingPaper.onRedoHistoryChangeListener = { btnRedo.isEnabled = it }
 
-        binding.btnClear.setOnClickListener { binding.paintingPaper.clear() }
-
-        binding.paintingPaper.onUndoHistoryChangeListener = {
-            binding.btnUndo.isEnabled = it
-        }
-
-        binding.paintingPaper.onRedoHistoryChangeListener = {
-            binding.btnRedo.isEnabled = it
-        }
-
-        binding.paintingPaper.onEraseModeChangeListener = {
-            binding.btnEraser.isSelected = it
+        rgShapes.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.rbPen -> paintingPaper.brushGenerator = ::BrushPen
+                R.id.rbRect -> paintingPaper.brushGenerator = ::BrushRect
+                R.id.rbCircle -> paintingPaper.brushGenerator = ::BrushCircle
+                R.id.rbEraser -> paintingPaper.brushGenerator = ::BrushEraser
+            }
         }
     }
 }

@@ -3,42 +3,39 @@ package woowacourse.paint.customVeiw
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.CornerPathEffect
 import android.graphics.Paint
-import android.graphics.Path
 import android.graphics.drawable.ColorDrawable
+import android.os.Bundle
+import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.model.Brush
+import woowacourse.paint.model.BrushCareTaker
+import woowacourse.paint.model.BrushMemento
+import woowacourse.paint.model.BrushPen
 import woowacourse.paint.model.Brushes
 
 class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    private val brushes: Brushes = Brushes()
-
-    private val previewBrush
-        get() = Brush(
-            Path().apply {
-                moveTo(100F, 100F)
-                lineTo(200F, 100F)
-            },
-            paint,
-        )
-
-    private val path
-        get() = Path()
-
-    private val paint
-        get() = Paint().apply {
-            color = this@PaintingPaper.color
-            strokeWidth = brushSize
-            style = Paint.Style.STROKE
-            strokeJoin = Paint.Join.ROUND
-            strokeCap = Paint.Cap.ROUND
-            pathEffect = CornerPathEffect(100F)
+    private var brushCareTaker: BrushCareTaker = BrushCareTaker()
+        set(value) {
+            brushes = value.currentMemento.brushes
+            field = value
+            updatePaper()
         }
 
-    var color = Color.BLACK
+    private var brushes = Brushes()
+
+    private var brush: Brush? = null
+
+    private val previewBrush: Brush
+        get() = BrushPen().apply {
+            setUpPaint(paint)
+            startDrawing(100F, 100F)
+            continueDrawing(200F, 100F)
+        }
+
+    var brushColor = Color.BLACK
         set(value) {
             field = value
             invalidate()
@@ -50,63 +47,103 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
             invalidate()
         }
 
-    init {
-        background = ColorDrawable(Color.WHITE)
-    }
+    var brushGenerator: () -> Brush = ::BrushPen
 
     var onUndoHistoryChangeListener: (Boolean) -> Unit = {}
 
     var onRedoHistoryChangeListener: (Boolean) -> Unit = {}
 
-    var onEraseModeChangeListener: (Boolean) -> Unit = {}
+    init {
+        background = ColorDrawable(Color.WHITE)
+        setLayerType(LAYER_TYPE_HARDWARE, null)
+    }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         brushes.drawOn(canvas)
+        brush?.drawOn(canvas)
         previewBrush.drawOn(canvas)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean = when (event.action) {
         MotionEvent.ACTION_DOWN -> onActionDown(event)
         MotionEvent.ACTION_MOVE -> onActionMove(event)
+        MotionEvent.ACTION_UP -> onActionUp(event)
         else -> super.onTouchEvent(event)
     }
 
+    override fun onSaveInstanceState(): Parcelable {
+        return Bundle().apply {
+            putParcelable(KEY_SUPER_STATE, super.onSaveInstanceState())
+            putParcelable(KEY_BRUSH_CARE_TAKER, brushCareTaker)
+        }
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        if (state is Bundle) {
+            brushCareTaker = state.getParcelable(KEY_BRUSH_CARE_TAKER)!!
+            super.onRestoreInstanceState(state.getParcelable(KEY_SUPER_STATE))
+        }
+    }
+
     private fun onActionDown(event: MotionEvent): Boolean {
-        brushes += Brush(path, paint).apply { start(event.x, event.y, ::updatePaper) }
+        brush = brushGenerator().apply {
+            setUpPaint(paint)
+            startDrawing(event.x, event.y) { updatePaper() }
+        }
         return true
     }
 
     private fun onActionMove(event: MotionEvent): Boolean {
-        brushes.last().move(event.x, event.y, ::updatePaper)
+        brush?.continueDrawing(event.x, event.y) { updatePaper() }
+        return true
+    }
+
+    private fun onActionUp(event: MotionEvent): Boolean {
+        brush?.let {
+            brushes += it
+            brushCareTaker.save(BrushMemento(brushes))
+        }
+        brush = null
+        updatePaper()
         return true
     }
 
     fun undo() {
-        brushes.undo(::updatePaper)
+        brushCareTaker.undo {
+            brushes = it
+            updatePaper()
+        }
     }
 
     fun redo() {
-        brushes.redo(::updatePaper)
+        brushCareTaker.redo {
+            brushes = it
+            updatePaper()
+        }
     }
 
     fun clear() {
-        brushes.clear(::updatePaper)
+        brushes = Brushes()
+        brushCareTaker.save(BrushMemento(brushes))
+        updatePaper()
+    }
+
+    private fun setUpPaint(paint: Paint) {
+        paint.apply {
+            color = this@PaintingPaper.brushColor
+            strokeWidth = brushSize
+        }
     }
 
     private fun updatePaper() {
-        onUndoHistoryChangeListener(brushes.hasHistory)
-        onRedoHistoryChangeListener(brushes.hasUndoHistory)
+        onUndoHistoryChangeListener(brushCareTaker.hasHistory)
+        onRedoHistoryChangeListener(brushCareTaker.hasUndoHistory)
         invalidate()
     }
 
-    fun drawMode(colorInt: Int) {
-        color = colorInt
-        onEraseModeChangeListener(false)
-    }
-
-    fun eraseMode() {
-        color = (background as ColorDrawable).color
-        onEraseModeChangeListener(true)
+    companion object {
+        private const val KEY_SUPER_STATE = "KEY_SUPER_STATE"
+        private const val KEY_BRUSH_CARE_TAKER = "KEY_BRUSH_CARE_TAKER"
     }
 }
