@@ -7,12 +7,12 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.model.DrawMode
-import woowacourse.paint.model.pen.Pen
+import woowacourse.paint.model.drawingEngine.DrawingEngines
 import woowacourse.paint.model.drawingEngine.EraserDrawingEngine
 import woowacourse.paint.model.drawingEngine.LineDrawingEngine
 import woowacourse.paint.model.drawingEngine.OvalDrawingEngine
 import woowacourse.paint.model.drawingEngine.RectangleDrawingEngine
-import woowacourse.paint.model.drawingEngine.DrawingEngines
+import woowacourse.paint.model.pen.Pen
 
 class PaintView(
     context: Context,
@@ -78,7 +78,7 @@ class PaintView(
     private fun addRectangle(pointX: Float, pointY: Float) {
         val addedRectangleDrawingEngine = RectangleDrawingEngine().apply {
             paint.color = pen.color
-            updatePosition(pointX, pointY, pointX, pointY)
+            changePosition(pointX, pointY, pointX, pointY)
         }
         drawingEngines.add(addedRectangleDrawingEngine)
     }
@@ -86,7 +86,7 @@ class PaintView(
     private fun addOval(pointX: Float, pointY: Float) {
         val addedOvalDrawingEngine = OvalDrawingEngine().apply {
             paint.color = pen.color
-            updatePosition(pointX, pointY, pointX, pointY)
+            changePosition(pointX, pointY, pointX, pointY)
         }
         drawingEngines.add(addedOvalDrawingEngine)
     }

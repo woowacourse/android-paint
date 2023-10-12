@@ -5,24 +5,23 @@ import android.graphics.Paint
 import android.graphics.RectF
 
 data class RectangleDrawingEngine(
-    val paint: Paint = Paint(),
-) : DrawingEngine {
-
-    val rectF: RectF = RectF()
+    override val paint: Paint = Paint(),
+    override val rectF: RectF = RectF(),
+) : ShapeDrawingEngin {
 
     override fun draw(canvas: Canvas) {
         canvas.drawRect(rectF, paint)
     }
 
     override fun move(pointX: Float, pointY: Float) {
-        updatePosition(right = pointX, bottom = pointY)
+        changePosition(right = pointX, bottom = pointY)
     }
 
-    fun updatePosition(
-        left: Float? = null,
-        top: Float? = null,
-        right: Float? = null,
-        bottom: Float? = null,
+    override fun changePosition(
+        left: Float?,
+        top: Float?,
+        right: Float?,
+        bottom: Float?,
     ) {
         rectF.apply {
             if (left != null) this.left = left
