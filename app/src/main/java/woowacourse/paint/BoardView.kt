@@ -4,172 +4,67 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
-import android.graphics.Path
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffXfermode
-import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import woowacourse.paint.model.BrushType
 import woowacourse.paint.model.ColorPalette
-import woowacourse.paint.model.Drawing
 import woowacourse.paint.model.DrawingHistory
+import woowacourse.paint.model.brush.Brush
+import woowacourse.paint.model.brush.PaintOptions
 
-class BoardView(context: Context, attrs: AttributeSet? = null) : View(context, attrs) {
+class BoardView(context: Context, attr: AttributeSet? = null) : View(context, attr) {
 
-    private var path = Path()
-    private var paint = Paint()
     private val drawingHistory = DrawingHistory()
-    private lateinit var brushType: BrushType
-    private var startX = DEFAULT_COORDINATE
-    private var startY = DEFAULT_COORDINATE
+    private val currentPaint = Paint()
+    private lateinit var brush: Brush
 
-    fun changeColor(colorPalette: ColorPalette) {
-        val color = ContextCompat.getColor(context, colorPalette.color)
-        setupPaint(selectedColor = color)
-    }
-
-    fun setWidth(width: Float) {
-        setupPaint(selectedWidth = width)
-    }
-
-    fun setBrush(brushType: BrushType) {
-        this.brushType = brushType
-    }
-
-    private fun setupPaint(
-        @ColorInt selectedColor: Int = paint.color,
-        selectedWidth: Float = paint.strokeWidth,
-    ) {
-        paint = Paint(paint)
-
-        paint.color = selectedColor
-        paint.strokeWidth = selectedWidth
-        paint.xfermode = null
-
-        when (brushType) {
-            BrushType.PEN -> setNotFilledPaint()
-            BrushType.FILLED_CIRCLE, BrushType.FILLED_RECTANGLE -> setFilledPaint()
-            BrushType.CIRCLE, BrushType.RECTANGLE -> setNotFilledPaint()
-            BrushType.ERASER -> Unit
-            BrushType.ERASER_LINE -> {
-                setNotFilledPaint()
-                paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
-                setLayerType(LAYER_TYPE_HARDWARE, null)
-            }
-        }
-    }
-
-    private fun setNotFilledPaint() {
-        paint.apply {
-            style = Paint.Style.STROKE
-            strokeCap = Paint.Cap.ROUND
-            strokeJoin = Paint.Join.ROUND
-            isAntiAlias = true
-        }
-    }
-
-    private fun setFilledPaint() {
-        paint.style = Paint.Style.FILL
-    }
-
-    fun eraseAll() {
-        drawingHistory.clearAll()
-        invalidate()
+    init {
+        setLayerType(LAYER_TYPE_HARDWARE, null)
     }
 
     override fun onDraw(canvas: Canvas) {
-        super.onDraw(canvas)
-
-        drawingHistory.history.forEach { (path: Path, paint: Paint) ->
-            canvas.drawPath(path, paint)
+        brush.setPaintingOption(currentPaint)
+        drawingHistory.history.forEach {
+            canvas.drawPath(it.path, it.paint)
         }
-        setupPaint()
-        canvas.drawPath(path, paint)
+        canvas.drawPath(brush.path, brush.paint)
+        super.onDraw(canvas)
     }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> startDrawing(event, brushType)
-            MotionEvent.ACTION_MOVE -> moveDrawing(event, brushType)
-            MotionEvent.ACTION_UP -> endDrawing(brushType)
+            MotionEvent.ACTION_DOWN -> brush.startDrawing(event)
+            MotionEvent.ACTION_MOVE -> brush.moveDrawing(event)
+            MotionEvent.ACTION_UP -> brush.endDrawing(drawingHistory)
         }
         invalidate()
         return true
     }
 
-    private fun startDrawing(event: MotionEvent, brushType: BrushType) {
-        when (brushType) {
-            BrushType.PEN -> {
-                path.moveTo(event.x, event.y)
-                path.lineTo(event.x, event.y)
-            }
-            BrushType.ERASER -> {
-                erasePath(event)
-            }
-            BrushType.ERASER_LINE -> {
-                path.moveTo(event.x, event.y)
-                path.lineTo(event.x, event.y)
-            }
-            else -> {
-                startX = event.x
-                startY = event.y
-            }
+    fun changeColor(colorPalette: ColorPalette) {
+        val color = ContextCompat.getColor(context, colorPalette.color)
+        currentPaint.color = color
+    }
+
+    fun setWidth(width: Float) {
+        currentPaint.strokeWidth = width
+    }
+
+    fun setBrush(brushType: BrushType) {
+        brush = when (brushType) {
+            BrushType.PEN, BrushType.ERASER_LINE, BrushType.RECTANGLE, BrushType.CIRCLE,
+            -> brushType.builder(Paint(PaintOptions.STROKE.paint))
+
+            BrushType.FILLED_RECTANGLE, BrushType.FILLED_CIRCLE,
+            -> brushType.builder(Paint(PaintOptions.FILLED.paint))
         }
     }
 
-    private fun erasePath(event: MotionEvent) {
-        val x = event.x
-        val y = event.y
-        val indexesToRemove = mutableListOf<Int>()
-
-        drawingHistory.history.forEachIndexed { index, drawing ->
-            val bounds = RectF()
-            drawing.path.computeBounds(bounds, true)
-            if (bounds.contains(x, y)) indexesToRemove.add(index)
-        }
-
-        indexesToRemove.asReversed().forEach {
-            drawingHistory.removeAt(it)
-        }
-
+    fun eraseAll() {
+        drawingHistory.clearAll()
         invalidate()
-    }
-
-    private fun moveDrawing(event: MotionEvent, brushType: BrushType) {
-        when (brushType) {
-            BrushType.PEN -> {
-                path.lineTo(event.x, event.y)
-            }
-            BrushType.RECTANGLE, BrushType.FILLED_RECTANGLE -> {
-                path.reset()
-                path.addRect(startX, startY, event.x, event.y, Path.Direction.CCW)
-                invalidate()
-            }
-            BrushType.CIRCLE, BrushType.FILLED_CIRCLE -> {
-                path.reset()
-                path.addCircle(startX, startY, event.x - startX, Path.Direction.CCW)
-                invalidate()
-            }
-            BrushType.ERASER -> Unit
-            BrushType.ERASER_LINE -> {
-                path.lineTo(event.x, event.y)
-            }
-        }
-    }
-
-    private fun endDrawing(brushType: BrushType) {
-        if (brushType != BrushType.ERASER) {
-            drawingHistory.add(Drawing(path, paint))
-            path = Path()
-        }
-    }
-
-    companion object {
-        private const val DEFAULT_COORDINATE = 0.0f
     }
 }
