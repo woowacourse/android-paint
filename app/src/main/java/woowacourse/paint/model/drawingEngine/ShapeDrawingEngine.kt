@@ -4,7 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
 
-abstract class ShapeDrawingEngin : DrawingEngine {
+abstract class ShapeDrawingEngine : DrawingEngine {
 
     abstract override val paint: Paint
     abstract val rectF: RectF
