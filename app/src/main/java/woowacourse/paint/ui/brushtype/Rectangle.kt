@@ -17,10 +17,12 @@ class Rectangle : BrushType {
         path = Path()
         paint = Paint()
 
-        paint.color = color
-        paint.style = Paint.Style.FILL
-        paint.strokeWidth = width
-        paint.xfermode = null
+        paint.apply {
+            this.color = color
+            style = Paint.Style.FILL
+            strokeWidth = width
+            xfermode = null
+        }
     }
 
     override fun startDrawing(pointX: Float, pointY: Float) {

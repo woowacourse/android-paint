@@ -16,12 +16,14 @@ class Eraser : BrushType {
         path = Path()
         paint = Paint()
 
-        paint.isAntiAlias = true
-        paint.style = Paint.Style.STROKE
-        paint.strokeCap = Paint.Cap.ROUND
-        paint.strokeJoin = Paint.Join.ROUND
-        paint.strokeWidth = width
-        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+        paint.apply {
+            isAntiAlias = true
+            style = Paint.Style.STROKE
+            strokeCap = Paint.Cap.ROUND
+            strokeJoin = Paint.Join.ROUND
+            strokeWidth = width
+            xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+        }
     }
 
     override fun startDrawing(pointX: Float, pointY: Float) {

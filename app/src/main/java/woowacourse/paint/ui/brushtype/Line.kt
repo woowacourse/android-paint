@@ -14,13 +14,15 @@ class Line : BrushType {
         path = Path()
         paint = Paint()
 
-        paint.isAntiAlias = true
-        paint.color = color
-        paint.style = Paint.Style.STROKE
-        paint.strokeCap = Paint.Cap.ROUND
-        paint.strokeJoin = Paint.Join.ROUND
-        paint.strokeWidth = width
-        paint.xfermode = null
+        paint.apply {
+            isAntiAlias = true
+            this.color = color
+            style = Paint.Style.STROKE
+            strokeCap = Paint.Cap.ROUND
+            strokeJoin = Paint.Join.ROUND
+            strokeWidth = width
+            xfermode = null
+        }
     }
 
     override fun startDrawing(pointX: Float, pointY: Float) {
