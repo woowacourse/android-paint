@@ -8,12 +8,12 @@ class PenDrawble(
     private val path: Path = Path(),
 ) : CanvasDrawble {
 
-    override fun movePath(x: Float, y: Float) {
+    override fun initPath(x: Float, y: Float) {
         path.moveTo(x, y)
         path.lineTo(x, y)
     }
 
-    override fun initPath(x: Float, y: Float) {
+    override fun movePath(x: Float, y: Float) {
         path.lineTo(x, y)
     }
 

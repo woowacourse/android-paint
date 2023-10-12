@@ -12,11 +12,11 @@ class DrawingTool(
     private val paint: Paint = Paint().applyPaintSetting(),
 ) {
     fun movePath(x: Float, y: Float) {
-        canvasDrawble.movePath(x, y)
+        canvasDrawble.initPath(x, y)
     }
 
     fun initPath(x: Float, y: Float) {
-        canvasDrawble.initPath(x, y)
+        canvasDrawble.movePath(x, y)
     }
 
     fun draw(canvas: Canvas) {

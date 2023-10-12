@@ -11,12 +11,12 @@ class CircleDrawble(
     private var prevX: Float = 0F
     private var prevY: Float = 0F
 
-    override fun movePath(x: Float, y: Float) {
+    override fun initPath(x: Float, y: Float) {
         prevX = x
         prevY = y
     }
 
-    override fun initPath(x: Float, y: Float) {
+    override fun movePath(x: Float, y: Float) {
         path.reset()
         path.addOval(
             prevX,

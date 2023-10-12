@@ -18,12 +18,12 @@ class RectangleDrawble(
            }
        }*/
 
-    override fun movePath(x: Float, y: Float) {
+    override fun initPath(x: Float, y: Float) {
         prevX = x
         prevY = y
     }
 
-    override fun initPath(x: Float, y: Float) {
+    override fun movePath(x: Float, y: Float) {
         path.reset()
         path.addRect(
             java.lang.Float.min(prevX, x),
