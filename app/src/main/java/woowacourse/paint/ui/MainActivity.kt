@@ -4,6 +4,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.R
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.ui.brushtype.Circle
+import woowacourse.paint.ui.brushtype.Eraser
+import woowacourse.paint.ui.brushtype.Line
+import woowacourse.paint.ui.brushtype.Rectangle
 import woowacourse.paint.ui.recyclerview.PaintAdapter
 
 class MainActivity : AppCompatActivity() {
@@ -42,10 +46,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun setOnClickListener() {
         binding.apply {
-            ivCircle.setOnClickListener { cvCanvas.setupCircle() }
-            ivRectangle.setOnClickListener { cvCanvas.setupRectangle() }
-            ivPen.setOnClickListener { cvCanvas.setupPen() }
-            ivEraser.setOnClickListener { cvCanvas.setupEraser() }
+            ivCircle.setOnClickListener {
+                cvCanvas.setupBrush(Circle())
+            }
+            ivRectangle.setOnClickListener {
+                cvCanvas.setupBrush(Rectangle())
+            }
+            ivPen.setOnClickListener {
+                cvCanvas.setupBrush(Line())
+            }
+            ivEraser.setOnClickListener {
+                cvCanvas.setupBrush(Eraser())
+            }
             ivReset.setOnClickListener { cvCanvas.resetCanvas() }
         }
     }

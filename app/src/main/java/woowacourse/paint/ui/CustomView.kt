@@ -13,10 +13,8 @@ import com.example.domain.BrushType.RECTANGLE
 import woowacourse.paint.Painting
 import woowacourse.paint.Paintings
 import woowacourse.paint.ui.brushtype.BrushType
-import woowacourse.paint.ui.brushtype.Circle
 import woowacourse.paint.ui.brushtype.Eraser
 import woowacourse.paint.ui.brushtype.Line
-import woowacourse.paint.ui.brushtype.Rectangle
 
 class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val paintings = Paintings()
@@ -56,27 +54,9 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         return true
     }
 
-    fun setupPen() {
+    fun setupBrush(otherBrush: BrushType) {
         val paint = brush.getPaint()
-        brush = Line()
-        brush.setupPaint(paint.strokeWidth, paint.color)
-    }
-
-    fun setupCircle() {
-        val paint = brush.getPaint()
-        brush = Circle()
-        brush.setupPaint(paint.strokeWidth, paint.color)
-    }
-
-    fun setupRectangle() {
-        val paint = brush.getPaint()
-        brush = Rectangle()
-        brush.setupPaint(paint.strokeWidth, paint.color)
-    }
-
-    fun setupEraser() {
-        val paint = brush.getPaint()
-        brush = Eraser()
+        brush = otherBrush
         brush.setupPaint(paint.strokeWidth, paint.color)
     }
 
@@ -94,24 +74,24 @@ class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         when (brush.type) {
             CIRCLE -> {
                 paintings.storePainting(Painting(currentPaint, currentPath))
-                setupCircle()
+                setupBrush(brush)
             }
 
             RECTANGLE -> {
                 paintings.storePainting(Painting(currentPaint, currentPath))
-                setupRectangle()
+                setupBrush(brush)
             }
 
             LINE -> {
                 (brush as Line).doActionUp(pointX, pointY)
                 paintings.storePainting(Painting(currentPaint, currentPath))
-                setupPen()
+                setupBrush(brush)
             }
 
             ERASER -> {
                 (brush as Eraser).doActionUp(pointX, pointY)
                 paintings.storePainting(Painting(currentPaint, currentPath))
-                setupEraser()
+                setupBrush(brush)
             }
         }
     }
