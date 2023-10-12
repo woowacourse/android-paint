@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import com.example.domain.BrushType.LINE
+import com.example.domain.Coordinate
 
 class Line : BrushType {
     override var type = LINE
@@ -19,15 +20,15 @@ class Line : BrushType {
         xfermode = null
     }
 
-    override fun startDrawing(pointX: Float, pointY: Float) {
-        path.moveTo(pointX, pointY)
+    override fun startDrawing(coordinate: Coordinate) {
+        path.moveTo(coordinate.pointX, coordinate.pointY)
     }
 
-    override fun moveDrawing(pointX: Float, pointY: Float) {
-        path.lineTo(pointX, pointY)
+    override fun moveDrawing(coordinate: Coordinate) {
+        path.lineTo(coordinate.pointX, coordinate.pointY)
     }
 
-    fun doActionUp(pointX: Float, pointY: Float) {
-        path.lineTo(pointX, pointY)
+    fun doActionUp(coordinate: Coordinate) {
+        path.lineTo(coordinate.pointX, coordinate.pointY)
     }
 }

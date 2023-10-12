@@ -5,6 +5,7 @@ import android.graphics.Path
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 import com.example.domain.BrushType.ERASER
+import com.example.domain.Coordinate
 
 class Eraser : BrushType {
     override var type = ERASER
@@ -19,15 +20,15 @@ class Eraser : BrushType {
         xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
     }
 
-    override fun startDrawing(pointX: Float, pointY: Float) {
-        path.moveTo(pointX, pointY)
+    override fun startDrawing(coordinate: Coordinate) {
+        path.moveTo(coordinate.pointX, coordinate.pointY)
     }
 
-    override fun moveDrawing(pointX: Float, pointY: Float) {
-        path.lineTo(pointX, pointY)
+    override fun moveDrawing(coordinate: Coordinate) {
+        path.lineTo(coordinate.pointX, coordinate.pointY)
     }
 
-    fun doActionUp(pointX: Float, pointY: Float) {
-        path.lineTo(pointX, pointY)
+    fun doActionUp(coordinate: Coordinate) {
+        path.lineTo(coordinate.pointX, coordinate.pointY)
     }
 }

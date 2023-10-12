@@ -10,6 +10,7 @@ import com.example.domain.BrushType.CIRCLE
 import com.example.domain.BrushType.ERASER
 import com.example.domain.BrushType.LINE
 import com.example.domain.BrushType.RECTANGLE
+import com.example.domain.Coordinate
 import woowacourse.paint.ui.brushtype.BrushType
 import woowacourse.paint.ui.brushtype.Circle
 import woowacourse.paint.ui.brushtype.Eraser
@@ -41,10 +42,10 @@ class PaintingPaper(context: Context, attrs: AttributeSet) : View(context, attrs
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                brush.startDrawing(pointX, pointY)
+                brush.startDrawing(Coordinate(pointX, pointY))
             }
             MotionEvent.ACTION_MOVE -> {
-                brush.moveDrawing(pointX, pointY)
+                brush.moveDrawing(Coordinate(pointX, pointY))
             }
             MotionEvent.ACTION_UP -> {
                 doActionUp(pointX, pointY)
@@ -88,13 +89,13 @@ class PaintingPaper(context: Context, attrs: AttributeSet) : View(context, attrs
             }
 
             LINE -> {
-                (brush as Line).doActionUp(pointX, pointY)
+                (brush as Line).doActionUp(Coordinate(pointX, pointY))
                 paintings.storePainting(Painting(currentPaint, currentPath))
                 setupBrush(Line())
             }
 
             ERASER -> {
-                (brush as Eraser).doActionUp(pointX, pointY)
+                (brush as Eraser).doActionUp(Coordinate(pointX, pointY))
                 paintings.storePainting(Painting(currentPaint, currentPath))
                 setupBrush(Eraser())
             }

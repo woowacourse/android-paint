@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import com.example.domain.BrushType.RECTANGLE
+import com.example.domain.Coordinate
 
 class Rectangle : BrushType {
     override var type = RECTANGLE
@@ -19,14 +20,20 @@ class Rectangle : BrushType {
     private var startPointX = START_DEFAULT_COORDINATE
     private var startPointY = START_DEFAULT_COORDINATE
 
-    override fun startDrawing(pointX: Float, pointY: Float) {
-        startPointX = pointX
-        startPointY = pointY
+    override fun startDrawing(coordinate: Coordinate) {
+        startPointX = coordinate.pointX
+        startPointY = coordinate.pointY
     }
 
-    override fun moveDrawing(pointX: Float, pointY: Float) {
+    override fun moveDrawing(coordinate: Coordinate) {
         path.reset()
-        path.addRect(startPointX, startPointY, pointX, pointY, Path.Direction.CCW)
+        path.addRect(
+            startPointX,
+            startPointY,
+            coordinate.pointX,
+            coordinate.pointY,
+            Path.Direction.CCW,
+        )
     }
 
     companion object {

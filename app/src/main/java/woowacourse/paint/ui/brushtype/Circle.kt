@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import com.example.domain.BrushType.CIRCLE
+import com.example.domain.Coordinate
 
 class Circle : BrushType {
     override var type = CIRCLE
@@ -19,14 +20,20 @@ class Circle : BrushType {
     private var startPointX = START_DEFAULT_COORDINATE
     private var startPointY = START_DEFAULT_COORDINATE
 
-    override fun startDrawing(pointX: Float, pointY: Float) {
-        startPointX = pointX
-        startPointY = pointY
+    override fun startDrawing(coordinate: Coordinate) {
+        startPointX = coordinate.pointX
+        startPointY = coordinate.pointY
     }
 
-    override fun moveDrawing(pointX: Float, pointY: Float) {
+    override fun moveDrawing(coordinate: Coordinate) {
         path.reset()
-        path.addOval(startPointX, startPointY, pointX, pointY, Path.Direction.CCW)
+        path.addOval(
+            startPointX,
+            startPointY,
+            coordinate.pointX,
+            coordinate.pointY,
+            Path.Direction.CCW,
+        )
     }
 
     companion object {
