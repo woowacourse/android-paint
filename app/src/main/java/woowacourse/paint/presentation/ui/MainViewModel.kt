@@ -3,9 +3,9 @@ package woowacourse.paint.presentation.ui
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import woowacourse.paint.data.model.Brush
-import woowacourse.paint.data.model.Color
-import woowacourse.paint.data.model.SettingMode
+import woowacourse.paint.presentation.ui.model.Brush
+import woowacourse.paint.presentation.ui.model.Color
+import woowacourse.paint.presentation.ui.model.SettingMode
 import woowacourse.paint.presentation.ui.uiState.MainUiState
 
 class MainViewModel : ViewModel() {

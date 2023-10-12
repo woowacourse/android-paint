@@ -5,11 +5,11 @@
 
     <data>
 
-        <import type="woowacourse.paint.data.model.SettingMode" />
+        <import type="woowacourse.paint.presentation.ui.model.SettingMode" />
 
-        <import type="woowacourse.paint.data.model.Color" />
+        <import type="woowacourse.paint.presentation.ui.model.Color" />
 
-        <import type="woowacourse.paint.data.model.Brush" />
+        <import type="woowacourse.paint.presentation.ui.model.Brush" />
 
         <variable
             name="vm"

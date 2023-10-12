@@ -7,8 +7,8 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import woowacourse.paint.data.model.Brush
-import woowacourse.paint.data.model.GraphicPrimitive
+import woowacourse.paint.presentation.ui.model.Brush
+import woowacourse.paint.presentation.ui.model.GraphicPrimitive
 
 class PaintBoardView(
     context: Context,

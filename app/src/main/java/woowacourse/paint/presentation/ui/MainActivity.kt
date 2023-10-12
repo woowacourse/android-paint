@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import woowacourse.paint.data.model.SettingMode
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.presentation.ui.model.SettingMode
 
 class MainActivity : AppCompatActivity() {
 
