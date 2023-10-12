@@ -149,8 +149,8 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     )
 
     private fun addCurrentGraphicObjectToGraphicObjects() {
-        if (currentGraphicObject != null) {
-            graphicObjects.add(currentGraphicObject!!)
+        currentGraphicObject?.let { graphicObject ->
+            graphicObjects.add(graphicObject)
         }
     }
 
