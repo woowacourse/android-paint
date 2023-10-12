@@ -1,5 +1,5 @@
 package woowacourse.paint.data.model
 
 enum class SettingMode {
-    NONE, COLOR, THICKNESS
+    NONE, COLOR, THICKNESS, BRUSH
 }

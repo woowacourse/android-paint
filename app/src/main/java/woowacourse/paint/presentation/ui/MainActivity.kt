@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.onColorChangeButtonClick = ::onColorChangeButtonClick
         binding.onThicknessChangeButtonClick = ::onThicknessChangeButtonClick
+        binding.onBrushChangeButtonClick = ::onBrushChangeButtonClick
     }
 
     private fun onColorChangeButtonClick() {
@@ -43,6 +44,14 @@ class MainActivity : AppCompatActivity() {
             viewModel.finishSetting()
         } else {
             viewModel.startThicknessSelection()
+        }
+    }
+
+    private fun onBrushChangeButtonClick() {
+        if (viewModel.uiState.value!!.settingMode == SettingMode.BRUSH) {
+            viewModel.finishSetting()
+        } else {
+            viewModel.startBrushSelection()
         }
     }
 

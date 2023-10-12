@@ -20,6 +20,10 @@ class MainViewModel : ViewModel() {
         _uiState.value = _uiState.value!!.copy(settingMode = SettingMode.THICKNESS)
     }
 
+    fun startBrushSelection() {
+        _uiState.value = _uiState.value!!.copy(settingMode = SettingMode.BRUSH)
+    }
+
     fun finishSetting() {
         _uiState.value = _uiState.value!!.copy(settingMode = SettingMode.NONE)
     }
