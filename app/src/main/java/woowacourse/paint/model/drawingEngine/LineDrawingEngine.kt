@@ -5,8 +5,8 @@ import android.graphics.Paint
 import android.graphics.Path
 
 data class LineDrawingEngine(
+    override val paint: Paint = Paint(),
     val path: Path = Path(),
-    val paint: Paint = Paint(),
 ) : DrawingEngine {
 
     override fun draw(canvas: Canvas) {

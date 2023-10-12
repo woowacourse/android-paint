@@ -7,8 +7,8 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 
 data class EraserDrawingEngine(
+    override val paint: Paint = Paint(),
     val path: Path = Path(),
-    val paint: Paint = Paint(),
 ) : DrawingEngine {
 
     init {
