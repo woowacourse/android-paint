@@ -128,15 +128,13 @@ class PaintingView @JvmOverloads constructor(context: Context, attrs: AttributeS
     }
 
     fun undo() {
-        _paintingHistory.add(_paintings.lastOrNull() ?: return)
-        _paintings.removeLast()
+        _paintingHistory.add(_paintings.removeLastOrNull() ?: return)
         currentPaintTool = currentPaintTool.newInstance()
         invalidate()
     }
 
     fun redo() {
-        _paintings.add(_paintingHistory.lastOrNull() ?: return)
-        _paintingHistory.removeLast()
+        _paintings.add(_paintingHistory.removeLastOrNull() ?: return)
         invalidate()
     }
 
