@@ -111,7 +111,6 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:listitem="@layout/item_main_brush_type" />
 
-
         <Button
             android:id="@+id/btn_color_change"
             android:layout_width="0dp"
