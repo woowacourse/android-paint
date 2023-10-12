@@ -13,18 +13,17 @@ abstract class PathDrawingEngine : DrawingEngine {
         canvas.drawPath(path, paint)
     }
 
-    override fun draw(pointX: Float, pointY: Float) {
-        quadTo(pointX, pointY)
+    fun draw(fromX: Float, fromY: Float, toX: Float, toY: Float) {
+        quadTo(fromX, fromY, toX, toY)
     }
 
     fun moveTo(pointX: Float, pointY: Float) {
         path.moveTo(pointX, pointY)
     }
 
-    fun quadTo(pointX: Float, pointY: Float) {
-        val nextX = (DrawingEngines.lastX + pointX) / 2
-        val nextY = (DrawingEngines.lastY + pointY) / 2
-        path.quadTo(DrawingEngines.lastX, DrawingEngines.lastY, nextX, nextY)
-        DrawingEngines.updateLastPoint(pointX, pointY)
+    private fun quadTo(fromX: Float, fromY: Float, toX: Float, toY: Float) {
+        val nextX = (fromX + toX) / 2
+        val nextY = (fromY + toY) / 2
+        path.quadTo(fromX, fromY, nextX, nextY)
     }
 }

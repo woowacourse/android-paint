@@ -30,7 +30,6 @@ class DrawingEngines(value: List<DrawingEngine> = mutableListOf()) {
      */
     fun add(drawingEngine: DrawingEngine, pointX: Float, pointY: Float) {
         _value.add(drawingEngine)
-        updateLastPoint(pointX, pointY)
         undoStack.clear()
     }
 
@@ -55,16 +54,4 @@ class DrawingEngines(value: List<DrawingEngine> = mutableListOf()) {
     }
 
     private fun throwNoShapeError(): Nothing = throw IllegalArgumentException("도형이 존재하지 않습니다.")
-
-    companion object {
-        var lastX: Float = 0f
-            private set
-        var lastY: Float = 0f
-            private set
-
-        fun updateLastPoint(x: Float, y: Float) {
-            lastX = x
-            lastY = y
-        }
-    }
 }

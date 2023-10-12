@@ -8,6 +8,8 @@ import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.model.DrawMode
 import woowacourse.paint.model.drawingEngine.DrawingEngines
+import woowacourse.paint.model.drawingEngine.PathDrawingEngine
+import woowacourse.paint.model.drawingEngine.ShapeDrawingEngine
 import woowacourse.paint.model.drawingEngine.path.LineDrawingEngine
 import woowacourse.paint.model.drawingEngine.path.PathEraserDrawingEngine
 import woowacourse.paint.model.drawingEngine.shape.OvalDrawingEngine
@@ -23,6 +25,9 @@ class PaintView(
 
     private val drawingEngines: DrawingEngines = DrawingEngines()
     var pen: Pen = Pen.createDefaultPenInstance()
+
+    private var lastX: Float = 0f
+    private var lastY: Float = 0f
 
     init {
         setLayerType(LAYER_TYPE_HARDWARE, null)
@@ -64,7 +69,13 @@ class PaintView(
     }
 
     private fun moveShape(pointX: Float, pointY: Float) {
-        drawingEngines.last().draw(pointX, pointY)
+        when (val last = drawingEngines.last()) {
+            is ShapeDrawingEngine -> last.draw(pointX, pointY)
+            is PathDrawingEngine -> {
+                last.draw(lastX, lastY, pointX, pointY)
+                updateLastPoint(pointX, pointY)
+            }
+        }
         invalidate()
     }
 
@@ -73,6 +84,7 @@ class PaintView(
         val addedLineDrawingEngine = LineDrawingEngine(paint = paint)
         drawingEngines.add(addedLineDrawingEngine, pointX, pointY)
         addedLineDrawingEngine.moveTo(pointX, pointY)
+        updateLastPoint(pointX, pointY)
     }
 
     private fun addRectangle(pointX: Float, pointY: Float) {
@@ -96,6 +108,7 @@ class PaintView(
         val addedEraserLineDrawingEngin = PathEraserDrawingEngine(paint = paint)
         drawingEngines.add(addedEraserLineDrawingEngin, pointX, pointY)
         addedEraserLineDrawingEngin.moveTo(pointX, pointY)
+        updateLastPoint(pointX, pointY)
     }
 
     fun undo() {
@@ -111,5 +124,10 @@ class PaintView(
     fun clear() {
         drawingEngines.clear(this)
         invalidate()
+    }
+
+    private fun updateLastPoint(x: Float, y: Float) {
+        lastX = x
+        lastY = y
     }
 }

@@ -8,6 +8,4 @@ sealed interface DrawingEngine {
     val paint: Paint
 
     fun draw(canvas: Canvas)
-
-    fun draw(pointX: Float, pointY: Float)
 }
