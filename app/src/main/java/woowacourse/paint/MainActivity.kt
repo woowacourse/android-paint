@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity() {
             with(toolButtonBinding) {
                 onClick = viewModel::pickTool
                 drawingTool = toolAssigned
-                name = getString(toolAssigned.toUiModel().toolNameId)
+                drawingToolName = getString(toolAssigned.toUiModel().toolNameId)
             }
             toolButtons.add(toolButtonBinding)
         }

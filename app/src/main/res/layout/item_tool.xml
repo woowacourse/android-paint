@@ -8,7 +8,7 @@
             type="woowacourse.paint.canvas.DrawingTool" />
 
         <variable
-            name="name"
+            name="drawingToolName"
             type="String" />
 
         <variable
@@ -25,5 +25,5 @@
         android:textSize="12sp"
         android:backgroundTint="@color/brush_selected"
         android:onClick="@{() -> onClick.invoke(drawingTool)}"
-        android:text="@{name}" />
+        android:text="@{drawingToolName}" />
 </layout>
