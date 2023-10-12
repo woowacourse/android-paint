@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <woowacourse.paint.ui.CustomView
+        <woowacourse.paint.ui.PaintingPaper
             android:id="@+id/cv_canvas"
             android:layout_width="0dp"
             android:layout_height="0dp"

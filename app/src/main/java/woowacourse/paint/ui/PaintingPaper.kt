@@ -16,7 +16,7 @@ import woowacourse.paint.ui.brushtype.BrushType
 import woowacourse.paint.ui.brushtype.Eraser
 import woowacourse.paint.ui.brushtype.Line
 
-class CustomView(context: Context, attrs: AttributeSet) : View(context, attrs) {
+class PaintingPaper(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val paintings = Paintings()
     private var brush: BrushType = Line()
 
