@@ -1,9 +1,13 @@
 package woowacourse.paint.model
 
+import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
+import androidx.annotation.ColorRes
+import woowacourse.paint.R
+import woowacourse.paint.customview.PaintBoard
 import woowacourse.paint.shape.Line
 import woowacourse.paint.shape.Shape
 
@@ -42,5 +46,23 @@ class Painting(
         }
         paint.style = style
         return Painting(shape, paint)
+    }
+
+    companion object {
+        @ColorRes
+        private val DEFAULT_COLOR = R.color.red
+        fun newInstance(context: Context): Painting {
+            return Painting(
+                shape = Line(),
+                paint = Paint().apply {
+                    isAntiAlias = true
+                    style = Paint.Style.STROKE
+                    strokeWidth = PaintBoard.DEFAULT_SIZE
+                    strokeCap = Paint.Cap.ROUND
+                    strokeJoin = Paint.Join.ROUND
+                    color = context.getColor(DEFAULT_COLOR)
+                },
+            )
+        }
     }
 }

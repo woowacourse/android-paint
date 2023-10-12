@@ -3,7 +3,6 @@ package woowacourse.paint.customview
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Paint
 import android.graphics.Paint.Style.FILL
 import android.graphics.Paint.Style.STROKE
 import android.util.AttributeSet
@@ -29,7 +28,7 @@ import woowacourse.paint.shape.Rectangle
 class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private val history: History = History()
-    private lateinit var painting: Painting
+    private var painting: Painting = Painting.newInstance(context)
 
     init {
         setupPaintSetting()
@@ -37,17 +36,6 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private fun setupPaintSetting() {
         setLayerType(LAYER_TYPE_HARDWARE, null)
-        painting = Painting(
-            shape = Line(),
-            paint = Paint().apply {
-                isAntiAlias = true
-                style = STROKE
-                strokeWidth = DEFAULT_SIZE
-                strokeCap = Paint.Cap.ROUND
-                strokeJoin = Paint.Join.ROUND
-                color = context.getColor(DEFAULT_COLOR)
-            },
-        )
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -123,8 +111,6 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     companion object {
-        @ColorRes
-        private val DEFAULT_COLOR = R.color.red
         const val DEFAULT_SIZE = 20F
 
         @ArrayRes
