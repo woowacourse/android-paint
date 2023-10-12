@@ -24,11 +24,11 @@ class Eraser : BrushType {
         paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
     }
 
-    override fun doActionDown(pointX: Float, pointY: Float) {
+    override fun startDrawing(pointX: Float, pointY: Float) {
         path.moveTo(pointX, pointY)
     }
 
-    override fun doActionMove(pointX: Float, pointY: Float) {
+    override fun moveDrawing(pointX: Float, pointY: Float) {
         path.lineTo(pointX, pointY)
     }
 

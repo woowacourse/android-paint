@@ -23,12 +23,12 @@ class Circle : BrushType {
         paint.xfermode = null
     }
 
-    override fun doActionDown(pointX: Float, pointY: Float) {
+    override fun startDrawing(pointX: Float, pointY: Float) {
         startPointX = pointX
         startPointY = pointY
     }
 
-    override fun doActionMove(pointX: Float, pointY: Float) {
+    override fun moveDrawing(pointX: Float, pointY: Float) {
         path.reset()
         path.addOval(startPointX, startPointY, pointX, pointY, Path.Direction.CCW)
     }

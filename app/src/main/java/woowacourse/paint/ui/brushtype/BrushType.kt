@@ -9,8 +9,8 @@ interface BrushType {
     var type: BrushType
 
     fun setupPaint(width: Float = 0F, color: Int = Color.BLACK)
-    fun doActionDown(pointX: Float, pointY: Float)
-    fun doActionMove(pointX: Float, pointY: Float)
+    fun startDrawing(pointX: Float, pointY: Float)
+    fun moveDrawing(pointX: Float, pointY: Float)
     fun getPath(): Path
     fun getPaint(): Paint
     fun setStrokeWidth(width: Float)

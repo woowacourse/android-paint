@@ -40,10 +40,10 @@ class PaintingPaper(context: Context, attrs: AttributeSet) : View(context, attrs
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                brush.doActionDown(pointX, pointY)
+                brush.startDrawing(pointX, pointY)
             }
             MotionEvent.ACTION_MOVE -> {
-                brush.doActionMove(pointX, pointY)
+                brush.moveDrawing(pointX, pointY)
             }
             MotionEvent.ACTION_UP -> {
                 doActionUp(pointX, pointY)
