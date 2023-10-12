@@ -2,7 +2,7 @@ package woowacourse.paint.drawingMenu.brushSelection
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.paint.model.BrushType
+import woowacourse.paint.model.brush.BrushType
 
 class BrushSelectionAdapter(private val onClickColorListener: (BrushType) -> Unit) :
     RecyclerView.Adapter<BrushSelectionViewHolder>() {

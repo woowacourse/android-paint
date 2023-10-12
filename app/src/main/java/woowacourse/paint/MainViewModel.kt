@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import woowacourse.paint.event.Event
-import woowacourse.paint.model.BrushType
 import woowacourse.paint.model.ColorPalette
+import woowacourse.paint.model.brush.BrushType
 
 class MainViewModel : ViewModel() {
 

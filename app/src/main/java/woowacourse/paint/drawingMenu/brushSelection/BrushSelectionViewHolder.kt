@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.paint.databinding.ItemOptionSelectionBinding
-import woowacourse.paint.model.BrushType
+import woowacourse.paint.model.brush.BrushType
 
 class BrushSelectionViewHolder(
     private val binding: ItemOptionSelectionBinding,

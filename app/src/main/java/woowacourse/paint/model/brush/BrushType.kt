@@ -1,9 +1,8 @@
-package woowacourse.paint.model
+package woowacourse.paint.model.brush
 
 import android.graphics.Paint
 import androidx.annotation.DrawableRes
 import woowacourse.paint.R
-import woowacourse.paint.model.brush.Brush
 import woowacourse.paint.model.brush.line.EraserBrush
 import woowacourse.paint.model.brush.line.PenBrush
 import woowacourse.paint.model.brush.shape.CircleBrush

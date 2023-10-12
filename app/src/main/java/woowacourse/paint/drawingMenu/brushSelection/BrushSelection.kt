@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import woowacourse.paint.databinding.ViewBrushSelectionBinding
-import woowacourse.paint.model.BrushType
+import woowacourse.paint.model.brush.BrushType
 
 class BrushSelection(
     context: Context,

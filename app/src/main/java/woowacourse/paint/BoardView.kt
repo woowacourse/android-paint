@@ -8,10 +8,10 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.ContextCompat
-import woowacourse.paint.model.BrushType
 import woowacourse.paint.model.ColorPalette
 import woowacourse.paint.model.DrawingHistory
 import woowacourse.paint.model.brush.Brush
+import woowacourse.paint.model.brush.BrushType
 import woowacourse.paint.model.brush.PaintOptions
 
 class BoardView(context: Context, attr: AttributeSet? = null) : View(context, attr) {
