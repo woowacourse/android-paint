@@ -9,10 +9,12 @@ class BrushAdapter(
     private val onBrushClick: (Brush) -> Unit,
 ) : RecyclerView.Adapter<BrushViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BrushViewHolder =
-        BrushViewHolder(parent)
+        BrushViewHolder(parent) { position ->
+            onBrushClick(items[position])
+        }
 
     override fun onBindViewHolder(holder: BrushViewHolder, position: Int) {
-        holder.bind(items[position], onBrushClick)
+        holder.bind(items[position])
     }
 
     override fun getItemCount(): Int = items.size

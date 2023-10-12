@@ -9,17 +9,20 @@ import woowacourse.paint.model.Brush
 
 class BrushViewHolder(
     parent: ViewGroup,
+    onBrushClick: (Int) -> Unit,
 ) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.item_brush, parent, false),
 ) {
     private val binding: ItemBrushBinding = ItemBrushBinding.bind(itemView)
 
-    fun bind(brush: Brush, onBrushClick: (Brush) -> Unit) {
-        binding.brush = brush
-
-        binding.btnBrush.setOnClickListener {
-            onBrushClick.invoke(brush)
+    init {
+        itemView.setOnClickListener {
+            onBrushClick(adapterPosition)
         }
+    }
+
+    fun bind(brush: Brush) {
+        binding.brush = brush
 
         with(itemView.context) {
             binding.btnBrush.text = when (brush) {
