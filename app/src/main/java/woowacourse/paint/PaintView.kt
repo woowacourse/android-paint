@@ -10,8 +10,8 @@ import woowacourse.paint.model.DrawMode
 import woowacourse.paint.model.drawingEngine.DrawingEngines
 import woowacourse.paint.model.drawingEngine.EraserDrawingEngine
 import woowacourse.paint.model.drawingEngine.LineDrawingEngine
-import woowacourse.paint.model.drawingEngine.OvalDrawingEngine
-import woowacourse.paint.model.drawingEngine.RectangleDrawingEngine
+import woowacourse.paint.model.drawingEngine.shape.OvalDrawingEngine
+import woowacourse.paint.model.drawingEngine.shape.RectangleDrawingEngine
 import woowacourse.paint.model.pen.Pen
 
 class PaintView(
