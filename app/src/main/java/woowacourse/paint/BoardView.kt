@@ -26,9 +26,7 @@ class BoardView(context: Context, attr: AttributeSet? = null) : View(context, at
 
     override fun onDraw(canvas: Canvas) {
         brush.setPaintingOption(currentPaint)
-        drawingHistory.history.forEach {
-            canvas.drawPath(it.path, it.paint)
-        }
+        drawingHistory.drawAll(canvas)
         canvas.drawPath(brush.path, brush.paint)
         super.onDraw(canvas)
     }

@@ -1,20 +1,16 @@
 package woowacourse.paint.model
 
-import android.graphics.Paint
-import android.graphics.Path
+import android.graphics.Canvas
 
 class DrawingHistory {
 
     private val _history = mutableListOf<Drawing>()
-    val history: List<Drawing>
-        get() = _history.map {
-            it.copy(
-                path = Path(it.path),
-                paint = Paint(it.paint),
-            )
-        }.toList()
 
     fun add(drawing: Drawing) = _history.add(drawing)
+
+    fun drawAll(canvas: Canvas) {
+        _history.forEach { canvas.drawPath(it.path, it.paint) }
+    }
 
     fun clearAll() = _history.clear()
 }
