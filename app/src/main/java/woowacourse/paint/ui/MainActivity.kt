@@ -1,7 +1,6 @@
 package woowacourse.paint.ui
 
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import dagger.hilt.android.AndroidEntryPoint
 import woowacourse.paint.R
@@ -15,8 +14,6 @@ import woowacourse.paint.model.BrushRect
 class MainActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-
-    private val vm: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,8 +33,6 @@ class MainActivity : AppCompatActivity() {
         paintingPaper.onUndoHistoryChangeListener = { btnUndo.isEnabled = it }
 
         paintingPaper.onRedoHistoryChangeListener = { btnRedo.isEnabled = it }
-
-        paintingPaper.brushCareTaker = vm.brushCareTaker
 
         rgShapes.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {

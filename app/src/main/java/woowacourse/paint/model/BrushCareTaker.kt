@@ -1,8 +1,11 @@
 package woowacourse.paint.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import java.util.Stack
 
-class BrushCareTaker {
+@Parcelize
+class BrushCareTaker : Parcelable {
     private val mementos = Stack<BrushMemento>()
     private val undoMementos = Stack<BrushMemento>()
 

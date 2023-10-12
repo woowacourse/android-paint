@@ -5,6 +5,8 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.drawable.ColorDrawable
+import android.os.Bundle
+import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -15,7 +17,7 @@ import woowacourse.paint.model.BrushPen
 import woowacourse.paint.model.Brushes
 
 class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    var brushCareTaker = BrushCareTaker()
+    private var brushCareTaker: BrushCareTaker = BrushCareTaker()
         set(value) {
             brushes = value.currentMemento.brushes
             field = value
@@ -68,6 +70,20 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
         MotionEvent.ACTION_MOVE -> onActionMove(event)
         MotionEvent.ACTION_UP -> onActionUp(event)
         else -> super.onTouchEvent(event)
+    }
+
+    override fun onSaveInstanceState(): Parcelable {
+        return Bundle().apply {
+            putParcelable(KEY_SUPER_STATE, super.onSaveInstanceState())
+            putParcelable(KEY_BRUSH_CARE_TAKER, brushCareTaker)
+        }
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        if (state is Bundle) {
+            brushCareTaker = state.getParcelable(KEY_BRUSH_CARE_TAKER)!!
+            super.onRestoreInstanceState(state.getParcelable(KEY_SUPER_STATE))
+        }
     }
 
     private fun onActionDown(event: MotionEvent): Boolean {
@@ -124,5 +140,10 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
         onUndoHistoryChangeListener(brushCareTaker.hasHistory)
         onRedoHistoryChangeListener(brushCareTaker.hasUndoHistory)
         invalidate()
+    }
+
+    companion object {
+        private const val KEY_SUPER_STATE = "KEY_SUPER_STATE"
+        private const val KEY_BRUSH_CARE_TAKER = "KEY_BRUSH_CARE_TAKER"
     }
 }
