@@ -4,9 +4,6 @@
 
     <data>
 
-        <variable
-            name="brush"
-            type="woowacourse.paint.model.Brush" />
     </data>
 
     <Button

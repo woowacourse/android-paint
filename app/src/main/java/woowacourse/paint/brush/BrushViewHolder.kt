@@ -22,8 +22,6 @@ class BrushViewHolder(
     }
 
     fun bind(brush: Brush) {
-        binding.brush = brush
-
         with(itemView.context) {
             binding.btnBrush.text = when (brush) {
                 Brush.PEN -> getString(R.string.main_btn_change_brush_pen)
