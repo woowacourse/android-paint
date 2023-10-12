@@ -15,11 +15,11 @@ class Rectangle(private var paint: Paint) : Brush {
     private var path: Path = Path()
 
     private fun addShape() {
-        val minX = min(startPoint.x, endPoint.x)
-        val maxX = max(startPoint.x, endPoint.x)
-        val minY = min(startPoint.y, endPoint.y)
-        val maxY = max(startPoint.y, endPoint.y)
-        path.addRect(minX, minY, maxX, maxY, Path.Direction.CW)
+        val left = min(startPoint.x, endPoint.x)
+        val right = max(startPoint.x, endPoint.x)
+        val bottom = min(startPoint.y, endPoint.y)
+        val top = max(startPoint.y, endPoint.y)
+        path.addRect(left, top, right, bottom, Path.Direction.CW)
     }
 
     override fun draw(canvas: Canvas) {

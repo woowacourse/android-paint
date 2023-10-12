@@ -17,8 +17,8 @@ class Circle(private var paint: Paint) : Brush {
     private fun addShape() {
         val left = min(startPoint.x, endPoint.x)
         val right = max(startPoint.x, endPoint.x)
-        val top = min(startPoint.y, endPoint.y)
-        val bottom = max(startPoint.y, endPoint.y)
+        val bottom = min(startPoint.y, endPoint.y)
+        val top = max(startPoint.y, endPoint.y)
         path.addOval(left, top, right, bottom, Path.Direction.CW)
     }
 
