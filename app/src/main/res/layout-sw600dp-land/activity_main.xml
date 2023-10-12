@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="woowacourse.paint.ui.main.MainViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tb_main_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/app_bar_color"
+            app:contentInsetLeft="0dp"
+            app:contentInsetStart="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="12dp">
+
+                <ImageView
+                    android:id="@+id/btn_clear"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/main_toolbar_clear"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_trash_23_26"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <ImageView
+                    android:id="@+id/btn_undo"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="8dp"
+                    android:contentDescription="@string/main_toolbar_undo"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/baseline_undo_24"
+                    app:layout_constraintEnd_toStartOf="@id/btn_redo" />
+
+                <ImageView
+                    android:id="@+id/btn_redo"
+                    android:layout_width="40dp"
+                    android:layout_height="match_parent"
+                    android:contentDescription="@string/main_toolbar_redo"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/baseline_redo_24"
+                    app:layout_constraintEnd_toEndOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <woowacourse.paint.customView.PaintBoard
+            android:id="@+id/pb_board"
+            paint_board_drawn_contents="@={vm.drawnPaths}"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:brushType="@{vm.appliedBrushType}"
+            app:currentColor="@{context.getColor(vm.appliedColor.colorRes)}"
+            app:currentStrokeWidth="@{vm.appliedStroke}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tb_main_toolbar"
+            app:maxStrokeWidth="@{vm.maxStrokeWidth}"
+            app:minStrokeWidth="@{vm.minStrokeWidth}" />
+
+        <com.google.android.material.slider.Slider
+            android:id="@+id/slider_pen_stroke_width"
+            registerSliderOnTouchListener="@{vm.onSelectedStrokeChange}"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:value="@{vm.appliedStroke}"
+            android:valueFrom="@{vm.minStrokeWidth}"
+            android:valueTo="@{vm.maxStrokeWidth}"
+            android:visibility="@{vm.isVisibleStrokeWidth() ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintEnd_toEndOf="@id/gl_center"
+            app:layout_constraintStart_toEndOf="@id/btn_stroke_change"
+            app:layout_constraintTop_toTopOf="@id/btn_stroke_change" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_colors"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:orientation="horizontal"
+            android:visibility="@{vm.isVisibleColorList() ? View.VISIBLE : View.INVISIBLE}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="@id/gl_center"
+            app:layout_constraintStart_toEndOf="@id/btn_color_change"
+            app:layout_constraintTop_toBottomOf="@id/slider_pen_stroke_width"
+            tools:listitem="@layout/item_main_brush_color" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_brush_types"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="@{vm.isVisibleBrushTypeList() ? View.VISIBLE : View.INVISIBLE}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="@id/gl_center"
+            app:layout_constraintStart_toEndOf="@id/btn_brush_type_change"
+            app:layout_constraintTop_toBottomOf="@id/rv_colors"
+            tools:listitem="@layout/item_main_brush_type" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.6" />
+
+        <Button
+            android:id="@+id/btn_stroke_change"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->vm.onStrokeVisibleChange()}"
+            android:text="@string/main_pen_stroke_change"
+            app:layout_constraintEnd_toEndOf="@id/btn_color_change"
+            app:layout_constraintStart_toStartOf="@id/btn_color_change"
+            app:layout_constraintTop_toBottomOf="@id/tb_main_toolbar" />
+
+        <Button
+            android:id="@+id/btn_color_change"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->vm.onColorVisibleChange()}"
+            android:text="@string/main_pen_color_change"
+            app:layout_constraintEnd_toEndOf="@id/btn_brush_type_change"
+            app:layout_constraintStart_toStartOf="@id/btn_brush_type_change"
+            app:layout_constraintTop_toBottomOf="@id/btn_stroke_change" />
+
+        <Button
+            android:id="@+id/btn_brush_type_change"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="12dp"
+            android:onClick="@{()->vm.onBrushTypeVisibleChange()}"
+            android:text="@string/main_brush_type_change"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_color_change" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
