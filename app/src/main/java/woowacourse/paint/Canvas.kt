@@ -12,6 +12,7 @@ import woowacourse.paint.model.Circle
 import woowacourse.paint.model.PathPaint
 import woowacourse.paint.model.Rectangle
 import woowacourse.paint.util.drawCircle
+import java.util.Stack
 
 class Canvas(
     context: Context,
@@ -20,8 +21,8 @@ class Canvas(
     private val pathPaints: MutableList<PathPaint> = mutableListOf()
     private var currentPathPaint: PathPaint = PathPaint()
 
-    private val undo: MutableList<Any> = mutableListOf()
-    private val redo: MutableList<Any> = mutableListOf()
+    private val undo: Stack<Any> = Stack()
+    private val redo: Stack<Any> = Stack()
 
     init {
         isFocusable = true
@@ -60,7 +61,7 @@ class Canvas(
             }
 
             MotionEvent.ACTION_UP -> {
-                undo.add(currentPathPaint)
+                undo.push(currentPathPaint)
                 currentPathPaint = currentPathPaint.resetPaint()
             }
 
@@ -83,16 +84,17 @@ class Canvas(
     }
 
     fun clear() {
-        undo.add(pathPaints.toList())
+        undo.push(pathPaints.toList())
         pathPaints.clear()
         invalidate()
     }
 
     fun undo() {
         runCatching {
-            processUndo(undo.last())
-            redo.add(undo.last())
-            undo.removeLast()
+            undo.pop().also { undoLast ->
+                processUndo(undoLast)
+                redo.push(undoLast)
+            }
         }
     }
 
@@ -106,9 +108,10 @@ class Canvas(
 
     fun redo() {
         runCatching {
-            processRedo(redo.last())
-            undo.add(redo.last())
-            redo.removeLast()
+            redo.pop().also { redoLast ->
+                processRedo(redoLast)
+                undo.push(redoLast)
+            }
         }
     }
 
