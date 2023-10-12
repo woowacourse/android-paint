@@ -34,7 +34,7 @@ class PaletteView constructor(
     }
 
     private fun colorViewSize(): Int {
-        val screenWidth = minOf(resources.displayMetrics.widthPixels, 960)
+        val screenWidth = minOf(resources.displayMetrics.widthPixels, 1024)
         val numberOfColors = Color.values().size
         return screenWidth / numberOfColors
     }
