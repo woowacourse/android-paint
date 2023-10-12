@@ -78,37 +78,39 @@
             android:id="@+id/slider_pen_stroke_width"
             isVisible="@{vm.isVisibleStrokeWidth()}"
             registerSliderOnTouchListener="@{vm.onSelectedStrokeChange}"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:value="@{vm.appliedStroke}"
             android:valueFrom="@{vm.minStrokeWidth}"
             android:valueTo="@{vm.maxStrokeWidth}"
-            app:layout_constraintBottom_toTopOf="@id/rv_colors" />
+            app:layout_constraintBottom_toTopOf="@id/rv_colors"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_begin" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_colors"
             isVisible="@{vm.isVisibleColorList()}"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@id/rv_brush_types"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_begin"
             tools:listitem="@layout/item_main_brush_color" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_brush_types"
             isVisible="@{vm.isVisibleBrushTypeList()}"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@id/btn_color_change"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
+            app:layout_constraintStart_toStartOf="@id/gl_begin"
             tools:listitem="@layout/item_main_brush_type" />
 
         <Button
@@ -122,7 +124,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btn_stroke_change"
             app:layout_constraintHorizontal_weight="1"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="@id/gl_begin" />
 
         <Button
             android:id="@+id/btn_stroke_change"
@@ -145,9 +147,23 @@
             android:onClick="@{()->vm.onBrushTypeVisibleChange()}"
             android:text="@string/main_brush_type_change"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/gl_end"
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintStart_toEndOf="@+id/btn_stroke_change" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_begin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/margin_side_layout" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/gl_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="@dimen/margin_side_layout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
