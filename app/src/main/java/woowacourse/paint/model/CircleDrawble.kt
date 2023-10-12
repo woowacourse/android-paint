@@ -4,24 +4,34 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 
-class EraserPainting(
+class CircleDrawble(
     private val path: Path = Path(),
-) : Painting {
+) : CanvasDrawble {
+
+    private var prevX: Float = 0F
+    private var prevY: Float = 0F
 
     override fun movePath(x: Float, y: Float) {
-        path.moveTo(x, y)
-        path.lineTo(x, y)
+        prevX = x
+        prevY = y
     }
 
     override fun initPath(x: Float, y: Float) {
-        path.lineTo(x, y)
+        path.reset()
+        path.addOval(
+            prevX,
+            prevY,
+            x,
+            y,
+            Path.Direction.CW,
+        )
     }
 
     override fun draw(canvas: Canvas, paint: Paint) {
         canvas.drawPath(path, paint)
     }
 
-    override fun newPainting(): Painting {
-        return EraserPainting()
+    override fun newPainting(): CanvasDrawble {
+        return CircleDrawble()
     }
 }

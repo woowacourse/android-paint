@@ -4,9 +4,9 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 
-class PenPainting(
+class EraserDrawble(
     private val path: Path = Path(),
-) : Painting {
+) : CanvasDrawble {
 
     override fun movePath(x: Float, y: Float) {
         path.moveTo(x, y)
@@ -21,7 +21,7 @@ class PenPainting(
         canvas.drawPath(path, paint)
     }
 
-    override fun newPainting(): Painting {
-        return PenPainting()
+    override fun newPainting(): CanvasDrawble {
+        return EraserDrawble()
     }
 }

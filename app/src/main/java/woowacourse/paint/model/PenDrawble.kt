@@ -4,34 +4,24 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 
-class CirclePainting(
+class PenDrawble(
     private val path: Path = Path(),
-) : Painting {
-
-    private var prevX: Float = 0F
-    private var prevY: Float = 0F
+) : CanvasDrawble {
 
     override fun movePath(x: Float, y: Float) {
-        prevX = x
-        prevY = y
+        path.moveTo(x, y)
+        path.lineTo(x, y)
     }
 
     override fun initPath(x: Float, y: Float) {
-        path.reset()
-        path.addOval(
-            prevX,
-            prevY,
-            x,
-            y,
-            Path.Direction.CW,
-        )
+        path.lineTo(x, y)
     }
 
     override fun draw(canvas: Canvas, paint: Paint) {
         canvas.drawPath(path, paint)
     }
 
-    override fun newPainting(): Painting {
-        return CirclePainting()
+    override fun newPainting(): CanvasDrawble {
+        return PenDrawble()
     }
 }

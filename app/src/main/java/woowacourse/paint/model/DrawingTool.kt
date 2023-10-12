@@ -8,19 +8,19 @@ import android.graphics.PorterDuffXfermode
 import androidx.annotation.ColorInt
 
 class DrawingTool(
-    private val painting: Painting = PenPainting(),
+    private val canvasDrawble: CanvasDrawble = PenDrawble(),
     private val paint: Paint = Paint().applyPaintSetting(),
 ) {
     fun movePath(x: Float, y: Float) {
-        painting.movePath(x, y)
+        canvasDrawble.movePath(x, y)
     }
 
     fun initPath(x: Float, y: Float) {
-        painting.initPath(x, y)
+        canvasDrawble.initPath(x, y)
     }
 
     fun draw(canvas: Canvas) {
-        painting.draw(canvas, paint)
+        canvasDrawble.draw(canvas, paint)
     }
 
     fun setStrokeWidth(value: Float) {
@@ -32,10 +32,10 @@ class DrawingTool(
     }
 
     fun newDrawingPainting(): DrawingTool =
-        DrawingTool(painting.newPainting(), Paint(paint))
+        DrawingTool(canvasDrawble.newPainting(), Paint(paint))
 
     fun setPainting(brush: BrushTool): DrawingTool {
-        val newPainting = painting.from(brush)
+        val newPainting = canvasDrawble.from(brush)
         when (brush) {
             BrushTool.PEN -> setPenPaint()
             BrushTool.CIRCLE, BrushTool.RECTANGLE -> setShapePaint()

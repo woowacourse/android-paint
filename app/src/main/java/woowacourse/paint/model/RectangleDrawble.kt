@@ -4,9 +4,9 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 
-class RectanglePainting(
+class RectangleDrawble(
     private val path: Path = Path(),
-) : Painting {
+) : CanvasDrawble {
 
     private var prevX: Float = 0F
     private var prevY: Float = 0F
@@ -38,7 +38,7 @@ class RectanglePainting(
         canvas.drawPath(path, paint)
     }
 
-    override fun newPainting(): Painting {
-        return RectanglePainting()
+    override fun newPainting(): CanvasDrawble {
+        return RectangleDrawble()
     }
 }
