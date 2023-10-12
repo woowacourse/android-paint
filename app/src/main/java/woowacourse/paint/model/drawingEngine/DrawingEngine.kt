@@ -1,8 +1,8 @@
-package woowacourse.paint.model.shape
+package woowacourse.paint.model.drawingEngine
 
 import android.graphics.Canvas
 
-sealed interface Shape {
+sealed interface DrawingEngine {
 
     fun draw(canvas: Canvas)
 

@@ -1,17 +1,17 @@
-package woowacourse.paint.model.shape
+package woowacourse.paint.model.drawingEngine
 
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
 
-data class Rectangle(
+data class OvalDrawingEngine(
     val paint: Paint = Paint(),
-) : Shape {
+) : DrawingEngine {
 
     val rectF: RectF = RectF()
 
     override fun draw(canvas: Canvas) {
-        canvas.drawRect(rectF, paint)
+        canvas.drawOval(rectF, paint)
     }
 
     override fun move(pointX: Float, pointY: Float) {

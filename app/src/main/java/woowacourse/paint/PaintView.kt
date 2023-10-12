@@ -8,11 +8,11 @@ import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.model.DrawMode
 import woowacourse.paint.model.pen.Pen
-import woowacourse.paint.model.shape.Eraser
-import woowacourse.paint.model.shape.Line
-import woowacourse.paint.model.shape.Oval
-import woowacourse.paint.model.shape.Rectangle
-import woowacourse.paint.model.shape.Shapes
+import woowacourse.paint.model.drawingEngine.EraserDrawingEngine
+import woowacourse.paint.model.drawingEngine.LineDrawingEngine
+import woowacourse.paint.model.drawingEngine.OvalDrawingEngine
+import woowacourse.paint.model.drawingEngine.RectangleDrawingEngine
+import woowacourse.paint.model.drawingEngine.DrawingEngines
 
 class PaintView(
     context: Context,
@@ -21,7 +21,7 @@ class PaintView(
 
     var drawMode: DrawMode = DrawMode.getDefaultDrawMode()
 
-    private val shapes: Shapes = Shapes()
+    private val drawingEngines: DrawingEngines = DrawingEngines()
     var pen: Pen = Pen.createDefaultPenInstance()
 
     init {
@@ -34,7 +34,7 @@ class PaintView(
     }
 
     private fun drawCanvas(canvas: Canvas) {
-        shapes.value.forEach {
+        drawingEngines.value.forEach {
             it.draw(canvas)
         }
     }
@@ -64,52 +64,52 @@ class PaintView(
     }
 
     private fun moveShape(pointX: Float, pointY: Float) {
-        shapes.last().move(pointX, pointY)
+        drawingEngines.last().move(pointX, pointY)
         invalidate()
     }
 
     private fun addLine(pointX: Float, pointY: Float) {
         val paint = pen.createPaint()
-        val addedLine = Line(paint = paint)
-        shapes.add(addedLine, pointX, pointY)
-        addedLine.moveTo(pointX, pointY)
+        val addedLineDrawingEngine = LineDrawingEngine(paint = paint)
+        drawingEngines.add(addedLineDrawingEngine, pointX, pointY)
+        addedLineDrawingEngine.moveTo(pointX, pointY)
     }
 
     private fun addRectangle(pointX: Float, pointY: Float) {
-        val addedRectangle = Rectangle().apply {
+        val addedRectangleDrawingEngine = RectangleDrawingEngine().apply {
             paint.color = pen.color
             updatePosition(pointX, pointY, pointX, pointY)
         }
-        shapes.add(addedRectangle)
+        drawingEngines.add(addedRectangleDrawingEngine)
     }
 
     private fun addOval(pointX: Float, pointY: Float) {
-        val addedOval = Oval().apply {
+        val addedOvalDrawingEngine = OvalDrawingEngine().apply {
             paint.color = pen.color
             updatePosition(pointX, pointY, pointX, pointY)
         }
-        shapes.add(addedOval)
+        drawingEngines.add(addedOvalDrawingEngine)
     }
 
     private fun addEraser(pointX: Float, pointY: Float) {
         val paint = pen.createPaint()
-        val addedEraserLine = Eraser(paint = paint)
-        shapes.add(addedEraserLine, pointX, pointY)
-        addedEraserLine.moveTo(pointX, pointY)
+        val addedEraserLineDrawingEngin = EraserDrawingEngine(paint = paint)
+        drawingEngines.add(addedEraserLineDrawingEngin, pointX, pointY)
+        addedEraserLineDrawingEngin.moveTo(pointX, pointY)
     }
 
     fun undo() {
-        shapes.undo()
+        drawingEngines.undo()
         invalidate()
     }
 
     fun redo() {
-        shapes.redo()
+        drawingEngines.redo()
         invalidate()
     }
 
     fun clear() {
-        shapes.clear(this)
+        drawingEngines.clear(this)
         invalidate()
     }
 }

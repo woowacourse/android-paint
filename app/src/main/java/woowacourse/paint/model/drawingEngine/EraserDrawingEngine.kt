@@ -1,4 +1,4 @@
-package woowacourse.paint.model.shape
+package woowacourse.paint.model.drawingEngine
 
 import android.graphics.Canvas
 import android.graphics.Paint
@@ -6,10 +6,10 @@ import android.graphics.Path
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 
-data class Eraser(
+data class EraserDrawingEngine(
     val path: Path = Path(),
     val paint: Paint = Paint(),
-) : Shape {
+) : DrawingEngine {
 
     init {
         paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
@@ -24,10 +24,10 @@ data class Eraser(
     }
 
     fun quadTo(pointX: Float, pointY: Float) {
-        val nextX = (Shapes.lastX + pointX) / 2
-        val nextY = (Shapes.lastY + pointY) / 2
-        path.quadTo(Shapes.lastX, Shapes.lastY, nextX, nextY)
-        Shapes.updateLastPoint(pointX, pointY)
+        val nextX = (DrawingEngines.lastX + pointX) / 2
+        val nextY = (DrawingEngines.lastY + pointY) / 2
+        path.quadTo(DrawingEngines.lastX, DrawingEngines.lastY, nextX, nextY)
+        DrawingEngines.updateLastPoint(pointX, pointY)
     }
 
     fun addRect(width: Float, height: Float) {
