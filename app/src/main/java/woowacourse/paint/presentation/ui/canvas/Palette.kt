@@ -9,10 +9,11 @@ class Palette(val paint: Paint = Paint()) {
     }
 
     private fun initPaint() {
-        paint.style = Paint.Style.STROKE
-        paint.strokeJoin = Paint.Join.ROUND
-        paint.strokeCap = Paint.Cap.ROUND
-        paint.isAntiAlias = true
+        with(paint) {
+            strokeJoin = Paint.Join.ROUND
+            strokeCap = Paint.Cap.ROUND
+            isAntiAlias = true
+        }
     }
 
     fun changeColor(color: Int): Palette = Palette(
@@ -25,6 +26,13 @@ class Palette(val paint: Paint = Paint()) {
     fun changeWidth(width: Float) = Palette(
         Paint().apply {
             this.strokeWidth = width
+            this.color = paint.color
+        },
+    )
+
+    fun copy() = Palette(
+        Paint().apply {
+            this.strokeWidth = paint.strokeWidth
             this.color = paint.color
         },
     )

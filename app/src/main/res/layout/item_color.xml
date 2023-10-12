@@ -7,7 +7,7 @@
 
         <variable
             name="itemColor"
-            type="woowacourse.paint.presentation.ui.main.ItemColor" />
+            type="woowacourse.paint.presentation.ui.main.colors.ItemColor" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

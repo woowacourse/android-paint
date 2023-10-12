@@ -7,6 +7,7 @@ import woowacourse.paint.domain.model.BrushWidth
 fun Brush.toPresentation() = BrushModel(
     color = color.toPresentation(),
     width = width.value,
+    type = type,
     minWidth = BrushWidth.MIN_WIDTH,
     maxWidth = BrushWidth.MAX_WIDTH,
 )

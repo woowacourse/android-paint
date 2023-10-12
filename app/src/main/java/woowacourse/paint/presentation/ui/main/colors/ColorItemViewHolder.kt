@@ -1,4 +1,4 @@
-package woowacourse.paint.presentation.ui.main
+package woowacourse.paint.presentation.ui.main.colors
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

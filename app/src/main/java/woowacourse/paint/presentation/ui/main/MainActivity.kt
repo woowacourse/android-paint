@@ -9,6 +9,11 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.google.android.material.slider.RangeSlider
 import kotlinx.coroutines.launch
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.domain.model.BrushType
+import woowacourse.paint.presentation.ui.main.brushTypes.BrushTypesAdapter
+import woowacourse.paint.presentation.ui.main.brushTypes.ItemBrushType
+import woowacourse.paint.presentation.ui.main.colors.ColorsAdapter
+import woowacourse.paint.presentation.ui.main.colors.ItemColor
 import woowacourse.paint.presentation.ui.model.BrushColorModel
 
 class MainActivity : AppCompatActivity() {
@@ -37,12 +42,16 @@ class MainActivity : AppCompatActivity() {
     private fun initView() {
         initRangeSliderBrushWidth()
         initColorAdapter()
+        initBrushTypesAdapter()
+        initUndo()
+        initRedo()
+        initClear()
     }
 
     private fun initRangeSliderBrushWidth() {
         val brush = viewModel.brush.value
         val rangeSliderClickListener = RangeSlider.OnChangeListener { _, value, _ ->
-            viewModel.changeLineWidth(value)
+            viewModel.changeBrushWidth(value)
         }
         with(binding.rsBrushWidth) {
             valueFrom = brush.minWidth
@@ -55,9 +64,36 @@ class MainActivity : AppCompatActivity() {
     private fun initColorAdapter() {
         val itemColors = BrushColorModel.values()
             .map { brushColor ->
-                ItemColor(brushColor, viewModel::changeLineColor)
+                ItemColor(brushColor, viewModel::changeBrushColor)
             }
         binding.rvBrushColors.adapter = ColorsAdapter(itemColors)
         binding.rvBrushColors.setHasFixedSize(true)
+    }
+
+    private fun initBrushTypesAdapter() {
+        val itemBrushTypes = BrushType.values()
+            .map { brushType ->
+                ItemBrushType(brushType, viewModel::changeBrushType)
+            }
+        binding.rvBrushTypes.adapter = BrushTypesAdapter(itemBrushTypes)
+        binding.rvBrushTypes.setHasFixedSize(true)
+    }
+
+    private fun initUndo() {
+        binding.ivUndo.setOnClickListener {
+            binding.cvCanvas.undo()
+        }
+    }
+
+    private fun initRedo() {
+        binding.ivRedo.setOnClickListener {
+            binding.cvCanvas.redo()
+        }
+    }
+
+    private fun initClear() {
+        binding.ivClear.setOnClickListener {
+            binding.cvCanvas.clear()
+        }
     }
 }
