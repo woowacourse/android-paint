@@ -1,4 +1,4 @@
-package woowacourse.paint
+package woowacourse.paint.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import woowacourse.paint.model.ColorBox

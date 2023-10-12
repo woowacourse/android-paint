@@ -9,7 +9,7 @@
 
         <variable
             name="listener"
-            type="woowacourse.paint.OnColorClickListener" />
+            type="woowacourse.paint.listener.OnColorClickListener" />
 
         <variable
             name="colorbox"

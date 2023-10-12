@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="paintBrush"
+            type="woowacourse.paint.model.BrushBox" />
+        <variable
+            name="listener"
+            type="woowacourse.paint.listener.OnBrushClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:id="@+id/btn_brush"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/btn_clicked_selector"
+            android:elevation="4dp"
+            android:textColor="@color/white"
+            android:onClick="@{() -> listener.onBrushClick(paintBrush)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth="50dp"
+            tools:src="@drawable/pen"
+            tools:text="펜" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

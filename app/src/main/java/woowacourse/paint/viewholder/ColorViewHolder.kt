@@ -1,9 +1,10 @@
-package woowacourse.paint
+package woowacourse.paint.viewholder
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.paint.databinding.ItemColorBinding
+import woowacourse.paint.listener.OnColorClickListener
 import woowacourse.paint.model.ColorBox
 
 class ColorViewHolder private constructor(
