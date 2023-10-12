@@ -84,6 +84,7 @@ class Canvas(
     }
 
     fun clear() {
+        if (pathPaints.isEmpty()) return
         undo.push(pathPaints.toList())
         pathPaints.clear()
         invalidate()
