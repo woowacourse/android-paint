@@ -1,5 +1,6 @@
 package woowacourse.paint.ui.brushtype
 
+import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import com.example.domain.BrushType.RECTANGLE
@@ -7,23 +8,16 @@ import com.example.domain.BrushType.RECTANGLE
 class Rectangle : BrushType {
     override var type = RECTANGLE
 
-    private var path = Path()
-    private var paint = Paint()
+    private val path = Path()
+    override var paint = Paint().apply {
+        this.color = Color.BLACK
+        style = Paint.Style.FILL
+        strokeWidth = 0f
+        xfermode = null
+    }
 
     private var startPointX = START_DEFAULT_COORDINATE
     private var startPointY = START_DEFAULT_COORDINATE
-
-    override fun setupPaint(width: Float, color: Int) {
-        path = Path()
-        paint = Paint()
-
-        paint.apply {
-            this.color = color
-            style = Paint.Style.FILL
-            strokeWidth = width
-            xfermode = null
-        }
-    }
 
     override fun startDrawing(pointX: Float, pointY: Float) {
         startPointX = pointX
@@ -37,18 +31,6 @@ class Rectangle : BrushType {
 
     override fun getPath(): Path {
         return path
-    }
-
-    override fun getPaint(): Paint {
-        return paint
-    }
-
-    override fun setStrokeWidth(width: Float) {
-        paint.strokeWidth = width
-    }
-
-    override fun setStrokeColor(color: Int) {
-        paint.color = color
     }
 
     companion object {

@@ -9,21 +9,14 @@ import com.example.domain.BrushType.ERASER
 class Eraser : BrushType {
     override var type = ERASER
 
-    private var path = Path()
-    private var paint = Paint()
-
-    override fun setupPaint(width: Float, color: Int) {
-        path = Path()
-        paint = Paint()
-
-        paint.apply {
-            isAntiAlias = true
-            style = Paint.Style.STROKE
-            strokeCap = Paint.Cap.ROUND
-            strokeJoin = Paint.Join.ROUND
-            strokeWidth = width
-            xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
-        }
+    private val path = Path()
+    override val paint = Paint().apply {
+        isAntiAlias = true
+        style = Paint.Style.STROKE
+        strokeCap = Paint.Cap.ROUND
+        strokeJoin = Paint.Join.ROUND
+        strokeWidth = 0f
+        xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
     }
 
     override fun startDrawing(pointX: Float, pointY: Float) {
@@ -40,17 +33,5 @@ class Eraser : BrushType {
 
     override fun getPath(): Path {
         return path
-    }
-
-    override fun getPaint(): Paint {
-        return paint
-    }
-
-    override fun setStrokeWidth(width: Float) {
-        paint.strokeWidth = width
-    }
-
-    override fun setStrokeColor(color: Int) {
-        paint.color = color
     }
 }

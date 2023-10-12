@@ -13,15 +13,16 @@ import com.example.domain.BrushType.RECTANGLE
 import woowacourse.paint.Painting
 import woowacourse.paint.Paintings
 import woowacourse.paint.ui.brushtype.BrushType
+import woowacourse.paint.ui.brushtype.Circle
 import woowacourse.paint.ui.brushtype.Eraser
 import woowacourse.paint.ui.brushtype.Line
+import woowacourse.paint.ui.brushtype.Rectangle
 
 class PaintingPaper(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val paintings = Paintings()
     private var brush: BrushType = Line()
 
     init {
-        brush.setupPaint()
         setLayerType(LAYER_TYPE_HARDWARE, null)
     }
 
@@ -30,7 +31,7 @@ class PaintingPaper(context: Context, attrs: AttributeSet) : View(context, attrs
         paintings.painting.forEach { painting ->
             canvas.drawPath(painting.path, painting.paint)
         }
-        canvas.drawPath(brush.getPath(), brush.getPaint())
+        canvas.drawPath(brush.getPath(), brush.paint)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -55,43 +56,47 @@ class PaintingPaper(context: Context, attrs: AttributeSet) : View(context, attrs
     }
 
     fun setupBrush(otherBrush: BrushType) {
-        val paint = brush.getPaint()
+        val width = brush.paint.strokeWidth
+        val color = brush.paint.color
         brush = otherBrush
-        brush.setupPaint(paint.strokeWidth, paint.color)
+        brush.apply {
+            paint.strokeWidth = width
+            paint.color = color
+        }
     }
 
     fun setMyStrokeWidth(width: Float) {
-        brush.setStrokeWidth(width)
+        brush.paint.strokeWidth = width
     }
 
     fun setMyStrokeColor(color: Int) {
-        brush.setStrokeColor(color)
+        brush.paint.color = color
     }
 
     private fun doActionUp(pointX: Float, pointY: Float) {
-        val currentPaint = brush.getPaint()
+        val currentPaint = brush.paint
         val currentPath = brush.getPath()
         when (brush.type) {
             CIRCLE -> {
                 paintings.storePainting(Painting(currentPaint, currentPath))
-                setupBrush(brush)
+                setupBrush(Circle())
             }
 
             RECTANGLE -> {
                 paintings.storePainting(Painting(currentPaint, currentPath))
-                setupBrush(brush)
+                setupBrush(Rectangle())
             }
 
             LINE -> {
                 (brush as Line).doActionUp(pointX, pointY)
                 paintings.storePainting(Painting(currentPaint, currentPath))
-                setupBrush(brush)
+                setupBrush(Line())
             }
 
             ERASER -> {
                 (brush as Eraser).doActionUp(pointX, pointY)
                 paintings.storePainting(Painting(currentPaint, currentPath))
-                setupBrush(brush)
+                setupBrush(Eraser())
             }
         }
     }
