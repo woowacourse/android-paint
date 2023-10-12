@@ -46,9 +46,11 @@ class DrawingEngines(value: List<DrawingEngine> = mutableListOf()) {
     }
 
     fun clear(view: View) {
-        val rectangleEraserDrawingEngine = RectangleEraserDrawingEngine().apply {
-            changePosition(0f, 0f, view.width.toFloat(), view.height.toFloat())
-        }
+        val rectangleEraserDrawingEngine =
+            RectangleEraserDrawingEngine.createInstance(view.width.toFloat(), view.height.toFloat())
+//        val rectangleEraserDrawingEngine = RectangleEraserDrawingEngine().apply {
+//            changePosition(0f, 0f, view.width.toFloat(), view.height.toFloat())
+//        }
         _value.add(rectangleEraserDrawingEngine)
         undoStack.clear()
     }

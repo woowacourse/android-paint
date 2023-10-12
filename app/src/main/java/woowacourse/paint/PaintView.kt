@@ -10,10 +10,6 @@ import woowacourse.paint.model.DrawMode
 import woowacourse.paint.model.drawingEngine.DrawingEngines
 import woowacourse.paint.model.drawingEngine.PathDrawingEngine
 import woowacourse.paint.model.drawingEngine.ShapeDrawingEngine
-import woowacourse.paint.model.drawingEngine.path.LineDrawingEngine
-import woowacourse.paint.model.drawingEngine.path.PathEraserDrawingEngine
-import woowacourse.paint.model.drawingEngine.shape.OvalDrawingEngine
-import woowacourse.paint.model.drawingEngine.shape.RectangleDrawingEngine
 import woowacourse.paint.model.pen.Pen
 
 class PaintView(
@@ -59,12 +55,9 @@ class PaintView(
     }
 
     private fun addPainting(pointX: Float, pointY: Float) {
-        when (drawMode) {
-            DrawMode.LINE -> addLine(pointX, pointY)
-            DrawMode.RECT -> addRectangle(pointX, pointY)
-            DrawMode.OVAL -> addOval(pointX, pointY)
-            DrawMode.ERASER -> addEraser(pointX, pointY)
-        }
+        val addedDrawingEngin = drawMode.instantiation(pen, pointX, pointY)
+        drawingEngines.add(addedDrawingEngin)
+        updateLastPoint(pointX, pointY)
         invalidate()
     }
 
@@ -77,38 +70,6 @@ class PaintView(
             }
         }
         invalidate()
-    }
-
-    private fun addLine(pointX: Float, pointY: Float) {
-        val paint = pen.createPaint()
-        val addedLineDrawingEngine = LineDrawingEngine(paint = paint)
-        drawingEngines.add(addedLineDrawingEngine, pointX, pointY)
-        addedLineDrawingEngine.moveTo(pointX, pointY)
-        updateLastPoint(pointX, pointY)
-    }
-
-    private fun addRectangle(pointX: Float, pointY: Float) {
-        val addedRectangleDrawingEngine = RectangleDrawingEngine().apply {
-            paint.color = pen.color
-            changePosition(pointX, pointY, pointX, pointY)
-        }
-        drawingEngines.add(addedRectangleDrawingEngine)
-    }
-
-    private fun addOval(pointX: Float, pointY: Float) {
-        val addedOvalDrawingEngine = OvalDrawingEngine().apply {
-            paint.color = pen.color
-            changePosition(pointX, pointY, pointX, pointY)
-        }
-        drawingEngines.add(addedOvalDrawingEngine)
-    }
-
-    private fun addEraser(pointX: Float, pointY: Float) {
-        val paint = pen.createPaint()
-        val addedEraserLineDrawingEngin = PathEraserDrawingEngine(paint = paint)
-        drawingEngines.add(addedEraserLineDrawingEngin, pointX, pointY)
-        addedEraserLineDrawingEngin.moveTo(pointX, pointY)
-        updateLastPoint(pointX, pointY)
     }
 
     fun undo() {
