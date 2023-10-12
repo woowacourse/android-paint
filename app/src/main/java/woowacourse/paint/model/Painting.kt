@@ -7,20 +7,20 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 import androidx.annotation.ColorInt
 
-class DrawingTool(
-    private val canvasDrawble: CanvasDrawble = PenDrawble(),
+class Painting(
+    private val shape: PaintingShape = Stroke(),
     private val paint: Paint = Paint().applyPaintSetting(),
 ) {
     fun movePath(x: Float, y: Float) {
-        canvasDrawble.initPath(x, y)
+        shape.initPath(x, y)
     }
 
     fun initPath(x: Float, y: Float) {
-        canvasDrawble.movePath(x, y)
+        shape.movePath(x, y)
     }
 
     fun draw(canvas: Canvas) {
-        canvasDrawble.draw(canvas, paint)
+        shape.draw(canvas, paint)
     }
 
     fun setStrokeWidth(value: Float) {
@@ -31,18 +31,33 @@ class DrawingTool(
         paint.color = color
     }
 
-    fun newDrawingPainting(): DrawingTool =
-        DrawingTool(canvasDrawble.newPainting(), Paint(paint))
+    fun newDrawingPainting(): Painting =
+        Painting(shape.newPaintingShape(), Paint(paint))
 
-    fun setPainting(brush: BrushTool): DrawingTool {
-        val newPainting = canvasDrawble.from(brush)
-        when (brush) {
-            BrushTool.PEN -> setPenPaint()
-            BrushTool.CIRCLE, BrushTool.RECTANGLE -> setShapePaint()
-            BrushTool.ERASER -> setEraserPaint()
-        }
-        return DrawingTool(newPainting, Paint(paint))
+    fun setPainting(brush: PaintBrush): Painting {
+        val shape: PaintingShape = setPaintingShape(brush)
+        val paint = setPaint(brush)
+
+        return Painting(shape, paint)
     }
+
+    private fun setPaintingShape(brush: PaintBrush): PaintingShape {
+        return when (brush) {
+            PaintBrush.PEN, PaintBrush.ERASER -> Stroke()
+            PaintBrush.CIRCLE -> Circle()
+            PaintBrush.RECTANGLE -> Rectangle()
+        }
+    }
+
+    private fun setPaint(brush: PaintBrush) = Paint(
+        paint.apply {
+            when (brush) {
+                PaintBrush.PEN -> setPenPaint()
+                PaintBrush.CIRCLE, PaintBrush.RECTANGLE -> setShapePaint()
+                PaintBrush.ERASER -> setEraserPaint()
+            }
+        },
+    )
 
     private fun setEraserPaint() {
         paint.apply {

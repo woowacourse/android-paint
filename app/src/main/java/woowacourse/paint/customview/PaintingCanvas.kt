@@ -6,8 +6,8 @@ import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import woowacourse.paint.model.DrawingTool
-import woowacourse.paint.model.PaintBrush
+import woowacourse.paint.model.BrushBox
+import woowacourse.paint.model.Painting
 import woowacourse.paint.model.PaintingHistory
 
 class PaintingCanvas @JvmOverloads constructor(
@@ -17,7 +17,7 @@ class PaintingCanvas @JvmOverloads constructor(
 
     var canvasCallback: CanvasCallback? = null
     lateinit var history: PaintingHistory
-    private var painting: DrawingTool = DrawingTool()
+    private var painting: Painting = Painting()
 
     init {
         isFocusable = true
@@ -65,7 +65,7 @@ class PaintingCanvas @JvmOverloads constructor(
         painting.setColor(context.getColor(color))
     }
 
-    fun setBrush(brush: PaintBrush) {
+    fun setBrush(brush: BrushBox) {
         painting = painting.setPainting(brush.brushTool)
     }
 

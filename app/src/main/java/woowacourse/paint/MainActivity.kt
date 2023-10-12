@@ -12,8 +12,8 @@ import woowacourse.paint.adapter.ColorAdapter
 import woowacourse.paint.customview.CanvasCallback
 import woowacourse.paint.customview.PaintingCanvas.Companion.DEFAULT_STROKE_WIDTH
 import woowacourse.paint.databinding.ActivityMainBinding
-import woowacourse.paint.model.BrushTool
-import woowacourse.paint.model.DrawingTool
+import woowacourse.paint.model.PaintBrush
+import woowacourse.paint.model.Painting
 
 class MainActivity : AppCompatActivity(), CanvasCallback {
 
@@ -108,12 +108,12 @@ class MainActivity : AppCompatActivity(), CanvasCallback {
 
             with(binding) {
                 cvPainter.setBrush(selectedBrush)
-                rvColor.isVisible = selectedBrush.brushTool != BrushTool.ERASER
-                btnColorChange.isEnabled = selectedBrush.brushTool != BrushTool.ERASER
+                rvColor.isVisible = selectedBrush.brushTool != PaintBrush.ERASER
+                btnColorChange.isEnabled = selectedBrush.brushTool != PaintBrush.ERASER
                 rsWidthChange.isVisible =
-                    selectedBrush.brushTool !in listOf(BrushTool.CIRCLE, BrushTool.RECTANGLE)
+                    selectedBrush.brushTool !in listOf(PaintBrush.CIRCLE, PaintBrush.RECTANGLE)
                 btnStrokeChange.isEnabled =
-                    selectedBrush.brushTool !in listOf(BrushTool.CIRCLE, BrushTool.RECTANGLE)
+                    selectedBrush.brushTool !in listOf(PaintBrush.CIRCLE, PaintBrush.RECTANGLE)
             }
         }
 
@@ -122,7 +122,7 @@ class MainActivity : AppCompatActivity(), CanvasCallback {
         }
     }
 
-    override fun onActionUp(drawingTool: DrawingTool) {
+    override fun onActionUp(drawingTool: Painting) {
         viewModel.addHistory(drawingTool)
     }
 

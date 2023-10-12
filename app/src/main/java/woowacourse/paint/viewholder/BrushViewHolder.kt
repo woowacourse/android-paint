@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.paint.databinding.ItemBrushBinding
 import woowacourse.paint.listener.OnBrushClickListener
-import woowacourse.paint.model.PaintBrush
+import woowacourse.paint.model.BrushBox
 
 class BrushViewHolder private constructor(
     private val binding: ItemBrushBinding,
@@ -16,7 +16,7 @@ class BrushViewHolder private constructor(
         binding.listener = onBrushClickListener
     }
 
-    fun bind(brush: PaintBrush) {
+    fun bind(brush: BrushBox) {
         binding.btnBrush.setImageResource(brush.brushTool.image)
         binding.btnBrush.isSelected = brush.isSelected
         binding.paintBrush = brush

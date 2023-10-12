@@ -4,9 +4,9 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 
-class CircleDrawble(
+class Rectangle(
     private val path: Path = Path(),
-) : CanvasDrawble {
+) : PaintingShape {
 
     private var prevX: Float = 0F
     private var prevY: Float = 0F
@@ -18,11 +18,11 @@ class CircleDrawble(
 
     override fun movePath(x: Float, y: Float) {
         path.reset()
-        path.addOval(
-            prevX,
-            prevY,
-            x,
-            y,
+        path.addRect(
+            java.lang.Float.min(prevX, x),
+            java.lang.Float.min(prevY, y),
+            java.lang.Float.max(prevX, x),
+            java.lang.Float.max(prevY, y),
             Path.Direction.CW,
         )
     }
@@ -31,7 +31,7 @@ class CircleDrawble(
         canvas.drawPath(path, paint)
     }
 
-    override fun newPainting(): CanvasDrawble {
-        return CircleDrawble()
+    override fun newPaintingShape(): PaintingShape {
+        return Rectangle()
     }
 }

@@ -1,7 +1,7 @@
 package woowacourse.paint.listener
 
-import woowacourse.paint.model.PaintBrush
+import woowacourse.paint.model.BrushBox
 
 fun interface OnBrushClickListener {
-    fun onBrushClick(paintBrush: PaintBrush)
+    fun onBrushClick(paintBrush: BrushBox)
 }
