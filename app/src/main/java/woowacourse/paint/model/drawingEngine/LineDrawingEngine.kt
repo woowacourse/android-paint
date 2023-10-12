@@ -13,7 +13,7 @@ data class LineDrawingEngine(
         canvas.drawPath(path, paint)
     }
 
-    override fun move(pointX: Float, pointY: Float) {
+    override fun draw(pointX: Float, pointY: Float) {
         quadTo(pointX, pointY)
     }
 

@@ -19,7 +19,7 @@ data class EraserDrawingEngine(
         canvas.drawPath(path, paint)
     }
 
-    override fun move(pointX: Float, pointY: Float) {
+    override fun draw(pointX: Float, pointY: Float) {
         quadTo(pointX, pointY)
     }
 

@@ -9,5 +9,5 @@ sealed interface DrawingEngine {
 
     fun draw(canvas: Canvas)
 
-    fun move(pointX: Float, pointY: Float)
+    fun draw(pointX: Float, pointY: Float)
 }

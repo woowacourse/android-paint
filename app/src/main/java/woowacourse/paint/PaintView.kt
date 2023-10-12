@@ -64,7 +64,7 @@ class PaintView(
     }
 
     private fun moveShape(pointX: Float, pointY: Float) {
-        drawingEngines.last().move(pointX, pointY)
+        drawingEngines.last().draw(pointX, pointY)
         invalidate()
     }
 

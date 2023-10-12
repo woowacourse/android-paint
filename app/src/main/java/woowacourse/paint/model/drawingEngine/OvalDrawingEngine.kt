@@ -13,7 +13,7 @@ data class OvalDrawingEngine(
         canvas.drawOval(rectF, paint)
     }
 
-    override fun move(pointX: Float, pointY: Float) {
+    override fun draw(pointX: Float, pointY: Float) {
         changePosition(right = pointX, bottom = pointY)
     }
 
