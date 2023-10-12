@@ -13,14 +13,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_palette_start"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="@dimen/palette_start_guideline" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/gl_palette_end"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="@dimen/palette_end_guideline" />
+
     <woowacourse.paint.view.palette.PaletteView
         android:id="@+id/palette_view"
         android:layout_width="0dp"
         android:layout_height="120dp"
         android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toTopOf="@id/palette_mode_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="@id/gl_palette_end"
+        app:layout_constraintStart_toStartOf="@id/gl_palette_start" />
 
     <LinearLayout
         android:id="@+id/palette_mode_view"
