@@ -15,16 +15,18 @@ class History {
     }
 
     fun undo() {
-        try {
-            cache.add(_paintings.removeLast())
-        } catch (_: NoSuchElementException) {
+        runCatching {
+            _paintings.removeLast()
+        }.onSuccess { painting ->
+            cache.add(painting)
         }
     }
 
     fun redo() {
-        try {
-            _paintings.add(cache.removeLast())
-        } catch (_: NoSuchElementException) {
+        runCatching {
+            cache.removeLast()
+        }.onSuccess { painting ->
+            _paintings.add(painting)
         }
     }
 }
