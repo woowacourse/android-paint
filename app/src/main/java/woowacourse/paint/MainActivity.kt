@@ -19,10 +19,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        setupView()
         setupRangeSlider()
         setupButton()
         setupToolbar()
         setupPaletteView()
+    }
+
+    private fun setupView() {
+        val margin = (resources.displayMetrics.widthPixels - 1024) / 2
+        if (margin > 0) {
+            binding.startGuideline.setGuidelineBegin(margin)
+            binding.endGuideline.setGuidelineEnd(margin)
+        }
     }
 
     private fun setupRangeSlider() {
