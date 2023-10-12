@@ -6,6 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/paper_color"
         android:orientation="vertical"
         android:weightSum="1">
 
@@ -49,6 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:text="@string/main_pen"
+            android:textColor="@color/font_color"
             app:layout_constraintEnd_toStartOf="@+id/btn_rectangle"
             app:layout_constraintHeight_percent="0.075"
             app:layout_constraintStart_toStartOf="@+id/rs"
@@ -59,6 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:text="@string/main_square"
+            android:textColor="@color/font_color"
             app:layout_constraintBottom_toBottomOf="@id/btn_pen"
             app:layout_constraintEnd_toStartOf="@+id/btn_circle"
             app:layout_constraintStart_toEndOf="@+id/btn_pen"
@@ -69,6 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:text="@string/main_circle"
+            android:textColor="@color/font_color"
             app:layout_constraintBottom_toBottomOf="@id/btn_pen"
             app:layout_constraintEnd_toStartOf="@+id/btn_eraser"
             app:layout_constraintStart_toEndOf="@+id/btn_rectangle"
@@ -79,6 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:text="@string/main_eraser"
+            android:textColor="@color/font_color"
             app:layout_constraintBottom_toBottomOf="@id/btn_pen"
             app:layout_constraintEnd_toEndOf="@+id/rs"
             app:layout_constraintStart_toEndOf="@+id/btn_circle"
@@ -90,9 +95,9 @@
             android:layout_height="0dp"
             android:layout_marginTop="6dp"
             android:drawableTop="@drawable/ic_undo"
+            app:layout_constraintEnd_toStartOf="@id/btn_rectangle"
             app:layout_constraintHeight_percent="0.06"
             app:layout_constraintStart_toEndOf="@id/btn_pen"
-            app:layout_constraintEnd_toStartOf="@id/btn_rectangle"
             app:layout_constraintTop_toBottomOf="@id/btn_pen" />
 
         <Button
@@ -101,8 +106,8 @@
             android:layout_height="0dp"
             android:drawableTop="@drawable/ic_redo"
             app:layout_constraintBottom_toBottomOf="@id/btn_undo"
-            app:layout_constraintStart_toEndOf="@id/btn_circle"
             app:layout_constraintEnd_toStartOf="@id/btn_eraser"
+            app:layout_constraintStart_toEndOf="@id/btn_circle"
             app:layout_constraintTop_toTopOf="@id/btn_undo" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
