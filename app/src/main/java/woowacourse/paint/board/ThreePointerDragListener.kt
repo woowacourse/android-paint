@@ -1,13 +1,14 @@
 package woowacourse.paint.board
 
-import android.view.ScaleGestureDetector
+import android.view.MotionEvent
 import android.view.View
 
-class TwoPointerDragListener(
+class ThreePointerDragListener(
     private val targetView: View,
     private val screenWidth: Int,
     private val screenHeight: Int,
-) : ScaleGestureDetector.SimpleOnScaleGestureListener() {
+) {
+    private var isInProgress: Boolean = false
 
     private lateinit var onScreenMoveListener: () -> Unit
 
@@ -18,24 +19,49 @@ class TwoPointerDragListener(
         onScreenMoveListener = listener
     }
 
-    override fun onScaleBegin(detector: ScaleGestureDetector): Boolean {
-        twoPointerDragOnScaleBegin(detector)
+    fun onTouchEvent(event: MotionEvent): Boolean {
+        when (event.actionMasked) {
+            MotionEvent.ACTION_POINTER_DOWN -> {
+                isInProgress = event.pointerCount == 3
+                if (isInProgress) onDragBegin(event)
+            }
+            MotionEvent.ACTION_MOVE -> {
+                if (isInProgress) onDrag(event)
+            }
+            MotionEvent.ACTION_POINTER_UP -> {
+                isInProgress = event.pointerCount != 3
+            }
+        }
         return true
     }
 
-    private fun twoPointerDragOnScaleBegin(detector: ScaleGestureDetector) {
-        lastFocusX = detector.focusX
-        lastFocusY = detector.focusY
+    private fun onDragBegin(event: MotionEvent) {
+        lastFocusX = getPointersFocusX(event)
+        lastFocusY = getPointersFocusY(event)
     }
 
-    override fun onScale(detector: ScaleGestureDetector): Boolean {
-        twoPointerDragOnScale(detector)
-        return true
+    /**
+     * 이 함수에서 뜻하는 FocusX는 포인터들의 중심점(평균)을 뜻한다.
+     */
+    private fun getPointersFocusX(event: MotionEvent): Float {
+        var sumX: Float = 0f
+        for (pointerNumber in 0 until event.pointerCount) {
+            sumX += event.getX(pointerNumber)
+        }
+        return sumX / event.pointerCount
     }
 
-    private fun twoPointerDragOnScale(detector: ScaleGestureDetector) {
-        val currentFocusX = detector.focusX
-        val currentFocusY = detector.focusY
+    private fun getPointersFocusY(event: MotionEvent): Float {
+        var sumY: Float = 0f
+        for (pointerNumber in 0 until event.pointerCount) {
+            sumY += event.getY(pointerNumber)
+        }
+        return sumY / event.pointerCount
+    }
+
+    private fun onDrag(event: MotionEvent) {
+        val currentFocusX = getPointersFocusX(event)
+        val currentFocusY = getPointersFocusY(event)
 
         val destinationX = targetView.x + (lastFocusX - currentFocusX) * DRAG_ADJUST_VALUE
         val destinationY = targetView.y + (lastFocusY - currentFocusY) * DRAG_ADJUST_VALUE
