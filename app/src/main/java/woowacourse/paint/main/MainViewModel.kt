@@ -3,15 +3,13 @@ package woowacourse.paint.main
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import woowacourse.paint.customview.paint.BrushColor
 import woowacourse.paint.customview.paint.PaintMode
 import woowacourse.paint.customview.paint.Painting
 import woowacourse.paint.main.model.BrushColorBox
 
 class MainViewModel : ViewModel() {
-
-    private val _brushColor: MutableLiveData<BrushColor> = MutableLiveData(BrushColor.RED)
-    val brushColor: LiveData<BrushColor> get() = _brushColor
 
     private val _brushThickness: MutableLiveData<Float> = MutableLiveData(DEFAULT_BRUSH_THICKNESS)
     val brushThickness: LiveData<Float> get() = _brushThickness
@@ -22,13 +20,16 @@ class MainViewModel : ViewModel() {
     private val _paintMode: MutableLiveData<PaintMode> = MutableLiveData(PaintMode.PEN)
     val paintMode: LiveData<PaintMode> get() = _paintMode
 
-    private val _brushColorBoxes: MutableLiveData<List<BrushColorBox>> = MutableLiveData(
-        BrushColorBox.getColorBoxes(
-            _brushColor.value
-                ?: throw NullPointerException(THE_BRUSH_COLOR_HAS_NOT_BEEN_SELECTED_YET),
-        ),
-    )
+    private val _brushColorBoxes: MutableLiveData<List<BrushColorBox>> =
+        MutableLiveData(BrushColorBox.getColorBoxes(BrushColor.RED))
     val brushColorBoxes: LiveData<List<BrushColorBox>> get() = _brushColorBoxes
+
+    val brushColor: LiveData<BrushColor> =
+        brushColorBoxes.map {
+            it.first { brushColorBox ->
+                brushColorBox.isSelected
+            }.brushColor
+        }
 
     private val _paintingHistory: MutableLiveData<List<Painting>> = MutableLiveData()
     val paintingHistory: LiveData<List<Painting>> get() = _paintingHistory
@@ -47,7 +48,7 @@ class MainViewModel : ViewModel() {
 
         if (clickedColor == currentColor) return
 
-        _brushColor.value = clickedColor
+//        _brushColor.value = clickedColor
         _brushColorBoxes.value = BrushColorBox.getColorBoxes(clickedColor)
     }
 
