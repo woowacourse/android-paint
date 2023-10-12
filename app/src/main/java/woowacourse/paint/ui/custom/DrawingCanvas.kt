@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.ColorInt
@@ -32,7 +33,7 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
             strokeCap = Paint.Cap.ROUND
             strokeWidth = DEFAULT_PAINT_WIDTH
             this.color = Color.RED
-            this.style = style
+            this.style = Paint.Style.STROKE
         }
     }
 
@@ -43,6 +44,7 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
     }
 
     private fun drawDrawingHistory(canvas: Canvas) {
+        Log.d("HKHK", "drawDrawingHistory: ${drawingHistory.drawings.joinToString("\n")}")
         drawingHistory.drawings.forEach { (path: Path, paint: Paint) ->
             canvas.drawPath(path, paint)
         }

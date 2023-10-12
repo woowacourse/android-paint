@@ -46,8 +46,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initPaintModeRecyclerView() {
-        binding.paintModeAdapter =
-            DrawingModeAdapter(BrushTools.values().toList()) { viewModel.updatePaintMode(it) }
+        binding.paintModeAdapter = DrawingModeAdapter(
+            BrushTools.values().toList()
+        ) { binding.mainDrawingCanvas.changePaintMode(it) }
     }
 
     private fun initDeleteButton() {

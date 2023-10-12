@@ -37,7 +37,6 @@
             app:layout_constraintBottom_toTopOf="@id/main_brush_width_slider"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:paintMode="@{viewModel.brushTools}"
             tools:layout_editor_absoluteX="-206dp" />
 
         <ImageView
