@@ -50,15 +50,15 @@ class PaintView(
         val pointY: Float = event.y
 
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> addShape(pointX, pointY)
-            MotionEvent.ACTION_MOVE -> moveShape(pointX, pointY)
+            MotionEvent.ACTION_DOWN -> addPainting(pointX, pointY)
+            MotionEvent.ACTION_MOVE -> drawPainting(pointX, pointY)
             else -> super.onTouchEvent(event)
         }
 
         return true
     }
 
-    private fun addShape(pointX: Float, pointY: Float) {
+    private fun addPainting(pointX: Float, pointY: Float) {
         when (drawMode) {
             DrawMode.LINE -> addLine(pointX, pointY)
             DrawMode.RECT -> addRectangle(pointX, pointY)
@@ -68,7 +68,7 @@ class PaintView(
         invalidate()
     }
 
-    private fun moveShape(pointX: Float, pointY: Float) {
+    private fun drawPainting(pointX: Float, pointY: Float) {
         when (val last = drawingEngines.last()) {
             is ShapeDrawingEngine -> last.draw(pointX, pointY)
             is PathDrawingEngine -> {
