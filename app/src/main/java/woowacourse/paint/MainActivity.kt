@@ -3,6 +3,7 @@ package woowacourse.paint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.model.DrawMode
 
 class MainActivity : AppCompatActivity() {
 
@@ -14,6 +15,11 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initPenTool()
+        initShapes()
+        initEraser()
+        initUndo()
+        initRedo()
+        initClear()
     }
 
     private fun initBinding() {
@@ -21,11 +27,44 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
     }
 
-    private fun initPenTool() {
-        val selectedPen = binding.penToolView.selectedPen
-        binding.paintView.pen = selectedPen
-        binding.btnOpenPenTool.setOnClickListener {
-            binding.penToolView.changeVisibility()
+    private fun initPenTool() = with(binding) {
+        paintView.pen = penToolView.selectedPen
+        btnOpenPenTool.setOnClickListener {
+            penToolView.toggleVisibility()
+            paintView.drawMode = DrawMode.LINE
+        }
+    }
+
+    private fun initShapes() = with(binding) {
+        btnShapeRectangle.setOnClickListener {
+            paintView.drawMode = DrawMode.RECT
+        }
+        btnShapeCircle.setOnClickListener {
+            paintView.drawMode = DrawMode.OVAL
+        }
+    }
+
+    private fun initEraser() = with(binding) {
+        btnEraser.setOnClickListener {
+            paintView.drawMode = DrawMode.ERASER
+        }
+    }
+
+    private fun initUndo() = with(binding) {
+        btnUndo.setOnClickListener {
+            paintView.undo()
+        }
+    }
+
+    private fun initRedo() = with(binding) {
+        btnRedo.setOnClickListener {
+            paintView.redo()
+        }
+    }
+
+    private fun initClear() = with(binding) {
+        btnAllCancel.setOnClickListener {
+            paintView.clear()
         }
     }
 }

@@ -16,25 +16,82 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <woowacourse.paint.PenToolView
+        <woowacourse.paint.tool.PenToolView
             android:id="@+id/pen_tool_view"
-            android:visibility="gone"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@id/btn_open_pen_tool"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/scroll_view_tools"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
-        <ImageView
-            android:id="@+id/btn_open_pen_tool"
-            android:layout_width="54dp"
-            android:layout_height="54dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/ic_pen"
-            android:contentDescription="펜 선택 버튼"
+        <HorizontalScrollView
+            android:id="@+id/scroll_view_tools"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent">
+
+            <LinearLayout
+                android:id="@+id/linear_layout_tools_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/btn_open_pen_tool"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="12dp"
+                    android:contentDescription="펜 선택 버튼"
+                    android:src="@drawable/ic_pen" />
+
+                <ImageView
+                    android:id="@+id/btn_eraser"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="12dp"
+                    android:src="@drawable/ic_eraser" />
+
+                <ImageView
+                    android:id="@+id/btn_all_cancel"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="12dp"
+                    android:src="@drawable/ic_cancel" />
+
+                <ImageView
+                    android:id="@+id/btn_undo"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="12dp"
+                    android:src="@drawable/ic_undo" />
+
+                <ImageView
+                    android:id="@+id/btn_redo"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="12dp"
+                    android:src="@drawable/ic_redo" />
+
+                <ImageView
+                    android:id="@+id/btn_shape_rectangle"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="12dp"
+                    android:src="@drawable/ic_shape_rectangle" />
+
+                <ImageView
+                    android:id="@+id/btn_shape_circle"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="12dp"
+                    android:src="@drawable/ic_shape_circle" />
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

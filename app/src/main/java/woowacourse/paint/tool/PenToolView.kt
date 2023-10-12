@@ -1,4 +1,4 @@
-package woowacourse.paint
+package woowacourse.paint.tool
 
 import android.content.Context
 import android.graphics.Color
@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.MarginLayoutParamsCompat
 import com.google.android.material.slider.Slider
+import woowacourse.paint.R
 import woowacourse.paint.model.PaletteColor
 import woowacourse.paint.model.pen.Pen
 
@@ -30,7 +31,7 @@ class PenToolView(
         initColorPalette()
     }
 
-    fun changeVisibility() {
+    fun toggleVisibility() {
         visibility =
             if (visibility == View.VISIBLE) {
                 View.GONE
@@ -42,8 +43,7 @@ class PenToolView(
     private fun initView() {
         val inflateService = Context.LAYOUT_INFLATER_SERVICE
         val layoutInflater = context.getSystemService(inflateService) as LayoutInflater
-        val v: View = layoutInflater.inflate(R.layout.view_pen_tool, this, false)
-        addView(v)
+        layoutInflater.inflate(R.layout.view_pen_tool, this, true)
 
         slider = findViewById(R.id.slider_pen_tool_pen_width)
         colorContainer = findViewById(R.id.linear_layout_pen_tool_color_container)
