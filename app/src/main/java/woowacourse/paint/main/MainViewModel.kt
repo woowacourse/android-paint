@@ -23,7 +23,7 @@ class MainViewModel : ViewModel() {
     val paintMode: LiveData<PaintMode> get() = _paintMode
 
     private val _brushColorBoxes: MutableLiveData<List<BrushColorBox>> = MutableLiveData(
-        BrushColor.getColorBoxes(
+        BrushColorBox.getColorBoxes(
             _brushColor.value
                 ?: throw NullPointerException(THE_BRUSH_COLOR_HAS_NOT_BEEN_SELECTED_YET),
         ),
@@ -48,7 +48,7 @@ class MainViewModel : ViewModel() {
         if (clickedColor == currentColor) return
 
         _brushColor.value = clickedColor
-        _brushColorBoxes.value = BrushColor.getColorBoxes(clickedColor)
+        _brushColorBoxes.value = BrushColorBox.getColorBoxes(clickedColor)
     }
 
     fun updatePaintMode(newPaintMode: PaintMode) {
