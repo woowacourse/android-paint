@@ -8,8 +8,8 @@ import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.model.DrawMode
 import woowacourse.paint.model.drawingEngine.DrawingEngines
-import woowacourse.paint.model.drawingEngine.EraserDrawingEngine
-import woowacourse.paint.model.drawingEngine.LineDrawingEngine
+import woowacourse.paint.model.drawingEngine.path.PathEraserDrawingEngine
+import woowacourse.paint.model.drawingEngine.path.LineDrawingEngine
 import woowacourse.paint.model.drawingEngine.shape.OvalDrawingEngine
 import woowacourse.paint.model.drawingEngine.shape.RectangleDrawingEngine
 import woowacourse.paint.model.pen.Pen
@@ -93,7 +93,7 @@ class PaintView(
 
     private fun addEraser(pointX: Float, pointY: Float) {
         val paint = pen.createPaint()
-        val addedEraserLineDrawingEngin = EraserDrawingEngine(paint = paint)
+        val addedEraserLineDrawingEngin = PathEraserDrawingEngine(paint = paint)
         drawingEngines.add(addedEraserLineDrawingEngin, pointX, pointY)
         addedEraserLineDrawingEngin.moveTo(pointX, pointY)
     }
