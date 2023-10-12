@@ -19,7 +19,7 @@ class ColorView private constructor(
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        val measuredSize = MeasureSpec.getSize(heightMeasureSpec)
+        val measuredSize = resolveSize(COLOR_VIEW_SIZE, heightMeasureSpec)
         setMeasuredDimension(measuredSize, measuredSize)
     }
 
@@ -37,6 +37,7 @@ class ColorView private constructor(
     companion object {
         private const val TOP_MARGIN = 30F
         private const val HORIZONTAL_MARGIN = 20F
+        private const val COLOR_VIEW_SIZE = 120
 
         fun create(
             context: Context,
