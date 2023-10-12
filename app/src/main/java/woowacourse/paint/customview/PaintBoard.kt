@@ -124,7 +124,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     companion object {
         @ColorRes
-        private val DEFAULT_COLOR = R.color.blue
+        private val DEFAULT_COLOR = R.color.red
         const val DEFAULT_SIZE = 20F
 
         @ArrayRes

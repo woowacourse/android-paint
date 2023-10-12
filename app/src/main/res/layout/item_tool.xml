@@ -12,7 +12,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:background="@drawable/bg_rectangle_tool_button"
+            android:background="@drawable/selector_tool"
             android:id="@+id/tv_tool"
             tools:text="직사각형"
             android:gravity="center"
