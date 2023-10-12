@@ -1,4 +1,4 @@
-package woowacourse.paint.drawing
+package woowacourse.paint.model.drawing
 
 class DrawingHistory(drawings: List<Drawing> = listOf()) {
     private val _drawings: MutableList<Drawing> = drawings.toMutableList()

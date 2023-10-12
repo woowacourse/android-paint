@@ -6,7 +6,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import woowacourse.paint.R
 import woowacourse.paint.databinding.ActivityMainBinding
-import woowacourse.paint.ui.adapter.PaintModeAdapter
+import woowacourse.paint.model.BrushTools
+import woowacourse.paint.ui.adapter.DrawingModeAdapter
 import woowacourse.paint.ui.adapter.PaletteAdapter
 import woowacourse.paint.ui.custom.DrawingCanvas.Companion.DEFAULT_PAINT_WIDTH
 import woowacourse.paint.ui.viewmodel.MainViewModel
@@ -46,7 +47,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initPaintModeRecyclerView() {
         binding.paintModeAdapter =
-            PaintModeAdapter(PaintMode.values().toList()) { viewModel.updatePaintMode(it) }
+            DrawingModeAdapter(BrushTools.values().toList()) { viewModel.updatePaintMode(it) }
     }
 
     private fun initDeleteButton() {

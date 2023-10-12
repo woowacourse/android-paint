@@ -10,24 +10,22 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.ColorInt
-import woowacourse.paint.drawing.Drawing
-import woowacourse.paint.drawing.DrawingCircle
-import woowacourse.paint.drawing.DrawingHistory
-import woowacourse.paint.drawing.DrawingRectangle
-import woowacourse.paint.drawing.Eraser
-import woowacourse.paint.ui.PaintMode
-import woowacourse.paint.ui.PathPoint
+import woowacourse.paint.model.BrushTools
+import woowacourse.paint.model.Eraser
+import woowacourse.paint.model.drawing.Drawing
+import woowacourse.paint.model.drawing.DrawingHistory
+import woowacourse.paint.model.drawing.PathPoint
+import woowacourse.paint.model.shape.Circle
+import woowacourse.paint.model.shape.Rectangle
 
 class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     View(context, attrs) {
     private var drawing = Drawing(Path(), Paint())
-
     private val drawingHistory = DrawingHistory()
+    private var brushTools = BrushTools.PEN
 
-    private var paintMode = PaintMode.PEN
-
-    private val drawingRectangle = DrawingRectangle()
-    private val drawingCircle = DrawingCircle()
+    private val rectangle = Rectangle()
+    private val circle = Circle()
     private val eraser = Eraser(drawingHistory)
 
     init {
@@ -37,17 +35,17 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         drawDrawingHistory(canvas)
-        when (paintMode) {
-            PaintMode.PEN -> canvas.drawPath(drawing.path, drawing.paint)
-            PaintMode.RECTANGLE, PaintMode.FILL_RECTANGLE -> drawingRectangle.drawShapeOnCanvas(
+        when (brushTools) {
+            BrushTools.PEN -> canvas.drawPath(drawing.path, drawing.paint)
+            BrushTools.RECTANGLE, BrushTools.FILL_RECTANGLE -> rectangle.drawShapeOnCanvas(
                 canvas, drawing.paint
             )
 
-            PaintMode.CIRCLE, PaintMode.FILL_CIRCLE -> drawingCircle.drawShapeOnCanvas(
+            BrushTools.CIRCLE, BrushTools.FILL_CIRCLE -> circle.drawShapeOnCanvas(
                 canvas, drawing.paint
             )
 
-            PaintMode.ERASER -> Unit
+            BrushTools.ERASER -> Unit
         }
     }
 
@@ -72,51 +70,51 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
     }
 
     private fun startDrawing(pointX: Float, pointY: Float) {
-        when (paintMode) {
-            PaintMode.PEN -> {
+        when (brushTools) {
+            BrushTools.PEN -> {
                 changePaintStyle(Paint.Style.STROKE)
                 drawing.path.moveTo(pointX, pointY)
             }
 
-            PaintMode.RECTANGLE, PaintMode.FILL_RECTANGLE -> {
-                drawingRectangle.initPoint(PathPoint(pointX, pointY))
-                changePaintStyle(if (paintMode == PaintMode.RECTANGLE) Paint.Style.STROKE else Paint.Style.FILL)
+            BrushTools.RECTANGLE, BrushTools.FILL_RECTANGLE -> {
+                rectangle.initPoint(PathPoint(pointX, pointY))
+                changePaintStyle(if (brushTools == BrushTools.RECTANGLE) Paint.Style.STROKE else Paint.Style.FILL)
             }
 
-            PaintMode.CIRCLE, PaintMode.FILL_CIRCLE -> {
-                drawingCircle.initPoint(PathPoint(pointX, pointY))
-                changePaintStyle(if (paintMode == PaintMode.CIRCLE) Paint.Style.STROKE else Paint.Style.FILL)
+            BrushTools.CIRCLE, BrushTools.FILL_CIRCLE -> {
+                circle.initPoint(PathPoint(pointX, pointY))
+                changePaintStyle(if (brushTools == BrushTools.CIRCLE) Paint.Style.STROKE else Paint.Style.FILL)
             }
 
-            PaintMode.ERASER -> {
+            BrushTools.ERASER -> {
                 eraser.erasePath(PathPoint(pointX, pointY))
             }
         }
     }
 
     private fun doDrawing(pointX: Float, pointY: Float) {
-        when (paintMode) {
-            PaintMode.PEN -> drawing.path.lineTo(pointX, pointY)
-            PaintMode.RECTANGLE, PaintMode.FILL_RECTANGLE -> drawingRectangle.updateEndPoint(
+        when (brushTools) {
+            BrushTools.PEN -> drawing.path.lineTo(pointX, pointY)
+            BrushTools.RECTANGLE, BrushTools.FILL_RECTANGLE -> rectangle.updateEndPoint(
                 PathPoint(pointX, pointY)
             )
 
-            PaintMode.CIRCLE, PaintMode.FILL_CIRCLE -> drawingCircle.updateEndPoint(
+            BrushTools.CIRCLE, BrushTools.FILL_CIRCLE -> circle.updateEndPoint(
                 PathPoint(pointX, pointY)
             )
 
-            PaintMode.ERASER -> eraser.erasePath(PathPoint(pointX, pointY))
+            BrushTools.ERASER -> eraser.erasePath(PathPoint(pointX, pointY))
         }
     }
 
     private fun endDrawing() {
-        when (paintMode) {
-            PaintMode.PEN -> Unit
-            PaintMode.RECTANGLE, PaintMode.FILL_RECTANGLE -> drawingRectangle.addShapeToPath(drawing.path)
-            PaintMode.CIRCLE, PaintMode.FILL_CIRCLE -> drawingCircle.addShapeToPath(drawing.path)
-            PaintMode.ERASER -> Unit
+        when (brushTools) {
+            BrushTools.PEN -> Unit
+            BrushTools.RECTANGLE, BrushTools.FILL_RECTANGLE -> rectangle.addShapeToPath(drawing.path)
+            BrushTools.CIRCLE, BrushTools.FILL_CIRCLE -> circle.addShapeToPath(drawing.path)
+            BrushTools.ERASER -> Unit
         }
-        if (paintMode != PaintMode.ERASER) drawingHistory.addDrawing(
+        if (brushTools != BrushTools.ERASER) drawingHistory.addDrawing(
             Drawing(
                 drawing.path, drawing.paint
             )
@@ -134,8 +132,8 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
         changePaintProperty(width = width)
     }
 
-    fun changePaintMode(paintMode: PaintMode) {
-        this.paintMode = paintMode
+    fun changePaintMode(brushTools: BrushTools) {
+        this.brushTools = brushTools
     }
 
     fun removeAllDrawings() {

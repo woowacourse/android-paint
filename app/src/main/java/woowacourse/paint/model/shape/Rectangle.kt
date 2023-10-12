@@ -1,13 +1,13 @@
-package woowacourse.paint.drawing
+package woowacourse.paint.model.shape
 
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
-import woowacourse.paint.ui.PathPoint
+import woowacourse.paint.model.drawing.PathPoint
 import kotlin.math.max
 import kotlin.math.min
 
-class DrawingRectangle : DrawingShape {
+class Rectangle : Shape {
     private var startPoint: PathPoint = PathPoint(0f, 0f)
     private var endPoint: PathPoint = PathPoint(0f, 0f)
 

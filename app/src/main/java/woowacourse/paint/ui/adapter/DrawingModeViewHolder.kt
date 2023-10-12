@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.paint.databinding.PaintModeItemBinding
-import woowacourse.paint.ui.PaintMode
+import woowacourse.paint.model.BrushTools
 
-class PaintModeViewHolder private constructor(
+class DrawingModeViewHolder private constructor(
     private val binding: PaintModeItemBinding,
     private val context: Context,
     onItemClick: (Int) -> Unit
@@ -20,18 +20,18 @@ class PaintModeViewHolder private constructor(
         }
     }
 
-    fun bind(paintMode: PaintMode) {
-        binding.icon = AppCompatResources.getDrawable(context, paintMode.drawable)
+    fun bind(brushTools: BrushTools) {
+        binding.icon = AppCompatResources.getDrawable(context, brushTools.drawable)
     }
 
     companion object {
         fun create(
             parent: ViewGroup,
             onItemClick: (Int) -> Unit
-        ): PaintModeViewHolder {
+        ): DrawingModeViewHolder {
             val binding =
                 PaintModeItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            return PaintModeViewHolder(binding, binding.root.context, onItemClick)
+            return DrawingModeViewHolder(binding, binding.root.context, onItemClick)
         }
     }
 }

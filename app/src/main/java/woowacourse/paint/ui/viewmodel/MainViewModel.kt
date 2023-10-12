@@ -3,7 +3,7 @@ package woowacourse.paint.ui.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import woowacourse.paint.ui.PaintMode
+import woowacourse.paint.model.BrushTools
 
 class MainViewModel : ViewModel() {
     private val _paintWidthControllerVisibility: MutableLiveData<Boolean> = MutableLiveData(false)
@@ -15,8 +15,8 @@ class MainViewModel : ViewModel() {
     private val _paintModeControllerVisibility: MutableLiveData<Boolean> = MutableLiveData(false)
     val paintModeControllerVisibility: LiveData<Boolean> get() = _paintModeControllerVisibility
 
-    private val _paintMode: MutableLiveData<PaintMode> = MutableLiveData(PaintMode.PEN)
-    val paintMode: LiveData<PaintMode> get() = _paintMode
+    private val _brushTools: MutableLiveData<BrushTools> = MutableLiveData(BrushTools.PEN)
+    val brushTools: LiveData<BrushTools> get() = _brushTools
 
     fun togglePaintWidthControllerVisibility() {
         _paintWidthControllerVisibility.value =
@@ -32,7 +32,7 @@ class MainViewModel : ViewModel() {
         _paintModeControllerVisibility.value = _paintModeControllerVisibility.value?.not() ?: false
     }
 
-    fun updatePaintMode(paintMode: PaintMode) {
-        _paintMode.value = paintMode
+    fun updatePaintMode(brushTools: BrushTools) {
+        _brushTools.value = brushTools
     }
 }

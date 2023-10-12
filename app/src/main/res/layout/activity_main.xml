@@ -7,7 +7,7 @@
 
         <import type="android.view.View" />
 
-        <import type="woowacourse.paint.ui.PaintMode" />
+        <import type="woowacourse.paint.model.BrushTools" />
 
         <variable
             name="viewModel"
@@ -23,7 +23,7 @@
 
         <variable
             name="paintModeAdapter"
-            type="woowacourse.paint.ui.adapter.PaintModeAdapter" />
+            type="woowacourse.paint.ui.adapter.DrawingModeAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -37,7 +37,7 @@
             app:layout_constraintBottom_toTopOf="@id/main_brush_width_slider"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.0"
-            app:paintMode="@{viewModel.paintMode}"
+            app:paintMode="@{viewModel.brushTools}"
             tools:layout_editor_absoluteX="-206dp" />
 
         <ImageView

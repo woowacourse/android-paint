@@ -1,7 +1,8 @@
-package woowacourse.paint.drawing
+package woowacourse.paint.model
 
 import android.graphics.RectF
-import woowacourse.paint.ui.PathPoint
+import woowacourse.paint.model.drawing.DrawingHistory
+import woowacourse.paint.model.drawing.PathPoint
 
 class Eraser(private val drawingHistory: DrawingHistory) {
     fun erasePath(pathPoint: PathPoint) {

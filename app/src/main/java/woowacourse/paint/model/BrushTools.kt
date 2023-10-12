@@ -1,8 +1,8 @@
-package woowacourse.paint.ui
+package woowacourse.paint.model
 
 import woowacourse.paint.R
 
-enum class PaintMode(val drawable: Int) {
+enum class BrushTools(val drawable: Int) {
     PEN(R.drawable.pen), RECTANGLE(R.drawable.rectangle), FILL_RECTANGLE(R.drawable.fill_rectangle), CIRCLE(
         R.drawable.circle
     ),
