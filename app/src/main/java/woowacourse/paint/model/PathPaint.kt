@@ -43,6 +43,7 @@ class PathPaint(
     init {
         with(paint) {
             isAntiAlias = true
+            color = Color.BLACK
             style = Paint.Style.STROKE
             strokeCap = Paint.Cap.ROUND
             strokeJoin = Paint.Join.ROUND
@@ -50,10 +51,7 @@ class PathPaint(
     }
 
     fun setPaintColor(@ColorInt color: Int) {
-        when (color == EMPTY_COLOR) {
-            true -> paint.color = Color.BLACK
-            false -> paint.color = color
-        }
+        paint.color = color
     }
 
     fun setPaintStrokeSize(size: Float) {
@@ -90,9 +88,5 @@ class PathPaint(
     private fun drawCircle(x: Float, y: Float) {
         shape = Circle(currentCX, currentCY, x, y)
         path.addCircle(shape as Circle, Direction.CW)
-    }
-
-    companion object {
-        private const val EMPTY_COLOR = 0
     }
 }
