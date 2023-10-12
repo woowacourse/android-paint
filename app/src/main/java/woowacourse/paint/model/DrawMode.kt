@@ -1,7 +1,7 @@
 package woowacourse.paint.model
 
 enum class DrawMode {
-    RECT, Oval, LINE, ERASER;
+    RECT, OVAL, LINE, ERASER;
 
     companion object {
         fun getDefaultDrawMode(): DrawMode = LINE

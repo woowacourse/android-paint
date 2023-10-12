@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
             paintView.drawMode = DrawMode.RECT
         }
         btnShapeCircle.setOnClickListener {
-            paintView.drawMode = DrawMode.Oval
+            paintView.drawMode = DrawMode.OVAL
         }
     }
 

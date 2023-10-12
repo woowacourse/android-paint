@@ -57,7 +57,7 @@ class PaintView(
         when (drawMode) {
             DrawMode.LINE -> addLine(pointX, pointY)
             DrawMode.RECT -> addRectangle(pointX, pointY)
-            DrawMode.Oval -> addOval(pointX, pointY)
+            DrawMode.OVAL -> addOval(pointX, pointY)
             DrawMode.ERASER -> addEraser(pointX, pointY)
         }
         invalidate()
