@@ -16,19 +16,11 @@ class DrawingEngines(value: List<DrawingEngine> = mutableListOf()) {
     }
 
     fun last(): DrawingEngine {
-        if (_value.isEmpty()) throwNoShapeError()
+        if (_value.isEmpty()) throw IllegalArgumentException("도형이 존재하지 않습니다.")
         return _value.last()
     }
 
     fun add(drawingEngine: DrawingEngine) {
-        _value.add(drawingEngine)
-        undoStack.clear()
-    }
-
-    /*
-    선 형태의 도형을 사용할 때는 해당 함수를 이용해 객체를 추가해야 합니다. 부드러운 곡선 기능을 제공합니다.
-     */
-    fun add(drawingEngine: DrawingEngine, pointX: Float, pointY: Float) {
         _value.add(drawingEngine)
         undoStack.clear()
     }
@@ -51,6 +43,4 @@ class DrawingEngines(value: List<DrawingEngine> = mutableListOf()) {
         _value.add(rectangleEraserDrawingEngine)
         undoStack.clear()
     }
-
-    private fun throwNoShapeError(): Nothing = throw IllegalArgumentException("도형이 존재하지 않습니다.")
 }
