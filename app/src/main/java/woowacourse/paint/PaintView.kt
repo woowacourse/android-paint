@@ -8,8 +8,6 @@ import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.model.DrawMode
 import woowacourse.paint.model.drawingEngine.DrawingEngines
-import woowacourse.paint.model.drawingEngine.PathDrawingEngine
-import woowacourse.paint.model.drawingEngine.ShapeDrawingEngine
 import woowacourse.paint.model.pen.Pen
 
 class PaintView(
@@ -21,9 +19,6 @@ class PaintView(
 
     private val drawingEngines: DrawingEngines = DrawingEngines()
     var pen: Pen = Pen.createDefaultPenInstance()
-
-    private var lastX: Float = 0f
-    private var lastY: Float = 0f
 
     init {
         setLayerType(LAYER_TYPE_HARDWARE, null)
@@ -57,18 +52,12 @@ class PaintView(
     private fun addPainting(pointX: Float, pointY: Float) {
         val addedDrawingEngin = drawMode.instantiation(pen, pointX, pointY)
         drawingEngines.add(addedDrawingEngin)
-        updateLastPoint(pointX, pointY)
         invalidate()
     }
 
     private fun drawPainting(pointX: Float, pointY: Float) {
-        when (val last = drawingEngines.last()) {
-            is ShapeDrawingEngine -> last.draw(pointX, pointY)
-            is PathDrawingEngine -> {
-                last.draw(lastX, lastY, pointX, pointY)
-                updateLastPoint(pointX, pointY)
-            }
-        }
+        val last = drawingEngines.last()
+        last.draw(pointX, pointY)
         invalidate()
     }
 
@@ -85,10 +74,5 @@ class PaintView(
     fun clear() {
         drawingEngines.clear(this)
         invalidate()
-    }
-
-    private fun updateLastPoint(x: Float, y: Float) {
-        lastX = x
-        lastY = y
     }
 }

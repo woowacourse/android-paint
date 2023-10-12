@@ -17,6 +17,7 @@ data class LineDrawingEngine(
             return LineDrawingEngine(paint = paint).apply {
                 paint.color = pen.color
                 moveTo(pointX, pointY)
+                setLastPoint(pointX, pointY)
             }
         }
     }
