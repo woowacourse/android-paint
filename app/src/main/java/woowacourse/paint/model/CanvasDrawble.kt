@@ -11,11 +11,6 @@ interface CanvasDrawble {
     fun newPainting(): CanvasDrawble
 
     fun from(brushTool: BrushTool): CanvasDrawble {
-        return when (brushTool) {
-            BrushTool.PEN -> PenDrawble()
-            BrushTool.RECTANGLE -> RectangleDrawble()
-            BrushTool.CIRCLE -> CircleDrawble()
-            BrushTool.ERASER -> EraserDrawble()
-        }
+        return newPainting()
     }
 }
