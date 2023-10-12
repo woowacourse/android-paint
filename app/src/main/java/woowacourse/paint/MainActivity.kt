@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         text = mode.modeName
         textSize = 20F
         setTextColor(getColor(R.color.white))
-        setBackgroundColor(getColor(R.color.button_color))
+        setBackgroundColor(getColor(R.color.primary_color))
         setOnClickListener { onClick(mode) }
     }
 
