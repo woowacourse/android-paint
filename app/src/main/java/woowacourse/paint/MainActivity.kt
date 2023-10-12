@@ -21,7 +21,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        initBinding()
         initPalette()
         initBrush()
         setupRangeSliderListener()
@@ -51,10 +50,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         return true
-    }
-
-    private fun initBinding() {
-        binding.vm = mainViewModel
     }
 
     private fun initPalette() {

@@ -5,9 +5,6 @@
 
     <data>
 
-        <variable
-            name="vm"
-            type="woowacourse.paint.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
