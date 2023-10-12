@@ -14,8 +14,4 @@ data class PathEraserDrawingEngine(
     init {
         paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
     }
-
-    fun addRect(width: Float, height: Float) {
-        path.addRect(0f, 0f, width, height, Path.Direction.CW)
-    }
 }
