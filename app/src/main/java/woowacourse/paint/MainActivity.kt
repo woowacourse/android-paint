@@ -7,7 +7,6 @@ import androidx.core.view.isVisible
 import com.google.android.material.slider.RangeSlider
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.model.brush.Circle
-import woowacourse.paint.model.brush.Eraser
 import woowacourse.paint.model.brush.Pen
 import woowacourse.paint.model.brush.Rectangle
 import woowacourse.paint.model.palettecolor.PaletteColor
@@ -76,7 +75,7 @@ class MainActivity : AppCompatActivity() {
         }
         binding.btEraser.setOnClickListener {
             setBrushTypeVisibility(false)
-            binding.fdvBoard.setBrushType(Eraser())
+            binding.fdvBoard.setEraseMode()
         }
     }
 

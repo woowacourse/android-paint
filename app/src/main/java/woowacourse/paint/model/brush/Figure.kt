@@ -1,11 +1,13 @@
 package woowacourse.paint.model.brush
 
 import android.graphics.Paint
+import android.graphics.Path
 
-abstract class Figure(private val paintInstance: BrushPaint) : Brush(paintInstance) {
+abstract class Figure(
+    private val paintInstance: BrushPaint,
+) : Brush(paintInstance) {
     override fun updateStyle(paint: Paint) {
-        paintInstance.set(paint)
-        paintInstance.style = Paint.Style.FILL
+        paintInstance.setFigureBrush(paint)
     }
 
     override fun updateColor(color: Int) {
@@ -16,9 +18,9 @@ abstract class Figure(private val paintInstance: BrushPaint) : Brush(paintInstan
         paintInstance.strokeWidth = thickness
     }
 
-    override fun onActionUp(xCursor: Float, yCursor: Float) = Unit
+    override fun onActionUp(xCursor: Float, yCursor: Float, updateView: (Pair<Path, Paint>) -> Unit) = Unit
 
-    override fun onActionDown(xCursor: Float, yCursor: Float) = Unit
+    override fun onActionDown(xCursor: Float, yCursor: Float, updateView: (Pair<Path, Paint>) -> Unit) = Unit
 
-    override fun onActionMove(xCursor: Float, yCursor: Float) = Unit
+    override fun onActionMove(xCursor: Float, yCursor: Float, updateView: (Pair<Path, Paint>) -> Unit) = Unit
 }

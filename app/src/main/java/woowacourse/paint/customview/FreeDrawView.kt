@@ -11,15 +11,16 @@ import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.model.brush.Brush
 import woowacourse.paint.model.brush.BrushPaint
-import woowacourse.paint.model.brush.Circle
 import woowacourse.paint.model.brush.Eraser
 import woowacourse.paint.model.brush.Pen
-import woowacourse.paint.model.brush.Rectangle
 import woowacourse.paint.model.palettecolor.PaletteColor
 
 class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context, attributeSet) {
 
-    private var brush: Brush = Pen(BrushPaint().apply { color = Color.RED })
+    private val previousDrawings: MutableList<Pair<Path, Paint>> = mutableListOf()
+    private var brush: Brush =
+        Pen(BrushPaint().apply { color = Color.RED })
+    private var eraseMode: Boolean = false
 
     init {
         brush.updateStyle(brush.copyPaint())
@@ -27,11 +28,11 @@ class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context,
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        previousDrawings.forEach { (path, paint) ->
-            canvas.drawPath(path, paint)
+        previousDrawings.map {
+            canvas.drawPath(it.first, it.second)
         }
-        if (brush is Circle || brush is Rectangle) {
-            canvas.drawPath(previewDraw.first, previewDraw.second)
+        if (!eraseMode) {
+            canvas.drawPath(brush.previewDraw.first, brush.previewDraw.second)
         }
     }
 
@@ -41,23 +42,31 @@ class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context,
         val cursorY = event.y
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                brush.onActionDown(cursorX, cursorY)
-                if (brush is Eraser) {
+                if (eraseMode) {
+                    Eraser.eraseBrush(cursorX, cursorY, previousDrawings)
                     invalidate()
+                } else {
+                    brush.onActionDown(cursorX, cursorY) {
+                        previousDrawings.add(it)
+                        invalidate()
+                    }
                 }
             }
 
             MotionEvent.ACTION_MOVE -> {
-                brush.onActionMove(cursorX, cursorY)
-                if (brush !is Eraser) {
-                    invalidate()
+                if (!eraseMode) {
+                    brush.onActionMove(cursorX, cursorY) {
+                        invalidate()
+                    }
                 }
             }
 
             MotionEvent.ACTION_UP -> {
-                brush.onActionUp(cursorX, cursorY)
-                if (brush is Rectangle || brush is Circle) {
-                    invalidate()
+                if (!eraseMode) {
+                    brush.onActionUp(cursorX, cursorY) {
+                        previousDrawings.add(it)
+                        invalidate()
+                    }
                 }
             }
 
@@ -79,10 +88,10 @@ class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context,
         val paint = this.brush.copyPaint()
         this.brush = brush
         this.brush.updateStyle(paint)
+        eraseMode = false
     }
 
-    companion object {
-        val previousDrawings: MutableList<Pair<Path, Paint>> = mutableListOf()
-        var previewDraw: Pair<Path, Paint> = Pair(Path(), Paint())
+    fun setEraseMode() {
+        eraseMode = true
     }
 }

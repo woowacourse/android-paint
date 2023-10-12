@@ -2,21 +2,38 @@ package woowacourse.paint.model.brush
 
 import android.graphics.Paint
 import android.graphics.Path
-import woowacourse.paint.customview.FreeDrawView
 
-class Circle(private val paintInstance: BrushPaint = BrushPaint()) : Figure(paintInstance) {
+class Circle(
+    private val paintInstance: BrushPaint = BrushPaint(),
+) : Figure(paintInstance) {
     private var beforePosition = Pair(0f, 0f)
-    override fun onActionDown(xCursor: Float, yCursor: Float) {
+
+    override fun onActionDown(
+        xCursor: Float,
+        yCursor: Float,
+        updateView: (Pair<Path, Paint>) -> Unit,
+    ) {
         beforePosition = xCursor to yCursor
     }
 
-    override fun onActionMove(xCursor: Float, yCursor: Float) {
+    override fun onActionMove(
+        xCursor: Float,
+        yCursor: Float,
+        updateView: (Pair<Path, Paint>) -> Unit,
+    ) {
         drawPreview(xCursor, yCursor)
+        updateView(previewDraw)
     }
 
-    override fun onActionUp(xCursor: Float, yCursor: Float) {
+    override fun onActionUp(
+        xCursor: Float,
+        yCursor: Float,
+        updateView: (Pair<Path, Paint>) -> Unit,
+    ) {
         draw(xCursor)
+        updateView(previewDraw)
     }
+
     private fun drawPreview(xCursor: Float, yCursor: Float) {
         val path = Path().apply {
             addCircle(
@@ -27,7 +44,7 @@ class Circle(private val paintInstance: BrushPaint = BrushPaint()) : Figure(pain
             )
         }
         val paint = Paint().apply { set(paintInstance) }
-        FreeDrawView.previewDraw = path to paint
+        previewDraw = path to paint
     }
 
     private fun draw(xCursor: Float) {
@@ -40,6 +57,6 @@ class Circle(private val paintInstance: BrushPaint = BrushPaint()) : Figure(pain
             )
         }
         val paint = Paint().apply { set(paintInstance) }
-        FreeDrawView.previousDrawings.add(path to paint)
+        previewDraw = path to paint
     }
 }
