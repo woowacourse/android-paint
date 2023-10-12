@@ -4,10 +4,11 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
+import woowacourse.paint.shape.Line
 import woowacourse.paint.shape.Shape
 
 class Painting(
-    val shape: Shape,
+    private val shape: Shape = Line(),
     val paint: Paint,
 ) {
     fun startDraw(pointX: Float, pointY: Float) {

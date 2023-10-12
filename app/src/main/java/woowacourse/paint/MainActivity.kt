@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupToolSelector() {
-        binding.rvTools.adapter = ToolAdapter(Tools.values(), ::onToolClicked)
+        binding.rvTools.adapter = ToolAdapter(Tools.values().map { it.stringRes }, ::onToolClicked)
     }
 
     private fun onToolClicked(idx: Int) {
