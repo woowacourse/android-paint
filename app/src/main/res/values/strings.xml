@@ -4,7 +4,7 @@
     <string name="rectangle_brush">직사각형</string>
     <string name="circle_brush">원</string>
     <string name="eraser">지우개</string>
-    <string name="undo">Undo</string>
-    <string name="redo">Redo</string>
-    <string name="clear">Clear</string>
+    <string name="undo">취소</string>
+    <string name="redo">재실행</string>
+    <string name="clear">전체 지우기</string>
 </resources>
