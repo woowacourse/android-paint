@@ -86,6 +86,7 @@
             android:layout_height="0dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
+            app:brush="@{vm.uiState.brush}"
             app:layout_constraintBottom_toTopOf="@+id/tv_color_change_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -209,10 +210,10 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:background="@{vm.uiState.brush == Brush.PEN ? @drawable/bg_secondary_selected_button : @drawable/bg_secondary_unselected_button}"
                 android:gravity="center"
-                android:layout_marginEnd="10dp"
                 android:onClick="@{() -> vm.setBrush(Brush.PEN)}"
                 android:paddingVertical="10dp"
                 android:text="@string/main_pen_select_button_label" />
@@ -220,10 +221,10 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:background="@{vm.uiState.brush == Brush.RECTANGLE ? @drawable/bg_secondary_selected_button : @drawable/bg_secondary_unselected_button}"
                 android:gravity="center"
-                android:layout_marginEnd="10dp"
                 android:onClick="@{() -> vm.setBrush(Brush.RECTANGLE)}"
                 android:paddingVertical="10dp"
                 android:text="@string/main_rectangle_select_button_label" />
@@ -231,10 +232,10 @@
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:background="@{vm.uiState.brush == Brush.CIRCLE ? @drawable/bg_secondary_selected_button : @drawable/bg_secondary_unselected_button}"
                 android:gravity="center"
-                android:layout_marginEnd="10dp"
                 android:onClick="@{() -> vm.setBrush(Brush.CIRCLE)}"
                 android:paddingVertical="10dp"
                 android:text="@string/main_circle_select_button_label" />

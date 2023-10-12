@@ -4,27 +4,26 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
-import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import woowacourse.paint.data.model.Brush
+import woowacourse.paint.data.model.GraphicPrimitive
 
 class PaintBoardView(
     context: Context,
     attrs: AttributeSet? = null,
 ) : View(context, attrs) {
 
-    private val strokes: MutableList<Stroke> = mutableListOf()
+    private val graphicPrimitives: MutableList<GraphicPrimitive> = mutableListOf()
+    private var brush: Brush = Brush.PEN
     private val paint: Paint = Paint()
+    private var downPoint: Pair<Float, Float> = 0f to 0f
     private val touchEventListeners: MutableList<TouchEventListener> = mutableListOf()
-
-    init {
-        setUpPaint()
-    }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        strokes.forEach { canvas.drawPath(it.path, it.paint) }
+        graphicPrimitives.forEach { canvas.drawPath(it.path, it.paint) }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -32,11 +31,15 @@ class PaintBoardView(
         val pointX = event.x
         val pointY = event.y
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> strokes.add(
-                Stroke(Path().apply { moveTo(pointX, pointY) }, Paint(paint)),
-            )
+            MotionEvent.ACTION_DOWN -> {
+                brush.onActionDown(graphicPrimitives, pointX, pointY, paint)
+                downPoint = pointX to pointY
+            }
 
-            MotionEvent.ACTION_MOVE -> strokes.last().path.lineTo(pointX, pointY)
+            MotionEvent.ACTION_MOVE -> {
+                val (basePointX, basePointY) = downPoint
+                brush.onActionMove(graphicPrimitives, basePointX, basePointY, pointX, pointY, paint)
+            }
 
             else -> super.onTouchEvent(event)
         }
@@ -45,7 +48,7 @@ class PaintBoardView(
         return true
     }
 
-    fun setStrokeColor(colorCode: Int) {
+    fun setBrushColor(colorCode: Int) {
         paint.color = colorCode
     }
 
@@ -53,24 +56,20 @@ class PaintBoardView(
         paint.strokeWidth = width
     }
 
+    fun setBrush(brush: Brush) {
+        this.brush = brush
+    }
+
     fun addTouchEventListener(listener: TouchEventListener) {
         touchEventListeners.add(listener)
     }
 
     fun reset() {
-        strokes.clear()
+        graphicPrimitives.clear()
         invalidate()
-    }
-
-    private fun setUpPaint() {
-        paint.style = Paint.Style.STROKE
-        paint.strokeCap = Paint.Cap.ROUND
-        paint.strokeJoin = Paint.Join.ROUND
     }
 
     fun interface TouchEventListener {
         fun onTouch()
     }
-
-    private class Stroke(val path: Path, val paint: Paint)
 }
