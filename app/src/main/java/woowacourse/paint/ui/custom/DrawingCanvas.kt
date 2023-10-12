@@ -11,42 +11,35 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.ColorInt
 import woowacourse.paint.model.BrushTools
-import woowacourse.paint.model.Eraser
-import woowacourse.paint.model.drawing.Drawing
+import woowacourse.paint.model.brush.Brush
+import woowacourse.paint.model.brush.Circle
+import woowacourse.paint.model.brush.Eraser
+import woowacourse.paint.model.brush.Pen
+import woowacourse.paint.model.brush.Rectangle
 import woowacourse.paint.model.drawing.DrawingHistory
 import woowacourse.paint.model.drawing.PathPoint
-import woowacourse.paint.model.shape.Circle
-import woowacourse.paint.model.shape.Rectangle
 
 class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     View(context, attrs) {
-    private var drawing = Drawing(Path(), Paint())
+    private var paint = Paint()
     private val drawingHistory = DrawingHistory()
-    private var brushTools = BrushTools.PEN
-
-    private val rectangle = Rectangle()
-    private val circle = Circle()
-    private val eraser = Eraser(drawingHistory)
+    private var brush: Brush = Pen(paint = paint)
 
     init {
-        changePaintProperty(Color.RED, DEFAULT_PAINT_WIDTH)
+        paint.apply {
+            isAntiAlias = true
+            strokeJoin = Paint.Join.ROUND
+            strokeCap = Paint.Cap.ROUND
+            strokeWidth = DEFAULT_PAINT_WIDTH
+            this.color = Color.RED
+            this.style = style
+        }
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         drawDrawingHistory(canvas)
-        when (brushTools) {
-            BrushTools.PEN -> canvas.drawPath(drawing.path, drawing.paint)
-            BrushTools.RECTANGLE, BrushTools.FILL_RECTANGLE -> rectangle.drawShapeOnCanvas(
-                canvas, drawing.paint
-            )
-
-            BrushTools.CIRCLE, BrushTools.FILL_CIRCLE -> circle.drawShapeOnCanvas(
-                canvas, drawing.paint
-            )
-
-            BrushTools.ERASER -> Unit
-        }
+        brush.draw(canvas)
     }
 
     private fun drawDrawingHistory(canvas: Canvas) {
@@ -57,83 +50,46 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        val pointX: Float = event.x
-        val pointY: Float = event.y
+        val point = PathPoint(event.x, event.y)
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> startDrawing(pointX, pointY)
-            MotionEvent.ACTION_MOVE -> doDrawing(pointX, pointY)
-            MotionEvent.ACTION_UP -> endDrawing()
+            MotionEvent.ACTION_DOWN -> brush.startDrawing(point)
+            MotionEvent.ACTION_MOVE -> brush.moveDrawing(point)
+            MotionEvent.ACTION_UP -> brush.endDrawing(drawingHistory)
             else -> super.onTouchEvent(event)
         }
         invalidate()
         return true
     }
 
-    private fun startDrawing(pointX: Float, pointY: Float) {
-        when (brushTools) {
+    fun changePaintMode(brushTools: BrushTools) {
+        this.brush = when (brushTools) {
             BrushTools.PEN -> {
                 changePaintStyle(Paint.Style.STROKE)
-                drawing.path.moveTo(pointX, pointY)
+                Pen(paint)
             }
 
-            BrushTools.RECTANGLE, BrushTools.FILL_RECTANGLE -> {
-                rectangle.initPoint(PathPoint(pointX, pointY))
-                changePaintStyle(if (brushTools == BrushTools.RECTANGLE) Paint.Style.STROKE else Paint.Style.FILL)
+            BrushTools.RECTANGLE -> {
+                changePaintStyle(Paint.Style.STROKE)
+                Rectangle(paint)
             }
 
-            BrushTools.CIRCLE, BrushTools.FILL_CIRCLE -> {
-                circle.initPoint(PathPoint(pointX, pointY))
-                changePaintStyle(if (brushTools == BrushTools.CIRCLE) Paint.Style.STROKE else Paint.Style.FILL)
+            BrushTools.FILL_RECTANGLE -> {
+                changePaintStyle(Paint.Style.FILL)
+                Rectangle(paint)
             }
 
-            BrushTools.ERASER -> {
-                eraser.erasePath(PathPoint(pointX, pointY))
+            BrushTools.CIRCLE -> {
+                changePaintStyle(Paint.Style.STROKE)
+                Circle(paint)
             }
+
+            BrushTools.FILL_CIRCLE -> {
+                changePaintStyle(Paint.Style.FILL)
+                Circle(paint)
+            }
+
+            BrushTools.ERASER -> Eraser(drawingHistory)
         }
-    }
-
-    private fun doDrawing(pointX: Float, pointY: Float) {
-        when (brushTools) {
-            BrushTools.PEN -> drawing.path.lineTo(pointX, pointY)
-            BrushTools.RECTANGLE, BrushTools.FILL_RECTANGLE -> rectangle.updateEndPoint(
-                PathPoint(pointX, pointY)
-            )
-
-            BrushTools.CIRCLE, BrushTools.FILL_CIRCLE -> circle.updateEndPoint(
-                PathPoint(pointX, pointY)
-            )
-
-            BrushTools.ERASER -> eraser.erasePath(PathPoint(pointX, pointY))
-        }
-    }
-
-    private fun endDrawing() {
-        when (brushTools) {
-            BrushTools.PEN -> Unit
-            BrushTools.RECTANGLE, BrushTools.FILL_RECTANGLE -> rectangle.addShapeToPath(drawing.path)
-            BrushTools.CIRCLE, BrushTools.FILL_CIRCLE -> circle.addShapeToPath(drawing.path)
-            BrushTools.ERASER -> Unit
-        }
-        if (brushTools != BrushTools.ERASER) drawingHistory.addDrawing(
-            Drawing(
-                drawing.path, drawing.paint
-            )
-        )
-        drawing.path = Path()
-    }
-
-    fun changePaintColor(@ColorInt color: Int) {
-        drawing.paint = Paint(drawing.paint)
-        changePaintProperty(color = color)
-    }
-
-    fun changePaintWidth(width: Float) {
-        drawing.paint = Paint(drawing.paint)
-        changePaintProperty(width = width)
-    }
-
-    fun changePaintMode(brushTools: BrushTools) {
-        this.brushTools = brushTools
     }
 
     fun removeAllDrawings() {
@@ -141,22 +97,33 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
         invalidate()
     }
 
+    fun changePaintColor(@ColorInt color: Int) {
+        paint = Paint(paint)
+        changePaintProperty(color = color)
+    }
+
+    fun changePaintWidth(width: Float) {
+        paint = Paint(paint)
+        changePaintProperty(width = width)
+    }
+
     private fun changePaintStyle(style: Paint.Style) {
-        drawing.paint = Paint(drawing.paint)
+        paint = Paint(paint)
         changePaintProperty(style = style)
     }
 
     private fun changePaintProperty(
-        @ColorInt color: Int = drawing.paint.color,
-        width: Float = drawing.paint.strokeWidth,
-        style: Paint.Style = drawing.paint.style
+        @ColorInt color: Int = paint.color,
+        width: Float = paint.strokeWidth,
+        style: Paint.Style = paint.style
     ) {
-        drawing.paint.isAntiAlias = true
-        drawing.paint.strokeJoin = Paint.Join.ROUND
-        drawing.paint.strokeCap = Paint.Cap.ROUND
-        drawing.paint.strokeWidth = width
-        drawing.paint.color = color
-        drawing.paint.style = style
+        brush.changePaintProperty(
+            paint.apply {
+                strokeWidth = width
+                this.color = color
+                this.style = style
+            }
+        )
     }
 
     companion object {
