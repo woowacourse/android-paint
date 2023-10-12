@@ -8,8 +8,8 @@ import android.graphics.PorterDuffXfermode
 
 data class EraserDrawingEngine(
     override val paint: Paint = Paint(),
-    val path: Path = Path(),
-) : DrawingEngine {
+    override val path: Path = Path(),
+) : PathDrawingEngine {
 
     init {
         paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
@@ -23,7 +23,7 @@ data class EraserDrawingEngine(
         quadTo(pointX, pointY)
     }
 
-    fun quadTo(pointX: Float, pointY: Float) {
+    override fun quadTo(pointX: Float, pointY: Float) {
         val nextX = (DrawingEngines.lastX + pointX) / 2
         val nextY = (DrawingEngines.lastY + pointY) / 2
         path.quadTo(DrawingEngines.lastX, DrawingEngines.lastY, nextX, nextY)
@@ -34,7 +34,7 @@ data class EraserDrawingEngine(
         path.addRect(0f, 0f, width, height, Path.Direction.CW)
     }
 
-    fun moveTo(pointX: Float, pointY: Float) {
+    override fun moveTo(pointX: Float, pointY: Float) {
         path.moveTo(pointX, pointY)
     }
 }
