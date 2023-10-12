@@ -41,7 +41,7 @@ class Rectangle(private var paint: Paint) : Brush {
         this.path = Path()
     }
 
-    override fun changePaintProperty(paint: Paint) {
+    override fun changePaint(paint: Paint) {
         this.paint = paint
     }
 }

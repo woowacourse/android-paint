@@ -27,5 +27,5 @@ class Eraser(private val drawingHistory: DrawingHistory) : Brush {
     }
 
     override fun endDrawing(drawingHistory: DrawingHistory) = Unit
-    override fun changePaintProperty(paint: Paint) = Unit
+    override fun changePaint(paint: Paint) = Unit
 }

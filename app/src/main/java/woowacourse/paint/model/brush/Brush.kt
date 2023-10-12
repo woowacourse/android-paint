@@ -10,5 +10,5 @@ interface Brush {
     fun startDrawing(point: PathPoint)
     fun moveDrawing(point: PathPoint)
     fun endDrawing(drawingHistory: DrawingHistory)
-    fun changePaintProperty(paint: Paint)
+    fun changePaint(paint: Paint)
 }

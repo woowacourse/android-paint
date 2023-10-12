@@ -18,40 +18,40 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initBinding()
-        initPaintColorsRecyclerView()
-        initPaintWidthRangeSlider()
-        initPaintModeRecyclerView()
-        initDeleteButton()
+        setUpBinding()
+        setUpPaintColorsRecyclerView()
+        setUpPaintWidthRangeSlider()
+        setUpPaintModeRecyclerView()
+        setUpDeleteButton()
     }
 
-    private fun initBinding() {
+    private fun setUpBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
     }
 
-    private fun initPaintColorsRecyclerView() {
+    private fun setUpPaintColorsRecyclerView() {
         val colors = resources.getIntArray(R.array.palette_colors).toList()
         binding.paletteAdapter = PaletteAdapter(colors) { color: Int ->
             binding.mainDrawingCanvas.changePaintColor(color)
         }
     }
 
-    private fun initPaintWidthRangeSlider() {
+    private fun setUpPaintWidthRangeSlider() {
         binding.defaultPaintWidth = DEFAULT_PAINT_WIDTH
         binding.mainBrushWidthSlider.addOnChangeListener { _, value, _ ->
             binding.mainDrawingCanvas.changePaintWidth(value)
         }
     }
 
-    private fun initPaintModeRecyclerView() {
+    private fun setUpPaintModeRecyclerView() {
         binding.paintModeAdapter = DrawingModeAdapter(
             BrushTools.values().toList()
         ) { binding.mainDrawingCanvas.changePaintMode(it) }
     }
 
-    private fun initDeleteButton() {
+    private fun setUpDeleteButton() {
         binding.mainBtnDeleteAll.setOnClickListener {
             binding.mainDrawingCanvas.removeAllDrawings()
         }

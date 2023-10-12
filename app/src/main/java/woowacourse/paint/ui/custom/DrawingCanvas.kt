@@ -119,7 +119,7 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
         width: Float = paint.strokeWidth,
         style: Paint.Style = paint.style
     ) {
-        brush.changePaintProperty(
+        brush.changePaint(
             paint.apply {
                 strokeWidth = width
                 this.color = color
