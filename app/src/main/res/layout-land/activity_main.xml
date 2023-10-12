@@ -7,13 +7,12 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
+        style="@style/CustomToolbarStyle"
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:titleTextColor="?attr/colorOnPrimary" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <woowacourse.paint.customview.CanvasView
         android:id="@+id/canvasView"
