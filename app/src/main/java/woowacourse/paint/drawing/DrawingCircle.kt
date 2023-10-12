@@ -12,19 +12,15 @@ class DrawingCircle : DrawingShape {
     private var endPoint: PathPoint = PathPoint(0f, 0f)
 
     override fun drawShapeOnCanvas(canvas: Canvas, paint: Paint) {
-        processDirectionalLogic { startX, startY, radius ->
-            canvas.drawCircle(
-                startX, startY, radius, paint
-            )
-        }
+        canvas.drawOval(startPoint.x, startPoint.y, endPoint.x, endPoint.y, paint)
     }
 
     override fun addShapeToPath(path: Path) {
-        processDirectionalLogic { startX, startY, radius ->
-            path.addCircle(
-                startX, startY, radius, Path.Direction.CW
-            )
-        }
+        val minX = min(startPoint.x, endPoint.x)
+        val maxX = max(startPoint.x, endPoint.x)
+        val minY = min(startPoint.y, endPoint.y)
+        val maxY = max(startPoint.y, endPoint.y)
+        path.addOval(minX, minY, maxX, maxY, Path.Direction.CW)
     }
 
     fun initPoint(value: PathPoint) {
@@ -34,16 +30,5 @@ class DrawingCircle : DrawingShape {
 
     fun updateEndPoint(point: PathPoint) {
         endPoint = point
-    }
-
-    private fun processDirectionalLogic(
-        logic: (startX: Float, startY: Float, radius: Float) -> Unit,
-    ) {
-        val startX = (startPoint.x + endPoint.x) / 2
-        val startY = (startPoint.y + endPoint.y) / 2
-        val maxX = max(startPoint.x, endPoint.x)
-        val minX = min(startPoint.x, endPoint.x)
-        val radius = maxX - minX
-        logic(startX, startY, radius)
     }
 }
