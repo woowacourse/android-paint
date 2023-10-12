@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="color_item_size">70dp</dimen>
+    <dimen name="drawing_options_start_margin_percent">0.2</dimen>
+    <dimen name="drawing_options_end_margin_percent">0.8</dimen>
+</resources>

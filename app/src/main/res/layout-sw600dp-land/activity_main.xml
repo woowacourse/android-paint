@@ -60,58 +60,54 @@
             android:id="@+id/cv_canvas"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/ll_tools"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tb_paint" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/gl_start"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+        <LinearLayout
+            android:id="@+id/ll_tools"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="@dimen/drawing_options_start_margin_percent" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/gl_end"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            app:layout_constraintGuide_percent="@dimen/drawing_options_end_margin_percent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tb_paint" />
 
         <com.google.android.material.slider.RangeSlider
             android:id="@+id/rs_width_changer"
-            android:layout_width="0dp"
+            android:layout_width="500dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             android:visibility="@{viewModel.paintChangingState == PaintChangingState.WIDTH_CHANGING &amp;&amp; viewModel.selectedDrawingTool.hasWidth ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toTopOf="@id/btn_change_width"
-            app:layout_constraintEnd_toStartOf="@id/gl_end"
-            app:layout_constraintStart_toEndOf="@id/gl_start" />
+            app:layout_constraintStart_toEndOf="@id/btn_change_color"
+            app:layout_constraintTop_toBottomOf="@id/tb_paint" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_colors"
-            android:layout_width="0dp"
+            android:layout_width="500dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal"
             android:visibility="@{viewModel.paintChangingState == PaintChangingState.COLOR_CHANGING &amp;&amp; viewModel.selectedDrawingTool.hasColor ? View.VISIBLE : View.GONE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@id/btn_change_color"
-            app:layout_constraintEnd_toStartOf="@id/gl_end"
-            app:layout_constraintStart_toEndOf="@id/gl_start"
+            app:layout_constraintStart_toEndOf="@id/btn_change_color"
+            app:layout_constraintTop_toBottomOf="@id/tb_paint"
             tools:listitem="@layout/item_color_palette" />
 
         <Button
             android:id="@+id/btn_change_color"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:backgroundTint="@color/purple_500"
             android:onClick="@{() -> viewModel.setSettingState(PaintChangingState.COLOR_CHANGING)}"
             android:text="@string/main_change_color"
             android:visibility="@{viewModel.selectedDrawingTool.hasColor ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toTopOf="@id/ll_tools"
-            app:layout_constraintEnd_toStartOf="@id/btn_change_width"
-            app:layout_constraintStart_toEndOf="@id/gl_start" />
+            app:layout_constraintStart_toEndOf="@id/ll_tools"
+            app:layout_constraintTop_toBottomOf="@id/tb_paint" />
 
         <Button
             android:id="@+id/btn_change_width"
@@ -122,19 +118,9 @@
             android:onClick="@{() -> viewModel.setSettingState(PaintChangingState.WIDTH_CHANGING)}"
             android:text="@string/main_change_thickness"
             android:visibility="@{viewModel.selectedDrawingTool.hasWidth ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toTopOf="@id/ll_tools"
-            app:layout_constraintEnd_toStartOf="@id/gl_end"
-            app:layout_constraintStart_toEndOf="@id/btn_change_color" />
+            app:layout_constraintStart_toEndOf="@id/ll_tools"
+            app:layout_constraintTop_toBottomOf="@id/btn_change_color" />
 
-        <LinearLayout
-            android:id="@+id/ll_tools"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/gl_end"
-            app:layout_constraintStart_toEndOf="@id/gl_start" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
