@@ -3,6 +3,8 @@ package woowacourse.paint.model.brush.shape
 import android.graphics.Paint
 import android.graphics.Path
 import android.view.MotionEvent
+import kotlin.math.abs
+import kotlin.math.max
 
 class CircleBrush(override var paint: Paint) : ShapeBrush {
 
@@ -12,7 +14,8 @@ class CircleBrush(override var paint: Paint) : ShapeBrush {
 
     override fun moveDrawing(event: MotionEvent) {
         path.reset()
-        path.addCircle(startX, startY, event.x - startX, Path.Direction.CCW)
+        val radius = max(abs(event.x - startX), abs(event.y - startY))
+        path.addCircle(startX, startY, radius, Path.Direction.CCW)
     }
 
     companion object {

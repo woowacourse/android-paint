@@ -3,6 +3,8 @@ package woowacourse.paint.model.brush.shape
 import android.graphics.Paint
 import android.graphics.Path
 import android.view.MotionEvent
+import kotlin.math.max
+import kotlin.math.min
 
 class RectangleBrush(override var paint: Paint) : ShapeBrush {
 
@@ -12,7 +14,13 @@ class RectangleBrush(override var paint: Paint) : ShapeBrush {
 
     override fun moveDrawing(event: MotionEvent) {
         path.reset()
-        path.addRect(startX, startY, event.x, event.y, Path.Direction.CCW)
+        path.addRect(
+            min(startX, event.x),
+            min(startY, event.y),
+            max(startX, event.x),
+            max(startY, event.y),
+            Path.Direction.CCW,
+        )
     }
 
     companion object {
