@@ -9,7 +9,7 @@ import com.example.domain.BrushType.ERASER
 class Eraser : BrushType {
     override var type = ERASER
 
-    private val path = Path()
+    override val path = Path()
     override val paint = Paint().apply {
         isAntiAlias = true
         style = Paint.Style.STROKE
@@ -29,9 +29,5 @@ class Eraser : BrushType {
 
     fun doActionUp(pointX: Float, pointY: Float) {
         path.lineTo(pointX, pointY)
-    }
-
-    override fun getPath(): Path {
-        return path
     }
 }

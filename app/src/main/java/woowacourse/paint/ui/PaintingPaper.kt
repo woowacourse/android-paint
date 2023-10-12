@@ -31,7 +31,7 @@ class PaintingPaper(context: Context, attrs: AttributeSet) : View(context, attrs
         paintings.painting.forEach { painting ->
             canvas.drawPath(painting.path, painting.paint)
         }
-        canvas.drawPath(brush.getPath(), brush.paint)
+        canvas.drawPath(brush.path, brush.paint)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -75,7 +75,7 @@ class PaintingPaper(context: Context, attrs: AttributeSet) : View(context, attrs
 
     private fun doActionUp(pointX: Float, pointY: Float) {
         val currentPaint = brush.paint
-        val currentPath = brush.getPath()
+        val currentPath = brush.path
         when (brush.type) {
             CIRCLE -> {
                 paintings.storePainting(Painting(currentPaint, currentPath))

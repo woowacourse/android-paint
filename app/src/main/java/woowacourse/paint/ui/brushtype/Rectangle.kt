@@ -8,7 +8,7 @@ import com.example.domain.BrushType.RECTANGLE
 class Rectangle : BrushType {
     override var type = RECTANGLE
 
-    private val path = Path()
+    override val path = Path()
     override var paint = Paint().apply {
         this.color = Color.BLACK
         style = Paint.Style.FILL
@@ -27,10 +27,6 @@ class Rectangle : BrushType {
     override fun moveDrawing(pointX: Float, pointY: Float) {
         path.reset()
         path.addRect(startPointX, startPointY, pointX, pointY, Path.Direction.CCW)
-    }
-
-    override fun getPath(): Path {
-        return path
     }
 
     companion object {

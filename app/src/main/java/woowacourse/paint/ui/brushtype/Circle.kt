@@ -8,7 +8,7 @@ import com.example.domain.BrushType.CIRCLE
 class Circle : BrushType {
     override var type = CIRCLE
 
-    private val path = Path()
+    override val path = Path()
     override val paint = Paint().apply {
         strokeWidth = 0f
         this.color = Color.BLACK
@@ -27,10 +27,6 @@ class Circle : BrushType {
     override fun moveDrawing(pointX: Float, pointY: Float) {
         path.reset()
         path.addOval(startPointX, startPointY, pointX, pointY, Path.Direction.CCW)
-    }
-
-    override fun getPath(): Path {
-        return path
     }
 
     companion object {

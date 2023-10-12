@@ -6,9 +6,9 @@ import com.example.domain.BrushType
 
 interface BrushType {
     var type: BrushType
+    val path: Path
     val paint: Paint
 
     fun startDrawing(pointX: Float, pointY: Float)
     fun moveDrawing(pointX: Float, pointY: Float)
-    fun getPath(): Path
 }

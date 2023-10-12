@@ -8,7 +8,7 @@ import com.example.domain.BrushType.LINE
 class Line : BrushType {
     override var type = LINE
 
-    private val path = Path()
+    override val path = Path()
     override val paint = Paint().apply {
         isAntiAlias = true
         this.color = Color.BLACK
@@ -29,9 +29,5 @@ class Line : BrushType {
 
     fun doActionUp(pointX: Float, pointY: Float) {
         path.lineTo(pointX, pointY)
-    }
-
-    override fun getPath(): Path {
-        return path
     }
 }
