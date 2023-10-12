@@ -8,8 +8,8 @@ import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.model.DrawMode
 import woowacourse.paint.model.drawingEngine.DrawingEngines
-import woowacourse.paint.model.drawingEngine.path.PathEraserDrawingEngine
 import woowacourse.paint.model.drawingEngine.path.LineDrawingEngine
+import woowacourse.paint.model.drawingEngine.path.PathEraserDrawingEngine
 import woowacourse.paint.model.drawingEngine.shape.OvalDrawingEngine
 import woowacourse.paint.model.drawingEngine.shape.RectangleDrawingEngine
 import woowacourse.paint.model.pen.Pen

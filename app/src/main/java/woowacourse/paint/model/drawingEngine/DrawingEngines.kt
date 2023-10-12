@@ -1,7 +1,7 @@
 package woowacourse.paint.model.drawingEngine
 
 import android.view.View
-import woowacourse.paint.model.drawingEngine.path.PathEraserDrawingEngine
+import woowacourse.paint.model.drawingEngine.shape.RectangleEraserDrawingEngine
 import java.util.Stack
 
 class DrawingEngines(value: List<DrawingEngine> = mutableListOf()) {
@@ -47,10 +47,10 @@ class DrawingEngines(value: List<DrawingEngine> = mutableListOf()) {
     }
 
     fun clear(view: View) {
-        val pathEraserDrawingEngine = PathEraserDrawingEngine().apply {
-            addRect(view.width.toFloat(), view.height.toFloat())
+        val rectangleEraserDrawingEngine = RectangleEraserDrawingEngine().apply {
+            changePosition(0f, 0f, view.width.toFloat(), view.height.toFloat())
         }
-        _value.add(pathEraserDrawingEngine)
+        _value.add(rectangleEraserDrawingEngine)
         undoStack.clear()
     }
 
