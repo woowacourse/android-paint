@@ -49,9 +49,18 @@ class ContentContainer(
         return _drawnContents.map { it.deepCopy() }
     }
 
+    fun getRedoAbleContents(): List<Content> {
+        return redoAbleContents.map { it.deepCopy() }
+    }
+
     fun changeDrawnContents(contents: List<Content>) {
         _drawnContents.clear()
         _drawnContents.addAll(contents)
+    }
+
+    fun changeRedoAbleContents(contents: List<Content>) {
+        redoAbleContents.clear()
+        redoAbleContents.addAll(contents)
     }
 
     fun undo(): Boolean {

@@ -65,7 +65,8 @@
 
         <woowacourse.paint.customView.PaintBoard
             android:id="@+id/pb_board"
-            paint_board_drawn_contents="@={vm.drawnPaths}"
+            paint_board_drawn_contents="@={vm.drawnContents}"
+            paint_board_redo_contents="@={vm.redoAbleContents}"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:brushType="@{vm.appliedBrushType}"

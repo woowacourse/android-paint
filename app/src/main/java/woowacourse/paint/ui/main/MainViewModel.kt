@@ -51,7 +51,8 @@ class MainViewModel : ViewModel() {
     }
 
     // 양방향 데이터바인딩으로 뷰모델에서 유지하는 경로 정보
-    val drawnPaths = MutableLiveData<List<Content>>(listOf())
+    val drawnContents = MutableLiveData<List<Content>>(listOf())
+    val redoAbleContents = MutableLiveData<List<Content>>(listOf())
 
     fun onChangeSelectedColor(brushColorItem: BrushColorItem) {
         _colors.value = BrushColorItem.getBoardColorItems(brushColorItem.color)

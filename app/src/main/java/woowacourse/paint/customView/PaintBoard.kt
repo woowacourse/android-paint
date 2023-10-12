@@ -20,10 +20,14 @@ class PaintBoard @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
 ) : View(context, attrs) {
-    var onContentsChangeListener: OnContentsChangeListener? = null
+    var onDrawnContentsChangeListener: OnDrawnContentsChangeListener? = null
+    var onRedoAbleContentsChangeListener: OnRedoAbleContentsChangeListener? = null
     private val contents = ContentContainer()
-    val drawnPaths: List<Content>
+    val drawnContents: List<Content>
         get() = contents.getDrawnContents()
+
+    val redoAbleContents: List<Content>
+        get() = contents.getRedoAbleContents()
 
     var currentColor: Int
         set(@ColorInt value) {
@@ -82,39 +86,55 @@ class PaintBoard @JvmOverloads constructor(
         typedArray.recycle()
     }
 
-    fun changeDrawnPaths(paths: List<Content>) {
-        contents.changeDrawnContents(paths)
+    fun changeDrawnContents(contents: List<Content>) {
+        this.contents.changeDrawnContents(contents)
         invalidate()
-        onContentChangeListener()
+        onDrawnContentsChange()
+    }
+
+    fun changeRedoAbleContents(contents: List<Content>) {
+        this.contents.changeRedoAbleContents(contents)
+        onRedoAbleContentsChange()
     }
 
     fun undo() {
         if (contents.undo()) {
             invalidate()
-            onContentChangeListener()
+            onDrawnContentsChange()
+            onRedoAbleContentsChange()
         }
     }
 
     fun redo() {
         if (contents.redo()) {
             invalidate()
-            onContentChangeListener()
+            onDrawnContentsChange()
+            onRedoAbleContentsChange()
         }
     }
 
     fun clear() {
         if (contents.clear()) {
             invalidate()
-            onContentChangeListener()
+            onDrawnContentsChange()
+            onRedoAbleContentsChange()
         }
     }
 
-    private fun onContentChangeListener() {
-        onContentsChangeListener?.onContentsChange(drawnPaths)
+    private fun onDrawnContentsChange() {
+        onDrawnContentsChangeListener?.onDrawnContentsChange(drawnContents)
     }
 
-    interface OnContentsChangeListener {
-        fun onContentsChange(contents: List<Content>)
+    private fun onRedoAbleContentsChange() {
+        onRedoAbleContentsChangeListener?.onRedoAbleContentsChange(redoAbleContents)
+    }
+
+    interface OnDrawnContentsChangeListener {
+        fun onDrawnContentsChange(contents: List<Content>)
+    }
+
+    interface OnRedoAbleContentsChangeListener {
+        fun onRedoAbleContentsChange(contents: List<Content>)
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -127,7 +147,7 @@ class PaintBoard @JvmOverloads constructor(
         contents.updateContent(event)
         invalidate()
         if (event.action == MotionEvent.ACTION_UP) {
-            onContentChangeListener()
+            onDrawnContentsChange()
         }
         return true
     }
@@ -136,15 +156,15 @@ class PaintBoard @JvmOverloads constructor(
         @JvmStatic
         @BindingAdapter("paint_board_drawn_contents")
         fun PaintBoard.setDrawnContents(contents: List<Content>) {
-            if (drawnPaths == contents) return
-            changeDrawnPaths(contents)
+            if (drawnContents == contents) return
+            changeDrawnContents(contents)
         }
 
         @JvmStatic
         @BindingAdapter("paint_board_drawn_contentsAttrChanged")
         fun PaintBoard.setDrawnContentsInverseBindingListener(inverseBindingListener: InverseBindingListener) {
-            onContentsChangeListener = object : OnContentsChangeListener {
-                override fun onContentsChange(contents: List<Content>) {
+            onDrawnContentsChangeListener = object : OnDrawnContentsChangeListener {
+                override fun onDrawnContentsChange(contents: List<Content>) {
                     inverseBindingListener.onChange()
                 }
             }
@@ -156,7 +176,33 @@ class PaintBoard @JvmOverloads constructor(
         )
         @JvmStatic
         fun getContent(view: PaintBoard): List<Content> {
-            return view.drawnPaths
+            return view.drawnContents
+        }
+
+        @JvmStatic
+        @BindingAdapter("paint_board_redo_contents")
+        fun PaintBoard.setRedoAbleContents(contents: List<Content>) {
+            if (redoAbleContents == contents) return
+            changeRedoAbleContents(contents)
+        }
+
+        @JvmStatic
+        @BindingAdapter("paint_board_redo_contentsAttrChanged")
+        fun PaintBoard.setRedoAbleContentsInverseBindingListener(inverseBindingListener: InverseBindingListener) {
+            onRedoAbleContentsChangeListener = object : OnRedoAbleContentsChangeListener {
+                override fun onRedoAbleContentsChange(contents: List<Content>) {
+                    inverseBindingListener.onChange()
+                }
+            }
+        }
+
+        @InverseBindingAdapter(
+            attribute = "paint_board_redo_contents",
+            event = "paint_board_redo_contentsAttrChanged",
+        )
+        @JvmStatic
+        fun getRedoAbleContent(view: PaintBoard): List<Content> {
+            return view.redoAbleContents
         }
     }
 }
