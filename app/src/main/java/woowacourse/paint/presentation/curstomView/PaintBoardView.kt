@@ -102,33 +102,32 @@ class PaintBoardView(
     }
 
     private class History {
-        private val records: MutableList<List<GraphicPrimitive>> =
-            mutableListOf(mutableListOf())
+        private val records: MutableList<List<GraphicPrimitive>> = mutableListOf(emptyList())
 
-        private var index = 0
+        private var snapshotIndex = 0
 
         fun addRecord(record: List<GraphicPrimitive>) {
-            records.add(++index, record)
-            while (records.size > index + 1) {
+            records.add(++snapshotIndex, record)
+            while (records.size > snapshotIndex + 1) {
                 records.removeLastOrNull()
             }
         }
 
         fun redo(): List<GraphicPrimitive> {
-            index = minOf(index + 1, records.size - 1)
-            return records[index]
+            snapshotIndex = minOf(snapshotIndex + 1, records.size - 1)
+            return records[snapshotIndex]
         }
 
         fun undo(): List<GraphicPrimitive> {
-            index = maxOf(index - 1, 0)
-            return records[index]
+            snapshotIndex = maxOf(snapshotIndex - 1, 0)
+            return records[snapshotIndex]
         }
 
         fun clear(): List<GraphicPrimitive> {
             records.clear()
-            records.add(mutableListOf())
-            index = 0
-            return records[index]
+            records.add(emptyList())
+            snapshotIndex = 0
+            return records[snapshotIndex]
         }
     }
 }
