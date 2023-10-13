@@ -27,12 +27,12 @@ class MainActivity : AppCompatActivity() {
         binding.rsThickness.addOnSliderTouchListener(object : RangeSlider.OnSliderTouchListener {
             override fun onStartTrackingTouch(slider: RangeSlider) = Unit
             override fun onStopTrackingTouch(slider: RangeSlider) {
-                setPaintThickness()
+                updateThickness()
             }
         })
     }
 
-    private fun setPaintThickness() {
+    private fun updateThickness() {
         binding.rsThickness.visibility = View.GONE
         val thickness = binding.rsThickness.values.last()
         binding.fdvBoard.updateThickness(thickness)
