@@ -1,8 +1,9 @@
 package woowacourse.paint.presentation.ui.model
 
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 
 enum class Brush {
     PEN {
@@ -78,7 +79,7 @@ enum class Brush {
 
         override fun getBrushPaint(paint: Paint): Paint =
             Paint(paint).apply {
-                color = Color.WHITE
+                xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
                 style = Paint.Style.STROKE
                 strokeCap = Paint.Cap.ROUND
                 strokeJoin = Paint.Join.ROUND

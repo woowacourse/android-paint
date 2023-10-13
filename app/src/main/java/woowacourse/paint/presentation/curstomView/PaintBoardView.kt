@@ -25,6 +25,10 @@ class PaintBoardView(
     private var downPoint: Pair<Float, Float> = 0f to 0f
     private val touchEventListeners: MutableList<TouchEventListener> = mutableListOf()
 
+    init {
+        setLayerType(LAYER_TYPE_HARDWARE, null)
+    }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         graphicPrimitives.forEach { canvas.drawPath(it.path, it.paint) }
