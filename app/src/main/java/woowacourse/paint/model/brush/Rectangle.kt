@@ -17,9 +17,9 @@ class Rectangle(private var paint: Paint) : Brush {
     private fun addShape() {
         val left = min(startPoint.x, endPoint.x)
         val right = max(startPoint.x, endPoint.x)
-        val bottom = min(startPoint.y, endPoint.y)
-        val top = max(startPoint.y, endPoint.y)
-        path.addRect(left, top, right, bottom, Path.Direction.CW)
+        val top = min(startPoint.y, endPoint.y)
+        val bottom = max(startPoint.y, endPoint.y)
+        path.addRect(left, top, right, bottom, Path.Direction.CCW)
     }
 
     override fun draw(canvas: Canvas) {
