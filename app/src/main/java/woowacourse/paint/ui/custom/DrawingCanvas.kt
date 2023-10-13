@@ -14,6 +14,7 @@ import woowacourse.paint.model.BrushTools
 import woowacourse.paint.model.brush.Brush
 import woowacourse.paint.model.brush.Circle
 import woowacourse.paint.model.brush.Eraser
+import woowacourse.paint.model.brush.PathBrush
 import woowacourse.paint.model.brush.Pen
 import woowacourse.paint.model.brush.Rectangle
 import woowacourse.paint.model.drawing.DrawingHistory
@@ -39,7 +40,7 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         drawDrawingHistory(canvas)
-        brush.draw(canvas)
+        if (brush is PathBrush) (brush as PathBrush).draw(canvas)
     }
 
     private fun drawDrawingHistory(canvas: Canvas) {
@@ -54,7 +55,7 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
         when (event.action) {
             MotionEvent.ACTION_DOWN -> brush.startDrawing(point)
             MotionEvent.ACTION_MOVE -> brush.moveDrawing(point)
-            MotionEvent.ACTION_UP -> brush.endDrawing(drawingHistory)
+            MotionEvent.ACTION_UP -> if (brush is PathBrush) (brush as PathBrush).endDrawing(drawingHistory)
             else -> super.onTouchEvent(event)
         }
         invalidate()
@@ -117,13 +118,14 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
         width: Float = paint.strokeWidth,
         style: Paint.Style = paint.style
     ) {
-        brush.changePaint(
-            paint.apply {
-                strokeWidth = width
-                this.color = color
-                this.style = style
-            }
-        )
+        if (brush is PathBrush)
+            (brush as PathBrush).changePaint(
+                paint.apply {
+                    strokeWidth = width
+                    this.color = color
+                    this.style = style
+                }
+            )
     }
 
     companion object {

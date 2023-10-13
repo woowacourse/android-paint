@@ -9,7 +9,7 @@ import woowacourse.paint.model.drawing.PathPoint
 import kotlin.math.max
 import kotlin.math.min
 
-class Rectangle(private var paint: Paint) : Brush {
+class Rectangle(private var paint: Paint) : PathBrush {
     private var startPoint: PathPoint = PathPoint(0f, 0f)
     private var endPoint: PathPoint = PathPoint(0f, 0f)
     private var path: Path = Path()
