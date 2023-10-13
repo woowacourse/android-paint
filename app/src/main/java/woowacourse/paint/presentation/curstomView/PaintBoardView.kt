@@ -9,13 +9,17 @@ import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.presentation.ui.model.Brush
 import woowacourse.paint.presentation.ui.model.GraphicPrimitive
+import kotlin.properties.Delegates
 
 class PaintBoardView(
     context: Context,
     attrs: AttributeSet? = null,
 ) : View(context, attrs) {
 
-    private val graphicPrimitives: MutableList<GraphicPrimitive> = mutableListOf()
+    private val history: History = History()
+    private var graphicPrimitives: List<GraphicPrimitive> by Delegates.observable(emptyList()) { _, _, _ ->
+        invalidate()
+    }
     private var brush: Brush = Brush.PEN
     private val paint: Paint = Paint()
     private var downPoint: Pair<Float, Float> = 0f to 0f
@@ -32,19 +36,32 @@ class PaintBoardView(
         val pointY = event.y
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                brush.onActionDown(graphicPrimitives, pointX, pointY, paint)
+                graphicPrimitives = brush.onActionDown(
+                    graphicPrimitives = graphicPrimitives,
+                    pointX = pointX,
+                    pointY = pointY,
+                    paint = paint,
+                )
                 downPoint = pointX to pointY
             }
 
             MotionEvent.ACTION_MOVE -> {
                 val (basePointX, basePointY) = downPoint
-                brush.onActionMove(graphicPrimitives, basePointX, basePointY, pointX, pointY, paint)
+                graphicPrimitives = brush.onActionMove(
+                    graphicPrimitives = graphicPrimitives,
+                    basePointX = basePointX,
+                    basePointY = basePointY,
+                    pointX = pointX,
+                    pointY = pointY,
+                    paint = paint,
+                )
             }
+
+            MotionEvent.ACTION_UP -> history.addRecord(graphicPrimitives)
 
             else -> super.onTouchEvent(event)
         }
         touchEventListeners.forEach { it.onTouch() }
-        invalidate()
         return true
     }
 
@@ -64,12 +81,50 @@ class PaintBoardView(
         touchEventListeners.add(listener)
     }
 
+    fun undo() {
+        graphicPrimitives = history.undo()
+    }
+
+    fun redo() {
+        graphicPrimitives = history.redo()
+    }
+
     fun reset() {
-        graphicPrimitives.clear()
-        invalidate()
+        graphicPrimitives = history.clear()
     }
 
     fun interface TouchEventListener {
         fun onTouch()
+    }
+
+    private class History {
+        private val records: MutableList<List<GraphicPrimitive>> =
+            mutableListOf(mutableListOf())
+
+        private var index = 0
+
+        fun addRecord(record: List<GraphicPrimitive>) {
+            records.add(++index, record)
+            while (records.size > index + 1) {
+                records.removeLastOrNull()
+            }
+        }
+
+        fun redo(): List<GraphicPrimitive> {
+            index = minOf(index + 1, records.size - 1)
+            return records[index]
+        }
+
+        fun undo(): List<GraphicPrimitive> {
+            index = maxOf(index - 1, 0)
+            return records[index]
+        }
+
+        fun clear(): List<GraphicPrimitive> {
+            records.clear()
+            records.add(mutableListOf())
+            index = 0
+            return records[index]
+        }
     }
 }

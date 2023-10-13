@@ -8,4 +8,6 @@
     <string name="main_rectangle_select_button_label">직사각형</string>
     <string name="main_circle_select_button_label">원</string>
     <string name="main_eraser_select_button_label">지우개</string>
+    <string name="main_undo_button_label">취소</string>
+    <string name="main_redo_button_label">재실행</string>
 </resources>

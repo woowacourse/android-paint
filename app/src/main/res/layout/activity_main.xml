@@ -266,6 +266,34 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TextView
+            android:id="@+id/tv_undo_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_primary_unselected_button"
+            android:onClick="@{() -> pbvPaintBoardView.undo()}"
+            android:padding="10dp"
+            android:text="@string/main_undo_button_label"
+            android:textColor="@color/primary_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_redo_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_primary_unselected_button"
+            android:onClick="@{() -> pbvPaintBoardView.redo()}"
+            android:padding="10dp"
+            android:text="@string/main_redo_button_label"
+            android:textColor="@color/primary_color"
+            app:layout_constraintStart_toEndOf="@+id/tv_undo_button"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
