@@ -24,10 +24,14 @@ class Pen(private var paint: Paint) : PathBrush {
 
     override fun endDrawing(drawingHistory: DrawingHistory) {
         drawingHistory.addDrawing(Drawing(path, paint))
-        this.path = Path()
+        initPath(Path())
     }
 
     override fun changePaint(paint: Paint) {
         this.paint = paint
+    }
+
+    private fun initPath(path: Path) {
+        this.path = path
     }
 }

@@ -14,21 +14,12 @@ class Circle(private var paint: Paint) : PathBrush {
     private var endPoint: PathPoint = PathPoint(0f, 0f)
     private var path: Path = Path()
 
-    private fun addShape() {
-        val left = min(startPoint.x, endPoint.x)
-        val right = max(startPoint.x, endPoint.x)
-        val top = min(startPoint.y, endPoint.y)
-        val bottom = max(startPoint.y, endPoint.y)
-        path.addOval(left, top, right, bottom, Path.Direction.CW)
-    }
-
     override fun draw(canvas: Canvas) {
         canvas.drawOval(startPoint.x, startPoint.y, endPoint.x, endPoint.y, paint)
     }
 
     override fun startDrawing(point: PathPoint) {
-        startPoint = point
-        endPoint = point
+        initPoint(point)
     }
 
     override fun moveDrawing(point: PathPoint) {
@@ -38,10 +29,28 @@ class Circle(private var paint: Paint) : PathBrush {
     override fun endDrawing(drawingHistory: DrawingHistory) {
         addShape()
         drawingHistory.addDrawing(Drawing(path, paint))
-        this.path = Path()
+        initPath(Path())
+        initPoint(PathPoint(0f, 0f))
     }
 
     override fun changePaint(paint: Paint) {
         this.paint = paint
+    }
+
+    private fun initPath(path: Path) {
+        this.path = path
+    }
+
+    private fun initPoint(point: PathPoint) {
+        startPoint = point
+        endPoint = point
+    }
+
+    private fun addShape() {
+        val left = min(startPoint.x, endPoint.x)
+        val right = max(startPoint.x, endPoint.x)
+        val top = min(startPoint.y, endPoint.y)
+        val bottom = max(startPoint.y, endPoint.y)
+        path.addOval(left, top, right, bottom, Path.Direction.CW)
     }
 }
