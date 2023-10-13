@@ -27,11 +27,24 @@
         android:text="@string/change_thickness"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/bt_change_brush"
         app:layout_constraintStart_toEndOf="@id/bt_change_color" />
+
+    <Button
+        android:id="@+id/bt_change_brush"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/change_brush"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/bt_change_thickness" />
 
 
     <com.google.android.material.slider.RangeSlider
+        android:visibility="gone"
         android:id="@+id/rs_thickness"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -58,13 +71,64 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:listitem="@layout/item_palette" />
 
-    <woowacourse.paint.FreeDrawView
+    <Button
+        android:id="@+id/bt_pen"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="15dp"
+        android:text="@string/pen"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/rs_thickness"
+        app:layout_constraintEnd_toStartOf="@id/bt_rectangle"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/bt_rectangle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="15dp"
+        android:text="@string/rectangle"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/rs_thickness"
+        app:layout_constraintEnd_toStartOf="@id/bt_circle"
+        app:layout_constraintStart_toEndOf="@id/bt_pen" />
+
+    <Button
+        android:id="@+id/bt_circle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="15dp"
+        android:text="@string/circle"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/rs_thickness"
+        app:layout_constraintEnd_toStartOf="@id/bt_eraser"
+        app:layout_constraintStart_toEndOf="@id/bt_rectangle" />
+
+    <Button
+        android:id="@+id/bt_eraser"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="15dp"
+        android:text="@string/eraser"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/rs_thickness"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/bt_circle" />
+
+    <woowacourse.paint.customview.FreeDrawView
         android:id="@+id/fdv_board"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/rs_thickness"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
