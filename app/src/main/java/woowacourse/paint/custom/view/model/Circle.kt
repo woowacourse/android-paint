@@ -2,7 +2,7 @@ package woowacourse.paint.custom.view.model
 
 import android.graphics.Canvas
 import android.graphics.Paint
-import kotlin.math.abs
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 data class Circle(
@@ -17,6 +17,6 @@ data class Circle(
     }
 
     fun changeRadius(x: Float, y: Float) {
-        radius = sqrt(abs(centerX - x) * abs(centerX - x) + abs(centerY - y) + abs(centerY - y))
+        radius = sqrt((centerX - x).pow(2) + (centerY - y).pow(2))
     }
 }
