@@ -27,7 +27,7 @@ import woowacourse.paint.shape.Rectangle
 
 class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
-    private val history: History = History()
+    val history: History = History()
     private var painting: Painting = Painting.newInstance(context)
 
     init {
@@ -108,6 +108,10 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     fun redo() {
         history.redo()
         invalidate()
+    }
+
+    fun restoreHistory(latestHistory: History) {
+        history.restoreHistory(latestHistory)
     }
 
     companion object {

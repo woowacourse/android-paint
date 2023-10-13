@@ -3,6 +3,7 @@ package woowacourse.paint
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.slider.RangeSlider
 import woowacourse.paint.adapter.ColorAdapter
@@ -16,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +26,18 @@ class MainActivity : AppCompatActivity() {
         setupSizeSelector()
         setupToolSelector()
         setUpColorSelector()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        viewModel.saveHistory(binding.pbPaintBoard.history)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        binding.pbPaintBoard.restoreHistory(viewModel.history)
     }
 
     private fun setupSizeSelector() {
