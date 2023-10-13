@@ -1,8 +1,5 @@
 package woowacourse.paint
 
-import android.os.SystemClock
-import android.view.MotionEvent
-import android.view.View
 import android.widget.Button
 import androidx.core.view.get
 import androidx.lifecycle.ViewModelProvider
@@ -15,6 +12,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
+import woowacourse.paint.UIEvent.drag
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.view.MainActivity
 import woowacourse.paint.view.PaintView
@@ -36,7 +34,7 @@ class MainActivityTest {
             val paintView = activity.findViewById<PaintView>(R.id.main_paint_view)
 
             // when
-            drag(paintView)
+            paintView.drag()
 
             // then
             val expected = 1
@@ -56,7 +54,7 @@ class MainActivityTest {
             activity.executePendingDataBinding<ActivityMainBinding>()
 
             // when
-            drag(paintView)
+            paintView.drag()
 
             // then
             val expected = 30F
@@ -76,7 +74,7 @@ class MainActivityTest {
             activity.executePendingDataBinding<ActivityMainBinding>()
 
             // when
-            drag(paintView)
+            paintView.drag()
 
             // then
             val expected = 0xFFFFFF00.toInt()
@@ -125,7 +123,7 @@ class MainActivityTest {
             // given
             val paintViewModel = ViewModelProvider(activity)[PaintViewModel::class.java]
             val paintView = activity.findViewById<PaintView>(R.id.main_paint_view)
-            drag(paintView)
+            paintView.drag()
 
             // when
             activity.findViewById<Button>(R.id.main_clear_btn).callOnClick()
@@ -143,9 +141,10 @@ class MainActivityTest {
             // given
             val paintViewModel = ViewModelProvider(activity)[PaintViewModel::class.java]
             val paintView = activity.findViewById<PaintView>(R.id.main_paint_view)
-            drag(paintView)
+            paintView.drag()
+
             val expected = paintViewModel.lines.getOrAwaitValue().toDomain()
-            drag(paintView)
+            paintView.drag()
             assertNotSame(expected, paintViewModel.lines.getOrAwaitValue().toDomain())
 
             // when
@@ -163,7 +162,8 @@ class MainActivityTest {
             // given
             val paintViewModel = ViewModelProvider(activity)[PaintViewModel::class.java]
             val paintView = activity.findViewById<PaintView>(R.id.main_paint_view)
-            drag(paintView)
+            paintView.drag()
+
             val expected = paintViewModel.lines.getOrAwaitValue().toDomain()
             activity.findViewById<Button>(R.id.main_undo_btn).callOnClick()
 
@@ -176,16 +176,4 @@ class MainActivityTest {
         }
     }
 
-    private fun drag(view: View) {
-        val downTime = SystemClock.uptimeMillis()
-        view.dispatchTouchEvent(
-            MotionEvent.obtain(downTime, downTime, MotionEvent.ACTION_DOWN, 10F, 10F, 0)
-        )
-        view.dispatchTouchEvent(
-            MotionEvent.obtain(downTime, downTime, MotionEvent.ACTION_MOVE, 15F, 10F, 0)
-        )
-        view.dispatchTouchEvent(
-            MotionEvent.obtain(downTime, downTime, MotionEvent.ACTION_UP, 10F, 10F, 0)
-        )
-    }
 }
