@@ -10,6 +10,7 @@ import kotlin.math.max
 import kotlin.math.min
 
 class Circle(private var paint: Paint) : PathBrush {
+
     private var startPoint: PathPoint = PathPoint(0f, 0f)
     private var endPoint: PathPoint = PathPoint(0f, 0f)
     private var path: Path = Path()

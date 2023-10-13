@@ -55,7 +55,12 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
         when (event.action) {
             MotionEvent.ACTION_DOWN -> brush.startDrawing(point)
             MotionEvent.ACTION_MOVE -> brush.moveDrawing(point)
-            MotionEvent.ACTION_UP -> if (brush is PathBrush) (brush as PathBrush).endDrawing(drawingHistory)
+            MotionEvent.ACTION_UP -> if (brush is PathBrush) {
+                (brush as PathBrush).endDrawing(
+                    drawingHistory,
+                )
+            }
+
             else -> super.onTouchEvent(event)
         }
         invalidate()
@@ -116,9 +121,9 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
     private fun changePaintProperty(
         @ColorInt color: Int = paint.color,
         width: Float = paint.strokeWidth,
-        style: Paint.Style = paint.style
+        style: Paint.Style = paint.style,
     ) {
-        if (brush is PathBrush)
+        if (brush is PathBrush) {
             (brush as PathBrush).changePaint(
                 paint.apply {
                     strokeWidth = width
@@ -126,6 +131,7 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
                     this.style = style
                 }
             )
+        }
     }
 
     companion object {

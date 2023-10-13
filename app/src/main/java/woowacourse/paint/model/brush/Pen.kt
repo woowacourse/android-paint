@@ -8,6 +8,7 @@ import woowacourse.paint.model.drawing.DrawingHistory
 import woowacourse.paint.model.drawing.PathPoint
 
 class Pen(private var paint: Paint) : PathBrush {
+
     private var path: Path = Path()
 
     override fun draw(canvas: Canvas) {

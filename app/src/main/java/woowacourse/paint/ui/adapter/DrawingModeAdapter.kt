@@ -6,13 +6,11 @@ import woowacourse.paint.model.BrushTools
 
 class DrawingModeAdapter(
     private val brushTools: List<BrushTools>,
-    private val onItemClick: (BrushTools) -> Unit
+    private val onItemClick: (BrushTools) -> Unit,
 ) : RecyclerView.Adapter<DrawingModeViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DrawingModeViewHolder {
-        return DrawingModeViewHolder.create(
-            parent
-        ) { position -> onItemClick(brushTools[position]) }
+        return DrawingModeViewHolder.create(parent) { position -> onItemClick(brushTools[position]) }
     }
 
     override fun getItemCount(): Int = brushTools.size

@@ -5,6 +5,7 @@ import android.graphics.Paint
 import woowacourse.paint.model.drawing.DrawingHistory
 
 interface PathBrush : Brush {
+
     fun draw(canvas: Canvas)
     fun endDrawing(drawingHistory: DrawingHistory)
     fun changePaint(paint: Paint)

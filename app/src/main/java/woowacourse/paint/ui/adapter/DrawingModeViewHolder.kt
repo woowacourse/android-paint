@@ -11,7 +11,7 @@ import woowacourse.paint.model.BrushTools
 class DrawingModeViewHolder private constructor(
     private val binding: PaintModeItemBinding,
     private val context: Context,
-    onItemClick: (Int) -> Unit
+    onItemClick: (Int) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
 
     init {
@@ -27,7 +27,7 @@ class DrawingModeViewHolder private constructor(
     companion object {
         fun create(
             parent: ViewGroup,
-            onItemClick: (Int) -> Unit
+            onItemClick: (Int) -> Unit,
         ): DrawingModeViewHolder {
             val binding =
                 PaintModeItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
