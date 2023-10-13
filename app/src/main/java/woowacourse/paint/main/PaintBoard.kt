@@ -23,7 +23,7 @@ class PaintBoard constructor(
     context: Context,
     attrs: AttributeSet? = null,
 ) : View(context, attrs) {
-    private val pathHistory = DrawableHistory()
+    private val drawableHistory = DrawableHistory()
     private var currentDraw: DrawableElement = DrawableLine(paint = Paint())
 
     init {
@@ -33,7 +33,7 @@ class PaintBoard constructor(
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        pathHistory.drawAll(canvas)
+        drawableHistory.drawAll(canvas)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -49,7 +49,7 @@ class PaintBoard constructor(
 
     private fun startDrawing(event: MotionEvent) {
         currentDraw = currentDraw.startDrawing(event.x, event.y)
-        pathHistory.add(currentDraw)
+        drawableHistory.add(currentDraw)
     }
 
     private fun moveDrawing(event: MotionEvent) {
@@ -80,17 +80,17 @@ class PaintBoard constructor(
     }
 
     fun undo() {
-        pathHistory.undo()
+        drawableHistory.undo()
         invalidate()
     }
 
     fun redo() {
-        pathHistory.redo()
+        drawableHistory.redo()
         invalidate()
     }
 
     fun deleteAll() {
-        pathHistory.clear()
+        drawableHistory.clear()
         invalidate()
     }
 }
