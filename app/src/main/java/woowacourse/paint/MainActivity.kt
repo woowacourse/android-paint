@@ -18,6 +18,9 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
     private val viewModel: MainViewModel by viewModels()
+    private val colorAdapter: ColorAdapter = ColorAdapter(PaintBoard.COLORS, ::onColorClicked)
+    private val toolAdapter: ToolAdapter =
+        ToolAdapter(Tools.values().map { it.stringRes }, ::onToolClicked)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,12 +35,16 @@ class MainActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
 
         viewModel.saveHistory(binding.pbPaintBoard.history)
+        viewModel.savePainting(binding.pbPaintBoard.painting)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
 
         binding.pbPaintBoard.restoreHistory(viewModel.history)
+        binding.pbPaintBoard.restorePainting(viewModel.painting)
+        colorAdapter.restoreSelectedColor(viewModel.colorIdx)
+        toolAdapter.restoreSelectedTool(viewModel.toolIdx)
     }
 
     private fun setupSizeSelector() {
@@ -48,27 +55,27 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun RangeSlider.setupSizeChangeListener() {
-        addOnChangeListener(
-            RangeSlider.OnChangeListener { _, value, _ ->
-                binding.pbPaintBoard.changeSize(value)
-            },
-        )
+        addOnChangeListener { _, value, _ ->
+            binding.pbPaintBoard.changeSize(value)
+        }
     }
 
     private fun setupToolSelector() {
-        binding.rvTools.adapter = ToolAdapter(Tools.values().map { it.stringRes }, ::onToolClicked)
+        binding.rvTools.adapter = toolAdapter
     }
 
     private fun onToolClicked(idx: Int) {
         binding.pbPaintBoard.changeTool(Tools.values()[idx])
+        viewModel.saveToolIdx(idx)
     }
 
     private fun setUpColorSelector() {
-        binding.rvColors.adapter = ColorAdapter(PaintBoard.COLORS, ::onColorClicked)
+        binding.rvColors.adapter = colorAdapter
     }
 
     private fun onColorClicked(idx: Int) {
         binding.pbPaintBoard.changeColor(PaintBoard.COLORS[idx])
+        viewModel.saveColorIdx(idx)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
