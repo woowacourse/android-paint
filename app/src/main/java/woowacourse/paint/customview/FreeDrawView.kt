@@ -28,8 +28,8 @@ class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context,
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        previousDrawings.map {
-            canvas.drawPath(it.first, it.second)
+        previousDrawings.forEach { (path, paint) ->
+            canvas.drawPath(path, paint)
         }
         if (!eraseMode) {
             canvas.drawPath(brush.previewDraw.first, brush.previewDraw.second)
