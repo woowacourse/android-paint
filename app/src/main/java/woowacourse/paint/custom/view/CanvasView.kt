@@ -30,7 +30,7 @@ class CanvasView(
     }
 
     private val painted = Painted()
-    private lateinit var drawable: Drawable
+    private var drawable: Drawable = Line(BrushTypeUiModel.PEN, Path(), brushUiModel.fromPaint())
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -57,40 +57,22 @@ class CanvasView(
     }
 
     private fun startDrawing(x: Float, y: Float) {
-        when (brushUiModel.brushType) {
-            BrushTypeUiModel.PEN -> {
-                drawable = Line(BrushTypeUiModel.PEN, Path(), brushUiModel.fromPaint())
-                (drawable as Line).moveTo(x, y)
-            }
-            BrushTypeUiModel.RECTANGLE -> {
-                drawable = Rectangle(RectF(x, y, x, y), brushUiModel.fromPaint())
-            }
-            BrushTypeUiModel.CIRCLE -> {
-                drawable = Circle(x, y, 0f, brushUiModel.fromPaint())
-            }
-            BrushTypeUiModel.ERASER -> {
-                drawable = Line(BrushTypeUiModel.ERASER, Path(), brushUiModel.fromPaint())
-                (drawable as Line).moveTo(x, y)
-            }
-        }
+        setDrawable(x, y)
+        drawable.startDrawing(x, y, brushUiModel.fromPaint())
         painted.add(drawable)
     }
 
-    private fun keepDrawing(x: Float, y: Float) {
-        when (brushUiModel.brushType) {
-            BrushTypeUiModel.PEN -> {
-                (drawable as Line).quadTo(x, y)
-            }
-            BrushTypeUiModel.RECTANGLE -> {
-                drawable = (drawable as Rectangle).setEndPoint(x, y)
-            }
-            BrushTypeUiModel.CIRCLE -> {
-                (drawable as Circle).changeRadius(x, y)
-            }
-            BrushTypeUiModel.ERASER -> {
-                (drawable as Line).quadTo(x, y)
-            }
+    private fun setDrawable(x: Float, y: Float) {
+        drawable = when (brushUiModel.brushType) {
+            BrushTypeUiModel.PEN -> Line(BrushTypeUiModel.PEN, Path(), brushUiModel.fromPaint())
+            BrushTypeUiModel.RECTANGLE -> Rectangle(RectF(x, y, x, y), brushUiModel.fromPaint())
+            BrushTypeUiModel.CIRCLE -> Circle(x, y, 0f, brushUiModel.fromPaint())
+            BrushTypeUiModel.ERASER -> Line(BrushTypeUiModel.ERASER, Path(), brushUiModel.fromPaint())
         }
+    }
+
+    private fun keepDrawing(x: Float, y: Float) {
+        drawable.keepDrawing(x, y)
     }
 
     fun changeStrokeWidth(new: BrushWidth) {

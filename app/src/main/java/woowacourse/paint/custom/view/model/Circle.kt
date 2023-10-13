@@ -16,7 +16,11 @@ data class Circle(
         canvas.drawCircle(centerX, centerY, radius, paint)
     }
 
-    fun changeRadius(x: Float, y: Float) {
+    override fun startDrawing(x: Float, y: Float, paint: Paint): Circle {
+        return Circle(x, y, 0f, paint)
+    }
+
+    override fun keepDrawing(x: Float, y: Float) {
         radius = sqrt((centerX - x).pow(2) + (centerY - y).pow(2))
     }
 }

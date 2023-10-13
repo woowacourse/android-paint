@@ -23,19 +23,21 @@ data class Line(
     private var lastX = 0f
     private var lastY = 0f
 
-    fun moveTo(x: Float, y: Float) {
+    override fun draw(canvas: Canvas) {
+        canvas.drawPath(path, paint)
+    }
+
+    override fun startDrawing(x: Float, y: Float, paint: Paint): Line {
         path.moveTo(x, y)
         lastX = x
         lastY = y
+
+        return Line(BrushTypeUiModel.PEN, Path(), paint)
     }
 
-    fun quadTo(x: Float, y: Float) {
+    override fun keepDrawing(x: Float, y: Float) {
         path.quadTo(lastX, lastY, (x + lastX) / 2, (y + lastY) / 2)
         lastX = x
         lastY = y
-    }
-
-    override fun draw(canvas: Canvas) {
-        canvas.drawPath(path, paint)
     }
 }
