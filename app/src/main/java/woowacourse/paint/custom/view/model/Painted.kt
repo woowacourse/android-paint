@@ -16,13 +16,13 @@ class Painted {
     }
 
     fun undo() {
-        if (drawable.empty().not()) {
+        if (drawable.isNotEmpty()) {
             history.add(drawable.pop())
         }
     }
 
     fun redo() {
-        if (history.empty().not()) {
+        if (history.isNotEmpty()) {
             drawable.add(history.pop())
         }
     }
