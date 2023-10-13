@@ -25,6 +25,10 @@ class CanvasView(
 
     private var brushUiModel = BrushUiModel.fromDefault()
 
+    init {
+        setLayerType(LAYER_TYPE_HARDWARE, null)
+    }
+
     private val painted = Painted()
     private lateinit var drawable: Drawable
 
@@ -66,7 +70,6 @@ class CanvasView(
             }
             BrushTypeUiModel.ERASER -> {
                 drawable = Line(BrushTypeUiModel.ERASER, Path(), brushUiModel.fromPaint())
-                setLayerType(LAYER_TYPE_HARDWARE, null)
                 (drawable as Line).moveTo(x, y)
             }
         }
