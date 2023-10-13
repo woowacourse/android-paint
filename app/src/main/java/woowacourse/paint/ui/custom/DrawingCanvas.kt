@@ -56,9 +56,7 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
             MotionEvent.ACTION_DOWN -> brush.startDrawing(point)
             MotionEvent.ACTION_MOVE -> brush.moveDrawing(point)
             MotionEvent.ACTION_UP -> if (brush is PathBrush) {
-                (brush as PathBrush).endDrawing(
-                    drawingHistory,
-                )
+                (brush as PathBrush).endDrawing(drawingHistory)
             }
 
             else -> super.onTouchEvent(event)
@@ -129,7 +127,7 @@ class DrawingCanvas @JvmOverloads constructor(context: Context, attrs: Attribute
                     strokeWidth = width
                     this.color = color
                     this.style = style
-                }
+                },
             )
         }
     }
