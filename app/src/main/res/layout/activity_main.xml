@@ -30,8 +30,8 @@
             android:valueTo="100.0"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@id/rv_main_palette"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintEnd_toEndOf="@id/btn_main_change_brush"
+            app:layout_constraintStart_toStartOf="@id/btn_main_change_color" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_main_palette"
@@ -43,8 +43,8 @@
             android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@id/rv_main_brush"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/btn_main_change_brush"
+            app:layout_constraintStart_toStartOf="@id/btn_main_change_color"
             tools:listitem="@layout/item_palette" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -56,8 +56,8 @@
             android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@id/btn_main_change_brush"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/btn_main_change_brush"
+            app:layout_constraintStart_toStartOf="@id/btn_main_change_color"
             tools:listitem="@layout/item_brush" />
 
         <Button
