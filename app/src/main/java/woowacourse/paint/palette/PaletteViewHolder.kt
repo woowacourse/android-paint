@@ -1,9 +1,10 @@
-package woowacourse.paint
+package woowacourse.paint.palette
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.ColorRes
 import androidx.recyclerview.widget.RecyclerView
+import woowacourse.paint.R
 import woowacourse.paint.databinding.ItemPaletteBinding
 
 class PaletteViewHolder(
