@@ -19,23 +19,23 @@
             android:id="@+id/cv_painter"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/rv_brush"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_brush"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:layout_marginBottom="10dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constrainedWidth="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cv_painter"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintTop_toTopOf="@id/btn_color_change"
             tools:itemCount="4"
             tools:listitem="@layout/item_brush" />
 
@@ -46,9 +46,10 @@
             android:layout_marginHorizontal="10dp"
             android:valueFrom="0.0f"
             android:valueTo="100.0f"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rv_brush" />
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
+            app:layout_constraintTop_toBottomOf="@id/rv_brush"
+            app:layout_constraintWidth_percent="0.32" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_color"
@@ -57,54 +58,60 @@
             android:layout_marginHorizontal="10dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintEnd_toEndOf="@id/guideline_end"
             app:layout_constraintTop_toBottomOf="@id/rs_width_change"
+            app:layout_constraintWidth_percent="0.32"
             tools:listitem="@layout/item_color" />
 
         <Button
             android:id="@+id/btn_color_change"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:elevation="4dp"
             android:text="@string/color_change"
             android:textSize="16sp"
-            app:layout_constraintDimensionRatio="H, 3:1.3"
-            app:layout_constraintEnd_toStartOf="@+id/btn_stroke_change"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rv_color"
-            app:layout_constraintWidth_percent="0.3" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.1" />
 
         <Button
             android:id="@+id/btn_stroke_change"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:elevation="4dp"
             android:text="@string/stroke_change"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="H, 3:1.3"
-            app:layout_constraintEnd_toStartOf="@id/btn_brush_change"
-            app:layout_constraintStart_toEndOf="@id/btn_color_change"
-            app:layout_constraintTop_toTopOf="@id/btn_color_change"
-            app:layout_constraintWidth_percent="0.3" />
+            app:layout_constraintStart_toStartOf="@id/btn_color_change"
+            app:layout_constraintTop_toBottomOf="@id/btn_color_change"
+            app:layout_constraintWidth_percent="0.1" />
 
         <Button
             android:id="@+id/btn_brush_change"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:elevation="4dp"
             android:text="@string/brush_change"
             android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@id/btn_stroke_change"
-            app:layout_constraintDimensionRatio="H, 3:1.3"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/btn_stroke_change"
-            app:layout_constraintTop_toTopOf="@id/btn_color_change"
-            app:layout_constraintWidth_percent="0.3" />
+            app:layout_constraintStart_toStartOf="@id/btn_color_change"
+            app:layout_constraintTop_toBottomOf="@id/btn_stroke_change"
+            app:layout_constraintWidth_percent="0.1" />
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="160dp" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="568dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
