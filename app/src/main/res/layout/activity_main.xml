@@ -92,7 +92,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_clear_btn"
             app:onTouch="@{() -> vm.finishSetting()}"
-            app:strokeColor="@{vm.uiState.color}" />
+            app:brushColor="@{vm.uiState.color}" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_color_select_layout"

@@ -12,8 +12,8 @@ fun PaintBoardView.setOnTouchListener(listener: PaintBoardView.TouchEventListene
     addTouchEventListener(listener)
 }
 
-@BindingAdapter("app:strokeColor")
-fun PaintBoardView.setStrokeColor(color: Color) {
+@BindingAdapter("app:brushColor")
+fun PaintBoardView.changeBrushColor(color: Color) {
     when (color) {
         Color.RED -> setBrushColor(ContextCompat.getColor(context, R.color.red))
         Color.ORANGE -> setBrushColor(ContextCompat.getColor(context, R.color.orange))
