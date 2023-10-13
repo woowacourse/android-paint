@@ -1,10 +1,10 @@
-package woowacourse.paint
+package woowacourse.paint.customview
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Path
+import android.graphics.Paint.Style.FILL
+import android.graphics.Paint.Style.STROKE
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.MotionEvent.ACTION_DOWN
@@ -13,28 +13,29 @@ import android.view.MotionEvent.ACTION_UP
 import android.view.View
 import androidx.annotation.ArrayRes
 import androidx.annotation.ColorRes
+import woowacourse.paint.R
+import woowacourse.paint.model.History
+import woowacourse.paint.model.Painting
+import woowacourse.paint.model.Tools
+import woowacourse.paint.model.Tools.CIRCLE
+import woowacourse.paint.model.Tools.ERASER
+import woowacourse.paint.model.Tools.LINE
+import woowacourse.paint.model.Tools.RECTANGLE
+import woowacourse.paint.shape.Circle
+import woowacourse.paint.shape.Line
+import woowacourse.paint.shape.Rectangle
 
 class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private val history: History = History()
-    private lateinit var painting: Painting
+    private var painting: Painting = Painting.newInstance(context)
 
     init {
         setupPaintSetting()
     }
 
     private fun setupPaintSetting() {
-        painting = Painting(
-            path = Path(),
-            paint = Paint().apply {
-                isAntiAlias = true
-                style = Paint.Style.STROKE
-                strokeWidth = DEFAULT_SIZE
-                strokeCap = Paint.Cap.ROUND
-                strokeJoin = Paint.Join.ROUND
-                color = context.getColor(DEFAULT_COLOR)
-            },
-        )
+        setLayerType(LAYER_TYPE_HARDWARE, null)
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -42,13 +43,13 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
         canvas.apply {
             drawHistory()
-            drawPath(painting.path, painting.paint)
+            painting.drawPath(this)
         }
     }
 
     private fun Canvas.drawHistory() {
         history.paintings.forEach { painting ->
-            drawPath(painting.path, painting.paint)
+            painting.drawPath(this)
         }
     }
 
@@ -74,20 +75,42 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private fun savePath() {
         history.add(painting)
-        painting = Painting(path = Path(), paint = Paint(painting.paint))
+        painting = painting.copy()
     }
 
     fun changeSize(value: Float) {
         painting.changeSize(value)
     }
 
+    fun changeTool(value: Tools) {
+        painting = when (value) {
+            LINE -> painting.changeShape(Line(), STROKE)
+            CIRCLE -> painting.changeShape(Circle(), FILL)
+            RECTANGLE -> painting.changeShape(Rectangle(), FILL)
+            ERASER -> painting.changeShape(Line(), STROKE, true)
+        }
+    }
+
     fun changeColor(@ColorRes value: Int) {
         painting.changeColor(context.getColor(value))
     }
 
+    fun clear() {
+        history.clear()
+        invalidate()
+    }
+
+    fun undo() {
+        history.undo()
+        invalidate()
+    }
+
+    fun redo() {
+        history.redo()
+        invalidate()
+    }
+
     companion object {
-        @ColorRes
-        private val DEFAULT_COLOR = R.color.blue
         const val DEFAULT_SIZE = 20F
 
         @ArrayRes

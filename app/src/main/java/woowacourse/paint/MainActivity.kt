@@ -1,9 +1,15 @@
 package woowacourse.paint
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.slider.RangeSlider
+import woowacourse.paint.adapter.ColorAdapter
+import woowacourse.paint.adapter.ToolAdapter
+import woowacourse.paint.customview.PaintBoard
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.model.Tools
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,11 +22,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupSizeSelector()
+        setupToolSelector()
         setUpColorSelector()
     }
 
     private fun setupSizeSelector() {
-        binding.rsSize.apply {
+        binding.rvSize.apply {
             setValues(PaintBoard.DEFAULT_SIZE)
             setupSizeChangeListener()
         }
@@ -34,11 +41,35 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
+    private fun setupToolSelector() {
+        binding.rvTools.adapter = ToolAdapter(Tools.values().map { it.stringRes }, ::onToolClicked)
+    }
+
+    private fun onToolClicked(idx: Int) {
+        binding.pbPaintBoard.changeTool(Tools.values()[idx])
+    }
+
     private fun setUpColorSelector() {
         binding.rvColors.adapter = ColorAdapter(PaintBoard.COLORS, ::onColorClicked)
     }
 
     private fun onColorClicked(idx: Int) {
         binding.pbPaintBoard.changeColor(PaintBoard.COLORS[idx])
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_activity, menu)
+
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_clear -> binding.pbPaintBoard.clear()
+            R.id.menu_undo -> binding.pbPaintBoard.undo()
+            R.id.menu_redo -> binding.pbPaintBoard.redo()
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 }

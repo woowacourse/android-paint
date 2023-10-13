@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_undo"
+        android:icon="@drawable/ic_arrow_undo"
+        android:title="@string/refresh_icon_clear"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_redo"
+        android:icon="@drawable/ic_arrow_redo"
+        android:title="@string/refresh_icon_clear"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_clear"
+        android:icon="@drawable/ic_trash_can"
+        android:title="@string/refresh_icon_clear"
+        app:showAsAction="ifRoom" />
+</menu>
