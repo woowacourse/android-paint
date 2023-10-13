@@ -8,8 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="toolbar_background">#FF6200EE</color>
-    <color name="canvas_background">#FFFFFF</color>
+    <color name="toolbar_background">#000000</color>
+    <color name="canvas_background">#000000</color>
 
     <!-- brush_color -->
     <color name="red">#FF0000</color>

@@ -20,8 +20,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/toolbar_background"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:titleTextColor="@color/white" />
 
@@ -31,78 +29,76 @@
             android:layout_height="0dp"
             app:brushColor="@{viewModel.brushColor}"
             app:brushThickness="@{viewModel.brushThickness}"
-            app:layout_constraintBottom_toTopOf="@id/slider_main_brush_thickness"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/toolbar_main" />
 
         <Button
             android:id="@+id/btn_main_paint_mode_pen"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
+            android:layout_marginHorizontal="4dp"
             android:text="@string/main_paint_mode_pen"
-            app:layout_constraintBottom_toBottomOf="@id/pv_main"
             app:layout_constraintEnd_toStartOf="@id/btn_main_paint_mode_rectangle"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toEndOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_main" />
 
 
         <Button
             android:id="@+id/btn_main_paint_mode_rectangle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
+            android:layout_marginHorizontal="4dp"
             android:text="@string/main_paint_mode_rectangle"
-            app:layout_constraintBottom_toBottomOf="@id/pv_main"
             app:layout_constraintEnd_toStartOf="@id/btn_main_paint_mode_oval"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@id/btn_main_paint_mode_pen" />
+            app:layout_constraintStart_toEndOf="@id/btn_main_paint_mode_pen"
+            app:layout_constraintTop_toTopOf="@id/btn_main_paint_mode_pen" />
 
         <Button
             android:id="@+id/btn_main_paint_mode_oval"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
+            android:layout_marginHorizontal="4dp"
             android:text="@string/main_paint_mode_oval"
-            app:layout_constraintBottom_toBottomOf="@id/pv_main"
             app:layout_constraintEnd_toStartOf="@id/btn_main_paint_mode_eraser"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@id/btn_main_paint_mode_rectangle" />
+            app:layout_constraintStart_toEndOf="@id/btn_main_paint_mode_rectangle"
+            app:layout_constraintTop_toTopOf="@id/btn_main_paint_mode_rectangle" />
 
         <Button
             android:id="@+id/btn_main_paint_mode_eraser"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
+            android:layout_marginHorizontal="4dp"
             android:text="@string/main_paint_mode_eraser"
-            app:layout_constraintBottom_toBottomOf="@id/pv_main"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/guideline_end"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@id/btn_main_paint_mode_oval" />
+            app:layout_constraintStart_toEndOf="@id/btn_main_paint_mode_oval"
+            app:layout_constraintTop_toTopOf="@id/btn_main_paint_mode_oval" />
 
         <com.google.android.material.slider.Slider
             android:id="@+id/slider_main_brush_thickness"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:stepSize="1.0"
             android:value="@{viewModel.brushThickness}"
             android:valueFrom="10.0"
             android:valueTo="100.0"
-            app:layout_constraintBottom_toTopOf="@id/rv_main_color_palette"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintEnd_toStartOf="@id/guideline_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/btn_main_paint_mode_pen" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_main_color_palette"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@id/btn_main_change_brush_color"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/guideline_end"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@id/slider_main_brush_thickness"
             tools:listitem="@layout/item_color_palette" />
 
         <Button
@@ -111,11 +107,9 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:text="@string/main_change_brush_color"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btn_main_change_brush_thickness"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintEnd_toStartOf="@id/guideline_start"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_main_change_brush_thickness" />
 
         <Button
             android:id="@+id/btn_main_change_brush_thickness"
@@ -123,10 +117,9 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:text="@string/main_change_brush_thickness"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btn_main_change_paint_mode"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@id/btn_main_change_brush_color" />
+            app:layout_constraintEnd_toStartOf="@+id/guideline_start"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_main_change_paint_mode" />
 
         <Button
             android:id="@+id/btn_main_change_paint_mode"
@@ -134,11 +127,22 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:text="@string/main_change_paint_mode"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@id/btn_main_change_brush_thickness" />
+            app:layout_constraintEnd_toStartOf="@id/guideline_start"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_main" />
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.15" />
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_end"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
