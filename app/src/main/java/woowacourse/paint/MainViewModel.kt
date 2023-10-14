@@ -13,12 +13,12 @@ import woowacourse.paint.model.Tool.NORMAL_PEN
 import woowacourse.paint.model.Tool.PATH_ERASER
 import woowacourse.paint.model.Tool.RECTANGLE_PEN
 import woowacourse.paint.paintBoard.Line
-import woowacourse.paint.paintBoard.tools.CirclePen
-import woowacourse.paint.paintBoard.tools.LineEraser
-import woowacourse.paint.paintBoard.tools.NormalPen
-import woowacourse.paint.paintBoard.tools.Painter
-import woowacourse.paint.paintBoard.tools.PathEraser
-import woowacourse.paint.paintBoard.tools.RectanglePen
+import woowacourse.paint.paintBoard.painter.Painter
+import woowacourse.paint.paintBoard.painter.tool.drawable.CirclePen
+import woowacourse.paint.paintBoard.painter.tool.drawable.NormalPen
+import woowacourse.paint.paintBoard.painter.tool.drawable.RectanglePen
+import woowacourse.paint.paintBoard.painter.tool.erase.LineEraser
+import woowacourse.paint.paintBoard.painter.tool.erase.PathEraser
 
 class MainViewModel : ViewModel() {
 

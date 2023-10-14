@@ -1,4 +1,4 @@
-package woowacourse.paint.paintBoard.tools
+package woowacourse.paint.paintBoard.painter.tool.erase
 
 import android.graphics.RectF
 import woowacourse.paint.paintBoard.Line

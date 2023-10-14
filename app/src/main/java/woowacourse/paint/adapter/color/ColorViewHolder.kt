@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.paint.model.Color
 import woowacourse.paint.databinding.ItemColorBinding
+import woowacourse.paint.model.Color
 
 class ColorViewHolder(
     private val binding: ItemColorBinding,

@@ -1,6 +1,7 @@
-package woowacourse.paint.paintBoard.tools
+package woowacourse.paint.paintBoard.painter.tool.drawable
 
 import woowacourse.paint.paintBoard.Line
+import woowacourse.paint.paintBoard.painter.Painter
 
 abstract class DrawableTool(
     open val line: Line,

@@ -1,4 +1,4 @@
-package woowacourse.paint.paintBoard.tools
+package woowacourse.paint.paintBoard.painter.tool.drawable
 
 import android.graphics.Path
 import woowacourse.paint.paintBoard.Line

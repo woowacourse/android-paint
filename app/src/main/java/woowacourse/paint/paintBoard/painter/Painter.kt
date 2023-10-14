@@ -1,4 +1,4 @@
-package woowacourse.paint.paintBoard.tools
+package woowacourse.paint.paintBoard.painter
 
 interface Painter {
 

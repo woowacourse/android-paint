@@ -7,7 +7,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.MotionEvent.*
 import android.view.View
-import woowacourse.paint.paintBoard.tools.Painter
+import woowacourse.paint.paintBoard.painter.Painter
 
 class DrawingPaper(
     context: Context,
