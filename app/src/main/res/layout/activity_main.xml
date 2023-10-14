@@ -40,9 +40,9 @@
         android:paddingHorizontal="17dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/rv_painting_types"
+        app:spanCount="5"
         tools:itemCount="5"
-        tools:listitem="@layout/item_painting_color"
-        tools:spanCount="5" />
+        tools:listitem="@layout/item_painting_color" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_painting_types"
