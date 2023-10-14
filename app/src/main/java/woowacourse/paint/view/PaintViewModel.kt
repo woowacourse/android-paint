@@ -66,7 +66,7 @@ class PaintViewModel : ViewModel() {
 
     fun updateStrokeWidth(strokeWidth: Float) {
         this.strokeWidth = strokeWidth
-        (_pen.value as? DrawablePen).also {
+        (_pen.value as? LinePen).also {
             it?.setStrokeWidth(strokeWidth)
         }
     }

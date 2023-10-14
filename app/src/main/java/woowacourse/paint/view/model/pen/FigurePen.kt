@@ -31,9 +31,6 @@ abstract class FigurePen(
         ink.path.reset()
     }
 
-    override fun setStrokeWidth(strokeWidth: Float) {
-    }
-
     override fun setColor(color: Int) {
         ink.paint.color = color
     }
