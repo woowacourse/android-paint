@@ -1,12 +1,17 @@
 package woowacourse.paint.presentation.main
 
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import woowacourse.paint.R
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.mapper.toBrushColorUiModel
-import woowacourse.paint.palette.PaletteAdapter
+import woowacourse.paint.mapper.toBrushTypeUiModel
+import woowacourse.paint.presentation.main.recyclerview.ItemAdapter
 import woowacourse.paint.presentation.uimodel.BrushColorUiModel
+import woowacourse.paint.presentation.uimodel.BrushTypeUiModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var viewBinding: ActivityMainBinding
@@ -21,10 +26,26 @@ class MainActivity : AppCompatActivity() {
         setListener()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_activity_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_undo -> { viewBinding.customCanvas.undo() }
+            R.id.menu_redo -> { viewBinding.customCanvas.redo() }
+            R.id.menu_remove -> { viewBinding.customCanvas.clear() }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     private fun initRecyclerView() {
         val colors = BrushColorUiModel.values().toList()
-        val adapter = PaletteAdapter(colors) { viewModel.changeBrushColor(it) }
-        viewBinding.rvColor.adapter = adapter
+        val types = BrushTypeUiModel.values().toList()
+        viewBinding.rvType.adapter = ItemAdapter(types) { viewModel.changeBrushType(it) }
+        viewBinding.rvType.setHasFixedSize(true)
+        viewBinding.rvColor.adapter = ItemAdapter(colors) { viewModel.changeBrushColor(it) }
         viewBinding.rvColor.setHasFixedSize(true)
     }
 
@@ -32,6 +53,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.brush.observe(this) {
             viewBinding.customCanvas.changeColor(it.brushColor.toBrushColorUiModel())
             viewBinding.customCanvas.changeStrokeWidth(it.brushWidth)
+            viewBinding.customCanvas.changeType(it.brushType.toBrushTypeUiModel())
         }
     }
 

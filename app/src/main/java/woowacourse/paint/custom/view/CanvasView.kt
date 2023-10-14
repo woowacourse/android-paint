@@ -3,32 +3,38 @@ package woowacourse.paint.custom.view
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import com.now.domain.BrushWidth
-import woowacourse.paint.custom.model.CurveLine
-import woowacourse.paint.custom.model.CurveLines
+import woowacourse.paint.custom.view.model.Circle
+import woowacourse.paint.custom.view.model.Drawable
+import woowacourse.paint.custom.view.model.Line
+import woowacourse.paint.custom.view.model.Painted
+import woowacourse.paint.custom.view.model.Rectangle
 import woowacourse.paint.presentation.uimodel.BrushColorUiModel
+import woowacourse.paint.presentation.uimodel.BrushTypeUiModel
+import woowacourse.paint.presentation.uimodel.BrushUiModel
 
 class CanvasView(
     context: Context,
     attributeSet: AttributeSet,
 ) : View(context, attributeSet) {
 
-    private val curveLines = CurveLines()
-    private var curveLine = CurveLine(Path(), Paint())
+    private var brushUiModel = BrushUiModel.fromDefault()
 
     init {
-        isFocusable = true
-        isFocusableInTouchMode = true
+        setLayerType(LAYER_TYPE_HARDWARE, null)
     }
+
+    private val painted = Painted()
+    private var drawable: Drawable = Line(BrushTypeUiModel.PEN, Path(), brushUiModel.fromPaint())
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        curveLines.draw(canvas)
+        painted.draw(canvas)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -51,19 +57,48 @@ class CanvasView(
     }
 
     private fun startDrawing(x: Float, y: Float) {
-        curveLines.add(curveLine)
-        curveLine.moveTo(x, y)
+        setDrawable(x, y)
+        drawable.startDrawing(x, y, brushUiModel.fromPaint())
+        painted.add(drawable)
+    }
+
+    private fun setDrawable(x: Float, y: Float) {
+        drawable = when (brushUiModel.brushType) {
+            BrushTypeUiModel.PEN -> Line(BrushTypeUiModel.PEN, Path(), brushUiModel.fromPaint())
+            BrushTypeUiModel.RECTANGLE -> Rectangle(RectF(x, y, x, y), brushUiModel.fromPaint())
+            BrushTypeUiModel.CIRCLE -> Circle(x, y, 0f, brushUiModel.fromPaint())
+            BrushTypeUiModel.ERASER -> Line(BrushTypeUiModel.ERASER, Path(), brushUiModel.fromPaint())
+        }
     }
 
     private fun keepDrawing(x: Float, y: Float) {
-        curveLine.quadTo(x, y)
+        drawable.keepDrawing(x, y)
     }
 
     fun changeStrokeWidth(new: BrushWidth) {
-        curveLine = curveLine.changeStrokeWidth(new)
+        brushUiModel = brushUiModel.changeWidth(new)
     }
 
     fun changeColor(new: BrushColorUiModel) {
-        curveLine = curveLine.changeColor(new)
+        brushUiModel = brushUiModel.changeColor(new)
+    }
+
+    fun changeType(new: BrushTypeUiModel) {
+        brushUiModel = brushUiModel.changeType(new)
+    }
+
+    fun redo() {
+        painted.redo()
+        invalidate()
+    }
+
+    fun undo() {
+        painted.undo()
+        invalidate()
+    }
+
+    fun clear() {
+        painted.clear()
+        invalidate()
     }
 }

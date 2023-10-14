@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/menu_undo"
+        android:title="되돌리기"
+        android:icon="@drawable/ic_undo"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/menu_redo"
+        android:title="다시하기"
+        android:icon="@drawable/ic_redo"
+        app:showAsAction="always"/>
+
+    <item
+        android:id="@+id/menu_remove"
+        android:title="전체삭제"
+        android:icon="@drawable/ic_remove"
+        app:showAsAction="always"/>
+
+</menu>
