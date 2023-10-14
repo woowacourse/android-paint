@@ -19,7 +19,7 @@ class Circle : Figure() {
         yCursor: Float,
         updateView: (Pair<Path, Paint>) -> Unit,
     ) {
-        drawPreview(xCursor, yCursor)
+        draw(xCursor)
         updateView(previewDraw)
     }
 

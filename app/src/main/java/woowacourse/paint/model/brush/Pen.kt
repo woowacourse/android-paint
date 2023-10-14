@@ -8,11 +8,6 @@ class Pen() : Brush() {
         setPenBrush(paint)
     }
 
-    private fun setFigureBrush(beforePaint: Paint) = paintInstance.apply {
-        set(beforePaint)
-        style = Paint.Style.FILL
-    }
-
     override fun onActionDown(
         xCursor: Float,
         yCursor: Float,
