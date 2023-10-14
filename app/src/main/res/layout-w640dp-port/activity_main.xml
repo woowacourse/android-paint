@@ -15,9 +15,9 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_main_tools"
         android:layout_width="0dp"
-        android:visibility="gone"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/rs_main_width"
         app:layout_constraintEnd_toEndOf="@+id/btn_main_tools"
@@ -26,11 +26,11 @@
     <com.google.android.material.slider.RangeSlider
         android:id="@+id/rs_main_width"
         android:layout_width="0dp"
-        android:visibility="gone"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:valueFrom="0"
         android:valueTo="100"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/rv_main_color"
         app:layout_constraintEnd_toEndOf="@+id/btn_main_tools"
         app:layout_constraintStart_toStartOf="@+id/btn_main_color" />
@@ -38,10 +38,10 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_main_color"
         android:layout_width="0dp"
-        android:visibility="gone"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
         android:orientation="horizontal"
+        android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/btn_main_color"
         app:layout_constraintEnd_toEndOf="@+id/btn_main_tools"
