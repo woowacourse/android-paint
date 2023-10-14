@@ -6,8 +6,7 @@ import woowacourse.paint.paintBoard.Line
 class PathEraser(
     private val onRemove: (Line) -> Unit,
     private val painting: MutableList<Line>,
-    override val line: Line = Line()
-) : Tools {
+) : EraseTool() {
 
     override fun startPainting(pointX: Float, pointY: Float) {
         erase(pointX, pointY)
@@ -29,8 +28,4 @@ class PathEraser(
     }
 
     override fun finishPainting() {}
-
-    override fun setWidth(width: Float) {}
-
-    override fun setColor(color: Int) {}
 }

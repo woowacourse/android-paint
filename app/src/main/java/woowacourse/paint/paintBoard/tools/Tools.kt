@@ -10,3 +10,18 @@ interface Tools : Painter {
 
     fun setColor(color: Int)
 }
+
+abstract class DrawableTool(
+    open val line: Line
+) : Painter {
+
+    fun setWidth(width: Float) {
+        line.brush.changeBrushWidth(width)
+    }
+
+    fun setColor(color: Int) {
+        line.brush.changeBrushColor(color)
+    }
+}
+
+abstract class EraseTool : Painter

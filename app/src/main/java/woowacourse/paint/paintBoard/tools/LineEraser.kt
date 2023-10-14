@@ -7,8 +7,8 @@ import woowacourse.paint.paintBoard.Brush
 import woowacourse.paint.paintBoard.Line
 
 class LineEraser(
-    private val onSave: (Line) -> Unit,
-    override val line: Line = Line(brush = Brush(
+    private val onRemove: (Line) -> Unit,
+    private val line: Line = Line(brush = Brush(
         Paint().apply {
             style = Paint.Style.STROKE
             strokeCap = Paint.Cap.ROUND
@@ -18,10 +18,14 @@ class LineEraser(
             xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
         }
     ))
-) : Tools {
+) : EraseTool() {
+
+    fun setWidth(width: Float) {
+        line.brush.changeBrushWidth(width)
+    }
 
     override fun startPainting(pointX: Float, pointY: Float) {
-        onSave(line)
+        onRemove(line)
         line.path.moveTo(pointX, pointY)
         line.path.lineTo(pointX, pointY)
     }
@@ -30,13 +34,7 @@ class LineEraser(
         line.path.lineTo(pointX, pointY)
     }
 
-    override fun setWidth(width: Float) {
-        line.brush.changeBrushWidth(width)
-    }
-
     override fun finishPainting() {}
-
-    override fun setColor(color: Int) {}
 
     companion object {
         private const val SOFT_ANGLE = 0f
