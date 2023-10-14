@@ -58,11 +58,25 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/main_paint_mode_recycler_view"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginBottom="10dp"
+                android:adapter="@{paintModeAdapter}"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:visibility="@{viewModel.paintModeControllerVisibility ? View.VISIBLE : View.GONE, default = gone}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toTopOf="@id/main_brush_width_slider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
             <com.google.android.material.slider.Slider
                 android:id="@+id/main_brush_width_slider"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
+                android:layout_marginBottom="10dp"
                 android:value="@{defaultPaintWidth}"
                 android:valueFrom="0.0"
                 android:valueTo="100.0"
@@ -76,8 +90,7 @@
                 android:id="@+id/main_brush_colors_recycler_view"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
-                android:layout_marginHorizontal="20dp"
-                android:layout_marginVertical="10dp"
+                android:layout_marginBottom="10dp"
                 android:adapter="@{paletteAdapter}"
                 android:orientation="horizontal"
                 android:visibility="@{viewModel.paintColorControllerVisibility ? View.VISIBLE : View.GONE, default = gone}"
@@ -86,20 +99,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:visibility="visible" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/main_paint_mode_recycler_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="10dp"
-                android:adapter="@{paintModeAdapter}"
-                android:background="@color/white"
-                android:orientation="horizontal"
-                android:visibility="@{viewModel.paintModeControllerVisibility ? View.VISIBLE : View.GONE, default = gone}"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintBottom_toTopOf="@id/main_brush_width_slider"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
 
             <Button
                 android:id="@+id/btn_change_paint_color"
