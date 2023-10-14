@@ -9,7 +9,7 @@ class PaletteAdapter(
 ) : RecyclerView.Adapter<PaletteViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PaletteViewHolder {
-        return PaletteViewHolder.create(parent) { position -> onItemClick(colors[position]) }
+        return PaletteViewHolder.create(parent, colors.size) { position -> onItemClick(colors[position]) }
     }
 
     override fun getItemCount(): Int = colors.size

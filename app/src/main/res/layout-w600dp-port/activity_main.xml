@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="woowacourse.paint.model.BrushTools" />
+
+        <variable
+            name="viewModel"
+            type="woowacourse.paint.ui.viewmodel.MainViewModel" />
+
+        <variable
+            name="defaultPaintWidth"
+            type="float" />
+
+        <variable
+            name="paletteAdapter"
+            type="woowacourse.paint.ui.adapter.PaletteAdapter" />
+
+        <variable
+            name="paintModeAdapter"
+            type="woowacourse.paint.ui.adapter.DrawingModeAdapter" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <woowacourse.paint.ui.custom.DrawingCanvas
+            android:id="@+id/main_drawing_canvas"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/main_layout_brush_tools"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="-206dp" />
+
+        <ImageView
+            android:id="@+id/main_btn_delete_all"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_margin="10dp"
+            android:src="@drawable/delete"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main_layout_brush_tools"
+            android:layout_width="500dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/main_brush_width_slider"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:value="@{defaultPaintWidth}"
+                android:valueFrom="0.0"
+                android:valueTo="100.0"
+                android:visibility="@{viewModel.paintWidthControllerVisibility ? View.VISIBLE : View.GONE, default = gone}"
+                app:layout_constraintBottom_toTopOf="@+id/main_brush_colors_recycler_view"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/main_brush_colors_recycler_view"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginVertical="10dp"
+                android:adapter="@{paletteAdapter}"
+                android:orientation="horizontal"
+                android:visibility="@{viewModel.paintColorControllerVisibility ? View.VISIBLE : View.GONE, default = gone}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toTopOf="@id/btn_change_paint_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:visibility="visible" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/main_paint_mode_recycler_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp"
+                android:adapter="@{paintModeAdapter}"
+                android:background="@color/white"
+                android:orientation="horizontal"
+                android:visibility="@{viewModel.paintModeControllerVisibility ? View.VISIBLE : View.GONE, default = gone}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toTopOf="@id/main_brush_width_slider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/btn_change_paint_color"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginBottom="10dp"
+                android:onClick="@{() -> viewModel.togglePaintColorControllerVisibility()}"
+                android:text="@string/main_btn_change_paint_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btn_change_paint_width"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/btn_change_paint_width"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:onClick="@{() -> viewModel.togglePaintWidthControllerVisibility()}"
+                android:text="@string/main_btn_change_paint_width"
+                app:layout_constraintBottom_toBottomOf="@id/btn_change_paint_color"
+                app:layout_constraintEnd_toStartOf="@id/btn_change_paint_mode"
+                app:layout_constraintStart_toEndOf="@id/btn_change_paint_color" />
+
+            <Button
+                android:id="@+id/btn_change_paint_mode"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:onClick="@{() -> viewModel.togglePaintModeControllerVisibility()}"
+                android:text="@string/main_btn_change_brush"
+                app:layout_constraintBottom_toBottomOf="@id/btn_change_paint_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btn_change_paint_width" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
