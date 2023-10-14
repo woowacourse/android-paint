@@ -5,7 +5,7 @@ import android.graphics.Path
 import androidx.annotation.ColorInt
 
 sealed class Brush(
-    private val paintInstance: BrushPaint,
+    protected val paintInstance: BrushPaint = BrushPaint(),
 ) {
     var previewDraw: Pair<Path, Paint> = Pair(Path(), Paint())
     abstract fun updateStyle(paint: Paint)

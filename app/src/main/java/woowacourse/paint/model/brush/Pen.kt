@@ -3,11 +3,7 @@ package woowacourse.paint.model.brush
 import android.graphics.Paint
 import android.graphics.Path
 
-class Pen(
-    private val paintInstance: BrushPaint = BrushPaint(),
-) : Brush(
-    paintInstance,
-) {
+class Pen() : Brush() {
     override fun updateStyle(paint: Paint) {
         paintInstance.setPenBrush(paint)
     }

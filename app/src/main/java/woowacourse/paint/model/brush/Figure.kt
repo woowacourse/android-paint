@@ -3,9 +3,7 @@ package woowacourse.paint.model.brush
 import android.graphics.Paint
 import android.graphics.Path
 
-abstract class Figure(
-    private val paintInstance: BrushPaint,
-) : Brush(paintInstance) {
+abstract class Figure : Brush() {
     override fun updateStyle(paint: Paint) {
         paintInstance.setFigureBrush(paint)
     }

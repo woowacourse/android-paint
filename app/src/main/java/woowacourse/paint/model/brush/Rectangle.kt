@@ -3,17 +3,23 @@ package woowacourse.paint.model.brush
 import android.graphics.Paint
 import android.graphics.Path
 
-class Rectangle(
-    private val paintInstance: BrushPaint = BrushPaint(),
-) : Figure(paintInstance) {
+class Rectangle() : Figure() {
     private var beforePosition = Pair(0f, 0f)
 
-    override fun onActionMove(xCursor: Float, yCursor: Float, updateView: (Pair<Path, Paint>) -> Unit) {
+    override fun onActionMove(
+        xCursor: Float,
+        yCursor: Float,
+        updateView: (Pair<Path, Paint>) -> Unit,
+    ) {
         drawPreview(xCursor, yCursor)
         updateView(previewDraw)
     }
 
-    override fun onActionUp(xCursor: Float, yCursor: Float, updateView: (Pair<Path, Paint>) -> Unit) {
+    override fun onActionUp(
+        xCursor: Float,
+        yCursor: Float,
+        updateView: (Pair<Path, Paint>) -> Unit,
+    ) {
         draw(xCursor, yCursor)
         updateView(previewDraw)
     }

@@ -10,7 +10,6 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.model.brush.Brush
-import woowacourse.paint.model.brush.BrushPaint
 import woowacourse.paint.model.brush.Eraser
 import woowacourse.paint.model.brush.Pen
 import woowacourse.paint.model.palettecolor.PaletteColor
@@ -18,8 +17,9 @@ import woowacourse.paint.model.palettecolor.PaletteColor
 class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context, attributeSet) {
 
     private val previousDrawings: MutableList<Pair<Path, Paint>> = mutableListOf()
-    private var brush: Brush =
-        Pen(BrushPaint().apply { color = Color.RED })
+    private var brush: Brush = Pen().apply {
+        updateStyle(Paint().apply { color = Color.RED })
+    }
     private var eraseMode: Boolean = false
 
     init {
