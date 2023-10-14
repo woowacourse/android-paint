@@ -55,7 +55,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvBrushColors"
-            android:layout_width="0dp"
+            android:layout_width="500dp"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@id/rvBrushTypes"
             android:orientation="horizontal"
@@ -66,7 +66,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvBrushTypes"
-            android:layout_width="wrap_content"
+            android:layout_width="500dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:orientation="horizontal"
