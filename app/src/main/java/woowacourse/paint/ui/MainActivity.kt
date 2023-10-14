@@ -6,8 +6,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import woowacourse.paint.R
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.model.BrushTools
+import woowacourse.paint.ui.adapter.DrawingModeAdapter
 import woowacourse.paint.ui.adapter.PaletteAdapter
-import woowacourse.paint.ui.custom.Canvas.Companion.DEFAULT_PAINT_WIDTH
+import woowacourse.paint.ui.custom.DrawingCanvas.Companion.DEFAULT_PAINT_WIDTH
 import woowacourse.paint.ui.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -16,29 +18,41 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        initBinding()
-        initPaintColorsRecyclerView()
-        initPaintWidthRangeSlider()
+        setUpBinding()
+        setUpPaintColorsRecyclerView()
+        setUpPaintWidthRangeSlider()
+        setUpPaintModeRecyclerView()
+        setUpDeleteButton()
     }
 
-    private fun initBinding() {
+    private fun setUpBinding() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
     }
 
-    private fun initPaintColorsRecyclerView() {
+    private fun setUpPaintColorsRecyclerView() {
         val colors = resources.getIntArray(R.array.palette_colors).toList()
-
-        binding.mainBrushColorsRecyclerView.adapter = PaletteAdapter(colors) { color: Int ->
-            binding.mainCanvas.changePaintColor(color)
+        binding.paletteAdapter = PaletteAdapter(colors) { color: Int ->
+            binding.mainDrawingCanvas.changePaintColor(color)
         }
     }
 
-    private fun initPaintWidthRangeSlider() {
+    private fun setUpPaintWidthRangeSlider() {
         binding.defaultPaintWidth = DEFAULT_PAINT_WIDTH
         binding.mainBrushWidthSlider.addOnChangeListener { _, value, _ ->
-            binding.mainCanvas.changePaintWidth(value)
+            binding.mainDrawingCanvas.changePaintWidth(value)
+        }
+    }
+
+    private fun setUpPaintModeRecyclerView() {
+        binding.paintModeAdapter =
+            DrawingModeAdapter(BrushTools.values().toList()) { binding.mainDrawingCanvas.changePaintMode(it) }
+    }
+
+    private fun setUpDeleteButton() {
+        binding.mainBtnDeleteAll.setOnClickListener {
+            binding.mainDrawingCanvas.removeAllDrawings()
         }
     }
 }

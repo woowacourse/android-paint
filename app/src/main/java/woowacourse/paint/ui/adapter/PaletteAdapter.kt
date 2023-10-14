@@ -5,13 +5,11 @@ import androidx.recyclerview.widget.RecyclerView
 
 class PaletteAdapter(
     private val colors: List<Int>,
-    private val onItemClick: (Int) -> Unit
+    private val onItemClick: (Int) -> Unit,
 ) : RecyclerView.Adapter<PaletteViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PaletteViewHolder {
-        return PaletteViewHolder.create(
-            parent
-        ) { position -> onItemClick(colors[position]) }
+        return PaletteViewHolder.create(parent) { position -> onItemClick(colors[position]) }
     }
 
     override fun getItemCount(): Int = colors.size
