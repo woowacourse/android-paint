@@ -33,14 +33,6 @@ class Pen() : Brush() {
         updateView(previewDraw)
     }
 
-    override fun updateColor(color: Int) {
-        paintInstance.color = color
-    }
-
-    override fun updateThickness(thickness: Float) {
-        paintInstance.strokeWidth = thickness
-    }
-
     private fun startDraw(x: Float, y: Float) {
         val path = Path().apply { moveTo(x, y) }
         previewDraw = path to Paint(paintInstance)

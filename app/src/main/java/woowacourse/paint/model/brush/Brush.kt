@@ -24,8 +24,13 @@ sealed class Brush(
 
     abstract fun onActionUp(xCursor: Float, yCursor: Float, updateView: (Pair<Path, Paint>) -> Unit)
 
-    abstract fun updateColor(@ColorInt color: Int)
+    fun updateColor(@ColorInt color: Int) {
+        paintInstance.color = color
+    }
 
-    abstract fun updateThickness(thickness: Float)
+    fun updateThickness(thickness: Float) {
+        paintInstance.strokeWidth = thickness
+    }
+
     fun copyPaint(): Paint = Paint().apply { set(paintInstance as Paint) }
 }
