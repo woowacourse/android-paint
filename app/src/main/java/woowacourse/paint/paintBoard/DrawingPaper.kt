@@ -7,16 +7,16 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.MotionEvent.*
 import android.view.View
-import woowacourse.paint.paintBoard.tools.Tools
+import woowacourse.paint.paintBoard.tools.Painter
 
 class DrawingPaper(
     context: Context,
     attributeSet: AttributeSet
 ) : View(context, attributeSet) {
-    private lateinit var painter: Tools
+    private lateinit var painter: Painter
     private val painting: MutableList<Line> = mutableListOf()
 
-    fun setTool(tool: Tools) {
+    fun setPainter(tool: Painter) {
         painter = tool
     }
 

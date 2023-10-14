@@ -16,9 +16,9 @@ import woowacourse.paint.paintBoard.Line
 import woowacourse.paint.paintBoard.tools.CirclePen
 import woowacourse.paint.paintBoard.tools.LineEraser
 import woowacourse.paint.paintBoard.tools.NormalPen
+import woowacourse.paint.paintBoard.tools.Painter
 import woowacourse.paint.paintBoard.tools.PathEraser
 import woowacourse.paint.paintBoard.tools.RectanglePen
-import woowacourse.paint.paintBoard.tools.Tools
 
 class MainViewModel : ViewModel() {
 
@@ -30,8 +30,8 @@ class MainViewModel : ViewModel() {
     private val _painting: MutableLiveData<List<Line>> = MutableLiveData(listOf())
     val painting: LiveData<List<Line>> get() = _painting
 
-    private val _tools: MutableLiveData<Tools> = MutableLiveData(setNormalPen())
-    val tools: LiveData<Tools> get() = _tools
+    private val _painter: MutableLiveData<Painter> = MutableLiveData(setNormalPen())
+    val painter: LiveData<Painter> get() = _painter
 
     fun updateToolState(tool: Tool) {
         this.tool = tool
@@ -101,7 +101,7 @@ class MainViewModel : ViewModel() {
     }
 
     private fun renewTools() {
-        _tools.value = when (tool) {
+        _painter.value = when (tool) {
             NORMAL_PEN -> setNormalPen()
             CIRCLE_PEN -> setCirclePen()
             RECTANGLE_PEN -> setRectanglePen()

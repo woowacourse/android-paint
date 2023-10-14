@@ -6,7 +6,7 @@ import woowacourse.paint.paintBoard.Line
 
 
 class NormalPen(
-    private val reset: () -> Unit,
+    reset: () -> Unit,
     private val onSave: (Line) -> Unit,
     override val line: Line = Line(brush = Brush(
         Paint().apply {
@@ -17,7 +17,7 @@ class NormalPen(
             isAntiAlias = true
         }
     ))
-) : Tools {
+) : DrawableTool(line, reset) {
 
     override fun startPainting(pointX: Float, pointY: Float) {
         onSave(line)
@@ -27,18 +27,6 @@ class NormalPen(
 
     override fun drawPainting(pointX: Float, pointY: Float) {
         line.path.lineTo(pointX, pointY)
-    }
-
-    override fun finishPainting() {
-        reset.invoke()
-    }
-
-    override fun setWidth(width: Float) {
-        line.brush.changeBrushWidth(width)
-    }
-
-    override fun setColor(color: Int) {
-        line.brush.changeBrushColor(color)
     }
 
     companion object {

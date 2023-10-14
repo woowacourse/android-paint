@@ -34,8 +34,6 @@ class LineEraser(
         line.path.lineTo(pointX, pointY)
     }
 
-    override fun finishPainting() {}
-
     companion object {
         private const val SOFT_ANGLE = 0f
     }

@@ -26,6 +26,4 @@ class PathEraser(
             }
         }
     }
-
-    override fun finishPainting() {}
 }

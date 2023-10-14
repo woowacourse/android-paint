@@ -2,17 +2,9 @@ package woowacourse.paint.paintBoard.tools
 
 import woowacourse.paint.paintBoard.Line
 
-interface Tools : Painter {
-
-    val line: Line
-
-    fun setWidth(width: Float)
-
-    fun setColor(color: Int)
-}
-
 abstract class DrawableTool(
-    open val line: Line
+    open val line: Line,
+    private val reset: () -> Unit
 ) : Painter {
 
     fun setWidth(width: Float) {
@@ -22,6 +14,9 @@ abstract class DrawableTool(
     fun setColor(color: Int) {
         line.brush.changeBrushColor(color)
     }
+
+    override fun finishPainting() {
+        reset.invoke()
+    }
 }
 
-abstract class EraseTool : Painter
