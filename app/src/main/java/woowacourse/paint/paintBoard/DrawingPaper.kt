@@ -16,6 +16,10 @@ class DrawingPaper(
     private lateinit var painter: Painter
     private val painting: MutableList<Line> = mutableListOf()
 
+    init {
+        setLayerType(LAYER_TYPE_HARDWARE, null)
+    }
+
     fun setPainter(tool: Painter) {
         painter = tool
     }
@@ -29,7 +33,6 @@ class DrawingPaper(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        setLayerType(LAYER_TYPE_HARDWARE, null)
 
         painting.forEach { line -> canvas.drawPath(line.path, line.brush.paint) }
     }
