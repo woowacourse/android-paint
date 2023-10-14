@@ -51,7 +51,6 @@ class MainViewModel : ViewModel() {
     fun resetPaintings() {
         if (painting.value.isNullOrEmpty()) return
 
-        paintingBackup.clear()
         paintingBackup.add(painting.value ?: emptyList())
         _painting.value = emptyList()
     }
@@ -64,7 +63,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun undoPaintings() {
-        if (painting.value.isNullOrEmpty() or (paintingBackup.size == BACKUP_MAX_SIZE)) return
+        if (painting.value.isNullOrEmpty()) return
 
         val latestLine = painting.value!!.last()
 
@@ -112,7 +111,6 @@ class MainViewModel : ViewModel() {
 
     companion object {
         private const val DEFAULT_PEN_SIZE = 0f
-        private const val BACKUP_MAX_SIZE = 3
 
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
