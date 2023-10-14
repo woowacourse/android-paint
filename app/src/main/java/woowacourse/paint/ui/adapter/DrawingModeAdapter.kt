@@ -10,7 +10,11 @@ class DrawingModeAdapter(
 ) : RecyclerView.Adapter<DrawingModeViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DrawingModeViewHolder {
-        return DrawingModeViewHolder.create(parent) { position -> onItemClick(brushTools[position]) }
+        return DrawingModeViewHolder.create(parent, brushTools.size) { position ->
+            onItemClick(
+                brushTools[position],
+            )
+        }
     }
 
     override fun getItemCount(): Int = brushTools.size

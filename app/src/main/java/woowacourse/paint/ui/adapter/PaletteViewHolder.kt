@@ -1,6 +1,5 @@
 package woowacourse.paint.ui.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.ColorInt
@@ -29,8 +28,6 @@ class PaletteViewHolder private constructor(
             val binding =
                 PaletteItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
             binding.root.layoutParams.width = parent.measuredWidth / itemSize
-            Log.d("HKHK", "width: ${parent.measuredWidth / itemSize}")
-            Log.d("HKHK", "height: ${parent.measuredHeight}")
             return PaletteViewHolder(binding, onItemClick)
         }
     }
