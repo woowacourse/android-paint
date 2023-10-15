@@ -22,10 +22,10 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:eraseAll="@{mainViewModel.isErasing}"
-            app:layout_constraintBottom_toTopOf="@id/layout_menu"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_color_selection"
+            app:layout_constraintTop_toBottomOf="@id/layout_menu"
             app:setBrush="@{mainViewModel.brushType}"
             app:setColorPalette="@{mainViewModel.color}"
             app:setWidth="@{mainViewModel.width}" />
@@ -42,40 +42,41 @@
 
         <LinearLayout
             android:id="@+id/layout_menu"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="70dp"
             android:gravity="center"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@id/btn_color_selection"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:paddingHorizontal="100dp"
+            app:layout_constraintEnd_toStartOf="@id/btn_erase"
+            app:layout_constraintStart_toEndOf="@id/btn_color_selection"
+            app:layout_constraintTop_toTopOf="@id/btn_color_selection" />
 
         <ImageButton
             android:id="@+id/btn_color_selection"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:background="@drawable/palette"
             android:onClick="@{()->mainViewModel.openColorSelection()}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
             android:id="@+id/btn_pen_width"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:background="@drawable/width"
             android:onClick="@{()->mainViewModel.openWidthSelection()}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/btn_color_selection" />
+            app:layout_constraintStart_toStartOf="@id/btn_color_selection"
+            app:layout_constraintTop_toBottomOf="@id/btn_color_selection" />
 
         <ImageButton
             android:id="@+id/btn_brush_type"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:background="@drawable/brush"
             android:onClick="@{()->mainViewModel.openBrushSelection()}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/btn_pen_width" />
+            app:layout_constraintStart_toStartOf="@id/btn_pen_width"
+            app:layout_constraintTop_toBottomOf="@id/btn_pen_width" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
