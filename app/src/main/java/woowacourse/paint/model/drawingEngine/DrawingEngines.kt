@@ -6,7 +6,7 @@ import java.util.Stack
 
 class DrawingEngines(value: List<DrawingEngine> = mutableListOf()) {
 
-    private var _value: MutableList<DrawingEngine>
+    private val _value: MutableList<DrawingEngine>
     val value: List<DrawingEngine> get() = _value.toList()
 
     private val undoStack: Stack<DrawingEngine> = Stack()
