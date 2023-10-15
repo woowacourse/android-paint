@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="palette_default">60dp</dimen>
+    <dimen name="item_default">60dp</dimen>
+    <dimen name="menu_height">70dp</dimen>
+    <dimen name="menu_padding_default">40dp</dimen>
+    <dimen name="erase_all_icon_margin">16dp</dimen>
 
 </resources>

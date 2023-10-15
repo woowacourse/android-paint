@@ -32,9 +32,9 @@
 
         <ImageButton
             android:id="@+id/btn_erase"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_margin="16dp"
+            android:layout_width="@dimen/item_default"
+            android:layout_height="@dimen/item_default"
+            android:layout_margin="@dimen/erase_all_icon_margin"
             android:background="@drawable/refresh_24"
             android:onClick="@{()->mainViewModel.erase()}"
             app:layout_constraintEnd_toEndOf="parent"
@@ -43,18 +43,18 @@
         <LinearLayout
             android:id="@+id/layout_menu"
             android:layout_width="wrap_content"
-            android:layout_height="70dp"
+            android:layout_height="@dimen/menu_height"
             android:gravity="center"
             android:orientation="horizontal"
-            android:paddingHorizontal="100dp"
+            android:paddingHorizontal="@dimen/menu_padding_default"
             app:layout_constraintEnd_toStartOf="@id/btn_erase"
             app:layout_constraintStart_toEndOf="@id/btn_color_selection"
             app:layout_constraintTop_toTopOf="@id/btn_color_selection" />
 
         <ImageButton
             android:id="@+id/btn_color_selection"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/item_default"
+            android:layout_height="@dimen/item_default"
             android:background="@drawable/palette"
             android:onClick="@{()->mainViewModel.openColorSelection()}"
             app:layout_constraintStart_toStartOf="parent"
@@ -62,8 +62,8 @@
 
         <ImageButton
             android:id="@+id/btn_pen_width"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/item_default"
+            android:layout_height="@dimen/item_default"
             android:background="@drawable/width"
             android:onClick="@{()->mainViewModel.openWidthSelection()}"
             app:layout_constraintStart_toStartOf="@id/btn_color_selection"
@@ -71,8 +71,8 @@
 
         <ImageButton
             android:id="@+id/btn_brush_type"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="@dimen/item_default"
+            android:layout_height="@dimen/item_default"
             android:background="@drawable/brush"
             android:onClick="@{()->mainViewModel.openBrushSelection()}"
             app:layout_constraintStart_toStartOf="@id/btn_pen_width"
