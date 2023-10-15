@@ -37,7 +37,15 @@ enum class Brush {
         ): List<GraphicPrimitive> {
             val result = graphicPrimitives.take(graphicPrimitives.size - 1)
             val path =
-                Path().apply { addRect(basePointX, basePointY, pointX, pointY, Path.Direction.CW) }
+                Path().apply {
+                    addRect(
+                        minOf(basePointX, pointX),
+                        minOf(basePointY, pointY),
+                        maxOf(basePointX, pointX),
+                        maxOf(basePointY, pointY),
+                        Path.Direction.CW,
+                    )
+                }
             val graphicPrimitive = GraphicPrimitive(path, getBrushPaint(paint))
             return result + graphicPrimitive
         }
