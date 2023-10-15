@@ -4,8 +4,8 @@ import android.os.Bundle
 import androidx.activity.addCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import woowacourse.paint.data.model.SettingMode
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.presentation.ui.model.SettingMode
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,6 +28,7 @@ class MainActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.onColorChangeButtonClick = ::onColorChangeButtonClick
         binding.onThicknessChangeButtonClick = ::onThicknessChangeButtonClick
+        binding.onBrushChangeButtonClick = ::onBrushChangeButtonClick
     }
 
     private fun onColorChangeButtonClick() {
@@ -43,6 +44,14 @@ class MainActivity : AppCompatActivity() {
             viewModel.finishSetting()
         } else {
             viewModel.startThicknessSelection()
+        }
+    }
+
+    private fun onBrushChangeButtonClick() {
+        if (viewModel.uiState.value!!.settingMode == SettingMode.BRUSH) {
+            viewModel.finishSetting()
+        } else {
+            viewModel.startBrushSelection()
         }
     }
 

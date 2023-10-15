@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
-        <import type="woowacourse.paint.data.model.SettingMode" />
+        <import type="woowacourse.paint.presentation.ui.model.SettingMode" />
 
-        <import type="woowacourse.paint.data.model.Color" />
+        <import type="woowacourse.paint.presentation.ui.model.Color" />
+
+        <import type="woowacourse.paint.presentation.ui.model.Brush" />
 
         <variable
             name="vm"
@@ -18,6 +21,10 @@
 
         <variable
             name="onThicknessChangeButtonClick"
+            type="kotlin.jvm.functions.Function0" />
+
+        <variable
+            name="onBrushChangeButtonClick"
             type="kotlin.jvm.functions.Function0" />
     </data>
 
@@ -32,7 +39,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:background="@{vm.uiState.settingMode == SettingMode.COLOR ? @drawable/bg_selected_button : @drawable/bg_unselected_button}"
+            android:background="@{vm.uiState.settingMode == SettingMode.COLOR ? @drawable/bg_primary_selected_button : @drawable/bg_primary_unselected_button}"
             android:gravity="center"
             android:onClick="@{() -> onColorChangeButtonClick.invoke()}"
             android:paddingVertical="10dp"
@@ -47,16 +54,31 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
-            android:background="@{vm.uiState.settingMode == SettingMode.THICKNESS ? @drawable/bg_selected_button : @drawable/bg_unselected_button}"
+            android:background="@{vm.uiState.settingMode == SettingMode.THICKNESS ? @drawable/bg_primary_selected_button : @drawable/bg_primary_unselected_button}"
             android:gravity="center"
             android:onClick="@{() -> onThicknessChangeButtonClick.invoke()}"
             android:paddingVertical="10dp"
             android:text="@string/main_thickness_change_btn_label"
             android:textColor="@{vm.uiState.settingMode == SettingMode.THICKNESS ? @color/white : @color/primary_color}"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_color_change_btn"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_brush_change_btn"
             app:layout_constraintStart_toEndOf="@+id/tv_color_change_btn"
             app:layout_constraintTop_toTopOf="@+id/tv_color_change_btn" />
+
+        <TextView
+            android:id="@+id/tv_brush_change_btn"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:background="@{vm.uiState.settingMode == SettingMode.BRUSH ? @drawable/bg_primary_selected_button : @drawable/bg_primary_unselected_button}"
+            android:gravity="center"
+            android:onClick="@{() -> onBrushChangeButtonClick.invoke()}"
+            android:paddingVertical="10dp"
+            android:text="@string/main_bruch_change_button_label"
+            android:textColor="@{vm.uiState.settingMode == SettingMode.BRUSH ? @color/white : @color/primary_color}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/tv_thickness_change_btn"
+            app:layout_constraintTop_toTopOf="@+id/tv_thickness_change_btn" />
 
         <woowacourse.paint.presentation.curstomView.PaintBoardView
             android:id="@+id/pbv_paint_board_view"
@@ -64,22 +86,26 @@
             android:layout_height="0dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
+            app:brush="@{vm.uiState.brush}"
             app:layout_constraintBottom_toTopOf="@+id/tv_color_change_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_clear_btn"
-            app:strokeColor="@{vm.uiState.color}"
-            app:onTouch="@{() -> vm.finishSetting()}" />
+            app:onTouch="@{() -> vm.finishSetting()}"
+            app:brushColor="@{vm.uiState.color}" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_color_select_layout"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:paddingTop="10dp"
+            android:background="@color/white"
             app:layout_constraintBottom_toTopOf="@id/tv_color_change_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:visible="@{vm.uiState.settingMode == SettingMode.COLOR}">
+            app:visible="@{vm.uiState.settingMode == SettingMode.COLOR}"
+            tools:visibility="gone">
 
             <View
                 android:id="@+id/view_select_red"
@@ -157,7 +183,7 @@
                 app:layout_constraintTop_toTopOf="@+id/view_select_red" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.google.android.material.slider.RangeSlider
+        <com.google.android.material.slider.Slider
             android:id="@+id/rs_thickness_setting_bar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -167,8 +193,68 @@
             app:layout_constraintBottom_toTopOf="@+id/tv_thickness_change_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:onValueChange="@{(slider, value, fromUser) -> pbvPaintBoardView.setStrokeWidth(value)}"
-            app:visible="@{vm.uiState.settingMode == SettingMode.THICKNESS}" />
+            app:onValueChange="@{(value) -> pbvPaintBoardView.setStrokeWidth(value)}"
+            app:visible="@{vm.uiState.settingMode == SettingMode.THICKNESS}"
+            tools:visibility="gone" />
+
+        <LinearLayout
+            android:id="@+id/ll_brush_select_layout"
+            android:layout_width="0dp"
+            android:background="@color/white"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            android:paddingTop="10dp"
+            android:paddingHorizontal="10dp"
+            app:layout_constraintBottom_toTopOf="@id/tv_brush_change_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:visible="@{vm.uiState.settingMode == SettingMode.BRUSH}">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:background="@{vm.uiState.brush == Brush.PEN ? @drawable/bg_secondary_selected_button : @drawable/bg_secondary_unselected_button}"
+                android:gravity="center"
+                android:onClick="@{() -> vm.setBrush(Brush.PEN)}"
+                android:paddingVertical="10dp"
+                android:text="@string/main_pen_select_button_label" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:background="@{vm.uiState.brush == Brush.RECTANGLE ? @drawable/bg_secondary_selected_button : @drawable/bg_secondary_unselected_button}"
+                android:gravity="center"
+                android:onClick="@{() -> vm.setBrush(Brush.RECTANGLE)}"
+                android:paddingVertical="10dp"
+                android:text="@string/main_rectangle_select_button_label" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:background="@{vm.uiState.brush == Brush.CIRCLE ? @drawable/bg_secondary_selected_button : @drawable/bg_secondary_unselected_button}"
+                android:gravity="center"
+                android:onClick="@{() -> vm.setBrush(Brush.CIRCLE)}"
+                android:paddingVertical="10dp"
+                android:text="@string/main_circle_select_button_label" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@{vm.uiState.brush == Brush.ERASER ? @drawable/bg_secondary_selected_button : @drawable/bg_secondary_unselected_button}"
+                android:gravity="center"
+                android:onClick="@{() -> vm.setBrush(Brush.ERASER)}"
+                android:paddingVertical="10dp"
+                android:text="@string/main_eraser_select_button_label" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_clear_btn"
@@ -176,13 +262,42 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
-            android:background="@drawable/bg_unselected_button"
+            android:background="@drawable/bg_primary_unselected_button"
             android:onClick="@{() -> pbvPaintBoardView.reset()}"
             android:padding="10dp"
             android:text="@string/main_reset_button_label"
             android:textColor="@color/primary_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_undo_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_primary_unselected_button"
+            android:onClick="@{() -> pbvPaintBoardView.undo()}"
+            android:padding="10dp"
+            android:text="@string/main_undo_button_label"
+            android:textColor="@color/primary_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_redo_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bg_primary_unselected_button"
+            android:onClick="@{() -> pbvPaintBoardView.redo()}"
+            android:padding="10dp"
+            android:text="@string/main_redo_button_label"
+            android:textColor="@color/primary_color"
+            app:layout_constraintStart_toEndOf="@+id/tv_undo_button"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
