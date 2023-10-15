@@ -58,7 +58,7 @@ class PaintView(
 
     private fun drawPainting(pointX: Float, pointY: Float) {
         val last = drawingEngines.last()
-        last.draw(pointX, pointY)
+        last.setEndPoint(pointX, pointY)
         invalidate()
     }
 

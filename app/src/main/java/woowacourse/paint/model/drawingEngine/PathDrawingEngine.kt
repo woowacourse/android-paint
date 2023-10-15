@@ -16,7 +16,7 @@ abstract class PathDrawingEngine : DrawingEngine {
         canvas.drawPath(path, paint)
     }
 
-    override fun draw(pointX: Float, pointY: Float) {
+    override fun setEndPoint(pointX: Float, pointY: Float) {
         quadTo(lastX, lastY, pointX, pointY)
         lastX = pointX
         lastY = pointY
