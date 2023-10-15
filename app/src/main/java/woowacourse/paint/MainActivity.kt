@@ -3,7 +3,7 @@ package woowacourse.paint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.databinding.ActivityMainBinding
-import woowacourse.paint.model.DrawMode
+import woowacourse.paint.model.DrawingMode
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,22 +31,22 @@ class MainActivity : AppCompatActivity() {
         paintView.pen = penToolView.selectedPen
         btnOpenPenTool.setOnClickListener {
             penToolView.toggleVisibility()
-            paintView.drawMode = DrawMode.LINE
+            paintView.drawingMode = DrawingMode.LINE
         }
     }
 
     private fun initShapes() = with(binding) {
         btnShapeRectangle.setOnClickListener {
-            paintView.drawMode = DrawMode.RECT
+            paintView.drawingMode = DrawingMode.RECT
         }
         btnShapeCircle.setOnClickListener {
-            paintView.drawMode = DrawMode.OVAL
+            paintView.drawingMode = DrawingMode.OVAL
         }
     }
 
     private fun initEraser() = with(binding) {
         btnEraser.setOnClickListener {
-            paintView.drawMode = DrawMode.ERASER
+            paintView.drawingMode = DrawingMode.ERASER
         }
     }
 

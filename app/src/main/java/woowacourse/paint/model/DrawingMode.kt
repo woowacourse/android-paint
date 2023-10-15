@@ -7,7 +7,7 @@ import woowacourse.paint.model.drawingEngine.shape.OvalDrawingEngine
 import woowacourse.paint.model.drawingEngine.shape.RectangleDrawingEngine
 import woowacourse.paint.model.pen.Pen
 
-enum class DrawMode(val instantiation: (pen: Pen, pointX: Float, pointY: Float) -> DrawingEngine) {
+enum class DrawingMode(val instantiation: (pen: Pen, pointX: Float, pointY: Float) -> DrawingEngine) {
     RECT(RectangleDrawingEngine::createInstance),
     OVAL(OvalDrawingEngine::createInstance),
     LINE(LineDrawingEngine::createInstance),
@@ -15,6 +15,6 @@ enum class DrawMode(val instantiation: (pen: Pen, pointX: Float, pointY: Float) 
     ;
 
     companion object {
-        fun getDefaultDrawMode(): DrawMode = LINE
+        fun getDefaultMode(): DrawingMode = LINE
     }
 }
