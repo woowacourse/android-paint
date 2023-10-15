@@ -10,7 +10,7 @@ import woowacourse.paint.model.PaintColor
 
 class ColorViewHolder(
     parent: ViewGroup,
-    onColorClickListener: (PaintColor) -> Unit,
+    onColorClickListener: (Int) -> Unit,
 ) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(
         R.layout.item_color,
@@ -22,7 +22,7 @@ class ColorViewHolder(
 
     init {
         binding.root.setOnClickListener {
-            onColorClickListener(PaintColor.getColor(adapterPosition))
+            onColorClickListener(adapterPosition)
         }
     }
 
