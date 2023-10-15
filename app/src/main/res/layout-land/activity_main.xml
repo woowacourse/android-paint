@@ -11,7 +11,7 @@
             android:id="@+id/cv_canvas"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/rs_stroke_controller"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -20,37 +20,36 @@
             android:id="@+id/rs_stroke_controller"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin"
-            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin_land"
             android:valueFrom="0.0f"
             android:valueTo="100.0f"
-            app:layout_constraintBottom_toTopOf="@id/rv_palette"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_palette"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin"
-            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin_land"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rs_stroke_controller"
             tools:listitem="@layout/color" />
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:layout_marginStart="@dimen/margin"
-            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="@dimen/margin_land"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="@+id/cv_canvas"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
 
             <ImageView
