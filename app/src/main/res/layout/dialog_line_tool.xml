@@ -14,7 +14,7 @@
         android:paddingVertical="8dp">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvPenToolColors"
+            android:id="@+id/rvBrushToolColors"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
@@ -24,13 +24,13 @@
             tools:listitem="@layout/rv_item_color" />
 
         <com.google.android.material.slider.RangeSlider
-            android:id="@+id/rsPenToolWidth"
+            android:id="@+id/rsBrushToolWidth"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rvPenToolColors" />
+            app:layout_constraintTop_toBottomOf="@id/rvBrushToolColors" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
