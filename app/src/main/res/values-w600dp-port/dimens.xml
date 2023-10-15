@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="radius_draw_mode_10">10dp</dimen>
-    <dimen name="margin_paint_tools_view">0dp</dimen>
+    <dimen name="margin_paint_tools_view">100dp</dimen>
 </resources>
