@@ -23,6 +23,11 @@ fun PaintBoardView.changeBrushColor(color: Color) {
     }
 }
 
+@BindingAdapter("app:strokeWidth")
+fun PaintBoardView.changeStrokeWidth(width: Float) {
+    setStrokeWidth(width)
+}
+
 @BindingAdapter("app:brush")
 fun PaintBoardView.changeBrush(brush: Brush) {
     setBrush(brush)

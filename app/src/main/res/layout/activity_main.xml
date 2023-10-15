@@ -98,6 +98,7 @@
             android:layout_marginBottom="10dp"
             app:brush="@{vm.uiState.brush}"
             app:brushColor="@{vm.uiState.color}"
+            app:strokeWidth="@{vm.uiState.thickness}"
             app:layout_constraintBottom_toTopOf="@+id/cl_setting_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -204,7 +205,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintWidth_max="500dp"
-            app:onValueChange="@{(value) -> pbvPaintBoardView.setStrokeWidth(value)}"
+            app:onValueChange="@{(value) -> vm.setStrokeWidth(value)}"
             app:visible="@{vm.uiState.settingMode == SettingMode.THICKNESS}"
             tools:visibility="gone" />
 

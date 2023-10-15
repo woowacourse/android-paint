@@ -33,6 +33,10 @@ class MainViewModel : ViewModel() {
         _uiState.value = _uiState.value!!.copy(color = color)
     }
 
+    fun setStrokeWidth(width: Float) {
+        _uiState.value = _uiState.value!!.copy(thickness = width)
+    }
+
     fun setBrush(brush: Brush) {
         _uiState.value = _uiState.value!!.copy(brush = brush)
     }
