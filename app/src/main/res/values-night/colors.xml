@@ -2,6 +2,7 @@
 <resources>
     <color name="purple_200">#FF3700B3</color>
 
+    <color name="canvas_outside">#FF939393</color>
     <color name="paint_board">#FF121212</color>
     <color name="drawing_tool_selected">#FFBB86FC</color>
 </resources>

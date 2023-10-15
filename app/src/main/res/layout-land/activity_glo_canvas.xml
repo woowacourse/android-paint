@@ -4,7 +4,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"     >
+        android:layout_height="match_parent"
+        android:background="@color/canvas_outside">
 
         <woowacourse.paint.ui.glocanvas.PaintBoard
             android:id="@+id/v_paint_board"
@@ -38,7 +39,7 @@
             android:valueFrom="0"
             android:valueTo="100"
             app:layout_constraintBottom_toTopOf="@id/rv_paint_color_palette"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_paint_color_palette"

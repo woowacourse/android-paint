@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -35,7 +34,6 @@
             android:id="@+id/rs_thickness_settings"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintWidth_max="600dp"
             android:background="@drawable/bg_palette"
             android:stepSize="1"
             android:valueFrom="0"
@@ -43,13 +41,13 @@
             app:layout_constraintBottom_toTopOf="@id/rv_paint_color_palette"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rv_drawing_tool_settings" />
+            app:layout_constraintTop_toBottomOf="@id/rv_drawing_tool_settings"
+            app:layout_constraintWidth_max="600dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_paint_color_palette"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintWidth_max="600dp"
             android:background="@drawable/bg_palette"
             android:orientation="horizontal"
             android:paddingBottom="20dp"
@@ -57,7 +55,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rs_thickness_settings" />
+            app:layout_constraintTop_toBottomOf="@id/rs_thickness_settings"
+            app:layout_constraintWidth_max="600dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

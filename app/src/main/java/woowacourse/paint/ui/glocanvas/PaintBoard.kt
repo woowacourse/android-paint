@@ -2,19 +2,45 @@ package woowacourse.paint.ui.glocanvas
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup.LayoutParams
+import dagger.hilt.android.AndroidEntryPoint
+import woowacourse.paint.di.DrawingsQualifier
+import woowacourse.paint.di.SavedDrawingsQualifier
 import woowacourse.paint.ui.glocanvas.drawing.Drawings
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    private val drawings: Drawings = Drawings()
-    private val savedDrawings: Drawings = Drawings()
+    @Inject
+    @DrawingsQualifier
+    lateinit var drawings: Drawings
+
+    @Inject
+    @SavedDrawingsQualifier
+    lateinit var savedDrawings: Drawings
     private lateinit var palette: Palette
 
     init {
         setLayerType(LAYER_TYPE_HARDWARE, null)
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        resizePaintBoard()
+    }
+
+    private fun resizePaintBoard() {
+        if (resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            val portraitWidth = resources.displayMetrics.widthPixels
+            val portraitHeight = resources.displayMetrics.heightPixels
+            layoutParams = LayoutParams(portraitHeight, portraitWidth)
+            x += (portraitWidth - portraitHeight) / 2
+        }
     }
 
     fun setupPalette(palette: Palette) {
