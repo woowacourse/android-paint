@@ -2,6 +2,7 @@ package woowacourse.paint.model.drawingEngine
 
 import android.view.View
 import woowacourse.paint.model.DrawingMode
+import woowacourse.paint.model.drawingEngine.error.NoShapeError
 import woowacourse.paint.model.drawingEngine.shape.RectangleEraserDrawingEngine
 import woowacourse.paint.model.pen.Pen
 import java.util.Stack
@@ -20,7 +21,7 @@ class DrawingEngines(value: List<DrawingEngine> = mutableListOf()) {
     }
 
     fun last(): DrawingEngine {
-        if (_value.isEmpty()) throw IllegalArgumentException("도형이 존재하지 않습니다.")
+        if (_value.isEmpty()) throw NoShapeError()
         return _value.last()
     }
 
