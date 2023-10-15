@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import dagger.hilt.android.AndroidEntryPoint
 import woowacourse.paint.R
 import woowacourse.paint.databinding.ActivityGloCanvasBinding
@@ -78,6 +79,12 @@ class GloCanvasActivity : AppCompatActivity() {
 
             R.id.new_canvas -> {
                 binding.vPaintBoard.setNewCanvas()
+            }
+
+            R.id.palette -> {
+                binding.rvDrawingToolSettings.isVisible = !binding.rvDrawingToolSettings.isVisible
+                binding.rsThicknessSettings.isVisible = !binding.rsThicknessSettings.isVisible
+                binding.rvPaintColorPalette.isVisible = !binding.rvPaintColorPalette.isVisible
             }
         }
         return super.onOptionsItemSelected(item)

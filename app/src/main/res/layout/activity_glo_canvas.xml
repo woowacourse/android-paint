@@ -8,12 +8,11 @@
         <woowacourse.paint.ui.glocanvas.PaintBoard
             android:id="@+id/v_paint_board"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:background="@color/paint_board"
-            app:layout_constraintBottom_toTopOf="@id/rs_thickness_settings"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_drawing_tool_settings"
@@ -27,8 +26,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@id/rs_thickness_settings"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/v_paint_board" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <com.google.android.material.slider.RangeSlider
             android:id="@+id/rs_thickness_settings"
@@ -41,7 +39,6 @@
             app:layout_constraintBottom_toTopOf="@id/rv_paint_color_palette"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rv_drawing_tool_settings"
             app:layout_constraintWidth_max="600dp" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -55,7 +52,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rs_thickness_settings"
             app:layout_constraintWidth_max="600dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
