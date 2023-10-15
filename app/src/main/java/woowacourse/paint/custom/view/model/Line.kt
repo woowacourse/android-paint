@@ -9,30 +9,27 @@ import woowacourse.paint.presentation.uimodel.BrushTypeUiModel
 
 data class Line(
     val type: BrushTypeUiModel,
-    val path: Path,
+    val x: Float,
+    val y: Float,
     val paint: Paint,
 ) : Drawable {
+
+    private val path = Path()
+    private var lastX = 0f
+    private var lastY = 0f
 
     init {
         when (type) {
             BrushTypeUiModel.ERASER -> { paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR) }
             else -> {}
         }
-    }
-
-    private var lastX = 0f
-    private var lastY = 0f
-
-    override fun draw(canvas: Canvas) {
-        canvas.drawPath(path, paint)
-    }
-
-    override fun startDrawing(x: Float, y: Float, paint: Paint): Line {
         path.moveTo(x, y)
         lastX = x
         lastY = y
+    }
 
-        return Line(BrushTypeUiModel.PEN, Path(), paint)
+    override fun draw(canvas: Canvas) {
+        canvas.drawPath(path, paint)
     }
 
     override fun keepDrawing(x: Float, y: Float) {
