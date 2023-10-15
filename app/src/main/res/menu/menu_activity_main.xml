@@ -6,18 +6,18 @@
         android:id="@+id/menu_undo"
         android:title="되돌리기"
         android:icon="@drawable/ic_undo"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/menu_redo"
         android:title="다시하기"
         android:icon="@drawable/ic_redo"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
 
     <item
         android:id="@+id/menu_remove"
         android:title="전체삭제"
         android:icon="@drawable/ic_remove"
-        app:showAsAction="always"/>
+        app:showAsAction="ifRoom"/>
 
 </menu>
