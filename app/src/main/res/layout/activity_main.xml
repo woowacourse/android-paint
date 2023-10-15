@@ -18,7 +18,6 @@
             android:id="@+id/ctv_paint_board"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:brushColor="@{viewModel.brushColor}"
             app:brushSize="@{viewModel.brushSize}"
             app:drawMode="@{viewModel.drawMode}"
             app:layout_constraintBottom_toTopOf="@id/slider_brush_size"

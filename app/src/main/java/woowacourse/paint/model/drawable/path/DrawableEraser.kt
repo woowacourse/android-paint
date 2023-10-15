@@ -39,7 +39,11 @@ data class DrawableEraser(
         path.lineTo(x, y)
     }
 
-    override fun changePaintColor(color: Int): DrawableElement = this
+    override fun changePaintColor(color: Int): DrawableElement {
+        return copy(
+            paint = Paint(paint).apply { this.color = color },
+        )
+    }
 
     override fun changeBrushSize(brushSize: BrushSize): DrawablePath {
         return copy(

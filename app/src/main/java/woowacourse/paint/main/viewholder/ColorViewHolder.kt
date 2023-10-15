@@ -28,5 +28,6 @@ class ColorViewHolder(
 
     fun bind(paintColor: PaintColor) {
         binding.color = getColor(itemView.context, paintColor.colorRes)
+        binding.isSelected = paintColor.isSelected
     }
 }
