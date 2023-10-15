@@ -87,7 +87,7 @@
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_margin="12dp"
-                    android:src="@drawable/ic_shape_circle" />
+                    android:src="@drawable/ic_shape_oval" />
 
             </LinearLayout>
 
