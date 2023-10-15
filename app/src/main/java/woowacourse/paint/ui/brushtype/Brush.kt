@@ -5,7 +5,7 @@ import android.graphics.Path
 import com.example.domain.BrushType
 import com.example.domain.Coordinate
 
-interface BrushType {
+interface Brush {
     var type: BrushType
     val path: Path
     val paint: Paint

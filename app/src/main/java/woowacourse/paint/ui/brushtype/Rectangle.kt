@@ -6,7 +6,7 @@ import android.graphics.Path
 import com.example.domain.BrushType.RECTANGLE
 import com.example.domain.Coordinate
 
-class Rectangle : BrushType {
+class Rectangle : Brush {
     override var type = RECTANGLE
 
     override val path = Path()

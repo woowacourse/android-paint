@@ -11,7 +11,7 @@ import com.example.domain.BrushType.ERASER
 import com.example.domain.BrushType.LINE
 import com.example.domain.BrushType.RECTANGLE
 import com.example.domain.Coordinate
-import woowacourse.paint.ui.brushtype.BrushType
+import woowacourse.paint.ui.brushtype.Brush
 import woowacourse.paint.ui.brushtype.Circle
 import woowacourse.paint.ui.brushtype.Eraser
 import woowacourse.paint.ui.brushtype.Line
@@ -21,7 +21,7 @@ import woowacourse.paint.ui.model.Paintings
 
 class PaintingPaper(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val paintings = Paintings()
-    private var brush: BrushType = Line()
+    private var brush: Brush = Line()
 
     init {
         setLayerType(LAYER_TYPE_HARDWARE, null)
@@ -56,7 +56,7 @@ class PaintingPaper(context: Context, attrs: AttributeSet) : View(context, attrs
         return true
     }
 
-    fun setupBrush(otherBrush: BrushType) {
+    fun setupBrush(otherBrush: Brush) {
         val width = brush.paint.strokeWidth
         val color = brush.paint.color
         brush = otherBrush

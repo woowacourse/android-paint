@@ -7,7 +7,7 @@ import android.graphics.PorterDuffXfermode
 import com.example.domain.BrushType.ERASER
 import com.example.domain.Coordinate
 
-class Eraser : BrushType {
+class Eraser : Brush {
     override var type = ERASER
 
     override val path = Path()

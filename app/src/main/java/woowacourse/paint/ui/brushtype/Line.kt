@@ -6,7 +6,7 @@ import android.graphics.Path
 import com.example.domain.BrushType.LINE
 import com.example.domain.Coordinate
 
-class Line : BrushType {
+class Line : Brush {
     override var type = LINE
 
     override val path = Path()

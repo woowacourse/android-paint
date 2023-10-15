@@ -6,7 +6,7 @@ import android.graphics.Path
 import com.example.domain.BrushType.CIRCLE
 import com.example.domain.Coordinate
 
-class Circle : BrushType {
+class Circle : Brush, Type() {
     override var type = CIRCLE
 
     override val path = Path()
