@@ -11,6 +11,13 @@ data class MainUiState(
     val brush: Brush,
 ) {
     companion object {
-        val Initial: MainUiState = MainUiState(SettingMode.NONE, Color.RED, 0f, Brush.PEN)
+        private const val INIT_THICKNESS: Float = 0f
+
+        val Initial: MainUiState = MainUiState(
+            settingMode = SettingMode.NONE,
+            color = Color.RED,
+            thickness = INIT_THICKNESS,
+            brush = Brush.PEN,
+        )
     }
 }
