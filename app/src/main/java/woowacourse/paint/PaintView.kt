@@ -50,8 +50,8 @@ class PaintView(
     }
 
     private fun addPainting(pointX: Float, pointY: Float) {
-        val addedDrawingEngin = drawMode.instantiation(pen, pointX, pointY)
-        drawingEngines.add(addedDrawingEngin)
+        val addedDrawingEngine = drawMode.instantiation(pen, pointX, pointY)
+        drawingEngines.add(addedDrawingEngine)
         invalidate()
     }
 
