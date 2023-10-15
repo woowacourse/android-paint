@@ -31,22 +31,22 @@ class MainActivity : AppCompatActivity() {
         paintView.pen = penToolView.selectedPen
         btnOpenPenTool.setOnClickListener {
             penToolView.toggleVisibility()
-            paintView.drawingMode = DrawingMode.LINE
+            paintView.setDrawingMode(DrawingMode.LINE)
         }
     }
 
     private fun initShapes() = with(binding) {
         btnShapeRectangle.setOnClickListener {
-            paintView.drawingMode = DrawingMode.RECT
+            paintView.setDrawingMode(DrawingMode.RECT)
         }
         btnShapeCircle.setOnClickListener {
-            paintView.drawingMode = DrawingMode.OVAL
+            paintView.setDrawingMode(DrawingMode.OVAL)
         }
     }
 
     private fun initEraser() = with(binding) {
         btnEraser.setOnClickListener {
-            paintView.drawingMode = DrawingMode.ERASER
+            paintView.setDrawingMode(DrawingMode.ERASER)
         }
     }
 

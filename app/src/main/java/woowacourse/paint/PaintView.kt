@@ -15,8 +15,6 @@ class PaintView(
     attributeSet: AttributeSet,
 ) : View(context, attributeSet) {
 
-    var drawingMode: DrawingMode = DrawingMode.getDefaultMode()
-
     private val drawingEngines: DrawingEngines = DrawingEngines()
     var pen: Pen = Pen.createDefaultPenInstance()
 
@@ -49,9 +47,12 @@ class PaintView(
         return true
     }
 
+    fun setDrawingMode(mode: DrawingMode) {
+        drawingEngines.setDrawingMode(mode)
+    }
+
     private fun addPainting(pointX: Float, pointY: Float) {
-        val addedDrawingEngine = drawingMode.instantiation(pen, pointX, pointY)
-        drawingEngines.add(addedDrawingEngine)
+        drawingEngines.add(pen, pointX, pointY)
         invalidate()
     }
 

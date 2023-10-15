@@ -1,7 +1,9 @@
 package woowacourse.paint.model.drawingEngine
 
 import android.view.View
+import woowacourse.paint.model.DrawingMode
 import woowacourse.paint.model.drawingEngine.shape.RectangleEraserDrawingEngine
+import woowacourse.paint.model.pen.Pen
 import java.util.Stack
 
 class DrawingEngines(value: List<DrawingEngine> = mutableListOf()) {
@@ -10,6 +12,8 @@ class DrawingEngines(value: List<DrawingEngine> = mutableListOf()) {
     val value: List<DrawingEngine> get() = _value.toList()
 
     private val undoStack: Stack<DrawingEngine> = Stack()
+
+    private var currentDrawingMode: DrawingMode = DrawingMode.getDefaultMode()
 
     init {
         this._value = value.toMutableList()
@@ -20,8 +24,13 @@ class DrawingEngines(value: List<DrawingEngine> = mutableListOf()) {
         return _value.last()
     }
 
-    fun add(drawingEngine: DrawingEngine) {
-        _value.add(drawingEngine)
+    fun setDrawingMode(mode: DrawingMode) {
+        currentDrawingMode = mode
+    }
+
+    fun add(pen: Pen, pointX: Float, pointY: Float) {
+        val addedDrawingEngine = currentDrawingMode.instantiation(pen, pointX, pointY)
+        _value.add(addedDrawingEngine)
         undoStack.clear()
     }
 
