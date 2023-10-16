@@ -24,8 +24,8 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     private val screenHeight = resources.displayMetrics.heightPixels
     private val expandedWidth = screenWidth * BOARD_WIDTH_EXPANSION_RATE
     private val expandedHeight = screenHeight * BOARD_HEIGHT_EXPANSION_RATE
-    private val statusBarSize = getStatusBarHeight()
-    private val navigateBarSize = getEnabledNavigateBarHeight()
+
+    private val responsiveUiAdjuster: ResponsiveUiAdjuster = ResponsiveUiAdjuster(context)
 
     private val graphicObjects: MutableList<GraphicObject> = mutableListOf()
 
@@ -44,18 +44,6 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     init {
         addStickyPalette()
         initEraserSetting()
-    }
-
-    private fun getStatusBarHeight(): Float {
-        val navigationBarId =
-            context.resources.getIdentifier("status_bar_height", "dimen", "android")
-        return context.resources.getDimensionPixelSize(navigationBarId).toFloat()
-    }
-
-    private fun getEnabledNavigateBarHeight(): Float {
-        val navigationBarId =
-            context.resources.getIdentifier("navigation_bar_height", "dimen", "android")
-        return context.resources.getDimensionPixelSize(navigationBarId).toFloat()
     }
 
     private fun initEraserSetting() {
@@ -98,13 +86,9 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     }
 
     private fun moveStickyPaletteToFollowBoard() {
-        palette.x = -x
-        palette.y =
-            -y + getScreenHeightExcludeStatusBarNavigationBar() - palette.height - PALETTE_BOTTOM_MARGIN_PIXEL
+        palette.x = responsiveUiAdjuster.calculatePaletteXPosition(x)
+        palette.y = responsiveUiAdjuster.calculatePaletteYPosition(y, palette.height.toFloat())
     }
-
-    private fun getScreenHeightExcludeStatusBarNavigationBar(): Float =
-        screenHeight - statusBarSize - navigateBarSize
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.actionMasked) {
@@ -176,6 +160,5 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     companion object {
         private const val BOARD_HEIGHT_EXPANSION_RATE = 5
         private const val BOARD_WIDTH_EXPANSION_RATE = 15
-        private const val PALETTE_BOTTOM_MARGIN_PIXEL = 20
     }
 }
