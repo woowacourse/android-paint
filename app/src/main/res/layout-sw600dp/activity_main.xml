@@ -19,8 +19,9 @@
         android:id="@+id/button_undo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/main_undo_button_text"
         android:layout_marginStart="17dp"
+        android:text="@string/main_undo_button_text"
+        android:textSize="50sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,34 +29,55 @@
         android:id="@+id/rs_stroke_controller"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="17dp"
         app:layout_constraintBottom_toTopOf="@id/rv_colors"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="@id/guide_lin_start"
+        app:layout_constraintEnd_toEndOf="@id/guide_line_end"
+        app:trackHeight="40dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_colors"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="17dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/rv_painting_types"
+        app:layout_constraintStart_toStartOf="@id/guide_lin_start"
+        app:layout_constraintEnd_toEndOf="@id/guide_line_end"
         app:spanCount="5"
         tools:itemCount="5"
         tools:listitem="@layout/item_painting_color" />
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_lin_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_percent="0.2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guide_line_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_percent="0.8"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_painting_types"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        android:paddingHorizontal="17dp"
+        android:layout_height="140dp"
         android:orientation="vertical"
-        tools:listitem="@layout/item_tool"
+        android:paddingVertical="20dp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guide_lin_start"
+        app:layout_constraintEnd_toEndOf="@id/guide_line_end"
+        app:spanCount="4"
         tools:itemCount="4"
-        app:spanCount="4"/>
+        tools:listitem="@layout/item_tool" />
 </androidx.constraintlayout.widget.ConstraintLayout>

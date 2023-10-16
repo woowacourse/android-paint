@@ -2,7 +2,6 @@ package woowacourse.paint
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.slider.RangeSlider
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.painting.PaintingType
@@ -54,12 +53,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun setUpPaintingColorControllerView() {
         binding.rvColors.adapter = paintingColorAdapter
-        binding.rvColors.layoutManager = GridLayoutManager(this, paintingColors.size)
     }
 
     private fun setUpPaintingTypeControllerView() {
         binding.rvPaintingTypes.adapter = paintingTypeAdapter
-        binding.rvPaintingTypes.layoutManager = GridLayoutManager(this, paintingTypes.size)
     }
 
     private fun setPaintColor(color: PaintingColor) {
