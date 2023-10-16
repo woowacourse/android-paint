@@ -18,7 +18,7 @@
 
         <woowacourse.paint.tool.PenToolView
             android:id="@+id/pen_tool_view"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/pen_tool_view_width"
             android:layout_height="wrap_content"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@id/scroll_view_tools"
@@ -27,7 +27,7 @@
 
         <HorizontalScrollView
             android:id="@+id/scroll_view_tools"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/drawing_mode_selection_view_width"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
