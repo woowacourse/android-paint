@@ -1,7 +1,10 @@
 package woowacourse.paint.board
 
 import android.content.Context
+import android.content.res.Configuration.ORIENTATION_LANDSCAPE
+import android.content.res.Configuration.ORIENTATION_PORTRAIT
 import android.content.res.Resources
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import kotlin.math.min
 import kotlin.math.roundToInt
 
@@ -15,6 +18,7 @@ class ResponsiveUiAdjuster(private val context: Context) {
     private val statusBarSize = getStatusBarHeight()
     private val navigateBarSize = getEnabledNavigateBarHeight()
     private val screenHeight = context.resources.displayMetrics.heightPixels
+    private val screenWidth = context.resources.displayMetrics.widthPixels
 
     fun calculatePaletteXPosition(BoardPosition: Float) =
         when (isPhone) {
@@ -48,6 +52,13 @@ class ResponsiveUiAdjuster(private val context: Context) {
             context.resources.getIdentifier("navigation_bar_height", "dimen", "android")
         return context.resources.getDimensionPixelSize(navigationBarId).toFloat()
     }
+
+    fun calculatePaletteWidth(): Int =
+        when (context.resources.configuration.orientation) {
+            ORIENTATION_PORTRAIT -> MATCH_PARENT
+            ORIENTATION_LANDSCAPE -> screenWidth / 2
+            else -> MATCH_PARENT
+        }
 
     companion object {
         private const val DEVICE_TYPE_BOUNDARY = 600

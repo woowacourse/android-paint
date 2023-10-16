@@ -153,7 +153,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
 
     private fun addStickyPalette() {
         palette = Palette(context, null)
-        palette.layoutParams = FrameLayout.LayoutParams(screenWidth, WRAP_CONTENT)
+        palette.layoutParams = FrameLayout.LayoutParams(responsiveUiAdjuster.calculatePaletteWidth(), WRAP_CONTENT)
         addView(palette)
     }
 
