@@ -25,13 +25,14 @@ class Canvas(
     private val redo: Stack<Any> = Stack()
 
     init {
+        setLayerType(LAYER_TYPE_SOFTWARE, null)
+
         isFocusable = true
         isFocusableInTouchMode = true
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        setLayerType(LAYER_TYPE_SOFTWARE, null)
 
         pathPaints.forEach {
             canvas.draw(it)
