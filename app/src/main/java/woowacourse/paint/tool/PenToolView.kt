@@ -19,6 +19,9 @@ class PenToolView(
     attrs: AttributeSet? = null,
 ) : ConstraintLayout(context, attrs) {
 
+    private val COLOR_VIEW_WIDTH: Int = resources.getDimension(R.dimen.palette_color_view_width).toInt()
+    private val COLOR_VIEW_MARGIN_BETWEEN: Int = resources.getDimension(R.dimen.palette_color_view_margin).toInt()
+
     private lateinit var slider: Slider
     private lateinit var colorContainer: LinearLayout
 
@@ -74,7 +77,7 @@ class PenToolView(
         val paletteColor = paletteColors[index]
         val view = TextView(context)
 
-        val params = MarginLayoutParams(COLOR_VIEW_WIDTH, COLOR_VIEW_HEIGHT)
+        val params = MarginLayoutParams(COLOR_VIEW_WIDTH, COLOR_VIEW_WIDTH)
         if (index != paletteColors.lastIndex) {
             MarginLayoutParamsCompat.setMarginEnd(params, COLOR_VIEW_MARGIN_BETWEEN)
         }
@@ -87,11 +90,5 @@ class PenToolView(
         }
 
         return view
-    }
-
-    companion object {
-        private const val COLOR_VIEW_WIDTH = 240
-        private const val COLOR_VIEW_HEIGHT = 240
-        private const val COLOR_VIEW_MARGIN_BETWEEN = 40
     }
 }
