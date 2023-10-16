@@ -6,17 +6,23 @@
         android:id="@+id/go_to_previous_drawing"
         android:icon="@drawable/ic_undo_100"
         android:title="@string/menu_item_go_to_previous_drawing"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/go_to_next_drawing"
         android:icon="@drawable/ic_redo_100"
         android:title="@string/menu_item_go_to_next_drawing"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/new_canvas"
         android:icon="@drawable/ic_flipboard_100"
         android:title="@string/menu_item_new_canvas"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/palette"
+        android:icon="@drawable/ic_palette_100"
+        android:title="@string/menu_item_palette"
+        app:showAsAction="always" />
 </menu>
