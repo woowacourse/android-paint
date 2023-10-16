@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <woowacourse.paint.PaintView
+            android:id="@+id/paint_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <woowacourse.paint.tool.PenToolView
+            android:id="@+id/pen_tool_view"
+            android:layout_width="@dimen/pen_tool_view_width"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@id/scroll_view_tools"
+            app:layout_constraintTop_toBottomOf="@id/scroll_view_tools" />
+
+        <HorizontalScrollView
+            android:id="@+id/scroll_view_tools"
+            android:layout_width="@dimen/drawing_mode_selection_view_width"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/paint_view">
+
+            <LinearLayout
+                android:id="@+id/linear_layout_tools_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/btn_open_pen_tool"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="12dp"
+                    android:contentDescription="펜 선택 버튼"
+                    android:src="@drawable/ic_pen" />
+
+                <ImageView
+                    android:id="@+id/btn_eraser"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="12dp"
+                    android:src="@drawable/ic_eraser" />
+
+                <ImageView
+                    android:id="@+id/btn_all_cancel"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="12dp"
+                    android:src="@drawable/ic_cancel" />
+
+                <ImageView
+                    android:id="@+id/btn_undo"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="12dp"
+                    android:src="@drawable/ic_undo" />
+
+                <ImageView
+                    android:id="@+id/btn_redo"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="12dp"
+                    android:src="@drawable/ic_redo" />
+
+                <ImageView
+                    android:id="@+id/btn_shape_rectangle"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="12dp"
+                    android:src="@drawable/ic_shape_rectangle" />
+
+                <ImageView
+                    android:id="@+id/btn_shape_circle"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="12dp"
+                    android:src="@drawable/ic_shape_oval" />
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
