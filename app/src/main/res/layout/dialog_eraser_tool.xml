@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:padding="8dp">
+
+        <RadioGroup
+            android:id="@+id/rgBrushToolEraser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioButton
+                android:id="@+id/rbBrushToolEraserPath"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/pathEraser" />
+
+            <RadioButton
+                android:id="@+id/rbBrushToolEraserArea"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/areaEraser" />
+        </RadioGroup>
+
+        <com.google.android.material.slider.RangeSlider
+            android:id="@+id/rsBrushToolEraserArea"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/rgBrushToolEraser" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

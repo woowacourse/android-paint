@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -14,23 +14,42 @@
         android:paddingVertical="8dp">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvPenToolColors"
+            android:id="@+id/rvBrushToolShapeColors"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:clipToPadding="false"
             android:orientation="horizontal"
             android:paddingHorizontal="16dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/rv_item_color" />
 
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/switchBrushToolShapeFillType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:checked="true"
+            android:text="@string/fill"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rvBrushToolShapeColors"
+            app:switchMinWidth="48dp" />
+
         <com.google.android.material.slider.RangeSlider
-            android:id="@+id/rsPenToolWidth"
+            android:id="@+id/rsBrushToolShapeWidth"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
+            android:layout_marginHorizontal="8dp"
             android:layout_marginTop="4dp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/rvPenToolColors" />
+            app:layout_constraintTop_toBottomOf="@id/switchBrushToolShapeFillType" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,16 +1,15 @@
-package woowacourse.paint.paintboard.line
+package woowacourse.paint
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Paint
+import woowacourse.paint.paintboard.drawables.BrushDrawables
 
-class LinesBitmap(private val w: Int, private val h: Int, private val canvasPaint: Paint) {
-    fun create(lines: Lines): Bitmap {
+class DrawablesBitmap(private val w: Int, private val h: Int, private val canvasPaint: Paint) {
+    fun create(drawables: BrushDrawables): Bitmap {
         val bitmap = getBitmap()
         val canvas = getCanvas(bitmap)
-        lines.forEach {
-            canvas.drawPath(it.path, it.paint)
-        }
+        drawables.draw(canvas)
         return bitmap
     }
 

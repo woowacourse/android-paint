@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PaintToolbar">
+        <attr name="minLineWidth" format="float"/>
+        <attr name="maxLineWidth" format="float"/>
+    </declare-styleable>
+</resources>

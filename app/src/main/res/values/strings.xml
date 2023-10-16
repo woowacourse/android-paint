@@ -3,4 +3,7 @@
 
     <string name="image_save_success">이미지 저장에 성공했습니다.</string>
     <string name="image_save_failure">이미지 저장에 실패했습니다.</string>
+    <string name="fill">Fill</string>
+    <string name="pathEraser">획 지우개</string>
+    <string name="areaEraser">영역 지우개</string>
 </resources>
