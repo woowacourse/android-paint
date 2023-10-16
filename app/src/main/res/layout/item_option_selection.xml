@@ -12,8 +12,8 @@
 
         <View
             android:id="@+id/option_item"
-            android:layout_width="@dimen/palette_default"
-            android:layout_height="@dimen/palette_default"
+            android:layout_width="@dimen/item_default"
+            android:layout_height="@dimen/item_default"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:background="@color/black" />
