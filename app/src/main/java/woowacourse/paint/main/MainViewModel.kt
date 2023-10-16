@@ -23,7 +23,7 @@ class MainViewModel : ViewModel() {
 
     init {
         _brushSize.value = BrushSize(BrushSize.DEFAULT_SIZE)
-        _brushColors.value = colors
+        _brushColors.value = PaintColor.colors
         _drawMode.value = DrawMode.DEFAULT_MODE
     }
 
@@ -32,7 +32,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun setBrushColor(index: Int) {
-        val color = colors[index]
+        val color = PaintColor.colors[index]
         _brushColors.value = _brushColors.value?.map {
             PaintColor(it.colorRes, it.colorRes == color.colorRes)
         }
@@ -40,15 +40,5 @@ class MainViewModel : ViewModel() {
 
     fun setDrawMode(mode: DrawMode) {
         _drawMode.value = mode
-    }
-
-    companion object {
-        private val colors = mutableListOf(
-            PaintColor(R.color.red, true),
-            PaintColor(R.color.orange, false),
-            PaintColor(R.color.yellow, false),
-            PaintColor(R.color.green, false),
-            PaintColor(R.color.blue, false),
-        )
     }
 }

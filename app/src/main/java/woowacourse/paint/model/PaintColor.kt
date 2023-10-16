@@ -8,6 +8,12 @@ data class PaintColor(
     val isSelected: Boolean,
 ) {
     companion object {
-        val DEFAULT_COLOR = PaintColor(R.color.red, true)
+        val colors = listOf(
+            PaintColor(R.color.red, true),
+            PaintColor(R.color.orange, false),
+            PaintColor(R.color.yellow, false),
+            PaintColor(R.color.green, false),
+            PaintColor(R.color.blue, false),
+        )
     }
 }
