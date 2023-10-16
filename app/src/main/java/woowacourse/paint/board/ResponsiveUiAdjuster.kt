@@ -55,7 +55,7 @@ class ResponsiveUiAdjuster(private val context: Context) {
 
     fun calculatePaletteWidth(): Int =
         when (context.resources.configuration.orientation) {
-            ORIENTATION_PORTRAIT -> MATCH_PARENT
+            ORIENTATION_PORTRAIT -> screenWidth
             ORIENTATION_LANDSCAPE -> screenWidth / 2
             else -> MATCH_PARENT
         }
