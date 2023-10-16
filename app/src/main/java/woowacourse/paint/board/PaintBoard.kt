@@ -12,6 +12,7 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import androidx.constraintlayout.widget.ConstraintLayout
+import woowacourse.paint.R
 import woowacourse.paint.board.draw.GraphicObject
 import woowacourse.paint.board.draw.GraphicObjectType
 import woowacourse.paint.board.draw.Line
@@ -122,7 +123,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
 
     private fun getLineInstance(): Line {
         val paint: Paint = if (palette.eraseMode) {
-            Paint().apply { xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR) }
+            Paint().apply { color = context.getColor(R.color.white) }
         } else {
             Paint().apply { color = context.getColor(palette.selectedColorId) }
         }
