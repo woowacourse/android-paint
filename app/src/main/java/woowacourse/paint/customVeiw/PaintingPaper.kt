@@ -27,13 +27,6 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
 
     private var brush: Brush? = null
 
-    private val previewBrush: Brush
-        get() = BrushPen().apply {
-            setUpPaint(paint)
-            startDrawing(100F, 100F)
-            continueDrawing(200F, 100F)
-        }
-
     var brushColor = Color.BLACK
         set(value) {
             field = value
@@ -60,7 +53,6 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
         super.onDraw(canvas)
         brushes.drawOn(canvas)
         brush?.drawOn(canvas)
-        previewBrush.drawOn(canvas)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean = when (event.action) {
