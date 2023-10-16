@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.AttributeSet
@@ -54,7 +53,6 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
     var onRedoHistoryChangeListener: (Boolean) -> Unit = {}
 
     init {
-        background = ColorDrawable(Color.WHITE)
         setLayerType(LAYER_TYPE_HARDWARE, null)
     }
 
