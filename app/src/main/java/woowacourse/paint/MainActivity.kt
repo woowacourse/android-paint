@@ -12,6 +12,7 @@ import woowacourse.paint.adapter.ColorAdapter
 import woowacourse.paint.customview.CanvasCallback
 import woowacourse.paint.customview.PaintingCanvas.Companion.DEFAULT_STROKE_WIDTH
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.databinding.ViewDrawingtoolBinding
 import woowacourse.paint.model.PaintBrush
 import woowacourse.paint.model.Painting
 
@@ -19,6 +20,10 @@ class MainActivity : AppCompatActivity(), CanvasCallback {
 
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
+    }
+
+    private val includeBinding: ViewDrawingtoolBinding by lazy {
+        binding.viewDrawingTool!!
     }
 
     private val viewModel by lazy {
@@ -68,31 +73,33 @@ class MainActivity : AppCompatActivity(), CanvasCallback {
     }
 
     private fun setupRangeSlider() {
-        binding.rsWidthChange.setValues(DEFAULT_STROKE_WIDTH)
+        includeBinding.rsWidthChange.setValues(DEFAULT_STROKE_WIDTH)
     }
 
     private fun setAdapter() {
-        binding.rvColor.adapter = colorAdapter
-        binding.rvBrush.adapter = brushAdapter
+        includeBinding.rvColor.adapter = colorAdapter
+        includeBinding.rvBrush.adapter = brushAdapter
     }
 
     private fun setListener() {
-        binding.rsWidthChange.addOnChangeListener(
+        includeBinding.rsWidthChange.addOnChangeListener(
             RangeSlider.OnChangeListener { _, value, _ ->
                 binding.cvPainter.setStroke(value)
             },
         )
 
-        binding.btnColorChange.setOnClickListener {
-            binding.rvColor.isVisible = !binding.rvColor.isVisible
-        }
+        with(includeBinding) {
+            btnColorChange.setOnClickListener {
+                rvColor.isVisible = !rvColor.isVisible
+            }
 
-        binding.btnStrokeChange.setOnClickListener {
-            binding.rsWidthChange.isVisible = !binding.rsWidthChange.isVisible
-        }
+            btnStrokeChange.setOnClickListener {
+                rsWidthChange.isVisible = !rsWidthChange.isVisible
+            }
 
-        binding.btnBrushChange.setOnClickListener {
-            binding.rvBrush.isVisible = !binding.rvBrush.isVisible
+            btnBrushChange.setOnClickListener {
+                rvBrush.isVisible = !rvBrush.isVisible
+            }
         }
     }
 
@@ -106,10 +113,12 @@ class MainActivity : AppCompatActivity(), CanvasCallback {
             val selectedBrush = brushList.first { it.isSelected }
             brushAdapter.submitList(brushList)
 
-            with(binding) {
-                cvPainter.setBrush(selectedBrush)
+            binding.cvPainter.setBrush(selectedBrush)
+
+            with(includeBinding) {
                 rvColor.isVisible = selectedBrush.brushTool != PaintBrush.ERASER
-                btnColorChange.isEnabled = selectedBrush.brushTool != PaintBrush.ERASER
+                btnColorChange.isEnabled =
+                    selectedBrush.brushTool != PaintBrush.ERASER
                 rsWidthChange.isVisible =
                     selectedBrush.brushTool !in listOf(PaintBrush.CIRCLE, PaintBrush.RECTANGLE)
                 btnStrokeChange.isEnabled =

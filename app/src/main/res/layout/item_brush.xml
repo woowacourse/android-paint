@@ -30,7 +30,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth="50dp"
+            app:layout_constraintWidth="@dimen/brush_width"
             tools:src="@drawable/pen"
             tools:text="펜" />
 

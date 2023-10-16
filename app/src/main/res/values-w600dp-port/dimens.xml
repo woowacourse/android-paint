@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="guideline_start">0.15</dimen>
+    <dimen name="guideline_end">0.85</dimen>
+    <dimen name ="color_width">88dp</dimen>
+    <dimen name = "brush_width">50dp</dimen>
+    <dimen name = "font_size">16sp</dimen>
+</resources>
