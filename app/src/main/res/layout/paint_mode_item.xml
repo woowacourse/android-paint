@@ -8,19 +8,15 @@
             type="android.graphics.drawable.Drawable" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background">
 
         <ImageView
             android:id="@+id/palette_item_view"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:src="@{icon}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@{icon}" />
+    </LinearLayout>
 </layout>
