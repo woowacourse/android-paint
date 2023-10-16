@@ -13,6 +13,7 @@ import woowacourse.paint.model.DrawMode
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private val viewModel by lazy { ViewModelProvider(this)[MainViewModel::class.java] }
+    private val colorAdapter by lazy { ColorAdapter { viewModel.setBrushColor(it) } }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         setViewModel()
 
         setColorsRecyclerview()
+        setColorsObserver()
         setBrushSizeListener()
         setDrawModeListener()
     }
@@ -45,10 +47,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun setColorsRecyclerview() {
         binding.rvColors.apply {
-            adapter = ColorAdapter {
-                viewModel.setBrushColor(it)
-            }
+            adapter = colorAdapter
             setHasFixedSize(true)
+            itemAnimator = null
+        }
+    }
+
+    private fun setColorsObserver() {
+        viewModel.brushColors.observe(this) { colors ->
+            colorAdapter.submitList(colors)
+            binding.ctvPaintBoard.setBrushColor(colors.first { it.isSelected })
         }
     }
 
