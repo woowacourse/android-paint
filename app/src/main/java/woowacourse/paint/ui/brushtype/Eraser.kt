@@ -4,12 +4,9 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
-import com.example.domain.BrushType.ERASER
 import com.example.domain.Coordinate
 
 class Eraser : Brush {
-    override var type = ERASER
-
     override val path = Path()
     override val paint = Paint().apply {
         isAntiAlias = true

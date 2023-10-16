@@ -6,10 +6,6 @@ import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import com.example.domain.BrushType.CIRCLE
-import com.example.domain.BrushType.ERASER
-import com.example.domain.BrushType.LINE
-import com.example.domain.BrushType.RECTANGLE
 import com.example.domain.Coordinate
 import woowacourse.paint.ui.brushtype.Brush
 import woowacourse.paint.ui.brushtype.Circle
@@ -48,7 +44,7 @@ class PaintingPaper(context: Context, attrs: AttributeSet) : View(context, attrs
                 brush.moveDrawing(Coordinate(pointX, pointY))
             }
             MotionEvent.ACTION_UP -> {
-                doActionUp(pointX, pointY)
+                doActionUp(pointX, pointY, brush)
             }
             else -> super.onTouchEvent(event)
         }
@@ -74,28 +70,25 @@ class PaintingPaper(context: Context, attrs: AttributeSet) : View(context, attrs
         brush.paint.color = color
     }
 
-    private fun doActionUp(pointX: Float, pointY: Float) {
-        val currentPaint = brush.paint
-        val currentPath = brush.path
-        when (brush.type) {
-            CIRCLE -> {
+    private fun doActionUp(pointX: Float, pointY: Float, brush: Brush) {
+        val currentPaint = this.brush.paint
+        val currentPath = this.brush.path
+        when (brush::class) {
+            Circle::class -> {
                 paintings.storePainting(Painting(currentPaint, currentPath))
                 setupBrush(Circle())
             }
-
-            RECTANGLE -> {
+            Rectangle::class -> {
                 paintings.storePainting(Painting(currentPaint, currentPath))
                 setupBrush(Rectangle())
             }
-
-            LINE -> {
-                (brush as Line).doActionUp(Coordinate(pointX, pointY))
+            Line::class -> {
+                (this.brush as Line).doActionUp(Coordinate(pointX, pointY))
                 paintings.storePainting(Painting(currentPaint, currentPath))
                 setupBrush(Line())
             }
-
-            ERASER -> {
-                (brush as Eraser).doActionUp(Coordinate(pointX, pointY))
+            Eraser::class -> {
+                (this.brush as Eraser).doActionUp(Coordinate(pointX, pointY))
                 paintings.storePainting(Painting(currentPaint, currentPath))
                 setupBrush(Eraser())
             }

@@ -3,12 +3,9 @@ package woowacourse.paint.ui.brushtype
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
-import com.example.domain.BrushType.LINE
 import com.example.domain.Coordinate
 
 class Line : Brush {
-    override var type = LINE
-
     override val path = Path()
     override val paint = Paint().apply {
         isAntiAlias = true

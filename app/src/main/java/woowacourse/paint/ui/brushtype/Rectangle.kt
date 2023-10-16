@@ -3,12 +3,9 @@ package woowacourse.paint.ui.brushtype
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
-import com.example.domain.BrushType.RECTANGLE
 import com.example.domain.Coordinate
 
 class Rectangle : Brush {
-    override var type = RECTANGLE
-
     override val path = Path()
     override var paint = Paint().apply {
         this.color = Color.BLACK

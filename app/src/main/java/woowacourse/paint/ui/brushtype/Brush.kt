@@ -2,11 +2,9 @@ package woowacourse.paint.ui.brushtype
 
 import android.graphics.Paint
 import android.graphics.Path
-import com.example.domain.BrushType
 import com.example.domain.Coordinate
 
 interface Brush {
-    var type: BrushType
     val path: Path
     val paint: Paint
 
