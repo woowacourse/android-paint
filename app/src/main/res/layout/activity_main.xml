@@ -3,93 +3,111 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/paper_color"
         android:orientation="vertical"
         android:weightSum="1">
 
         <woowacourse.paint.painting.PaintingView
             android:id="@+id/pv"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_weight="0.7" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.7"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_colors"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_weight="0.075"
+            android:layout_marginStart="@dimen/common_margin"
+            android:layout_marginEnd="@dimen/common_margin"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent="0.075"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pv"
+            app:layout_constraintVertical_weight="0.3"
             tools:listitem="@layout/item_color" />
 
         <com.google.android.material.slider.RangeSlider
             android:id="@+id/rs"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_weight="0.075"
             android:valueFrom="0.0f"
-            android:valueTo="100.0f" />
+            android:valueTo="100.0f"
+            app:layout_constraintEnd_toEndOf="@id/rv_colors"
+            app:layout_constraintHeight_percent="0.075"
+            app:layout_constraintStart_toStartOf="@id/rv_colors"
+            app:layout_constraintTop_toBottomOf="@id/rv_colors" />
 
-        <LinearLayout
-            android:id="@+id/ln_tools"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/btn_pen"
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight="0.075"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:weightSum="1">
+            android:text="@string/main_pen"
+            android:textColor="@color/font_color"
+            app:layout_constraintEnd_toStartOf="@+id/btn_rectangle"
+            app:layout_constraintHeight_percent="0.075"
+            app:layout_constraintStart_toStartOf="@+id/rs"
+            app:layout_constraintTop_toBottomOf="@id/rs" />
 
-            <Button
-                android:id="@+id/btn_pen"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="@string/main_pen" />
-
-            <Button
-                android:id="@+id/btn_rectangle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="@string/main_square" />
-
-            <Button
-                android:id="@+id/btn_circle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="@string/main_circle" />
-
-            <Button
-                android:id="@+id/btn_eraser"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="@string/main_eraser" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/btn_rectangle"
+            android:layout_width="wrap_content"
             android:layout_height="0dp"
-            android:layout_weight="0.075"
-            android:gravity="center"
-            android:weightSum="1">
+            android:text="@string/main_square"
+            android:textColor="@color/font_color"
+            app:layout_constraintBottom_toBottomOf="@id/btn_pen"
+            app:layout_constraintEnd_toStartOf="@+id/btn_circle"
+            app:layout_constraintStart_toEndOf="@+id/btn_pen"
+            app:layout_constraintTop_toBottomOf="@id/rs" />
 
-            <Button
-                android:id="@+id/btn_undo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:drawableTop="@drawable/ic_undo" />
+        <Button
+            android:id="@+id/btn_circle"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="@string/main_circle"
+            android:textColor="@color/font_color"
+            app:layout_constraintBottom_toBottomOf="@id/btn_pen"
+            app:layout_constraintEnd_toStartOf="@+id/btn_eraser"
+            app:layout_constraintStart_toEndOf="@+id/btn_rectangle"
+            app:layout_constraintTop_toBottomOf="@id/rs" />
 
-            <Button
-                android:id="@+id/btn_redo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:drawableTop="@drawable/ic_redo" />
-        </LinearLayout>
-    </LinearLayout>
+        <Button
+            android:id="@+id/btn_eraser"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:text="@string/main_eraser"
+            android:textColor="@color/font_color"
+            app:layout_constraintBottom_toBottomOf="@id/btn_pen"
+            app:layout_constraintEnd_toEndOf="@+id/rs"
+            app:layout_constraintStart_toEndOf="@+id/btn_circle"
+            app:layout_constraintTop_toBottomOf="@id/rs" />
+
+        <Button
+            android:id="@+id/btn_undo"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="6dp"
+            android:drawableTop="@drawable/ic_undo"
+            app:layout_constraintEnd_toStartOf="@id/btn_rectangle"
+            app:layout_constraintHeight_percent="0.06"
+            app:layout_constraintStart_toEndOf="@id/btn_pen"
+            app:layout_constraintTop_toBottomOf="@id/btn_pen" />
+
+        <Button
+            android:id="@+id/btn_redo"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:drawableTop="@drawable/ic_redo"
+            app:layout_constraintBottom_toBottomOf="@id/btn_undo"
+            app:layout_constraintEnd_toStartOf="@id/btn_eraser"
+            app:layout_constraintStart_toEndOf="@id/btn_circle"
+            app:layout_constraintTop_toTopOf="@id/btn_undo" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
