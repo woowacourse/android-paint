@@ -5,6 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent">
 
+    <Space
+        android:id="@+id/space_component_width"
+        android:layout_width="@dimen/data"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <Button
         android:id="@+id/bt_change_color"
         android:layout_width="0dp"
@@ -16,7 +24,7 @@
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/bt_change_thickness"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="@id/space_component_width" />
 
     <Button
         android:id="@+id/bt_change_thickness"
@@ -39,22 +47,22 @@
         android:text="@string/change_brush"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/space_component_width"
         app:layout_constraintStart_toEndOf="@id/bt_change_thickness" />
 
 
     <com.google.android.material.slider.RangeSlider
-        android:visibility="gone"
-        android:id="@+id/rs_thickness"
         android:layout_width="0dp"
+        android:id="@+id/rs_thickness"
+        android:visibility="visible"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="20dp"
         android:valueFrom="0.0"
         android:valueTo="100.0"
         app:layout_constraintBottom_toTopOf="@id/rv_palette"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="@id/space_component_width"
+        app:layout_constraintStart_toStartOf="@id/space_component_width" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_palette"
@@ -67,8 +75,8 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/bt_change_thickness"
         app:layout_constraintDimensionRatio="H,360:60"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/space_component_width"
+        app:layout_constraintStart_toStartOf="@id/space_component_width"
         tools:listitem="@layout/item_palette" />
 
     <Button
@@ -82,7 +90,7 @@
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/rs_thickness"
         app:layout_constraintEnd_toStartOf="@id/bt_rectangle"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="@id/space_component_width" />
 
     <Button
         android:id="@+id/bt_rectangle"
@@ -117,7 +125,7 @@
         android:text="@string/eraser"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/rs_thickness"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/space_component_width"
         app:layout_constraintStart_toEndOf="@id/bt_circle" />
 
     <woowacourse.paint.customview.FreeDrawView
