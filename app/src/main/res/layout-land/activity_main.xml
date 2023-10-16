@@ -18,73 +18,70 @@
         android:id="@+id/canvasView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/lineBrushButton"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/startGuideline"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp" />
 
     <Button
         android:id="@+id/lineBrushButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/line_brush"
-        app:layout_constraintBottom_toTopOf="@id/rangeSlider"
-        app:layout_constraintEnd_toStartOf="@id/rectBrushButton"
-        app:layout_constraintStart_toStartOf="@id/paletteView" />
+        app:layout_constraintStart_toEndOf="@id/startGuideline"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <Button
         android:id="@+id/rectBrushButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/rectangle_brush"
-        app:layout_constraintBottom_toTopOf="@id/rangeSlider"
-        app:layout_constraintEnd_toStartOf="@id/circleBrushButton"
-        app:layout_constraintStart_toEndOf="@id/lineBrushButton" />
+        app:layout_constraintStart_toEndOf="@id/startGuideline"
+        app:layout_constraintTop_toBottomOf="@id/lineBrushButton" />
 
     <Button
         android:id="@+id/circleBrushButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/circle_brush"
-        app:layout_constraintBottom_toTopOf="@id/rangeSlider"
-        app:layout_constraintEnd_toStartOf="@id/eraserButton"
-        app:layout_constraintStart_toEndOf="@id/rectBrushButton" />
+        app:layout_constraintStart_toEndOf="@id/startGuideline"
+        app:layout_constraintTop_toBottomOf="@id/rectBrushButton" />
 
     <Button
         android:id="@+id/eraserButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/eraser"
-        app:layout_constraintBottom_toTopOf="@id/rangeSlider"
-        app:layout_constraintEnd_toEndOf="@id/paletteView"
-        app:layout_constraintStart_toEndOf="@id/circleBrushButton" />
+        app:layout_constraintStart_toEndOf="@id/startGuideline"
+        app:layout_constraintTop_toBottomOf="@id/circleBrushButton" />
 
 
     <com.google.android.material.slider.RangeSlider
         android:id="@+id/rangeSlider"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:valueFrom="0"
         android:valueTo="100"
-        app:layout_constraintBottom_toTopOf="@id/paletteView"
         app:layout_constraintEnd_toEndOf="@id/paletteView"
-        app:layout_constraintStart_toStartOf="@id/paletteView" />
+        app:layout_constraintStart_toEndOf="@id/lineBrushButton"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
     <woowacourse.paint.customview.PaletteView
         android:id="@+id/paletteView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@id/spaceBottom"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Space
-        android:id="@+id/spaceBottom"
         android:layout_width="0dp"
-        android:layout_height="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toEndOf="@id/lineBrushButton"
+        app:layout_constraintTop_toBottomOf="@id/rangeSlider"
+        tools:layout_width="600dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
