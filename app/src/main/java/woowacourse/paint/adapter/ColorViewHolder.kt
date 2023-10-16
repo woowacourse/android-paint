@@ -10,18 +10,19 @@ import woowacourse.paint.databinding.ItemColorBinding
 class ColorViewHolder(
     private val parent: ViewGroup,
     private val onColorClicked: (Int) -> Unit,
+    colorIdx: Int,
 ) : RecyclerView.ViewHolder(
     LayoutInflater.from(parent.context).inflate(R.layout.item_color, parent, false),
 ) {
     private val binding: ItemColorBinding = ItemColorBinding.bind(itemView)
 
     init {
-        setupColorSetting()
         setupOnColorClick()
+        setupColorSetting(colorIdx)
     }
 
-    private fun setupColorSetting() {
-        val defaultColorView = parent.getChildAt(DEFAULT_COLOR_IDX)
+    private fun setupColorSetting(idx: Int) {
+        val defaultColorView = parent.getChildAt(idx)
         defaultColorView?.alpha = ALPHA_SELECTED
     }
 
@@ -40,6 +41,5 @@ class ColorViewHolder(
     companion object {
         private const val ALPHA_UNSELECTED = 1.0f
         private const val ALPHA_SELECTED = 0.5f
-        private const val DEFAULT_COLOR_IDX = 0
     }
 }

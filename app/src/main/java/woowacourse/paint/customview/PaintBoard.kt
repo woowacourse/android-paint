@@ -27,8 +27,10 @@ import woowacourse.paint.shape.Rectangle
 
 class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
-    private val history: History = History()
-    private var painting: Painting = Painting.newInstance(context)
+    val history: History = History()
+    private var _painting: Painting = Painting.newInstance(context)
+    val painting
+        get() = _painting
 
     init {
         setupPaintSetting()
@@ -75,7 +77,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private fun savePath() {
         history.add(painting)
-        painting = painting.copy()
+        _painting = _painting.copy()
     }
 
     fun changeSize(value: Float) {
@@ -83,7 +85,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     fun changeTool(value: Tools) {
-        painting = when (value) {
+        _painting = when (value) {
             LINE -> painting.changeShape(Line(), STROKE)
             CIRCLE -> painting.changeShape(Circle(), FILL)
             RECTANGLE -> painting.changeShape(Rectangle(), FILL)
@@ -108,6 +110,14 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     fun redo() {
         history.redo()
         invalidate()
+    }
+
+    fun restoreHistory(latestHistory: History) {
+        history.restoreHistory(latestHistory)
+    }
+
+    fun restorePainting(latestPainting: Painting) {
+        _painting = latestPainting
     }
 
     companion object {

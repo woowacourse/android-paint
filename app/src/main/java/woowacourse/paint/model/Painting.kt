@@ -12,7 +12,7 @@ import woowacourse.paint.shape.Line
 import woowacourse.paint.shape.Shape
 
 class Painting(
-    private val shape: Shape = Line(),
+    val shape: Shape = Line(),
     val paint: Paint,
 ) {
     fun startDraw(pointX: Float, pointY: Float) {

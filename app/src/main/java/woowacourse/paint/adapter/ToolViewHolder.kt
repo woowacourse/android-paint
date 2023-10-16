@@ -7,7 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.paint.R
 import woowacourse.paint.databinding.ItemToolBinding
 
-class ToolViewHolder(private val parent: ViewGroup, private val onToolClicked: (Int) -> Unit) :
+class ToolViewHolder(
+    private val parent: ViewGroup,
+    private val onToolClicked: (Int) -> Unit,
+    toolIdx: Int,
+) :
     RecyclerView.ViewHolder(
         LayoutInflater.from(parent.context).inflate(R.layout.item_tool, parent, false),
     ) {
@@ -15,12 +19,12 @@ class ToolViewHolder(private val parent: ViewGroup, private val onToolClicked: (
     private val binding = ItemToolBinding.bind(itemView)
 
     init {
-        setupDefaultTool()
         setupOnToolClick()
+        setupDefaultTool(toolIdx)
     }
 
-    private fun setupDefaultTool() {
-        val initialView = parent.getChildAt(DEFAULT_TOOL_IDX)
+    private fun setupDefaultTool(idx: Int) {
+        val initialView = parent.getChildAt(idx)
         initialView?.isSelected = true
     }
 
@@ -34,9 +38,5 @@ class ToolViewHolder(private val parent: ViewGroup, private val onToolClicked: (
 
     fun bind() {
         binding.tvTool.text = parent.resources.getStringArray(R.array.toolNames)[adapterPosition]
-    }
-
-    companion object {
-        private const val DEFAULT_TOOL_IDX = 0
     }
 }

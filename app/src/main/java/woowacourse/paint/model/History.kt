@@ -29,4 +29,9 @@ class History {
             _paintings.add(painting)
         }
     }
+
+    fun restoreHistory(latestHistory: History) {
+        _paintings.addAll(latestHistory.paintings)
+        cache.addAll(latestHistory.cache)
+    }
 }
