@@ -27,10 +27,12 @@ class DrawingModeViewHolder private constructor(
     companion object {
         fun create(
             parent: ViewGroup,
+            itemSize: Int,
             onItemClick: (Int) -> Unit,
         ): DrawingModeViewHolder {
             val binding =
                 PaintModeItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            binding.root.layoutParams.width = parent.measuredWidth / itemSize
             return DrawingModeViewHolder(binding, binding.root.context, onItemClick)
         }
     }

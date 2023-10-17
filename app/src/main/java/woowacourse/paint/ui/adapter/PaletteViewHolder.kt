@@ -22,10 +22,12 @@ class PaletteViewHolder private constructor(
     companion object {
         fun create(
             parent: ViewGroup,
+            itemSize: Int,
             onItemClick: (Int) -> Unit,
         ): PaletteViewHolder {
             val binding =
                 PaletteItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            binding.root.layoutParams.width = parent.measuredWidth / itemSize
             return PaletteViewHolder(binding, onItemClick)
         }
     }
