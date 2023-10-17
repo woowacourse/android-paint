@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.AttributeSet
@@ -28,13 +27,6 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
 
     private var brush: Brush? = null
 
-    private val previewBrush: Brush
-        get() = BrushPen().apply {
-            setUpPaint(paint)
-            startDrawing(100F, 100F)
-            continueDrawing(200F, 100F)
-        }
-
     var brushColor = Color.BLACK
         set(value) {
             field = value
@@ -54,7 +46,6 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
     var onRedoHistoryChangeListener: (Boolean) -> Unit = {}
 
     init {
-        background = ColorDrawable(Color.WHITE)
         setLayerType(LAYER_TYPE_HARDWARE, null)
     }
 
@@ -62,7 +53,6 @@ class PaintingPaper constructor(context: Context, attrs: AttributeSet) : View(co
         super.onDraw(canvas)
         brushes.drawOn(canvas)
         brush?.drawOn(canvas)
-        previewBrush.drawOn(canvas)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean = when (event.action) {
