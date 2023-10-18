@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initPenTool() = with(binding) {
-        paintView.pen = penToolView.selectedPen
+        paintView.selectedPen = penToolView.selectedPen
         btnOpenPenTool.setOnClickListener {
             penToolView.toggleVisibility()
             paintView.setDrawingMode(DrawingMode.LINE)

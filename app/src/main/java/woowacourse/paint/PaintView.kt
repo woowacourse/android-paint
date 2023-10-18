@@ -16,7 +16,7 @@ class PaintView(
 ) : View(context, attributeSet) {
 
     private val drawingEngines: DrawingEngines = DrawingEngines()
-    var pen: Pen = Pen.createDefaultPenInstance()
+    var selectedPen: Pen = Pen.createDefaultPenInstance()
 
     init {
         setLayerType(LAYER_TYPE_HARDWARE, null)
@@ -46,7 +46,7 @@ class PaintView(
     }
 
     private fun addPainting(pointX: Float, pointY: Float) {
-        drawingEngines.add(pen, pointX, pointY)
+        drawingEngines.add(selectedPen, pointX, pointY)
         invalidate()
     }
 
