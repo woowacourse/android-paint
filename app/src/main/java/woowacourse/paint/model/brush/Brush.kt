@@ -5,10 +5,12 @@ import android.graphics.Path
 import androidx.annotation.ColorInt
 
 sealed class Brush(
-    private val paintInstance: BrushPaint,
+    protected val paintInstance: Paint = Paint(),
 ) {
     var previewDraw: Pair<Path, Paint> = Pair(Path(), Paint())
-    abstract fun updateStyle(paint: Paint)
+    open fun updateStyle(paint: Paint) {
+        paintInstance.set(paint)
+    }
 
     abstract fun onActionDown(
         xCursor: Float,
@@ -24,8 +26,13 @@ sealed class Brush(
 
     abstract fun onActionUp(xCursor: Float, yCursor: Float, updateView: (Pair<Path, Paint>) -> Unit)
 
-    abstract fun updateColor(@ColorInt color: Int)
+    fun updateColor(@ColorInt color: Int) {
+        paintInstance.color = color
+    }
 
-    abstract fun updateThickness(thickness: Float)
-    fun copyPaint(): Paint = Paint().apply { set(paintInstance as Paint) }
+    fun updateThickness(thickness: Float) {
+        paintInstance.strokeWidth = thickness
+    }
+
+    fun copyPaint(): Paint = Paint().apply { set(paintInstance) }
 }

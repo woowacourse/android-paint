@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <woowacourse.paint.customview.FreeDrawView
         android:id="@+id/fdv_board"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/rs_thickness"
+        app:layout_constraintBottom_toBottomOf="@id/bt_change_thickness"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -18,11 +18,10 @@
 
     <Space
         android:id="@+id/space_component_width"
-        android:layout_width="@dimen/data"
+        android:layout_width="500dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/bt_change_color"
@@ -63,14 +62,15 @@
 
 
     <com.google.android.material.slider.RangeSlider
-        android:layout_width="0dp"
+        android:focusedByDefault="true"
         android:id="@+id/rs_thickness"
-        android:visibility="visible"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="20dp"
         android:valueFrom="0.0"
         android:valueTo="100.0"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@id/rv_palette"
         app:layout_constraintEnd_toEndOf="@id/space_component_width"
         app:layout_constraintStart_toStartOf="@id/space_component_width" />

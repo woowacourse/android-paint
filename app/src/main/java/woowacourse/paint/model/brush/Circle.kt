@@ -3,9 +3,7 @@ package woowacourse.paint.model.brush
 import android.graphics.Paint
 import android.graphics.Path
 
-class Circle(
-    private val paintInstance: BrushPaint = BrushPaint(),
-) : Figure(paintInstance) {
+class Circle : Figure() {
     private var beforePosition = Pair(0f, 0f)
 
     override fun onActionDown(
@@ -21,7 +19,7 @@ class Circle(
         yCursor: Float,
         updateView: (Pair<Path, Paint>) -> Unit,
     ) {
-        drawPreview(xCursor, yCursor)
+        draw(xCursor)
         updateView(previewDraw)
     }
 
@@ -32,19 +30,6 @@ class Circle(
     ) {
         draw(xCursor)
         updateView(previewDraw)
-    }
-
-    private fun drawPreview(xCursor: Float, yCursor: Float) {
-        val path = Path().apply {
-            addCircle(
-                beforePosition.first + ((xCursor - beforePosition.first) / 2),
-                beforePosition.second + ((xCursor - beforePosition.first) / 2),
-                (xCursor - beforePosition.first) / 2,
-                Path.Direction.CW,
-            )
-        }
-        val paint = Paint().apply { set(paintInstance) }
-        previewDraw = path to paint
     }
 
     private fun draw(xCursor: Float) {

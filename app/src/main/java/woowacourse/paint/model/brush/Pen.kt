@@ -3,13 +3,14 @@ package woowacourse.paint.model.brush
 import android.graphics.Paint
 import android.graphics.Path
 
-class Pen(
-    private val paintInstance: BrushPaint = BrushPaint(),
-) : Brush(
-    paintInstance,
-) {
+class Pen : Brush() {
     override fun updateStyle(paint: Paint) {
-        paintInstance.setPenBrush(paint)
+        super.updateStyle(paint)
+        paintInstance.apply {
+            style = Paint.Style.STROKE
+            strokeCap = Paint.Cap.ROUND
+            strokeJoin = Paint.Join.ROUND
+        }
     }
 
     override fun onActionDown(
@@ -35,14 +36,6 @@ class Pen(
         updateView: (Pair<Path, Paint>) -> Unit,
     ) {
         updateView(previewDraw)
-    }
-
-    override fun updateColor(color: Int) {
-        paintInstance.color = color
-    }
-
-    override fun updateThickness(thickness: Float) {
-        paintInstance.strokeWidth = thickness
     }
 
     private fun startDraw(x: Float, y: Float) {
