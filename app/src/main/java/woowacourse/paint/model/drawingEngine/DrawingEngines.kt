@@ -2,7 +2,7 @@ package woowacourse.paint.model.drawingEngine
 
 import android.graphics.Canvas
 import android.view.View
-import woowacourse.paint.model.drawingEngine.error.EmptyDrawingEnginesError
+import woowacourse.paint.model.drawingEngine.error.AccessToEmptyDrawingEnginesError
 import woowacourse.paint.model.drawingEngine.shape.RectangleEraserDrawingEngine
 import java.util.Stack
 
@@ -13,7 +13,7 @@ class DrawingEngines(value: List<DrawingEngine> = mutableListOf()) {
     private val undoStack: Stack<DrawingEngine> = Stack()
 
     fun last(): DrawingEngine {
-        if (_value.isEmpty()) throw EmptyDrawingEnginesError()
+        if (_value.isEmpty()) throw AccessToEmptyDrawingEnginesError()
         return _value.last()
     }
 
