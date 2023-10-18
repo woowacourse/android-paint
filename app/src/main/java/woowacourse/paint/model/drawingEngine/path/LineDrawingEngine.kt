@@ -16,7 +16,7 @@ data class LineDrawingEngine(
             val paint = pen.createPaint()
             return LineDrawingEngine(paint = paint).apply {
                 paint.color = pen.color
-                moveTo(pointX, pointY)
+                setStartPoint(pointX, pointY)
                 setLastPoint(pointX, pointY)
             }
         }
