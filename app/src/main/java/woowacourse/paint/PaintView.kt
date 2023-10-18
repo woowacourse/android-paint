@@ -24,13 +24,7 @@ class PaintView(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        drawCanvas(canvas)
-    }
-
-    private fun drawCanvas(canvas: Canvas) {
-        drawingEngines.value.forEach {
-            it.draw(canvas)
-        }
+        drawingEngines.draw(canvas)
     }
 
     @SuppressLint("ClickableViewAccessibility")

@@ -1,5 +1,6 @@
 package woowacourse.paint.model.drawingEngine
 
+import android.graphics.Canvas
 import android.view.View
 import woowacourse.paint.model.DrawingMode
 import woowacourse.paint.model.drawingEngine.error.NoShapeError
@@ -9,16 +10,11 @@ import java.util.Stack
 
 class DrawingEngines(value: List<DrawingEngine> = mutableListOf()) {
 
-    private val _value: MutableList<DrawingEngine>
-    val value: List<DrawingEngine> get() = _value.toList()
+    private val _value: MutableList<DrawingEngine> = value.toMutableList()
 
     private val undoStack: Stack<DrawingEngine> = Stack()
 
     private var currentDrawingMode: DrawingMode = DrawingMode.getDefaultMode()
-
-    init {
-        this._value = value.toMutableList()
-    }
 
     fun last(): DrawingEngine {
         if (_value.isEmpty()) throw NoShapeError()
@@ -27,6 +23,12 @@ class DrawingEngines(value: List<DrawingEngine> = mutableListOf()) {
 
     fun setDrawingMode(mode: DrawingMode) {
         currentDrawingMode = mode
+    }
+
+    fun draw(canvas: Canvas) {
+        _value.forEach {
+            it.draw(canvas)
+        }
     }
 
     fun add(pen: Pen, pointX: Float, pointY: Float) {
