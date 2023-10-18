@@ -32,7 +32,8 @@ class FreeDrawView(context: Context, attributeSet: AttributeSet) : View(context,
             canvas.drawPath(path, paint)
         }
         if (!eraseMode) {
-            canvas.drawPath(brush.previewDraw.first, brush.previewDraw.second)
+            val (path, paint) = brush.previewDraw
+            canvas.drawPath(path, paint)
         }
     }
 

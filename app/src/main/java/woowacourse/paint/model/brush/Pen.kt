@@ -5,7 +5,12 @@ import android.graphics.Path
 
 class Pen : Brush() {
     override fun updateStyle(paint: Paint) {
-        setPenBrush(paint)
+        super.updateStyle(paint)
+        paintInstance.apply {
+            style = Paint.Style.STROKE
+            strokeCap = Paint.Cap.ROUND
+            strokeJoin = Paint.Join.ROUND
+        }
     }
 
     override fun onActionDown(
@@ -40,12 +45,5 @@ class Pen : Brush() {
 
     private fun drawLine(x: Float, y: Float) {
         previewDraw.first.lineTo(x, y)
-    }
-
-    private fun setPenBrush(beforePaint: Paint) = paintInstance.apply {
-        set(beforePaint)
-        style = Paint.Style.STROKE
-        strokeCap = Paint.Cap.ROUND
-        strokeJoin = Paint.Join.ROUND
     }
 }

@@ -6,7 +6,8 @@ import android.graphics.Path
 abstract class Figure : Brush() {
 
     override fun updateStyle(paint: Paint) {
-        setFigureBrush(paint)
+        super.updateStyle(paint)
+        paintInstance.style = Paint.Style.FILL
     }
 
     override fun onActionUp(
@@ -28,7 +29,6 @@ abstract class Figure : Brush() {
     ) = Unit
 
     private fun setFigureBrush(beforePaint: Paint) = paintInstance.apply {
-        set(beforePaint)
-        style = Paint.Style.FILL
+
     }
 }
