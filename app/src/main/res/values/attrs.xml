@@ -7,6 +7,9 @@
         <attr name="currentStrokeWidth" format="float" />
         <attr name="brushType" format="enum">
             <enum name="STROKE" value="0" />
+            <enum name="RECTANGLE" value="1" />
+            <enum name="CIRCLE" value="2" />
+            <enum name="ERASER" value="3" />
         </attr>
     </declare-styleable>
 </resources>

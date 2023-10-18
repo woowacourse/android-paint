@@ -1,18 +1,21 @@
-package woowacourse.paint.customView.content
+package woowacourse.paint.customView.content.eraser
 
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 import android.view.MotionEvent
+import woowacourse.paint.customView.content.BrushType
+import woowacourse.paint.customView.content.Content
 
-class Stroke(
+class Eraser(
     override val id: Long,
     private val path: Path,
     private val paint: Paint,
 ) : Content() {
-    override val brushType: BrushType = BrushType.Stroke
+    override val brushType: BrushType = BrushType.Eraser
+
     override fun deepCopy(): Content {
-        return Stroke(id, Path(path), Paint(paint))
+        return Eraser(id, Path(path), Paint(paint))
     }
 
     override fun action(event: MotionEvent) {
