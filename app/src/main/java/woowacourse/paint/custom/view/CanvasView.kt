@@ -3,7 +3,6 @@ package woowacourse.paint.custom.view
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Path
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -30,7 +29,7 @@ class CanvasView(
     }
 
     private val painted = Painted()
-    private var drawable: Drawable = Line(BrushTypeUiModel.PEN, Path(), brushUiModel.fromPaint())
+    private var drawable: Drawable = Line(BrushTypeUiModel.PEN, 0f, 0f, brushUiModel.fromPaint())
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -58,16 +57,15 @@ class CanvasView(
 
     private fun startDrawing(x: Float, y: Float) {
         setDrawable(x, y)
-        drawable.startDrawing(x, y, brushUiModel.fromPaint())
         painted.add(drawable)
     }
 
     private fun setDrawable(x: Float, y: Float) {
         drawable = when (brushUiModel.brushType) {
-            BrushTypeUiModel.PEN -> Line(BrushTypeUiModel.PEN, Path(), brushUiModel.fromPaint())
+            BrushTypeUiModel.PEN -> Line(BrushTypeUiModel.PEN, x, y, brushUiModel.fromPaint())
             BrushTypeUiModel.RECTANGLE -> Rectangle(RectF(x, y, x, y), brushUiModel.fromPaint())
             BrushTypeUiModel.CIRCLE -> Circle(x, y, 0f, brushUiModel.fromPaint())
-            BrushTypeUiModel.ERASER -> Line(BrushTypeUiModel.ERASER, Path(), brushUiModel.fromPaint())
+            BrushTypeUiModel.ERASER -> Line(BrushTypeUiModel.ERASER, x, y, brushUiModel.fromPaint())
         }
     }
 

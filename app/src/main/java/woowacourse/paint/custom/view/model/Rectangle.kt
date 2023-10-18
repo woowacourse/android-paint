@@ -10,10 +10,6 @@ data class Rectangle(val rectF: RectF, val paint: Paint) : Drawable {
         canvas.drawRect(rectF, paint)
     }
 
-    override fun startDrawing(x: Float, y: Float, paint: Paint): Rectangle {
-        return Rectangle(RectF(x, y, x, y), paint)
-    }
-
     override fun keepDrawing(x: Float, y: Float) {
         rectF.apply {
             right = x
