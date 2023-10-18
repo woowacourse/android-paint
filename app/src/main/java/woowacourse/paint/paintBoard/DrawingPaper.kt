@@ -7,16 +7,20 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.MotionEvent.*
 import android.view.View
-import woowacourse.paint.paintBoard.tools.Tools
+import woowacourse.paint.paintBoard.painter.Painter
 
 class DrawingPaper(
     context: Context,
     attributeSet: AttributeSet
 ) : View(context, attributeSet) {
-    private lateinit var painter: Tools
+    private lateinit var painter: Painter
     private val painting: MutableList<Line> = mutableListOf()
 
-    fun setTool(tool: Tools) {
+    init {
+        setLayerType(LAYER_TYPE_HARDWARE, null)
+    }
+
+    fun setPainter(tool: Painter) {
         painter = tool
     }
 
@@ -29,7 +33,6 @@ class DrawingPaper(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        setLayerType(LAYER_TYPE_HARDWARE, null)
 
         painting.forEach { line -> canvas.drawPath(line.path, line.brush.paint) }
     }

@@ -35,8 +35,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observeViewModel() {
-        viewModel.tools.observe(this) { tool ->
-            binding.dpMain.setTool(tool)
+        viewModel.painter.observe(this) { painter ->
+            binding.dpMain.setPainter(painter)
         }
 
         viewModel.painting.observe(this) { lines ->

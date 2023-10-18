@@ -13,25 +13,25 @@ import woowacourse.paint.model.Tool.NORMAL_PEN
 import woowacourse.paint.model.Tool.PATH_ERASER
 import woowacourse.paint.model.Tool.RECTANGLE_PEN
 import woowacourse.paint.paintBoard.Line
-import woowacourse.paint.paintBoard.tools.CirclePen
-import woowacourse.paint.paintBoard.tools.LineEraser
-import woowacourse.paint.paintBoard.tools.NormalPen
-import woowacourse.paint.paintBoard.tools.PathEraser
-import woowacourse.paint.paintBoard.tools.RectanglePen
-import woowacourse.paint.paintBoard.tools.Tools
+import woowacourse.paint.paintBoard.painter.Painter
+import woowacourse.paint.paintBoard.painter.tool.drawable.CirclePen
+import woowacourse.paint.paintBoard.painter.tool.drawable.NormalPen
+import woowacourse.paint.paintBoard.painter.tool.drawable.RectanglePen
+import woowacourse.paint.paintBoard.painter.tool.erase.LineEraser
+import woowacourse.paint.paintBoard.painter.tool.erase.PathEraser
 
 class MainViewModel : ViewModel() {
 
     private var color = R.color.black
-    private var width = 0f
+    private var width = DEFAULT_PEN_SIZE
     private var tool: Tool = NORMAL_PEN
     private var paintingBackup: MutableList<List<Line>> = mutableListOf()
 
     private val _painting: MutableLiveData<List<Line>> = MutableLiveData(listOf())
     val painting: LiveData<List<Line>> get() = _painting
 
-    private val _tools: MutableLiveData<Tools> = MutableLiveData(setNormalPen())
-    val tools: LiveData<Tools> get() = _tools
+    private val _painter: MutableLiveData<Painter> = MutableLiveData(setNormalPen())
+    val painter: LiveData<Painter> get() = _painter
 
     fun updateToolState(tool: Tool) {
         this.tool = tool
@@ -51,7 +51,6 @@ class MainViewModel : ViewModel() {
     fun resetPaintings() {
         if (painting.value.isNullOrEmpty()) return
 
-        paintingBackup.clear()
         paintingBackup.add(painting.value ?: emptyList())
         _painting.value = emptyList()
     }
@@ -64,7 +63,7 @@ class MainViewModel : ViewModel() {
     }
 
     fun undoPaintings() {
-        if (painting.value.isNullOrEmpty() or (paintingBackup.size == BACKUP_MAX_SIZE)) return
+        if (painting.value.isNullOrEmpty()) return
 
         val latestLine = painting.value!!.last()
 
@@ -101,7 +100,7 @@ class MainViewModel : ViewModel() {
     }
 
     private fun renewTools() {
-        _tools.value = when (tool) {
+        _painter.value = when (tool) {
             NORMAL_PEN -> setNormalPen()
             CIRCLE_PEN -> setCirclePen()
             RECTANGLE_PEN -> setRectanglePen()
@@ -111,7 +110,7 @@ class MainViewModel : ViewModel() {
     }
 
     companion object {
-        private const val BACKUP_MAX_SIZE = 3
+        private const val DEFAULT_PEN_SIZE = 0f
 
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
