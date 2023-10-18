@@ -3,7 +3,10 @@ package woowacourse.paint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.databinding.ActivityMainBinding
-import woowacourse.paint.model.DrawMode
+import woowacourse.paint.model.drawingEngine.path.LineDrawingEngine
+import woowacourse.paint.model.drawingEngine.path.PathEraserDrawingEngine
+import woowacourse.paint.model.drawingEngine.shape.OvalDrawingEngine
+import woowacourse.paint.model.drawingEngine.shape.RectangleDrawingEngine
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,25 +31,28 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initPenTool() = with(binding) {
-        paintView.pen = penToolView.selectedPen
+        paintView.selectedPen = penToolView.selectedPen
         btnOpenPenTool.setOnClickListener {
             penToolView.toggleVisibility()
-            paintView.drawMode = DrawMode.LINE
+            paintView.selectedDrawingEngineInstantiation = LineDrawingEngine.Companion::createInstance
         }
     }
 
     private fun initShapes() = with(binding) {
         btnShapeRectangle.setOnClickListener {
-            paintView.drawMode = DrawMode.RECT
+            paintView.selectedDrawingEngineInstantiation =
+                RectangleDrawingEngine.Companion::createInstance
         }
         btnShapeCircle.setOnClickListener {
-            paintView.drawMode = DrawMode.OVAL
+            paintView.selectedDrawingEngineInstantiation =
+                OvalDrawingEngine.Companion::createInstance
         }
     }
 
     private fun initEraser() = with(binding) {
         btnEraser.setOnClickListener {
-            paintView.drawMode = DrawMode.ERASER
+            paintView.selectedDrawingEngineInstantiation =
+                PathEraserDrawingEngine.Companion::createInstance
         }
     }
 

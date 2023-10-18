@@ -21,17 +21,15 @@
             android:layout_width="@dimen/pen_tool_view_width"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/scroll_view_tools"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="@id/scroll_view_tools"
+            app:layout_constraintTop_toBottomOf="@id/scroll_view_tools" />
 
         <HorizontalScrollView
             android:id="@+id/scroll_view_tools"
             android:layout_width="@dimen/drawing_mode_selection_view_width"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/paint_view">
 
             <LinearLayout
                 android:id="@+id/linear_layout_tools_container"

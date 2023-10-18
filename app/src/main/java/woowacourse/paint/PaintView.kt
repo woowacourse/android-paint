@@ -6,8 +6,9 @@ import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import woowacourse.paint.model.DrawMode
+import woowacourse.paint.model.drawingEngine.DrawingEngine
 import woowacourse.paint.model.drawingEngine.DrawingEngines
+import woowacourse.paint.model.drawingEngine.createDefaultDrawingEngine
 import woowacourse.paint.model.pen.Pen
 
 class PaintView(
@@ -15,10 +16,10 @@ class PaintView(
     attributeSet: AttributeSet,
 ) : View(context, attributeSet) {
 
-    var drawMode: DrawMode = DrawMode.getDefaultDrawMode()
-
     private val drawingEngines: DrawingEngines = DrawingEngines()
-    var pen: Pen = Pen.createDefaultPenInstance()
+    var selectedPen: Pen = Pen.createDefaultPenInstance()
+
+    var selectedDrawingEngineInstantiation: (pen: Pen, pointX: Float, pointY: Float) -> DrawingEngine = ::createDefaultDrawingEngine
 
     init {
         setLayerType(LAYER_TYPE_HARDWARE, null)
@@ -26,13 +27,7 @@ class PaintView(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        drawCanvas(canvas)
-    }
-
-    private fun drawCanvas(canvas: Canvas) {
-        drawingEngines.value.forEach {
-            it.draw(canvas)
-        }
+        drawingEngines.draw(canvas)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -50,14 +45,14 @@ class PaintView(
     }
 
     private fun addPainting(pointX: Float, pointY: Float) {
-        val addedDrawingEngin = drawMode.instantiation(pen, pointX, pointY)
-        drawingEngines.add(addedDrawingEngin)
+        val addedDrawingEngine = selectedDrawingEngineInstantiation(selectedPen, pointX, pointY)
+        drawingEngines.add(addedDrawingEngine)
         invalidate()
     }
 
     private fun drawPainting(pointX: Float, pointY: Float) {
         val last = drawingEngines.last()
-        last.draw(pointX, pointY)
+        last.setEndPoint(pointX, pointY)
         invalidate()
     }
 

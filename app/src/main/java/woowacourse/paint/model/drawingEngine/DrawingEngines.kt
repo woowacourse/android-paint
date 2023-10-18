@@ -1,23 +1,26 @@
 package woowacourse.paint.model.drawingEngine
 
+import android.graphics.Canvas
 import android.view.View
+import woowacourse.paint.model.drawingEngine.error.AccessToEmptyDrawingEnginesError
 import woowacourse.paint.model.drawingEngine.shape.RectangleEraserDrawingEngine
 import java.util.Stack
 
 class DrawingEngines(value: List<DrawingEngine> = mutableListOf()) {
 
-    private var _value: MutableList<DrawingEngine>
-    val value: List<DrawingEngine> get() = _value.toList()
+    private val _value: MutableList<DrawingEngine> = value.toMutableList()
 
     private val undoStack: Stack<DrawingEngine> = Stack()
 
-    init {
-        this._value = value.toMutableList()
+    fun last(): DrawingEngine {
+        if (_value.isEmpty()) throw AccessToEmptyDrawingEnginesError()
+        return _value.last()
     }
 
-    fun last(): DrawingEngine {
-        if (_value.isEmpty()) throw IllegalArgumentException("도형이 존재하지 않습니다.")
-        return _value.last()
+    fun draw(canvas: Canvas) {
+        _value.forEach {
+            it.draw(canvas)
+        }
     }
 
     fun add(drawingEngine: DrawingEngine) {

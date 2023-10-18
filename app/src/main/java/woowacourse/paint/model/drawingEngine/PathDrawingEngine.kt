@@ -16,14 +16,14 @@ abstract class PathDrawingEngine : DrawingEngine {
         canvas.drawPath(path, paint)
     }
 
-    override fun draw(pointX: Float, pointY: Float) {
+    override fun setStartPoint(pointX: Float, pointY: Float) {
+        path.moveTo(pointX, pointY)
+    }
+
+    override fun setEndPoint(pointX: Float, pointY: Float) {
         quadTo(lastX, lastY, pointX, pointY)
         lastX = pointX
         lastY = pointY
-    }
-
-    fun moveTo(pointX: Float, pointY: Float) {
-        path.moveTo(pointX, pointY)
     }
 
     private fun quadTo(fromX: Float, fromY: Float, toX: Float, toY: Float) {

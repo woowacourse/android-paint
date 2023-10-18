@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="pen_tool_view_width">0dp</dimen>
+    <dimen name="drawing_mode_selection_view_width">0dp</dimen>
+    <dimen name="palette_color_view_width">56dp</dimen>
+    <dimen name="palette_color_view_margin">16dp</dimen>
+</resources>

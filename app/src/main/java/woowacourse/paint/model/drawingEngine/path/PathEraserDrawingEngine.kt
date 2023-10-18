@@ -22,7 +22,7 @@ data class PathEraserDrawingEngine(
             val paint = pen.createPaint()
             return PathEraserDrawingEngine(paint = paint).apply {
                 paint.color = pen.color
-                moveTo(pointX, pointY)
+                setStartPoint(pointX, pointY)
                 setLastPoint(pointX, pointY)
             }
         }

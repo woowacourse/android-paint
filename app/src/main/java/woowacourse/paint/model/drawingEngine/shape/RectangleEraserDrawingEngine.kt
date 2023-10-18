@@ -7,7 +7,6 @@ import android.graphics.PorterDuffXfermode
 import android.graphics.RectF
 import woowacourse.paint.model.drawingEngine.DrawingEngine
 import woowacourse.paint.model.drawingEngine.ShapeDrawingEngine
-import woowacourse.paint.model.pen.Pen
 
 data class RectangleEraserDrawingEngine(
     override val paint: Paint = Paint(),

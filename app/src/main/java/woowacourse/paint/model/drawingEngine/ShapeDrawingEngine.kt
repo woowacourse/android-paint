@@ -11,7 +11,11 @@ abstract class ShapeDrawingEngine : DrawingEngine {
 
     abstract override fun draw(canvas: Canvas)
 
-    override fun draw(pointX: Float, pointY: Float) {
+    override fun setStartPoint(pointX: Float, pointY: Float) {
+        changePosition(left = pointX, top = pointY)
+    }
+
+    override fun setEndPoint(pointX: Float, pointY: Float) {
         changePosition(right = pointX, bottom = pointY)
     }
 
