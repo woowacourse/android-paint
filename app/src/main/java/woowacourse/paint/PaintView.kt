@@ -6,8 +6,9 @@ import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import woowacourse.paint.model.DrawingMode
+import woowacourse.paint.model.drawingEngine.DrawingEngine
 import woowacourse.paint.model.drawingEngine.DrawingEngines
+import woowacourse.paint.model.drawingEngine.createDefaultDrawingEngine
 import woowacourse.paint.model.pen.Pen
 
 class PaintView(
@@ -17,6 +18,8 @@ class PaintView(
 
     private val drawingEngines: DrawingEngines = DrawingEngines()
     var selectedPen: Pen = Pen.createDefaultPenInstance()
+
+    var selectedDrawingEngineInstantiation: (pen: Pen, pointX: Float, pointY: Float) -> DrawingEngine = ::createDefaultDrawingEngine
 
     init {
         setLayerType(LAYER_TYPE_HARDWARE, null)
@@ -41,12 +44,9 @@ class PaintView(
         return true
     }
 
-    fun setDrawingMode(mode: DrawingMode) {
-        drawingEngines.setDrawingMode(mode)
-    }
-
     private fun addPainting(pointX: Float, pointY: Float) {
-        drawingEngines.add(selectedPen, pointX, pointY)
+        val addedDrawingEngine = selectedDrawingEngineInstantiation(selectedPen, pointX, pointY)
+        drawingEngines.add(addedDrawingEngine)
         invalidate()
     }
 
