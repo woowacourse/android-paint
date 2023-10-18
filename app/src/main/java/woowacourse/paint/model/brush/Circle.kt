@@ -32,19 +32,6 @@ class Circle : Figure() {
         updateView(previewDraw)
     }
 
-    private fun drawPreview(xCursor: Float, yCursor: Float) {
-        val path = Path().apply {
-            addCircle(
-                beforePosition.first + ((xCursor - beforePosition.first) / 2),
-                beforePosition.second + ((xCursor - beforePosition.first) / 2),
-                (xCursor - beforePosition.first) / 2,
-                Path.Direction.CW,
-            )
-        }
-        val paint = Paint().apply { set(paintInstance) }
-        previewDraw = path to paint
-    }
-
     private fun draw(xCursor: Float) {
         val path = Path().apply {
             addCircle(
