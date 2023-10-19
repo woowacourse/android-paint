@@ -12,6 +12,7 @@ import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.view.ViewTreeObserver
 import android.widget.FrameLayout
 import androidx.constraintlayout.widget.ConstraintLayout
+import woowacourse.paint.R
 import woowacourse.paint.board.draw.GraphicObject
 import woowacourse.paint.board.draw.GraphicObjectType
 import woowacourse.paint.board.draw.Line
@@ -24,6 +25,8 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     private val screenHeight = resources.displayMetrics.heightPixels
     private val expandedWidth = screenWidth * BOARD_WIDTH_EXPANSION_RATE
     private val expandedHeight = screenHeight * BOARD_HEIGHT_EXPANSION_RATE
+
+    private val responsiveUiAdjuster: ResponsiveUiAdjuster = ResponsiveUiAdjuster(context)
 
     private val graphicObjects: MutableList<GraphicObject> = mutableListOf()
 
@@ -84,8 +87,8 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
     }
 
     private fun moveStickyPaletteToFollowBoard() {
-        palette.x = -x
-        palette.y = -y + screenHeight - palette.height - PALETTE_BOTTOM_MARGIN_PIXEL
+        palette.x = responsiveUiAdjuster.calculatePaletteXPosition(x)
+        palette.y = responsiveUiAdjuster.calculatePaletteYPosition(y, palette.height.toFloat())
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -120,7 +123,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
 
     private fun getLineInstance(): Line {
         val paint: Paint = if (palette.eraseMode) {
-            Paint().apply { xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR) }
+            Paint().apply { color = context.getColor(R.color.white) }
         } else {
             Paint().apply { color = context.getColor(palette.selectedColorId) }
         }
@@ -151,13 +154,12 @@ class PaintBoard(context: Context, attrs: AttributeSet) : ConstraintLayout(conte
 
     private fun addStickyPalette() {
         palette = Palette(context, null)
-        palette.layoutParams = FrameLayout.LayoutParams(screenWidth, WRAP_CONTENT)
+        palette.layoutParams = FrameLayout.LayoutParams(responsiveUiAdjuster.calculatePaletteWidth(), WRAP_CONTENT)
         addView(palette)
     }
 
     companion object {
         private const val BOARD_HEIGHT_EXPANSION_RATE = 5
         private const val BOARD_WIDTH_EXPANSION_RATE = 15
-        private const val PALETTE_BOTTOM_MARGIN_PIXEL = 100
     }
 }
