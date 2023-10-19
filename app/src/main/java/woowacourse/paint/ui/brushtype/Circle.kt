@@ -3,12 +3,9 @@ package woowacourse.paint.ui.brushtype
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
-import com.example.domain.BrushType.CIRCLE
 import com.example.domain.Coordinate
 
-class Circle : BrushType {
-    override var type = CIRCLE
-
+class Circle : Brush {
     override val path = Path()
     override val paint = Paint().apply {
         strokeWidth = 0f
