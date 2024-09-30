@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity(), OnClickPaletteListener {
+class MainActivity : AppCompatActivity(), OnPaletteClickListener {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
     private var isPaletteVisible = false
@@ -13,22 +13,26 @@ class MainActivity : AppCompatActivity(), OnClickPaletteListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        initBinding()
+        setOnPaletteClickListener()
+        setRangeSlider()
+    }
+
+    private fun initBinding() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+    }
 
+    private fun setOnPaletteClickListener() {
         binding.onClickPaletteListener = this
+    }
 
+    private fun setRangeSlider() {
         binding.rangeSlider.valueFrom = 1.0f
         binding.rangeSlider.valueTo = 100.0f
-
         binding.rangeSlider.addOnChangeListener { _, value, _ ->
             binding.paintView.setThickness(value)
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 
     override fun onClickChangePaintButton() {
@@ -43,5 +47,10 @@ class MainActivity : AppCompatActivity(), OnClickPaletteListener {
 
     override fun onClickPaint(color: Int) {
         binding.paintView.setPaint(color)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

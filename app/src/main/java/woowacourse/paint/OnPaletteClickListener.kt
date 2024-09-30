@@ -1,6 +1,6 @@
 package woowacourse.paint
 
-interface OnClickPaletteListener {
+interface OnPaletteClickListener {
     fun onClickChangePaintButton()
 
     fun onClickChangeThicknessButton()

@@ -6,7 +6,7 @@
 
         <variable
             name="onClickPaletteListener"
-            type="woowacourse.paint.OnClickPaletteListener" />
+            type="woowacourse.paint.OnPaletteClickListener" />
 
     </data>
 
