@@ -6,96 +6,47 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
-import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.ColorRes
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import woowacourse.paint.R
-import woowacourse.paint.databinding.ViewPaintBinding
 
-class PaintView(context: Context, attrs: AttributeSet) :
-    ConstraintLayout(context, attrs) {
-    private val binding by lazy {
-        ViewPaintBinding.inflate(LayoutInflater.from(context), this, true)
-    }
-
+class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val lines: MutableList<Line> by lazy { mutableListOf() }
-    private var ovalSize: Int = DEFAULT_OVAL_SIZE
     private var currentPath: Path = Path()
     private var currentPaint: Paint = Paint()
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        setWillNotDraw(false)
-        initializeView()
+        initializePaint()
     }
 
-    private fun initializeView() {
-        isFocusable = true
-        isFocusableInTouchMode = true
-        setupPaint()
-        initializeLayout()
-        initializeSelectColorLayout()
-        initializeThicknessRangeSlider()
-    }
-
-    private fun setupPaint(@ColorRes colorResId: Int = DEFAULT_PAINT_COLOR_RES_ID) {
-        val paintColor = ContextCompat.getColor(context, colorResId)
-        currentPaint.color = paintColor
-    }
-
-    private fun initializeLayout() = with(binding) {
-        btnChangeColor.setOnClickListener {
-            layoutSelectColor.visibility = layoutSelectColor.reverseVisibility()
-        }
-        btnChangeThickness.setOnClickListener {
-            rangeSliderThickness.visibility = rangeSliderThickness.reverseVisibility()
+    private fun initializePaint() {
+        currentPaint.run {
+            color = ContextCompat.getColor(context, DEFAULT_COLOR_RES_ID)
+            strokeWidth = DEFAULT_STROKE
+            style = Paint.Style.STROKE
         }
     }
-
-    private fun View.reverseVisibility() = if (visibility == VISIBLE) GONE else VISIBLE
-
-    private fun initializeSelectColorLayout() = with(binding) {
-        ivRed.setOnClickListener {
-            setupPaint(R.color.red)
-        }
-        ivOrange.setOnClickListener {
-            setupPaint(R.color.orange)
-        }
-        ivYellow.setOnClickListener {
-            setupPaint(R.color.yellow)
-        }
-        ivGreen.setOnClickListener {
-            setupPaint(R.color.green)
-        }
-        ivBlue.setOnClickListener {
-            setupPaint(R.color.blue)
-        }
-    }
-
-    private fun initializeThicknessRangeSlider() =
-        with(binding.rangeSliderThickness) {
-            valueFrom = OVAL_SIZE_MIN
-            valueTo = OVAL_SIZE_MAX
-            this.addOnChangeListener { _, value, _ ->
-                ovalSize = value.toInt()
-            }
-        }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         lines.forEach { line ->
             canvas.drawPath(line.path, line.paint)
         }
+        canvas.drawPath(currentPath, currentPaint)
     }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
-            MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE -> {
-                addOvalToPath(event.x, event.y)
+            MotionEvent.ACTION_DOWN -> {
+                currentPath.moveTo(event.x, event.y)
+            }
+
+            MotionEvent.ACTION_MOVE -> {
+                currentPath.lineTo(event.x, event.y)
             }
 
             MotionEvent.ACTION_UP -> {
@@ -109,26 +60,21 @@ class PaintView(context: Context, attrs: AttributeSet) :
         return true
     }
 
-    private fun addOvalToPath(x: Float, y: Float) {
-        currentPath.addOval(
-            x,
-            y,
-            x + ovalSize,
-            y + ovalSize,
-            Path.Direction.CW,
-        )
+    private fun resetLine() {
+        currentPath = Path()
+        currentPaint = Paint(currentPaint)
     }
 
-    private fun resetLine() {
-        val currentPaintColor = currentPaint.color
-        currentPath = Path()
-        currentPaint = Paint().apply { color = currentPaintColor }
+    fun changePaintColor(@ColorRes colorResId: Int) {
+        currentPaint.color = ContextCompat.getColor(context, colorResId)
+    }
+
+    fun changeOvalSize(ovalSize: Float) {
+        currentPaint.strokeWidth = ovalSize
     }
 
     companion object {
-        private const val OVAL_SIZE_MIN = 0.0f
-        private const val OVAL_SIZE_MAX = 100.0f
-        private val DEFAULT_PAINT_COLOR_RES_ID = R.color.red
-        private const val DEFAULT_OVAL_SIZE = 50
+        private const val DEFAULT_STROKE = 10.0f
+        private val DEFAULT_COLOR_RES_ID = R.color.red
     }
 }
