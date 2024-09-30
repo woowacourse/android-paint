@@ -25,11 +25,11 @@ fun setSliderListeners(slider: Slider, attrChange: InverseBindingListener) {
 }
 
 @BindingAdapter("lineColor")
-fun setLineColor(view: CustomView, color: Int) {
+fun setLineColor(view: CanvasView, color: Int) {
     view.setLineColor(color)
 }
 
 @BindingAdapter("lineWidth")
-fun setLineWidth(view: CustomView, width: Float) {
+fun setLineWidth(view: CanvasView, width: Float) {
     view.setLineWidth(width)
 }

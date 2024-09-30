@@ -10,7 +10,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 
-class CustomView(context: Context, attrs: AttributeSet) :
+class CanvasView(context: Context, attrs: AttributeSet) :
     View(context, attrs) {
 
 
