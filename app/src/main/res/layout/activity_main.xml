@@ -76,7 +76,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:backgroundTint="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btn_clear"
             app:layout_constraintEnd_toStartOf="@id/btn_red"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -85,7 +85,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:backgroundTint="@color/red"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btn_clear"
             app:layout_constraintEnd_toStartOf="@id/btn_orange"
             app:layout_constraintStart_toEndOf="@id/btn_black"
             tools:text="" />
@@ -95,7 +95,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:backgroundTint="@color/orange"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btn_clear"
             app:layout_constraintEnd_toStartOf="@id/btn_yellow"
             app:layout_constraintStart_toEndOf="@id/btn_red"
             tools:text="" />
@@ -105,7 +105,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:backgroundTint="@color/yellow"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btn_clear"
             app:layout_constraintEnd_toStartOf="@id/btn_green"
             app:layout_constraintStart_toEndOf="@id/btn_orange"
             tools:text="" />
@@ -115,7 +115,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:backgroundTint="@color/green"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btn_clear"
             app:layout_constraintEnd_toStartOf="@id/btn_blue"
             app:layout_constraintStart_toEndOf="@id/btn_yellow"
             tools:text="" />
@@ -125,10 +125,21 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:backgroundTint="@color/blue"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btn_clear"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/btn_green"
             tools:text="" />
+
+        <Button
+            android:id="@+id/btn_clear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="전체 지우기"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -150,23 +150,13 @@ class DrawingView(
             }
         }
 
-    private fun upPen(): Boolean {
-        currentPath = null
-        currentPaint = null
-        return true
-    }
-
-    private fun drawLine(
-        x: Float,
-        y: Float,
-    ): Boolean {
-        currentPath?.lineTo(x, y)
-        invalidate()
-        return true
-    }
-
     fun updateBrushColor(color: Int) {
         currentColor = color
+    }
+
+    fun clearCanvas() {
+        strokes.clear()
+        invalidate()
     }
 
     fun updateBrushSize(size: Float) {

@@ -26,7 +26,11 @@ class MainActivity : AppCompatActivity() {
         val btnRectangle: Button = findViewById(R.id.btn_rectangle)
         val btnCircle: Button = findViewById(R.id.btn_circle)
         val btnEraser: Button = findViewById(R.id.btn_eraser)
+        val btnClear: Button = findViewById(R.id.btn_clear)
 
+        btnClear.setOnClickListener {
+            drawingView.clearCanvas()
+        }
         btnPen.setOnClickListener {
             drawingView.currentBrushType = BrushType.PEN
         }
