@@ -2,6 +2,7 @@ package woowacourse.paint
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.TypedArray
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
@@ -24,22 +25,29 @@ class CanvasView(context: Context, attrs: AttributeSet) :
     }
 
     init {
-        isFocusable = true
-        isFocusableInTouchMode = true
-
+        initializeCanvasView()
         context.theme.obtainStyledAttributes(
             attrs,
             R.styleable.CustomView,
-            0, 0
+            0,
+            0,
         ).apply {
-            try {
-                currentPaint.color = getColor(R.styleable.CustomView_lineColor, Color.RED)
-                currentPaint.strokeWidth = getDimension(R.styleable.CustomView_lineWidth, 50f)
-                println(currentPaint.color)
-                println(currentPaint.strokeWidth)
-            } finally {
-                recycle()
-            }
+            initializePaint()
+        }
+    }
+
+    private fun initializeCanvasView() {
+        isFocusable = true
+        isFocusableInTouchMode = true
+    }
+
+    private fun TypedArray.initializePaint() {
+        try {
+            currentPaint.color = getColor(R.styleable.CustomView_lineColor, DEFAULT_LINE_COLOR)
+            currentPaint.strokeWidth =
+                getDimension(R.styleable.CustomView_lineWidth, DEFAULT_LINE_WIDTH)
+        } finally {
+            recycle()
         }
     }
 
@@ -56,21 +64,14 @@ class CanvasView(context: Context, attrs: AttributeSet) :
         val pointX = event.x
         val pointY = event.y
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> {
-                currentPath = Path().apply { moveTo(pointX, pointY) }
-            }
-
-            MotionEvent.ACTION_MOVE -> {
-                currentPath?.lineTo(pointX, pointY)
-            }
-
+            MotionEvent.ACTION_DOWN -> currentPath = Path().apply { moveTo(pointX, pointY) }
+            MotionEvent.ACTION_MOVE -> currentPath?.lineTo(pointX, pointY)
             MotionEvent.ACTION_UP -> {
                 currentPath?.let {
                     strokes.add(Stroke(it, Paint(currentPaint)))
                 }
                 currentPath = null
             }
-
             else -> return super.onTouchEvent(event)
         }
         invalidate()
@@ -83,5 +84,10 @@ class CanvasView(context: Context, attrs: AttributeSet) :
 
     fun setLineWidth(width: Float) {
         currentPaint.strokeWidth = width
+    }
+
+    companion object {
+        private const val DEFAULT_LINE_COLOR = Color.RED
+        private const val DEFAULT_LINE_WIDTH = 50f
     }
 }
