@@ -10,4 +10,10 @@
 
     <color name="light_sky_blue">#FFF4F7FC</color>
     <color name="sky_blue">#FF6C7BFF</color>
+
+    <color name="red">#FFFF0000</color>
+    <color name="orange">#FFFF9800</color>
+    <color name="yellow">#FFFFEB3B</color>
+    <color name="green">#FF4CAF50</color>
+    <color name="blue">#FF4050B5</color>
 </resources>
