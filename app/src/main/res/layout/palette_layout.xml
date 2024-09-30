@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="onClickPaletteListener"
+            type="woowacourse.paint.OnClickPaletteListener" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_palette"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/red_palette"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="15dp"
+            android:background="@color/red"
+            android:onClick="@{() -> onClickPaletteListener.onClickPaint(@color/red)}"
+            app:layout_constraintEnd_toStartOf="@id/orange_palette"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/orange_palette"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@color/orange"
+            android:onClick="@{() -> onClickPaletteListener.onClickPaint(@color/orange)}"
+            app:layout_constraintEnd_toStartOf="@id/yellow_palette"
+            app:layout_constraintStart_toEndOf="@id/red_palette"
+            app:layout_constraintTop_toTopOf="@id/red_palette" />
+
+        <View
+            android:id="@+id/yellow_palette"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@color/yellow"
+            android:onClick="@{() -> onClickPaletteListener.onClickPaint(@color/yellow)}"
+            app:layout_constraintEnd_toStartOf="@id/green_palette"
+            app:layout_constraintStart_toEndOf="@id/orange_palette"
+            app:layout_constraintTop_toTopOf="@id/red_palette" />
+
+        <View
+            android:id="@+id/green_palette"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@color/green"
+            android:onClick="@{() -> onClickPaletteListener.onClickPaint(@color/green)}"
+            app:layout_constraintEnd_toStartOf="@id/blue_palette"
+            app:layout_constraintStart_toEndOf="@id/yellow_palette"
+            app:layout_constraintTop_toTopOf="@id/red_palette" />
+
+        <View
+            android:id="@+id/blue_palette"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginEnd="15dp"
+            android:background="@color/blue"
+            android:onClick="@{() -> onClickPaletteListener.onClickPaint(@color/blue)}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/green_palette"
+            app:layout_constraintTop_toTopOf="@id/red_palette" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

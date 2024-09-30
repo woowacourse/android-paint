@@ -1,101 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <woowacourse.paint.PaintView
-        android:id="@+id/paint_view"
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="onClickPaletteListener"
+            type="woowacourse.paint.OnClickPaletteListener" />
+
+        <variable
+            name="isPaletteVisible"
+            type="Boolean" />
+
+        <variable
+            name="isRangeSliderVisible"
+            type="Boolean" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/range_slider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent">
 
-    <com.google.android.material.slider.RangeSlider
-        android:id="@+id/range_slider"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@id/red_palette"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/paint_view" />
+        <woowacourse.paint.PaintView
+            android:id="@+id/paint_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toTopOf="@id/range_slider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:id="@+id/red_palette"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="15dp"
-        android:background="@color/red"
-        app:layout_constraintBottom_toTopOf="@id/btn_change_color"
-        app:layout_constraintEnd_toStartOf="@id/orange_palette"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/range_slider" />
+        <com.google.android.material.slider.RangeSlider
+            android:id="@+id/range_slider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="15dp"
+            android:layout_marginBottom="10dp"
+            android:visibility="@{isRangeSliderVisible ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/color_palette"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:values="@array/default_values" />
 
-    <View
-        android:id="@+id/orange_palette"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@color/orange"
-        app:layout_constraintEnd_toStartOf="@id/yellow_palette"
-        app:layout_constraintStart_toEndOf="@id/red_palette"
-        app:layout_constraintTop_toTopOf="@id/red_palette" />
+        <include
+            android:id="@+id/color_palette"
+            layout="@layout/palette_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="@{isPaletteVisible ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/btn_change_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:onClickPaletteListener="@{onClickPaletteListener}" />
 
-    <View
-        android:id="@+id/yellow_palette"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@color/yellow"
-        app:layout_constraintEnd_toStartOf="@id/green_palette"
-        app:layout_constraintStart_toEndOf="@id/orange_palette"
-        app:layout_constraintTop_toTopOf="@id/red_palette" />
+        <Button
+            android:id="@+id/btn_change_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="10dp"
+            android:onClick="@{() -> onClickPaletteListener.onClickChangePaintButton()}"
+            android:text="@string/main_change_color"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_change_thickness"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <View
-        android:id="@+id/green_palette"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:background="@color/green"
-        app:layout_constraintEnd_toStartOf="@id/blue_palette"
-        app:layout_constraintStart_toEndOf="@id/yellow_palette"
-        app:layout_constraintTop_toTopOf="@id/red_palette" />
-
-    <View
-        android:id="@+id/blue_palette"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginEnd="15dp"
-        android:background="@color/blue"
-        app:layout_constraintEnd_toEndOf="@id/paint_view"
-        app:layout_constraintStart_toEndOf="@id/green_palette"
-        app:layout_constraintTop_toTopOf="@id/red_palette" />
-
-    <Button
-        android:id="@+id/btn_change_color"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginTop="10dp"
-        android:text="색상 변경"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btn_change_thick"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/red_palette" />
-
-    <Button
-        android:id="@+id/btn_change_thick"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="15dp"
-        android:text="굵기 변경"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/btn_change_color"
-        app:layout_constraintTop_toBottomOf="@id/red_palette" />
+        <Button
+            android:id="@+id/btn_change_thickness"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:onClick="@{() -> onClickPaletteListener.onClickChangeThicknessButton()}"
+            android:text="@string/main_change_thickness"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_change_color" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
