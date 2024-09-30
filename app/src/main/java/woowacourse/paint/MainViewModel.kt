@@ -3,6 +3,8 @@ package woowacourse.paint
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import woowacourse.paint.model.Color
+import woowacourse.paint.model.ColorPalette
 
 class MainViewModel : ViewModel() {
     val colorPalette = ColorPalette()

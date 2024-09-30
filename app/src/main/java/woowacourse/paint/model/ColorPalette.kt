@@ -1,4 +1,6 @@
-package woowacourse.paint
+package woowacourse.paint.model
+
+import woowacourse.paint.model.Color
 
 class ColorPalette {
     val red = Color("Red", "#FF0000")

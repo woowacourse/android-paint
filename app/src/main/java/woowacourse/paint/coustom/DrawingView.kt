@@ -1,4 +1,4 @@
-package woowacourse.paint
+package woowacourse.paint.coustom
 
 import android.annotation.SuppressLint
 import android.content.Context

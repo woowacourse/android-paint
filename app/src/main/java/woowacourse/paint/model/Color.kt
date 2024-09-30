@@ -1,4 +1,4 @@
-package woowacourse.paint
+package woowacourse.paint.model
 
 data class Color(val name: String, val hex: String) {
     fun toColorInt(): Int {
