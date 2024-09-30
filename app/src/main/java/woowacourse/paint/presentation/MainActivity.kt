@@ -1,7 +1,8 @@
-package woowacourse.paint
+package woowacourse.paint.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import woowacourse.paint.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

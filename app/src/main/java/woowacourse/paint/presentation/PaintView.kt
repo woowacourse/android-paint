@@ -1,4 +1,4 @@
-package woowacourse.paint
+package woowacourse.paint.presentation
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -12,6 +12,7 @@ import android.view.View
 import androidx.annotation.ColorRes
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import woowacourse.paint.R
 import woowacourse.paint.databinding.ViewPaintBinding
 
 class PaintView(context: Context, attrs: AttributeSet) :
@@ -20,9 +21,10 @@ class PaintView(context: Context, attrs: AttributeSet) :
         ViewPaintBinding.inflate(LayoutInflater.from(context), this, true)
     }
 
+    private val lines: MutableList<Line> by lazy { mutableListOf() }
     private var ovalSize: Int = DEFAULT_OVAL_SIZE
-    private val path: Path by lazy { Path() }
-    private val paint: Paint by lazy { Paint() }
+    private var currentPath: Path = Path()
+    private var currentPaint: Paint = Paint()
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
@@ -41,7 +43,7 @@ class PaintView(context: Context, attrs: AttributeSet) :
 
     private fun setupPaint(@ColorRes colorResId: Int = DEFAULT_PAINT_COLOR_RES_ID) {
         val paintColor = ContextCompat.getColor(context, colorResId)
-        paint.color = paintColor
+        currentPaint.color = paintColor
     }
 
     private fun initializeLayout() = with(binding) {
@@ -84,27 +86,43 @@ class PaintView(context: Context, attrs: AttributeSet) :
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvas.drawPath(path, paint)
+        lines.forEach { line ->
+            canvas.drawPath(line.path, line.paint)
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        val pointX = event.x
-        val pointY = event.y
         when (event.action) {
-            MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE, MotionEvent.ACTION_UP ->
-                path.addOval(
-                    pointX,
-                    pointY,
-                    pointX + ovalSize,
-                    pointY + ovalSize,
-                    Path.Direction.CW
-                )
+            MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE -> {
+                addOvalToPath(event.x, event.y)
+            }
+
+            MotionEvent.ACTION_UP -> {
+                lines.add(Line(currentPath, currentPaint))
+                resetLine()
+            }
 
             else -> super.onTouchEvent(event)
         }
         invalidate()
         return true
+    }
+
+    private fun addOvalToPath(x: Float, y: Float) {
+        currentPath.addOval(
+            x,
+            y,
+            x + ovalSize,
+            y + ovalSize,
+            Path.Direction.CW,
+        )
+    }
+
+    private fun resetLine() {
+        val currentPaintColor = currentPaint.color
+        currentPath = Path()
+        currentPaint = Paint().apply { color = currentPaintColor }
     }
 
     companion object {
