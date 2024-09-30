@@ -13,12 +13,11 @@ import android.view.View
 class PaintBoard(context: Context, attr: AttributeSet) : View(context, attr) {
     private val lines: MutableList<Line> = mutableListOf()
 
-    private var paintColor: Int = Color.RED
-    private var paintStrokeWidth: Float = 25.0f
+    private var path: Path = Path()
+    private var paint: Paint = Paint()
 
     init {
-        isFocusable = true
-        isFocusableInTouchMode = true
+        initPaint()
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -27,8 +26,14 @@ class PaintBoard(context: Context, attr: AttributeSet) : View(context, attr) {
         val y = event.y
 
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> createLine(x, y)
-            MotionEvent.ACTION_MOVE -> lines.last().path.lineTo(x, y)
+            MotionEvent.ACTION_DOWN -> {
+                createNewPath(x, y)
+                createNewLine()
+            }
+
+            MotionEvent.ACTION_MOVE -> path.lineTo(x, y)
+            MotionEvent.ACTION_UP -> createNewPaint()
+
             else -> super.onTouchEvent(event)
         }
 
@@ -43,35 +48,48 @@ class PaintBoard(context: Context, attr: AttributeSet) : View(context, attr) {
         }
     }
 
-    private fun createLine(x: Float, y: Float) {
-        val path = createPath(x, y)
-        val paint = createPaint()
-        lines.add(Line(path, paint))
-    }
-
-    private fun createPath(
-        x: Float,
-        y: Float,
-    ): Path {
-        return Path().apply { moveTo(x, y) }
-    }
-
-    private fun createPaint(): Paint {
-        return Paint().apply {
+    private fun initPaint() {
+        paint = paint.apply {
             style = Paint.Style.STROKE
             strokeJoin = Paint.Join.ROUND
             strokeCap = Paint.Cap.ROUND
-            isAntiAlias = true
-            color = paintColor
-            strokeWidth = paintStrokeWidth
+            color = DEFAULT_PAINT_COLOR
+            strokeWidth = DEFAULT_STROKE_WIDTH
+        }
+    }
+
+    private fun createNewLine() {
+        val line = Line(path, paint)
+        lines.add(line)
+    }
+
+    private fun createNewPath(
+        x: Float,
+        y: Float,
+    ) {
+        path = Path().apply { moveTo(x, y) }
+    }
+
+    private fun createNewPaint() {
+        paint = Paint().apply {
+            style = Paint.Style.STROKE
+            strokeJoin = Paint.Join.ROUND
+            strokeCap = Paint.Cap.ROUND
+            color = paint.color
+            strokeWidth = paint.strokeWidth
         }
     }
 
     fun setPaintColor(color: Int) {
-        paintColor = color
+        paint.color = color
     }
 
     fun setPaintStrokeWidth(strokeWidth: Float) {
-        paintStrokeWidth = strokeWidth
+        paint.strokeWidth = strokeWidth
+    }
+
+    companion object {
+        private const val DEFAULT_PAINT_COLOR = Color.RED
+        const val DEFAULT_STROKE_WIDTH = 25.0f
     }
 }

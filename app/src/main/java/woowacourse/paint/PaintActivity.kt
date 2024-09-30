@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.slider.RangeSlider
+import woowacourse.paint.PaintBoard.Companion.DEFAULT_STROKE_WIDTH
 import woowacourse.paint.databinding.ActivityPaintBinding
 
 class PaintActivity : AppCompatActivity() {
@@ -35,9 +36,9 @@ class PaintActivity : AppCompatActivity() {
     }
 
     private fun setupRangeSlider() {
-        rangeSlider.valueFrom = 0.0f
-        rangeSlider.valueTo = 100.0f
-        rangeSlider.setValues(25.0f)
+        rangeSlider.valueFrom = STROKE_WIDTH_START_VALUE
+        rangeSlider.valueTo = STROKE_WIDTH_END_VALUE
+        rangeSlider.setValues(DEFAULT_STROKE_WIDTH)
 
         rangeSlider.addOnChangeListener(
             RangeSlider.OnChangeListener { _, value, _ ->
@@ -50,5 +51,10 @@ class PaintActivity : AppCompatActivity() {
         viewModel.color.observe(this) { colorResId ->
             paintBoard.setPaintColor(colorResId)
         }
+    }
+
+    companion object {
+        private const val STROKE_WIDTH_START_VALUE = 0.0f
+        private const val STROKE_WIDTH_END_VALUE = 100.0f
     }
 }
