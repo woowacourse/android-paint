@@ -35,6 +35,41 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
+        <Button
+            android:id="@+id/btn_pen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="펜"
+            app:layout_constraintBottom_toTopOf="@+id/btn_black"
+            app:layout_constraintEnd_toStartOf="@+id/btn_rectangle"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btn_rectangle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="직사각형"
+            app:layout_constraintBottom_toTopOf="@+id/btn_black"
+            app:layout_constraintEnd_toStartOf="@+id/btn_circle"
+            app:layout_constraintStart_toEndOf="@+id/btn_pen" />
+
+        <Button
+            android:id="@+id/btn_circle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="원"
+            app:layout_constraintBottom_toTopOf="@+id/btn_black"
+            app:layout_constraintEnd_toStartOf="@id/btn_eraser"
+            app:layout_constraintStart_toEndOf="@+id/btn_rectangle" />
+
+        <Button
+            android:id="@+id/btn_eraser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="지우개"
+            app:layout_constraintBottom_toTopOf="@+id/btn_black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btn_circle" />
 
         <Button
             android:id="@+id/btn_black"
@@ -43,7 +78,7 @@
             android:backgroundTint="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_red"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/btn_red"

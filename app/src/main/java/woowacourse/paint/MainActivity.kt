@@ -22,6 +22,26 @@ class MainActivity : AppCompatActivity() {
         val btnYellow: Button = findViewById(R.id.btn_yellow)
         val btnGreen: Button = findViewById(R.id.btn_green)
         val btnBlue: Button = findViewById(R.id.btn_blue)
+        val btnPen: Button = findViewById(R.id.btn_pen)
+        val btnRectangle: Button = findViewById(R.id.btn_rectangle)
+        val btnCircle: Button = findViewById(R.id.btn_circle)
+        val btnEraser: Button = findViewById(R.id.btn_eraser)
+
+        btnPen.setOnClickListener {
+            drawingView.currentBrushType = BrushType.PEN
+        }
+
+        btnRectangle.setOnClickListener {
+            drawingView.currentBrushType = BrushType.RECTANGLE
+        }
+
+        btnCircle.setOnClickListener {
+            drawingView.currentBrushType = BrushType.CIRCLE
+        }
+
+        btnEraser.setOnClickListener {
+            drawingView.currentBrushType = BrushType.ERASER
+        }
 
         btnBlack.setOnClickListener {
             drawingView.updateBrushColor(Color.BLACK)
