@@ -8,9 +8,8 @@
         android:id="@+id/text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/background"
         android:padding="16dp"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         tools:text="레아 안녕하세요" />
 
 </FrameLayout>
