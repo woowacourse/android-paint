@@ -27,6 +27,10 @@ class PaintCanvasView(context: Context, attrs: AttributeSet) : View(context, att
         selectedColor = colorValue
     }
 
+    fun selectStrokeWidth(strokeWidth: Float) {
+        selectedStrokeWidth = strokeWidth
+    }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         canvasData.forEach {

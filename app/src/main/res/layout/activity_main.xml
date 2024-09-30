@@ -9,13 +9,13 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toTopOf="@id/width_seek_bar"
+        app:layout_constraintBottom_toTopOf="@id/stroke_width_slider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <SeekBar
-        android:id="@+id/width_seek_bar"
+    <com.google.android.material.slider.RangeSlider
+        android:id="@+id/stroke_width_slider"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"

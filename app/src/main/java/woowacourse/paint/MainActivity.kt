@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.slider.RangeSlider
 
 class MainActivity : AppCompatActivity() {
     private lateinit var paintCanvas: PaintCanvasView
@@ -13,6 +14,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         paintCanvas = findViewById(R.id.paint_canvas)
         initColorButtons()
+        initWidthSeekBar()
     }
 
     private fun initColorButtons() {
@@ -29,6 +31,18 @@ class MainActivity : AppCompatActivity() {
             findViewById<ImageView>(buttonId).apply {
                 setSelectedColor(color)
             }
+        }
+    }
+
+    private fun initWidthSeekBar() {
+        findViewById<RangeSlider>(R.id.stroke_width_slider).apply {
+            valueFrom = 0.0f
+            valueTo = 100.0f
+
+            addOnChangeListener(RangeSlider.OnChangeListener { _, value, _ ->
+                paintCanvas.selectStrokeWidth(value)
+            })
+
         }
     }
 
