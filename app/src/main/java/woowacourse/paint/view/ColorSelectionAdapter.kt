@@ -1,9 +1,11 @@
-package woowacourse.paint
+package woowacourse.paint.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import woowacourse.paint.view.listener.ColorSelectionListener
 import woowacourse.paint.databinding.ItemColorBinding
+import woowacourse.paint.model.ColorItem
 
 class ColorSelectionAdapter(
     private val colors: List<ColorItem>,

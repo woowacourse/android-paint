@@ -1,4 +1,4 @@
-package woowacourse.paint
+package woowacourse.paint.model
 
 class ColorItem(
     val color: Int,

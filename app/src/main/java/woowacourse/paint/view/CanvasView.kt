@@ -1,4 +1,4 @@
-package woowacourse.paint
+package woowacourse.paint.view
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -10,6 +10,8 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import woowacourse.paint.R
+import woowacourse.paint.model.Stroke
 
 class CanvasView(context: Context, attrs: AttributeSet) :
     View(context, attrs) {

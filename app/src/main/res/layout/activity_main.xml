@@ -8,18 +8,18 @@
 
         <variable
             name="adapter"
-            type="woowacourse.paint.ColorSelectionAdapter" />
+            type="woowacourse.paint.view.ColorSelectionAdapter" />
 
         <variable
             name="viewModel"
-            type="woowacourse.paint.MainViewModel" />
+            type="woowacourse.paint.view.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <woowacourse.paint.CanvasView
+        <woowacourse.paint.view.CanvasView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:lineColor="@{viewModel.selectedColor.getArgbColor()}"

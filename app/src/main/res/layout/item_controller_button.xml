@@ -6,11 +6,11 @@
 
         <variable
             name="colorVisibilityListener"
-            type="woowacourse.paint.ColorControllerVisibilityListener" />
+            type="woowacourse.paint.view.listener.ColorControllerVisibilityListener" />
 
         <variable
             name="widthVisibilityListener"
-            type="woowacourse.paint.WidthControllerVisibilityListener" />
+            type="woowacourse.paint.view.listener.WidthControllerVisibilityListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

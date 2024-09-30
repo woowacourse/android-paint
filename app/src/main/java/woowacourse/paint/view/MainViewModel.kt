@@ -1,8 +1,12 @@
-package woowacourse.paint
+package woowacourse.paint.view
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import woowacourse.paint.view.listener.ColorControllerVisibilityListener
+import woowacourse.paint.view.listener.ColorSelectionListener
+import woowacourse.paint.view.listener.WidthControllerVisibilityListener
+import woowacourse.paint.model.ColorItem
 
 class MainViewModel : ViewModel(), ColorSelectionListener, ColorControllerVisibilityListener,
     WidthControllerVisibilityListener {

@@ -5,17 +5,17 @@
 
     <data>
 
-        <import type="woowacourse.paint.ColorItem" />
+        <import type="woowacourse.paint.model.ColorItem" />
 
-        <import type="woowacourse.paint.ColorSelectionListener" />
+        <import type="woowacourse.paint.view.listener.ColorSelectionListener" />
 
         <variable
             name="colorItemSelectionListener"
-            type="ColorSelectionListener" />
+            type="woowacourse.paint.view.listener.ColorSelectionListener" />
 
         <variable
             name="colorItem"
-            type="ColorItem" />
+            type="woowacourse.paint.model.ColorItem" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

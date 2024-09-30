@@ -1,4 +1,4 @@
-package woowacourse.paint
+package woowacourse.paint.view
 
 import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
