@@ -36,6 +36,9 @@ android {
     dataBinding {
         enable = true
     }
+    viewBinding {
+        enable = true
+    }
     testOptions {
         unitTests.isIncludeAndroidResources = true
     }
