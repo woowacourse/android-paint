@@ -6,12 +6,12 @@ import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.model.DrawingStyle
-import woowacourse.paint.ui.adapter.DrawColorAdapter
+import woowacourse.paint.ui.adapter.DrawingColorAdapter
 
 class MainActivity : AppCompatActivity(), ActionHandler {
     private lateinit var binding: ActivityMainBinding
 
-    private val adapter: DrawColorAdapter by lazy { DrawColorAdapter(this@MainActivity) }
+    private val adapter: DrawingColorAdapter by lazy { DrawingColorAdapter(this@MainActivity) }
 
     private lateinit var drawingStyle: DrawingStyle
     private lateinit var drawingView: DrawingView

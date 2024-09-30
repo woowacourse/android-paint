@@ -9,8 +9,8 @@ import woowacourse.paint.databinding.HolderDrawingColorBinding
 import woowacourse.paint.model.DrawingStyle
 import woowacourse.paint.ui.ActionHandler
 
-class DrawColorAdapter(private val actionHandler: ActionHandler) :
-    ListAdapter<DrawingStyle, DrawColorAdapter.DrawColorViewHolder>(PetDetailItemDiffCallback) {
+class DrawingColorAdapter(private val actionHandler: ActionHandler) :
+    ListAdapter<DrawingStyle, DrawingColorAdapter.DrawColorViewHolder>(DrawingColorDiffCallback) {
     init {
         setHasStableIds(true)
     }
@@ -40,7 +40,7 @@ class DrawColorAdapter(private val actionHandler: ActionHandler) :
         }
     }
 
-    companion object PetDetailItemDiffCallback : DiffUtil.ItemCallback<DrawingStyle>() {
+    companion object DrawingColorDiffCallback : DiffUtil.ItemCallback<DrawingStyle>() {
         override fun areItemsTheSame(
             oldItem: DrawingStyle,
             newItem: DrawingStyle,
