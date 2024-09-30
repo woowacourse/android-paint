@@ -66,6 +66,7 @@ class PaintView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
         paint.color = Color.RED
         paint.style = Paint.Style.STROKE
         paint.strokeWidth = DEFAULT_STROKE_WIDTH
+        paint.strokeCap = Paint.Cap.ROUND
         paint.isAntiAlias = true
     }
 
