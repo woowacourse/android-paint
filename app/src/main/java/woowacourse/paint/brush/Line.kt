@@ -27,13 +27,19 @@ data class Line(
         paint.strokeWidth = width
     }
 
-    fun move(x: Float, y: Float) {
+    fun move(
+        x: Float,
+        y: Float,
+    ) {
         endX = x
         endY = y
         path.moveTo(endX, endY)
     }
 
-    fun quad(x: Float, y: Float) {
+    fun quad(
+        x: Float,
+        y: Float,
+    ) {
         path.quadTo(endX, endY, (x + endX) / 2, (y + endY) / 2)
         endX = x
         endY = y
@@ -43,7 +49,7 @@ data class Line(
         canvas.drawPath(linePath, linePaint)
     }
 
-    companion object{
+    companion object {
         private const val DEFAULT_POINT = 0f
     }
 }

@@ -4,7 +4,7 @@ import android.graphics.Color
 import androidx.annotation.ColorInt
 
 enum class ColorPalette(
-    @ColorInt val color: Int
+    @ColorInt val color: Int,
 ) {
     RED(Color.parseColor("#EA3323")),
     ORANGE(Color.parseColor("#F19D38")),

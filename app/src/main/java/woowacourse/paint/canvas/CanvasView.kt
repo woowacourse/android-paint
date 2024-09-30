@@ -8,7 +8,6 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.brush.Brush
-import woowacourse.paint.brush.ColorPalette
 import woowacourse.paint.brush.Line
 
 class CanvasView(
@@ -47,12 +46,18 @@ class CanvasView(
         }
     }
 
-    private fun startDrawing(x: Float, y: Float) {
+    private fun startDrawing(
+        x: Float,
+        y: Float,
+    ) {
         drawingLine.move(x, y)
         lines.add(drawingLine)
     }
 
-    private fun quadDrawing(x: Float, y: Float) {
+    private fun quadDrawing(
+        x: Float,
+        y: Float,
+    ) {
         drawingLine.quad(x, y)
     }
 
@@ -64,7 +69,7 @@ class CanvasView(
         drawingLine = Line(paint = createNewPaint(brush))
     }
 
-    private fun createNewPaint(brush: Brush): Paint{
+    private fun createNewPaint(brush: Brush): Paint {
         return Paint().apply {
             this.color = brush.colorPalette.color
             this.strokeWidth = brush.width

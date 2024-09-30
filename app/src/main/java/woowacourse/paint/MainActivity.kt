@@ -6,7 +6,6 @@ import woowacourse.paint.brush.Brush
 import woowacourse.paint.brush.ColorPalette
 import woowacourse.paint.databinding.ActivityMainBinding
 
-
 class MainActivity : AppCompatActivity() {
     private lateinit var activityViewBinding: ActivityMainBinding
     private var brush: Brush = Brush()
@@ -21,12 +20,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun initPalettes() {
         activityViewBinding.customCanvas.changeColor(brush)
-        activityViewBinding.rvColor.adapter = ColorPaletteAdapter(
-            colorPalettes = ColorPalette.entries,
-        ) { color ->
-            brush = brush.changeColor(color)
-            activityViewBinding.customCanvas.changeColor(brush)
-        }
+        activityViewBinding.rvColor.adapter =
+            ColorPaletteAdapter(
+                colorPalettes = ColorPalette.entries,
+            ) { color ->
+                brush = brush.changeColor(color)
+                activityViewBinding.customCanvas.changeColor(brush)
+            }
     }
 
     private fun initListener() {

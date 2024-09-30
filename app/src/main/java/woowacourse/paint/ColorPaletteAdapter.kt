@@ -10,7 +10,6 @@ class ColorPaletteAdapter(
     private val colorPalettes: List<ColorPalette>,
     private val onClickColorPalette: (ColorPalette) -> Unit,
 ) : RecyclerView.Adapter<ColorPaletteAdapter.ColorPaletteViewHolder>() {
-
     class ColorPaletteViewHolder(
         private val binding: ItemColorPaletteBinding,
         private val onClickColorPalette: (ColorPalette) -> Unit,
@@ -25,15 +24,21 @@ class ColorPaletteAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ColorPaletteViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): ColorPaletteViewHolder {
         val binding =
             ItemColorPaletteBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ColorPaletteViewHolder(binding,onClickColorPalette)
+        return ColorPaletteViewHolder(binding, onClickColorPalette)
     }
 
     override fun getItemCount(): Int = colorPalettes.size
 
-    override fun onBindViewHolder(holder: ColorPaletteViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: ColorPaletteViewHolder,
+        position: Int,
+    ) {
         holder.bind(colorPalettes[position])
     }
 }
