@@ -3,6 +3,7 @@ package woowacourse.paint
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import woowacourse.paint.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -14,6 +15,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         initBinding()
         initViewModel()
+        observeViewModel()
     }
 
     private fun initViewModel() {
@@ -23,5 +25,19 @@ class MainActivity : AppCompatActivity() {
     private fun initBinding() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+    }
+
+    private fun observeViewModel() {
+        viewModel.selectedColor.observe(
+            this,
+            Observer { color ->
+                binding.drawingView.setPaintColor(color = color.toColorInt())
+            },
+        )
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }
