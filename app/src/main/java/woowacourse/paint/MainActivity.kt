@@ -1,6 +1,7 @@
 package woowacourse.paint
 
 import android.os.Bundle
+import android.widget.SeekBar
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -16,6 +17,7 @@ class MainActivity : AppCompatActivity() {
         initBinding()
         initViewModel()
         observeViewModel()
+        observeStrokeWidth()
     }
 
     private fun initViewModel() {
@@ -32,6 +34,24 @@ class MainActivity : AppCompatActivity() {
             this,
             Observer { color ->
                 binding.drawingView.setPaintColor(color = color.toColorInt())
+            },
+        )
+    }
+
+    private fun observeStrokeWidth() {
+        binding.sbPaintWidth.setOnSeekBarChangeListener(
+            object : SeekBar.OnSeekBarChangeListener {
+                override fun onProgressChanged(
+                    seekBar: SeekBar?,
+                    progress: Int,
+                    fromUser: Boolean,
+                ) {
+                    binding.drawingView.setPaintWidth(progress)
+                }
+
+                override fun onStartTrackingTouch(seekBar: SeekBar?) {}
+
+                override fun onStopTrackingTouch(seekBar: SeekBar?) {}
             },
         )
     }

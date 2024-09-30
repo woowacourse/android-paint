@@ -18,17 +18,17 @@
             android:id="@+id/drawing_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/seekbar_drawing_stroke_width"
+            app:layout_constraintBottom_toTopOf="@+id/sb_paint_width"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <SeekBar
-            android:id="@+id/seekbar_drawing_stroke_width"
+            android:id="@+id/sb_paint_width"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:max="100"
-            android:progress="@{vm.strokeWidth}"
+            android:progress="50"
             android:theme="@style/SeekBarColor"
             app:layout_constraintBottom_toTopOf="@+id/cl_color_selector"
             app:layout_constraintEnd_toEndOf="parent"

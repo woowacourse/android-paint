@@ -77,6 +77,10 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         currentPaint.color = color
     }
 
+    fun setPaintWidth(width: Int) {
+        ovalSize = width
+    }
+
     companion object {
         private const val OVAL_SIZE = 50
     }
