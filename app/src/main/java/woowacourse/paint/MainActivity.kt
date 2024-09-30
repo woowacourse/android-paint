@@ -1,5 +1,6 @@
 package woowacourse.paint
 
+import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -21,15 +22,15 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView.adapter = ColorsAdapter(
             listOf(
-                ColorUiModel(1, R.color.red),
-                ColorUiModel(2, R.color.orange),
-                ColorUiModel(3, R.color.yellow),
-                ColorUiModel(4, R.color.green),
-                ColorUiModel(5, R.color.blue),
-                ColorUiModel(6, R.color.indigo),
-            )
+                ColorUiModel(1, Color.RED),
+                ColorUiModel(3, Color.YELLOW),
+                ColorUiModel(4, Color.GREEN),
+                ColorUiModel(5, Color.BLUE),
+                ColorUiModel(6, Color.MAGENTA),
+            ),
+            listener = { colorUiModel ->
+                drawingBoard.setBrushColor(colorUiModel.color)
+            }
         )
     }
 }
-
-private const val TAG = "MainActivity"

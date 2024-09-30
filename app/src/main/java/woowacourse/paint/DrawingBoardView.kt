@@ -65,6 +65,11 @@ class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, at
         }
         currentDrawing = currentDrawing.copy(paint = paint)
     }
-}
 
-private const val TAG = "DrawingBoardView"
+    fun setBrushColor(color: Int) {
+        val paint = Paint(currentDrawing.paint).apply {
+            this.color = color
+        }
+        currentDrawing = currentDrawing.copy(paint = paint)
+    }
+}
