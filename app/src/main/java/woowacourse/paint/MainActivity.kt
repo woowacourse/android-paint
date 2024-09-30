@@ -27,7 +27,16 @@ class MainActivity : AppCompatActivity() {
         val btnCircle: Button = findViewById(R.id.btn_circle)
         val btnEraser: Button = findViewById(R.id.btn_eraser)
         val btnClear: Button = findViewById(R.id.btn_clear)
+        val btnUndo: Button = findViewById(R.id.btn_undo)
+        val btnRedo: Button = findViewById(R.id.btn_redo)
 
+        btnUndo.setOnClickListener {
+            drawingView.undo()
+        }
+
+        btnRedo.setOnClickListener {
+            drawingView.redo()
+        }
         btnClear.setOnClickListener {
             drawingView.clearCanvas()
         }

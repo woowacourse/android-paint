@@ -19,6 +19,7 @@ class DrawingView(
     private val strokes = mutableListOf<Stroke>()
     private var currentPath: Path? = null
     private var currentPaint: Paint? = null
+    private val undoneStrokes = mutableListOf<Stroke>()
     private var startX = 0f
     private var startY = 0f
     var currentBrushType = BrushType.PEN
@@ -157,6 +158,22 @@ class DrawingView(
     fun clearCanvas() {
         strokes.clear()
         invalidate()
+    }
+
+    fun undo() {
+        if (strokes.isNotEmpty()) {
+            val lastStroke = strokes.removeAt(strokes.size - 1)
+            undoneStrokes.add(lastStroke)
+            invalidate()
+        }
+    }
+
+    fun redo() {
+        if (undoneStrokes.isNotEmpty()) {
+            val redoStroke = undoneStrokes.removeAt(undoneStrokes.size - 1)
+            strokes.add(redoStroke)
+            invalidate()
+        }
     }
 
     fun updateBrushSize(size: Float) {
