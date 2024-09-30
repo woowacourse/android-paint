@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity(), ActionHandler {
     }
 
     private fun initDrawingView() {
-        drawingStyle = DrawingStyle(Color.BLACK)
+        drawingStyle = DrawingStyle(Color.RED)
         drawingView =
             DrawingView(
                 context = this,
