@@ -1,7 +1,6 @@
 package woowacourse.paint
 
 import android.os.Bundle
-import android.view.MotionEvent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.slider.RangeSlider
@@ -12,6 +11,7 @@ class PaintActivity : AppCompatActivity() {
     private val binding get() = _binding!!
 
     private val rangeSlider: RangeSlider by lazy { binding.rangeSliderThickness }
+    private val paintBoard: PaintBoard by lazy { binding.paintBoard }
     private val viewModel: PaintViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,24 +21,7 @@ class PaintActivity : AppCompatActivity() {
 
         setupBinding()
         setupRangeSlider()
-    }
-
-    override fun onTouchEvent(event: MotionEvent): Boolean {
-        return when (event.action) {
-            MotionEvent.ACTION_DOWN -> {
-                true
-            }
-
-            MotionEvent.ACTION_MOVE -> {
-                true
-            }
-
-            MotionEvent.ACTION_UP -> {
-                true
-            }
-
-            else -> super.onTouchEvent(event)
-        }
+        setupObserving()
     }
 
     override fun onDestroy() {
@@ -54,11 +37,18 @@ class PaintActivity : AppCompatActivity() {
     private fun setupRangeSlider() {
         rangeSlider.valueFrom = 0.0f
         rangeSlider.valueTo = 100.0f
+        rangeSlider.setValues(25.0f)
 
         rangeSlider.addOnChangeListener(
             RangeSlider.OnChangeListener { _, value, _ ->
-                viewModel.changeThickness(value.toInt())
+                paintBoard.setPaintStrokeWidth(value)
             },
         )
+    }
+
+    private fun setupObserving() {
+        viewModel.color.observe(this) { colorResId ->
+            paintBoard.setPaintColor(colorResId)
+        }
     }
 }

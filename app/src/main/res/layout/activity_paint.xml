@@ -39,7 +39,7 @@
 
             <ImageView
                 android:id="@+id/tv_red_color"
-                checkedColor="@{vm.colorResId}"
+                checkedColor="@{vm.color}"
                 android:layout_width="65dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/color_circle"
@@ -50,7 +50,7 @@
 
             <ImageView
                 android:id="@+id/tv_orange_color"
-                checkedColor="@{vm.colorResId}"
+                checkedColor="@{vm.color}"
                 android:layout_width="65dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/color_circle"
@@ -62,7 +62,7 @@
 
             <ImageView
                 android:id="@+id/tv_yellow_color"
-                checkedColor="@{vm.colorResId}"
+                checkedColor="@{vm.color}"
                 android:layout_width="65dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/color_circle"
@@ -74,7 +74,7 @@
 
             <ImageView
                 android:id="@+id/tv_green_color"
-                checkedColor="@{vm.colorResId}"
+                checkedColor="@{vm.color}"
                 android:layout_width="65dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/color_circle"
@@ -86,7 +86,7 @@
 
             <ImageView
                 android:id="@+id/tv_blue_color"
-                checkedColor="@{vm.colorResId}"
+                checkedColor="@{vm.color}"
                 android:layout_width="65dp"
                 android:layout_height="match_parent"
                 android:background="@drawable/color_circle"
