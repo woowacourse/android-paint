@@ -28,7 +28,6 @@ class CustomView(context: Context, attrs: AttributeSet) :
         super.onDraw(canvas)
         for ((path, paint) in pathAttributes) {
             canvas.drawPath(path, paint)
-            Log.d("CustomView", "onDraw: ${path} ${paint.color}")
         }
         canvas.drawPath(path, paint)
     }
