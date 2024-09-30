@@ -7,19 +7,16 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 
 class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val path = Path()
-    private val paint = Paint()
+    val paint = Paint()
+    var brushThickness: Float = 5f
 
     init {
-        paint.apply {
-            color = Color.BLACK
-            strokeWidth = 10f
-        }
+        paint.color = Color.BLACK
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -35,16 +32,16 @@ class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, at
             MotionEvent.ACTION_DOWN -> path.addOval(
                 pointX,
                 pointY,
-                pointX + 100,
-                pointY + 100,
+                pointX + brushThickness,
+                pointY + brushThickness,
                 Path.Direction.CW
             )
 
             MotionEvent.ACTION_MOVE -> path.addOval(
                 pointX,
                 pointY,
-                pointX + 100,
-                pointY + 100,
+                pointX + brushThickness,
+                pointY + brushThickness,
                 Path.Direction.CW
             )
 
