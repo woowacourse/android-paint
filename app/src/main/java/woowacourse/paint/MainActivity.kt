@@ -22,28 +22,28 @@ class MainActivity : AppCompatActivity() {
         val btnBlue: Button = findViewById(R.id.btn_blue)
 
         btnRed.setOnClickListener {
-            drawingView.setBrushColor(Color.RED)
+            drawingView.updateBrushColor(Color.RED)
         }
 
         btnOrange.setOnClickListener {
-            drawingView.setBrushColor(Color.parseColor("#FFA500")) // 주황색
+            drawingView.updateBrushColor(Color.parseColor("#FFA500")) // 주황색
         }
 
         btnYellow.setOnClickListener {
-            drawingView.setBrushColor(Color.YELLOW)
+            drawingView.updateBrushColor(Color.YELLOW)
         }
 
         btnGreen.setOnClickListener {
-            drawingView.setBrushColor(Color.GREEN)
+            drawingView.updateBrushColor(Color.GREEN)
         }
 
         btnBlue.setOnClickListener {
-            drawingView.setBrushColor(Color.BLUE)
+            drawingView.updateBrushColor(Color.BLUE)
         }
 
         val sliderBrushSize: Slider = findViewById(R.id.slider_brush_size)
         sliderBrushSize.addOnChangeListener { _, value, _ ->
-            drawingView.setBrushSize(value)
+            drawingView.updateBrushSize(value)
         }
     }
 }

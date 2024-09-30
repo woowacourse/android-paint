@@ -1,4 +1,4 @@
-package woowacourse.paint // 실제 패키지 이름으로 변경하세요.
+package woowacourse.paint
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -26,38 +26,56 @@ class DrawingView(
         val x = event.x
         val y = event.y
 
-        when (event.action) {
+        return when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                currentPath =
-                    Path().apply {
-                        moveTo(x, y)
-                    }
-                currentPaint =
-                    Paint().apply {
-                        color = currentColor
-                        style = Paint.Style.STROKE
-                        strokeWidth = currentStrokeWidth
-                        isAntiAlias = true
-                    }
-                strokes.add(Stroke(currentPath!!, currentPaint!!))
-                invalidate()
-                return true
+                downPen(x, y)
             }
 
             MotionEvent.ACTION_MOVE -> {
-                currentPath?.lineTo(x, y)
-                invalidate()
-                return true
+                drawLine(x, y)
             }
 
             MotionEvent.ACTION_UP -> {
-                currentPath = null
-                currentPaint = null
-                return true
+                upPen()
             }
 
-            else -> return false
+            else -> false
         }
+    }
+
+    private fun downPen(
+        x: Float,
+        y: Float,
+    ): Boolean {
+        currentPath =
+            Path().apply {
+                moveTo(x, y)
+            }
+        currentPaint =
+            Paint().apply {
+                color = currentColor
+                style = Paint.Style.STROKE
+                strokeWidth = currentStrokeWidth
+                isAntiAlias = true
+            }
+        strokes.add(Stroke(currentPath!!, currentPaint!!))
+        invalidate()
+        return true
+    }
+
+    private fun upPen(): Boolean {
+        currentPath = null
+        currentPaint = null
+        return true
+    }
+
+    private fun drawLine(
+        x: Float,
+        y: Float,
+    ): Boolean {
+        currentPath?.lineTo(x, y)
+        invalidate()
+        return true
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -67,11 +85,11 @@ class DrawingView(
         }
     }
 
-    fun setBrushColor(color: Int) {
+    fun updateBrushColor(color: Int) {
         currentColor = color
     }
 
-    fun setBrushSize(size: Float) {
+    fun updateBrushSize(size: Float) {
         currentStrokeWidth = size
     }
 }
