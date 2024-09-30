@@ -3,25 +3,26 @@ package woowacourse.paint.ui
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import woowacourse.paint.model.DrawingStyle
 
 @SuppressLint("ViewConstructor")
 class DrawingView(
     context: Context,
     attrs: AttributeSet?,
+    drawingStyle: DrawingStyle,
 ) : View(context, attrs) {
     private val path = Path()
     private val paint = Paint()
 
     init {
-        paint.color = Color.BLACK
+        paint.color = drawingStyle.color
         paint.isAntiAlias = true
-        paint.strokeWidth = 5F
+        paint.strokeWidth = drawingStyle.strokeWidth
         paint.style = Paint.Style.STROKE
     }
 
