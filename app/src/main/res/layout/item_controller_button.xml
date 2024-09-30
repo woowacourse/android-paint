@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="colorVisibilityListener"
+            type="woowacourse.paint.ColorControllerVisibilityListener" />
+
+        <variable
+            name="widthVisibilityListener"
+            type="woowacourse.paint.WidthControllerVisibilityListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+
+        <Button
+            android:id="@+id/btn_color_control"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_width_control"
+            android:text="색상 변경"
+            android:onClick="@{() -> colorVisibilityListener.toggleColorControllerVisibility()}"/>
+
+        <Button
+            android:id="@+id/btn_width_control"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_color_control"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="굵기 변경"
+            android:onClick="@{() -> widthVisibilityListener.toggleWidthControllerVisibility()}"/>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
