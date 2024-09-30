@@ -16,7 +16,13 @@ class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, at
     var brushThickness: Float = 5f
 
     init {
-        paint.color = Color.BLACK
+        paint.apply {
+            color = Color.BLACK
+            style = Paint.Style.STROKE  // 선으로 그리기 위해 STROKE 설정
+            strokeWidth = brushThickness
+            strokeCap = Paint.Cap.ROUND  // 선 끝을 둥글게 처리
+            isAntiAlias = true  // 선을 부드럽게 처리
+        }
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -28,24 +34,18 @@ class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, at
     override fun onTouchEvent(event: MotionEvent): Boolean {
         val pointX = event.x
         val pointY = event.y
+
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> path.addOval(
-                pointX,
-                pointY,
-                pointX + brushThickness,
-                pointY + brushThickness,
-                Path.Direction.CW
-            )
+            MotionEvent.ACTION_DOWN -> {
+                path.moveTo(pointX, pointY)  // 새로운 경로 시작
+            }
+            MotionEvent.ACTION_MOVE -> {
+                path.lineTo(pointX, pointY)  // 이전 점에서 현재 점까지 선을 그림
+            }
+            MotionEvent.ACTION_UP -> {
 
-            MotionEvent.ACTION_MOVE -> path.addOval(
-                pointX,
-                pointY,
-                pointX + brushThickness,
-                pointY + brushThickness,
-                Path.Direction.CW
-            )
-
-            else -> super.onTouchEvent(event)
+            }
+            else -> return false
         }
         invalidate()
         return true
