@@ -1,4 +1,4 @@
-package woowacourse.paint.presentation
+package woowacourse.paint.presentation.palette
 
 import android.widget.ImageView
 import androidx.annotation.ColorRes

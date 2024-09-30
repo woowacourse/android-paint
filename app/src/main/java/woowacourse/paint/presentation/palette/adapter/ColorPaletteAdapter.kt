@@ -1,10 +1,10 @@
-package woowacourse.paint.presentation
+package woowacourse.paint.presentation.palette.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import woowacourse.paint.databinding.ItemColorPaletteBinding
+import woowacourse.paint.presentation.palette.ColorPaletteListener
 
 class ColorPaletteAdapter(
     private val colorResIds: List<Int>,

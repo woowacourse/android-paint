@@ -11,7 +11,7 @@
 
         <variable
             name="colorPaletteListener"
-            type="woowacourse.paint.presentation.ColorPaletteListener" />
+            type="woowacourse.paint.presentation.palette.ColorPaletteListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

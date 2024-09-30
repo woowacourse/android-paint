@@ -1,4 +1,4 @@
-package woowacourse.paint.presentation
+package woowacourse.paint.presentation.palette
 
 import android.os.Bundle
 import android.view.View
@@ -7,8 +7,10 @@ import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.R
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.presentation.palette.adapter.ColorPaletteAdapter
+import woowacourse.paint.presentation.paint.PaintView
 
-class MainActivity : AppCompatActivity(), ColorPaletteListener {
+class ColorPaletteActivity : AppCompatActivity(), ColorPaletteListener {
     private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private val paintView: PaintView by lazy { binding.paintView }
     private val colorResIds =
