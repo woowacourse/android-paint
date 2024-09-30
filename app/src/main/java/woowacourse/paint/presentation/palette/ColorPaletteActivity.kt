@@ -7,8 +7,8 @@ import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.R
 import woowacourse.paint.databinding.ActivityMainBinding
-import woowacourse.paint.presentation.palette.adapter.ColorPaletteAdapter
 import woowacourse.paint.presentation.paint.PaintView
+import woowacourse.paint.presentation.palette.adapter.ColorPaletteAdapter
 
 class ColorPaletteActivity : AppCompatActivity(), ColorPaletteListener {
     private val binding: ActivityMainBinding by lazy { ActivityMainBinding.inflate(layoutInflater) }
@@ -42,15 +42,16 @@ class ColorPaletteActivity : AppCompatActivity(), ColorPaletteListener {
         binding.rvColorPalette.adapter = ColorPaletteAdapter(colorResIds, this)
     }
 
-    private fun initializeThicknessRangeSlider() = with(binding.rangeSliderThickness) {
-        stepSize = OVAL_SIZE_INTERVAL
-        values = listOf(OVAL_SIZE_MIN)
-        valueFrom = OVAL_SIZE_MIN
-        valueTo = OVAL_SIZE_MAX
-        addOnChangeListener { _, value, _ ->
-            paintView.changeOvalSize(value)
+    private fun initializeThicknessRangeSlider() =
+        binding.rangeSliderThickness.run {
+            stepSize = OVAL_SIZE_INTERVAL
+            values = listOf(OVAL_SIZE_MIN)
+            valueFrom = OVAL_SIZE_MIN
+            valueTo = OVAL_SIZE_MAX
+            addOnChangeListener { _, value, _ ->
+                paintView.changeOvalSize(value)
+            }
         }
-    }
 
     override fun onSelectColor(colorResId: Int) {
         paintView.changePaintColor(colorResId)

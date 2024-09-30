@@ -65,7 +65,9 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         currentPaint = Paint(currentPaint)
     }
 
-    fun changePaintColor(@ColorRes colorResId: Int) {
+    fun changePaintColor(
+        @ColorRes colorResId: Int,
+    ) {
         currentPaint.color = ContextCompat.getColor(context, colorResId)
     }
 
