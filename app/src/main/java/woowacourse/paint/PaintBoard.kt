@@ -13,7 +13,9 @@ import android.view.View
 class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private val path = Path()
-    private val paint = Paint()
+    private val paint = Paint().apply {
+        style = Paint.Style.STROKE
+    }
 
     init {
         isFocusable = true
@@ -31,22 +33,18 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
         val pointX = event.x
         val pointY = event.y
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> path.addOval(
-                pointX,
-                pointY,
-                pointX + OVAL_SIZE,
-                pointY + OVAL_SIZE,
-                Path.Direction.CW
-            )
+            MotionEvent.ACTION_DOWN -> {
+                path.moveTo(pointX, pointY)
+            }
 
-            else -> super.onTouchEvent(event)
+            MotionEvent.ACTION_MOVE -> {
+                path.lineTo(pointX, pointY)
+            }
+
+            else -> return false
         }
+
         invalidate()
         return true
     }
-
-    companion object {
-        private const val OVAL_SIZE = 50
-    }
-
 }
