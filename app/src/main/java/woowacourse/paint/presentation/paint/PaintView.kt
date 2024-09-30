@@ -27,6 +27,8 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             color = ContextCompat.getColor(context, DEFAULT_COLOR_RES_ID)
             strokeWidth = DEFAULT_STROKE
             style = Paint.Style.STROKE
+            strokeCap = Paint.Cap.ROUND
+            isAntiAlias = true
         }
     }
 
