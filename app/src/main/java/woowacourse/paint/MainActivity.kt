@@ -23,7 +23,8 @@ class MainActivity : AppCompatActivity() {
 
         rangeSlider.addOnChangeListener { slider, value, fromUser ->
             Log.d(TAG, "rangeSlider.addOnChangeListener: value: $value, fromUser: $fromUser")
-            drawingBoard.paint.strokeWidth = value
+//            drawingBoard.currentPaint.strokeWidth = value
+            drawingBoard.setBrushThickness(value)
         }
     }
 }

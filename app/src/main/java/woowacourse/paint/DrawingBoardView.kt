@@ -11,23 +11,26 @@ import android.view.MotionEvent
 import android.view.View
 
 class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    private val path = Path()
-    val paint = Paint()
-    var brushThickness: Float = 5f
+    private var currentDrawing = Drawing(Path(), Paint())
+    private var brushThickness: Float = 5f
+
+    private val drawings: MutableList<Drawing> = mutableListOf()
 
     init {
-        paint.apply {
+        currentDrawing.paint.apply {
             color = Color.BLACK
-            style = Paint.Style.STROKE  // 선으로 그리기 위해 STROKE 설정
+            style = Paint.Style.STROKE
             strokeWidth = brushThickness
-            strokeCap = Paint.Cap.ROUND  // 선 끝을 둥글게 처리
-            isAntiAlias = true  // 선을 부드럽게 처리
+            strokeCap = Paint.Cap.ROUND
+            isAntiAlias = true
         }
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvas.drawPath(path, paint)
+        for (draw in drawings) {
+            canvas.drawPath(draw.path, draw.paint)
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -37,18 +40,30 @@ class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, at
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                path.moveTo(pointX, pointY)  // 새로운 경로 시작
+                currentDrawing = currentDrawing.copy(path = Path())
+                drawings.add(currentDrawing)
+                currentDrawing.path.moveTo(pointX, pointY)
             }
-            MotionEvent.ACTION_MOVE -> {
-                path.lineTo(pointX, pointY)  // 이전 점에서 현재 점까지 선을 그림
-            }
-            MotionEvent.ACTION_UP -> {
 
+            MotionEvent.ACTION_MOVE -> {
+                currentDrawing.path.lineTo(pointX, pointY)
             }
+
+            MotionEvent.ACTION_UP -> {
+                currentDrawing = currentDrawing.copy(path = Path())
+            }
+
             else -> return false
         }
         invalidate()
         return true
+    }
+
+    fun setBrushThickness(thickness: Float) {
+        val paint = Paint(currentDrawing.paint).apply {
+            strokeWidth = thickness
+        }
+        currentDrawing = currentDrawing.copy(paint = paint)
     }
 }
 
