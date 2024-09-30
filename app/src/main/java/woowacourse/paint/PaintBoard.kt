@@ -3,7 +3,6 @@ package woowacourse.paint
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
@@ -49,13 +48,14 @@ class PaintBoard(context: Context, attr: AttributeSet) : View(context, attr) {
     }
 
     private fun initPaint() {
-        paint = paint.apply {
-            style = Paint.Style.STROKE
-            strokeJoin = Paint.Join.ROUND
-            strokeCap = Paint.Cap.ROUND
-            color = DEFAULT_PAINT_COLOR
-            strokeWidth = DEFAULT_STROKE_WIDTH
-        }
+        paint =
+            paint.apply {
+                style = Paint.Style.STROKE
+                strokeJoin = Paint.Join.ROUND
+                strokeCap = Paint.Cap.ROUND
+                color = DEFAULT_PAINT_COLOR_RES
+                strokeWidth = DEFAULT_STROKE_WIDTH
+            }
     }
 
     private fun createNewLine() {
@@ -71,13 +71,14 @@ class PaintBoard(context: Context, attr: AttributeSet) : View(context, attr) {
     }
 
     private fun createNewPaint() {
-        paint = Paint().apply {
-            style = Paint.Style.STROKE
-            strokeJoin = Paint.Join.ROUND
-            strokeCap = Paint.Cap.ROUND
-            color = paint.color
-            strokeWidth = paint.strokeWidth
-        }
+        paint =
+            Paint().apply {
+                style = Paint.Style.STROKE
+                strokeJoin = Paint.Join.ROUND
+                strokeCap = Paint.Cap.ROUND
+                color = paint.color
+                strokeWidth = paint.strokeWidth
+            }
     }
 
     fun setPaintColor(color: Int) {
@@ -89,7 +90,7 @@ class PaintBoard(context: Context, attr: AttributeSet) : View(context, attr) {
     }
 
     companion object {
-        private const val DEFAULT_PAINT_COLOR = Color.RED
-        const val DEFAULT_STROKE_WIDTH = 25.0f
+        val DEFAULT_PAINT_COLOR_RES: Int = R.color.red
+        const val DEFAULT_STROKE_WIDTH: Float = 30.0f
     }
 }

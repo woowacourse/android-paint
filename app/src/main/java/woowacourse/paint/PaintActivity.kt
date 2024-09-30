@@ -13,6 +13,7 @@ class PaintActivity : AppCompatActivity() {
 
     private val rangeSlider: RangeSlider by lazy { binding.rangeSliderThickness }
     private val paintBoard: PaintBoard by lazy { binding.paintBoard }
+    private val adapter: PaintColorAdapter by lazy { PaintColorAdapter(viewModel) }
     private val viewModel: PaintViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,8 +22,9 @@ class PaintActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupBinding()
-        setupRangeSlider()
+        setupAdapter()
         setupObserving()
+        setupRangeSlider()
     }
 
     override fun onDestroy() {
@@ -35,26 +37,40 @@ class PaintActivity : AppCompatActivity() {
         binding.vm = viewModel
     }
 
-    private fun setupRangeSlider() {
-        rangeSlider.valueFrom = STROKE_WIDTH_START_VALUE
-        rangeSlider.valueTo = STROKE_WIDTH_END_VALUE
-        rangeSlider.setValues(DEFAULT_STROKE_WIDTH)
-
-        rangeSlider.addOnChangeListener(
-            RangeSlider.OnChangeListener { _, value, _ ->
-                paintBoard.setPaintStrokeWidth(value)
-            },
-        )
+    private fun setupAdapter() {
+        binding.rcvColorPalette.adapter = adapter
+        adapter.submitList(PaintColor.getAllPaintColors())
     }
 
     private fun setupObserving() {
-        viewModel.color.observe(this) { colorResId ->
-            paintBoard.setPaintColor(colorResId)
+        viewModel.colorRes.observe(this) { colorRes ->
+            val color = getColor(colorRes)
+            paintBoard.setPaintColor(color)
+            adapter.notifyDataSetChanged()
+        }
+
+        viewModel.strokeWidth.observe(this) { strokeWidth ->
+            paintBoard.setPaintStrokeWidth(strokeWidth)
+        }
+    }
+
+    private fun setupRangeSlider() {
+        rangeSlider.apply {
+            stepSize = RANGE_STEP
+            valueFrom = RANGE_FROM
+            valueTo = RANGE_TO
+            setValues(DEFAULT_STROKE_WIDTH)
+            addOnChangeListener(
+                RangeSlider.OnChangeListener { _, value, _ ->
+                    viewModel.changeStrokeWidth(value)
+                },
+            )
         }
     }
 
     companion object {
-        private const val STROKE_WIDTH_START_VALUE = 0.0f
-        private const val STROKE_WIDTH_END_VALUE = 100.0f
+        private const val RANGE_STEP = 10.0f
+        private const val RANGE_FROM = 10.0f
+        private const val RANGE_TO = 100.0f
     }
 }

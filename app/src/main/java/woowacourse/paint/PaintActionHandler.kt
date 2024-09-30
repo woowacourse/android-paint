@@ -1,5 +1,5 @@
 package woowacourse.paint
 
 interface PaintActionHandler {
-    fun changeColor(color: Int)
+    fun changeColorRes(colorRes: Int)
 }

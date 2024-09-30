@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -26,75 +27,21 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:layout_marginVertical="10dp"
-            app:layout_constraintBottom_toTopOf="@id/color_palette"
+            app:layout_constraintBottom_toTopOf="@id/rcv_color_palette"
             app:layout_constraintTop_toBottomOf="@id/paint_board" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/color_palette"
-            android:layout_width="match_parent"
-            android:layout_height="65dp"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcv_color_palette"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:layout_marginBottom="20dp"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-            <ImageView
-                android:id="@+id/tv_red_color"
-                checkedColor="@{vm.color}"
-                android:layout_width="65dp"
-                android:layout_height="match_parent"
-                android:background="@drawable/color_circle"
-                android:backgroundTint="@color/red"
-                android:clickable="true"
-                android:onClick="@{() -> vm.changeColor(@color/red)}"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <ImageView
-                android:id="@+id/tv_orange_color"
-                checkedColor="@{vm.color}"
-                android:layout_width="65dp"
-                android:layout_height="match_parent"
-                android:background="@drawable/color_circle"
-                android:backgroundTint="@color/orange"
-                android:clickable="true"
-                android:onClick="@{() -> vm.changeColor(@color/orange)}"
-                app:layout_constraintEnd_toStartOf="@id/tv_yellow_color"
-                app:layout_constraintStart_toEndOf="@id/tv_red_color" />
-
-            <ImageView
-                android:id="@+id/tv_yellow_color"
-                checkedColor="@{vm.color}"
-                android:layout_width="65dp"
-                android:layout_height="match_parent"
-                android:background="@drawable/color_circle"
-                android:backgroundTint="@color/yellow"
-                android:clickable="true"
-                android:onClick="@{() -> vm.changeColor(@color/yellow)}"
-                app:layout_constraintEnd_toStartOf="@id/tv_green_color"
-                app:layout_constraintStart_toEndOf="@id/tv_orange_color" />
-
-            <ImageView
-                android:id="@+id/tv_green_color"
-                checkedColor="@{vm.color}"
-                android:layout_width="65dp"
-                android:layout_height="match_parent"
-                android:background="@drawable/color_circle"
-                android:backgroundTint="@color/green"
-                android:clickable="true"
-                android:onClick="@{() -> vm.changeColor(@color/green)}"
-                app:layout_constraintEnd_toStartOf="@id/tv_blue_color"
-                app:layout_constraintStart_toEndOf="@id/tv_yellow_color" />
-
-            <ImageView
-                android:id="@+id/tv_blue_color"
-                checkedColor="@{vm.color}"
-                android:layout_width="65dp"
-                android:layout_height="match_parent"
-                android:background="@drawable/color_circle"
-                android:backgroundTint="@color/blue"
-                android:clickable="true"
-                android:onClick="@{() -> vm.changeColor(@color/blue)}"
-                app:layout_constraintEnd_toEndOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:itemCount="5"
+            tools:listitem="@layout/item_paint_color" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
