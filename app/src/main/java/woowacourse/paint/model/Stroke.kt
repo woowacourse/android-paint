@@ -5,5 +5,5 @@ import android.graphics.Path
 
 data class Stroke(
     val path: Path,
-    val paint: Paint
+    val paint: Paint,
 )

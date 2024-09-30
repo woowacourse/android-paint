@@ -15,16 +15,15 @@ import woowacourse.paint.model.Stroke
 
 class CanvasView(context: Context, attrs: AttributeSet) :
     View(context, attrs) {
-
-
     private val strokes = mutableListOf<Stroke>()
     private var currentPath: Path? = null
-    private var currentPaint: Paint = Paint().apply {
-        style = Paint.Style.STROKE
-        isAntiAlias = true
-        strokeJoin = Paint.Join.ROUND
-        strokeCap = Paint.Cap.ROUND
-    }
+    private var currentPaint: Paint =
+        Paint().apply {
+            style = Paint.Style.STROKE
+            isAntiAlias = true
+            strokeJoin = Paint.Join.ROUND
+            strokeCap = Paint.Cap.ROUND
+        }
 
     init {
         initializeCanvasView()

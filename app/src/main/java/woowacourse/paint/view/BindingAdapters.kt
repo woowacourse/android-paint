@@ -11,25 +11,37 @@ fun getSliderValue(slider: Slider): Float {
 }
 
 @BindingAdapter("app:value")
-fun setSliderValue(slider: Slider, value: Float) {
+fun setSliderValue(
+    slider: Slider,
+    value: Float,
+) {
     if (slider.value != value) {
         slider.value = value
     }
 }
 
 @BindingAdapter("app:valueAttrChanged")
-fun setSliderListeners(slider: Slider, attrChange: InverseBindingListener) {
+fun setSliderListeners(
+    slider: Slider,
+    attrChange: InverseBindingListener,
+) {
     slider.addOnChangeListener { _, _, _ ->
         attrChange.onChange()
     }
 }
 
 @BindingAdapter("lineColor")
-fun setLineColor(view: CanvasView, color: Int) {
+fun setLineColor(
+    view: CanvasView,
+    color: Int,
+) {
     view.setLineColor(color)
 }
 
 @BindingAdapter("lineWidth")
-fun setLineWidth(view: CanvasView, width: Float) {
+fun setLineWidth(
+    view: CanvasView,
+    width: Float,
+) {
     view.setLineWidth(width)
 }

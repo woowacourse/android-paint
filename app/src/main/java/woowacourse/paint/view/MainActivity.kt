@@ -22,4 +22,3 @@ class MainActivity : AppCompatActivity() {
         binding.adapter = adapter
     }
 }
-

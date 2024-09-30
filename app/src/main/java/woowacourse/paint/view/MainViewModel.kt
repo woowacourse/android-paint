@@ -3,12 +3,15 @@ package woowacourse.paint.view
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import woowacourse.paint.model.ColorItem
 import woowacourse.paint.view.listener.ColorControllerVisibilityListener
 import woowacourse.paint.view.listener.ColorSelectionListener
 import woowacourse.paint.view.listener.WidthControllerVisibilityListener
-import woowacourse.paint.model.ColorItem
 
-class MainViewModel : ViewModel(), ColorSelectionListener, ColorControllerVisibilityListener,
+class MainViewModel :
+    ViewModel(),
+    ColorSelectionListener,
+    ColorControllerVisibilityListener,
     WidthControllerVisibilityListener {
     private val _colorControllerVisible: MutableLiveData<Boolean> = MutableLiveData(true)
     val colorControllerVisible: LiveData<Boolean> = _colorControllerVisible
@@ -44,4 +47,3 @@ class MainViewModel : ViewModel(), ColorSelectionListener, ColorControllerVisibi
         _widthControllerVisible.value = !currValue
     }
 }
-
