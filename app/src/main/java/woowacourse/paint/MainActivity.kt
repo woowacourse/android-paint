@@ -11,8 +11,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val name = "레아"
-        val text = findViewById<TextView>(R.id.text)
-        text.text = "$name 안녕하세요!"
+
     }
 }
