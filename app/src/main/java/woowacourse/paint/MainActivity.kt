@@ -15,18 +15,23 @@ class MainActivity : AppCompatActivity() {
 
         drawingView = findViewById(R.id.drawing_view)
 
+        val btnBlack: Button = findViewById(R.id.btn_black)
         val btnRed: Button = findViewById(R.id.btn_red)
         val btnOrange: Button = findViewById(R.id.btn_orange)
         val btnYellow: Button = findViewById(R.id.btn_yellow)
         val btnGreen: Button = findViewById(R.id.btn_green)
         val btnBlue: Button = findViewById(R.id.btn_blue)
 
+        btnBlack.setOnClickListener {
+            drawingView.updateBrushColor(Color.BLACK)
+        }
+
         btnRed.setOnClickListener {
             drawingView.updateBrushColor(Color.RED)
         }
 
         btnOrange.setOnClickListener {
-            drawingView.updateBrushColor(Color.parseColor("#FFA500")) // 주황색
+            drawingView.updateBrushColor(Color.parseColor(ORANGE_COLOR))
         }
 
         btnYellow.setOnClickListener {
@@ -45,5 +50,9 @@ class MainActivity : AppCompatActivity() {
         sliderBrushSize.addOnChangeListener { _, value, _ ->
             drawingView.updateBrushSize(value)
         }
+    }
+
+    companion object {
+        private const val ORANGE_COLOR = "#FFA500"
     }
 }
