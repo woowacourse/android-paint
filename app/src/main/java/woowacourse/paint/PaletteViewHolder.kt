@@ -5,11 +5,13 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.paint.databinding.ItemColorBinding
 
-class PaletteViewHolder(
-    private val binding: ItemColorBinding,
-) : RecyclerView.ViewHolder(binding.root) {
-    fun bind(color: PaletteColor) {
+class PaletteViewHolder(private val binding: ItemColorBinding) : RecyclerView.ViewHolder(binding.root) {
+    fun bind(
+        color: PaletteColor,
+        paletteListener: PaletteListener,
+    ) {
         val targetColor = ContextCompat.getColor(binding.root.context, color.colorRes)
         binding.vwColor.backgroundTintList = ColorStateList.valueOf(targetColor)
+        binding.vwColor.setOnClickListener { paletteListener.selectColor(color) }
     }
 }

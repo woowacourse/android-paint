@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.paint.databinding.ItemColorBinding
 
-class PaletteAdapter(private val items: List<PaletteColor>) :
+class PaletteAdapter(private val items: List<PaletteColor>, private val listener: PaletteListener) :
     RecyclerView.Adapter<PaletteViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -24,7 +24,7 @@ class PaletteAdapter(private val items: List<PaletteColor>) :
         holder: PaletteViewHolder,
         position: Int,
     ) {
-        holder.bind(items[position])
+        holder.bind(items[position], listener)
     }
 
     override fun getItemCount(): Int = items.size
