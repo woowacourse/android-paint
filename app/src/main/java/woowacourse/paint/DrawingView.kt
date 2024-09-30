@@ -143,7 +143,11 @@ class DrawingView(
                 } else {
                     currentColor
                 }
-            style = Paint.Style.STROKE
+            style =
+                when (currentBrushType) {
+                    BrushType.PEN, BrushType.ERASER -> Paint.Style.STROKE
+                    BrushType.RECTANGLE, BrushType.CIRCLE -> Paint.Style.FILL_AND_STROKE
+                }
             strokeWidth = currentStrokeWidth
             isAntiAlias = true
             if (currentBrushType == BrushType.ERASER) {
