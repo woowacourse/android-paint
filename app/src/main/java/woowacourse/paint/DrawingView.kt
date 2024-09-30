@@ -16,8 +16,6 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
     private var currentPath: Path = Path()
     private var currentPaint: Paint = Paint()
 
-    private var ovalSize: Int = OVAL_SIZE
-
     init {
         isFocusable = true
         isFocusableInTouchMode = true
@@ -43,19 +41,14 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
             MotionEvent.ACTION_DOWN -> {
                 currentPath =
                     Path().apply {
-                        addOval(
-                            pointX,
-                            pointY,
-                            pointX + ovalSize,
-                            pointY + ovalSize,
-                            Path.Direction.CW,
-                        )
+                        moveTo(pointX, pointY)
                     }
-
-                paths.add(Pair(currentPath, Paint(currentPaint)))
             }
 
-            MotionEvent.ACTION_MOVE -> {}
+            MotionEvent.ACTION_MOVE -> {
+                currentPath.lineTo(pointX, pointY)
+            }
+
             MotionEvent.ACTION_UP -> {
                 paths.add(Pair(currentPath, Paint(currentPaint)))
                 currentPath = Path()
@@ -70,6 +63,8 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         currentPaint =
             Paint().apply {
                 color = Color.RED
+                style = Paint.Style.STROKE
+                strokeWidth = 50f
             }
     }
 
@@ -78,10 +73,6 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
     }
 
     fun setPaintWidth(width: Int) {
-        ovalSize = width
-    }
-
-    companion object {
-        private const val OVAL_SIZE = 50
+        currentPaint.strokeWidth = width.toFloat()
     }
 }
