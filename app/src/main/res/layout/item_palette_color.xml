@@ -5,6 +5,10 @@
     <data>
 
         <variable
+            name="color"
+            type="int" />
+
+        <variable
             name="actionHandler"
             type="woowacourse.paint.ui.PaletteAction" />
     </data>
@@ -18,8 +22,8 @@
             android:id="@+id/vw_color"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@color/white"
-            android:onClick="@{() -> actionHandler.onColorSelected(@color/black)}"
+            android:background="@{color}"
+            android:onClick="@{() -> actionHandler.onColorSelected(color)}"
             tools:background="@color/red" />
     </LinearLayout>
 </layout>

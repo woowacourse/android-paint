@@ -10,7 +10,7 @@ class PaletteViewHolder(
 
     fun bind(colorRes: Int, paletteAction: PaletteAction) {
         val color = ContextCompat.getColor(binding.root.context, colorRes)
-        binding.vwColor.setBackgroundColor(color)
+        binding.color = color
         binding.actionHandler = paletteAction
     }
 }

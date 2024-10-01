@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity(), PaletteAction {
         binding.rangeSlider.addOnChangeListener { _, value, _ ->
             val newBrush = brush.changeWidth(value)
             binding.canvas.setBrush(newBrush)
+            brush = newBrush
         }
     }
 
@@ -53,5 +54,8 @@ class MainActivity : AppCompatActivity(), PaletteAction {
     }
 
     override fun onColorSelected(color: Int) {
+        val newBrush = brush.changeColor(color)
+        binding.canvas.setBrush(newBrush)
+        brush = newBrush
     }
 }
