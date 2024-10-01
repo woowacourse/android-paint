@@ -1,12 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <woowacourse.paint.CustomView
-        android:id="@+id/customView"
+    <data>
+
+        <variable
+            name="view"
+            type="woowacourse.paint.CustomView" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
 
-</FrameLayout>
+        <woowacourse.paint.CustomView
+            android:id="@+id/customView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/range_slider"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_change_color"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:background="@color/purple_500"
+            android:text="색상 변경"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/btn_change_width"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.4" />
+
+        <Button
+            android:id="@+id/btn_change_width"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="10dp"
+            android:background="@color/purple_500"
+            android:text="굵기 변경"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintWidth_percent="0.4" />
+
+        <Button
+            android:id="@+id/btn_color_red"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="10dp"
+            android:background="#DD3723"
+            app:layout_constraintBottom_toTopOf="@id/btn_change_width"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.2" />
+
+        <Button
+            android:id="@+id/btn_color_orange"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:background="#E79D39"
+            app:layout_constraintBottom_toBottomOf="@id/btn_color_red"
+            app:layout_constraintStart_toEndOf="@id/btn_color_red"
+            app:layout_constraintWidth_percent="0.2" />
+
+        <Button
+            android:id="@+id/btn_color_yellow"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:background="#F6EC62"
+            app:layout_constraintBottom_toBottomOf="@id/btn_color_red"
+            app:layout_constraintStart_toEndOf="@id/btn_color_orange"
+            app:layout_constraintWidth_percent="0.2" />
+
+        <Button
+            android:id="@+id/btn_color_green"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:background="#6FAC5C"
+            app:layout_constraintBottom_toBottomOf="@id/btn_color_red"
+            app:layout_constraintStart_toEndOf="@id/btn_color_yellow"
+            app:layout_constraintWidth_percent="0.2" />
+
+        <Button
+            android:id="@+id/btn_color_blue"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:background="#4D51AE"
+            app:layout_constraintBottom_toBottomOf="@id/btn_color_red"
+            app:layout_constraintStart_toEndOf="@id/btn_color_green"
+            app:layout_constraintWidth_percent="0.2" />
+
+        <com.google.android.material.slider.RangeSlider
+            android:id="@+id/range_slider"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/btn_color_red" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
