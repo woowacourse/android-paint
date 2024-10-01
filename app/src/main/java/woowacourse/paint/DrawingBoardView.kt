@@ -45,13 +45,9 @@ class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, at
                 currentDrawing.path.moveTo(pointX, pointY)
             }
 
-            MotionEvent.ACTION_MOVE -> {
-                currentDrawing.path.lineTo(pointX, pointY)
-            }
+            MotionEvent.ACTION_MOVE -> currentDrawing.path.lineTo(pointX, pointY)
 
-            MotionEvent.ACTION_UP -> {
-                currentDrawing = currentDrawing.copy(path = Path())
-            }
+            MotionEvent.ACTION_UP -> currentDrawing = currentDrawing.copy(path = Path())
 
             else -> return false
         }
@@ -60,16 +56,18 @@ class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, at
     }
 
     fun setBrushThickness(thickness: Float) {
-        val paint = Paint(currentDrawing.paint).apply {
-            strokeWidth = thickness
-        }
+        val paint =
+            Paint(currentDrawing.paint).apply {
+                strokeWidth = thickness
+            }
         currentDrawing = currentDrawing.copy(paint = paint)
     }
 
     fun setBrushColor(color: Int) {
-        val paint = Paint(currentDrawing.paint).apply {
-            this.color = color
-        }
+        val paint =
+            Paint(currentDrawing.paint).apply {
+                this.color = color
+            }
         currentDrawing = currentDrawing.copy(paint = paint)
     }
 }

@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.slider.RangeSlider
 
-
 class MainActivity : AppCompatActivity() {
     private val drawingBoard: DrawingBoardView by lazy { findViewById(R.id.drawing_board) }
     private val rangeSlider: RangeSlider by lazy { findViewById(R.id.range_slider) }
@@ -20,17 +19,23 @@ class MainActivity : AppCompatActivity() {
             drawingBoard.setBrushThickness(value)
         }
 
-        recyclerView.adapter = ColorsAdapter(
+        recyclerView.adapter =
+            ColorsAdapter(
+                colors = colors,
+                listener = { colorUiModel ->
+                    drawingBoard.setBrushColor(colorUiModel.color)
+                },
+            )
+    }
+
+    companion object {
+        private val colors =
             listOf(
                 ColorUiModel(1, Color.RED),
                 ColorUiModel(3, Color.YELLOW),
                 ColorUiModel(4, Color.GREEN),
                 ColorUiModel(5, Color.BLUE),
                 ColorUiModel(6, Color.MAGENTA),
-            ),
-            listener = { colorUiModel ->
-                drawingBoard.setBrushColor(colorUiModel.color)
-            }
-        )
+            )
     }
 }
