@@ -6,9 +6,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 
 @BindingAdapter("isChecked")
-fun ImageView.bindPaintColorIsChecked(
-    isChecked: Boolean
-) {
+fun ImageView.bindPaintColorIsChecked(isChecked: Boolean) {
     if (isChecked) {
         setImageResource(R.drawable.ic_check_white)
     } else {

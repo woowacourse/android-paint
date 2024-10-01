@@ -26,12 +26,16 @@ class PaintBoard(context: Context, attr: AttributeSet) : View(context, attr) {
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                createNewPath(x, y)
-                createNewLine()
+                lines.add(Line(path, paint))
+                path.moveTo(x, y)
             }
 
             MotionEvent.ACTION_MOVE -> path.lineTo(x, y)
-            MotionEvent.ACTION_UP -> createNewPaint()
+
+            MotionEvent.ACTION_UP -> {
+                createNewPath()
+                createNewPaint()
+            }
 
             else -> super.onTouchEvent(event)
         }
@@ -58,16 +62,8 @@ class PaintBoard(context: Context, attr: AttributeSet) : View(context, attr) {
             }
     }
 
-    private fun createNewLine() {
-        val line = Line(path, paint)
-        lines.add(line)
-    }
-
-    private fun createNewPath(
-        x: Float,
-        y: Float,
-    ) {
-        path = Path().apply { moveTo(x, y) }
+    private fun createNewPath() {
+        path = Path()
     }
 
     private fun createNewPaint() {

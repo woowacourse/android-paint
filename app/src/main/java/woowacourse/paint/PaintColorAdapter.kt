@@ -28,7 +28,7 @@ class PaintColorAdapter(private val actionHandler: PaintActionHandler) :
         holder.bind(
             color = getItem(position).color,
             isChecked = getItem(position).isChecked,
-            actionHandler = actionHandler
+            actionHandler = actionHandler,
         )
     }
 

@@ -58,10 +58,11 @@ class PaintActivity : AppCompatActivity() {
     }
 
     private fun submitPaintColors(colorRes: Int) {
-        val paintColors = Color.getColors().map { color ->
-            val isChecked = color.colorRes == colorRes
-            PaintColor(color, isChecked)
-        }
+        val paintColors =
+            Color.getColors().map { color ->
+                val isChecked = color.colorRes == colorRes
+                PaintColor(color, isChecked)
+            }
         adapter.submitList(paintColors)
     }
 
