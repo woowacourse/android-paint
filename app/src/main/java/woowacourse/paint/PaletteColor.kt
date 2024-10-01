@@ -10,9 +10,4 @@ enum class PaletteColor(
     YELLOW(R.color.yellow),
     GREEN(R.color.green),
     BLUE(R.color.blue),
-    ;
-
-    companion object {
-        fun getAllColors(): List<PaletteColor> = entries
-    }
 }

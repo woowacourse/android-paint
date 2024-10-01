@@ -7,7 +7,7 @@ import woowacourse.paint.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), PaletteListener {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    private val adapter by lazy { PaletteAdapter(PaletteColor.getAllColors(), this) }
+    private val adapter by lazy { PaletteAdapter(PaletteColor.entries, this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

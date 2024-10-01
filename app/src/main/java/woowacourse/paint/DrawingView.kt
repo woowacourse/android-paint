@@ -14,11 +14,6 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
     private var currentColor = resources.getColor(DEFAULT_STROKE_COLOR.colorRes, null)
     private var currentStrokeWidth = DEFAULT_STROKE_WIDTH
 
-    init {
-        isFocusable = true
-        isFocusableInTouchMode = true
-    }
-
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         for (line in lines) {
@@ -65,7 +60,7 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
     }
 
     companion object {
-        val DEFAULT_STROKE_COLOR = PaletteColor.RED
+        private val DEFAULT_STROKE_COLOR = PaletteColor.RED
         const val DEFAULT_STROKE_WIDTH = 20f
     }
 }
