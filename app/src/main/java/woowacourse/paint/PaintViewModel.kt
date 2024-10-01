@@ -1,5 +1,6 @@
 package woowacourse.paint
 
+import androidx.annotation.ColorRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,7 +14,7 @@ class PaintViewModel : ViewModel(), PaintActionHandler {
     private val _strokeWidth: MutableLiveData<Float> = MutableLiveData(DEFAULT_STROKE_WIDTH)
     val strokeWidth: LiveData<Float> get() = _strokeWidth
 
-    override fun changeColorRes(colorRes: Int) {
+    override fun changeColorRes(@ColorRes colorRes: Int) {
         _colorRes.value = colorRes
     }
 

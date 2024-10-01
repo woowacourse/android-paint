@@ -2,6 +2,7 @@ package woowacourse.paint
 
 import android.content.res.ColorStateList
 import android.widget.ImageView
+import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 
@@ -15,7 +16,7 @@ fun ImageView.bindPaintColorIsChecked(isChecked: Boolean) {
 }
 
 @BindingAdapter("colorBackgroundTint")
-fun ImageView.bindColorBackgroundTint(colorRes: Int) {
+fun ImageView.bindColorBackgroundTint(@ColorRes colorRes: Int) {
     val color = ContextCompat.getColor(context, colorRes)
     backgroundTintList = ColorStateList.valueOf(color)
 }
