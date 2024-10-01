@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity(), ColorPaletteHandler {
         setContentView(R.layout.activity_main)
         setupDrawingBoard()
         setupColorPalette()
+        setupStrokeWidthRangeSlider()
     }
 
     override fun onColorChangeClicked(color: Int) {
@@ -27,5 +28,11 @@ class MainActivity : AppCompatActivity(), ColorPaletteHandler {
 
     private fun setupColorPalette() {
         binding.rvMainColorPalette.adapter = adapter
+    }
+
+    private fun setupStrokeWidthRangeSlider() {
+        binding.rangeSliderMainStrokeWidth.addOnChangeListener { _, value, _ ->
+            drawingBoard.setupStrokeWidth(strokeWidth = value)
+        }
     }
 }

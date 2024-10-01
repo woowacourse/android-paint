@@ -15,18 +15,19 @@
             android:id="@+id/custom_view_main_drawing_board"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/range_slider_main_stroke_width"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/range_slider_main_thickness" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.slider.RangeSlider
-            android:id="@+id/range_slider_main_thickness"
+            android:id="@+id/range_slider_main_stroke_width"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="8dp"
             android:layout_marginBottom="8dp"
-            android:visibility="gone"
+            android:valueFrom="1"
+            android:valueTo="100"
             app:layout_constraintBottom_toTopOf="@id/rv_main_color_palette"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -36,41 +37,17 @@
             android:id="@+id/rv_main_color_palette"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="16dp"
             android:background="@drawable/shape_color_palette_background"
             android:clipToPadding="false"
             android:orientation="horizontal"
             android:padding="12dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@id/btn_main_change_color"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:itemCount="5"
             tools:listitem="@layout/item_color_palette" />
-
-        <Button
-            android:id="@+id/btn_main_change_color"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginBottom="8dp"
-            android:text="@string/main_change_color"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btn_main_change_thickness"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <Button
-            android:id="@+id/btn_main_change_thickness"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginEnd="8dp"
-            android:text="@string/main_change_thickness"
-            app:layout_constraintBottom_toBottomOf="@id/btn_main_change_color"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/btn_main_change_color"
-            app:layout_constraintTop_toTopOf="@id/btn_main_change_color" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

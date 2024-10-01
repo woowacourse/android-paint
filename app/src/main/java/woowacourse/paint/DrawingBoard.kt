@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 
 class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs) {
     private var selectedColor: Int = ContextCompat.getColor(context, R.color.red)
+    private var selectedStrokeWidth: Float = 1f
 
     private var line = Line(Path(), setupPaint())
     private val lines: MutableList<Line> = mutableListOf(line)
@@ -43,6 +44,11 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
         return true
     }
 
+    fun setupStrokeWidth(strokeWidth: Float) {
+        selectedStrokeWidth = strokeWidth
+        addNewLine()
+    }
+
     fun setupColor(color: Int) {
         selectedColor = color
         addNewLine()
@@ -53,13 +59,12 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
         lines.add(line)
     }
 
-    private fun setupPaint(): Paint {
-        return Paint().apply {
+    private fun setupPaint() =
+        Paint().apply {
             color = selectedColor
             strokeCap = Cap.ROUND
             style = Paint.Style.STROKE
-            strokeWidth = 2f
+            strokeWidth = selectedStrokeWidth
             isAntiAlias = true
         }
-    }
 }
