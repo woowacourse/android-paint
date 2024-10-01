@@ -8,7 +8,6 @@ import woowacourse.paint.ui.PaintBoard
 import woowacourse.paint.ui.PaletteAction
 import woowacourse.paint.ui.PaletteAdapter
 
-
 class MainActivity : AppCompatActivity(), PaletteAction {
     private lateinit var binding: ActivityMainBinding
     private lateinit var brush: Brush
@@ -17,8 +16,8 @@ class MainActivity : AppCompatActivity(), PaletteAction {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initView()
-        initPaintBoard()
         initBrush()
+        initPaintBoard()
         initPalette()
     }
 

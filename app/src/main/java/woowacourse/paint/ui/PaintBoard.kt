@@ -12,7 +12,6 @@ import woowacourse.paint.model.Brush
 import woowacourse.paint.model.Drawing
 
 class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
-
     private val drawings = mutableListOf<Drawing>()
     private var currentPath = Path()
     private var currentBrush = Brush()
