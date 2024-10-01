@@ -5,12 +5,11 @@ import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 
-@BindingAdapter("colorRes", "checkedColorRes")
-fun ImageView.bindPaintColorChecked(
-    colorRes: Int,
-    checkedColorRes: Int,
+@BindingAdapter("isChecked")
+fun ImageView.bindPaintColorIsChecked(
+    isChecked: Boolean
 ) {
-    if (colorRes == checkedColorRes) {
+    if (isChecked) {
         setImageResource(R.drawable.ic_check_white)
     } else {
         setImageResource(0)

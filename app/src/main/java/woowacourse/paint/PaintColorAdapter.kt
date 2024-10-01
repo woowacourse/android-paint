@@ -6,8 +6,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import woowacourse.paint.databinding.ItemPaintColorBinding
 
-class PaintColorAdapter(private val viewModel: PaintViewModel) :
+class PaintColorAdapter(private val actionHandler: PaintActionHandler) :
     ListAdapter<PaintColor, PaintColorViewHolder>(diffUtil) {
+    init {
+        setHasStableIds(true)
+    }
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -21,7 +25,11 @@ class PaintColorAdapter(private val viewModel: PaintViewModel) :
         holder: PaintColorViewHolder,
         position: Int,
     ) {
-        holder.bind(color = getItem(position), viewModel = viewModel)
+        holder.bind(
+            color = getItem(position).color,
+            isChecked = getItem(position).isChecked,
+            actionHandler = actionHandler
+        )
     }
 
     companion object {

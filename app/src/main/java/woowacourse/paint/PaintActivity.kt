@@ -39,19 +39,30 @@ class PaintActivity : AppCompatActivity() {
 
     private fun setupAdapter() {
         binding.rcvColorPalette.adapter = adapter
-        adapter.submitList(PaintColor.getAllPaintColors())
+
+        val colorRes = viewModel.colorRes.value ?: return
+        submitPaintColors(colorRes)
     }
 
     private fun setupObserving() {
         viewModel.colorRes.observe(this) { colorRes ->
-            val color = getColor(colorRes)
-            paintBoard.setPaintColor(color)
-            adapter.notifyDataSetChanged()
+            val paintColor = getColor(colorRes)
+            paintBoard.setPaintColor(paintColor)
+
+            submitPaintColors(colorRes)
         }
 
         viewModel.strokeWidth.observe(this) { strokeWidth ->
             paintBoard.setPaintStrokeWidth(strokeWidth)
         }
+    }
+
+    private fun submitPaintColors(colorRes: Int) {
+        val paintColors = Color.getColors().map { color ->
+            val isChecked = color.colorRes == colorRes
+            PaintColor(color, isChecked)
+        }
+        adapter.submitList(paintColors)
     }
 
     private fun setupRangeSlider() {
