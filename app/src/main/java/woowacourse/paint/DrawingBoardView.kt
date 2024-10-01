@@ -12,16 +12,17 @@ import android.view.View
 
 class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private var currentDrawing = Drawing(Path(), Paint())
-    private var brushThickness: Float = 5f
 
     private val drawings: MutableList<Drawing> = mutableListOf()
 
     init {
+        setUpDefaultBrush()
+    }
+
+    private fun setUpDefaultBrush() {
         currentDrawing.paint.apply {
-            color = Color.BLACK
-            style = Paint.Style.STROKE
-            strokeWidth = brushThickness
-            strokeCap = Paint.Cap.ROUND
+            color = DEFAULT_BRUSH_COLOR
+            style = DEFAULT_BRUSH_STYLE
             isAntiAlias = true
         }
     }
@@ -69,5 +70,10 @@ class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, at
                 this.color = color
             }
         currentDrawing = currentDrawing.copy(paint = paint)
+    }
+
+    companion object {
+        private const val DEFAULT_BRUSH_COLOR = Color.BLACK
+        private val DEFAULT_BRUSH_STYLE = Paint.Style.STROKE
     }
 }

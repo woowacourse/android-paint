@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
         private val colors =
             listOf(
+                ColorUiModel(0, Color.BLACK),
                 ColorUiModel(1, Color.RED),
                 ColorUiModel(3, Color.YELLOW),
                 ColorUiModel(4, Color.GREEN),
