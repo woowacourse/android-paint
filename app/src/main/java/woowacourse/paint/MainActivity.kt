@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.model.Brush
 import woowacourse.paint.ui.PaintBoard
+import woowacourse.paint.ui.PaletteAction
+import woowacourse.paint.ui.PaletteAdapter
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), PaletteAction {
     private lateinit var binding: ActivityMainBinding
     private lateinit var brush: Brush
     private lateinit var paintBoard: PaintBoard
@@ -17,6 +19,7 @@ class MainActivity : AppCompatActivity() {
         initView()
         initPaintBoard()
         initBrush()
+        initPalette()
     }
 
     private fun initView() {
@@ -35,5 +38,20 @@ class MainActivity : AppCompatActivity() {
             val newBrush = brush.changeWidth(value)
             binding.canvas.setBrush(newBrush)
         }
+    }
+
+    private fun initPalette() {
+        val palette =
+            listOf(
+                R.color.red,
+                R.color.orange,
+                R.color.yellow,
+                R.color.green,
+                R.color.blue,
+            )
+        binding.rvPalette.adapter = PaletteAdapter(palette, this)
+    }
+
+    override fun onColorSelected(color: Int) {
     }
 }
