@@ -64,10 +64,6 @@ class CustomView(
         return true
     }
 
-    fun startDrawing() {
-        currentPath = Path()
-    }
-
     private fun finishDrawing() {
         paths.add(PathData(currentPath, paint.color, paint.strokeWidth))
     }

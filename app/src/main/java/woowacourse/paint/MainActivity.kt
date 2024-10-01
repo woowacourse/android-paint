@@ -20,28 +20,22 @@ class MainActivity : AppCompatActivity() {
 
     private fun setPaintColor() {
         binding.btnColorRed.setOnClickListener {
-            binding.customView.startDrawing()
             binding.customView.paint.color = MyColor.RED
         }
 
         binding.btnColorOrange.setOnClickListener {
-            binding.customView.startDrawing()
             binding.customView.paint.color = MyColor.ORANGE
-            Log.d("alsong", "${binding.customView.paint.color}")
         }
 
         binding.btnColorYellow.setOnClickListener {
-            binding.customView.startDrawing()
             binding.customView.paint.color = MyColor.YELLOW
         }
 
         binding.btnColorGreen.setOnClickListener {
-            binding.customView.startDrawing()
             binding.customView.paint.color = MyColor.GREEN
         }
 
         binding.btnColorBlue.setOnClickListener {
-            binding.customView.startDrawing()
             binding.customView.paint.color = MyColor.BLUE
         }
     }
