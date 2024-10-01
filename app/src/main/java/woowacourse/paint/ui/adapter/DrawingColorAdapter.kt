@@ -11,10 +11,6 @@ import woowacourse.paint.ui.ActionHandler
 
 class DrawingColorAdapter(private val actionHandler: ActionHandler) :
     ListAdapter<DrawingStyle, DrawingColorAdapter.DrawColorViewHolder>(DrawingColorDiffCallback) {
-    init {
-        setHasStableIds(true)
-    }
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
