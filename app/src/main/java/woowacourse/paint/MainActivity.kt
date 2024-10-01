@@ -1,19 +1,31 @@
 package woowacourse.paint
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import woowacourse.paint.view.SliderView
+import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.view.PaletteAdapter
 
 
 class MainActivity : AppCompatActivity() {
 
+    private val binding: ActivityMainBinding by lazy {
+        ActivityMainBinding.inflate(layoutInflater)
+    }
+    private val adapter by lazy {
+        PaletteAdapter {
+            binding.drawingPaper.currentColor = it.color
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        findViewById<SliderView>(R.id.my_slider).setOnPositionChangeListener {
-            Log.d("Position", "Position : $it")
+        setContentView(binding.root)
+        binding.drawingPaper.currentStrokeWidth = binding.mySlider.sliderPosition
+        binding.mySlider.setOnSliderChangeListener {
+            binding.drawingPaper.currentStrokeWidth = it
         }
+        binding.rvPalette.adapter = adapter
+        binding.rvPalette.setHasFixedSize(true)
+        adapter.submitList(Paint.dummy)
     }
 }
