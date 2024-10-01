@@ -1,8 +1,9 @@
 package woowacourse.paint
 
 import android.os.Bundle
-import android.widget.TextView
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import woowacourse.paint.view.SliderView
 
 
 class MainActivity : AppCompatActivity() {
@@ -11,8 +12,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val name = "레아"
-        val text = findViewById<TextView>(R.id.text)
-        text.text = "$name 안녕하세요!"
+        findViewById<SliderView>(R.id.my_slider).setOnPositionChangeListener {
+            Log.d("Position", "Position : $it")
+        }
     }
 }
