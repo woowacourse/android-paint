@@ -6,7 +6,7 @@
 
         <variable
             name="color"
-            type="woowacourse.paint.Color" />
+            type="woowacourse.paint.util.Color" />
 
         <variable
             name="isChecked"
@@ -14,7 +14,7 @@
 
         <variable
             name="actionHandler"
-            type="woowacourse.paint.PaintActionHandler" />
+            type="woowacourse.paint.action.PaintActionHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

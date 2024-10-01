@@ -6,7 +6,11 @@ import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.slider.RangeSlider
 import woowacourse.paint.PaintBoard.Companion.DEFAULT_STROKE_WIDTH
+import woowacourse.paint.adapter.PaintColorAdapter
 import woowacourse.paint.databinding.ActivityPaintBinding
+import woowacourse.paint.model.PaintColor
+import woowacourse.paint.util.Color
+import woowacourse.paint.viewmodel.PaintViewModel
 
 class PaintActivity : AppCompatActivity() {
     private var _binding: ActivityPaintBinding? = null
@@ -58,7 +62,9 @@ class PaintActivity : AppCompatActivity() {
         }
     }
 
-    private fun submitPaintColors(@ColorRes colorRes: Int) {
+    private fun submitPaintColors(
+        @ColorRes colorRes: Int,
+    ) {
         val paintColors =
             Color.getColors().map { color ->
                 val isChecked = color.colorRes == colorRes

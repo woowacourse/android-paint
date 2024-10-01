@@ -8,6 +8,7 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import woowacourse.paint.model.Line
 
 class PaintBoard(context: Context, attr: AttributeSet) : View(context, attr) {
     private val lines: MutableList<Line> = mutableListOf()

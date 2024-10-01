@@ -1,6 +1,7 @@
-package woowacourse.paint
+package woowacourse.paint.util
 
 import androidx.annotation.ColorRes
+import woowacourse.paint.R
 
 enum class Color(
     @ColorRes val colorRes: Int,

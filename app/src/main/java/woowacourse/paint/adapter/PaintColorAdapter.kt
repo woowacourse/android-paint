@@ -1,10 +1,12 @@
-package woowacourse.paint
+package woowacourse.paint.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import woowacourse.paint.action.PaintActionHandler
 import woowacourse.paint.databinding.ItemPaintColorBinding
+import woowacourse.paint.model.PaintColor
 
 class PaintColorAdapter(private val actionHandler: PaintActionHandler) :
     ListAdapter<PaintColor, PaintColorViewHolder>(diffUtil) {
