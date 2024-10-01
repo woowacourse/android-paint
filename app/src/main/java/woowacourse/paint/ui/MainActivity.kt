@@ -39,7 +39,6 @@ class MainActivity : AppCompatActivity(), ActionHandler {
         drawingView =
             DrawingView(
                 context = this,
-                attrs = null,
                 drawingStyle = drawingStyle,
             )
         binding.constraintPaintBoard.addView(drawingView)
@@ -58,7 +57,6 @@ class MainActivity : AppCompatActivity(), ActionHandler {
                     drawingView =
                         DrawingView(
                             context = this@MainActivity,
-                            attrs = null,
                             drawingStyle = drawingStyle,
                         )
                     binding.constraintPaintBoard.addView(drawingView)
@@ -76,7 +74,6 @@ class MainActivity : AppCompatActivity(), ActionHandler {
         drawingView =
             DrawingView(
                 context = this,
-                attrs = null,
                 drawingStyle = drawingStyle,
             )
 

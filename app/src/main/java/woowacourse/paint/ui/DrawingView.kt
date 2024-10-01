@@ -13,7 +13,7 @@ import woowacourse.paint.model.DrawingStyle
 @SuppressLint("ViewConstructor")
 class DrawingView(
     context: Context,
-    attrs: AttributeSet?,
+    attrs: AttributeSet? = null,
     drawingStyle: DrawingStyle,
 ) : View(context, attrs) {
     private val path = Path()
