@@ -17,7 +17,7 @@ class CanvasView(context: Context, attrs: AttributeSet) :
     View(context, attrs) {
     private val strokes = mutableListOf<Stroke>()
     private var currentPath: Path? = null
-    private var currentPaint: Paint =
+    private val currentPaint: Paint =
         Paint().apply {
             style = Paint.Style.STROKE
             isAntiAlias = true
@@ -27,13 +27,17 @@ class CanvasView(context: Context, attrs: AttributeSet) :
 
     init {
         initializeCanvasView()
+        initializePaint(context, attrs)
+    }
+
+    private fun initializePaint(context: Context, attrs: AttributeSet) {
         context.theme.obtainStyledAttributes(
             attrs,
             R.styleable.CustomView,
             0,
             0,
         ).apply {
-            initializePaint()
+            initializePaintByResourceType()
         }
     }
 
@@ -42,7 +46,7 @@ class CanvasView(context: Context, attrs: AttributeSet) :
         isFocusableInTouchMode = true
     }
 
-    private fun TypedArray.initializePaint() {
+    private fun TypedArray.initializePaintByResourceType() {
         try {
             currentPaint.color = getColor(R.styleable.CustomView_lineColor, DEFAULT_LINE_COLOR)
             currentPaint.strokeWidth =
