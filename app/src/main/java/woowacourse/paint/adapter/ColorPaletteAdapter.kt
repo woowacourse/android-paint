@@ -1,8 +1,10 @@
-package woowacourse.paint
+package woowacourse.paint.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import woowacourse.paint.ColorPaletteHandler
+import woowacourse.paint.R
 import woowacourse.paint.databinding.ItemColorPaletteBinding
 
 class ColorPaletteAdapter(

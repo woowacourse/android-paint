@@ -1,4 +1,4 @@
-package woowacourse.paint
+package woowacourse.paint.drawingboard
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -10,6 +10,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.ContextCompat
+import woowacourse.paint.R
 
 class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs) {
     private var selectedColor: Int = ContextCompat.getColor(context, R.color.red)

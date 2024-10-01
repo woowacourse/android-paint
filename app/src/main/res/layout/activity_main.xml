@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <woowacourse.paint.DrawingBoard
+        <woowacourse.paint.drawingboard.DrawingBoard
             android:id="@+id/custom_view_main_drawing_board"
             android:layout_width="0dp"
             android:layout_height="0dp"

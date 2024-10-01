@@ -3,7 +3,9 @@ package woowacourse.paint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import woowacourse.paint.adapter.ColorPaletteAdapter
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.drawingboard.DrawingBoard
 
 class MainActivity : AppCompatActivity(), ColorPaletteHandler {
     private val binding: ActivityMainBinding by lazy { DataBindingUtil.setContentView(this, R.layout.activity_main) }
