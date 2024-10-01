@@ -11,19 +11,25 @@ import woowacourse.paint.utils.ItemDiffCallback
 class PaletteAdapter(
     private val onClickPaint: (Paint) -> Unit,
 ) : ListAdapter<Paint, PaletteAdapter.PaintViewHolder>(paintComparator) {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PaintViewHolder {
-        val binding = ItemPaintBinding.inflate(
-            LayoutInflater.from(parent.context),
-            parent,
-            false
-        )
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): PaintViewHolder {
+        val binding =
+            ItemPaintBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false,
+            )
         return PaintViewHolder(binding, onClickPaint)
     }
 
-    override fun onBindViewHolder(holder: PaintViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: PaintViewHolder,
+        position: Int,
+    ) {
         holder.bind(getItem(position))
     }
-
 
     class PaintViewHolder(
         private val binding: ItemPaintBinding,
@@ -43,10 +49,10 @@ class PaletteAdapter(
     }
 
     private companion object {
-        val paintComparator = ItemDiffCallback<Paint>(
-            onItemsTheSame = { oldItem, newItem -> oldItem.color == newItem.color },
-            onContentsTheSame = { oldItem, newItem -> oldItem == newItem },
-        )
+        val paintComparator =
+            ItemDiffCallback<Paint>(
+                onItemsTheSame = { oldItem, newItem -> oldItem.color == newItem.color },
+                onContentsTheSame = { oldItem, newItem -> oldItem == newItem },
+            )
     }
 }
-
