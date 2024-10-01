@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity(), ActionHandler {
 
     private val adapter: DrawingColorAdapter by lazy { DrawingColorAdapter(this@MainActivity) }
 
-    private lateinit var drawingStyle: DrawingStyle
+    private lateinit var currentDrawingStyle: DrawingStyle
     private lateinit var drawingView: DrawingView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,13 +35,8 @@ class MainActivity : AppCompatActivity(), ActionHandler {
     }
 
     private fun initDrawingView() {
-        drawingStyle = DrawingStyle(Color.RED)
-        drawingView =
-            DrawingView(
-                context = this,
-                drawingStyle = drawingStyle,
-            )
-        binding.constraintPaintBoard.addView(drawingView)
+        currentDrawingStyle = DrawingStyle(Color.RED)
+        addView()
     }
 
     private fun initObserve() {
@@ -53,13 +48,8 @@ class MainActivity : AppCompatActivity(), ActionHandler {
                     progress: Int,
                     fromUser: Boolean,
                 ) {
-                    drawingStyle = drawingStyle.copy(strokeWidth = progress.toFloat())
-                    drawingView =
-                        DrawingView(
-                            context = this@MainActivity,
-                            drawingStyle = drawingStyle,
-                        )
-                    binding.constraintPaintBoard.addView(drawingView)
+                    currentDrawingStyle = currentDrawingStyle.copy(strokeWidth = progress.toFloat())
+                    addView()
                 }
 
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {}
@@ -70,13 +60,16 @@ class MainActivity : AppCompatActivity(), ActionHandler {
     }
 
     override fun changeDrawingColor(color: Int) {
-        drawingStyle = drawingStyle.copy(color = color)
+        currentDrawingStyle = currentDrawingStyle.copy(color = color)
+        addView()
+    }
+
+    private fun addView() {
         drawingView =
             DrawingView(
                 context = this,
-                drawingStyle = drawingStyle,
+                drawingStyle = currentDrawingStyle,
             )
-
         binding.constraintPaintBoard.addView(drawingView)
     }
 
