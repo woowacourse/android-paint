@@ -1,12 +1,7 @@
 package woowacourse.paint.presentation.palette
 
 import android.os.Bundle
-import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.BindingAdapter
-import woowacourse.paint.R
 import woowacourse.paint.databinding.ActivityColorPaletteBinding
 import woowacourse.paint.presentation.paint.PaintView
 import woowacourse.paint.presentation.palette.adapter.ColorPaletteAdapter
