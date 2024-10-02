@@ -40,6 +40,7 @@ class CustomView(context: Context, attrs: AttributeSet) :
             MotionEvent.ACTION_DOWN -> {
                 path = addOval(pointX, pointY)
             }
+
             MotionEvent.ACTION_MOVE ->
                 addPath(
                     path, pointX, pointY
@@ -84,17 +85,9 @@ class CustomView(context: Context, attrs: AttributeSet) :
         paint.strokeCap = Paint.Cap.ROUND;
     }
 
-    private fun newPaint(): Paint {
-        val newPaint = Paint()
-        newPaint.color = paint.color
-        newPaint.strokeWidth = paint.strokeWidth
-
-        newPaint.style = Paint.Style.STROKE;
-        newPaint.isAntiAlias = true;
-        newPaint.isDither = true;
-        newPaint.strokeJoin = Paint.Join.ROUND;
-        newPaint.strokeCap = Paint.Cap.ROUND;
-        return newPaint
+    private fun newPaint(): Paint = paint.apply {
+        color = paint.color
+        strokeWidth = paint.strokeWidth
     }
 
     fun setColor(color: Int) {
