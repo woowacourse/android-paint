@@ -28,8 +28,6 @@ class PaintView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
         for ((path, paint) in pathHistory) {
             canvas.drawPath(path, paint)
         }
-
-        canvas.drawPath(path, paint)
     }
 
     @SuppressLint("ClickableViewAccessibility")
