@@ -65,10 +65,12 @@
             layout="@layout/brush_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:visibility="@{isBrushListVisible ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toTopOf="@id/range_slider"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:onClickPaletteListener="@{onClickPaletteListener}" />
 
         <Button
             android:id="@+id/btn_change_color"

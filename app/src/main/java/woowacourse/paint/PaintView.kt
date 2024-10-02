@@ -12,6 +12,8 @@ import androidx.annotation.ColorRes
 
 class PaintView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     private val brushHistory = mutableListOf(Brush())
+    private var startX: Float = 0f
+    private var startY: Float = 0f
 
     init {
         isFocusable = true
@@ -20,6 +22,7 @@ class PaintView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
             setColor(DEFAULT_COLOR)
             setThickness(DEFAULT_STROKE_WIDTH)
         }
+        setLayerType(LAYER_TYPE_HARDWARE, null)
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -36,8 +39,21 @@ class PaintView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
         val pointY = event.y
         val currentBrush = brushHistory.last()
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> currentBrush.moveTo(pointX, pointY)
-            MotionEvent.ACTION_MOVE -> currentBrush.lineTo(pointX, pointY)
+            MotionEvent.ACTION_DOWN -> {
+                startX = pointX
+                startY = pointY
+                currentBrush.moveTo(pointX, pointY)
+            }
+
+            MotionEvent.ACTION_MOVE -> {
+                currentBrush.saveMovement(startX, startY, pointX, pointY, false)
+            }
+
+            MotionEvent.ACTION_UP -> {
+                currentBrush.saveMovement(startX, startY, pointX, pointY, true)
+                brushHistory.add(newBrush())
+            }
+
             else -> super.onTouchEvent(event)
         }
 
@@ -49,16 +65,28 @@ class PaintView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
     fun changeColor(
         @ColorRes color: Int,
     ) {
-        val newBrush = Brush(paint = Paint(brushHistory.last().paint))
+        val newBrush = newBrush()
         newBrush.setColor(color)
         brushHistory.add(newBrush)
     }
 
     fun changeThickness(size: Float) {
-        val newBrush = Brush(paint = Paint(brushHistory.last().paint))
+        val newBrush = newBrush()
         newBrush.setThickness(size)
         brushHistory.add(newBrush)
     }
+
+    fun changeBrush(brushName: String) {
+        val newBrush = newBrush()
+        newBrush.setBrush(brushName)
+        brushHistory.add(newBrush)
+    }
+
+    private fun newBrush() =
+        Brush(
+            paint = Paint(brushHistory.last().paint),
+            brushState = brushHistory.last().brushState,
+        )
 
     companion object {
         private const val DEFAULT_STROKE_WIDTH = 10.0f

@@ -4,6 +4,10 @@
 
     <data>
 
+        <variable
+            name="onClickPaletteListener"
+            type="woowacourse.paint.OnPaletteClickListener" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,7 +20,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:background="@color/purple_200"
-            android:text="펜"
+            android:onClick="@{() -> onClickPaletteListener.onClickBrushChange(@string/brush_pen)}"
+            android:text="@string/brush_pen"
             android:textColor="@color/white"
             app:layout_constraintEnd_toStartOf="@id/orange_palette"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -28,7 +33,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/purple_200"
-            android:text="직사각형"
+            android:onClick="@{() -> onClickPaletteListener.onClickBrushChange(@string/brush_rectangle)}"
+            android:text="@string/brush_rectangle"
             android:textColor="@color/white"
             app:layout_constraintEnd_toStartOf="@id/yellow_palette"
             app:layout_constraintStart_toEndOf="@id/red_palette"
@@ -39,7 +45,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/purple_200"
-            android:text="원"
+            android:onClick="@{() -> onClickPaletteListener.onClickBrushChange(@string/brush_circle)}"
+            android:text="@string/brush_circle"
             android:textColor="@color/white"
             app:layout_constraintEnd_toStartOf="@id/green_palette"
             app:layout_constraintStart_toEndOf="@id/orange_palette"
@@ -51,7 +58,8 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="15dp"
             android:background="@color/purple_200"
-            android:text="지우개"
+            android:onClick="@{() -> onClickPaletteListener.onClickBrushChange(@string/brush_eraser)}"
+            android:text="@string/brush_eraser"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/yellow_palette"

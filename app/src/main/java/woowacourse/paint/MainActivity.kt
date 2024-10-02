@@ -55,6 +55,10 @@ class MainActivity : AppCompatActivity(), OnPaletteClickListener {
         binding.paintView.changeColor(color)
     }
 
+    override fun onClickBrushChange(brushName: String) {
+        binding.paintView.changeBrush(brushName)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null

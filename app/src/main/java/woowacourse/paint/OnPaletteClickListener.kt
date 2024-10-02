@@ -8,4 +8,6 @@ interface OnPaletteClickListener {
     fun onClickChangeBrushButton()
 
     fun onClickPaint(color: Int)
+
+    fun onClickBrushChange(brushName: String)
 }
