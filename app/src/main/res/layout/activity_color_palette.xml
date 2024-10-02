@@ -74,10 +74,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
+            android:stepSize="10.0"
+            android:valueFrom="10.0"
+            android:valueTo="100.0"
             android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@id/layout_color_palette"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:values="@array/default_thickness_range_slider"
             tools:visibility="visible" />
 
         <LinearLayout

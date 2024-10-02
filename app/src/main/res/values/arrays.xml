@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="default_thickness_range_slider">
+        <item>10.0</item>
+    </array>
+</resources>

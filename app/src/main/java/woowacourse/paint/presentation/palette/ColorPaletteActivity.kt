@@ -5,7 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.databinding.ActivityColorPaletteBinding
 import woowacourse.paint.presentation.paint.PaintView
 
-class ColorPaletteActivity : AppCompatActivity(), ColorPaletteListener, BrushListener, PaintHistoryListener {
+class ColorPaletteActivity : AppCompatActivity(), ColorPaletteListener, BrushListener,
+    PaintHistoryListener {
     private val binding: ActivityColorPaletteBinding by lazy {
         ActivityColorPaletteBinding.inflate(layoutInflater)
     }
@@ -24,16 +25,11 @@ class ColorPaletteActivity : AppCompatActivity(), ColorPaletteListener, BrushLis
         binding.colorPaletteListener = this
     }
 
-    private fun initializeThicknessRangeSlider() =
-        binding.rangeSliderThickness.run {
-            stepSize = OVAL_SIZE_INTERVAL
-            values = listOf(OVAL_SIZE_MIN)
-            valueFrom = OVAL_SIZE_MIN
-            valueTo = OVAL_SIZE_MAX
-            addOnChangeListener { _, value, _ ->
-                paintView.changeOvalSize(value)
-            }
+    private fun initializeThicknessRangeSlider() {
+        binding.rangeSliderThickness.addOnChangeListener { _, value, _ ->
+            paintView.changeOvalSize(value)
         }
+    }
 
     override fun onSelectColor(colorUiModel: ColorUiModel) {
         paintView.changePaintColor(colorUiModel)
@@ -53,11 +49,5 @@ class ColorPaletteActivity : AppCompatActivity(), ColorPaletteListener, BrushLis
 
     override fun onRedo() {
         paintView.redo()
-    }
-
-    companion object {
-        private const val OVAL_SIZE_MIN = 10.0f
-        private const val OVAL_SIZE_MAX = 100.0f
-        private const val OVAL_SIZE_INTERVAL = 10.0f
     }
 }
