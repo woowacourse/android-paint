@@ -23,8 +23,8 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private var currentPath: Path = Path()
     private var currentPaint: Paint = Paint()
 
-    private var startX = 0f
-    private var startY = 0f
+    private var startX: Float = 0f
+    private var startY: Float = 0f
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
@@ -57,13 +57,16 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> down(event.x, event.y)
             MotionEvent.ACTION_MOVE -> move(event.x, event.y)
-            MotionEvent.ACTION_UP -> up(event.x, event.y)
+            MotionEvent.ACTION_UP -> up()
             else -> super.onTouchEvent(event)
         }
         return true
     }
 
-    private fun down(x: Float, y: Float) {
+    private fun down(
+        x: Float,
+        y: Float,
+    ) {
         currentMoveType = 0
         lines.add(Line(currentPath, currentPaint))
         startX = x
@@ -74,7 +77,10 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         }
     }
 
-    private fun move(x: Float, y: Float) {
+    private fun move(
+        x: Float,
+        y: Float,
+    ) {
         currentMoveType = 1
         when (currentBrushType) {
             BrushType.PEN -> {
@@ -87,7 +93,11 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             BrushType.RECTANGLE -> {
                 currentPaint.xfermode = null
                 currentPaint.style = Paint.Style.FILL
-                currentPath.addRect(startX, startY, x, y, Path.Direction.CW)
+                if (startX < x && startY < y) {
+                    currentPath.addRect(startX, startY, x, y, Path.Direction.CW)
+                } else {
+                    currentPath.addRect(x, y, startX, startY, Path.Direction.CW)
+                }
                 invalidate()
             }
 
@@ -107,7 +117,7 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         }
     }
 
-    private fun up(x: Float, y: Float) {
+    private fun up() {
         currentMoveType = 2
         resetLine()
     }
