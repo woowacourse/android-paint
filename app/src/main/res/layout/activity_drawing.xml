@@ -5,11 +5,22 @@
 
     <data>
 
+        <variable
+            name="colorPickerAdapter"
+            type="woowacourse.paint.ui.colorpicker.ColorPickerAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <woowacourse.paint.ui.DrawingBoardView
+            android:id="@+id/custom_view_drawing_board"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/white"
+            app:layout_constraintBottom_toTopOf="@id/range_slider_drawing_brush_size_controller"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.slider.RangeSlider
             android:id="@+id/range_slider_drawing_brush_size_controller"
@@ -20,6 +31,7 @@
         <include
             android:id="@+id/layout_drawing_color_picker"
             layout="@layout/layout_color_picker"
+            adapter="@{colorPickerAdapter}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
