@@ -19,6 +19,10 @@
             name="isRangeSliderVisible"
             type="Boolean" />
 
+        <variable
+            name="isBrushListVisible"
+            type="Boolean" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -57,6 +61,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:onClickPaletteListener="@{onClickPaletteListener}" />
 
+        <include
+            layout="@layout/brush_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="@{isBrushListVisible ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/range_slider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <Button
             android:id="@+id/btn_change_color"
             android:layout_width="wrap_content"
@@ -73,12 +86,22 @@
             android:id="@+id/btn_change_thickness"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
             android:onClick="@{() -> onClickPaletteListener.onClickChangeThicknessButton()}"
             android:text="@string/main_change_thickness"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_change_brush"
             app:layout_constraintStart_toEndOf="@id/btn_change_color" />
+
+        <Button
+            android:id="@+id/btn_change_brush"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:onClick="@{() -> onClickPaletteListener.onClickChangeBrushButton()}"
+            android:text="@string/main_change_brush"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_change_thickness" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

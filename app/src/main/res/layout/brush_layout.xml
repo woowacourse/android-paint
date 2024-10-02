@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/red_palette"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:background="@color/purple_200"
+            android:text="펜"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@id/orange_palette"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/orange_palette"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/purple_200"
+            android:text="직사각형"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@id/yellow_palette"
+            app:layout_constraintStart_toEndOf="@id/red_palette"
+            app:layout_constraintTop_toTopOf="@id/red_palette" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/yellow_palette"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/purple_200"
+            android:text="원"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toStartOf="@id/green_palette"
+            app:layout_constraintStart_toEndOf="@id/orange_palette"
+            app:layout_constraintTop_toTopOf="@id/red_palette" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/green_palette"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:background="@color/purple_200"
+            android:text="지우개"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/yellow_palette"
+            app:layout_constraintTop_toTopOf="@id/red_palette" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
