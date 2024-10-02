@@ -5,6 +5,14 @@
 
     <data>
 
+        <variable
+            name="brush"
+            type="woowacourse.paint.presentation.palette.BrushType" />
+
+
+        <variable
+            name="brushListener"
+            type="woowacourse.paint.presentation.palette.BrushListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,21 +43,25 @@
             <Button
                 android:id="@+id/btn_brush_type_pen"
                 style="@style/brush_type_button"
+                android:onClick="@{() ->brushListener.onChangeBrushType(brush.PEN)}"
                 android:text="@string/brush_type_pen" />
 
             <Button
                 android:id="@+id/btn_brush_type_rectangle"
                 style="@style/brush_type_button"
+                android:onClick="@{() ->brushListener.onChangeBrushType(brush.RECTANGLE)}"
                 android:text="@string/brush_type_rectangle" />
 
             <Button
                 android:id="@+id/btn_brush_type_circle"
                 style="@style/brush_type_button"
+                android:onClick="@{() ->brushListener.onChangeBrushType(brush.CIRCLE)}"
                 android:text="@string/brush_type_circle" />
 
             <Button
                 android:id="@+id/btn_brush_type_eraser"
                 style="@style/brush_type_button"
+                android:onClick="@{() ->brushListener.onChangeBrushType(brush.ERASER)}"
                 android:text="@string/brush_type_eraser" />
         </LinearLayout>
 
