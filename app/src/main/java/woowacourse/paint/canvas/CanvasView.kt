@@ -76,7 +76,7 @@ class CanvasView(
 
     private fun createNewPaint(brush: Brush): Paint {
         return Paint().apply {
-            this.color = brush.colorPalette.color
+            this.color = brush.colorPalette.colorRes
             this.strokeWidth = brush.width
         }
     }
