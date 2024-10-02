@@ -8,7 +8,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 
-class CustomView constructor(context: Context, attrs: AttributeSet) : View(context, attrs) {
+class CanvasView constructor(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private val drawings = mutableListOf<Drawing>()
     private var currentPaint =

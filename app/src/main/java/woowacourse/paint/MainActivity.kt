@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupRangeSlider() {
-        binding.rangeSlider.setValues(CustomView.DEFAULT_BRUSH_SIZE)
+        binding.rangeSlider.setValues(CanvasView.DEFAULT_BRUSH_SIZE)
 
         binding.rangeSlider.addOnChangeListener { _, brushWidth, _ ->
             binding.paintView.changeBrushWidth(brushWidth)
