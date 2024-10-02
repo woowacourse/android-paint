@@ -8,7 +8,7 @@ import woowacourse.paint.model.PaintingColor
 
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
-    private val paintingColorList = PaintingColor.values().toList()
+    private val paintingColorList = PaintingColor.entries
     private val paintingColorAdapter by lazy {
         PaintingColorAdapter(paintingColorList) { color ->
             binding.customView.changeColor(
