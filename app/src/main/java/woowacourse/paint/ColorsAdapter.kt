@@ -7,6 +7,15 @@ class ColorsAdapter(
     private val colors: List<ColorUiModel>,
     private val listener: (ColorUiModel) -> Unit,
 ) : RecyclerView.Adapter<ColorViewHolder>() {
+
+    init {
+        setDefaultColor()
+    }
+
+    private fun setDefaultColor() {
+        listener(ColorUiModel.DEFAULT_COLOR)
+    }
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -20,4 +29,5 @@ class ColorsAdapter(
     }
 
     override fun getItemCount(): Int = colors.size
+
 }

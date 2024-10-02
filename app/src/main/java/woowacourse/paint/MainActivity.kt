@@ -1,8 +1,9 @@
 package woowacourse.paint
 
-import android.graphics.Color
+import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.slider.RangeSlider
 
@@ -21,22 +22,10 @@ class MainActivity : AppCompatActivity() {
 
         recyclerView.adapter =
             ColorsAdapter(
-                colors = colors,
+                colors = ColorUiModel.palletColors(this),
                 listener = { colorUiModel ->
                     drawingBoard.setBrushColor(colorUiModel.color)
                 },
-            )
-    }
-
-    companion object {
-        private val colors =
-            listOf(
-                ColorUiModel(0, Color.BLACK),
-                ColorUiModel(1, Color.RED),
-                ColorUiModel(3, Color.YELLOW),
-                ColorUiModel(4, Color.GREEN),
-                ColorUiModel(5, Color.BLUE),
-                ColorUiModel(6, Color.MAGENTA),
             )
     }
 }

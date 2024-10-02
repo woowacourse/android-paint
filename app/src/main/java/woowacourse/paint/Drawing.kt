@@ -1,7 +1,6 @@
 package woowacourse.paint
 
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 
@@ -12,7 +11,6 @@ data class Drawing(private val path: Path, private val paint: Paint) {
 
     private fun setUpDefaultPaint() {
         paint.apply {
-            color = DEFAULT_BRUSH_COLOR
             style = DEFAULT_BRUSH_STYLE
             strokeCap = DEFAULT_BRUSH_CAP
             isAntiAlias = true
@@ -46,7 +44,6 @@ data class Drawing(private val path: Path, private val paint: Paint) {
     }
 
     companion object {
-        private const val DEFAULT_BRUSH_COLOR = Color.BLACK
         private val DEFAULT_BRUSH_STYLE = Paint.Style.STROKE
         private val DEFAULT_BRUSH_CAP = Paint.Cap.ROUND
     }
