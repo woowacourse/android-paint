@@ -12,8 +12,8 @@ import androidx.annotation.ColorRes
 
 class PaintView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     private val brushHistory = mutableListOf(Brush())
-    private var startX: Float = 0f
-    private var startY: Float = 0f
+    private var startX: Float = DEFAULT_POSITION
+    private var startY: Float = DEFAULT_POSITION
 
     init {
         isFocusable = true
@@ -84,5 +84,6 @@ class PaintView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
     companion object {
         private const val DEFAULT_STROKE_WIDTH = 10.0f
         private const val DEFAULT_COLOR = Color.RED
+        private const val DEFAULT_POSITION = 0f
     }
 }
