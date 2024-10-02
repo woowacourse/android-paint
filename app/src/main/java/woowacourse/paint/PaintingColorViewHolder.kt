@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.paint.databinding.ItemColorBinding
 import woowacourse.paint.model.PaintingColor
 
-class PaintingColorViewHolder(
+class PaintingColorViewHolder private constructor(
     private val binding: ItemColorBinding,
     private val setPaintingColor: (paintingColor: PaintingColor) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
