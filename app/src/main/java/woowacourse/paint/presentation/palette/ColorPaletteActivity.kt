@@ -5,7 +5,10 @@ import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.databinding.ActivityColorPaletteBinding
 import woowacourse.paint.presentation.paint.PaintView
 
-class ColorPaletteActivity : AppCompatActivity(), ColorPaletteListener, BrushListener,
+class ColorPaletteActivity :
+    AppCompatActivity(),
+    ColorPaletteListener,
+    BrushListener,
     PaintHistoryListener {
     private val binding: ActivityColorPaletteBinding by lazy {
         ActivityColorPaletteBinding.inflate(layoutInflater)
