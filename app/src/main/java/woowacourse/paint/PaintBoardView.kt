@@ -11,7 +11,7 @@ import android.view.MotionEvent
 import android.view.View
 
 class PaintBoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    private val path = Path()
+    private val drawLines = mutableListOf<DrawLine>()
     private val paint = Paint()
 
     init {
@@ -22,7 +22,10 @@ class PaintBoardView(context: Context, attrs: AttributeSet) : View(context, attr
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvas.drawPath(path, paint)
+        drawLines.forEach {
+            paint.strokeWidth = it.strokeWidth
+            canvas.drawPath(it.path, paint)
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -31,12 +34,24 @@ class PaintBoardView(context: Context, attrs: AttributeSet) : View(context, attr
         val pointY = event.y
 
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> path.moveTo(event.x, event.y)
-            MotionEvent.ACTION_MOVE -> path.lineTo(pointX, pointY)
+            MotionEvent.ACTION_DOWN -> {
+                val nextPath = Path()
+                nextPath.moveTo(event.x, event.y)
+                drawLines.add(DrawLine(nextPath, paint.strokeWidth))
+            }
+
+            MotionEvent.ACTION_MOVE -> {
+                drawLines.last().path.lineTo(pointX, pointY)
+            }
+
             else -> super.onTouchEvent(event)
         }
         invalidate()
         return true
+    }
+
+    fun setStrokeWidth(strokeWidth: Float) {
+        paint.strokeWidth = strokeWidth
     }
 
     private fun setupPaint() {
