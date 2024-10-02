@@ -65,6 +65,7 @@ data class Brush(
             BrushState.PEN -> {
                 lineTo(endX, endY)
             }
+
             BrushState.RECTANGLE -> {
                 if (!isEnd) resetPath()
                 saveRectangle(startX, startY, endX, endY)
@@ -76,7 +77,9 @@ data class Brush(
                 path.addCircle(startX, startY, radius, Path.Direction.CCW)
             }
 
-            BrushState.ERASER -> TODO()
+            BrushState.ERASER -> {
+                lineTo(endX, endY)
+            }
         }
     }
 
@@ -116,20 +119,24 @@ data class Brush(
     private fun changeBrushToPen() {
         paint.style = Paint.Style.STROKE
         brushState = BrushState.PEN
+        paint.xfermode = null
     }
 
     private fun changeBrushToRectangle() {
         paint.style = Paint.Style.FILL
         brushState = BrushState.RECTANGLE
+        paint.xfermode = null
     }
 
     private fun changeBrushToCircle() {
         paint.style = Paint.Style.FILL
         brushState = BrushState.CIRCLE
+        paint.xfermode = null
     }
 
     private fun changeBrushToEraser() {
         paint.style = Paint.Style.STROKE
         brushState = BrushState.ERASER
+        paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
     }
 }
