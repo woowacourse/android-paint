@@ -82,11 +82,12 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
                 currentPaint.style = Paint.Style.FILL
                 currentPath.addRect(startX, startY, x, y, Path.Direction.CW)
                 invalidate()
-                Log.e("TEST", "move invalidate after")
             }
 
             BrushType.CIRCLE -> {
-
+                currentPaint.style = Paint.Style.FILL
+                currentPath.addOval(startX, startY, x, y, Path.Direction.CW)
+                invalidate()
             }
 
             BrushType.ERASER -> {
