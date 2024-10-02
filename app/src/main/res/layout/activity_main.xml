@@ -24,6 +24,7 @@
             android:id="@+id/range_slider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
             android:valueFrom="0.1"
             android:valueTo="100.0"
             app:layout_constraintBottom_toTopOf="@id/rv_palette"
@@ -34,13 +35,13 @@
             android:id="@+id/rv_palette"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:listitem="@layout/item_palette_color"
-            tools:itemCount="5">
+            tools:itemCount="5"
+            tools:listitem="@layout/item_palette_color">
 
         </androidx.recyclerview.widget.RecyclerView>
 
