@@ -23,7 +23,7 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     private fun initializePaint() {
-        currentPaint.run {
+        currentPaint.apply {
             color = ContextCompat.getColor(context, DEFAULT_COLOR_RES_ID)
             strokeWidth = DEFAULT_STROKE
             style = Paint.Style.STROKE
