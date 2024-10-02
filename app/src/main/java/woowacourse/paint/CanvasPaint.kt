@@ -5,7 +5,10 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import androidx.annotation.ColorInt
 
-data class CanvasPaint(@ColorInt val colorInt: Int, val brushWidth: Float = DEFAULT_BRUSH_SIZE) : Paint() {
+data class CanvasPaint(
+    @ColorInt private val colorInt: Int,
+    private val brushWidth: Float
+) : Paint() {
 
     init {
         style = Style.STROKE
@@ -13,21 +16,14 @@ data class CanvasPaint(@ColorInt val colorInt: Int, val brushWidth: Float = DEFA
         strokeJoin = Join.ROUND
         strokeCap = Cap.ROUND
         strokeWidth = brushWidth
+        color = colorInt
     }
 
-
-    @SuppressLint("ResourceAsColor")
-    fun changeColor(@ColorInt colorInt: Int):CanvasPaint {
-        return this.copy().apply { color = colorInt }
+    fun changeColor(@ColorInt colorInt: Int): CanvasPaint {
+        return this.copy(colorInt = colorInt)
     }
 
-    fun changeBrushWidth(brushWidth: Float):CanvasPaint {
-        return this.copy().apply { strokeWidth = brushWidth }
+    fun changeBrushWidth(brushWidth: Float): CanvasPaint {
+        return this.copy(brushWidth = brushWidth)
     }
-
-
-    companion object {
-        private const val DEFAULT_BRUSH_SIZE = 50f
-    }
-
 }

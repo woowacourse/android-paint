@@ -14,6 +14,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.rangeSlider.setValues(CustomView.DEFAULT_BRUSH_SIZE)
+
         binding.rangeSlider.addOnChangeListener { _, width, _ ->
             binding.paintView.changeBrushWidth(width)
         }

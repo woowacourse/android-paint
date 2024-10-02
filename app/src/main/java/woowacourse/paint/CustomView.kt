@@ -14,9 +14,9 @@ import androidx.constraintlayout.widget.ConstraintSet.Motion
 
 class CustomView constructor(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
-
     private val drawings = mutableListOf<Drawing>()
-    private var currentPaint = CanvasPaint(this.context.getColor(ColorType.RED.colorId))
+    private var currentPaint =
+        CanvasPaint(this.context.getColor(DEFAULT_COLOR.colorId), DEFAULT_BRUSH_SIZE)
     private var currentPath: Path? = null
 
 
@@ -41,12 +41,13 @@ class CustomView constructor(context: Context, attrs: AttributeSet) : View(conte
                 path.addOval(
                     pointX,
                     pointY,
-                    pointX ,
+                    pointX,
                     pointY,
                     Path.Direction.CW
                 )
                 currentPath = path
             }
+
             MotionEvent.ACTION_MOVE -> currentPath?.lineTo(pointX, pointY)
             MotionEvent.ACTION_UP -> {
                 currentPath?.let {
@@ -54,6 +55,7 @@ class CustomView constructor(context: Context, attrs: AttributeSet) : View(conte
                 }
                 invalidate()
             }
+
             else -> super.onTouchEvent(event)
         }
         return true
@@ -63,12 +65,13 @@ class CustomView constructor(context: Context, attrs: AttributeSet) : View(conte
         currentPaint = currentPaint.changeColor(this.context.getColor(colorType.colorId))
     }
 
-    fun changeBrushWidth(width:Float) {
+    fun changeBrushWidth(width: Float) {
         currentPaint = currentPaint.changeBrushWidth(width)
     }
 
 
     companion object {
-        private const val DEFAULT_BRUSH_SIZE = 50f
+        const val DEFAULT_BRUSH_SIZE = 10f
+        val DEFAULT_COLOR = ColorType.RED
     }
 }
