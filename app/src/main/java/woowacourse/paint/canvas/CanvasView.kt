@@ -27,7 +27,9 @@ class CanvasView(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        lines.forEach { it.draw(canvas) }
+        lines.forEach { line ->
+            canvas.drawPath(line.path,line.paint)
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
