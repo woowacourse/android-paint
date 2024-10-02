@@ -11,11 +11,13 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.R
+import woowacourse.paint.model.BrushType
 import woowacourse.paint.model.Stroke
 
 class CanvasView(context: Context, attrs: AttributeSet) :
     View(context, attrs) {
     private val strokes = mutableListOf<Stroke>()
+    private var currentBrushType = BrushType.PEN
     private var currentPath: Path? = null
     private val currentPaint: Paint =
         Paint().apply {
@@ -89,6 +91,10 @@ class CanvasView(context: Context, attrs: AttributeSet) :
 
     fun setLineWidth(width: Float) {
         currentPaint.strokeWidth = width
+    }
+
+    fun setBrushType(brushType: BrushType) {
+        currentBrushType = brushType
     }
 
     companion object {

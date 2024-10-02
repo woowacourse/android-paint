@@ -4,6 +4,7 @@ import androidx.databinding.BindingAdapter
 import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import com.google.android.material.slider.Slider
+import woowacourse.paint.model.BrushType
 
 @InverseBindingAdapter(attribute = "app:value")
 fun getSliderValue(slider: Slider): Float {
@@ -44,4 +45,12 @@ fun setLineWidth(
     width: Float,
 ) {
     view.setLineWidth(width)
+}
+
+@BindingAdapter("app:brushType")
+fun setBrushType(
+    view: CanvasView,
+    brushType: BrushType,
+) {
+    view.setBrushType(brushType)
 }

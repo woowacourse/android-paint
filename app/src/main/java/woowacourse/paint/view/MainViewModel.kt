@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import woowacourse.paint.model.Brush
+import woowacourse.paint.model.BrushType
 import woowacourse.paint.model.ColorItem
 import woowacourse.paint.view.listener.BrushChangeListener
 import woowacourse.paint.view.listener.BrushControllerVisibilityChangeListener
@@ -33,8 +34,8 @@ class MainViewModel :
     private val _selectedColor: MutableLiveData<ColorItem> = MutableLiveData(colors[0])
     val selectedColor: LiveData<ColorItem> = _selectedColor
 
-    private val _selectedBrush: MutableLiveData<Brush> = MutableLiveData(brushes[0])
-    val selectedBrush: LiveData<Brush> = _selectedBrush
+    private val _selectedBrush: MutableLiveData<BrushType> = MutableLiveData(brushes[0].type)
+    val selectedBrush: LiveData<BrushType> = _selectedBrush
 
     val selectedWidth = MutableLiveData(DEFAULT_WIDTH)
 
@@ -61,7 +62,7 @@ class MainViewModel :
     }
 
     override fun onBrushChanged(brush: Brush) {
-        _selectedBrush.value = brush
+        _selectedBrush.value = brush.type
     }
 
     companion object {

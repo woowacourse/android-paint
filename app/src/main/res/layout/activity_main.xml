@@ -30,7 +30,8 @@
             app:layout_constraintBottom_toTopOf="@id/layout_controller_buttons"
             app:layout_constraintTop_toTopOf="parent"
             app:lineColor="@{viewModel.selectedColor.getArgbColor()}"
-            app:lineWidth="@{viewModel.selectedWidth}" />
+            app:lineWidth="@{viewModel.selectedWidth}"
+            app:brushType="@{viewModel.selectedBrush}" />
 
         <com.google.android.material.slider.Slider
             android:layout_width="match_parent"
