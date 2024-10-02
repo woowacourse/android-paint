@@ -5,6 +5,8 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
@@ -24,6 +26,7 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
+        setLayerType(LAYER_TYPE_HARDWARE, null)
         initializePaint()
     }
 
@@ -42,7 +45,7 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         lines.forEach { line ->
             canvas.drawPath(line.path, line.paint)
         }
-        if (currentMoveType == 1 && currentBrushType != BrushType.PEN) {
+        if (currentMoveType == 1 && (currentBrushType == BrushType.RECTANGLE || currentBrushType == BrushType.CIRCLE)) {
             if (lines.isNotEmpty()) lines.last().path.reset()
         }
     }
@@ -63,7 +66,7 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         lines.add(Line(currentPath, currentPaint))
         startX = x
         startY = y
-        if (currentBrushType == BrushType.PEN) {
+        if (currentBrushType == BrushType.PEN || currentBrushType == BrushType.ERASER) {
             currentPath.moveTo(x, y)
             invalidate()
         }
@@ -73,25 +76,31 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         currentMoveType = 1
         when (currentBrushType) {
             BrushType.PEN -> {
+                currentPaint.xfermode = null
                 currentPaint.style = Paint.Style.STROKE
                 currentPath.lineTo(x, y)
                 invalidate()
             }
 
             BrushType.RECTANGLE -> {
+                currentPaint.xfermode = null
                 currentPaint.style = Paint.Style.FILL
                 currentPath.addRect(startX, startY, x, y, Path.Direction.CW)
                 invalidate()
             }
 
             BrushType.CIRCLE -> {
+                currentPaint.xfermode = null
                 currentPaint.style = Paint.Style.FILL
                 currentPath.addOval(startX, startY, x, y, Path.Direction.CW)
                 invalidate()
             }
 
             BrushType.ERASER -> {
-
+                currentPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+                currentPaint.style = Paint.Style.STROKE
+                currentPath.lineTo(x, y)
+                invalidate()
             }
         }
     }
