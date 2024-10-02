@@ -27,10 +27,14 @@ class CustomView(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        for ((path, paint) in map) {
+        drawAllPaths(canvas)
+        canvas.drawPath(path, paint)
+    }
+
+    private fun drawAllPaths(canvas: Canvas) {
+        for ((path, paint) in drawings) {
             canvas.drawPath(path, paint)
         }
-        canvas.drawPath(path, paint)
     }
 
     @SuppressLint("ClickableViewAccessibility")
