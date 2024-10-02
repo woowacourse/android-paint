@@ -1,7 +1,5 @@
 package woowacourse.paint.model
 
-import woowacourse.paint.model.Color
-
 class ColorPalette {
     val red = Color("Red", "#FF0000")
     val orange = Color("Orange", "#FFA500")
