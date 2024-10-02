@@ -27,6 +27,7 @@
             android:background="@drawable/color_circle"
             android:clickable="true"
             android:onClick="@{() -> actionHandler.changeColorRes(paintColor.color.colorRes)}"
+            android:padding="8dp"
             tools:backgroundTint="@color/red" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
