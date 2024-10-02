@@ -17,7 +17,9 @@ data class ColorUiModel(
                 colors
             }.map { ColorUiModel(it) }
 
-        private fun compatColorOf(context: Context, color: Int): Int = ContextCompat.getColor(context, color)
-
+        private fun compatColorOf(
+            context: Context,
+            color: Int,
+        ): Int = ContextCompat.getColor(context, color)
     }
 }

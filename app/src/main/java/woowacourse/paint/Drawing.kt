@@ -21,25 +21,33 @@ data class Drawing(private val path: Path, private val paint: Paint) {
         canvas.drawPath(path, paint)
     }
 
-    fun pathMoveTo(x: Float, y: Float) {
+    fun pathMoveTo(
+        x: Float,
+        y: Float,
+    ) {
         path.moveTo(x, y)
     }
 
-    fun pathLineTo(x: Float, y: Float) {
+    fun pathLineTo(
+        x: Float,
+        y: Float,
+    ) {
         path.lineTo(x, y)
     }
 
     fun copyWithPaint(thickness: Float): Drawing {
-        val paint = Paint(paint).apply {
-            strokeWidth = thickness
-        }
+        val paint =
+            Paint(paint).apply {
+                strokeWidth = thickness
+            }
         return Drawing(path, paint)
     }
 
     fun copyWithPaint(color: Int): Drawing {
-        val paint = Paint(paint).apply {
-            this.color = color
-        }
+        val paint =
+            Paint(paint).apply {
+                this.color = color
+            }
         return Drawing(path, paint)
     }
 
