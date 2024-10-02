@@ -14,29 +14,27 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setupRangeSlider()
+        setupColorGroupListener()
+    }
+
+    private fun setupRangeSlider() {
         binding.rangeSlider.setValues(CustomView.DEFAULT_BRUSH_SIZE)
 
-        binding.rangeSlider.addOnChangeListener { _, width, _ ->
-            binding.paintView.changeBrushWidth(width)
+        binding.rangeSlider.addOnChangeListener { _, brushWidth, _ ->
+            binding.paintView.changeBrushWidth(brushWidth)
         }
-        binding.btnRed.setOnClickListener {
-            binding.paintView.changePaintColor(ColorType.RED)
-        }
+    }
 
-        binding.btnOrange.setOnClickListener {
-            binding.paintView.changePaintColor(ColorType.ORANGE)
-        }
-
-        binding.btnYellow.setOnClickListener {
-            binding.paintView.changePaintColor(ColorType.YELLOW)
-        }
-
-        binding.btnGreen.setOnClickListener {
-            binding.paintView.changePaintColor(ColorType.GREEN)
-        }
-
-        binding.btnBlue.setOnClickListener {
-            binding.paintView.changePaintColor(ColorType.BLUE)
+    private fun setupColorGroupListener() {
+        binding.colorGroup.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.btn_red -> binding.paintView.changePaintColor(ColorType.RED)
+                R.id.btn_orange -> binding.paintView.changePaintColor(ColorType.ORANGE)
+                R.id.btn_yellow -> binding.paintView.changePaintColor(ColorType.YELLOW)
+                R.id.btn_green -> binding.paintView.changePaintColor(ColorType.GREEN)
+                R.id.btn_blue -> binding.paintView.changePaintColor(ColorType.BLUE)
+            }
         }
     }
 }
