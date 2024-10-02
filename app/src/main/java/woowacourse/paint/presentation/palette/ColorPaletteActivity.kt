@@ -4,38 +4,24 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.databinding.ActivityColorPaletteBinding
 import woowacourse.paint.presentation.paint.PaintView
-import woowacourse.paint.presentation.palette.adapter.ColorPaletteAdapter
 
 class ColorPaletteActivity : AppCompatActivity(), ColorPaletteListener, BrushListener, PaintHistoryListener {
     private val binding: ActivityColorPaletteBinding by lazy {
         ActivityColorPaletteBinding.inflate(layoutInflater)
     }
     private val paintView: PaintView by lazy { binding.paintView }
-    private val colorUiModels: List<ColorUiModel> by lazy {
-        listOf(
-            ColorUiModel.RED,
-            ColorUiModel.ORANGE,
-            ColorUiModel.YELLOW,
-            ColorUiModel.GREEN,
-            ColorUiModel.BLUE,
-        )
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initializeBinding()
-        initializeColorPalette()
         initializeThicknessRangeSlider()
     }
 
     private fun initializeBinding() {
         setContentView(binding.root)
-        binding.brushListener = this
         binding.paintHistoryListener = this
-    }
-
-    private fun initializeColorPalette() {
-        binding.rvColorPalette.adapter = ColorPaletteAdapter(colorUiModels, this)
+        binding.brushListener = this
+        binding.colorPaletteListener = this
     }
 
     private fun initializeThicknessRangeSlider() =
