@@ -33,7 +33,7 @@
             android:id="@+id/paint_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_constraintBottom_toTopOf="@id/palette_tool_layout"
+            app:layout_constraintBottom_toBottomOf="@id/paint_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -41,11 +41,11 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/palette_tool_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="150dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/paint_view">
+            app:layout_constraintStart_toStartOf="parent">
 
             <com.google.android.material.slider.RangeSlider
                 android:id="@+id/range_slider"
@@ -85,7 +85,6 @@
                 android:id="@+id/btn_change_color"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
                 android:onClick="@{() -> onClickPaletteListener.onClickChangePaintButton()}"
                 android:text="@string/main_change_color"
@@ -107,7 +106,6 @@
                 android:id="@+id/btn_change_brush"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="15dp"
                 android:onClick="@{() -> onClickPaletteListener.onClickChangeBrushButton()}"
                 android:text="@string/main_change_brush"
                 app:layout_constraintBottom_toBottomOf="parent"
