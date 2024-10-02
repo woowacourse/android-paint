@@ -19,14 +19,14 @@ class MainViewModel :
     private val _widthControllerVisible: MutableLiveData<Boolean> = MutableLiveData(true)
     val widthControllerVisible: LiveData<Boolean> = _widthControllerVisible
 
-    val colors: List<ColorItem> =
-        listOf(
-            ColorItem(0xCD2701),
-            ColorItem(0xFF7C2A),
-            ColorItem(0xFFFF00),
-            ColorItem(0x0D9A00),
-            ColorItem(0x2601A8),
-        )
+    val colors: List<ColorItem> = ColorItem.entries
+//        listOf(
+//            ColorItem(0xCD2701),
+//            ColorItem(0xFF7C2A),
+//            ColorItem(0xFFFF00),
+//            ColorItem(0x0D9A00),
+//            ColorItem(0x2601A8),
+//        )
 
     private val _selectedColor: MutableLiveData<ColorItem> = MutableLiveData(colors[0])
     val selectedColor: LiveData<ColorItem> = _selectedColor
