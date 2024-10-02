@@ -6,7 +6,7 @@ import woowacourse.paint.databinding.ActivityColorPaletteBinding
 import woowacourse.paint.presentation.paint.PaintView
 import woowacourse.paint.presentation.palette.adapter.ColorPaletteAdapter
 
-class ColorPaletteActivity : AppCompatActivity(), ColorPaletteListener,BrushListener {
+class ColorPaletteActivity : AppCompatActivity(), ColorPaletteListener, BrushListener, PaintHistoryListener {
     private val binding: ActivityColorPaletteBinding by lazy {
         ActivityColorPaletteBinding.inflate(layoutInflater)
     }
@@ -31,6 +31,7 @@ class ColorPaletteActivity : AppCompatActivity(), ColorPaletteListener,BrushList
     private fun initializeBinding() {
         setContentView(binding.root)
         binding.brushListener = this
+        binding.paintHistoryListener = this
     }
 
     private fun initializeColorPalette() {
@@ -54,6 +55,10 @@ class ColorPaletteActivity : AppCompatActivity(), ColorPaletteListener,BrushList
 
     override fun onChangeBrushType(brushType: BrushType) {
         paintView.changeBrushType(brushType)
+    }
+
+    override fun onEmpty() {
+        paintView.empty()
     }
 
     companion object {

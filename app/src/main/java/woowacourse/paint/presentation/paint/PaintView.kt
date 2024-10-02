@@ -128,6 +128,11 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         currentBrushType = brushType
     }
 
+    fun empty() {
+        lines.clear()
+        invalidate()
+    }
+
     companion object {
         private const val DEFAULT_STROKE = 10.0f
         private val DEFAULT_COLOR = ColorUiModel.RED

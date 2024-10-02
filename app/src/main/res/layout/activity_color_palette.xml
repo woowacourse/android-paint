@@ -13,6 +13,10 @@
         <variable
             name="brushListener"
             type="woowacourse.paint.presentation.palette.BrushListener" />
+
+        <variable
+            name="paintHistoryListener"
+            type="woowacourse.paint.presentation.palette.PaintHistoryListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,6 +31,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_paint_empty"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="8dp"
+            android:onClick="@{() -> paintHistoryListener.onEmpty()}"
+            android:src="@drawable/ic_trash"
+            app:layout_constraintBottom_toTopOf="@id/layout_brush"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <LinearLayout
             android:id="@+id/layout_brush"
