@@ -3,7 +3,6 @@ package woowacourse.paint
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
@@ -14,19 +13,6 @@ class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, at
     private var currentDrawing = Drawing(Path(), Paint())
 
     private val drawings: MutableList<Drawing> = mutableListOf()
-
-    init {
-        setUpDefaultBrush()
-    }
-
-    private fun setUpDefaultBrush() {
-        currentDrawing.paint.apply {
-            color = DEFAULT_BRUSH_COLOR
-            style = DEFAULT_BRUSH_STYLE
-            strokeCap = DEFAULT_BRUSH_CAP
-            isAntiAlias = true
-        }
-    }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -58,24 +44,10 @@ class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, at
     }
 
     fun setBrushThickness(thickness: Float) {
-        val paint =
-            Paint(currentDrawing.paint).apply {
-                strokeWidth = thickness
-            }
-        currentDrawing = currentDrawing.copy(paint = paint)
+        currentDrawing = currentDrawing.copyWithPaint(thickness)
     }
 
     fun setBrushColor(color: Int) {
-        val paint =
-            Paint(currentDrawing.paint).apply {
-                this.color = color
-            }
-        currentDrawing = currentDrawing.copy(paint = paint)
-    }
-
-    companion object {
-        private const val DEFAULT_BRUSH_COLOR = Color.BLACK
-        private val DEFAULT_BRUSH_STYLE = Paint.Style.STROKE
-        private val DEFAULT_BRUSH_CAP = Paint.Cap.ROUND
+        currentDrawing = currentDrawing.copyWithPaint(color)
     }
 }
