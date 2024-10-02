@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.graphics.Canvas
 import android.graphics.Paint
 import androidx.annotation.ColorInt
-import androidx.annotation.ColorRes
 
 data class CanvasPaint(@ColorInt val colorInt: Int, val brushWidth: Float = DEFAULT_BRUSH_SIZE) : Paint() {
 

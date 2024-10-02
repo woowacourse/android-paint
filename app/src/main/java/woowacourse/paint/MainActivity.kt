@@ -14,6 +14,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.rangeSlider.addOnChangeListener { _, width, _ ->
+            binding.paintView.changeBrushWidth(width)
+        }
         binding.btnRed.setOnClickListener {
             binding.paintView.changePaintColor(ColorType.RED)
         }

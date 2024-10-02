@@ -17,6 +17,8 @@
         android:id="@+id/range_slider"
         android:layout_width="match_parent"
         android:layout_height="2dp"
+        android:valueFrom="1"
+        android:valueTo="100"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toTopOf="@id/btn_red"

@@ -63,6 +63,10 @@ class CustomView constructor(context: Context, attrs: AttributeSet) : View(conte
         currentPaint = currentPaint.changeColor(this.context.getColor(colorType.colorId))
     }
 
+    fun changeBrushWidth(width:Float) {
+        currentPaint = currentPaint.changeBrushWidth(width)
+    }
+
 
     companion object {
         private const val DEFAULT_BRUSH_SIZE = 50f
