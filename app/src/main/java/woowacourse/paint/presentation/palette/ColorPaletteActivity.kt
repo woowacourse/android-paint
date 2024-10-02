@@ -16,8 +16,15 @@ class ColorPaletteActivity : AppCompatActivity(), ColorPaletteListener {
         ActivityColorPaletteBinding.inflate(layoutInflater)
     }
     private val paintView: PaintView by lazy { binding.paintView }
-    private val colorResIds =
-        listOf(R.color.red, R.color.orange, R.color.yellow, R.color.green, R.color.blue)
+    private val colorUiModels: List<ColorUiModel> by lazy {
+        listOf(
+            ColorUiModel.RED,
+            ColorUiModel.ORANGE,
+            ColorUiModel.YELLOW,
+            ColorUiModel.GREEN,
+            ColorUiModel.BLUE,
+        )
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +35,7 @@ class ColorPaletteActivity : AppCompatActivity(), ColorPaletteListener {
     }
 
     private fun initializeColorPalette() {
-        binding.rvColorPalette.adapter = ColorPaletteAdapter(colorResIds, this)
+        binding.rvColorPalette.adapter = ColorPaletteAdapter(colorUiModels, this)
     }
 
     private fun initializeThicknessRangeSlider() =
@@ -42,8 +49,8 @@ class ColorPaletteActivity : AppCompatActivity(), ColorPaletteListener {
             }
         }
 
-    override fun onSelectColor(colorResId: Int) {
-        paintView.changePaintColor(colorResId)
+    override fun onSelectColor(colorUiModel: ColorUiModel) {
+        paintView.changePaintColor(colorUiModel)
     }
 
     companion object {

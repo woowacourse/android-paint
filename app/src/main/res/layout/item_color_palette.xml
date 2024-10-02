@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="colorResId"
-            type="int" />
+            name="color"
+            type="woowacourse.paint.presentation.palette.ColorUiModel" />
 
         <variable
             name="colorPaletteListener"
@@ -23,8 +23,8 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_margin="10dp"
-            android:onClick="@{() -> colorPaletteListener.onSelectColor(colorResId)}"
-            app:backgroundColorResId="@{colorResId}"
+            android:onClick="@{() -> colorPaletteListener.onSelectColor(color)}"
+            app:backgroundColorUiModel="@{color}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -8,9 +8,9 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import woowacourse.paint.R
+import woowacourse.paint.presentation.palette.ColorUiModel
 
 class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val lines: MutableList<Line> by lazy { mutableListOf() }
@@ -66,10 +66,8 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         currentPaint = Paint(currentPaint)
     }
 
-    fun changePaintColor(
-        @ColorRes colorResId: Int,
-    ) {
-        currentPaint.color = ContextCompat.getColor(context, colorResId)
+    fun changePaintColor(colorUiModel: ColorUiModel) {
+        currentPaint.color = ContextCompat.getColor(context, colorUiModel.resId)
     }
 
     fun changeOvalSize(ovalSize: Float) {

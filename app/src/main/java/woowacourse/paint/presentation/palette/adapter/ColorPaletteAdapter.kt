@@ -4,10 +4,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.paint.databinding.ItemColorPaletteBinding
+import woowacourse.paint.presentation.palette.ColorUiModel
 import woowacourse.paint.presentation.palette.ColorPaletteListener
 
 class ColorPaletteAdapter(
-    private val colorResIds: List<Int>,
+    private val colorUiModels: List<ColorUiModel>,
     private val colorPaletteListener: ColorPaletteListener,
 ) : RecyclerView.Adapter<ColorPaletteViewHolder>() {
     override fun onCreateViewHolder(
@@ -19,12 +20,12 @@ class ColorPaletteAdapter(
         return ColorPaletteViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = colorResIds.size
+    override fun getItemCount(): Int = colorUiModels.size
 
     override fun onBindViewHolder(
         holder: ColorPaletteViewHolder,
         position: Int,
     ) {
-        holder.bind(colorResIds[position], colorPaletteListener)
+        holder.bind(colorUiModels[position], colorPaletteListener)
     }
 }
