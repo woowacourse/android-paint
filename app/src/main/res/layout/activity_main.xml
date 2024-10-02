@@ -22,7 +22,7 @@
         android:layout_weight="1"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/fragment_item" />
+        tools:listitem="@layout/color_item" />
 
     <com.google.android.material.slider.RangeSlider
         android:id="@+id/range_slider"

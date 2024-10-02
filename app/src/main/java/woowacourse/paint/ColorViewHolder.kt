@@ -24,7 +24,7 @@ class ColorViewHolder(
             listener: (ColorUiModel) -> Unit,
         ): ColorViewHolder =
             ColorViewHolder(
-                LayoutInflater.from(parent.context).inflate(R.layout.fragment_item, parent, false),
+                LayoutInflater.from(parent.context).inflate(R.layout.color_item, parent, false),
                 listener,
             )
     }
