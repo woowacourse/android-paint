@@ -1,10 +1,11 @@
 package woowacourse.paint
 
+import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 
-data class Drawing(val path: Path, val paint: Paint) {
+data class Drawing(private val path: Path, private val paint: Paint) {
     init {
         setUpDefaultPaint()
     }
@@ -16,6 +17,18 @@ data class Drawing(val path: Path, val paint: Paint) {
             strokeCap = DEFAULT_BRUSH_CAP
             isAntiAlias = true
         }
+    }
+
+    fun drawPath(canvas: Canvas) {
+        canvas.drawPath(path, paint)
+    }
+
+    fun pathMoveTo(x: Float, y: Float) {
+        path.moveTo(x, y)
+    }
+
+    fun pathLineTo(x: Float, y: Float) {
+        path.lineTo(x, y)
     }
 
     fun copyWithPaint(thickness: Float): Drawing {

@@ -16,8 +16,8 @@ class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, at
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        for (draw in drawings) {
-            canvas.drawPath(draw.path, draw.paint)
+        for (drawing in drawings) {
+            drawing.drawPath(canvas)
         }
     }
 
@@ -30,10 +30,10 @@ class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, at
             MotionEvent.ACTION_DOWN -> {
                 currentDrawing = currentDrawing.copy(path = Path())
                 drawings.add(currentDrawing)
-                currentDrawing.path.moveTo(pointX, pointY)
+                currentDrawing.pathMoveTo(pointX, pointY)
             }
 
-            MotionEvent.ACTION_MOVE -> currentDrawing.path.lineTo(pointX, pointY)
+            MotionEvent.ACTION_MOVE -> currentDrawing.pathLineTo(pointX, pointY)
 
             MotionEvent.ACTION_UP -> currentDrawing = currentDrawing.copy(path = Path())
 
