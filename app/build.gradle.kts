@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-kapt")
 }
 
 android {
@@ -44,6 +45,9 @@ android {
             excludes += "META-INF/**"
             excludes += "win32-x86*/**"
         }
+    }
+    dataBinding {
+        enable = true
     }
 }
 
