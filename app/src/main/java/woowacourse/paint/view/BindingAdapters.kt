@@ -5,7 +5,7 @@ import androidx.databinding.InverseBindingAdapter
 import androidx.databinding.InverseBindingListener
 import com.google.android.material.slider.Slider
 
-@InverseBindingAdapter(attribute = "value")
+@InverseBindingAdapter(attribute = "app:value")
 fun getSliderValue(slider: Slider): Float {
     return slider.value
 }
@@ -30,7 +30,7 @@ fun setSliderListeners(
     }
 }
 
-@BindingAdapter("lineColor")
+@BindingAdapter("app:lineColor")
 fun setLineColor(
     view: CanvasView,
     color: Int,
@@ -38,7 +38,7 @@ fun setLineColor(
     view.setLineColor(color)
 }
 
-@BindingAdapter("lineWidth")
+@BindingAdapter("app:lineWidth")
 fun setLineWidth(
     view: CanvasView,
     width: Float,
