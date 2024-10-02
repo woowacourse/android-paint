@@ -3,30 +3,22 @@ package woowacourse.paint
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import androidx.annotation.ColorRes
-import androidx.constraintlayout.widget.ConstraintSet.Motion
 
 class CustomView constructor(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     private val drawings = mutableListOf<Drawing>()
     private var currentPaint =
         CanvasPaint(this.context.getColor(DEFAULT_COLOR.colorId), DEFAULT_BRUSH_SIZE)
-    private var currentPath: Path? = null
 
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         drawings.forEach {
             canvas.drawPath(it.path, it.paint)
-        }
-        currentPath?.let { path ->
-            canvas.drawPath(path, currentPaint)
         }
     }
 
@@ -36,29 +28,31 @@ class CustomView constructor(context: Context, attrs: AttributeSet) : View(conte
         val pointX = event.x
         val pointY = event.y
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> {
-                val path = Path()
-                path.addOval(
-                    pointX,
-                    pointY,
-                    pointX,
-                    pointY,
-                    Path.Direction.CW
-                )
-                currentPath = path
-            }
-
-            MotionEvent.ACTION_MOVE -> currentPath?.lineTo(pointX, pointY)
-            MotionEvent.ACTION_UP -> {
-                currentPath?.let {
-                    drawings.add(Drawing(it, currentPaint))
-                }
-                invalidate()
-            }
-
+            MotionEvent.ACTION_DOWN -> startLine(pointX, pointY)
+            MotionEvent.ACTION_MOVE -> drawLine(pointX, pointY)
             else -> super.onTouchEvent(event)
         }
         return true
+    }
+
+    private fun startLine(pointX: Float, pointY: Float) {
+        val currentPath = Path().apply {
+            addOval(
+                pointX,
+                pointY,
+                pointX,
+                pointY,
+                Path.Direction.CW
+            )
+        }
+
+        drawings.add(Drawing(currentPath, currentPaint))
+        invalidate()
+    }
+
+    private fun drawLine(pointX: Float, pointY: Float) {
+        drawings.lastOrNull()?.path?.lineTo(pointX, pointY)
+        invalidate()
     }
 
     fun changePaintColor(colorType: ColorType) {
