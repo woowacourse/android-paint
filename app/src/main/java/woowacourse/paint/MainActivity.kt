@@ -1,18 +1,37 @@
 package woowacourse.paint
 
 import android.os.Bundle
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import woowacourse.paint.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val name = "레아"
-        val text = findViewById<TextView>(R.id.text)
-        text.text = "$name 안녕하세요!"
+        binding.btnRed.setOnClickListener {
+            binding.paintView.changePaintColor(ColorType.RED)
+        }
+
+        binding.btnOrange.setOnClickListener {
+            binding.paintView.changePaintColor(ColorType.ORANGE)
+        }
+
+        binding.btnYellow.setOnClickListener {
+            binding.paintView.changePaintColor(ColorType.YELLOW)
+        }
+
+        binding.btnGreen.setOnClickListener {
+            binding.paintView.changePaintColor(ColorType.GREEN)
+        }
+
+        binding.btnBlue.setOnClickListener {
+            binding.paintView.changePaintColor(ColorType.BLUE)
+        }
     }
 }
