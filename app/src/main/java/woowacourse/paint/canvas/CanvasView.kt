@@ -28,7 +28,7 @@ class CanvasView(
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         lines.forEach { line ->
-            canvas.drawPath(line.path,line.paint)
+            canvas.drawPath(line.path, line.paint)
         }
     }
 
