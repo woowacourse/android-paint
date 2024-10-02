@@ -19,14 +19,6 @@ data class Line(
         paint.strokeCap = Paint.Cap.ROUND
     }
 
-    fun changeColor(colorPalette: ColorPalette) {
-        paint.color = colorPalette.color
-    }
-
-    fun changeWidth(width: Float) {
-        paint.strokeWidth = width
-    }
-
     fun move(
         x: Float,
         y: Float,
