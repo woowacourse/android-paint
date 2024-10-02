@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity(), OnPaletteClickListener {
         binding.rangeSlider.valueFrom = 1.0f
         binding.rangeSlider.valueTo = 100.0f
         binding.rangeSlider.addOnChangeListener { _, value, _ ->
-            binding.paintView.setThickness(value)
+            binding.paintView.changeThickness(value)
         }
     }
 
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity(), OnPaletteClickListener {
     }
 
     override fun onClickPaint(color: Int) {
-        binding.paintView.setPaint(color)
+        binding.paintView.changeColor(color)
     }
 
     override fun onDestroy() {
