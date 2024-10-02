@@ -61,7 +61,9 @@ class PaintView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
         return true
     }
 
-    fun changeColor(@ColorRes color: Int) = updateBrush { it.setColor(color) }
+    fun changeColor(
+        @ColorRes color: Int,
+    ) = updateBrush { it.setColor(color) }
 
     fun changeThickness(size: Float) = updateBrush { it.setThickness(size) }
 
