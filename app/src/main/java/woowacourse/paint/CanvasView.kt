@@ -9,11 +9,9 @@ import android.view.MotionEvent
 import android.view.View
 
 class CanvasView constructor(context: Context, attrs: AttributeSet) : View(context, attrs) {
-
     private val drawings = mutableListOf<Drawing>()
     private var currentPaint =
         CanvasPaint(this.context.getColor(DEFAULT_COLOR.colorId), DEFAULT_BRUSH_SIZE)
-
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -21,7 +19,6 @@ class CanvasView constructor(context: Context, attrs: AttributeSet) : View(conte
             canvas.drawPath(it.path, it.paint)
         }
     }
-
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -35,22 +32,29 @@ class CanvasView constructor(context: Context, attrs: AttributeSet) : View(conte
         return true
     }
 
-    private fun startLine(pointX: Float, pointY: Float) {
-        val currentPath = Path().apply {
-            addOval(
-                pointX,
-                pointY,
-                pointX,
-                pointY,
-                Path.Direction.CW
-            )
-        }
+    private fun startLine(
+        pointX: Float,
+        pointY: Float,
+    ) {
+        val currentPath =
+            Path().apply {
+                addOval(
+                    pointX,
+                    pointY,
+                    pointX,
+                    pointY,
+                    Path.Direction.CW,
+                )
+            }
 
         drawings.add(Drawing(currentPath, currentPaint))
         invalidate()
     }
 
-    private fun drawLine(pointX: Float, pointY: Float) {
+    private fun drawLine(
+        pointX: Float,
+        pointY: Float,
+    ) {
         drawings.lastOrNull()?.path?.lineTo(pointX, pointY)
         invalidate()
     }
@@ -62,7 +66,6 @@ class CanvasView constructor(context: Context, attrs: AttributeSet) : View(conte
     fun changeBrushWidth(width: Float) {
         currentPaint = currentPaint.changeBrushWidth(width)
     }
-
 
     companion object {
         const val DEFAULT_BRUSH_SIZE = 10f

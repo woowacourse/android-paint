@@ -1,15 +1,12 @@
 package woowacourse.paint
 
-import android.annotation.SuppressLint
-import android.graphics.Canvas
 import android.graphics.Paint
 import androidx.annotation.ColorInt
 
 data class CanvasPaint(
     @ColorInt private val colorInt: Int,
-    private val brushWidth: Float
+    private val brushWidth: Float,
 ) : Paint() {
-
     init {
         style = Style.STROKE
         isAntiAlias = true
@@ -19,7 +16,9 @@ data class CanvasPaint(
         color = colorInt
     }
 
-    fun changeColor(@ColorInt colorInt: Int): CanvasPaint {
+    fun changeColor(
+        @ColorInt colorInt: Int,
+    ): CanvasPaint {
         return this.copy(colorInt = colorInt)
     }
 
