@@ -37,13 +37,13 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         lines.forEach { line ->
             canvas.drawPath(line.path, line.paint)
         }
-        canvas.drawPath(currentPath, currentPaint)
     }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
+                lines.add(Line(currentPath, currentPaint))
                 currentPath.moveTo(event.x, event.y)
             }
 
@@ -52,7 +52,6 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             }
 
             MotionEvent.ACTION_UP -> {
-                lines.add(Line(currentPath, currentPaint))
                 resetLine()
             }
 
