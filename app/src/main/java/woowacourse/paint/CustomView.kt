@@ -69,9 +69,13 @@ class CustomView(
     }
 
     private fun setupPaint() {
-        paint.color = Color.RED
-        paint.style = Paint.Style.STROKE
-        paint.strokeWidth = 10f
-        paint.isAntiAlias = true
+        paint.apply {
+            color = Color.RED
+            style = Paint.Style.STROKE
+            strokeWidth = 10f
+            strokeJoin = Paint.Join.ROUND
+            strokeCap = Paint.Cap.ROUND
+            isAntiAlias = true
+        }
     }
 }
