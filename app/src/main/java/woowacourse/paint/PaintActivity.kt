@@ -5,6 +5,7 @@ import androidx.activity.viewModels
 import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.slider.RangeSlider
+import woowacourse.paint.PaintBoard.Companion.DEFAULT_PAINT_COLOR_RES
 import woowacourse.paint.PaintBoard.Companion.DEFAULT_STROKE_WIDTH
 import woowacourse.paint.adapter.PaintColorAdapter
 import woowacourse.paint.databinding.ActivityPaintBinding
@@ -45,8 +46,7 @@ class PaintActivity : AppCompatActivity() {
     private fun setupAdapter() {
         binding.rcvColorPalette.adapter = adapter
 
-        val colorRes = viewModel.colorRes.value ?: return
-        submitPaintColors(colorRes)
+        submitPaintColors(DEFAULT_PAINT_COLOR_RES)
     }
 
     private fun setupObserving() {
