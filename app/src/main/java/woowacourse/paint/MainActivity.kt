@@ -2,6 +2,7 @@ package woowacourse.paint
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import woowacourse.paint.adapter.ColorPaletteAdapter
 import woowacourse.paint.brush.Brush
 import woowacourse.paint.brush.ColorPalette
 import woowacourse.paint.databinding.ActivityMainBinding

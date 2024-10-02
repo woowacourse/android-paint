@@ -1,4 +1,4 @@
-package woowacourse.paint
+package woowacourse.paint.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,20 +9,7 @@ import woowacourse.paint.databinding.ItemColorPaletteBinding
 class ColorPaletteAdapter(
     private val colorPalettes: List<ColorPalette>,
     private val onClickColorPalette: (ColorPalette) -> Unit,
-) : RecyclerView.Adapter<ColorPaletteAdapter.ColorPaletteViewHolder>() {
-    class ColorPaletteViewHolder(
-        private val binding: ItemColorPaletteBinding,
-        private val onClickColorPalette: (ColorPalette) -> Unit,
-    ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(colorPalette: ColorPalette) {
-            binding.paletteButton.apply {
-                setBackgroundColor(colorPalette.color)
-                setOnClickListener {
-                    onClickColorPalette(colorPalette)
-                }
-            }
-        }
-    }
+) : RecyclerView.Adapter<ColorPaletteViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -42,3 +29,4 @@ class ColorPaletteAdapter(
         holder.bind(colorPalettes[position])
     }
 }
+
