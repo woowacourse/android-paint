@@ -3,22 +3,13 @@ package woowacourse.paint.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import woowacourse.paint.Color
 import woowacourse.paint.ColorPaletteHandler
-import woowacourse.paint.R
 import woowacourse.paint.databinding.ItemColorPaletteBinding
 
 class ColorPaletteAdapter(
     private val colorPaletteHandler: ColorPaletteHandler,
 ) : RecyclerView.Adapter<ColorPaletteViewHolder>() {
-    private val colors =
-        listOf(
-            R.color.red,
-            R.color.orange,
-            R.color.yellow,
-            R.color.green,
-            R.color.blue,
-        )
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
@@ -29,13 +20,13 @@ class ColorPaletteAdapter(
     }
 
     override fun getItemCount(): Int {
-        return colors.size
+        return Color.entries.size
     }
 
     override fun onBindViewHolder(
         holder: ColorPaletteViewHolder,
         position: Int,
     ) {
-        holder.bind(colors[position])
+        holder.bind(Color.entries[position].colorId)
     }
 }
