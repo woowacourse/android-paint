@@ -4,11 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.view.View" />
 
         <variable
-            name="adapter"
+            name="colorSelectionAdapter"
             type="woowacourse.paint.view.ColorSelectionAdapter" />
+
+        <variable
+            name="brushControllerAdapter"
+            type="woowacourse.paint.view.BrushControllerAdapter" />
 
         <variable
             name="viewModel"
@@ -22,8 +27,8 @@
         <woowacourse.paint.view.CanvasView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/layout_controller_buttons"
+            app:layout_constraintTop_toTopOf="parent"
             app:lineColor="@{viewModel.selectedColor.getArgbColor()}"
             app:lineWidth="@{viewModel.selectedWidth}" />
 
@@ -32,28 +37,45 @@
             android:layout_height="wrap_content"
             android:valueFrom="0"
             android:valueTo="100"
-            app:value="@={viewModel.selectedWidth}"
+            android:visibility="@{viewModel.widthControllerVisible ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toTopOf="@id/rv_color_selection"
-            android:visibility="@{viewModel.widthControllerVisible ? View.VISIBLE : View.GONE}"/>
+            app:value="@={viewModel.selectedWidth}" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_color_selection"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:adapter="@{adapter}"
+            android:adapter="@{colorSelectionAdapter}"
             android:orientation="horizontal"
             android:visibility="@{viewModel.colorControllerVisible ? View.VISIBLE : View.GONE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@id/layout_controller_buttons"
+            app:layout_constraintBottom_toTopOf="@id/rv_brush_controller"
             tools:listitem="@layout/item_color" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_brush_controller"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:adapter="@{brushControllerAdapter}"
+            android:orientation="horizontal"
+            android:overScrollMode="never"
+            android:visibility="@{viewModel.brushControllerVisible ? View.VISIBLE : View.GONE}"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/layout_controller_buttons"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:itemCount="4"
+            tools:listitem="@layout/item_brush_button" />
 
         <include
             android:id="@+id/layout_controller_buttons"
             layout="@layout/item_controller_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:brushControllerVisibilityChangeListener="@{viewModel}"
             app:colorVisibilityChangeListener="@{viewModel}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:widthVisibilityChangeListener="@{viewModel}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

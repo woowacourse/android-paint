@@ -11,6 +11,10 @@
         <variable
             name="widthVisibilityChangeListener"
             type="woowacourse.paint.view.listener.WidthControllerVisibilityChangeListener" />
+
+        <variable
+            name="brushControllerVisibilityChangeListener"
+            type="woowacourse.paint.view.listener.BrushControllerVisibilityChangeListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -34,9 +38,19 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/btn_color_control"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_brush_control"
             android:text="굵기 변경"
             android:onClick="@{() -> widthVisibilityChangeListener.toggleWidthControllerVisibility()}"/>
+
+        <Button
+            android:id="@+id/btn_brush_control"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_width_control"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="브러쉬 변경"
+            android:onClick="@{() -> brushControllerVisibilityChangeListener.toggleBrushControllerVisibility()}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

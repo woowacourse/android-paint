@@ -10,8 +10,11 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
     private val viewModel: MainViewModel by viewModels()
-    private val adapter: ColorSelectionAdapter by lazy {
+    private val colorSelectionAdapter: ColorSelectionAdapter by lazy {
         ColorSelectionAdapter(viewModel.colors, viewModel)
+    }
+    private val brushControllerAdapter: BrushControllerAdapter by lazy {
+        BrushControllerAdapter(viewModel.brushes, viewModel)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        binding.adapter = adapter
+        binding.colorSelectionAdapter = colorSelectionAdapter
+        binding.brushControllerAdapter = brushControllerAdapter
     }
 }
