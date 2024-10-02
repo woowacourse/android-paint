@@ -21,5 +21,44 @@
             android:valueTo="100.0"
             app:layout_constraintTop_toBottomOf="@id/paint_board" />
 
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/range_slider"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/redChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipBackgroundColor="@color/red" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/orangeChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipBackgroundColor="@color/orange" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/yellowChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipBackgroundColor="@color/yellow" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/greenChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipBackgroundColor="@color/green" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/blueChip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:chipBackgroundColor="@color/blue" />
+
+        </com.google.android.material.chip.ChipGroup>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -7,8 +7,10 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
+import androidx.annotation.ColorRes
 
 class PaintBoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val drawLines = mutableListOf<DrawLine>()
@@ -24,6 +26,7 @@ class PaintBoardView(context: Context, attrs: AttributeSet) : View(context, attr
         super.onDraw(canvas)
         drawLines.forEach {
             paint.strokeWidth = it.strokeWidth
+            paint.color = it.color
             canvas.drawPath(it.path, paint)
         }
     }
@@ -37,7 +40,7 @@ class PaintBoardView(context: Context, attrs: AttributeSet) : View(context, attr
             MotionEvent.ACTION_DOWN -> {
                 val nextPath = Path()
                 nextPath.moveTo(event.x, event.y)
-                drawLines.add(DrawLine(nextPath, paint.strokeWidth))
+                drawLines.add(DrawLine(nextPath, paint.strokeWidth, paint.color))
             }
 
             MotionEvent.ACTION_MOVE -> {
@@ -52,6 +55,12 @@ class PaintBoardView(context: Context, attrs: AttributeSet) : View(context, attr
 
     fun setStrokeWidth(strokeWidth: Float) {
         paint.strokeWidth = strokeWidth
+    }
+
+    fun setColor(
+        @ColorRes color: Int,
+    ) {
+        paint.color = context.getColor(color)
     }
 
     private fun setupPaint() {
