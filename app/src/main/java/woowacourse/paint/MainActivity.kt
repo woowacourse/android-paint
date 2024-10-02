@@ -9,7 +9,6 @@ import woowacourse.paint.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     private lateinit var activityViewBinding: ActivityMainBinding
-    private var brush: Brush = Brush()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,20 +19,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initPalettes() {
-        activityViewBinding.customCanvas.changeColor(brush)
         activityViewBinding.rvColor.adapter =
             ColorPaletteAdapter(
                 colorPalettes = ColorPalette.entries,
             ) { color ->
-                brush = brush.changeColor(color)
-                activityViewBinding.customCanvas.changeColor(brush)
+                activityViewBinding.customCanvas.changeColor(color)
             }
     }
 
     private fun initListener() {
         activityViewBinding.rangeSlider.addOnChangeListener { _, width, _ ->
-            brush = brush.changeWidth(width)
-            activityViewBinding.customCanvas.changeLineWidth(brush)
+            activityViewBinding.customCanvas.changeLineWidth(width)
         }
     }
 }

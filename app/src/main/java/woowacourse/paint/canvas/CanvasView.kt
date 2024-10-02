@@ -8,16 +8,19 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.brush.Brush
+import woowacourse.paint.brush.ColorPalette
 import woowacourse.paint.brush.Line
 
 class CanvasView(
     context: Context,
     attributeSet: AttributeSet,
 ) : View(context, attributeSet) {
+    private var brush: Brush = Brush()
     private val lines: MutableList<Line> = mutableListOf()
     private var drawingLine = Line()
 
     init {
+        changeColor(Brush.INIT_COLOR)
         isFocusable = true
         isFocusableInTouchMode = true
     }
@@ -61,11 +64,13 @@ class CanvasView(
         drawingLine.quad(x, y)
     }
 
-    fun changeLineWidth(brush: Brush) {
+    fun changeLineWidth(width: Float) {
+        brush = brush.changeWidth(width)
         drawingLine = Line(paint = createNewPaint(brush))
     }
 
-    fun changeColor(brush: Brush) {
+    fun changeColor(colorPalette: ColorPalette) {
+        brush = brush.changeColor(colorPalette)
         drawingLine = Line(paint = createNewPaint(brush))
     }
 
