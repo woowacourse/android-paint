@@ -17,20 +17,20 @@
 
         <View
             android:id="@+id/red_palette"
-            android:layout_width="50dp"
+            android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginStart="15dp"
             android:background="@color/red"
             android:onClick="@{() -> onClickPaletteListener.onClickPaint(@color/red)}"
             app:layout_constraintEnd_toStartOf="@id/orange_palette"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
             android:id="@+id/orange_palette"
-            android:layout_width="50dp"
+            android:layout_width="0dp"
             android:layout_height="50dp"
+            android:layout_marginStart="15dp"
             android:background="@color/orange"
             android:onClick="@{() -> onClickPaletteListener.onClickPaint(@color/orange)}"
             app:layout_constraintEnd_toStartOf="@id/yellow_palette"
@@ -39,8 +39,9 @@
 
         <View
             android:id="@+id/yellow_palette"
-            android:layout_width="50dp"
+            android:layout_width="0dp"
             android:layout_height="50dp"
+            android:layout_marginStart="15dp"
             android:background="@color/yellow"
             android:onClick="@{() -> onClickPaletteListener.onClickPaint(@color/yellow)}"
             app:layout_constraintEnd_toStartOf="@id/green_palette"
@@ -49,8 +50,9 @@
 
         <View
             android:id="@+id/green_palette"
-            android:layout_width="50dp"
+            android:layout_width="0dp"
             android:layout_height="50dp"
+            android:layout_marginStart="15dp"
             android:background="@color/green"
             android:onClick="@{() -> onClickPaletteListener.onClickPaint(@color/green)}"
             app:layout_constraintEnd_toStartOf="@id/blue_palette"
@@ -59,8 +61,9 @@
 
         <View
             android:id="@+id/blue_palette"
-            android:layout_width="50dp"
+            android:layout_width="0dp"
             android:layout_height="50dp"
+            android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
             android:background="@color/blue"
             android:onClick="@{() -> onClickPaletteListener.onClickPaint(@color/blue)}"
