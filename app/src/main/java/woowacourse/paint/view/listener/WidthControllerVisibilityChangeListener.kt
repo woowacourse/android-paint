@@ -1,5 +1,5 @@
 package woowacourse.paint.view.listener
 
-interface WidthControllerVisibilityListener {
+interface WidthControllerVisibilityChangeListener {
     fun toggleWidthControllerVisibility()
 }

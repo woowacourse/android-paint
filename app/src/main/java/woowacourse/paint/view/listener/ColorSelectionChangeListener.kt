@@ -1,5 +1,5 @@
 package woowacourse.paint.view.listener
 
-interface ColorSelectionListener {
+interface ColorSelectionChangeListener {
     fun onColorSelected(color: Int)
 }

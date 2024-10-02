@@ -51,8 +51,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:colorVisibilityListener="@{viewModel}"
-            app:widthVisibilityListener="@{viewModel}" />
+            app:colorVisibilityChangeListener="@{viewModel}"
+            app:widthVisibilityChangeListener="@{viewModel}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

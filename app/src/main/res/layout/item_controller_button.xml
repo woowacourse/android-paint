@@ -5,12 +5,12 @@
     <data>
 
         <variable
-            name="colorVisibilityListener"
-            type="woowacourse.paint.view.listener.ColorControllerVisibilityListener" />
+            name="colorVisibilityChangeListener"
+            type="woowacourse.paint.view.listener.ColorControllerVisibilityChangeListener" />
 
         <variable
-            name="widthVisibilityListener"
-            type="woowacourse.paint.view.listener.WidthControllerVisibilityListener" />
+            name="widthVisibilityChangeListener"
+            type="woowacourse.paint.view.listener.WidthControllerVisibilityChangeListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,7 +26,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_width_control"
             android:text="색상 변경"
-            android:onClick="@{() -> colorVisibilityListener.toggleColorControllerVisibility()}"/>
+            android:onClick="@{() -> colorVisibilityChangeListener.toggleColorControllerVisibility()}"/>
 
         <Button
             android:id="@+id/btn_width_control"
@@ -36,7 +36,7 @@
             app:layout_constraintStart_toEndOf="@id/btn_color_control"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="굵기 변경"
-            android:onClick="@{() -> widthVisibilityListener.toggleWidthControllerVisibility()}"/>
+            android:onClick="@{() -> widthVisibilityChangeListener.toggleWidthControllerVisibility()}"/>
 
 
 

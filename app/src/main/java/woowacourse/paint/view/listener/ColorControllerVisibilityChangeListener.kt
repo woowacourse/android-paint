@@ -1,5 +1,5 @@
 package woowacourse.paint.view.listener
 
-interface ColorControllerVisibilityListener {
+interface ColorControllerVisibilityChangeListener {
     fun toggleColorControllerVisibility()
 }

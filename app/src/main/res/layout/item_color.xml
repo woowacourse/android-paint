@@ -7,11 +7,11 @@
 
         <import type="woowacourse.paint.model.ColorItem" />
 
-        <import type="woowacourse.paint.view.listener.ColorSelectionListener" />
+        <import type="woowacourse.paint.view.listener.ColorSelectionChangeListener" />
 
         <variable
-            name="colorItemSelectionListener"
-            type="woowacourse.paint.view.listener.ColorSelectionListener" />
+            name="colorItemSelectionChangeListener"
+            type="woowacourse.paint.view.listener.ColorSelectionChangeListener" />
 
         <variable
             name="colorItem"
@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:backgroundTint="@{colorItem.getArgbColor()}"
-            android:onClick="@{() -> colorItemSelectionListener.onColorSelected(colorItem.color)}"
+            android:onClick="@{() -> colorItemSelectionChangeListener.onColorSelected(colorItem.color)}"
             app:layout_constraintDimensionRatio="H,1:1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

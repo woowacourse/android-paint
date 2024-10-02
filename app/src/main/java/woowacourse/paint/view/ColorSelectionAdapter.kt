@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.paint.databinding.ItemColorBinding
 import woowacourse.paint.model.ColorItem
-import woowacourse.paint.view.listener.ColorSelectionListener
+import woowacourse.paint.view.listener.ColorSelectionChangeListener
 
 class ColorSelectionAdapter(
     private val colors: List<ColorItem>,
-    private val colorSelectionListener: ColorSelectionListener,
+    private val colorSelectionChangeListener: ColorSelectionChangeListener,
 ) : RecyclerView.Adapter<ColorSelectionAdapter.ColorSelectionViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -17,7 +17,7 @@ class ColorSelectionAdapter(
     ): ColorSelectionViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding = ItemColorBinding.inflate(layoutInflater, parent, false)
-        return ColorSelectionViewHolder(binding, colorSelectionListener)
+        return ColorSelectionViewHolder(binding, colorSelectionChangeListener)
     }
 
     override fun onBindViewHolder(
@@ -31,11 +31,11 @@ class ColorSelectionAdapter(
 
     class ColorSelectionViewHolder(
         private val binding: ItemColorBinding,
-        colorSelectionListener: ColorSelectionListener,
+        colorSelectionChangeListener: ColorSelectionChangeListener,
     ) :
         RecyclerView.ViewHolder(binding.root) {
         init {
-            binding.colorItemSelectionListener = colorSelectionListener
+            binding.colorItemSelectionChangeListener = colorSelectionChangeListener
         }
 
         fun bind(colorItem: ColorItem) {

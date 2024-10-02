@@ -4,15 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import woowacourse.paint.model.ColorItem
-import woowacourse.paint.view.listener.ColorControllerVisibilityListener
-import woowacourse.paint.view.listener.ColorSelectionListener
-import woowacourse.paint.view.listener.WidthControllerVisibilityListener
+import woowacourse.paint.view.listener.ColorControllerVisibilityChangeListener
+import woowacourse.paint.view.listener.ColorSelectionChangeListener
+import woowacourse.paint.view.listener.WidthControllerVisibilityChangeListener
 
 class MainViewModel :
     ViewModel(),
-    ColorSelectionListener,
-    ColorControllerVisibilityListener,
-    WidthControllerVisibilityListener {
+    ColorSelectionChangeListener,
+    ColorControllerVisibilityChangeListener,
+    WidthControllerVisibilityChangeListener {
     private val _colorControllerVisible: MutableLiveData<Boolean> = MutableLiveData(true)
     val colorControllerVisible: LiveData<Boolean> = _colorControllerVisible
 
