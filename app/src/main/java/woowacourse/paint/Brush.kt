@@ -26,15 +26,6 @@ data class Brush(
         path.moveTo(x, y)
     }
 
-    private fun setUpPaintStyle() {
-        when (brushState) {
-            BrushState.PEN -> paint.style = Paint.Style.STROKE
-            BrushState.RECTANGLE -> paint.style = Paint.Style.FILL
-            BrushState.CIRCLE -> paint.style = Paint.Style.FILL
-            BrushState.ERASER -> Paint.Style.STROKE
-        }
-    }
-
     private fun lineTo(
         x: Float,
         y: Float,
@@ -62,28 +53,33 @@ data class Brush(
         isEnd: Boolean,
     ) {
         when (brushState) {
-            BrushState.PEN -> {
-                lineTo(endX, endY)
-            }
+            BrushState.PEN -> lineTo(endX, endY)
 
             BrushState.RECTANGLE -> {
                 if (!isEnd) resetPath()
-                saveRectangle(startX, startY, endX, endY)
+                saveRectangleMovement(startX, startY, endX, endY)
             }
 
             BrushState.CIRCLE -> {
                 if (!isEnd) resetPath()
-                val radius = calculateRadius(startX, startY, endX, endY)
-                path.addCircle(startX, startY, radius, Path.Direction.CCW)
+                saveCircleMovement(startX, startY, endX, endY)
             }
 
-            BrushState.ERASER -> {
-                lineTo(endX, endY)
-            }
+            BrushState.ERASER -> lineTo(endX, endY)
         }
     }
 
-    private fun saveRectangle(
+    private fun saveCircleMovement(
+        startX: Float,
+        startY: Float,
+        endX: Float,
+        endY: Float,
+    ) {
+        val radius = calculateRadius(startX, startY, endX, endY)
+        path.addCircle(startX, startY, radius, Path.Direction.CCW)
+    }
+
+    private fun saveRectangleMovement(
         startX: Float,
         startY: Float,
         endX: Float,
@@ -103,16 +99,21 @@ data class Brush(
         ).toFloat()
     }
 
-    private fun resetPath() {
-        path.reset()
-    }
-
     fun setBrush(brushName: String) {
         when (BrushState.getBrushState(brushName)) {
             BrushState.PEN -> changeBrushToPen()
             BrushState.RECTANGLE -> changeBrushToRectangle()
             BrushState.CIRCLE -> changeBrushToCircle()
             BrushState.ERASER -> changeBrushToEraser()
+        }
+    }
+
+    private fun setUpPaintStyle() {
+        when (brushState) {
+            BrushState.PEN -> paint.style = Paint.Style.STROKE
+            BrushState.RECTANGLE -> paint.style = Paint.Style.FILL
+            BrushState.CIRCLE -> paint.style = Paint.Style.FILL
+            BrushState.ERASER -> Paint.Style.STROKE
         }
     }
 
@@ -138,5 +139,9 @@ data class Brush(
         paint.style = Paint.Style.STROKE
         brushState = BrushState.ERASER
         paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+    }
+
+    private fun resetPath() {
+        path.reset()
     }
 }
