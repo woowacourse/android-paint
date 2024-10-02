@@ -15,10 +15,43 @@
             android:id="@+id/paint_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/range_slider_thickness"
+            app:layout_constraintBottom_toTopOf="@id/layout_brush"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/layout_brush"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/range_slider_thickness"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/paint_view"
+            tools:visibility="visible">
+
+            <Button
+                android:id="@+id/btn_brush_type_pen"
+                style="@style/brush_type_button"
+                android:text="@string/brush_type_pen" />
+
+            <Button
+                android:id="@+id/btn_brush_type_rectangle"
+                style="@style/brush_type_button"
+                android:text="@string/brush_type_rectangle" />
+
+            <Button
+                android:id="@+id/btn_brush_type_circle"
+                style="@style/brush_type_button"
+                android:text="@string/brush_type_circle" />
+
+            <Button
+                android:id="@+id/btn_brush_type_eraser"
+                style="@style/brush_type_button"
+                android:text="@string/brush_type_eraser" />
+        </LinearLayout>
 
         <com.google.android.material.slider.RangeSlider
             android:id="@+id/range_slider_thickness"
@@ -29,7 +62,7 @@
             app:layout_constraintBottom_toTopOf="@id/rv_color_palette"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/paint_view"
+            app:layout_constraintTop_toBottomOf="@id/layout_brush"
             tools:visibility="visible" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -65,10 +98,22 @@
             android:layout_margin="5dp"
             android:text="@string/change_thickness"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_change_brush"
             app:layout_constraintStart_toEndOf="@id/btn_change_color"
             app:layout_constraintTop_toBottomOf="@id/rv_color_palette"
             app:onClickReverseVisibility="@{rangeSliderThickness}" />
+
+        <Button
+            android:id="@+id/btn_change_brush"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="@string/change_brush"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_change_thickness"
+            app:layout_constraintTop_toBottomOf="@id/rv_color_palette"
+            app:onClickReverseVisibility="@{layoutBrush}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
