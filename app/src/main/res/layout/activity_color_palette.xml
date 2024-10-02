@@ -50,9 +50,7 @@
 
             <ImageView
                 android:id="@+id/iv_paint_undo"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_margin="8dp"
+                style="@style/canvas_history_image_view"
                 android:onClick="@{() -> paintHistoryListener.onUndo()}"
                 android:src="@drawable/ic_undo"
                 app:layout_constraintBottom_toTopOf="@id/range_slider_thickness"
@@ -60,9 +58,7 @@
 
             <ImageView
                 android:id="@+id/iv_paint_redo"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_margin="8dp"
+                style="@style/canvas_history_image_view"
                 android:onClick="@{() -> paintHistoryListener.onRedo()}"
                 android:src="@drawable/ic_redo"
                 app:layout_constraintBottom_toTopOf="@id/range_slider_thickness"
@@ -70,9 +66,7 @@
 
             <ImageView
                 android:id="@+id/iv_paint_empty"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_margin="8dp"
+                style="@style/canvas_history_image_view"
                 android:onClick="@{() -> paintHistoryListener.onEmpty()}"
                 android:src="@drawable/ic_trash"
                 app:layout_constraintBottom_toTopOf="@id/range_slider_thickness"
