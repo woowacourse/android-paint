@@ -6,10 +6,10 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import woowacourse.paint.action.PaintActionHandler
 import woowacourse.paint.databinding.ItemPaintColorBinding
-import woowacourse.paint.model.PaintColor
+import woowacourse.paint.uimodel.PaintColorUiModel
 
 class PaintColorAdapter(private val actionHandler: PaintActionHandler) :
-    ListAdapter<PaintColor, PaintColorViewHolder>(diffUtil) {
+    ListAdapter<PaintColorUiModel, PaintColorViewHolder>(diffUtil) {
     init {
         setHasStableIds(true)
     }
@@ -28,24 +28,24 @@ class PaintColorAdapter(private val actionHandler: PaintActionHandler) :
         position: Int,
     ) {
         holder.bind(
-            paintColor = getItem(position),
-            actionHandler = actionHandler
+            paintColorUiModel = getItem(position),
+            actionHandler = actionHandler,
         )
     }
 
     companion object {
         val diffUtil =
-            object : DiffUtil.ItemCallback<PaintColor>() {
+            object : DiffUtil.ItemCallback<PaintColorUiModel>() {
                 override fun areContentsTheSame(
-                    oldItem: PaintColor,
-                    newItem: PaintColor,
+                    oldItem: PaintColorUiModel,
+                    newItem: PaintColorUiModel,
                 ): Boolean {
                     return oldItem == newItem
                 }
 
                 override fun areItemsTheSame(
-                    oldItem: PaintColor,
-                    newItem: PaintColor,
+                    oldItem: PaintColorUiModel,
+                    newItem: PaintColorUiModel,
                 ): Boolean {
                     return oldItem === newItem
                 }

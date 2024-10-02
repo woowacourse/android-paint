@@ -8,6 +8,7 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import woowacourse.paint.model.DrawingMode
 import woowacourse.paint.model.Line
 
 class PaintBoard(context: Context, attr: AttributeSet) : View(context, attr) {
@@ -78,15 +79,22 @@ class PaintBoard(context: Context, attr: AttributeSet) : View(context, attr) {
             }
     }
 
-    fun setPaintColor(color: Int) {
+    fun updateDrawingMode(drawingMode: DrawingMode) {
+//        when(drawingMode) {
+//
+//        }
+    }
+
+    fun updatePaintColor(color: Int) {
         paint.color = color
     }
 
-    fun setPaintStrokeWidth(strokeWidth: Float) {
+    fun updatePaintStrokeWidth(strokeWidth: Float) {
         paint.strokeWidth = strokeWidth
     }
 
     companion object {
+        val DEFAULT_DRAWING_MODE: DrawingMode = DrawingMode.PEN
         val DEFAULT_PAINT_COLOR_RES: Int = R.color.red
         const val DEFAULT_STROKE_WIDTH: Float = 30.0f
     }

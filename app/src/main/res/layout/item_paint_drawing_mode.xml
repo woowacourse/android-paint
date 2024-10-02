@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="DrawingModeUiModel"
+            type="woowacourse.paint.uimodel.DrawingModeUiModel" />
+
+        <variable
+            name="actionHandler"
+            type="woowacourse.paint.action.PaintActionHandler" />
+    </data>
+
+    <TextView
+        android:id="@+id/btn_pen"
+        drawingMode="@{DrawingModeUiModel}"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_marginHorizontal="6dp"
+        android:drawablePadding="4dp"
+        android:gravity="center"
+        android:onClick="@{() -> actionHandler.changeDrawingMode(DrawingModeUiModel.drawingMode)}"
+        android:paddingHorizontal="6dp"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        tools:drawableStart="@drawable/ic_pen"
+        tools:text="펜" />
+</layout>

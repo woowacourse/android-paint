@@ -5,12 +5,16 @@ import androidx.activity.viewModels
 import androidx.annotation.ColorRes
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.slider.RangeSlider
+import woowacourse.paint.PaintBoard.Companion.DEFAULT_DRAWING_MODE
 import woowacourse.paint.PaintBoard.Companion.DEFAULT_PAINT_COLOR_RES
 import woowacourse.paint.PaintBoard.Companion.DEFAULT_STROKE_WIDTH
 import woowacourse.paint.adapter.PaintColorAdapter
+import woowacourse.paint.adapter.PaintDrawingModeAdapter
 import woowacourse.paint.databinding.ActivityPaintBinding
+import woowacourse.paint.model.DrawingMode
 import woowacourse.paint.model.PaintColor
-import woowacourse.paint.util.Color
+import woowacourse.paint.uimodel.DrawingModeUiModel
+import woowacourse.paint.uimodel.PaintColorUiModel
 import woowacourse.paint.viewmodel.PaintViewModel
 
 class PaintActivity : AppCompatActivity() {
@@ -19,7 +23,12 @@ class PaintActivity : AppCompatActivity() {
 
     private val rangeSlider: RangeSlider by lazy { binding.rangeSliderThickness }
     private val paintBoard: PaintBoard by lazy { binding.paintBoard }
-    private val adapter: PaintColorAdapter by lazy { PaintColorAdapter(viewModel) }
+    private val paintColorAdapter: PaintColorAdapter by lazy { PaintColorAdapter(viewModel) }
+    private val paintDrawingModeAdapter: PaintDrawingModeAdapter by lazy {
+        PaintDrawingModeAdapter(
+            viewModel
+        )
+    }
     private val viewModel: PaintViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,33 +53,52 @@ class PaintActivity : AppCompatActivity() {
     }
 
     private fun setupAdapter() {
-        binding.rcvColorPalette.adapter = adapter
-
+        binding.rcvPaintColor.adapter = paintColorAdapter
         submitPaintColors(DEFAULT_PAINT_COLOR_RES)
+
+        binding.rcvPaintDrawingMode.adapter = paintDrawingModeAdapter
+        submitDrawingModes(DEFAULT_DRAWING_MODE)
     }
 
     private fun setupObserving() {
+        viewModel.drawingMode.observe(this) { drawingMode ->
+            paintBoard.updateDrawingMode(drawingMode)
+
+            submitDrawingModes(drawingMode)
+        }
+
         viewModel.colorRes.observe(this) { colorRes ->
             val paintColor = getColor(colorRes)
-            paintBoard.setPaintColor(paintColor)
+            paintBoard.updatePaintColor(paintColor)
 
             submitPaintColors(colorRes)
         }
 
         viewModel.strokeWidth.observe(this) { strokeWidth ->
-            paintBoard.setPaintStrokeWidth(strokeWidth)
+            paintBoard.updatePaintStrokeWidth(strokeWidth)
         }
     }
 
     private fun submitPaintColors(
-        @ColorRes colorRes: Int,
+        @ColorRes checkedColorRes: Int,
     ) {
-        val paintColors =
-            Color.getColors().map { color ->
-                val isChecked = color.colorRes == colorRes
-                PaintColor(color, isChecked)
+        val paintPaintColorUiModels =
+            PaintColor.getColors().map { color ->
+                val isChecked = color.colorRes == checkedColorRes
+                PaintColorUiModel(color, isChecked)
             }
-        adapter.submitList(paintColors)
+        paintColorAdapter.submitList(paintPaintColorUiModels)
+    }
+
+    private fun submitDrawingModes(
+        checkedDrawingMode: DrawingMode
+    ) {
+        val drawingModes =
+            DrawingMode.getDrawingModes().map { drawingMode ->
+                val isChecked = drawingMode == checkedDrawingMode
+                DrawingModeUiModel(drawingMode, isChecked)
+            }
+        paintDrawingModeAdapter.submitList(drawingModes)
     }
 
     private fun setupRangeSlider() {
