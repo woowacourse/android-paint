@@ -3,17 +3,16 @@ package woowacourse.paint.adapter
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.paint.action.PaintActionHandler
 import woowacourse.paint.databinding.ItemPaintColorBinding
+import woowacourse.paint.model.PaintColor
 import woowacourse.paint.util.Color
 
 class PaintColorViewHolder(private val binding: ItemPaintColorBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(
-        color: Color,
-        isChecked: Boolean,
+        paintColor: PaintColor,
         actionHandler: PaintActionHandler,
     ) {
-        binding.color = color
-        binding.isChecked = isChecked
+        binding.paintColor = paintColor
         binding.actionHandler = actionHandler
     }
 }
