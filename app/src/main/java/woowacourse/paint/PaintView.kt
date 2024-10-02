@@ -18,7 +18,7 @@ class PaintView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
     init {
         isFocusable = true
         isFocusableInTouchMode = true
-        brushHistory.last().apply {
+        currentBrush().apply {
             setColor(DEFAULT_COLOR)
             setThickness(DEFAULT_STROKE_WIDTH)
         }
@@ -37,7 +37,7 @@ class PaintView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         val pointX = event.x
         val pointY = event.y
-        val currentBrush = brushHistory.last()
+        val currentBrush = currentBrush()
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 startX = pointX
@@ -61,32 +61,25 @@ class PaintView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
         return true
     }
 
-    @SuppressLint("ResourceAsColor")
-    fun changeColor(
-        @ColorRes color: Int,
-    ) {
-        val newBrush = newBrush()
-        newBrush.setColor(color)
-        brushHistory.add(newBrush)
-    }
+    fun changeColor(@ColorRes color: Int) = updateBrush { it.setColor(color) }
 
-    fun changeThickness(size: Float) {
-        val newBrush = newBrush()
-        newBrush.setThickness(size)
-        brushHistory.add(newBrush)
-    }
+    fun changeThickness(size: Float) = updateBrush { it.setThickness(size) }
 
-    fun changeBrush(brushName: String) {
+    fun changeBrush(brushName: String) = updateBrush { it.setBrush(brushName) }
+
+    private fun updateBrush(updateAction: (Brush) -> Unit) {
         val newBrush = newBrush()
-        newBrush.setBrush(brushName)
+        updateAction(newBrush)
         brushHistory.add(newBrush)
     }
 
     private fun newBrush() =
         Brush(
-            paint = Paint(brushHistory.last().paint),
-            brushState = brushHistory.last().brushState,
+            paint = Paint(currentBrush().paint),
+            brushState = currentBrush().brushState,
         )
+
+    private fun currentBrush() = brushHistory.last()
 
     companion object {
         private const val DEFAULT_STROKE_WIDTH = 10.0f
