@@ -5,10 +5,6 @@
 
     <data>
 
-        <import type="woowacourse.paint.model.ColorItem" />
-
-        <import type="woowacourse.paint.view.listener.ColorSelectionChangeListener" />
-
         <variable
             name="colorItemSelectionChangeListener"
             type="woowacourse.paint.view.listener.ColorSelectionChangeListener" />
