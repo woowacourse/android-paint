@@ -6,6 +6,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -14,6 +15,7 @@ import woowacourse.paint.presentation.palette.ColorUiModel
 
 class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val lines: MutableList<Line> by lazy { mutableListOf() }
+    private var currentMoveType: Int = 0
     private var currentBrushType: BrushType = DEFAULT_BRUSH_TYPE
     private var currentPath: Path = Path()
     private var currentPaint: Paint = Paint()
@@ -40,6 +42,9 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         lines.forEach { line ->
             canvas.drawPath(line.path, line.paint)
         }
+        if (currentMoveType == 1 && currentBrushType != BrushType.PEN) {
+            if (lines.isNotEmpty()) lines.last().path.reset()
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -54,21 +59,30 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     private fun down(x: Float, y: Float) {
+        currentMoveType = 0
         lines.add(Line(currentPath, currentPaint))
         startX = x
         startY = y
-        currentPath.moveTo(x, y)
-        invalidate()
+        if (currentBrushType == BrushType.PEN) {
+            currentPath.moveTo(x, y)
+            invalidate()
+        }
     }
 
     private fun move(x: Float, y: Float) {
+        currentMoveType = 1
         when (currentBrushType) {
             BrushType.PEN -> {
+                currentPaint.style = Paint.Style.STROKE
                 currentPath.lineTo(x, y)
                 invalidate()
             }
 
             BrushType.RECTANGLE -> {
+                currentPaint.style = Paint.Style.FILL
+                currentPath.addRect(startX, startY, x, y, Path.Direction.CW)
+                invalidate()
+                Log.e("TEST", "move invalidate after")
             }
 
             BrushType.CIRCLE -> {
@@ -82,6 +96,7 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     private fun up(x: Float, y: Float) {
+        currentMoveType = 2
         resetLine()
     }
 
