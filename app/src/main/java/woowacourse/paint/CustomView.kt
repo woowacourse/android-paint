@@ -14,7 +14,7 @@ class CustomView(
     context: Context,
     attrs: AttributeSet,
 ) : View(context, attrs) {
-    private val map: MutableMap<Path, Paint> = mutableMapOf()
+    private val drawings: MutableMap<Path, Paint> = mutableMapOf()
 
     private var path = Path()
     private var paint = Paint()
@@ -48,7 +48,7 @@ class CustomView(
             }
 
             MotionEvent.ACTION_UP -> {
-                map[path] = Paint(paint)
+                drawings[path] = Paint(paint)
             }
 
             else -> super.onTouchEvent(event)
