@@ -61,6 +61,14 @@ class ColorPaletteActivity : AppCompatActivity(), ColorPaletteListener, BrushLis
         paintView.empty()
     }
 
+    override fun onUndo() {
+        paintView.undo()
+    }
+
+    override fun onRedo() {
+        paintView.redo()
+    }
+
     companion object {
         private const val OVAL_SIZE_MIN = 10.0f
         private const val OVAL_SIZE_MAX = 100.0f

@@ -33,6 +33,26 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
+            android:id="@+id/iv_paint_undo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="8dp"
+            android:onClick="@{() -> paintHistoryListener.onUndo()}"
+            android:src="@drawable/ic_undo"
+            app:layout_constraintBottom_toTopOf="@id/layout_brush"
+            app:layout_constraintEnd_toStartOf="@id/iv_paint_redo" />
+
+        <ImageView
+            android:id="@+id/iv_paint_redo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="8dp"
+            android:onClick="@{() -> paintHistoryListener.onRedo()}"
+            android:src="@drawable/ic_redo"
+            app:layout_constraintBottom_toTopOf="@id/layout_brush"
+            app:layout_constraintEnd_toStartOf="@id/iv_paint_empty" />
+
+        <ImageView
             android:id="@+id/iv_paint_empty"
             android:layout_width="40dp"
             android:layout_height="40dp"

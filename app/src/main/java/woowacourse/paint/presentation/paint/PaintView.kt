@@ -8,7 +8,6 @@ import android.graphics.Path
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -17,10 +16,13 @@ import woowacourse.paint.presentation.palette.ColorUiModel
 
 class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val lines: MutableList<Line> by lazy { mutableListOf() }
+    private val undoHistory: MutableList<Line> by lazy { mutableListOf() }
+
     private var currentMoveType: Int = 0
     private var currentBrushType: BrushType = DEFAULT_BRUSH_TYPE
     private var currentPath: Path = Path()
     private var currentPaint: Paint = Paint()
+
     private var startX = 0f
     private var startY = 0f
 
@@ -130,6 +132,20 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     fun empty() {
         lines.clear()
+        invalidate()
+    }
+
+    fun undo() {
+        if (lines.isEmpty()) return
+        val lastLine = lines.removeLast()
+        undoHistory.add(lastLine)
+        invalidate()
+    }
+
+    fun redo() {
+        if (undoHistory.isEmpty()) return
+        val firstUndoLine = undoHistory.removeFirst()
+        lines.add(firstUndoLine)
         invalidate()
     }
 
