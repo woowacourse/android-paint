@@ -41,14 +41,7 @@ class MainActivity : AppCompatActivity(), PaletteAction {
     }
 
     private fun initPalette() {
-        val palette =
-            listOf(
-                R.color.red,
-                R.color.orange,
-                R.color.yellow,
-                R.color.green,
-                R.color.blue,
-            )
+        val palette = resources.getIntArray(R.array.palette_colors).toList()
         binding.rvPalette.adapter = PaletteAdapter(palette, this)
     }
 
