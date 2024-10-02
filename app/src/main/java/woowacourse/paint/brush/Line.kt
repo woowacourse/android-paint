@@ -37,10 +37,6 @@ data class Line(
         endY = y
     }
 
-    fun draw(canvas: Canvas) {
-        canvas.drawPath(linePath, linePaint)
-    }
-
     companion object {
         private const val DEFAULT_POINT = 0f
     }

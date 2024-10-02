@@ -1,6 +1,5 @@
 package woowacourse.paint.adapter
 
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import woowacourse.paint.brush.ColorPalette
 import woowacourse.paint.databinding.ItemColorPaletteBinding
@@ -11,11 +10,7 @@ class ColorPaletteViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(colorPalette: ColorPalette) {
         binding.paletteButton.apply {
-            setBackgroundColor(
-                ContextCompat.getColor(
-                    binding.root.context, colorPalette.colorRes
-                )
-            )
+            setBackgroundColor(colorPalette.colorRes)
             setOnClickListener {
                 onClickColorPalette(colorPalette)
             }
