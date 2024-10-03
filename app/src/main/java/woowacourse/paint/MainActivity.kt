@@ -1,18 +1,54 @@
 package woowacourse.paint
 
 import android.os.Bundle
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
+import com.google.android.material.slider.RangeSlider
+import woowacourse.paint.adapter.ColorAdapter
+import woowacourse.paint.adapter.ColorHandler
+import woowacourse.paint.databinding.ActivityMainBinding
 
+class MainActivity : AppCompatActivity(), ColorHandler {
+    private val layoutResourceId: Int get() = R.layout.activity_main
+    private var _binding: ActivityMainBinding? = null
+    private val binding get() = requireNotNull(_binding)
 
-class MainActivity : AppCompatActivity() {
+    private lateinit var paintCanvas: PaintCanvasView
+    private lateinit var colorAdapter: ColorAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        _binding = DataBindingUtil.setContentView(this, layoutResourceId)
+        initPaintCanvas()
+        initColorAdapter()
+        initWidthSeekBar()
+    }
 
-        val name = "레아"
-        val text = findViewById<TextView>(R.id.text)
-        text.text = "$name 안녕하세요!"
+    private fun initPaintCanvas() {
+        paintCanvas = findViewById(R.id.paint_canvas)
+    }
+
+    private fun initColorAdapter() {
+        colorAdapter = ColorAdapter(this)
+        binding.rvColor.adapter = colorAdapter
+    }
+
+    private fun initWidthSeekBar() {
+        findViewById<RangeSlider>(R.id.stroke_width_slider).apply {
+            valueFrom = 0.0f
+            valueTo = 100.0f
+
+            addOnChangeListener(
+                RangeSlider.OnChangeListener { _, value, _ ->
+                    paintCanvas.selectStrokeWidth(value)
+                },
+            )
+        }
+    }
+
+    override fun selectColor(selectedColor: PaintColor) {
+        val color = ContextCompat.getColor(this, selectedColor.res)
+        paintCanvas.selectColorInt(color)
     }
 }
