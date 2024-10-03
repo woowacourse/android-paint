@@ -92,7 +92,7 @@ class CanvasView(context: Context, attrs: AttributeSet) :
                 canvas.drawOval(rect, currentPaint)
             }
 
-            BrushType.ERASER -> Unit
+            else -> Unit
         }
     }
 
@@ -121,6 +121,8 @@ class CanvasView(context: Context, attrs: AttributeSet) :
                         currentPath?.lineTo(pointX, pointY)
                         eraseIntersectingStrokes()
                     }
+
+                    BrushType.RESET -> Unit
                 }
             }
 
@@ -166,6 +168,8 @@ class CanvasView(context: Context, attrs: AttributeSet) :
                         eraseIntersectingStrokes()
                         currentPath?.reset()
                     }
+
+                    BrushType.RESET -> Unit
                 }
             }
 
@@ -188,6 +192,10 @@ class CanvasView(context: Context, attrs: AttributeSet) :
         when (currentBrushType) {
             BrushType.PEN, BrushType.ERASER -> currentPaint.style = Paint.Style.STROKE
             BrushType.RECTANGULAR, BrushType.CIRCLE -> currentPaint.style = Paint.Style.FILL
+            BrushType.RESET -> {
+                strokes.clear()
+                invalidate()
+            }
         }
     }
 
@@ -199,10 +207,12 @@ class CanvasView(context: Context, attrs: AttributeSet) :
             val stroke = strokes[i]
             stroke.path.computeBounds(strokeBounds, true)
 
-            if (RectF.intersects(eraserBounds, strokeBounds)) {
-                if (isPathIntersecting(stroke.path, currentPath!!)) {
-                    strokesToRemove.add(i)
-                }
+            if (RectF.intersects(eraserBounds, strokeBounds) && isPathIntersecting(
+                    stroke.path,
+                    currentPath!!
+                )
+            ) {
+                strokesToRemove.add(i)
             }
         }
 
@@ -216,11 +226,9 @@ class CanvasView(context: Context, attrs: AttributeSet) :
         intersectionPath.op(path1, path2, Path.Op.INTERSECT)
         if (!intersectionPath.isEmpty) return true
 
-        // 점 기반 검사
         val bounds = RectF()
         path1.computeBounds(bounds, true)
         return bounds.contains(startX, startY) || bounds.contains(endX, endY)
-
     }
 
     private fun remove(index: Int) {

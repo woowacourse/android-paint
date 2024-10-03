@@ -20,8 +20,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        initializeViewModel()
+        initializeAdapters()
+    }
+
+    private fun initializeViewModel() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
+    }
+
+    private fun initializeAdapters() {
         binding.colorSelectionAdapter = colorSelectionAdapter
         binding.brushControllerAdapter = brushControllerAdapter
     }

@@ -55,12 +55,11 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_brush_controller"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="12dp"
             android:adapter="@{brushControllerAdapter}"
             android:orientation="horizontal"
-            android:overScrollMode="never"
             android:visibility="@{viewModel.brushControllerVisible ? View.VISIBLE : View.GONE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@id/layout_controller_buttons"

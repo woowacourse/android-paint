@@ -5,4 +5,5 @@ enum class BrushType {
     RECTANGULAR,
     CIRCLE,
     ERASER,
+    RESET,
 }
