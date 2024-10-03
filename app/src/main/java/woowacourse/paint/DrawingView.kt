@@ -9,7 +9,6 @@ import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.tools.Circle
 import woowacourse.paint.tools.DrawingTool
-import woowacourse.paint.tools.Eraser
 import woowacourse.paint.tools.Line
 import woowacourse.paint.tools.Rectangle
 
@@ -71,18 +70,22 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
                 DrawingMode.LINE -> Line()
                 DrawingMode.RECTANGLE -> Rectangle()
                 DrawingMode.CIRCLE -> Circle()
-                DrawingMode.ERASE -> Eraser()
+                DrawingMode.ERASE -> Line(isEraser = true)
             }
     }
 
     fun undo() {
-        drawings.removeLast()
-        invalidate()
+        if (drawings.isNotEmpty()) {
+            drawings.removeLast()
+            invalidate()
+        }
     }
 
     fun deleteAll() {
-        drawings.clear()
-        invalidate()
+        if (drawings.isNotEmpty()) {
+            drawings.clear()
+            invalidate()
+        }
     }
 
     companion object {
