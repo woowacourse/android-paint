@@ -1,16 +1,111 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/background"
-        android:padding="16dp"
-        android:textColor="@color/white"
-        tools:text="레아 안녕하세요" />
+    <data>
 
-</FrameLayout>
+        <variable
+            name="vm"
+            type="woowacourse.paint.MainViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <woowacourse.paint.coustom.DrawingView
+            android:id="@+id/drawing_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/sb_paint_width"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <SeekBar
+            android:id="@+id/sb_paint_width"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:max="100"
+            android:progress="50"
+            android:theme="@style/SeekBarColor"
+            app:layout_constraintBottom_toTopOf="@+id/cl_color_selector"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_color_selector"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <View
+                android:id="@+id/v_color_red"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/ic_color_selector"
+                android:onClick="@{() -> vm.onColorSelected(vm.selectedColor.RED)}"
+                app:backgroundTint="@{vm.selectedColor.RED}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/v_color_orange"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/v_color_orange"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/ic_color_selector"
+                android:onClick="@{() -> vm.onColorSelected(vm.selectedColor.ORANGE)}"
+                app:backgroundTint="@{vm.selectedColor.ORANGE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/v_color_yellow"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/v_color_red"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/v_color_yellow"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/ic_color_selector"
+                android:onClick="@{() -> vm.onColorSelected(vm.selectedColor.YELLOW)}"
+                app:backgroundTint="@{vm.selectedColor.YELLOW}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/v_color_green"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/v_color_orange"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/v_color_green"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/ic_color_selector"
+                android:onClick="@{() -> vm.onColorSelected(vm.selectedColor.GREEN)}"
+                app:backgroundTint="@{vm.selectedColor.GREEN}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/v_color_blue"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/v_color_yellow"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/v_color_blue"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/ic_color_selector"
+                android:onClick="@{() -> vm.onColorSelected(vm.selectedColor.BLUE)}"
+                app:backgroundTint="@{vm.selectedColor.BLUE}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/v_color_green"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
