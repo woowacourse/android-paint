@@ -4,21 +4,27 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
-import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import woowacourse.paint.tools.Circle
+import woowacourse.paint.tools.DrawingTool
+import woowacourse.paint.tools.Line
+import woowacourse.paint.tools.Rectangle
 
 class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    private val lines = mutableListOf<Line>()
-    private var currentColor = resources.getColor(DEFAULT_STROKE_COLOR.colorRes, null)
-    private var currentStrokeWidth = DEFAULT_STROKE_WIDTH
+    private var currentDrawingMode: DrawingTool = Line()
+    private val drawings = mutableListOf<DrawingTool>()
+    private val currentPaint =
+        Paint().apply {
+            strokeWidth = DEFAULT_STROKE_WIDTH
+            color = resources.getColor(DEFAULT_STROKE_COLOR.colorRes, null)
+        }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        for (line in lines) {
-            canvas.drawPath(line.path, line.paint)
-        }
+        drawings.forEach { it.renderOnCanvas(canvas) }
+        currentDrawingMode.renderOnCanvas(canvas)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -28,13 +34,22 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                val newPath = Path().apply { moveTo(pointX, pointY) }
-                val newPaint = createPaint()
-                lines.add(Line(newPath, newPaint))
+                currentDrawingMode.setStartPoint(pointX, pointY, currentPaint)
             }
 
             MotionEvent.ACTION_MOVE -> {
-                lines.lastOrNull()?.path?.lineTo(pointX, pointY)
+                currentDrawingMode.draw(pointX, pointY)
+            }
+
+            MotionEvent.ACTION_UP -> {
+                drawings.add(currentDrawingMode)
+                currentDrawingMode =
+                    when (currentDrawingMode) {
+                        is Line -> Line()
+                        is Rectangle -> Rectangle()
+                        is Circle -> Circle()
+                        else -> throw IllegalStateException("Unknown drawing mode")
+                    }
             }
 
             else -> super.onTouchEvent(event)
@@ -43,20 +58,22 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         return true
     }
 
-    private fun createPaint(): Paint =
-        Paint().apply {
-            strokeWidth = currentStrokeWidth
-            color = currentColor
-            style = Paint.Style.STROKE
-            strokeCap = Paint.Cap.ROUND
-        }
-
     fun setStrokeWidth(width: Float) {
-        currentStrokeWidth = width
+        currentPaint.strokeWidth = width
     }
 
     fun setStrokeColor(color: Int) {
-        currentColor = color
+        currentPaint.color = color
+    }
+
+    fun setDrawingMode(drawingMode: DrawingMode) {
+        currentDrawingMode =
+            when (drawingMode) {
+                DrawingMode.LINE -> Line()
+                DrawingMode.RECTANGLE -> Rectangle()
+                DrawingMode.CIRCLE -> Circle()
+                DrawingMode.ERASE -> Circle() // TODO
+            }
     }
 
     companion object {
