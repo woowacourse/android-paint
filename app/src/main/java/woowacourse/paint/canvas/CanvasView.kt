@@ -1,0 +1,85 @@
+package woowacourse.paint.canvas
+
+import android.annotation.SuppressLint
+import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.util.AttributeSet
+import android.view.MotionEvent
+import android.view.View
+import woowacourse.paint.brush.Brush
+import woowacourse.paint.brush.ColorPalette
+import woowacourse.paint.brush.Line
+
+class CanvasView(
+    context: Context,
+    attributeSet: AttributeSet,
+) : View(context, attributeSet) {
+    private var brush: Brush = Brush()
+    private val lines: MutableList<Line> = mutableListOf()
+    private var drawingLine = Line()
+
+    init {
+        changeColor(Brush.INIT_COLOR)
+        isFocusable = true
+        isFocusableInTouchMode = true
+    }
+
+    override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
+        lines.forEach { line ->
+            canvas.drawPath(line.path, line.paint)
+        }
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    override fun onTouchEvent(event: MotionEvent): Boolean {
+        return when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                startDrawing(event.x, event.y)
+                invalidate()
+                true
+            }
+
+            MotionEvent.ACTION_MOVE -> {
+                quadDrawing(event.x, event.y)
+                invalidate()
+                true
+            }
+
+            else -> super.onTouchEvent(event)
+        }
+    }
+
+    private fun startDrawing(
+        x: Float,
+        y: Float,
+    ) {
+        drawingLine.move(x, y)
+        lines.add(drawingLine)
+    }
+
+    private fun quadDrawing(
+        x: Float,
+        y: Float,
+    ) {
+        drawingLine.quad(x, y)
+    }
+
+    fun changeLineWidth(width: Float) {
+        brush = brush.changeWidth(width)
+        drawingLine = Line(paint = createNewPaint(brush))
+    }
+
+    fun changeColor(colorPalette: ColorPalette) {
+        brush = brush.changeColor(colorPalette)
+        drawingLine = Line(paint = createNewPaint(brush))
+    }
+
+    private fun createNewPaint(brush: Brush): Paint {
+        return Paint().apply {
+            this.color = brush.colorPalette.colorRes
+            this.strokeWidth = brush.width
+        }
+    }
+}
