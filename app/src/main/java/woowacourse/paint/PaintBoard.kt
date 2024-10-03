@@ -115,6 +115,11 @@ class PaintBoard(context: Context, attr: AttributeSet) : View(context, attr) {
         paint.strokeWidth = strokeWidth
     }
 
+    fun clearDrawings() {
+        drawings.clear()
+        invalidate()
+    }
+
     private fun createNewPath() {
         path = Path()
     }

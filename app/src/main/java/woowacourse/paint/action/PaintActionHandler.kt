@@ -9,4 +9,6 @@ interface PaintActionHandler {
     )
 
     fun changeDrawingMode(drawingMode: DrawingMode)
+
+    fun clearDrawings()
 }

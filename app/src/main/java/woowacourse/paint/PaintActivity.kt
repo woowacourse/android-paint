@@ -8,6 +8,7 @@ import com.google.android.material.slider.RangeSlider
 import woowacourse.paint.PaintBoard.Companion.DEFAULT_DRAWING_MODE
 import woowacourse.paint.PaintBoard.Companion.DEFAULT_PAINT_COLOR_RES
 import woowacourse.paint.PaintBoard.Companion.DEFAULT_STROKE_WIDTH
+import woowacourse.paint.action.PaintBoardAction
 import woowacourse.paint.adapter.PaintColorAdapter
 import woowacourse.paint.adapter.PaintDrawingModeAdapter
 import woowacourse.paint.databinding.ActivityPaintBinding
@@ -76,6 +77,16 @@ class PaintActivity : AppCompatActivity() {
 
         viewModel.strokeWidth.observe(this) { strokeWidth ->
             paintBoard.updatePaintStrokeWidth(strokeWidth)
+        }
+
+        viewModel.boardAction.observe(this) { event ->
+            event.getContentIfNotHandled()?.let { action ->
+                when (action) {
+                    PaintBoardAction.ClearDrawings -> {
+                        paintBoard.clearDrawings()
+                    }
+                }
+            }
         }
     }
 
