@@ -9,6 +9,7 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import woowacourse.paint.util.MyColor
 
 class CustomView(
     context: Context,
@@ -70,7 +71,7 @@ class CustomView(
 
     private fun setupPaint() {
         paint.apply {
-            color = Color.RED
+            color = MyColor.RED
             style = Paint.Style.STROKE
             strokeWidth = 10f
             strokeJoin = Paint.Join.ROUND
