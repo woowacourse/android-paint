@@ -63,6 +63,7 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         y: Float,
     ) {
         currentDrawing.down(x, y)
+        undoHistory.clear()
         drawingHistory.add(currentDrawing)
         startX = x
         startY = y
@@ -98,6 +99,7 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     fun empty() {
         drawingHistory.clear()
+        undoHistory.clear()
         invalidate()
     }
 
@@ -110,7 +112,7 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     fun redo() {
         if (undoHistory.isEmpty()) return
-        val firstUndoDrawing = undoHistory.removeFirst()
+        val firstUndoDrawing = undoHistory.removeLast()
         drawingHistory.add(firstUndoDrawing)
         invalidate()
     }
