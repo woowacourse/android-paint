@@ -9,6 +9,7 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import androidx.annotation.ColorInt
 
 class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val paths = mutableListOf<Pair<Path, Paint>>()
@@ -68,7 +69,7 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
             }
     }
 
-    fun setPaintColor(color: Int) {
+    fun setPaintColor(@ColorInt color: Int) {
         currentPaint.color = color
     }
 
