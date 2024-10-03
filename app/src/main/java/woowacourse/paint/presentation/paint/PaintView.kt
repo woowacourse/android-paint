@@ -8,8 +8,8 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import woowacourse.paint.presentation.palette.BrushType
-import woowacourse.paint.presentation.palette.ColorUiModel
+import woowacourse.paint.presentation.paint.model.BrushType
+import woowacourse.paint.presentation.paint.model.ColorUiModel
 
 class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val drawingHistory: MutableList<Drawing> by lazy { mutableListOf() }

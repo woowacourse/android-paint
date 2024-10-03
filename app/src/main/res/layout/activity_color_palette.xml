@@ -7,23 +7,23 @@
 
         <variable
             name="color"
-            type="woowacourse.paint.presentation.palette.ColorUiModel" />
+            type="woowacourse.paint.presentation.paint.model.ColorUiModel" />
 
         <variable
             name="brush"
-            type="woowacourse.paint.presentation.palette.BrushType" />
+            type="woowacourse.paint.presentation.paint.model.BrushType" />
 
         <variable
             name="brushListener"
-            type="woowacourse.paint.presentation.palette.BrushListener" />
+            type="woowacourse.paint.presentation.palette.listener.BrushListener" />
 
         <variable
             name="paintHistoryListener"
-            type="woowacourse.paint.presentation.palette.PaintHistoryListener" />
+            type="woowacourse.paint.presentation.palette.listener.PaintHistoryListener" />
 
         <variable
             name="colorPaletteListener"
-            type="woowacourse.paint.presentation.palette.ColorPaletteListener" />
+            type="woowacourse.paint.presentation.palette.listener.ColorPaletteListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

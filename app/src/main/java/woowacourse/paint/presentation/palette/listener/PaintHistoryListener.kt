@@ -1,4 +1,4 @@
-package woowacourse.paint.presentation.palette
+package woowacourse.paint.presentation.palette.listener
 
 interface PaintHistoryListener {
     fun onEmpty()

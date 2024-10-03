@@ -3,8 +3,8 @@ package woowacourse.paint.presentation.paint
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.RectF
-import woowacourse.paint.presentation.palette.BrushType
-import woowacourse.paint.presentation.palette.TouchType
+import woowacourse.paint.presentation.paint.model.BrushType
+import woowacourse.paint.presentation.paint.model.TouchType
 import kotlin.math.max
 import kotlin.math.min
 

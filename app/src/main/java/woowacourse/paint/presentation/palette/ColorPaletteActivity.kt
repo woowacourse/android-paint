@@ -4,6 +4,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.databinding.ActivityColorPaletteBinding
 import woowacourse.paint.presentation.paint.PaintView
+import woowacourse.paint.presentation.paint.model.BrushType
+import woowacourse.paint.presentation.paint.model.ColorUiModel
+import woowacourse.paint.presentation.palette.listener.BrushListener
+import woowacourse.paint.presentation.palette.listener.ColorPaletteListener
+import woowacourse.paint.presentation.palette.listener.PaintHistoryListener
 
 class ColorPaletteActivity :
     AppCompatActivity(),
