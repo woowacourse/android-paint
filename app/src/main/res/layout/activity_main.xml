@@ -1,16 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10">
 
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="wrap_content"
+    <woowacourse.paint.DrawingBoardView
+        android:id="@+id/drawing_board"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="8.5" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_colors"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/color_item" />
+
+    <com.google.android.material.slider.RangeSlider
+        android:id="@+id/range_slider"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/background"
-        android:padding="16dp"
-        android:textColor="@color/white"
-        tools:text="레아 안녕하세요" />
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="10dp"
+        android:layout_weight="0.5"
+        android:valueFrom="5.0"
+        android:valueTo="50.0" />
 
-</FrameLayout>
+</LinearLayout>
