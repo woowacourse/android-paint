@@ -37,18 +37,22 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             0,
             0
         ).apply {
-            try {
-                currentPaint.apply {
-                    style = Paint.Style.STROKE
-                    isAntiAlias = true
-                    strokeJoin = Paint.Join.ROUND
-                    strokeCap = Paint.Cap.ROUND
-                    color = getColor(R.styleable.CustomView_lineColor, DEFAULT_LINE_COLOR)
-                    strokeWidth = getDimension(R.styleable.CustomView_lineWidth, DEFAULT_LINE_WIDTH)
-                }
-            } finally {
-                recycle()
+            initializePaintAttributes()
+        }
+    }
+
+    private fun TypedArray.initializePaintAttributes() {
+        try {
+            currentPaint.apply {
+                style = Paint.Style.STROKE
+                isAntiAlias = true
+                strokeJoin = Paint.Join.ROUND
+                strokeCap = Paint.Cap.ROUND
+                color = getColor(R.styleable.CustomView_lineColor, DEFAULT_LINE_COLOR)
+                strokeWidth = getDimension(R.styleable.CustomView_lineWidth, DEFAULT_LINE_WIDTH)
             }
+        } finally {
+            recycle()
         }
     }
 
