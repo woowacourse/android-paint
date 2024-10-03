@@ -75,6 +75,16 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
             }
     }
 
+    fun undo() {
+        drawings.removeLast()
+        invalidate()
+    }
+
+    fun deleteAll() {
+        drawings.clear()
+        invalidate()
+    }
+
     companion object {
         private val DEFAULT_STROKE_COLOR = PaletteColor.RED
         const val DEFAULT_STROKE_WIDTH = 20f

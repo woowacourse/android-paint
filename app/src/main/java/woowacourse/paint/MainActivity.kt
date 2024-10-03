@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity(), PaletteListener {
         setRangeSlider()
         setColorPalette()
         setDrawingMode()
+        setButtons()
     }
 
     private fun setRangeSlider() {
@@ -45,6 +46,15 @@ class MainActivity : AppCompatActivity(), PaletteListener {
                     else -> error("유효하지 않는 모드")
                 }
             binding.canvas.setDrawingMode(drawingMode)
+        }
+    }
+
+    private fun setButtons() {
+        binding.btnUndo.setOnClickListener {
+            binding.canvas.undo()
+        }
+        binding.btnDeleteAll.setOnClickListener {
+            binding.canvas.deleteAll()
         }
     }
 

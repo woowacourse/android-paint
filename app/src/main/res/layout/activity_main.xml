@@ -20,6 +20,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/btn_undo"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginEnd="12dp"
+            android:src="@drawable/icon_undo"
+            app:layout_constraintBottom_toBottomOf="@id/btn_delete_all"
+            app:layout_constraintEnd_toStartOf="@id/btn_delete_all"
+            app:layout_constraintTop_toTopOf="@id/btn_delete_all"
+            app:tint="@color/black" />
+
+        <ImageView
+            android:id="@+id/btn_delete_all"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="12dp"
+            android:src="@drawable/icon_delete_all"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/black" />
+
         <RadioGroup
             android:id="@+id/radioGroup"
             android:layout_width="0dp"
@@ -54,9 +75,9 @@
 
             <RadioButton
                 android:id="@+id/radio_eraser"
-                android:layout_weight="1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="지우개" />
 
         </RadioGroup>
