@@ -4,17 +4,18 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.RectF
 import woowacourse.paint.presentation.palette.BrushType
+import woowacourse.paint.presentation.palette.TouchType
 import kotlin.math.max
 import kotlin.math.min
 
 class Line(
     val path: Path = Path(),
     val paint: Paint = Paint(),
-    private var moveType: Int = 0,
-    private var brushType: BrushType = DEFAULT_BRUSH_TYPE,
+    private var touchType: TouchType = TouchType.DOWN,
+    private var brushType: BrushType,
 ) {
     fun shouldClearLastShape(): Boolean {
-        return moveType == 1 && brushType.isShape()
+        return touchType == TouchType.MOVE && brushType.isShape()
     }
 
     fun clear() {
@@ -24,19 +25,19 @@ class Line(
     fun copy(
         path: Path = Path(this.path),
         paint: Paint = Paint(this.paint),
-        moveType: Int = this.moveType,
+        moveType: TouchType = this.touchType,
         brushType: BrushType = this.brushType,
     ): Line {
         return Line(path, paint, moveType, brushType)
     }
 
     fun down(x: Float, y: Float) {
-        moveType = 0
+        touchType = TouchType.DOWN
         path.moveTo(x, y)
     }
 
     fun move(startX: Float, startY: Float, x: Float, y: Float) {
-        moveType = 1
+        touchType = TouchType.MOVE
         when (brushType) {
             BrushType.PEN -> path.lineTo(x, y)
             BrushType.RECTANGLE -> {
@@ -54,7 +55,7 @@ class Line(
     }
 
     fun up() {
-        moveType = 2
+        touchType = TouchType.UP
     }
 
     fun changePaintColor(color: Int) {
@@ -69,9 +70,5 @@ class Line(
         this.brushType = brushType
         paint.xfermode = this.brushType.eraserMode()
         paint.style = this.brushType.paintStyle()
-    }
-
-    companion object {
-        private val DEFAULT_BRUSH_TYPE = BrushType.PEN
     }
 }

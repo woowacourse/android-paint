@@ -15,18 +15,20 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val lines: MutableList<Line> by lazy { mutableListOf() }
     private val undoHistory: MutableList<Line> by lazy { mutableListOf() }
 
-    private var currentLine: Line = Line(paint = initialPaint())
+    private var currentLine: Line = initialLine()
     private var startX: Float = 0f
     private var startY: Float = 0f
 
-    private fun initialPaint(): Paint {
-        return Paint().apply {
-            color = DEFAULT_COLOR.getColor(context)
-            strokeWidth = DEFAULT_STROKE
-            style = Paint.Style.STROKE
-            strokeCap = Paint.Cap.ROUND
-            isAntiAlias = true
-        }
+    private fun initialLine(): Line {
+        val initialPaint =
+            Paint().apply {
+                color = DEFAULT_COLOR.getColor(context)
+                strokeWidth = DEFAULT_STROKE
+                style = Paint.Style.STROKE
+                strokeCap = Paint.Cap.ROUND
+                isAntiAlias = true
+            }
+        return Line(paint = initialPaint, brushType = DEFAULT_BRUSH_TYPE)
     }
 
     override fun onAttachedToWindow() {
@@ -114,7 +116,8 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     companion object {
-        private const val DEFAULT_STROKE = 10.0f
+        private val DEFAULT_BRUSH_TYPE = BrushType.PEN
         private val DEFAULT_COLOR = ColorUiModel.RED
+        private const val DEFAULT_STROKE = 10.0f
     }
 }
