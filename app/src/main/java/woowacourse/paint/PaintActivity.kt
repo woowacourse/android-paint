@@ -26,7 +26,7 @@ class PaintActivity : AppCompatActivity() {
     private val paintColorAdapter: PaintColorAdapter by lazy { PaintColorAdapter(viewModel) }
     private val paintDrawingModeAdapter: PaintDrawingModeAdapter by lazy {
         PaintDrawingModeAdapter(
-            viewModel
+            viewModel,
         )
     }
     private val viewModel: PaintViewModel by viewModels()
@@ -90,9 +90,7 @@ class PaintActivity : AppCompatActivity() {
         paintColorAdapter.submitList(paintPaintColorUiModels)
     }
 
-    private fun submitDrawingModes(
-        checkedDrawingMode: DrawingMode
-    ) {
+    private fun submitDrawingModes(checkedDrawingMode: DrawingMode) {
         val drawingModes =
             DrawingMode.getDrawingModes().map { drawingMode ->
                 val isChecked = drawingMode == checkedDrawingMode

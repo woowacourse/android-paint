@@ -49,16 +49,18 @@ fun TextView.bindDrawingMode(drawingMode: DrawingModeUiModel) {
 
 @BindingAdapter("thicknessVisibility")
 fun RangeSlider.bindThicknessVisibility(drawingMode: DrawingMode) {
-    isVisible = when (drawingMode) {
-        DrawingMode.PEN, DrawingMode.ERASER -> true
-        else -> false
-    }
+    isVisible =
+        when (drawingMode) {
+            DrawingMode.PEN, DrawingMode.ERASER -> true
+            else -> false
+        }
 }
 
 @BindingAdapter("paintColorVisibility")
 fun RecyclerView.bindPaintColorVisibility(drawingMode: DrawingMode) {
-    isVisible = when (drawingMode) {
-        DrawingMode.PEN, DrawingMode.SQUARE, DrawingMode.CIRCLE -> true
-        else -> false
-    }
+    isVisible =
+        when (drawingMode) {
+            DrawingMode.PEN, DrawingMode.SQUARE, DrawingMode.CIRCLE -> true
+            else -> false
+        }
 }

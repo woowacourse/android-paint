@@ -34,20 +34,21 @@ class PaintDrawingModeAdapter(private val actionHandler: PaintActionHandler) :
     }
 
     companion object {
-        val diffUtil = object : DiffUtil.ItemCallback<DrawingModeUiModel>() {
-            override fun areContentsTheSame(
-                oldItem: DrawingModeUiModel,
-                newItem: DrawingModeUiModel,
-            ): Boolean {
-                return oldItem == newItem
-            }
+        val diffUtil =
+            object : DiffUtil.ItemCallback<DrawingModeUiModel>() {
+                override fun areContentsTheSame(
+                    oldItem: DrawingModeUiModel,
+                    newItem: DrawingModeUiModel,
+                ): Boolean {
+                    return oldItem == newItem
+                }
 
-            override fun areItemsTheSame(
-                oldItem: DrawingModeUiModel,
-                newItem: DrawingModeUiModel,
-            ): Boolean {
-                return oldItem === newItem
+                override fun areItemsTheSame(
+                    oldItem: DrawingModeUiModel,
+                    newItem: DrawingModeUiModel,
+                ): Boolean {
+                    return oldItem === newItem
+                }
             }
-        }
     }
 }

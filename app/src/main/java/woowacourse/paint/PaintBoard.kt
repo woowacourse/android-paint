@@ -23,13 +23,14 @@ class PaintBoard(context: Context, attr: AttributeSet) : View(context, attr) {
 
     private lateinit var drawingMode: DrawingMode
     private var path: Path = Path()
-    private var paint: Paint = Paint().apply {
-        style = Paint.Style.STROKE
-        strokeJoin = Paint.Join.ROUND
-        strokeCap = Paint.Cap.ROUND
-        color = DEFAULT_PAINT_COLOR_RES
-        strokeWidth = DEFAULT_STROKE_WIDTH
-    }
+    private var paint: Paint =
+        Paint().apply {
+            style = Paint.Style.STROKE
+            strokeJoin = Paint.Join.ROUND
+            strokeCap = Paint.Cap.ROUND
+            color = DEFAULT_PAINT_COLOR_RES
+            strokeWidth = DEFAULT_STROKE_WIDTH
+        }
 
     private var startX: Float = 0f
     private var startY: Float = 0f
@@ -40,47 +41,43 @@ class PaintBoard(context: Context, attr: AttributeSet) : View(context, attr) {
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        val x = event.x
-        val y = event.y
+        val currentX = event.x
+        val currentY = event.y
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                startX = x
-                startY = y
+                startX = currentX
+                startY = currentY
 
                 drawings.add(Drawing(path, paint, drawingMode))
-                path.moveTo(x, y)
+                path.moveTo(currentX, currentY)
             }
 
             MotionEvent.ACTION_MOVE -> {
                 when (drawingMode) {
                     DrawingMode.PEN -> {
-                        path.lineTo(x, y)
+                        path.lineTo(currentX, currentY)
                     }
 
                     DrawingMode.SQUARE -> {
-                        val rect = RectF(
-                            min(startX, x),
-                            min(startY, y),
-                            max(x, startX),
-                            max(y, startY)
-                        )
+                        path.reset()
+
+                        val rect = createRectangle(currentX, currentY)
                         path.addRect(
                             rect,
-                            Path.Direction.CW
+                            Path.Direction.CW,
                         )
                     }
 
                     DrawingMode.CIRCLE -> {
-                        val radius = sqrt(
-                            (x - startX).toDouble().pow(2.0) +
-                                    (y - startY).toDouble().pow(2.0)
-                        ).toFloat()
+                        path.reset()
+
+                        val radius = calculateRadius(currentX, currentY)
                         path.addCircle(startX, startY, radius, Path.Direction.CW)
                     }
 
                     DrawingMode.ERASER -> {
-                        path.lineTo(x, y)
+                        path.lineTo(currentX, currentY)
                     }
                 }
             }
@@ -104,6 +101,20 @@ class PaintBoard(context: Context, attr: AttributeSet) : View(context, attr) {
         }
     }
 
+    fun updateDrawingMode(drawingMode: DrawingMode) {
+        this.drawingMode = drawingMode
+
+        applyDrawingMode()
+    }
+
+    fun updatePaintColor(color: Int) {
+        paint.color = color
+    }
+
+    fun updatePaintStrokeWidth(strokeWidth: Float) {
+        paint.strokeWidth = strokeWidth
+    }
+
     private fun createNewPath() {
         path = Path()
     }
@@ -119,20 +130,6 @@ class PaintBoard(context: Context, attr: AttributeSet) : View(context, attr) {
             }
 
         applyDrawingMode()
-    }
-
-    fun updateDrawingMode(drawingMode: DrawingMode) {
-        this.drawingMode = drawingMode
-
-        applyDrawingMode()
-    }
-
-    fun updatePaintColor(color: Int) {
-        paint.color = color
-    }
-
-    fun updatePaintStrokeWidth(strokeWidth: Float) {
-        paint.strokeWidth = strokeWidth
     }
 
     private fun applyDrawingMode() {
@@ -158,6 +155,23 @@ class PaintBoard(context: Context, attr: AttributeSet) : View(context, attr) {
             }
         }
     }
+
+    private fun createRectangle(
+        currentX: Float,
+        currentY: Float,
+    ) = RectF(
+        min(startX, currentX),
+        min(startY, currentY),
+        max(currentX, startX),
+        max(currentY, startY),
+    )
+
+    private fun calculateRadius(
+        currentX: Float,
+        currentY: Float,
+    ) = sqrt(
+        (currentX - startX).toDouble().pow(2.0) + (currentY - startY).toDouble().pow(2.0),
+    ).toFloat()
 
     companion object {
         val DEFAULT_DRAWING_MODE: DrawingMode = DrawingMode.PEN
