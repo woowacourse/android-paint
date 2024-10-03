@@ -8,7 +8,7 @@ import woowacourse.paint.presentation.palette.TouchType
 import kotlin.math.max
 import kotlin.math.min
 
-class Line(
+class Drawing(
     val path: Path = Path(),
     val paint: Paint = Paint(),
     private var touchType: TouchType = TouchType.DOWN,
@@ -27,8 +27,8 @@ class Line(
         paint: Paint = Paint(this.paint),
         moveType: TouchType = this.touchType,
         brushType: BrushType = this.brushType,
-    ): Line {
-        return Line(path, paint, moveType, brushType)
+    ): Drawing {
+        return Drawing(path, paint, moveType, brushType)
     }
 
     fun down(x: Float, y: Float) {
@@ -39,18 +39,13 @@ class Line(
     fun move(startX: Float, startY: Float, x: Float, y: Float) {
         touchType = TouchType.MOVE
         when (brushType) {
-            BrushType.PEN -> path.lineTo(x, y)
+            BrushType.PEN, BrushType.ERASER -> path.lineTo(x, y)
             BrushType.RECTANGLE -> {
-                val left = min(startX, x)
-                val top = min(startY, y)
-                val right = max(startX, x)
-                val bottom = max(startY, y)
-                val rect = RectF(left, top, right, bottom)
+                val rect = RectF(min(startX, x), min(startY, y), max(startX, x), max(startY, y))
                 path.addRect(rect, Path.Direction.CW)
             }
 
             BrushType.CIRCLE -> path.addOval(startX, startY, x, y, Path.Direction.CW)
-            BrushType.ERASER -> path.lineTo(x, y)
         }
     }
 

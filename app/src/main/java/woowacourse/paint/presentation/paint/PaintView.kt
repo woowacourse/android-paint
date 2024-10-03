@@ -12,14 +12,14 @@ import woowacourse.paint.presentation.palette.BrushType
 import woowacourse.paint.presentation.palette.ColorUiModel
 
 class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    private val lines: MutableList<Line> by lazy { mutableListOf() }
-    private val undoHistory: MutableList<Line> by lazy { mutableListOf() }
+    private val drawingHistory: MutableList<Drawing> by lazy { mutableListOf() }
+    private val undoHistory: MutableList<Drawing> by lazy { mutableListOf() }
 
-    private var currentLine: Line = initialLine()
+    private var currentDrawing: Drawing = initialDrawing()
     private var startX: Float = 0f
     private var startY: Float = 0f
 
-    private fun initialLine(): Line {
+    private fun initialDrawing(): Drawing {
         val initialPaint =
             Paint().apply {
                 color = DEFAULT_COLOR.getColor(context)
@@ -28,7 +28,7 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
                 strokeCap = Paint.Cap.ROUND
                 isAntiAlias = true
             }
-        return Line(paint = initialPaint, brushType = DEFAULT_BRUSH_TYPE)
+        return Drawing(paint = initialPaint, brushType = DEFAULT_BRUSH_TYPE)
     }
 
     override fun onAttachedToWindow() {
@@ -38,11 +38,11 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        lines.forEach { line ->
-            canvas.drawPath(line.path, line.paint)
+        drawingHistory.forEach { drawing ->
+            canvas.drawPath(drawing.path, drawing.paint)
         }
-        if (currentLine.shouldClearLastShape()) {
-            lines.last().clear()
+        if (currentDrawing.shouldClearLastShape()) {
+            drawingHistory.last().clear()
         }
     }
 
@@ -62,8 +62,8 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         x: Float,
         y: Float,
     ) {
-        currentLine.down(x, y)
-        lines.add(currentLine)
+        currentDrawing.down(x, y)
+        drawingHistory.add(currentDrawing)
         startX = x
         startY = y
     }
@@ -72,46 +72,46 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         x: Float,
         y: Float,
     ) {
-        currentLine.move(startX, startY, x, y)
+        currentDrawing.move(startX, startY, x, y)
     }
 
     private fun up() {
-        currentLine.up()
-        resetLine()
+        currentDrawing.up()
+        resetDrawing()
     }
 
-    private fun resetLine() {
-        currentLine = currentLine.copy(path = Path())
+    private fun resetDrawing() {
+        currentDrawing = currentDrawing.copy(path = Path())
     }
 
     fun changePaintColor(colorUiModel: ColorUiModel) {
-        currentLine.changePaintColor(colorUiModel.getColor(context))
+        currentDrawing.changePaintColor(colorUiModel.getColor(context))
     }
 
     fun changeStrokeSize(strokeSize: Float) {
-        currentLine.changeStrokeSize(strokeSize)
+        currentDrawing.changeStrokeSize(strokeSize)
     }
 
     fun changeBrushType(brushType: BrushType) {
-        currentLine.changeBrushType(brushType)
+        currentDrawing.changeBrushType(brushType)
     }
 
     fun empty() {
-        lines.clear()
+        drawingHistory.clear()
         invalidate()
     }
 
     fun undo() {
-        if (lines.isEmpty()) return
-        val lastLine = lines.removeLast()
-        undoHistory.add(lastLine)
+        if (drawingHistory.isEmpty()) return
+        val lastDrawing = drawingHistory.removeLast()
+        undoHistory.add(lastDrawing)
         invalidate()
     }
 
     fun redo() {
         if (undoHistory.isEmpty()) return
-        val firstUndoLine = undoHistory.removeFirst()
-        lines.add(firstUndoLine)
+        val firstUndoDrawing = undoHistory.removeFirst()
+        drawingHistory.add(firstUndoDrawing)
         invalidate()
     }
 
