@@ -12,29 +12,19 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.R
+import woowacourse.paint.model.BrushState
 import woowacourse.paint.model.BrushType
+import woowacourse.paint.model.CircleState
+import woowacourse.paint.model.EraserState
+import woowacourse.paint.model.PenState
+import woowacourse.paint.model.RectangularState
 import woowacourse.paint.model.Stroke
 
-class CanvasView(context: Context, attrs: AttributeSet) :
-    View(context, attrs) {
+class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val strokes = mutableListOf<Stroke>()
-    private var currentBrushType = BrushType.PEN
+    private var currentState: BrushState = PenState()
     private var currentPath: Path? = null
-    private val currentPaint: Paint =
-        Paint().apply {
-            style = Paint.Style.STROKE
-            isAntiAlias = true
-            strokeJoin = Paint.Join.ROUND
-            strokeCap = Paint.Cap.ROUND
-        }
-    private val currentRect = RectF()
-    private val eraserBounds = RectF()
-    private val strokeBounds = RectF()
-
-    private var startX: Float = 0f
-    private var startY: Float = 0f
-    private var endX: Float = 0f
-    private var endY: Float = 0f
+    private val currentPaint: Paint = Paint()
 
     init {
         initializePaint(context, attrs)
@@ -45,19 +35,20 @@ class CanvasView(context: Context, attrs: AttributeSet) :
             attrs,
             R.styleable.CustomView,
             0,
-            0,
+            0
         ).apply {
-            initializePaintByResourceType()
-        }
-    }
-
-    private fun TypedArray.initializePaintByResourceType() {
-        try {
-            currentPaint.color = getColor(R.styleable.CustomView_lineColor, DEFAULT_LINE_COLOR)
-            currentPaint.strokeWidth =
-                getDimension(R.styleable.CustomView_lineWidth, DEFAULT_LINE_WIDTH)
-        } finally {
-            recycle()
+            try {
+                currentPaint.apply {
+                    style = Paint.Style.STROKE
+                    isAntiAlias = true
+                    strokeJoin = Paint.Join.ROUND
+                    strokeCap = Paint.Cap.ROUND
+                    color = getColor(R.styleable.CustomView_lineColor, DEFAULT_LINE_COLOR)
+                    strokeWidth = getDimension(R.styleable.CustomView_lineWidth, DEFAULT_LINE_WIDTH)
+                }
+            } finally {
+                recycle()
+            }
         }
     }
 
@@ -66,34 +57,7 @@ class CanvasView(context: Context, attrs: AttributeSet) :
         for (stroke in strokes) {
             canvas.drawPath(stroke.path, stroke.paint)
         }
-
-        when (currentBrushType) {
-            BrushType.PEN -> currentPath?.let { canvas.drawPath(it, currentPaint) }
-
-            BrushType.RECTANGULAR -> {
-                currentPath?.apply {
-                    moveTo(startX, startY)
-                    lineTo(endX, startY)
-                    lineTo(endX, endY)
-                    lineTo(startX, endY)
-                    close()
-                }?.let {
-                    canvas.drawPath(it, currentPaint)
-                }
-            }
-
-            BrushType.CIRCLE -> {
-                val rect = currentRect.apply {
-                    left = startX.coerceAtMost(endX)
-                    top = startY.coerceAtMost(endY)
-                    right = startX.coerceAtLeast(endX)
-                    bottom = startY.coerceAtLeast(endY)
-                }
-                canvas.drawOval(rect, currentPaint)
-            }
-
-            else -> Unit
-        }
+        currentState.onDraw(canvas, currentPath, currentPaint)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -102,75 +66,16 @@ class CanvasView(context: Context, attrs: AttributeSet) :
         val pointY = event.y
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                currentPath = Path().apply { moveTo(pointX, pointY) }
-                startX = pointX
-                startY = pointY
-                endX = pointX
-                endY = pointY
+                currentPath = currentState.onTouchDown(pointX, pointY)
             }
 
             MotionEvent.ACTION_MOVE -> {
-                when (currentBrushType) {
-                    BrushType.PEN -> currentPath?.lineTo(pointX, pointY)
-                    BrushType.RECTANGULAR, BrushType.CIRCLE -> {
-                        endX = event.x
-                        endY = event.y
-                    }
-
-                    BrushType.ERASER -> {
-                        currentPath?.lineTo(pointX, pointY)
-                        eraseIntersectingStrokes()
-                    }
-
-                    BrushType.RESET -> Unit
-                }
+                currentPath?.let { currentState.onTouchMove(it, pointX, pointY) }
             }
 
             MotionEvent.ACTION_UP -> {
-                when (currentBrushType) {
-                    BrushType.PEN -> {
-                        currentPath?.let {
-                            strokes.add(Stroke(it, Paint(currentPaint)))
-                        }
-                        currentPath = null
-                    }
-
-                    BrushType.RECTANGULAR -> {
-                        currentPath?.apply {
-                            moveTo(startX, startY)
-                            lineTo(endX, startY)
-                            lineTo(endX, endY)
-                            lineTo(startX, endY)
-                            close()
-                        }?.let {
-                            strokes.add(Stroke(it, Paint(currentPaint)))
-                        }
-                    }
-
-                    BrushType.CIRCLE -> {
-                        val rect = currentRect.apply {
-                            left = startX.coerceAtMost(endX)
-                            top = startY.coerceAtMost(endY)
-                            right = startX.coerceAtLeast(endX)
-                            bottom = startY.coerceAtLeast(endY)
-                        }
-                        strokes.add(
-                            Stroke(
-                                currentPath?.apply { addOval(rect, Path.Direction.CW) }
-                                    ?: error("CurrentPath does not exist."),
-                                Paint(currentPaint)
-                            )
-                        )
-                    }
-
-                    BrushType.ERASER -> {
-                        currentPath?.lineTo(pointX, pointY)
-                        eraseIntersectingStrokes()
-                        currentPath?.reset()
-                    }
-
-                    BrushType.RESET -> Unit
-                }
+                currentPath?.let { currentState.onTouchUp(this, it, currentPaint) }
+                currentPath = null
             }
 
             else -> return super.onTouchEvent(event)
@@ -179,66 +84,64 @@ class CanvasView(context: Context, attrs: AttributeSet) :
         return true
     }
 
+    fun setBrushType(brushType: BrushType) {
+        currentState = when (brushType) {
+            BrushType.PEN -> PenState()
+            BrushType.RECTANGULAR -> RectangularState()
+            BrushType.CIRCLE -> CircleState()
+            BrushType.ERASER -> EraserState()
+            BrushType.RESET -> {
+                strokes.clear()
+                invalidate()
+                currentState
+            }
+        }
+
+        currentPaint.style = when (brushType) {
+            BrushType.PEN, BrushType.ERASER, BrushType.RESET -> Paint.Style.STROKE
+            BrushType.RECTANGULAR, BrushType.CIRCLE -> Paint.Style.FILL
+        }
+    }
+
+    fun addStroke(stroke: Stroke) {
+        strokes.add(stroke)
+        invalidate()
+    }
+
+    fun eraseIntersectingStrokes(eraserPath: Path) {
+        val eraserBounds = RectF()
+        eraserPath.computeBounds(eraserBounds, true)
+        val strokesToRemove = mutableListOf<Int>()
+        for (i in strokes.indices) {
+            val stroke = strokes[i]
+            val strokeBounds = RectF()
+            stroke.path.computeBounds(strokeBounds, true)
+            if (RectF.intersects(eraserBounds, strokeBounds) && isPathIntersecting(
+                    stroke.path,
+                    eraserPath
+                )
+            ) {
+                strokesToRemove.add(i)
+            }
+        }
+        for (i in strokesToRemove.reversed()) {
+            strokes.removeAt(i)
+        }
+        invalidate()
+    }
+
+    private fun isPathIntersecting(path1: Path, path2: Path): Boolean {
+        val intersectionPath = Path()
+        intersectionPath.op(path1, path2, Path.Op.INTERSECT)
+        return !intersectionPath.isEmpty
+    }
+
     fun setLineColor(color: Int) {
         currentPaint.color = color
     }
 
     fun setLineWidth(width: Float) {
         currentPaint.strokeWidth = width
-    }
-
-    fun setBrushType(brushType: BrushType) {
-        when (brushType) {
-            BrushType.PEN, BrushType.ERASER ->{
-                currentBrushType = brushType
-                currentPaint.style = Paint.Style.STROKE
-            }
-            BrushType.RECTANGULAR, BrushType.CIRCLE -> {
-                currentBrushType = brushType
-                currentPaint.style = Paint.Style.FILL
-            }
-            BrushType.RESET -> {
-                strokes.clear()
-                invalidate()
-            }
-        }
-    }
-
-    private fun eraseIntersectingStrokes() {
-        currentPath?.computeBounds(eraserBounds, true)
-        val strokesToRemove = mutableListOf<Int>()
-
-        for (i in strokes.indices) {
-            val stroke = strokes[i]
-            stroke.path.computeBounds(strokeBounds, true)
-
-            if (RectF.intersects(eraserBounds, strokeBounds) && isPathIntersecting(
-                    stroke.path,
-                    currentPath!!
-                )
-            ) {
-                strokesToRemove.add(i)
-            }
-        }
-
-        for (i in strokesToRemove.reversed()) {
-            remove(i)
-        }
-    }
-
-    private fun isPathIntersecting(path1: Path, path2: Path): Boolean {
-        val intersectionPath = Path()
-        intersectionPath.op(path1, path2, Path.Op.INTERSECT)
-        if (!intersectionPath.isEmpty) return true
-
-        val bounds = RectF()
-        path1.computeBounds(bounds, true)
-        return bounds.contains(startX, startY) || bounds.contains(endX, endY)
-    }
-
-    private fun remove(index: Int) {
-        strokes.removeAt(index)
-        invalidate()
     }
 
     companion object {
