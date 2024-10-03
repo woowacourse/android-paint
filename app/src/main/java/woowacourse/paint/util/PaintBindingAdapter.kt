@@ -1,11 +1,11 @@
 package woowacourse.paint.util
 
 import android.content.res.ColorStateList
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
-import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.slider.RangeSlider
@@ -49,18 +49,18 @@ fun TextView.bindDrawingMode(drawingMode: DrawingModeUiModel) {
 
 @BindingAdapter("thicknessVisibility")
 fun RangeSlider.bindThicknessVisibility(drawingMode: DrawingMode) {
-    isVisible =
+    visibility =
         when (drawingMode) {
-            DrawingMode.PEN, DrawingMode.ERASER -> true
-            else -> false
+            DrawingMode.PEN, DrawingMode.ERASER -> View.VISIBLE
+            else -> View.INVISIBLE
         }
 }
 
 @BindingAdapter("paintColorVisibility")
 fun RecyclerView.bindPaintColorVisibility(drawingMode: DrawingMode) {
-    isVisible =
+    visibility =
         when (drawingMode) {
-            DrawingMode.PEN, DrawingMode.SQUARE, DrawingMode.CIRCLE -> true
-            else -> false
+            DrawingMode.PEN, DrawingMode.SQUARE, DrawingMode.CIRCLE -> View.VISIBLE
+            else -> View.INVISIBLE
         }
 }
