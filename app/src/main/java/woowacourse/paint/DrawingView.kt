@@ -9,22 +9,27 @@ import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.tools.Circle
 import woowacourse.paint.tools.DrawingTool
+import woowacourse.paint.tools.Eraser
 import woowacourse.paint.tools.Line
 import woowacourse.paint.tools.Rectangle
 
 class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    private var currentDrawingMode: DrawingTool = Line()
     private val drawings = mutableListOf<DrawingTool>()
+    private var currentDrawingTool: DrawingTool = Line()
     private val currentPaint =
         Paint().apply {
             strokeWidth = DEFAULT_STROKE_WIDTH
             color = resources.getColor(DEFAULT_STROKE_COLOR.colorRes, null)
         }
 
+    init {
+        setLayerType(LAYER_TYPE_HARDWARE, null)
+    }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         drawings.forEach { it.renderOnCanvas(canvas) }
-        currentDrawingMode.renderOnCanvas(canvas)
+        currentDrawingTool.renderOnCanvas(canvas)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -34,22 +39,16 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                currentDrawingMode.setStartPoint(pointX, pointY, currentPaint)
+                currentDrawingTool.setStartPoint(pointX, pointY, currentPaint)
             }
 
             MotionEvent.ACTION_MOVE -> {
-                currentDrawingMode.draw(pointX, pointY)
+                currentDrawingTool.draw(pointX, pointY)
             }
 
             MotionEvent.ACTION_UP -> {
-                drawings.add(currentDrawingMode)
-                currentDrawingMode =
-                    when (currentDrawingMode) {
-                        is Line -> Line()
-                        is Rectangle -> Rectangle()
-                        is Circle -> Circle()
-                        else -> throw IllegalStateException("Unknown drawing mode")
-                    }
+                drawings.add(currentDrawingTool)
+                currentDrawingTool = currentDrawingTool.initialize()
             }
 
             else -> super.onTouchEvent(event)
@@ -67,12 +66,12 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
     }
 
     fun setDrawingMode(drawingMode: DrawingMode) {
-        currentDrawingMode =
+        currentDrawingTool =
             when (drawingMode) {
                 DrawingMode.LINE -> Line()
                 DrawingMode.RECTANGLE -> Rectangle()
                 DrawingMode.CIRCLE -> Circle()
-                DrawingMode.ERASE -> Circle() // TODO
+                DrawingMode.ERASE -> Eraser()
             }
     }
 

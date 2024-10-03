@@ -4,6 +4,8 @@ import android.graphics.Canvas
 import android.graphics.Paint
 
 sealed interface DrawingTool {
+    fun initialize(): DrawingTool
+
     fun setStartPoint(
         x: Float,
         y: Float,

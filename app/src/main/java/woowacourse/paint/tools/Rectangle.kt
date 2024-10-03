@@ -5,6 +5,8 @@ import android.graphics.Paint
 import android.graphics.RectF
 
 data class Rectangle(val rectF: RectF = RectF(), val paint: Paint = createDefaultPaint()) : DrawingTool {
+    override fun initialize(): DrawingTool = Rectangle()
+
     override fun setStartPoint(
         x: Float,
         y: Float,

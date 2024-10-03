@@ -9,6 +9,8 @@ data class Circle(val paint: Paint = createDefaultPaint()) : DrawingTool {
     private var centerY: Float = 0f
     private var radius: Float = 0f
 
+    override fun initialize(): DrawingTool = Circle()
+
     override fun setStartPoint(
         x: Float,
         y: Float,
