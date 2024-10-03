@@ -17,40 +17,44 @@
             type="woowacourse.paint.view.listener.BrushControllerVisibilityChangeListener" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="8dp">
+        android:padding="8dp"
+        android:orientation="@dimen/controller_orientation">
 
         <Button
             android:id="@+id/btn_color_control"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/visibility_button_width"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/btn_width_control"
+            android:layout_weight="1"
+            android:onClick="@{() -> colorVisibilityChangeListener.toggleColorControllerVisibility()}"
             android:text="색상 변경"
-            android:onClick="@{() -> colorVisibilityChangeListener.toggleColorControllerVisibility()}"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_width_control"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/btn_width_control"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/visibility_button_width"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/btn_color_control"
-            app:layout_constraintEnd_toStartOf="@id/btn_brush_control"
+            android:layout_weight="1"
+            android:onClick="@{() -> widthVisibilityChangeListener.toggleWidthControllerVisibility()}"
             android:text="굵기 변경"
-            android:onClick="@{() -> widthVisibilityChangeListener.toggleWidthControllerVisibility()}"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_brush_control"
+            app:layout_constraintStart_toEndOf="@id/btn_color_control" />
 
         <Button
             android:id="@+id/btn_brush_control"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/visibility_button_width"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/btn_width_control"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_weight="1"
+            android:onClick="@{() -> brushControllerVisibilityChangeListener.toggleBrushControllerVisibility()}"
             android:text="브러쉬 변경"
-            android:onClick="@{() -> brushControllerVisibilityChangeListener.toggleBrushControllerVisibility()}"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_width_control" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 </layout>
