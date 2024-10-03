@@ -45,6 +45,9 @@ android {
             excludes += "win32-x86*/**"
         }
     }
+    viewBinding {
+        enable = true
+    }
 }
 
 dependencies {
