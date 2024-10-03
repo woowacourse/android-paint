@@ -1,18 +1,19 @@
 package woowacourse.paint.model
 
-class ColorPalette {
-    val red = Color("Red", "#FF0000")
-    val orange = Color("Orange", "#FFA500")
-    val yellow = Color("Yellow", "#FFFF00")
-    val green = Color("Green", "#00FF00")
-    val blue = Color("Blue", "#0000FF")
+import android.content.Context
+import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
+import woowacourse.paint.R
 
-    val colors =
-        listOf(
-            red,
-            orange,
-            yellow,
-            green,
-            blue,
-        )
+enum class ColorPalette(@ColorRes val colorResId: Int){
+    RED(colorResId = R.color.red),
+    ORANGE(colorResId = R.color.orange),
+    YELLOW(colorResId = R.color.yellow),
+    GREEN(colorResId = R.color.green),
+    BLUE(colorResId = R.color.blue);
+
+    @ColorInt
+    fun getColor(context: Context): Int {
+        return context.getColor(colorResId)
+    }
 }

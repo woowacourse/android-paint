@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         viewModel.selectedColor.observe(
             this,
             Observer { color ->
-                binding.drawingView.setPaintColor(color = color.toColorInt())
+                binding.drawingView.setPaintColor(color = color.getColor(this))
             },
         )
     }
