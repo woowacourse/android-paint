@@ -26,8 +26,8 @@
             android:layout_height="24dp"
             android:layout_margin="12dp"
             android:background="@drawable/ic_ripple"
-            android:src="@drawable/ic_clear"
             android:onClick="@{() -> vm.clearDrawings()}"
+            android:src="@drawable/ic_clear"
             app:layout_constraintEnd_toEndOf="@id/paint_board"
             app:layout_constraintTop_toTopOf="@id/paint_board" />
 
@@ -35,7 +35,7 @@
             android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="@color/light_gray"
+            android:background="@color/black"
             app:layout_constraintTop_toBottomOf="@id/paint_board" />
 
         <androidx.recyclerview.widget.RecyclerView
