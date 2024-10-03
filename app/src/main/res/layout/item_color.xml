@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -12,9 +13,11 @@
 
         <View
             android:id="@+id/vw_color"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:background="@drawable/shape_oval" />
+            android:layout_width="@dimen/palette_item_width"
+            android:layout_height="@dimen/palette_item_height"
+            android:background="@drawable/shape_oval"
+            tools:background="@color/blue"
+            />
 
     </LinearLayout>
 </layout>
