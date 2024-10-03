@@ -7,6 +7,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -26,9 +27,14 @@ class CanvasView(context: Context, attrs: AttributeSet) :
             strokeJoin = Paint.Join.ROUND
             strokeCap = Paint.Cap.ROUND
         }
+    private val currentRect = RectF()
+
+    private var startX: Float = 0f
+    private var startY: Float = 0f
+    private var endX: Float = 0f
+    private var endY: Float = 0f
 
     init {
-        initializeCanvasView()
         initializePaint(context, attrs)
     }
 
@@ -41,11 +47,6 @@ class CanvasView(context: Context, attrs: AttributeSet) :
         ).apply {
             initializePaintByResourceType()
         }
-    }
-
-    private fun initializeCanvasView() {
-        isFocusable = true
-        isFocusableInTouchMode = true
     }
 
     private fun TypedArray.initializePaintByResourceType() {
@@ -63,7 +64,36 @@ class CanvasView(context: Context, attrs: AttributeSet) :
         for (stroke in strokes) {
             canvas.drawPath(stroke.path, stroke.paint)
         }
-        currentPath?.let { canvas.drawPath(it, currentPaint) }
+
+        when (currentBrushType) {
+            BrushType.PEN -> currentPath?.let { canvas.drawPath(it, currentPaint) }
+
+            BrushType.RECTANGULAR -> {
+                currentPath?.apply {
+                    moveTo(startX, startY)
+                    lineTo(endX, startY)
+                    lineTo(endX, endY)
+                    lineTo(startX, endY)
+                    close()
+                }?.let {
+                    canvas.drawPath(it, currentPaint)
+                }
+            }
+
+            BrushType.CIRCLE -> {
+                val rect = currentRect.apply {
+                    left = startX.coerceAtMost(endX)
+                    top = startY.coerceAtMost(endY)
+                    right = startX.coerceAtLeast(endX)
+                    bottom = startY.coerceAtLeast(endY)
+                }
+                canvas.drawOval(rect, currentPaint)
+            }
+
+            BrushType.ERASER -> {
+
+            }
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -71,14 +101,71 @@ class CanvasView(context: Context, attrs: AttributeSet) :
         val pointX = event.x
         val pointY = event.y
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> currentPath = Path().apply { moveTo(pointX, pointY) }
-            MotionEvent.ACTION_MOVE -> currentPath?.lineTo(pointX, pointY)
-            MotionEvent.ACTION_UP -> {
-                currentPath?.let {
-                    strokes.add(Stroke(it, Paint(currentPaint)))
-                }
-                currentPath = null
+            MotionEvent.ACTION_DOWN -> {
+                currentPath = Path().apply { moveTo(pointX, pointY) }
+                startX = pointX
+                startY = pointY
+                endX = pointX
+                endY = pointY
             }
+
+            MotionEvent.ACTION_MOVE -> {
+                when (currentBrushType) {
+                    BrushType.PEN -> currentPath?.lineTo(pointX, pointY)
+                    BrushType.RECTANGULAR, BrushType.CIRCLE -> {
+                        endX = event.x
+                        endY = event.y
+                    }
+
+                    BrushType.ERASER -> {
+
+                    }
+                }
+            }
+
+            MotionEvent.ACTION_UP -> {
+                when (currentBrushType) {
+                    BrushType.PEN -> {
+                        currentPath?.let {
+                            strokes.add(Stroke(it, Paint(currentPaint)))
+                        }
+                        currentPath = null
+                    }
+
+                    BrushType.RECTANGULAR -> {
+                        currentPath?.apply {
+                            moveTo(startX, startY)
+                            lineTo(endX, startY)
+                            lineTo(endX, endY)
+                            lineTo(startX, endY)
+                            close()
+                        }?.let {
+                            strokes.add(Stroke(it, Paint(currentPaint)))
+                        }
+                    }
+
+                    BrushType.CIRCLE -> {
+                        val rect = currentRect.apply {
+                            left = startX.coerceAtMost(endX)
+                            top = startY.coerceAtMost(endY)
+                            right = startX.coerceAtLeast(endX)
+                            bottom = startY.coerceAtLeast(endY)
+                        }
+                        strokes.add(
+                            Stroke(
+                                currentPath?.apply { addOval(rect, Path.Direction.CW) }
+                                    ?: error("CurrentPath does not exist."),
+                                Paint(currentPaint)
+                            )
+                        )
+                    }
+
+                    BrushType.ERASER -> {
+
+                    }
+                }
+            }
+
             else -> return super.onTouchEvent(event)
         }
         invalidate()
@@ -95,6 +182,10 @@ class CanvasView(context: Context, attrs: AttributeSet) :
 
     fun setBrushType(brushType: BrushType) {
         currentBrushType = brushType
+        when (currentBrushType) {
+            BrushType.PEN, BrushType.ERASER -> currentPaint.style = Paint.Style.STROKE
+            BrushType.RECTANGULAR, BrushType.CIRCLE -> currentPaint.style = Paint.Style.FILL
+        }
     }
 
     companion object {
