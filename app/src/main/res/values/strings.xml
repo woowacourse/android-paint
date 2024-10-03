@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Paint</string>
+
+    <!--activity_main    -->
+    <string name="paint_change_color">색상 변경</string>
+    <string name="paint_change_width">굵기 변경</string>
 </resources>
