@@ -31,12 +31,20 @@ class Drawing(
         return Drawing(path, paint, moveType, brushType)
     }
 
-    fun down(x: Float, y: Float) {
+    fun down(
+        x: Float,
+        y: Float,
+    ) {
         touchType = TouchType.DOWN
         path.moveTo(x, y)
     }
 
-    fun move(startX: Float, startY: Float, x: Float, y: Float) {
+    fun move(
+        startX: Float,
+        startY: Float,
+        x: Float,
+        y: Float,
+    ) {
         touchType = TouchType.MOVE
         when (brushType) {
             BrushType.PEN, BrushType.ERASER -> path.lineTo(x, y)
