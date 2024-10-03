@@ -12,11 +12,19 @@ class MainActivity : AppCompatActivity() {
 
     private val colorMap =
         mapOf(
-            R.id.redChip to R.color.red,
-            R.id.orangeChip to R.color.orange,
-            R.id.yellowChip to R.color.yellow,
-            R.id.greenChip to R.color.green,
-            R.id.blueChip to R.color.blue,
+            R.id.redColor to R.color.red,
+            R.id.orangeColor to R.color.orange,
+            R.id.yellowColor to R.color.yellow,
+            R.id.greenColor to R.color.green,
+            R.id.blueColor to R.color.blue,
+        )
+
+    private val toolsMap =
+        mapOf(
+            R.id.pen_tool to ShapeType.FREEHAND,
+            R.id.rectangle_tool to ShapeType.RECTANGLE,
+            R.id.circle_tool to ShapeType.CIRCLE,
+            R.id.eraser_tool to ShapeType.ERASER,
         )
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,6 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         initializeRangeSlider()
         initializeColorChips()
+        initializeToolChips()
     }
 
     private fun initializeRangeSlider() {
@@ -39,6 +48,14 @@ class MainActivity : AppCompatActivity() {
         colorMap.forEach { (chipId, colorId) ->
             findViewById<View>(chipId).setOnClickListener {
                 binding.paintBoard.setColor(colorId)
+            }
+        }
+    }
+
+    private fun initializeToolChips() {
+        toolsMap.forEach { (chipId, shapeType) ->
+            findViewById<View>(chipId).setOnClickListener {
+                binding.paintBoard.setShapeType(shapeType)
             }
         }
     }

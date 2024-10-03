@@ -9,8 +9,43 @@
         <woowacourse.paint.PaintBoardView
             android:id="@+id/paint_board"
             android:layout_width="match_parent"
-            android:layout_height="500dp"
-            app:layout_constraintTop_toTopOf="@id/paint_board" />
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toTopOf="@id/tool_chip_group"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/tool_chip_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/range_slider"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/pen_tool"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="펜" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/rectangle_tool"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="직사각형" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/circle_tool"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="원" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/eraser_tool"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="지우개" />
+
+        </com.google.android.material.chip.ChipGroup>
+
 
         <com.google.android.material.slider.RangeSlider
             android:id="@+id/range_slider"
@@ -19,41 +54,41 @@
             android:stepSize="10.0"
             android:valueFrom="0.0"
             android:valueTo="100.0"
-            app:layout_constraintTop_toBottomOf="@id/paint_board" />
+            app:layout_constraintBottom_toTopOf="@id/color_chip_group" />
 
         <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chip_group"
+            android:id="@+id/color_chip_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/range_slider"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:singleSelection="true">
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/redChip"
+                android:id="@+id/redColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:chipBackgroundColor="@color/red" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/orangeChip"
+                android:id="@+id/orangeColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:chipBackgroundColor="@color/orange" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/yellowChip"
+                android:id="@+id/yellowColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:chipBackgroundColor="@color/yellow" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/greenChip"
+                android:id="@+id/greenColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:chipBackgroundColor="@color/green" />
 
             <com.google.android.material.chip.Chip
-                android:id="@+id/blueChip"
+                android:id="@+id/blueColor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:chipBackgroundColor="@color/blue" />
