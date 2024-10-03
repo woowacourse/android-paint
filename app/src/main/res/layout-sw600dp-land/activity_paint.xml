@@ -32,6 +32,17 @@
             app:layout_constraintEnd_toEndOf="@id/paint_board"
             app:layout_constraintTop_toTopOf="@id/paint_board" />
 
+        <ImageView
+            android:id="@+id/iv_undo_drawing"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_margin="12dp"
+            android:background="@drawable/ic_ripple"
+            android:onClick="@{() -> vm.undoDrawing()}"
+            android:src="@drawable/ic_undo"
+            app:layout_constraintEnd_toStartOf="@id/iv_clear_drawings"
+            app:layout_constraintTop_toTopOf="@id/paint_board" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rcv_paint_drawing_mode"
             android:layout_width="0dp"

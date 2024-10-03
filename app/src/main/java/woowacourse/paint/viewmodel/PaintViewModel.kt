@@ -32,6 +32,10 @@ class PaintViewModel : ViewModel(), PaintActionHandler {
         _boardAction.value = Event(PaintBoardAction.ClearDrawings)
     }
 
+    override fun undoDrawing() {
+        _boardAction.value = Event(PaintBoardAction.UndoDrawing)
+    }
+
     override fun changeColorRes(
         @ColorRes colorRes: Int,
     ) {

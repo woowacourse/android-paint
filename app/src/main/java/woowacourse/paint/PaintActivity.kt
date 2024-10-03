@@ -85,6 +85,10 @@ class PaintActivity : AppCompatActivity() {
                     PaintBoardAction.ClearDrawings -> {
                         paintBoard.clearDrawings()
                     }
+
+                    PaintBoardAction.UndoDrawing -> {
+                        paintBoard.undoDrawing()
+                    }
                 }
             }
         }

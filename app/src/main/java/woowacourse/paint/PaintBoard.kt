@@ -120,6 +120,13 @@ class PaintBoard(context: Context, attr: AttributeSet) : View(context, attr) {
         invalidate()
     }
 
+    fun undoDrawing() {
+        if (drawings.isNotEmpty()) {
+            drawings.removeLast()
+            invalidate()
+        }
+    }
+
     private fun createNewPath() {
         path = Path()
     }
