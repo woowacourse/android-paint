@@ -5,20 +5,37 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
+import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import woowacourse.paint.model.Drawing
 import woowacourse.paint.model.DrawingMode
-import woowacourse.paint.model.Line
+import kotlin.math.max
+import kotlin.math.min
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 class PaintBoard(context: Context, attr: AttributeSet) : View(context, attr) {
-    private val lines: MutableList<Line> = mutableListOf()
+    private val drawings: MutableList<Drawing> = mutableListOf()
 
+    private lateinit var drawingMode: DrawingMode
     private var path: Path = Path()
-    private var paint: Paint = Paint()
+    private var paint: Paint = Paint().apply {
+        style = Paint.Style.STROKE
+        strokeJoin = Paint.Join.ROUND
+        strokeCap = Paint.Cap.ROUND
+        color = DEFAULT_PAINT_COLOR_RES
+        strokeWidth = DEFAULT_STROKE_WIDTH
+    }
+
+    private var startX: Float = 0f
+    private var startY: Float = 0f
 
     init {
-        initPaint()
+        setLayerType(LAYER_TYPE_HARDWARE, null)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -28,11 +45,45 @@ class PaintBoard(context: Context, attr: AttributeSet) : View(context, attr) {
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                lines.add(Line(path, paint))
+                startX = x
+                startY = y
+
+                drawings.add(Drawing(path, paint, drawingMode))
                 path.moveTo(x, y)
             }
 
-            MotionEvent.ACTION_MOVE -> path.lineTo(x, y)
+            MotionEvent.ACTION_MOVE -> {
+                when (drawingMode) {
+                    DrawingMode.PEN -> {
+                        path.lineTo(x, y)
+                    }
+
+                    DrawingMode.SQUARE -> {
+                        val rect = RectF(
+                            min(startX, x),
+                            min(startY, y),
+                            max(x, startX),
+                            max(y, startY)
+                        )
+                        path.addRect(
+                            rect,
+                            Path.Direction.CW
+                        )
+                    }
+
+                    DrawingMode.CIRCLE -> {
+                        val radius = sqrt(
+                            (x - startX).toDouble().pow(2.0) +
+                                    (y - startY).toDouble().pow(2.0)
+                        ).toFloat()
+                        path.addCircle(startX, startY, radius, Path.Direction.CW)
+                    }
+
+                    DrawingMode.ERASER -> {
+                        path.lineTo(x, y)
+                    }
+                }
+            }
 
             MotionEvent.ACTION_UP -> {
                 createNewPath()
@@ -48,20 +99,9 @@ class PaintBoard(context: Context, attr: AttributeSet) : View(context, attr) {
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        lines.forEach { line ->
-            canvas.drawPath(line.path, line.paint)
+        drawings.forEach { drawing ->
+            canvas.drawPath(drawing.path, drawing.paint)
         }
-    }
-
-    private fun initPaint() {
-        paint =
-            paint.apply {
-                style = Paint.Style.STROKE
-                strokeJoin = Paint.Join.ROUND
-                strokeCap = Paint.Cap.ROUND
-                color = DEFAULT_PAINT_COLOR_RES
-                strokeWidth = DEFAULT_STROKE_WIDTH
-            }
     }
 
     private fun createNewPath() {
@@ -77,12 +117,14 @@ class PaintBoard(context: Context, attr: AttributeSet) : View(context, attr) {
                 color = paint.color
                 strokeWidth = paint.strokeWidth
             }
+
+        applyDrawingMode()
     }
 
     fun updateDrawingMode(drawingMode: DrawingMode) {
-//        when(drawingMode) {
-//
-//        }
+        this.drawingMode = drawingMode
+
+        applyDrawingMode()
     }
 
     fun updatePaintColor(color: Int) {
@@ -91,6 +133,30 @@ class PaintBoard(context: Context, attr: AttributeSet) : View(context, attr) {
 
     fun updatePaintStrokeWidth(strokeWidth: Float) {
         paint.strokeWidth = strokeWidth
+    }
+
+    private fun applyDrawingMode() {
+        when (drawingMode) {
+            DrawingMode.PEN -> {
+                paint.style = Paint.Style.STROKE
+                paint.xfermode = null
+            }
+
+            DrawingMode.SQUARE -> {
+                paint.style = Paint.Style.FILL
+                paint.xfermode = null
+            }
+
+            DrawingMode.CIRCLE -> {
+                paint.style = Paint.Style.FILL
+                paint.xfermode = null
+            }
+
+            DrawingMode.ERASER -> {
+                paint.style = Paint.Style.STROKE
+                paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+            }
+        }
     }
 
     companion object {
