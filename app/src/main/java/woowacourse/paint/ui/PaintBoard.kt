@@ -51,8 +51,12 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
         return true
     }
 
-    fun setBrush(brush: Brush) {
-        currentBrush = brush
+    fun setBrushWidth(width: Float) {
+        currentBrush = currentBrush.changeWidth(width)
+    }
+
+    fun setBrushColor(color: Int) {
+        currentBrush = currentBrush.changeColor(color)
     }
 
     private fun Brush.toPaint(): Paint {
