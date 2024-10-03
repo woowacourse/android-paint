@@ -55,8 +55,9 @@ class CanvasView constructor(context: Context, attrs: AttributeSet) : View(conte
         pointX: Float,
         pointY: Float,
     ) {
-        drawings.lastOrNull()?.path?.lineTo(pointX, pointY)
-        invalidate()
+        drawings.lastOrNull()?.path?.lineTo(pointX, pointY)?.let {
+            invalidate()
+        }
     }
 
     fun changePaintColor(colorType: ColorType) {
