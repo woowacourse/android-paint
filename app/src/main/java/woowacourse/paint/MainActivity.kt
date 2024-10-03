@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity(), PaletteListener {
         setContentView(binding.root)
         setRangeSlider()
         setColorPalette()
+        setDrawingMode()
     }
 
     private fun setRangeSlider() {
@@ -30,6 +31,21 @@ class MainActivity : AppCompatActivity(), PaletteListener {
 
     private fun setColorPalette() {
         binding.rvColors.adapter = adapter
+    }
+
+    private fun setDrawingMode() {
+        binding.radioGroup.check(R.id.radio_line)
+        binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
+            val drawingMode =
+                when (checkedId) {
+                    R.id.radio_line -> DrawingMode.LINE
+                    R.id.radio_rectangle -> DrawingMode.RECTANGLE
+                    R.id.radio_circle -> DrawingMode.CIRCLE
+                    R.id.radio_eraser -> DrawingMode.ERASE
+                    else -> error("유효하지 않는 모드")
+                }
+            binding.canvas.setDrawingMode(drawingMode)
+        }
     }
 
     override fun selectColor(selected: PaletteColor) {
