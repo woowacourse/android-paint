@@ -15,12 +15,11 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
     private val paths = mutableListOf<Pair<Path, Paint>>()
 
     private var currentPath: Path = Path()
-    private var currentPaint: Paint = Paint()
+    private var currentPaint: Paint = initialPaint()
 
     init {
         isFocusable = true
         isFocusableInTouchMode = true
-        initPaint()
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -60,16 +59,17 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         return true
     }
 
-    private fun initPaint() {
-        currentPaint =
-            Paint().apply {
-                color = Color.RED
-                style = Paint.Style.STROKE
-                strokeWidth = 50f
-            }
+    private fun initialPaint(): Paint {
+        return Paint().apply {
+            color = Color.RED
+            style = Paint.Style.STROKE
+            strokeWidth = 50f
+        }
     }
 
-    fun setPaintColor(@ColorInt color: Int) {
+    fun setPaintColor(
+        @ColorInt color: Int,
+    ) {
         currentPaint.color = color
     }
 
