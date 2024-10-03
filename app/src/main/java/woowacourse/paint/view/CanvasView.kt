@@ -28,6 +28,8 @@ class CanvasView(context: Context, attrs: AttributeSet) :
             strokeCap = Paint.Cap.ROUND
         }
     private val currentRect = RectF()
+    private val eraserBounds = RectF()
+    private val strokeBounds = RectF()
 
     private var startX: Float = 0f
     private var startY: Float = 0f
@@ -90,9 +92,7 @@ class CanvasView(context: Context, attrs: AttributeSet) :
                 canvas.drawOval(rect, currentPaint)
             }
 
-            BrushType.ERASER -> {
-
-            }
+            BrushType.ERASER -> Unit
         }
     }
 
@@ -118,7 +118,8 @@ class CanvasView(context: Context, attrs: AttributeSet) :
                     }
 
                     BrushType.ERASER -> {
-
+                        currentPath?.lineTo(pointX, pointY)
+                        eraseIntersectingStrokes()
                     }
                 }
             }
@@ -161,7 +162,9 @@ class CanvasView(context: Context, attrs: AttributeSet) :
                     }
 
                     BrushType.ERASER -> {
-
+                        currentPath?.lineTo(pointX, pointY)
+                        eraseIntersectingStrokes()
+                        currentPath?.reset()
                     }
                 }
             }
@@ -186,6 +189,43 @@ class CanvasView(context: Context, attrs: AttributeSet) :
             BrushType.PEN, BrushType.ERASER -> currentPaint.style = Paint.Style.STROKE
             BrushType.RECTANGULAR, BrushType.CIRCLE -> currentPaint.style = Paint.Style.FILL
         }
+    }
+
+    private fun eraseIntersectingStrokes() {
+        currentPath?.computeBounds(eraserBounds, true)
+        val strokesToRemove = mutableListOf<Int>()
+
+        for (i in strokes.indices) {
+            val stroke = strokes[i]
+            stroke.path.computeBounds(strokeBounds, true)
+
+            if (RectF.intersects(eraserBounds, strokeBounds)) {
+                if (isPathIntersecting(stroke.path, currentPath!!)) {
+                    strokesToRemove.add(i)
+                }
+            }
+        }
+
+        for (i in strokesToRemove.reversed()) {
+            remove(i)
+        }
+    }
+
+    private fun isPathIntersecting(path1: Path, path2: Path): Boolean {
+        val intersectionPath = Path()
+        intersectionPath.op(path1, path2, Path.Op.INTERSECT)
+        if (!intersectionPath.isEmpty) return true
+
+        // 점 기반 검사
+        val bounds = RectF()
+        path1.computeBounds(bounds, true)
+        return bounds.contains(startX, startY) || bounds.contains(endX, endY)
+
+    }
+
+    private fun remove(index: Int) {
+        strokes.removeAt(index)
+        invalidate()
     }
 
     companion object {
