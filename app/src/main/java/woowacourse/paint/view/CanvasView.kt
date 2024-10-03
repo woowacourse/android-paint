@@ -188,10 +188,15 @@ class CanvasView(context: Context, attrs: AttributeSet) :
     }
 
     fun setBrushType(brushType: BrushType) {
-        currentBrushType = brushType
-        when (currentBrushType) {
-            BrushType.PEN, BrushType.ERASER -> currentPaint.style = Paint.Style.STROKE
-            BrushType.RECTANGULAR, BrushType.CIRCLE -> currentPaint.style = Paint.Style.FILL
+        when (brushType) {
+            BrushType.PEN, BrushType.ERASER ->{
+                currentBrushType = brushType
+                currentPaint.style = Paint.Style.STROKE
+            }
+            BrushType.RECTANGULAR, BrushType.CIRCLE -> {
+                currentBrushType = brushType
+                currentPaint.style = Paint.Style.FILL
+            }
             BrushType.RESET -> {
                 strokes.clear()
                 invalidate()
