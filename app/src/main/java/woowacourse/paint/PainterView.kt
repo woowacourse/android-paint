@@ -4,6 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -11,19 +14,21 @@ import android.view.View
 class PainterView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val brushView = BrushView(context, attrs)
     private val canvasBitmap: Bitmap = Bitmap.createBitmap(2000, 2000, Bitmap.Config.ARGB_8888)
+    private val brushPaint = Paint()
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         canvas.drawBitmap(canvasBitmap, 0f, 0f, null)
-        brushView.draw(canvas)
     }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         brushView.onTouchEvent(event)
         when (event.action) {
-            MotionEvent.ACTION_UP -> {
+            MotionEvent.ACTION_MOVE -> {
                 drawOnCanvasBitmap()
+            }
+            MotionEvent.ACTION_UP -> {
                 brushView.clear()
             }
             else -> super.onTouchEvent(event)
@@ -35,7 +40,7 @@ class PainterView(context: Context, attrs: AttributeSet) : View(context, attrs) 
     private fun drawOnCanvasBitmap() {
         val canvas = Canvas(canvasBitmap)
         val brushBitmap = getBitmapFromTool()
-        canvas.drawBitmap(brushBitmap, 0f, 0f, null)
+        canvas.drawBitmap(brushBitmap, 0f, 0f, brushPaint)
     }
 
     private fun getBitmapFromTool(): Bitmap {
@@ -51,5 +56,10 @@ class PainterView(context: Context, attrs: AttributeSet) : View(context, attrs) 
 
     fun setColor(color: Int) {
         brushView.setColor(color)
+        brushPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_OVER)
+    }
+
+    fun setEraser() {
+        brushPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OUT)
     }
 }

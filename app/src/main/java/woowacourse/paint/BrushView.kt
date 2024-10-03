@@ -35,8 +35,9 @@ class BrushView(context: Context, attrs: AttributeSet) : View(context, attrs) {
                 path.lineTo(pointX, pointY)
             }
 
-            MotionEvent.ACTION_MOVE ->
+            MotionEvent.ACTION_MOVE -> {
                 path.lineTo(pointX, pointY)
+            }
 
             else -> super.onTouchEvent(event)
         }

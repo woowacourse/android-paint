@@ -6,9 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.slider.RangeSlider
 
-
 class MainActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -19,14 +17,16 @@ class MainActivity : AppCompatActivity() {
         val yellow = findViewById<View>(R.id.yellow)
         val green = findViewById<View>(R.id.green)
         val blue = findViewById<View>(R.id.blue)
+        val eraser = findViewById<View>(R.id.eraser)
 
         rangeSlider.valueFrom = 0.0f
         rangeSlider.valueTo = 100.0f
 
-        rangeSlider.addOnChangeListener(RangeSlider.OnChangeListener { _, value, _ ->
-            painterView.setStrokeWidth(value)
-            // value.toInt() 활용
-        })
+        rangeSlider.addOnChangeListener(
+            RangeSlider.OnChangeListener { _, value, _ ->
+                painterView.setStrokeWidth(value)
+            },
+        )
         red.setOnClickListener {
             painterView.setColor(Color.RED)
         }
@@ -41,6 +41,9 @@ class MainActivity : AppCompatActivity() {
         }
         blue.setOnClickListener {
             painterView.setColor(Color.BLUE)
+        }
+        eraser.setOnClickListener {
+            painterView.setEraser()
         }
     }
 }
