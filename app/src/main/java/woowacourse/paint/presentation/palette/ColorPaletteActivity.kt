@@ -30,7 +30,7 @@ class ColorPaletteActivity :
 
     private fun initializeThicknessRangeSlider() {
         binding.rangeSliderThickness.addOnChangeListener { _, value, _ ->
-            paintView.changeOvalSize(value)
+            paintView.changeStrokeSize(value)
         }
     }
 

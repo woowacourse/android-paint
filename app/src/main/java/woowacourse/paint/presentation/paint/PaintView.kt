@@ -5,12 +5,9 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffXfermode
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import androidx.core.content.ContextCompat
 import woowacourse.paint.presentation.palette.BrushType
 import woowacourse.paint.presentation.palette.ColorUiModel
 
@@ -18,23 +15,13 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val lines: MutableList<Line> by lazy { mutableListOf() }
     private val undoHistory: MutableList<Line> by lazy { mutableListOf() }
 
-    private var currentMoveType: Int = 0
-    private var currentBrushType: BrushType = DEFAULT_BRUSH_TYPE
-    private var currentPath: Path = Path()
-    private var currentPaint: Paint = Paint()
-
+    private var currentLine: Line = Line(paint = initialPaint())
     private var startX: Float = 0f
     private var startY: Float = 0f
 
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-        setLayerType(LAYER_TYPE_HARDWARE, null)
-        initializePaint()
-    }
-
-    private fun initializePaint() {
-        currentPaint.apply {
-            color = ContextCompat.getColor(context, DEFAULT_COLOR.resId)
+    private fun initialPaint(): Paint {
+        return Paint().apply {
+            color = DEFAULT_COLOR.getColor(context)
             strokeWidth = DEFAULT_STROKE
             style = Paint.Style.STROKE
             strokeCap = Paint.Cap.ROUND
@@ -42,13 +29,18 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         }
     }
 
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        setLayerType(LAYER_TYPE_HARDWARE, null)
+    }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         lines.forEach { line ->
             canvas.drawPath(line.path, line.paint)
         }
-        if (currentMoveType == 1 && (currentBrushType == BrushType.RECTANGLE || currentBrushType == BrushType.CIRCLE)) {
-            if (lines.isNotEmpty()) lines.last().path.reset()
+        if (currentLine.shouldClearLastShape()) {
+            lines.last().clear()
         }
     }
 
@@ -60,6 +52,7 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             MotionEvent.ACTION_UP -> up()
             else -> super.onTouchEvent(event)
         }
+        invalidate()
         return true
     }
 
@@ -67,77 +60,38 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         x: Float,
         y: Float,
     ) {
-        currentMoveType = 0
-        lines.add(Line(currentPath, currentPaint))
+        currentLine.down(x, y)
+        lines.add(currentLine)
         startX = x
         startY = y
-        if (currentBrushType == BrushType.PEN || currentBrushType == BrushType.ERASER) {
-            currentPath.moveTo(x, y)
-            invalidate()
-        }
     }
 
     private fun move(
         x: Float,
         y: Float,
     ) {
-        currentMoveType = 1
-        when (currentBrushType) {
-            BrushType.PEN -> {
-                currentPaint.xfermode = null
-                currentPaint.style = Paint.Style.STROKE
-                currentPath.lineTo(x, y)
-                invalidate()
-            }
-
-            BrushType.RECTANGLE -> {
-                currentPaint.xfermode = null
-                currentPaint.style = Paint.Style.FILL
-                if (startX < x && startY < y) {
-                    currentPath.addRect(startX, startY, x, y, Path.Direction.CW)
-                } else {
-                    currentPath.addRect(x, y, startX, startY, Path.Direction.CW)
-                }
-                invalidate()
-            }
-
-            BrushType.CIRCLE -> {
-                currentPaint.xfermode = null
-                currentPaint.style = Paint.Style.FILL
-                currentPath.addOval(startX, startY, x, y, Path.Direction.CW)
-                invalidate()
-            }
-
-            BrushType.ERASER -> {
-                currentPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
-                currentPaint.style = Paint.Style.STROKE
-                currentPath.lineTo(x, y)
-                invalidate()
-            }
-        }
+        currentLine.move(startX, startY, x, y)
     }
 
     private fun up() {
-        currentMoveType = 2
+        currentLine.up()
         resetLine()
     }
 
     private fun resetLine() {
-        currentPath = Path()
-        currentPaint = Paint(currentPaint)
-        invalidate()
+        currentLine = currentLine.copy(path = Path())
     }
 
     fun changePaintColor(colorUiModel: ColorUiModel) {
-        currentPaint.color = ContextCompat.getColor(context, colorUiModel.resId)
+        currentLine.changePaintColor(colorUiModel.getColor(context))
     }
 
-    fun changeOvalSize(ovalSize: Float) {
-        currentPaint.strokeWidth = ovalSize
+    fun changeStrokeSize(strokeSize: Float) {
+        currentLine.changeStrokeSize(strokeSize)
     }
 
     fun changeBrushType(brushType: BrushType) {
-        currentBrushType = brushType
+        currentLine.changeBrushType(brushType)
     }
 
     fun empty() {
@@ -162,6 +116,5 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     companion object {
         private const val DEFAULT_STROKE = 10.0f
         private val DEFAULT_COLOR = ColorUiModel.RED
-        private val DEFAULT_BRUSH_TYPE = BrushType.PEN
     }
 }
