@@ -1,37 +1,37 @@
 package woowacourse.paint
 
-import android.graphics.Color
 import android.os.Bundle
-import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import com.google.android.material.slider.RangeSlider
+import woowacourse.paint.adapter.ColorAdapter
+import woowacourse.paint.adapter.ColorHandler
+import woowacourse.paint.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ColorHandler {
+    private val layoutResourceId: Int get() = R.layout.activity_main
+    private var _binding: ActivityMainBinding? = null
+    private val binding get() = requireNotNull(_binding)
+
     private lateinit var paintCanvas: PaintCanvasView
+    private lateinit var colorAdapter: ColorAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        paintCanvas = findViewById(R.id.paint_canvas)
-        initColorButtons()
+        _binding = DataBindingUtil.setContentView(this, layoutResourceId)
+        initPaintCanvas()
+        initColorAdapter()
         initWidthSeekBar()
     }
 
-    private fun initColorButtons() {
-        val colorButtons = mapOf(
-            R.id.iv_red to PaintColor.RED,
-            R.id.iv_orange to PaintColor.ORANGE,
-            R.id.iv_yellow to PaintColor.YELLOW,
-            R.id.iv_green to PaintColor.GREEN,
-            R.id.iv_blue to PaintColor.BLUE,
-            R.id.iv_black to PaintColor.BLACK
-        )
+    private fun initPaintCanvas() {
+        paintCanvas = findViewById(R.id.paint_canvas)
+    }
 
-        colorButtons.forEach { (buttonId, color) ->
-            findViewById<ImageView>(buttonId).apply {
-                setSelectedColor(color)
-            }
-        }
+    private fun initColorAdapter() {
+        colorAdapter = ColorAdapter(this)
+        binding.rvColor.adapter = colorAdapter
     }
 
     private fun initWidthSeekBar() {
@@ -39,16 +39,16 @@ class MainActivity : AppCompatActivity() {
             valueFrom = 0.0f
             valueTo = 100.0f
 
-            addOnChangeListener(RangeSlider.OnChangeListener { _, value, _ ->
-                paintCanvas.selectStrokeWidth(value)
-            })
-
+            addOnChangeListener(
+                RangeSlider.OnChangeListener { _, value, _ ->
+                    paintCanvas.selectStrokeWidth(value)
+                },
+            )
         }
     }
 
-    private fun ImageView.setSelectedColor(paintColor: PaintColor) {
-        setOnClickListener {
-            paintCanvas.selectColor(Color.parseColor(paintColor.value))
-        }
+    override fun selectColor(selectedColor: PaintColor) {
+        val color = ContextCompat.getColor(this, selectedColor.res)
+        paintCanvas.selectColorInt(color)
     }
 }
