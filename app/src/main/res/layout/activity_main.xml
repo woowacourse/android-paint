@@ -22,29 +22,53 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/btn_change_color"
+            android:id="@+id/btn_change_to_pen"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:background="@color/purple_500"
-            android:text="@string/paint_change_color"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="@id/btn_change_width"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintWidth_percent="0.4" />
-
-        <Button
-            android:id="@+id/btn_change_width"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
             android:layout_marginBottom="10dp"
             android:background="@color/purple_500"
-            android:text="@string/paint_change_width"
+            android:text="@string/paint_change_to_pen"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_change_to_rectangle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintWidth_percent="0.2" />
+
+        <Button
+            android:id="@+id/btn_change_to_rectangle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/purple_500"
+            android:text="@string/paint_change_to_rectangle"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/btn_change_to_pen"
+            app:layout_constraintEnd_toStartOf="@id/btn_change_to_circle"
+            app:layout_constraintStart_toEndOf="@id/btn_change_to_pen"
+            app:layout_constraintWidth_percent="0.2" />
+
+        <Button
+            android:id="@+id/btn_change_to_circle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/purple_500"
+            android:text="@string/paint_change_to_circle"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/btn_change_to_pen"
+            app:layout_constraintEnd_toStartOf="@id/btn_change_to_eraser"
+            app:layout_constraintStart_toEndOf="@id/btn_change_to_rectangle"
+            app:layout_constraintWidth_percent="0.2" />
+
+        <Button
+            android:id="@+id/btn_change_to_eraser"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@color/purple_500"
+            android:text="@string/paint_change_to_eraser"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/btn_change_to_pen"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintWidth_percent="0.4" />
+            app:layout_constraintStart_toEndOf="@id/btn_change_to_circle"
+            app:layout_constraintWidth_percent="0.2" />
 
         <Button
             android:id="@+id/btn_color_red"
@@ -52,7 +76,7 @@
             android:layout_height="80dp"
             android:layout_marginBottom="10dp"
             android:background="#DD3723"
-            app:layout_constraintBottom_toTopOf="@id/btn_change_width"
+            app:layout_constraintBottom_toTopOf="@id/btn_change_to_pen"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintWidth_percent="0.2" />
 

@@ -2,6 +2,8 @@
     <string name="app_name">Paint</string>
 
     <!--activity_main    -->
-    <string name="paint_change_color">색상 변경</string>
-    <string name="paint_change_width">굵기 변경</string>
+    <string name="paint_change_to_pen">펜</string>
+    <string name="paint_change_to_rectangle">직사각형</string>
+    <string name="paint_change_to_circle">원</string>
+    <string name="paint_change_to_eraser">지우개</string>
 </resources>
