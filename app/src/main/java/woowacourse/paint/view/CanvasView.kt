@@ -26,7 +26,10 @@ class CanvasView(
     private val sketches = mutableListOf<Sketch>()
     private var currentPath = Path()
     private var currentRectangleVertex: RectangleVertex = RectangleVertex()
-    private var currentCircle: Circle = Circle()
+
+    //    private var currentCircle: Circle = Circle()
+    private var currentCenter: Center = Center()
+    private var currentRadius: Float = 0f
     private var brushType: BrushType = BrushType.PEN
 
     init {
@@ -51,12 +54,14 @@ class CanvasView(
                     currentPaint,
                 )
 
-            BrushType.CIRCLE -> canvas.drawCircle(
-                currentCircle.center.x,
-                currentCircle.center.y,
-                currentCircle.radius,
-                currentPaint,
-            )
+            BrushType.CIRCLE ->
+                canvas.drawCircle(
+                    currentCenter.x,
+                    currentCenter.y,
+                    currentRadius,
+                    currentPaint,
+                )
+
             BrushType.ERASER -> TODO()
         }
     }
@@ -108,13 +113,9 @@ class CanvasView(
             }
 
             MotionEvent.ACTION_UP -> {
-                sketches.add(
-                    Rectangle(
-                        currentRectangleVertex,
-                        currentPaint.color,
-                        currentPaint.strokeWidth,
-                    ),
-                )
+                val currentRectangle =
+                    Rectangle(currentRectangleVertex, currentPaint.color, currentPaint.strokeWidth)
+                sketches.add(currentRectangle)
             }
         }
     }
@@ -122,24 +123,24 @@ class CanvasView(
     private fun onTouchCircleEvent(event: MotionEvent) {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                currentCircle = Circle()
-                currentCircle.changeProperty(center = Center(event.x, event.y), radius = 0f)
+                currentCenter = Center()
+                currentCenter.changeProperty(event.x, event.y)
+                currentRadius = 0f
             }
 
             MotionEvent.ACTION_MOVE -> {
-                val center = currentCircle.center
-                currentCircle.changeProperty(
-                    radius = calculateDistance(
-                        center.x,
-                        center.y,
-                        event.x,
-                        event.y
-                    )
-                )
+                currentRadius =
+                    calculateDistance(currentCenter.x, currentCenter.y, event.x, event.y)
             }
 
             MotionEvent.ACTION_UP -> {
-                currentCircle.changeProperty(color = currentPaint.color, strokeWidth = currentPaint.strokeWidth)
+                val currentCircle =
+                    Circle(
+                        currentCenter,
+                        currentRadius,
+                        currentPaint.color,
+                        currentPaint.strokeWidth,
+                    )
                 sketches.add(currentCircle)
             }
         }
