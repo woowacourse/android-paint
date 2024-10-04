@@ -7,12 +7,12 @@ import android.graphics.Path
 data class Line(
     val path: Path,
     val color: Int,
-    val width: Float,
+    val strokeWidth: Float,
 ) : Sketch() {
     private val paint = Paint().apply {
         color = this@Line.color
         style = Paint.Style.STROKE
-        strokeWidth = this@Line.width
+        strokeWidth = this@Line.strokeWidth
         strokeJoin = Paint.Join.ROUND
         strokeCap = Paint.Cap.ROUND
         isAntiAlias = true
