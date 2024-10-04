@@ -17,7 +17,7 @@ class PaintCanvasView(context: Context, attrs: AttributeSet) : View(context, att
 
     private var path = Path()
     private var paint = createPaintWith(selectedColorInt, selectedStrokeWidth)
-    private val canvasData = mutableMapOf(Pair(path, paint))
+    private val canvasData = mutableListOf(path to paint)
 
     init {
         isFocusable = true
@@ -37,7 +37,7 @@ class PaintCanvasView(context: Context, attrs: AttributeSet) : View(context, att
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         canvasData.forEach {
-            canvas.drawPath(it.key, it.value)
+            canvas.drawPath(it.first, it.second)
         }
     }
 
@@ -59,7 +59,7 @@ class PaintCanvasView(context: Context, attrs: AttributeSet) : View(context, att
         pointY: Float,
     ) {
         path = Path().apply { moveTo(pointX, pointY) }
-        canvasData[path] = createPaintWith(selectedColorInt, selectedStrokeWidth)
+        canvasData.add(path to createPaintWith(selectedColorInt, selectedStrokeWidth))
     }
 
     private fun drawLine(
