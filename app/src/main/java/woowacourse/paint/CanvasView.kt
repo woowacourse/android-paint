@@ -8,13 +8,15 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import woowacourse.paint.util.MyColor
+import woowacourse.paint.model.Line
+import woowacourse.paint.model.MyColor
+import woowacourse.paint.model.Sketch
 
 class CanvasView(
     context: Context,
     attrs: AttributeSet,
 ) : View(context, attrs) {
-    private val lines = mutableListOf<Line>()
+    private val lines = mutableListOf<Sketch>()
     private var currentPath = Path()
     val currentPaint = Paint()
 

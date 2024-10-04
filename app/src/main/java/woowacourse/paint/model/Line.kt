@@ -1,4 +1,4 @@
-package woowacourse.paint
+package woowacourse.paint.model
 
 import android.graphics.Canvas
 import android.graphics.Paint
@@ -8,7 +8,7 @@ data class Line(
     val path: Path,
     val color: Int,
     val width: Float,
-) {
+) : Sketch() {
     private val paint = Paint().apply {
         color = this@Line.color
         style = Paint.Style.STROKE
@@ -18,7 +18,7 @@ data class Line(
         isAntiAlias = true
     }
 
-    fun draw(canvas: Canvas) {
+    override fun draw(canvas: Canvas) {
         canvas.drawPath(path, paint)
     }
 }

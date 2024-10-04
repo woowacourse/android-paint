@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.slider.RangeSlider
 import woowacourse.paint.databinding.ActivityMainBinding
-import woowacourse.paint.util.MyColor
+import woowacourse.paint.model.MyColor
 
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
