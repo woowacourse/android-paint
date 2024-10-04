@@ -8,6 +8,7 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import woowacourse.paint.model.BrushType
 import woowacourse.paint.model.Line
 import woowacourse.paint.model.MyColor
 import woowacourse.paint.model.Rectangle
@@ -22,6 +23,7 @@ class CanvasView(
     private var currentPath = Path()
     private var currentVertexes: Vertexes = Vertexes()
     val currentPaint = Paint()
+    private var brushType: BrushType = BrushType.PEN
 
     init {
         isFocusable = true
@@ -34,20 +36,29 @@ class CanvasView(
         for (sketch in sketches) {
             sketch.draw(canvas)
         }
-//        canvas.drawPath(currentPath, currentPaint)
-        canvas.drawRect(
-            currentVertexes.startX,
-            currentVertexes.startY,
-            currentVertexes.endX,
-            currentVertexes.endY,
-            currentPaint,
-        )
+        when (brushType) {
+            BrushType.PEN -> canvas.drawPath(currentPath, currentPaint)
+            BrushType.RECTANGLE -> canvas.drawRect(
+                currentVertexes.startX,
+                currentVertexes.startY,
+                currentVertexes.endX,
+                currentVertexes.endY,
+                currentPaint,
+            )
+
+            BrushType.CIRCLE -> TODO()
+            BrushType.ERASER -> TODO()
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
-//        onTouchLineEvent(event)
-        onTouchRectangleEvent(event)
+        when(brushType) {
+            BrushType.PEN -> onTouchLineEvent(event)
+            BrushType.RECTANGLE -> onTouchRectangleEvent(event)
+            BrushType.CIRCLE -> TODO()
+            BrushType.ERASER -> TODO()
+        }
         invalidate()
         return true
     }
@@ -108,5 +119,9 @@ class CanvasView(
             strokeCap = Paint.Cap.ROUND
             isAntiAlias = true
         }
+    }
+
+    fun changeBrushType(brushType: BrushType) {
+        this.brushType = brushType
     }
 }

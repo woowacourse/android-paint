@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.slider.RangeSlider
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.model.BrushType
 import woowacourse.paint.model.MyColor
 
 class MainActivity : AppCompatActivity() {
@@ -15,27 +16,28 @@ class MainActivity : AppCompatActivity() {
         initBinding()
         setPaintColor()
         setPaintWidth()
+        setBrushType()
     }
 
     private fun setPaintColor() {
         binding.btnColorRed.setOnClickListener {
-            binding.customView.currentPaint.color = MyColor.RED
+            binding.canvasView.currentPaint.color = MyColor.RED
         }
 
         binding.btnColorOrange.setOnClickListener {
-            binding.customView.currentPaint.color = MyColor.ORANGE
+            binding.canvasView.currentPaint.color = MyColor.ORANGE
         }
 
         binding.btnColorYellow.setOnClickListener {
-            binding.customView.currentPaint.color = MyColor.YELLOW
+            binding.canvasView.currentPaint.color = MyColor.YELLOW
         }
 
         binding.btnColorGreen.setOnClickListener {
-            binding.customView.currentPaint.color = MyColor.GREEN
+            binding.canvasView.currentPaint.color = MyColor.GREEN
         }
 
         binding.btnColorBlue.setOnClickListener {
-            binding.customView.currentPaint.color = MyColor.BLUE
+            binding.canvasView.currentPaint.color = MyColor.BLUE
         }
     }
 
@@ -45,9 +47,24 @@ class MainActivity : AppCompatActivity() {
 
         binding.rangeSlider.addOnChangeListener(
             RangeSlider.OnChangeListener { _, value, _ ->
-                binding.customView.currentPaint.strokeWidth = value
+                binding.canvasView.currentPaint.strokeWidth = value
             },
         )
+    }
+
+    private fun setBrushType() {
+        binding.btnChangeToPen.setOnClickListener {
+            binding.canvasView.changeBrushType(BrushType.PEN)
+        }
+        binding.btnChangeToRectangle.setOnClickListener {
+            binding.canvasView.changeBrushType(BrushType.RECTANGLE)
+        }
+        binding.btnChangeToCircle.setOnClickListener {
+            binding.canvasView.changeBrushType(BrushType.CIRCLE)
+        }
+        binding.btnChangeToEraser.setOnClickListener {
+            binding.canvasView.changeBrushType(BrushType.ERASER)
+        }
     }
 
     private fun initBinding() {
