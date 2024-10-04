@@ -23,19 +23,13 @@ class PaintBoard(context: Context, attr: AttributeSet) : View(context, attr) {
 
     private lateinit var drawingMode: DrawingMode
     private var path: Path = Path()
-    private var paint: Paint =
-        Paint().apply {
-            style = Paint.Style.STROKE
-            strokeJoin = Paint.Join.ROUND
-            strokeCap = Paint.Cap.ROUND
-            color = DEFAULT_PAINT_COLOR_RES
-            strokeWidth = DEFAULT_STROKE_WIDTH
-        }
+    private var paint: Paint = Paint()
 
     private var startX: Float = 0f
     private var startY: Float = 0f
 
     init {
+        initPaint()
         setLayerType(LAYER_TYPE_HARDWARE, null)
     }
 
@@ -99,6 +93,16 @@ class PaintBoard(context: Context, attr: AttributeSet) : View(context, attr) {
         if (drawings.isNotEmpty()) {
             drawings.removeLast()
             invalidate()
+        }
+    }
+
+    private fun initPaint() {
+        paint.apply {
+            style = Paint.Style.STROKE
+            strokeJoin = Paint.Join.ROUND
+            strokeCap = Paint.Cap.ROUND
+            color = DEFAULT_PAINT_COLOR_RES
+            strokeWidth = DEFAULT_STROKE_WIDTH
         }
     }
 
