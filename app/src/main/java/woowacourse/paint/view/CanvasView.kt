@@ -1,4 +1,4 @@
-package woowacourse.paint
+package woowacourse.paint.view
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -38,13 +38,14 @@ class CanvasView(
         }
         when (brushType) {
             BrushType.PEN -> canvas.drawPath(currentPath, currentPaint)
-            BrushType.RECTANGLE -> canvas.drawRect(
-                currentVertexes.startX,
-                currentVertexes.startY,
-                currentVertexes.endX,
-                currentVertexes.endY,
-                currentPaint,
-            )
+            BrushType.RECTANGLE ->
+                canvas.drawRect(
+                    currentVertexes.startX,
+                    currentVertexes.startY,
+                    currentVertexes.endX,
+                    currentVertexes.endY,
+                    currentPaint,
+                )
 
             BrushType.CIRCLE -> TODO()
             BrushType.ERASER -> TODO()
@@ -53,7 +54,7 @@ class CanvasView(
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        when(brushType) {
+        when (brushType) {
             BrushType.PEN -> onTouchLineEvent(event)
             BrushType.RECTANGLE -> onTouchRectangleEvent(event)
             BrushType.CIRCLE -> TODO()
