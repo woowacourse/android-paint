@@ -1,7 +1,7 @@
 package woowacourse.paint
 
-data class PathData(
+data class Stroke(
     val path: android.graphics.Path,
     val color: Int,
-    val strokeWidth: Float,
+    val width: Float,
 )

@@ -14,7 +14,7 @@ class CanvasView(
     context: Context,
     attrs: AttributeSet,
 ) : View(context, attrs) {
-    private val paths = mutableListOf<PathData>()
+    private val strokes = mutableListOf<Stroke>()
     private var currentPath = Path()
     val paint = Paint()
 
@@ -28,10 +28,10 @@ class CanvasView(
         super.onDraw(canvas)
         val currentColor = paint.color
         val currentStrokeWidth = paint.strokeWidth
-        for (pathData in paths) {
-            paint.color = pathData.color
-            paint.strokeWidth = pathData.strokeWidth
-            canvas.drawPath(pathData.path, paint)
+        for (stroke in strokes) {
+            paint.color = stroke.color
+            paint.strokeWidth = stroke.width
+            canvas.drawPath(stroke.path, paint)
         }
         paint.color = currentColor
         paint.strokeWidth = currentStrokeWidth
@@ -65,7 +65,7 @@ class CanvasView(
     }
 
     private fun finishDrawing() {
-        paths.add(PathData(currentPath, paint.color, paint.strokeWidth))
+        strokes.add(Stroke(currentPath, paint.color, paint.strokeWidth))
     }
 
     private fun setupPaint() {
