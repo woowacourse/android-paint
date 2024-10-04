@@ -74,7 +74,12 @@ class CanvasView(
     private fun onTouchRectangleEvent(event: MotionEvent) {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                currentVertexes.changeVertex(event.x, event.y, event.x, event.y)
+                currentVertexes.changeVertex(
+                    startX = event.x,
+                    startY = event.y,
+                    endX = event.x,
+                    endY = event.y,
+                )
             }
 
             MotionEvent.ACTION_MOVE -> {
@@ -83,7 +88,13 @@ class CanvasView(
 
             MotionEvent.ACTION_UP -> {
                 currentVertexes.changeVertex(endX = event.x, endY = event.y)
-                sketches.add(Rectangle(currentVertexes, currentPaint.color, currentPaint.strokeWidth))
+                sketches.add(
+                    Rectangle(
+                        currentVertexes,
+                        currentPaint.color,
+                        currentPaint.strokeWidth,
+                    ),
+                )
             }
         }
     }

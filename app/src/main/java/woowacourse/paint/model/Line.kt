@@ -9,14 +9,15 @@ data class Line(
     val color: Int,
     val strokeWidth: Float,
 ) : Sketch() {
-    private val paint = Paint().apply {
-        color = this@Line.color
-        style = Paint.Style.STROKE
-        strokeWidth = this@Line.strokeWidth
-        strokeJoin = Paint.Join.ROUND
-        strokeCap = Paint.Cap.ROUND
-        isAntiAlias = true
-    }
+    private val paint =
+        Paint().apply {
+            color = this@Line.color
+            style = Paint.Style.STROKE
+            strokeWidth = this@Line.strokeWidth
+            strokeJoin = Paint.Join.ROUND
+            strokeCap = Paint.Cap.ROUND
+            isAntiAlias = true
+        }
 
     override fun draw(canvas: Canvas) {
         canvas.drawPath(path, paint)
