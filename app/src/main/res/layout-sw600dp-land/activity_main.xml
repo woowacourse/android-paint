@@ -44,6 +44,30 @@
             app:layout_constraintStart_toEndOf="@id/btn_circle"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <Button
+            android:id="@+id/btn_undo"
+            android:layout_width="@dimen/button_size"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="undo"
+            app:layout_constraintStart_toEndOf="@id/btn_eraser"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_clear"
+            android:layout_width="@dimen/button_size"
+            android:layout_height="wrap_content"
+            android:text="clear"
+            app:layout_constraintStart_toEndOf="@id/btn_undo"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_redo"
+            android:layout_width="@dimen/button_size"
+            android:layout_height="wrap_content"
+            android:text="redo"
+            app:layout_constraintStart_toEndOf="@id/btn_clear"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -101,14 +125,6 @@
             android:layout_height="@dimen/color_button_size"
             android:backgroundTint="@color/orange"
             app:layout_constraintStart_toEndOf="@id/btn_yellow"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/btn_white"
-            android:layout_width="@dimen/color_button_size"
-            android:layout_height="@dimen/color_button_size"
-            android:backgroundTint="@color/white"
-            app:layout_constraintStart_toEndOf="@id/btn_orange"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
