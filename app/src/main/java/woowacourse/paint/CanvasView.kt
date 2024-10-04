@@ -23,7 +23,7 @@ class CanvasView(
     init {
         isFocusable = true
         isFocusableInTouchMode = true
-        setupPaint()
+        initPaint()
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -61,7 +61,7 @@ class CanvasView(
         }
     }
 
-    private fun setupPaint() {
+    private fun initPaint() {
         currentPaint.apply {
             color = MyColor.RED
             style = Paint.Style.STROKE
