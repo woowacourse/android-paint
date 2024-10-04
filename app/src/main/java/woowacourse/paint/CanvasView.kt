@@ -14,9 +14,9 @@ class CanvasView(
     context: Context,
     attrs: AttributeSet,
 ) : View(context, attrs) {
-    private val strokes = mutableListOf<Stroke>()
+    private val lines = mutableListOf<Line>()
     private var currentPath = Path()
-    val paint = Paint()
+    val currentPaint = Paint()
 
     init {
         isFocusable = true
@@ -26,50 +26,41 @@ class CanvasView(
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        val currentColor = paint.color
-        val currentStrokeWidth = paint.strokeWidth
-        for (stroke in strokes) {
-            paint.color = stroke.color
-            paint.strokeWidth = stroke.width
-            canvas.drawPath(stroke.path, paint)
+        for (line in lines) {
+            line.draw(canvas)
         }
-        paint.color = currentColor
-        paint.strokeWidth = currentStrokeWidth
-        canvas.drawPath(currentPath, paint)
+        canvas.drawPath(currentPath, currentPaint)
     }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        val pointX = event.x
-        val pointY = event.y
-
-        when (event.action) {
-            MotionEvent.ACTION_DOWN -> {
-                currentPath = Path()
-                currentPath.moveTo(pointX, pointY)
-            }
-
-            MotionEvent.ACTION_MOVE -> {
-                currentPath.lineTo(pointX, pointY)
-            }
-
-            MotionEvent.ACTION_UP -> {
-                finishDrawing()
-            }
-
-            else -> super.onTouchEvent(event)
-        }
+        onTouchLineEvent(event)
 
         invalidate()
         return true
     }
 
-    private fun finishDrawing() {
-        strokes.add(Stroke(currentPath, paint.color, paint.strokeWidth))
+    private fun onTouchLineEvent(event: MotionEvent) {
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                currentPath = Path()
+                currentPath.moveTo(event.x, event.y)
+            }
+
+            MotionEvent.ACTION_MOVE -> {
+                currentPath.lineTo(event.x, event.y)
+            }
+
+            MotionEvent.ACTION_UP -> {
+                lines.add(Line(currentPath, currentPaint.color, currentPaint.strokeWidth))
+            }
+
+            else -> super.onTouchEvent(event)
+        }
     }
 
     private fun setupPaint() {
-        paint.apply {
+        currentPaint.apply {
             color = MyColor.RED
             style = Paint.Style.STROKE
             strokeWidth = 10f

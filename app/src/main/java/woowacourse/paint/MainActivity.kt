@@ -19,23 +19,23 @@ class MainActivity : AppCompatActivity() {
 
     private fun setPaintColor() {
         binding.btnColorRed.setOnClickListener {
-            binding.customView.paint.color = MyColor.RED
+            binding.customView.currentPaint.color = MyColor.RED
         }
 
         binding.btnColorOrange.setOnClickListener {
-            binding.customView.paint.color = MyColor.ORANGE
+            binding.customView.currentPaint.color = MyColor.ORANGE
         }
 
         binding.btnColorYellow.setOnClickListener {
-            binding.customView.paint.color = MyColor.YELLOW
+            binding.customView.currentPaint.color = MyColor.YELLOW
         }
 
         binding.btnColorGreen.setOnClickListener {
-            binding.customView.paint.color = MyColor.GREEN
+            binding.customView.currentPaint.color = MyColor.GREEN
         }
 
         binding.btnColorBlue.setOnClickListener {
-            binding.customView.paint.color = MyColor.BLUE
+            binding.customView.currentPaint.color = MyColor.BLUE
         }
     }
 
@@ -45,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.rangeSlider.addOnChangeListener(
             RangeSlider.OnChangeListener { _, value, _ ->
-                binding.customView.paint.strokeWidth = value
+                binding.customView.currentPaint.strokeWidth = value
             },
         )
     }
