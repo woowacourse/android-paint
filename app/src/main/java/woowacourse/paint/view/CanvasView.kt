@@ -12,17 +12,21 @@ import woowacourse.paint.model.BrushType
 import woowacourse.paint.model.Line
 import woowacourse.paint.model.MyColor
 import woowacourse.paint.model.Rectangle
+import woowacourse.paint.model.RectangleVertex
 import woowacourse.paint.model.Sketch
-import woowacourse.paint.model.Vertexes
+import woowacourse.paint.model.circle.Center
+import woowacourse.paint.model.circle.Circle
+import woowacourse.paint.util.calculateDistance
 
 class CanvasView(
     context: Context,
     attrs: AttributeSet,
 ) : View(context, attrs) {
+    val currentPaint = Paint()
     private val sketches = mutableListOf<Sketch>()
     private var currentPath = Path()
-    private var currentVertexes: Vertexes = Vertexes()
-    val currentPaint = Paint()
+    private var currentRectangleVertex: RectangleVertex = RectangleVertex()
+    private var currentCircle: Circle = Circle()
     private var brushType: BrushType = BrushType.PEN
 
     init {
@@ -40,14 +44,19 @@ class CanvasView(
             BrushType.PEN -> canvas.drawPath(currentPath, currentPaint)
             BrushType.RECTANGLE ->
                 canvas.drawRect(
-                    currentVertexes.startX,
-                    currentVertexes.startY,
-                    currentVertexes.endX,
-                    currentVertexes.endY,
+                    currentRectangleVertex.startX,
+                    currentRectangleVertex.startY,
+                    currentRectangleVertex.endX,
+                    currentRectangleVertex.endY,
                     currentPaint,
                 )
 
-            BrushType.CIRCLE -> TODO()
+            BrushType.CIRCLE -> canvas.drawCircle(
+                currentCircle.center.x,
+                currentCircle.center.y,
+                currentCircle.radius,
+                currentPaint,
+            )
             BrushType.ERASER -> TODO()
         }
     }
@@ -57,7 +66,7 @@ class CanvasView(
         when (brushType) {
             BrushType.PEN -> onTouchLineEvent(event)
             BrushType.RECTANGLE -> onTouchRectangleEvent(event)
-            BrushType.CIRCLE -> TODO()
+            BrushType.CIRCLE -> onTouchCircleEvent(event)
             BrushType.ERASER -> TODO()
         }
         invalidate()
@@ -86,7 +95,7 @@ class CanvasView(
     private fun onTouchRectangleEvent(event: MotionEvent) {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                currentVertexes.changeVertex(
+                currentRectangleVertex.changeVertex(
                     startX = event.x,
                     startY = event.y,
                     endX = event.x,
@@ -95,18 +104,43 @@ class CanvasView(
             }
 
             MotionEvent.ACTION_MOVE -> {
-                currentVertexes.changeVertex(endX = event.x, endY = event.y)
+                currentRectangleVertex.changeVertex(endX = event.x, endY = event.y)
             }
 
             MotionEvent.ACTION_UP -> {
-                currentVertexes.changeVertex(endX = event.x, endY = event.y)
                 sketches.add(
                     Rectangle(
-                        currentVertexes,
+                        currentRectangleVertex,
                         currentPaint.color,
                         currentPaint.strokeWidth,
                     ),
                 )
+            }
+        }
+    }
+
+    private fun onTouchCircleEvent(event: MotionEvent) {
+        when (event.action) {
+            MotionEvent.ACTION_DOWN -> {
+                currentCircle = Circle()
+                currentCircle.changeProperty(center = Center(event.x, event.y), radius = 0f)
+            }
+
+            MotionEvent.ACTION_MOVE -> {
+                val center = currentCircle.center
+                currentCircle.changeProperty(
+                    radius = calculateDistance(
+                        center.x,
+                        center.y,
+                        event.x,
+                        event.y
+                    )
+                )
+            }
+
+            MotionEvent.ACTION_UP -> {
+                currentCircle.changeProperty(color = currentPaint.color, strokeWidth = currentPaint.strokeWidth)
+                sketches.add(currentCircle)
             }
         }
     }

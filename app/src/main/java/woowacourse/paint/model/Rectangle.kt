@@ -5,14 +5,14 @@ import android.graphics.Paint
 import android.graphics.RectF
 
 data class Rectangle(
-    val vertexes: Vertexes,
+    val rectangleVertex: RectangleVertex,
     val color: Int,
     val strokeWidth: Float,
 ) : Sketch() {
-    private val startX = vertexes.startX
-    private val startY = vertexes.startY
-    private val endX = vertexes.endX
-    private val endY = vertexes.endY
+    private val startX = rectangleVertex.startX
+    private val startY = rectangleVertex.startY
+    private val endX = rectangleVertex.endX
+    private val endY = rectangleVertex.endY
 
     private val paint =
         Paint().apply {

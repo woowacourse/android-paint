@@ -1,6 +1,6 @@
 package woowacourse.paint.model
 
-data class Vertexes(
+data class RectangleVertex(
     var startX: Float = 0f,
     var startY: Float = 0f,
     var endX: Float = 0f,
