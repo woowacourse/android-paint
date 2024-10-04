@@ -3,7 +3,6 @@ package woowacourse.paint
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.slider.Slider
 
