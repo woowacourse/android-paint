@@ -54,32 +54,7 @@ class PaintBoard(context: Context, attr: AttributeSet) : View(context, attr) {
             }
 
             MotionEvent.ACTION_MOVE -> {
-                when (drawingMode) {
-                    DrawingMode.PEN -> {
-                        path.lineTo(currentX, currentY)
-                    }
-
-                    DrawingMode.SQUARE -> {
-                        path.reset()
-
-                        val rect = createRectangle(currentX, currentY)
-                        path.addRect(
-                            rect,
-                            Path.Direction.CW,
-                        )
-                    }
-
-                    DrawingMode.CIRCLE -> {
-                        path.reset()
-
-                        val radius = calculateRadius(currentX, currentY)
-                        path.addCircle(startX, startY, radius, Path.Direction.CW)
-                    }
-
-                    DrawingMode.ERASER -> {
-                        path.lineTo(currentX, currentY)
-                    }
-                }
+                updatePath(currentX, currentY)
             }
 
             MotionEvent.ACTION_UP -> {
@@ -124,6 +99,35 @@ class PaintBoard(context: Context, attr: AttributeSet) : View(context, attr) {
         if (drawings.isNotEmpty()) {
             drawings.removeLast()
             invalidate()
+        }
+    }
+
+    private fun updatePath(currentX: Float, currentY: Float) {
+        when (drawingMode) {
+            DrawingMode.PEN -> {
+                path.lineTo(currentX, currentY)
+            }
+
+            DrawingMode.SQUARE -> {
+                path.reset()
+
+                val rect = createRectangle(currentX, currentY)
+                path.addRect(
+                    rect,
+                    Path.Direction.CW,
+                )
+            }
+
+            DrawingMode.CIRCLE -> {
+                path.reset()
+
+                val radius = calculateRadius(currentX, currentY)
+                path.addCircle(startX, startY, radius, Path.Direction.CW)
+            }
+
+            DrawingMode.ERASER -> {
+                path.lineTo(currentX, currentY)
+            }
         }
     }
 
