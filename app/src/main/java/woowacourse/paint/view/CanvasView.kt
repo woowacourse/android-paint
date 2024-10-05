@@ -6,6 +6,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.model.BrushType
@@ -110,6 +111,7 @@ class CanvasView(
     private fun onTouchRectangleEvent(event: MotionEvent) {
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
+                currentRectangleVertex = RectangleVertex()
                 currentRectangleVertex.changeVertex(
                     startX = event.x,
                     startY = event.y,
@@ -158,10 +160,13 @@ class CanvasView(
 
     private fun onTouchEraserEvent(event: MotionEvent) {
         when (event.action) {
-            MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE ->
+            MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE -> {
+                val haveToRemove = mutableListOf<Sketch>()
                 sketches.forEach { sketch ->
-                    if (sketch.isTouched(event.x, event.y)) sketches.remove(sketch)
+                    if (sketch.isTouched(event.x, event.y)) haveToRemove.add(sketch)
                 }
+                sketches.removeAll(haveToRemove)
+            }
         }
     }
 
