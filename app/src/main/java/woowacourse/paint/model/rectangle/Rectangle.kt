@@ -1,19 +1,18 @@
 package woowacourse.paint.model.rectangle
 
 import android.graphics.Canvas
-import android.graphics.Paint
 import android.graphics.RectF
 import woowacourse.paint.model.Sketch
 
 data class Rectangle(
-    private val rectangleVertex: RectangleVertex,
+    private val vertex: RectangleVertex,
     private val color: Int,
     private val strokeWidth: Float,
 ) : Sketch(color, strokeWidth) {
-    private val startX = rectangleVertex.startX
-    private val startY = rectangleVertex.startY
-    private val endX = rectangleVertex.endX
-    private val endY = rectangleVertex.endY
+    private val startX = vertex.startX
+    private val startY = vertex.startY
+    private val endX = vertex.endX
+    private val endY = vertex.endY
 
     private val rectF =
         RectF(
@@ -25,5 +24,12 @@ data class Rectangle(
 
     override fun draw(canvas: Canvas) {
         canvas.drawRect(rectF, paint)
+    }
+
+    fun isTouched(
+        x: Float,
+        y: Float,
+    ): Boolean {
+        return x >= vertex.startX && x <= vertex.endX && y >= vertex.startY && y <= vertex.endY
     }
 }

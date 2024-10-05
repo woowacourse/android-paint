@@ -12,4 +12,13 @@ data class Line(
     override fun draw(canvas: Canvas) {
         canvas.drawPath(path, paint)
     }
+
+    fun isTouched(
+        x: Float,
+        y: Float,
+    ): Boolean {
+        val bounds = android.graphics.RectF()
+        path.computeBounds(bounds, true)
+        return bounds.contains(x, y)
+    }
 }

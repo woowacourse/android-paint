@@ -26,8 +26,6 @@ class CanvasView(
     private val sketches = mutableListOf<Sketch>()
     private var currentPath = Path()
     private var currentRectangleVertex: RectangleVertex = RectangleVertex()
-
-    //    private var currentCircle: Circle = Circle()
     private var currentCenter: Center = Center()
     private var currentRadius: Float = 0f
     private var brushType: BrushType = BrushType.PEN
@@ -45,6 +43,7 @@ class CanvasView(
         }
         when (brushType) {
             BrushType.PEN -> canvas.drawPath(currentPath, currentPaint)
+
             BrushType.RECTANGLE ->
                 canvas.drawRect(
                     currentRectangleVertex.startX,
@@ -62,7 +61,7 @@ class CanvasView(
                     currentPaint,
                 )
 
-            BrushType.ERASER -> TODO()
+            BrushType.ERASER -> {}
         }
     }
 
@@ -72,7 +71,7 @@ class CanvasView(
             BrushType.PEN -> onTouchLineEvent(event)
             BrushType.RECTANGLE -> onTouchRectangleEvent(event)
             BrushType.CIRCLE -> onTouchCircleEvent(event)
-            BrushType.ERASER -> TODO()
+            BrushType.ERASER -> onTouchEraserEvent(event)
         }
         invalidate()
         return true
@@ -142,6 +141,21 @@ class CanvasView(
                         currentPaint.strokeWidth,
                     )
                 sketches.add(currentCircle)
+            }
+        }
+    }
+
+    private fun onTouchEraserEvent(event: MotionEvent) {
+        if (event.action == MotionEvent.ACTION_DOWN) {
+            // sketches에서 터치된 위치에 있는 도형을 찾음
+            val iterator = sketches.iterator()
+            while (iterator.hasNext()) {
+                val sketch = iterator.next()
+                when (sketch) {
+                    is Line -> if (sketch.isTouched(event.x, event.y)) iterator.remove()
+                    is Rectangle -> if (sketch.isTouched(event.x, event.y)) iterator.remove()
+                    is Circle -> if (sketch.isTouched(event.x, event.y)) iterator.remove()
+                }
             }
         }
     }
