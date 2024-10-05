@@ -9,13 +9,13 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.model.BrushType
-import woowacourse.paint.model.line.Line
 import woowacourse.paint.model.MyColor
-import woowacourse.paint.model.rectangle.Rectangle
-import woowacourse.paint.model.rectangle.RectangleVertex
 import woowacourse.paint.model.Sketch
 import woowacourse.paint.model.circle.Center
 import woowacourse.paint.model.circle.Circle
+import woowacourse.paint.model.line.Line
+import woowacourse.paint.model.rectangle.Rectangle
+import woowacourse.paint.model.rectangle.RectangleVertex
 import woowacourse.paint.util.calculateDistance
 
 class CanvasView(
