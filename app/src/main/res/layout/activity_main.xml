@@ -37,17 +37,57 @@
             android:id="@+id/rv_main_color_palette"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="12dp"
             android:background="@drawable/shape_color_palette_background"
             android:clipToPadding="false"
             android:orientation="horizontal"
             android:padding="12dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/btn_main_pen"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:itemCount="5"
             tools:listitem="@layout/item_color_palette" />
+
+        <Button
+            android:id="@+id/btn_main_pen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="@string/main_pen"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_main_rectangle"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btn_main_rectangle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_rectangle"
+            app:layout_constraintBottom_toBottomOf="@id/btn_main_pen"
+            app:layout_constraintEnd_toStartOf="@id/btn_main_circle"
+            app:layout_constraintStart_toEndOf="@id/btn_main_pen"
+            app:layout_constraintTop_toTopOf="@id/btn_main_pen" />
+
+        <Button
+            android:id="@+id/btn_main_circle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_circle"
+            app:layout_constraintBottom_toBottomOf="@id/btn_main_pen"
+            app:layout_constraintEnd_toStartOf="@id/btn_main_eraser"
+            app:layout_constraintStart_toEndOf="@id/btn_main_rectangle"
+            app:layout_constraintTop_toTopOf="@id/btn_main_pen" />
+
+        <Button
+            android:id="@+id/btn_main_eraser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_eraser"
+            app:layout_constraintBottom_toBottomOf="@id/btn_main_pen"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_main_circle"
+            app:layout_constraintTop_toTopOf="@id/btn_main_pen" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
