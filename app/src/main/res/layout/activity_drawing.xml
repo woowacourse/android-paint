@@ -26,6 +26,7 @@
             android:id="@+id/range_slider_drawing_brush_size_controller"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
             app:layout_constraintBottom_toTopOf="@id/layout_drawing_color_picker" />
 
         <include
