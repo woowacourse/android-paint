@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity(), ColorHandler {
     }
 
     private fun initPaintCanvas() {
-        paintCanvas = findViewById(R.id.paint_canvas)
+        paintCanvas = binding.paintCanvas
     }
 
     private fun initColorAdapter() {
@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity(), ColorHandler {
     }
 
     private fun initWidthSeekBar() {
-        findViewById<RangeSlider>(R.id.stroke_width_slider).apply {
+        binding.strokeWidthSlider.apply {
             valueFrom = 0.0f
             valueTo = 100.0f
 
