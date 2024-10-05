@@ -1,8 +1,9 @@
-package woowacourse.paint.model
+package woowacourse.paint.model.rectangle
 
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
+import woowacourse.paint.model.Sketch
 
 data class Rectangle(
     val rectangleVertex: RectangleVertex,

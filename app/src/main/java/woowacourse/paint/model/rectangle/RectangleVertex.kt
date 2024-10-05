@@ -1,4 +1,4 @@
-package woowacourse.paint.model
+package woowacourse.paint.model.rectangle
 
 data class RectangleVertex(
     var startX: Float = 0f,

@@ -1,8 +1,9 @@
-package woowacourse.paint.model
+package woowacourse.paint.model.line
 
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
+import woowacourse.paint.model.Sketch
 
 data class Line(
     val path: Path,
