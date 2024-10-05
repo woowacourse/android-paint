@@ -14,7 +14,7 @@ data class Line(
         canvas.drawPath(path, paint)
     }
 
-    fun isTouched(
+    override fun isTouched(
         x: Float,
         y: Float,
     ): Boolean {

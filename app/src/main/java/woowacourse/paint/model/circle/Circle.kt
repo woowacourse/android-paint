@@ -14,7 +14,7 @@ data class Circle(
         canvas.drawCircle(center.x, center.y, radius, paint)
     }
 
-    fun isTouched(
+    override fun isTouched(
         x: Float,
         y: Float,
     ): Boolean {

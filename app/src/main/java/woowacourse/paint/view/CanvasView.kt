@@ -36,6 +36,17 @@ class CanvasView(
         initPaint()
     }
 
+    private fun initPaint() {
+        currentPaint.apply {
+            color = MyColor.RED
+            style = Paint.Style.STROKE
+            strokeWidth = 10f
+            strokeJoin = Paint.Join.ROUND
+            strokeCap = Paint.Cap.ROUND
+            isAntiAlias = true
+        }
+    }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         for (sketch in sketches) {
@@ -146,28 +157,11 @@ class CanvasView(
     }
 
     private fun onTouchEraserEvent(event: MotionEvent) {
-        if (event.action == MotionEvent.ACTION_DOWN) {
-            // sketches에서 터치된 위치에 있는 도형을 찾음
-            val iterator = sketches.iterator()
-            while (iterator.hasNext()) {
-                val sketch = iterator.next()
-                when (sketch) {
-                    is Line -> if (sketch.isTouched(event.x, event.y)) iterator.remove()
-                    is Rectangle -> if (sketch.isTouched(event.x, event.y)) iterator.remove()
-                    is Circle -> if (sketch.isTouched(event.x, event.y)) iterator.remove()
+        when (event.action) {
+            MotionEvent.ACTION_DOWN, MotionEvent.ACTION_MOVE ->
+                sketches.forEach { sketch ->
+                    if (sketch.isTouched(event.x, event.y)) sketches.remove(sketch)
                 }
-            }
-        }
-    }
-
-    private fun initPaint() {
-        currentPaint.apply {
-            color = MyColor.RED
-            style = Paint.Style.STROKE
-            strokeWidth = 10f
-            strokeJoin = Paint.Join.ROUND
-            strokeCap = Paint.Cap.ROUND
-            isAntiAlias = true
         }
     }
 

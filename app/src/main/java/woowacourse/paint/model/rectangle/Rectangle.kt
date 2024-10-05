@@ -9,24 +9,18 @@ data class Rectangle(
     private val color: Int,
     private val strokeWidth: Float,
 ) : Sketch(color, strokeWidth) {
-    private val startX = vertex.startX
-    private val startY = vertex.startY
-    private val endX = vertex.endX
-    private val endY = vertex.endY
-
-    private val rectF =
-        RectF(
-            startX.coerceAtMost(endX),
-            startY.coerceAtMost(endY),
-            startX.coerceAtLeast(endX),
-            startY.coerceAtLeast(endY),
-        )
+    private val rectF = RectF(
+        vertex.startX.coerceAtMost(vertex.endX),
+        vertex.startY.coerceAtMost(vertex.endY),
+        vertex.startX.coerceAtLeast(vertex.endX),
+        vertex.startY.coerceAtLeast(vertex.endY),
+    )
 
     override fun draw(canvas: Canvas) {
         canvas.drawRect(rectF, paint)
     }
 
-    fun isTouched(
+    override fun isTouched(
         x: Float,
         y: Float,
     ): Boolean {

@@ -15,4 +15,9 @@ abstract class Sketch(currentColor: Int, currentWidth: Float) {
             strokeCap = Paint.Cap.ROUND
             isAntiAlias = true
         }
+
+    abstract fun isTouched(
+        x: Float,
+        y: Float,
+    ): Boolean
 }
