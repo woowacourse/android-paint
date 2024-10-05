@@ -28,7 +28,10 @@ class DrawingBoardView constructor(context: Context, attrs: AttributeSet) : View
                 path =
                     Path().apply {
                         moveTo(event.x, event.y)
+                        lineTo(event.x, event.y)
                     }
+                drawings.add(Drawing(path, Paint(paint)))
+                invalidate()
             }
 
             MotionEvent.ACTION_MOVE -> {
@@ -37,7 +40,7 @@ class DrawingBoardView constructor(context: Context, attrs: AttributeSet) : View
             }
 
             MotionEvent.ACTION_UP -> {
-                drawings.add(Drawing(path, Paint(paint)))
+                path = Path()
             }
 
             else -> super.onTouchEvent(event)
