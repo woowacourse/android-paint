@@ -9,10 +9,12 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import woowacourse.paint.BrushType
 
 class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs) {
     private var currentLine = Line(Path(), Paint().apply { color = DEFAULT_LINE_COLOR })
     private val lines: MutableList<Line> = mutableListOf(currentLine)
+    private var brushType: BrushType = DEFAULT_BRUSH_TYPE
 
     init {
         isFocusable = true
@@ -28,6 +30,18 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
+        when (brushType) {
+            BrushType.PEN -> onTouchEventForPen(event)
+            BrushType.RECTANGLE -> {
+                // TODO: 직사각형 그리기 구현
+            }
+        }
+
+        invalidate()
+        return true
+    }
+
+    private fun onTouchEventForPen(event: MotionEvent): Boolean {
         val pointX = event.x
         val pointY = event.y
 
@@ -39,7 +53,6 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
             MotionEvent.ACTION_MOVE -> currentLine.lineTo(pointX, pointY)
             else -> return super.onTouchEvent(event)
         }
-        invalidate()
         return true
     }
 
@@ -53,11 +66,16 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
         currentLine = newColorLine
     }
 
+    fun changeBrushType(brush: BrushType) {
+        this.brushType = brush
+    }
+
     private fun addNewLine() {
         lines.add(currentLine)
     }
 
     companion object {
         const val DEFAULT_LINE_COLOR = Color.RED
+        val DEFAULT_BRUSH_TYPE = BrushType.PEN
     }
 }
