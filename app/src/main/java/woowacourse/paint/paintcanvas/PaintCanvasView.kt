@@ -1,66 +1,54 @@
-package woowacourse.paint
+package woowacourse.paint.paintcanvas
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
-import android.graphics.Path
-import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
+import woowacourse.paint.R
+import woowacourse.paint.paintcanvas.shape.OvalShape
+import woowacourse.paint.paintcanvas.shape.PathShape
+import woowacourse.paint.paintcanvas.shape.RectShape
+import woowacourse.paint.paintcanvas.shape.Shape
 
 class PaintCanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private var selectedColorInt = ContextCompat.getColor(context, default_color)
     private var selectedStrokeWidth = DEFAULT_STROKE_WIDTH
-    private var path = Path()
-    private var paint = createPaintWith(selectedColorInt, selectedStrokeWidth)
-    private val canvasData = mutableListOf(path to paint)
 
+    private var paint = createPaintWith(selectedColorInt, selectedStrokeWidth)
+
+    private lateinit var shape: Shape
+    private var canvasHistory: MutableList<Pair<Shape, Paint>> = mutableListOf()
     private var selectedDiagram = Diagram.PEN
-    private var startX = 0F
-    private var startY = 0F
-    private var rect = RectF()
-    private var oval = RectF()
-    private var rectPaint = createDiagramPaintWith(selectedColorInt)
-    private var ovalPaint = createDiagramPaintWith(selectedColorInt)
-    private val canvasRectData = mutableListOf(rect to rectPaint)
-    private val canvasOvalData = mutableListOf(oval to ovalPaint)
 
     init {
         isFocusable = true
         isFocusableInTouchMode = true
     }
 
-    fun selectColorInt(
+    fun selectColor(
         @ColorInt value: Int,
     ) {
         selectedColorInt = value
-    }
-
-    fun selectDiagram(diagram: Diagram) {
-        selectedDiagram = diagram
     }
 
     fun selectStrokeWidth(strokeWidth: Float) {
         selectedStrokeWidth = strokeWidth
     }
 
+    fun selectDiagram(diagram: Diagram) {
+        selectedDiagram = diagram
+    }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvasData.forEach {
-            canvas.drawPath(it.first, it.second)
+        canvasHistory.forEach {
+            it.first.draw(canvas, it.second)
         }
-        canvasRectData.forEach {
-            canvas.drawRect(it.first, it.second)
-        }
-        canvasOvalData.forEach {
-            canvas.drawOval(it.first, it.second)
-        }
-        canvas.drawRect(rect, rectPaint)
-        canvas.drawOval(oval, ovalPaint)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -93,6 +81,8 @@ class PaintCanvasView(context: Context, attrs: AttributeSet) : View(context, att
             Diagram.OVAL -> {
                 startOval(pointX, pointY)
             }
+
+            Diagram.ERASER -> TODO()
         }
     }
 
@@ -100,26 +90,25 @@ class PaintCanvasView(context: Context, attrs: AttributeSet) : View(context, att
         pointX: Float,
         pointY: Float,
     ) {
-        path = Path().apply { moveTo(pointX, pointY) }
-        canvasData.add(path to createPaintWith(selectedColorInt, selectedStrokeWidth))
+        shape = PathShape().apply { onActionDown(pointX, pointY) }
+        paint = createPaintWith(selectedColorInt, selectedStrokeWidth)
+        canvasHistory.add(shape to paint)
     }
 
     private fun startRect(
         pointX: Float,
         pointY: Float,
     ) {
-        startX = pointX
-        startY = pointY
-        rectPaint = createDiagramPaintWith(selectedColorInt)
+        shape = RectShape().apply { onActionDown(pointX, pointY) }
+        paint = createDiagramPaintWith(selectedColorInt)
     }
 
     private fun startOval(
         pointX: Float,
         pointY: Float,
     ) {
-        startX = pointX
-        startY = pointY
-        ovalPaint = createDiagramPaintWith(selectedColorInt)
+        shape = OvalShape().apply { onActionDown(pointX, pointY) }
+        paint = createDiagramPaintWith(selectedColorInt)
     }
 
     private fun progressDrawing(
@@ -128,37 +117,31 @@ class PaintCanvasView(context: Context, attrs: AttributeSet) : View(context, att
     ) {
         when (selectedDiagram) {
             Diagram.PEN -> {
-                progressLine(pointX, pointY)
+                shape.onActionMove(pointX, pointY)
             }
 
             Diagram.RECT -> {
-                rect = RectF(startX, startY, pointX, pointY)
+                shape.onActionMove(pointX, pointY)
+                canvasHistory.drop(1)
+                canvasHistory.add(shape to paint)
             }
 
             Diagram.OVAL -> {
-                oval = RectF(startX, startY, pointX, pointY)
+                shape.onActionMove(pointX, pointY)
+                canvasHistory.drop(1)
+                canvasHistory.add(shape to paint)
             }
-        }
-    }
 
-    private fun progressLine(
-        pointX: Float,
-        pointY: Float,
-    ) {
-        path.lineTo(pointX, pointY)
+            Diagram.ERASER -> TODO()
+        }
     }
 
     private fun finishDrawing(
         pointX: Float,
         pointY: Float,
     ) {
-        if (selectedDiagram == Diagram.RECT) {
-            rect = RectF(startX, startY, pointX, pointY)
-            canvasRectData.add(rect to rectPaint)
-        } else if (selectedDiagram == Diagram.OVAL) {
-            oval = RectF(startX, startY, pointX, pointY)
-            canvasOvalData.add(oval to ovalPaint)
-        }
+        shape.onActionUp(pointX, pointY)
+        canvasHistory.add(shape to paint)
     }
 
     private fun createPaintWith(

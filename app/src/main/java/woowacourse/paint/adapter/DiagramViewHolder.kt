@@ -1,8 +1,8 @@
 package woowacourse.paint.adapter
 
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.paint.Diagram
 import woowacourse.paint.databinding.ItemDiagramBinding
+import woowacourse.paint.paintcanvas.Diagram
 
 class DiagramViewHolder(private val binding: ItemDiagramBinding) :
     RecyclerView.ViewHolder(binding.root) {

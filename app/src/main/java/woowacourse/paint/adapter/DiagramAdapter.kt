@@ -3,8 +3,8 @@ package woowacourse.paint.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.paint.Diagram
 import woowacourse.paint.databinding.ItemDiagramBinding
+import woowacourse.paint.paintcanvas.Diagram
 
 class DiagramAdapter(private val handler: DiagramHandler) :
     RecyclerView.Adapter<DiagramViewHolder>() {

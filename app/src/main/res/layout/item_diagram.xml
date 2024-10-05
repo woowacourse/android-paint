@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="woowacourse.paint.Diagram" />
+            type="woowacourse.paint.paintcanvas.Diagram" />
 
         <variable
             name="handler"

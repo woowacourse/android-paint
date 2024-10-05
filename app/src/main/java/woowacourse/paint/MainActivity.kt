@@ -11,6 +11,8 @@ import woowacourse.paint.adapter.ColorHandler
 import woowacourse.paint.adapter.DiagramAdapter
 import woowacourse.paint.adapter.DiagramHandler
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.paintcanvas.Diagram
+import woowacourse.paint.paintcanvas.PaintCanvasView
 
 class MainActivity : AppCompatActivity(), ColorHandler, DiagramHandler {
     private val layoutResourceId: Int get() = R.layout.activity_main
@@ -55,7 +57,7 @@ class MainActivity : AppCompatActivity(), ColorHandler, DiagramHandler {
 
     override fun selectColor(selectedColor: PaintColor) {
         val color = ContextCompat.getColor(this, selectedColor.res)
-        paintCanvas.selectColorInt(color)
+        paintCanvas.selectColor(color)
     }
 
     override fun selectDiagram(selectedDiagram: Diagram) {
