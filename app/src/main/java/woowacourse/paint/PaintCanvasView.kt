@@ -19,7 +19,7 @@ class PaintCanvasView(context: Context, attrs: AttributeSet) : View(context, att
     private var paint = createPaintWith(selectedColorInt, selectedStrokeWidth)
     private val canvasData = mutableListOf(path to paint)
 
-    private var selectedDiagram = Diagram.LINE
+    private var selectedDiagram = Diagram.PEN
     private var startX = 0F
     private var startY = 0F
     private var rect = RectF()
@@ -82,7 +82,7 @@ class PaintCanvasView(context: Context, attrs: AttributeSet) : View(context, att
         pointY: Float,
     ) {
         when (selectedDiagram) {
-            Diagram.LINE -> {
+            Diagram.PEN -> {
                 startLine(pointX, pointY)
             }
 
@@ -127,7 +127,7 @@ class PaintCanvasView(context: Context, attrs: AttributeSet) : View(context, att
         pointY: Float,
     ) {
         when (selectedDiagram) {
-            Diagram.LINE -> {
+            Diagram.PEN -> {
                 progressLine(pointX, pointY)
             }
 

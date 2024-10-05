@@ -3,6 +3,7 @@ package woowacourse.paint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.isGone
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.slider.RangeSlider
 import woowacourse.paint.adapter.ColorAdapter
@@ -58,6 +59,7 @@ class MainActivity : AppCompatActivity(), ColorHandler, DiagramHandler {
     }
 
     override fun selectDiagram(selectedDiagram: Diagram) {
+        binding.strokeWidthSlider.isGone = (selectedDiagram != Diagram.PEN)
         paintCanvas.selectDiagram(selectedDiagram)
     }
 }

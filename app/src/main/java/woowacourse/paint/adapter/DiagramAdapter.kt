@@ -37,7 +37,7 @@ class DiagramAdapter(private val handler: DiagramHandler) :
     companion object {
         private val defaultDiagrams =
             listOf(
-                Diagram.LINE,
+                Diagram.PEN,
                 Diagram.RECT,
                 Diagram.OVAL,
             )
