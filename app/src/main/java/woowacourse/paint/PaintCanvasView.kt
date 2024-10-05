@@ -14,7 +14,11 @@ import androidx.core.content.ContextCompat
 class PaintCanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private var selectedColorInt = ContextCompat.getColor(context, default_color)
     private var selectedStrokeWidth = DEFAULT_STROKE_WIDTH
+    private var selectedDiagram = Diagram.LINE
 
+    private var startX = 0F
+    private var startY = 0F
+    private var diagramPath = Path()
     private var path = Path()
     private var paint = createPaintWith(selectedColorInt, selectedStrokeWidth)
     private val canvasData = mutableListOf(path to paint)
@@ -30,6 +34,10 @@ class PaintCanvasView(context: Context, attrs: AttributeSet) : View(context, att
         selectedColorInt = value
     }
 
+    fun selectDiagram(diagram: Diagram) {
+        selectedDiagram = diagram
+    }
+
     fun selectStrokeWidth(strokeWidth: Float) {
         selectedStrokeWidth = strokeWidth
     }
@@ -39,6 +47,7 @@ class PaintCanvasView(context: Context, attrs: AttributeSet) : View(context, att
         canvasData.forEach {
             canvas.drawPath(it.first, it.second)
         }
+        canvas.drawPath(diagramPath, createPaintWith(selectedColorInt, selectedStrokeWidth))
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -46,7 +55,7 @@ class PaintCanvasView(context: Context, attrs: AttributeSet) : View(context, att
         val pointX = event.x
         val pointY = event.y
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> startNewLine(pointX, pointY)
+            MotionEvent.ACTION_DOWN -> startNewDiagram(pointX, pointY)
             MotionEvent.ACTION_MOVE -> drawLine(pointX, pointY)
             else -> super.onTouchEvent(event)
         }
@@ -54,19 +63,37 @@ class PaintCanvasView(context: Context, attrs: AttributeSet) : View(context, att
         return true
     }
 
-    private fun startNewLine(
+    private fun startNewDiagram(
         pointX: Float,
         pointY: Float,
     ) {
-        path = Path().apply { moveTo(pointX, pointY) }
-        canvasData.add(path to createPaintWith(selectedColorInt, selectedStrokeWidth))
+        when (selectedDiagram) {
+            Diagram.LINE -> {
+                path = Path().apply { moveTo(pointX, pointY) }
+                canvasData.add(path to createPaintWith(selectedColorInt, selectedStrokeWidth))
+            }
+
+            Diagram.RECT -> {
+                startX = pointX
+                startY = pointY
+            }
+        }
     }
 
     private fun drawLine(
         pointX: Float,
         pointY: Float,
     ) {
-        path.lineTo(pointX, pointY)
+        when (selectedDiagram) {
+            Diagram.LINE -> {
+                path.lineTo(pointX, pointY)
+            }
+
+            Diagram.RECT -> {
+                diagramPath =
+                    Path().apply { addRect(startX, startY, pointX, pointY, Path.Direction.CW) }
+            }
+        }
     }
 
     private fun createPaintWith(

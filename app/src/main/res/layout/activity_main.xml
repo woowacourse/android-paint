@@ -32,6 +32,19 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_diagram"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toTopOf="@id/rv_color"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:itemCount="8"
+            tools:listitem="@layout/item_diagram" />
+
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_color"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
