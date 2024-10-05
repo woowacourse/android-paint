@@ -47,8 +47,8 @@ class ColorPaletteActivity :
         paintView.changeBrushType(brushType)
     }
 
-    override fun onEmpty() {
-        paintView.empty()
+    override fun onClear() {
+        paintView.clear()
     }
 
     override fun onUndo() {

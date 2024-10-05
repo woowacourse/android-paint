@@ -11,7 +11,7 @@ enum class BrushType {
     ERASER,
     ;
 
-    fun isShape(): Boolean = this == RECTANGLE || this == CIRCLE
+    private fun isShape(): Boolean = this == RECTANGLE || this == CIRCLE
 
     fun paintStyle(): Paint.Style {
         return if (isShape()) Paint.Style.FILL else Paint.Style.STROKE

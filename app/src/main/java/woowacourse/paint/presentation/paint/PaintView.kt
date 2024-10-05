@@ -93,7 +93,7 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         currentDrawing.changeBrushType(brushType)
     }
 
-    fun empty() {
+    fun clear() {
         drawingHistory.clear()
         undoHistory.clear()
         invalidate()

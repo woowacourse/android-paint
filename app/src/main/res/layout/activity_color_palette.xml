@@ -67,7 +67,7 @@
             <ImageView
                 android:id="@+id/iv_paint_empty"
                 style="@style/canvas_history_image_view"
-                android:onClick="@{() -> paintHistoryListener.onEmpty()}"
+                android:onClick="@{() -> paintHistoryListener.onClear()}"
                 android:src="@drawable/ic_trash"
                 app:layout_constraintBottom_toTopOf="@id/range_slider_thickness"
                 app:layout_constraintEnd_toEndOf="parent" />
