@@ -9,21 +9,11 @@ data class Rectangle(
     private val rectangleVertex: RectangleVertex,
     private val color: Int,
     private val strokeWidth: Float,
-) : Sketch() {
+) : Sketch(color, strokeWidth) {
     private val startX = rectangleVertex.startX
     private val startY = rectangleVertex.startY
     private val endX = rectangleVertex.endX
     private val endY = rectangleVertex.endY
-
-    private val paint =
-        Paint().apply {
-            color = this@Rectangle.color
-            style = Paint.Style.STROKE
-            strokeWidth = this@Rectangle.strokeWidth
-            strokeJoin = Paint.Join.ROUND
-            strokeCap = Paint.Cap.ROUND
-            isAntiAlias = true
-        }
 
     private val rectF =
         RectF(
