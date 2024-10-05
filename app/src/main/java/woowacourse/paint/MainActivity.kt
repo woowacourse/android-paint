@@ -7,14 +7,13 @@ import androidx.core.view.isGone
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.slider.RangeSlider
 import woowacourse.paint.adapter.ColorAdapter
-import woowacourse.paint.adapter.ColorHandler
 import woowacourse.paint.adapter.DiagramAdapter
-import woowacourse.paint.adapter.DiagramHandler
+import woowacourse.paint.adapter.PaintCanvasHandler
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.paintcanvas.Diagram
 import woowacourse.paint.paintcanvas.PaintCanvasView
 
-class MainActivity : AppCompatActivity(), ColorHandler, DiagramHandler {
+class MainActivity : AppCompatActivity(), PaintCanvasHandler {
     private val layoutResourceId: Int get() = R.layout.activity_main
     private var _binding: ActivityMainBinding? = null
     private val binding get() = requireNotNull(_binding)
@@ -26,6 +25,7 @@ class MainActivity : AppCompatActivity(), ColorHandler, DiagramHandler {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = DataBindingUtil.setContentView(this, layoutResourceId)
+        binding.handler = this
         initPaintCanvas()
         initAdapter()
         initWidthSeekBar()
@@ -63,5 +63,13 @@ class MainActivity : AppCompatActivity(), ColorHandler, DiagramHandler {
     override fun selectDiagram(selectedDiagram: Diagram) {
         binding.strokeWidthSlider.isGone = (selectedDiagram != Diagram.PEN)
         paintCanvas.selectDiagram(selectedDiagram)
+    }
+
+    override fun undo() {
+        paintCanvas.undo()
+    }
+
+    override fun redo() {
+        paintCanvas.redo()
     }
 }

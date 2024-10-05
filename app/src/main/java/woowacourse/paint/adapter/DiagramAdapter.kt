@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import woowacourse.paint.databinding.ItemDiagramBinding
 import woowacourse.paint.paintcanvas.Diagram
 
-class DiagramAdapter(private val handler: DiagramHandler) :
+class DiagramAdapter(private val handler: PaintCanvasHandler) :
     RecyclerView.Adapter<DiagramViewHolder>() {
     private var diagrams: List<Diagram> = defaultDiagrams
 

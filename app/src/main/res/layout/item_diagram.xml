@@ -11,7 +11,7 @@
 
         <variable
             name="handler"
-            type="woowacourse.paint.adapter.DiagramHandler" />
+            type="woowacourse.paint.adapter.PaintCanvasHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
