@@ -41,9 +41,6 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         drawingHistory.forEach { drawing ->
             canvas.drawPath(drawing.path, drawing.paint)
         }
-        if (currentDrawing.shouldClearLastShape()) {
-            drawingHistory.last().clear()
-        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -77,7 +74,6 @@ class PaintView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     private fun up() {
-        currentDrawing.up()
         resetDrawing()
     }
 
