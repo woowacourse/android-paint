@@ -29,13 +29,15 @@
         <Button
             android:id="@+id/btn_change_to_rectangle"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:background="@color/purple_500"
             android:text="@string/paint_change_to_rectangle"
+            android:textSize="10sp"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@id/btn_change_to_pen"
             app:layout_constraintEnd_toStartOf="@id/btn_change_to_circle"
             app:layout_constraintStart_toEndOf="@id/btn_change_to_pen"
+            app:layout_constraintTop_toTopOf="@id/btn_change_to_pen"
             app:layout_constraintWidth_percent="0.2" />
 
         <Button
@@ -48,6 +50,7 @@
             app:layout_constraintBottom_toBottomOf="@id/btn_change_to_pen"
             app:layout_constraintEnd_toStartOf="@id/btn_change_to_eraser"
             app:layout_constraintStart_toEndOf="@id/btn_change_to_rectangle"
+            app:layout_constraintTop_toTopOf="@id/btn_change_to_pen"
             app:layout_constraintWidth_percent="0.2" />
 
         <Button
@@ -60,6 +63,7 @@
             app:layout_constraintBottom_toBottomOf="@id/btn_change_to_pen"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/btn_change_to_circle"
+            app:layout_constraintTop_toTopOf="@id/btn_change_to_pen"
             app:layout_constraintWidth_percent="0.2" />
 
         <Button
@@ -113,6 +117,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="visible"
+            app:trackColor="#FFAEC9"
+            app:thumbColor="#FFAEC9"
+            app:haloColor="#FFAEC9"
             app:layout_constraintBottom_toTopOf="@id/btn_color_red" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

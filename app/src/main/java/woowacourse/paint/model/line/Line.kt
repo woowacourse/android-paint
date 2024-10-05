@@ -2,6 +2,7 @@ package woowacourse.paint.model.line
 
 import android.graphics.Canvas
 import android.graphics.Path
+import android.graphics.RectF
 import woowacourse.paint.model.Sketch
 
 data class Line(
@@ -17,7 +18,7 @@ data class Line(
         x: Float,
         y: Float,
     ): Boolean {
-        val bounds = android.graphics.RectF()
+        val bounds = RectF()
         path.computeBounds(bounds, true)
         return bounds.contains(x, y)
     }
