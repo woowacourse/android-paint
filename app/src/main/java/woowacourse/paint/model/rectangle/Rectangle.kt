@@ -9,12 +9,13 @@ data class Rectangle(
     private val color: Int,
     private val strokeWidth: Float,
 ) : Sketch(color, strokeWidth) {
-    private val rectF = RectF(
-        vertex.startX.coerceAtMost(vertex.endX),
-        vertex.startY.coerceAtMost(vertex.endY),
-        vertex.startX.coerceAtLeast(vertex.endX),
-        vertex.startY.coerceAtLeast(vertex.endY),
-    )
+    private val rectF =
+        RectF(
+            vertex.startX.coerceAtMost(vertex.endX),
+            vertex.startY.coerceAtMost(vertex.endY),
+            vertex.startX.coerceAtLeast(vertex.endX),
+            vertex.startY.coerceAtLeast(vertex.endY),
+        )
 
     override fun draw(canvas: Canvas) {
         canvas.drawRect(rectF, paint)
