@@ -39,6 +39,7 @@ class DiagramAdapter(private val handler: DiagramHandler) :
             listOf(
                 Diagram.LINE,
                 Diagram.RECT,
+                Diagram.OVAL,
             )
     }
 }

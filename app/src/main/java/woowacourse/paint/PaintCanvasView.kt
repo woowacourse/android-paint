@@ -23,8 +23,11 @@ class PaintCanvasView(context: Context, attrs: AttributeSet) : View(context, att
     private var startX = 0F
     private var startY = 0F
     private var rect = RectF()
-    private var diagramPaint = createDiagramPaintWith(selectedColorInt)
-    private val canvasDiagramData = mutableListOf(rect to diagramPaint)
+    private var oval = RectF()
+    private var rectPaint = createDiagramPaintWith(selectedColorInt)
+    private var ovalPaint = createDiagramPaintWith(selectedColorInt)
+    private val canvasRectData = mutableListOf(rect to rectPaint)
+    private val canvasOvalData = mutableListOf(oval to ovalPaint)
 
     init {
         isFocusable = true
@@ -50,10 +53,14 @@ class PaintCanvasView(context: Context, attrs: AttributeSet) : View(context, att
         canvasData.forEach {
             canvas.drawPath(it.first, it.second)
         }
-        canvasDiagramData.forEach {
+        canvasRectData.forEach {
             canvas.drawRect(it.first, it.second)
         }
-        canvas.drawRect(rect, diagramPaint)
+        canvasOvalData.forEach {
+            canvas.drawOval(it.first, it.second)
+        }
+        canvas.drawRect(rect, rectPaint)
+        canvas.drawOval(oval, ovalPaint)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -82,18 +89,37 @@ class PaintCanvasView(context: Context, attrs: AttributeSet) : View(context, att
             Diagram.RECT -> {
                 startRect(pointX, pointY)
             }
+
+            Diagram.OVAL -> {
+                startOval(pointX, pointY)
+            }
         }
     }
 
-    private fun startLine(pointX: Float, pointY: Float) {
+    private fun startLine(
+        pointX: Float,
+        pointY: Float,
+    ) {
         path = Path().apply { moveTo(pointX, pointY) }
         canvasData.add(path to createPaintWith(selectedColorInt, selectedStrokeWidth))
     }
 
-    private fun startRect(pointX: Float, pointY: Float) {
+    private fun startRect(
+        pointX: Float,
+        pointY: Float,
+    ) {
         startX = pointX
         startY = pointY
-        diagramPaint = createDiagramPaintWith(selectedColorInt)
+        rectPaint = createDiagramPaintWith(selectedColorInt)
+    }
+
+    private fun startOval(
+        pointX: Float,
+        pointY: Float,
+    ) {
+        startX = pointX
+        startY = pointY
+        ovalPaint = createDiagramPaintWith(selectedColorInt)
     }
 
     private fun progressDrawing(
@@ -108,10 +134,17 @@ class PaintCanvasView(context: Context, attrs: AttributeSet) : View(context, att
             Diagram.RECT -> {
                 rect = RectF(startX, startY, pointX, pointY)
             }
+
+            Diagram.OVAL -> {
+                oval = RectF(startX, startY, pointX, pointY)
+            }
         }
     }
 
-    private fun progressLine(pointX: Float, pointY: Float) {
+    private fun progressLine(
+        pointX: Float,
+        pointY: Float,
+    ) {
         path.lineTo(pointX, pointY)
     }
 
@@ -121,7 +154,10 @@ class PaintCanvasView(context: Context, attrs: AttributeSet) : View(context, att
     ) {
         if (selectedDiagram == Diagram.RECT) {
             rect = RectF(startX, startY, pointX, pointY)
-            canvasDiagramData.add(rect to diagramPaint)
+            canvasRectData.add(rect to rectPaint)
+        } else if (selectedDiagram == Diagram.OVAL) {
+            oval = RectF(startX, startY, pointX, pointY)
+            canvasOvalData.add(oval to ovalPaint)
         }
     }
 
