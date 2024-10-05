@@ -6,9 +6,9 @@ import android.graphics.RectF
 import woowacourse.paint.model.Sketch
 
 data class Rectangle(
-    val rectangleVertex: RectangleVertex,
-    val color: Int,
-    val strokeWidth: Float,
+    private val rectangleVertex: RectangleVertex,
+    private val color: Int,
+    private val strokeWidth: Float,
 ) : Sketch() {
     private val startX = rectangleVertex.startX
     private val startY = rectangleVertex.startY
