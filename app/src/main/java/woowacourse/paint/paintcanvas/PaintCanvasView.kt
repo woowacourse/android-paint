@@ -10,20 +10,17 @@ import android.view.View
 import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import woowacourse.paint.R
-import woowacourse.paint.paintcanvas.shape.OvalShape
 import woowacourse.paint.paintcanvas.shape.PathShape
-import woowacourse.paint.paintcanvas.shape.RectShape
 import woowacourse.paint.paintcanvas.shape.Shape
 
 class PaintCanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    private var selectedColorInt = ContextCompat.getColor(context, default_color)
+    private var selectedColorInt = ContextCompat.getColor(context, R.color.red)
     private var selectedStrokeWidth = DEFAULT_STROKE_WIDTH
-
-    private var paint = createPaintWith(selectedColorInt, selectedStrokeWidth)
-
-    private lateinit var shape: Shape
-    private var canvasHistory: MutableList<Pair<Shape, Paint>> = mutableListOf()
     private var selectedDiagram = Diagram.PEN
+
+    private var shape: Shape = PathShape()
+    private var paint = createNewPaint()
+    private var canvasHistory: MutableList<Pair<Shape, Paint>> = mutableListOf()
 
     init {
         isFocusable = true
@@ -69,46 +66,11 @@ class PaintCanvasView(context: Context, attrs: AttributeSet) : View(context, att
         pointX: Float,
         pointY: Float,
     ) {
-        when (selectedDiagram) {
-            Diagram.PEN -> {
-                startLine(pointX, pointY)
-            }
-
-            Diagram.RECT -> {
-                startRect(pointX, pointY)
-            }
-
-            Diagram.OVAL -> {
-                startOval(pointX, pointY)
-            }
-
-            Diagram.ERASER -> TODO()
+        shape = selectedDiagram.toShape().apply {
+            onActionDown(pointX, pointY)
         }
-    }
-
-    private fun startLine(
-        pointX: Float,
-        pointY: Float,
-    ) {
-        shape = PathShape().apply { onActionDown(pointX, pointY) }
-        paint = createPaintWith(selectedColorInt, selectedStrokeWidth)
+        paint = createNewPaint()
         canvasHistory.add(shape to paint)
-    }
-
-    private fun startRect(
-        pointX: Float,
-        pointY: Float,
-    ) {
-        shape = RectShape().apply { onActionDown(pointX, pointY) }
-        paint = createDiagramPaintWith(selectedColorInt)
-    }
-
-    private fun startOval(
-        pointX: Float,
-        pointY: Float,
-    ) {
-        shape = OvalShape().apply { onActionDown(pointX, pointY) }
-        paint = createDiagramPaintWith(selectedColorInt)
     }
 
     private fun progressDrawing(
@@ -132,7 +94,9 @@ class PaintCanvasView(context: Context, attrs: AttributeSet) : View(context, att
                 canvasHistory.add(shape to paint)
             }
 
-            Diagram.ERASER -> TODO()
+            Diagram.ERASER -> {
+                // to-do
+            }
         }
     }
 
@@ -144,27 +108,16 @@ class PaintCanvasView(context: Context, attrs: AttributeSet) : View(context, att
         canvasHistory.add(shape to paint)
     }
 
-    private fun createPaintWith(
-        colorValue: Int,
-        width: Float,
-    ) = Paint().apply {
-        strokeCap = Paint.Cap.ROUND
-        isAntiAlias = true
-        style = Paint.Style.STROKE
-        color = colorValue
-        strokeWidth = width
-    }
-
-    private fun createDiagramPaintWith(colorValue: Int) =
+    private fun createNewPaint() =
         Paint().apply {
             strokeCap = Paint.Cap.ROUND
             isAntiAlias = true
-            style = Paint.Style.FILL
-            color = colorValue
+            color = selectedColorInt
+            strokeWidth = selectedStrokeWidth
+            style = if (shape is PathShape) Paint.Style.STROKE else Paint.Style.FILL
         }
 
     companion object {
-        private val default_color = R.color.red
         private const val DEFAULT_STROKE_WIDTH = 10F
     }
 }
