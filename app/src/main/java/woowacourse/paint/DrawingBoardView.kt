@@ -5,19 +5,23 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.Rect
+import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import woowacourse.paint.drawing.Drawing2
+import woowacourse.paint.drawing.Rectangle
 
 class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    private var currentDrawing = Drawing(Path(), Paint())
+    private var currentDrawing = Rectangle(RectF(), Paint())
 
-    private val drawings: MutableList<Drawing> = mutableListOf()
+    private val drawings: MutableList<Drawing2> = mutableListOf()
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         for (drawing in drawings) {
-            drawing.drawPath(canvas)
+            drawing.drawOn(canvas)
         }
     }
 
@@ -28,26 +32,37 @@ class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, at
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                currentDrawing = currentDrawing.copy(path = Path())
                 drawings.add(currentDrawing)
-                currentDrawing.pathMoveTo(pointX, pointY)
+//                currentDrawing.pathMoveTo(pointX, pointY)
+                currentDrawing.setStartPoint(pointX, pointY)
             }
 
-            MotionEvent.ACTION_MOVE -> currentDrawing.pathLineTo(pointX, pointY)
+            MotionEvent.ACTION_MOVE -> {
+                currentDrawing.pathLineTo(pointX, pointY)
+                invalidate()
 
-            MotionEvent.ACTION_UP -> currentDrawing = currentDrawing.copy(path = Path())
+            }
+
+            MotionEvent.ACTION_UP -> {
+//                drawings.add(currentDrawing)
+                currentDrawing = currentDrawing.copy(
+                    RectF(pointX, pointY, pointX, pointY)
+                )
+            }
 
             else -> return false
         }
-        invalidate()
+//        invalidate()
         return true
     }
 
     fun setBrushThickness(thickness: Float) {
-        currentDrawing = currentDrawing.copyWithPaint(thickness)
+        // TODO: remove type casting
+        currentDrawing = currentDrawing.copyWithPaint(thickness) as Rectangle
     }
 
     fun setBrushColor(color: Int) {
-        currentDrawing = currentDrawing.copyWithPaint(color)
+        // TODO: remove type casting
+        currentDrawing = currentDrawing.copyWithPaint(color) as Rectangle
     }
 }
