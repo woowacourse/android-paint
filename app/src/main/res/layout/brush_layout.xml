@@ -4,18 +4,22 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="onClickPaletteListener"
             type="woowacourse.paint.OnPaletteClickListener" />
 
+        <variable
+            name="isBrushListVisible"
+            type="Boolean" />
+
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <merge>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/red_palette"
+            android:id="@+id/btn_pen"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
@@ -23,13 +27,14 @@
             android:onClick="@{() -> onClickPaletteListener.onClickBrushChange(@string/brush_pen)}"
             android:text="@string/brush_pen"
             android:textColor="@color/default_text_color"
+            android:visibility="@{isBrushListVisible ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/range_slider"
             app:layout_constraintEnd_toStartOf="@id/orange_palette"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/orange_palette"
+            android:id="@+id/btn_rectangle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
@@ -37,12 +42,13 @@
             android:onClick="@{() -> onClickPaletteListener.onClickBrushChange(@string/brush_rectangle)}"
             android:text="@string/brush_rectangle"
             android:textColor="@color/default_text_color"
+            android:visibility="@{isBrushListVisible ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/range_slider"
             app:layout_constraintEnd_toStartOf="@id/yellow_palette"
-            app:layout_constraintStart_toEndOf="@id/red_palette"
-            app:layout_constraintTop_toTopOf="@id/red_palette" />
+            app:layout_constraintStart_toEndOf="@id/red_palette" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/yellow_palette"
+            android:id="@+id/btn_circle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
@@ -50,12 +56,13 @@
             android:onClick="@{() -> onClickPaletteListener.onClickBrushChange(@string/brush_circle)}"
             android:text="@string/brush_circle"
             android:textColor="@color/default_text_color"
+            android:visibility="@{isBrushListVisible ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/range_slider"
             app:layout_constraintEnd_toStartOf="@id/green_palette"
-            app:layout_constraintStart_toEndOf="@id/orange_palette"
-            app:layout_constraintTop_toTopOf="@id/red_palette" />
+            app:layout_constraintStart_toEndOf="@id/orange_palette" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/green_palette"
+            android:id="@+id/btn_eraser"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
@@ -64,9 +71,10 @@
             android:onClick="@{() -> onClickPaletteListener.onClickBrushChange(@string/brush_eraser)}"
             android:text="@string/brush_eraser"
             android:textColor="@color/default_text_color"
+            android:visibility="@{isBrushListVisible ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/range_slider"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/yellow_palette"
-            app:layout_constraintTop_toTopOf="@id/red_palette" />
+            app:layout_constraintStart_toEndOf="@id/yellow_palette" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </merge>
 </layout>

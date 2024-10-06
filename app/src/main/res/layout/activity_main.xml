@@ -4,8 +4,6 @@
 
     <data>
 
-        <import type="android.view.View" />
-
         <variable
             name="onClickPaletteListener"
             type="woowacourse.paint.OnPaletteClickListener" />
@@ -44,7 +42,7 @@
             android:layout_marginHorizontal="15dp"
             android:layout_marginBottom="10dp"
             android:visibility="@{isRangeSliderVisible ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toTopOf="@id/color_palette"
+            app:layout_constraintBottom_toTopOf="@id/red_palette"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:values="@array/default_values" />
@@ -54,10 +52,7 @@
             layout="@layout/palette_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="@{isPaletteVisible ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toTopOf="@id/btn_change_color"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:isPaletteVisible="@{isPaletteVisible}"
             app:onClickPaletteListener="@{onClickPaletteListener}" />
 
         <include
@@ -65,10 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:visibility="@{isBrushListVisible ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toTopOf="@id/range_slider"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:isBrushListVisible="@{isBrushListVisible}"
             app:onClickPaletteListener="@{onClickPaletteListener}" />
 
         <Button

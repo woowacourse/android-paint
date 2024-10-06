@@ -4,16 +4,19 @@
 
     <data>
 
+        <import type="android.view.View" />
+
         <variable
             name="onClickPaletteListener"
             type="woowacourse.paint.OnPaletteClickListener" />
 
+        <variable
+            name="isPaletteVisible"
+            type="Boolean" />
+
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_palette"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+    <merge>
 
         <View
             android:id="@+id/red_palette"
@@ -22,9 +25,10 @@
             android:layout_marginStart="15dp"
             android:background="@color/red"
             android:onClick="@{() -> onClickPaletteListener.onClickPaint(@color/red)}"
+            android:visibility="@{isPaletteVisible ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/btn_change_color"
             app:layout_constraintEnd_toStartOf="@id/orange_palette"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <View
             android:id="@+id/orange_palette"
@@ -33,6 +37,8 @@
             android:layout_marginStart="15dp"
             android:background="@color/orange"
             android:onClick="@{() -> onClickPaletteListener.onClickPaint(@color/orange)}"
+            android:visibility="@{isPaletteVisible ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/btn_change_color"
             app:layout_constraintEnd_toStartOf="@id/yellow_palette"
             app:layout_constraintStart_toEndOf="@id/red_palette"
             app:layout_constraintTop_toTopOf="@id/red_palette" />
@@ -44,6 +50,8 @@
             android:layout_marginStart="15dp"
             android:background="@color/yellow"
             android:onClick="@{() -> onClickPaletteListener.onClickPaint(@color/yellow)}"
+            android:visibility="@{isPaletteVisible ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/btn_change_color"
             app:layout_constraintEnd_toStartOf="@id/green_palette"
             app:layout_constraintStart_toEndOf="@id/orange_palette"
             app:layout_constraintTop_toTopOf="@id/red_palette" />
@@ -55,6 +63,8 @@
             android:layout_marginStart="15dp"
             android:background="@color/green"
             android:onClick="@{() -> onClickPaletteListener.onClickPaint(@color/green)}"
+            android:visibility="@{isPaletteVisible ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/btn_change_color"
             app:layout_constraintEnd_toStartOf="@id/blue_palette"
             app:layout_constraintStart_toEndOf="@id/yellow_palette"
             app:layout_constraintTop_toTopOf="@id/red_palette" />
@@ -67,9 +77,11 @@
             android:layout_marginEnd="15dp"
             android:background="@color/blue"
             android:onClick="@{() -> onClickPaletteListener.onClickPaint(@color/blue)}"
+            android:visibility="@{isPaletteVisible ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/btn_change_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/green_palette"
             app:layout_constraintTop_toTopOf="@id/red_palette" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </merge>
 </layout>
