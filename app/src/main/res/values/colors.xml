@@ -11,9 +11,9 @@
     <color name="dark_gray">#484848</color>
     <color name="light_gray">#9A9A9A</color>
 
-    <color name="red">#D71010</color>
-    <color name="orange">#FF8C00</color>
-    <color name="yellow">#FFF200</color>
-    <color name="green">#07E000</color>
-    <color name="blue">#1420FF</color>
+    <color name="red">#B70606</color>
+    <color name="orange">#F28006</color>
+    <color name="yellow">#E4DA1F</color>
+    <color name="green">#08AE37</color>
+    <color name="blue">#0A13BA</color>
 </resources>
