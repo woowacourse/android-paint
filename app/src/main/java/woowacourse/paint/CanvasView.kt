@@ -91,6 +91,11 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             }
     }
 
+    fun clear()  {
+        drawings.clear()
+        invalidate()
+    }
+
     companion object {
         const val DEFAULT_BRUSH_SIZE = 10f
         val DEFAULT_COLOR = ColorType.RED

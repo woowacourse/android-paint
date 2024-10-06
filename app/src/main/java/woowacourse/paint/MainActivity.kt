@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         setUpBrushListener()
         setupRangeSlider()
         setupColorGroupListener()
+        clearCanvas()
     }
 
     private fun setUpBrushListener() {
@@ -30,7 +31,6 @@ class MainActivity : AppCompatActivity() {
                     R.id.btn_rect -> changeRect()
                     R.id.btn_circle -> changeCircle()
                     R.id.btn_erase -> changeErase()
-
                 }
             }
         }
@@ -79,6 +79,12 @@ class MainActivity : AppCompatActivity() {
                     R.id.btn_blue -> paintView.changePaintColor(ColorType.BLUE)
                 }
             }
+        }
+    }
+
+    private fun clearCanvas() {
+        binding.btnClear.setOnClickListener {
+            binding.paintView.clear()
         }
     }
 }

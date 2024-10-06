@@ -11,6 +11,18 @@
         app:layout_constraintBottom_toTopOf="@id/range_slider"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageButton
+        android:id="@+id/btn_clear"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="15dp"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_trash"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/brush_unselected" />
+
 
     <com.google.android.material.slider.RangeSlider
         android:id="@+id/range_slider"
