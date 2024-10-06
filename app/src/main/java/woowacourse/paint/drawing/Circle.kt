@@ -53,7 +53,6 @@ data class Circle(
         return Circle(RectF(rect), newPaint)
     }
 
-    override fun copy(rect: RectF): Drawing2 {
-        return Circle(rect, Paint(paint))
-    }
+    override fun copy(pointX: Float, pointY: Float): Drawing2 =
+        Circle(RectF(pointX, pointY, pointX, pointY), Paint(paint))
 }

@@ -44,9 +44,7 @@ data class Pen(private val path: Path, private val paint: Paint) : Drawing2 {
         return Pen(path, paint)
     }
 
-    override fun copy(rect: RectF): Drawing2 {
-        return Pen(Path(path), Paint(paint))
-    }
+    override fun copy(pointX: Float, pointY: Float): Drawing2 = Pen(Path(path), Paint(paint))
 
 }
 

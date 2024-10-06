@@ -37,13 +37,10 @@ class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, at
             MotionEvent.ACTION_MOVE -> {
                 currentDrawing.pathLineTo(pointX, pointY)
                 invalidate()
-
             }
 
             MotionEvent.ACTION_UP -> {
-                currentDrawing = currentDrawing.copy(
-                    rect = RectF(pointX, pointY, pointX, pointY)
-                )
+                currentDrawing = currentDrawing.copy(pointX, pointY)
             }
 
             else -> return false
