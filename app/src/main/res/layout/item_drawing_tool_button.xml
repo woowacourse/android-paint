@@ -7,11 +7,11 @@
 
         <variable
             name="brush"
-            type="woowacourse.paint.model.Brush" />
+            type="woowacourse.paint.model.DrawingTool" />
 
         <variable
-            name="brushChangeListener"
-            type="woowacourse.paint.view.listener.BrushChangeListener" />
+            name="drawingToolChangeListener"
+            type="woowacourse.paint.view.listener.DrawingToolChangeListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/purple_200"
-            android:onClick="@{() -> brushChangeListener.onBrushChanged(brush)}"
+            android:onClick="@{() -> drawingToolChangeListener.onDrawingToolChanged(brush)}"
             android:text="@{brush.name}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

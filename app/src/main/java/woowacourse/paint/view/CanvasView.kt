@@ -13,7 +13,7 @@ import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.R
 import woowacourse.paint.model.BrushState
-import woowacourse.paint.model.BrushType
+import woowacourse.paint.model.DrawingToolType
 import woowacourse.paint.model.CircleState
 import woowacourse.paint.model.EraserState
 import woowacourse.paint.model.PenState
@@ -88,22 +88,22 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         return true
     }
 
-    fun setBrushType(brushType: BrushType) {
-        currentState = when (brushType) {
-            BrushType.PEN -> PenState()
-            BrushType.RECTANGULAR -> RectangularState()
-            BrushType.CIRCLE -> CircleState()
-            BrushType.ERASER -> EraserState()
-            BrushType.RESET -> {
+    fun setDrawingToolType(drawingToolType: DrawingToolType) {
+        currentState = when (drawingToolType) {
+            DrawingToolType.PEN -> PenState()
+            DrawingToolType.RECTANGULAR -> RectangularState()
+            DrawingToolType.CIRCLE -> CircleState()
+            DrawingToolType.ERASER -> EraserState()
+            DrawingToolType.RESET -> {
                 strokes.clear()
                 invalidate()
                 currentState
             }
         }
 
-        currentPaint.style = when (brushType) {
-            BrushType.PEN, BrushType.ERASER, BrushType.RESET -> Paint.Style.STROKE
-            BrushType.RECTANGULAR, BrushType.CIRCLE -> Paint.Style.FILL
+        currentPaint.style = when (drawingToolType) {
+            DrawingToolType.PEN, DrawingToolType.ERASER, DrawingToolType.RESET -> Paint.Style.STROKE
+            DrawingToolType.RECTANGULAR, DrawingToolType.CIRCLE -> Paint.Style.FILL
         }
     }
 

@@ -13,8 +13,8 @@ class MainActivity : AppCompatActivity() {
     private val colorSelectionAdapter: ColorSelectionAdapter by lazy {
         ColorSelectionAdapter(viewModel.colors, viewModel)
     }
-    private val brushControllerAdapter: BrushControllerAdapter by lazy {
-        BrushControllerAdapter(viewModel.brushes, viewModel)
+    private val drawingToolControllerAdapter: DrawingToolControllerAdapter by lazy {
+        DrawingToolControllerAdapter(viewModel.drawingTools, viewModel)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +31,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun initializeAdapters() {
         binding.colorSelectionAdapter = colorSelectionAdapter
-        binding.brushControllerAdapter = brushControllerAdapter
+        binding.drawingToolControllerAdapter = drawingToolControllerAdapter
     }
 }

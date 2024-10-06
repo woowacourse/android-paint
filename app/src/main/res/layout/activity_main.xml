@@ -12,8 +12,8 @@
             type="woowacourse.paint.view.ColorSelectionAdapter" />
 
         <variable
-            name="brushControllerAdapter"
-            type="woowacourse.paint.view.BrushControllerAdapter" />
+            name="drawingToolControllerAdapter"
+            type="woowacourse.paint.view.DrawingToolControllerAdapter" />
 
         <variable
             name="viewModel"
@@ -27,7 +27,7 @@
         <woowacourse.paint.view.CanvasView
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:brushType="@{viewModel.selectedBrush}"
+            app:drawingToolType="@{viewModel.selectedTool}"
             app:layout_constraintBottom_toTopOf="@id/layout_controller_buttons"
             app:layout_constraintTop_toTopOf="parent"
             app:lineColor="@{viewModel.selectedColor.getArgbColor()}"
@@ -54,26 +54,26 @@
             android:orientation="horizontal"
             android:visibility="@{viewModel.colorControllerVisible ? View.VISIBLE : View.GONE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@id/rv_brush_controller"
+            app:layout_constraintBottom_toTopOf="@id/rv_drawing_tool_controller"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             tools:listitem="@layout/item_color" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_brush_controller"
+            android:id="@+id/rv_drawing_tool_controller"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginHorizontal="12dp"
-            android:adapter="@{brushControllerAdapter}"
+            android:adapter="@{drawingToolControllerAdapter}"
             android:orientation="horizontal"
-            android:visibility="@{viewModel.brushControllerVisible ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.drawingToolControllerVisible ? View.VISIBLE : View.GONE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@id/layout_controller_buttons"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:itemCount="4"
-            tools:listitem="@layout/item_brush_button" />
+            tools:listitem="@layout/item_drawing_tool_button" />
 
         <include
             android:id="@+id/layout_controller_buttons"
@@ -81,7 +81,7 @@
             android:layout_width="@dimen/visibility_button_controller_width"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/controller_horizontal_margin"
-            app:brushControllerVisibilityChangeListener="@{viewModel}"
+            app:drawingToolControllerVisibilityChangeListener="@{viewModel}"
             app:colorVisibilityChangeListener="@{viewModel}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:widthVisibilityChangeListener="@{viewModel}" />

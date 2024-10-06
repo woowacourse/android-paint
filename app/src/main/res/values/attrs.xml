@@ -3,7 +3,7 @@
     <declare-styleable name="CustomView">
         <attr name="lineColor" format="color" />
         <attr name="lineWidth" format="float" />
-        <attr name="brushType" format="enum">
+        <attr name="drawingToolType" format="enum">
             <enum name="PEN" value="0" />
             <enum name="RECTANGULAR" value="1" />
             <enum name="CIRCLE" value="2" />

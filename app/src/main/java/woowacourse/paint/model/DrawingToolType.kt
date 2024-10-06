@@ -1,6 +1,6 @@
 package woowacourse.paint.model
 
-enum class BrushType {
+enum class DrawingToolType {
     PEN,
     RECTANGULAR,
     CIRCLE,

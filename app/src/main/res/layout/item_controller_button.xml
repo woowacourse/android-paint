@@ -13,8 +13,8 @@
             type="woowacourse.paint.view.listener.WidthControllerVisibilityChangeListener" />
 
         <variable
-            name="brushControllerVisibilityChangeListener"
-            type="woowacourse.paint.view.listener.BrushControllerVisibilityChangeListener" />
+            name="drawingToolControllerVisibilityChangeListener"
+            type="woowacourse.paint.view.listener.DrawingToolControllerVisibilityChangeListener" />
     </data>
 
     <LinearLayout
@@ -50,7 +50,7 @@
             android:layout_width="@dimen/visibility_button_width"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:onClick="@{() -> brushControllerVisibilityChangeListener.toggleBrushControllerVisibility()}"
+            android:onClick="@{() -> drawingToolControllerVisibilityChangeListener.toggleDrawingToolControllerVisibility()}"
             android:text="브러쉬 변경"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

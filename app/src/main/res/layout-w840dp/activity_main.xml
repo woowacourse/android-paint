@@ -13,7 +13,7 @@
 
         <variable
             name="brushControllerAdapter"
-            type="woowacourse.paint.view.BrushControllerAdapter" />
+            type="woowacourse.paint.view.DrawingToolControllerAdapter" />
 
         <variable
             name="viewModel"
@@ -27,7 +27,7 @@
         <woowacourse.paint.view.CanvasView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:brushType="@{viewModel.selectedBrush}"
+            app:drawingToolType="@{viewModel.selectedTool}"
             app:lineColor="@{viewModel.selectedColor.getArgbColor()}"
             app:lineWidth="@{viewModel.selectedWidth}" />
 
@@ -36,7 +36,7 @@
             layout="@layout/item_controller_button"
             android:layout_width="@dimen/visibility_button_controller_width"
             android:layout_height="wrap_content"
-            app:brushControllerVisibilityChangeListener="@{viewModel}"
+            app:drawingToolControllerVisibilityChangeListener="@{viewModel}"
             app:colorVisibilityChangeListener="@{viewModel}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -72,12 +72,12 @@
             android:layout_marginHorizontal="12dp"
             android:adapter="@{brushControllerAdapter}"
             android:orientation="horizontal"
-            android:visibility="@{viewModel.brushControllerVisible ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewModel.drawingToolControllerVisible ? View.VISIBLE : View.GONE}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@id/rv_color_selection"
             app:layout_constraintStart_toStartOf="@id/slider_width"
             tools:itemCount="4"
-            tools:listitem="@layout/item_brush_button" />
+            tools:listitem="@layout/item_drawing_tool_button" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
