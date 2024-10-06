@@ -1,30 +1,55 @@
 package woowacourse.paint.drawing
 
 import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.RectF
+import woowacourse.paint.drawing.Drawing2.Companion.DEFAULT_BRUSH_CAP
+import woowacourse.paint.drawing.Drawing2.Companion.DEFAULT_BRUSH_STYLE
 
-class Circle: Drawing2 {
+data class Circle(
+    private val rect: RectF = RectF(),
+    private val paint: Paint
+) : Drawing2 {
+
     override fun setUpDefaultPaint() {
-        TODO("Not yet implemented")
+        paint.apply {
+            style = DEFAULT_BRUSH_STYLE
+            strokeCap = DEFAULT_BRUSH_CAP
+            isAntiAlias = true
+        }
     }
 
     override fun drawOn(canvas: Canvas) {
-        TODO("Not yet implemented")
+        // 원의 중심 및 반지름 계산
+        val centerX = (rect.left + rect.right) / 2
+        val centerY = (rect.top + rect.bottom) / 2
+        val radius = Math.min(rect.width(), rect.height()) / 2
+
+        // 원 그리기
+        canvas.drawCircle(centerX, centerY, radius, paint)
     }
 
     override fun setStartPoint(x: Float, y: Float) {
-        TODO("Not yet implemented")
+        rect.left = x
+        rect.top = y
     }
 
     override fun pathLineTo(x: Float, y: Float) {
-        TODO("Not yet implemented")
+        rect.right = x
+        rect.bottom = y
     }
 
     override fun copyWithPaint(thickness: Float): Drawing2 {
-        TODO("Not yet implemented")
+        val newPaint = Paint(paint).apply {
+            strokeWidth = thickness
+        }
+        return Circle(RectF(rect), newPaint)
     }
 
     override fun copyWithPaint(color: Int): Drawing2 {
-        TODO("Not yet implemented")
+        val newPaint = Paint(paint).apply {
+            this.color = color
+        }
+        return Circle(RectF(rect), newPaint)
     }
-
 }

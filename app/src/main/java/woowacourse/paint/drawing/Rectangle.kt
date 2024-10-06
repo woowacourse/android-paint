@@ -2,7 +2,6 @@ package woowacourse.paint.drawing
 
 import android.graphics.Canvas
 import android.graphics.Paint
-import android.graphics.Rect
 import android.graphics.RectF
 import woowacourse.paint.drawing.Drawing2.Companion.DEFAULT_BRUSH_CAP
 import woowacourse.paint.drawing.Drawing2.Companion.DEFAULT_BRUSH_STYLE
