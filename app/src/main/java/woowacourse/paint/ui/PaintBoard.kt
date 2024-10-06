@@ -8,40 +8,55 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import woowacourse.paint.model.Brush
+import woowacourse.paint.model.BrushType
 import woowacourse.paint.model.Drawing
 
 class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    private val drawings = mutableListOf<Drawing>()
-    private var currentPath = Path()
-    private var currentBrush = Brush()
+    private val drawings = mutableListOf<Drawing>(Drawing())
+    private var startX = 0f
+    private var startY = 0f
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-
         for (drawing in drawings) {
             canvas.drawPath(drawing.path, drawing.paint)
         }
-
-        canvas.drawPath(currentPath, currentBrush.toPaint())
     }
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         val pointX = event.x
         val pointY = event.y
+        val drawing = currentDrawing()
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                currentPath.moveTo(pointX, pointY)
+                startX = pointX
+                startY = pointY
+                drawing.path.moveTo(pointX, pointY)
             }
 
             MotionEvent.ACTION_MOVE -> {
-                currentPath.lineTo(pointX, pointY)
+                drawing.move(
+                    startX = startX,
+                    startY = startY,
+                    endX = pointX,
+                    endY = pointY,
+                )
             }
 
             MotionEvent.ACTION_UP -> {
-                drawings.add(Drawing(Path(currentPath), currentBrush.toPaint()))
-                currentPath.reset()
+                drawing.move(
+                    startX = startX,
+                    startY = startY,
+                    endX = pointX,
+                    endY = pointY,
+                )
+
+                val newDrawing = drawing.copy(
+                    path = Path(),
+                    paint = Paint(drawing.paint)
+                )
+                drawings.add(newDrawing)
             }
 
             else -> return false
@@ -51,19 +66,17 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
         return true
     }
 
+    private fun currentDrawing(): Drawing = drawings.last()
+
     fun setBrushWidth(width: Float) {
-        currentBrush = currentBrush.changeWidth(width)
+        currentDrawing().updateBrush { changeWidth(width) }
     }
 
     fun setBrushColor(color: Int) {
-        currentBrush = currentBrush.changeColor(color)
+        currentDrawing().updateBrush { changeColor(color) }
     }
 
-    private fun Brush.toPaint(): Paint {
-        return Paint().apply {
-            style = Paint.Style.STROKE
-            strokeWidth = this@toPaint.strokeWidth
-            color = this@toPaint.color
-        }
+    fun setBrushType(brushType: BrushType) {
+        currentDrawing().updateBrush { changeBrushType(brushType) }
     }
 }
