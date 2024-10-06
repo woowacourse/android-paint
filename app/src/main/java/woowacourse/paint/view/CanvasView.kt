@@ -58,7 +58,7 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        for (stroke in strokes) {
+        strokes.forEach { stroke ->
             canvas.drawPath(stroke.path, stroke.paint)
         }
         currentState.onDraw(canvas, currentPath, currentPaint)
@@ -116,8 +116,7 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         val eraserBounds = RectF()
         eraserPath.computeBounds(eraserBounds, true)
         val strokesToRemove = mutableListOf<Int>()
-        for (i in strokes.indices) {
-            val stroke = strokes[i]
+        strokes.forEachIndexed { index, stroke ->
             val strokeBounds = RectF()
             stroke.path.computeBounds(strokeBounds, true)
             if (RectF.intersects(eraserBounds, strokeBounds) && isPathIntersecting(
@@ -125,11 +124,12 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
                     eraserPath
                 )
             ) {
-                strokesToRemove.add(i)
+                strokesToRemove.add(index)
             }
         }
-        for (i in strokesToRemove.reversed()) {
-            strokes.removeAt(i)
+
+        strokesToRemove.asReversed().forEach { index ->
+            strokes.removeAt(index)
         }
         invalidate()
     }
