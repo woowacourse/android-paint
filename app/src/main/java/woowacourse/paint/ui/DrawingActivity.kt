@@ -69,7 +69,7 @@ class DrawingActivity : AppCompatActivity(), ColorPickerHandler, DrawingModeHand
 
     private fun setupColorPickerAdapter() {
         colorPickerAdapter.submitList(colorList)
-        binding.colorPickerAdapter = colorPickerAdapter
+        binding.rvDrawingColorPicker.adapter = colorPickerAdapter
     }
 
     private fun setupDrawingModeAdapter() {
