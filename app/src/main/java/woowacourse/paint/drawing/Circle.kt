@@ -52,4 +52,8 @@ data class Circle(
         }
         return Circle(RectF(rect), newPaint)
     }
+
+    override fun copy(rect: RectF): Drawing2 {
+        return Circle(rect, Paint(paint))
+    }
 }

@@ -3,10 +3,11 @@ package woowacourse.paint.drawing
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.RectF
 import woowacourse.paint.drawing.Drawing2.Companion.DEFAULT_BRUSH_CAP
 import woowacourse.paint.drawing.Drawing2.Companion.DEFAULT_BRUSH_STYLE
 
-class Pen(private val path: Path, private val paint: Paint) : Drawing2 {
+data class Pen(private val path: Path, private val paint: Paint) : Drawing2 {
     override fun setUpDefaultPaint() {
         paint.apply {
             style = DEFAULT_BRUSH_STYLE
@@ -41,6 +42,10 @@ class Pen(private val path: Path, private val paint: Paint) : Drawing2 {
                 this.color = color
             }
         return Pen(path, paint)
+    }
+
+    override fun copy(rect: RectF): Drawing2 {
+        return Pen(Path(path), Paint(paint))
     }
 
 }

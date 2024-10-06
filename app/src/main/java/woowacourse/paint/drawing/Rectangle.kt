@@ -49,4 +49,8 @@ data class Rectangle(val rect: RectF = RectF(), private val paint: Paint) : Draw
         return Rectangle(rect, paint)
     }
 
+    override fun copy(rect: RectF): Drawing2 {
+        return Rectangle(rect, Paint(paint))
+    }
+
 }

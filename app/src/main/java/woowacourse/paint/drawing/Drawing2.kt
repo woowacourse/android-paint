@@ -2,6 +2,7 @@ package woowacourse.paint.drawing
 
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.RectF
 
 sealed interface Drawing2 {
     fun setUpDefaultPaint()
@@ -18,6 +19,8 @@ sealed interface Drawing2 {
     fun copyWithPaint(thickness: Float): Drawing2
 
     fun copyWithPaint(color: Int): Drawing2
+
+    fun copy(rect: RectF): Drawing2
 
     companion object {
         val DEFAULT_BRUSH_STYLE = Paint.Style.STROKE

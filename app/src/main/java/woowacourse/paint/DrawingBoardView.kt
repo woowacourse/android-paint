@@ -12,8 +12,7 @@ import woowacourse.paint.drawing.Circle
 import woowacourse.paint.drawing.Drawing2
 
 class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    //    private var currentDrawing = Rectangle(RectF(), Paint())
-    private var currentDrawing = Circle(RectF(), Paint())
+    private var currentDrawing: Drawing2 = Circle(RectF(), Paint())
 
     private val drawings: MutableList<Drawing2> = mutableListOf()
 
@@ -32,7 +31,6 @@ class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, at
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 drawings.add(currentDrawing)
-//                currentDrawing.pathMoveTo(pointX, pointY)
                 currentDrawing.setStartPoint(pointX, pointY)
             }
 
@@ -43,7 +41,6 @@ class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, at
             }
 
             MotionEvent.ACTION_UP -> {
-//                drawings.add(currentDrawing)
                 currentDrawing = currentDrawing.copy(
                     rect = RectF(pointX, pointY, pointX, pointY)
                 )
@@ -51,17 +48,16 @@ class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, at
 
             else -> return false
         }
-//        invalidate()
         return true
     }
 
     fun setBrushThickness(thickness: Float) {
         // TODO: remove type casting
-        currentDrawing = currentDrawing.copyWithPaint(thickness) as Circle
+        currentDrawing = currentDrawing.copyWithPaint(thickness)
     }
 
     fun setBrushColor(color: Int) {
         // TODO: remove type casting
-        currentDrawing = currentDrawing.copyWithPaint(color) as Circle
+        currentDrawing = currentDrawing.copyWithPaint(color)
     }
 }
