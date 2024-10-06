@@ -11,18 +11,26 @@ import woowacourse.paint.drawing.Rectangle
 
 class MainActivity : AppCompatActivity() {
     private val drawingBoard: DrawingBoardView by lazy { findViewById(R.id.drawing_board) }
-    private val rangeSlider: RangeSlider by lazy { findViewById(R.id.range_slider) }
+    private val brushThicknessSelector: RangeSlider by lazy { findViewById(R.id.range_slider) }
     private val drawingTypes: RadioGroup by lazy { findViewById(R.id.rg_drawing_types) }
-    private val recyclerView: RecyclerView by lazy { findViewById(R.id.rv_colors) }
+    private val colorsPallet: RecyclerView by lazy { findViewById(R.id.rv_colors) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        rangeSlider.addOnChangeListener { _, value, _ ->
+        initBrushThickness()
+        initDrawingTypes()
+        initColorsPallet()
+    }
+
+    private fun initBrushThickness() {
+        brushThicknessSelector.addOnChangeListener { _, value, _ ->
             drawingBoard.setBrushThickness(value)
         }
+    }
 
+    private fun initDrawingTypes() {
         drawingTypes.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
                 R.id.rb_drawing_pen ->
@@ -41,8 +49,10 @@ class MainActivity : AppCompatActivity() {
                     )
             }
         }
+    }
 
-        recyclerView.adapter =
+    private fun initColorsPallet() {
+        colorsPallet.adapter =
             ColorsAdapter(
                 colors = ColorUiModel.palletColors(this),
                 listener = { colorUiModel ->
