@@ -15,21 +15,20 @@
             android:id="@+id/canvas"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/rg_drawing_tools"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <RadioGroup
             android:id="@+id/rg_drawing_tools"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
             android:gravity="center"
             android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@id/range_slider"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintEnd_toEndOf="@id/range_slider"
+            app:layout_constraintStart_toStartOf="@id/range_slider">
 
             <RadioButton
                 android:id="@+id/rb_pen"
@@ -63,14 +62,13 @@
 
         <com.google.android.material.slider.RangeSlider
             android:id="@+id/range_slider"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
             android:valueFrom="0.1"
             android:valueTo="100.0"
             app:layout_constraintBottom_toTopOf="@id/rv_palette"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintEnd_toEndOf="@id/rv_palette"
+            app:layout_constraintStart_toStartOf="@id/rv_palette" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_palette"
@@ -79,7 +77,6 @@
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             tools:itemCount="5"
             tools:listitem="@layout/item_palette_color">
