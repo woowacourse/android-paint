@@ -88,7 +88,6 @@ class CustomView(
     fun changeBrushMode(brushMode: BrushMode) {
         if (brushMode == BrushMode.ERASER) {
             val backgroundColor = if (isDarkMode()) Color.BLACK else Color.WHITE
-            println("backgroundColor: ${isDarkMode()}")
             currentDrawing().changeColor(backgroundColor)
         } else if (currentDrawing().brushMode == BrushMode.ERASER) {
             currentDrawing().changeColor(Color.RED)

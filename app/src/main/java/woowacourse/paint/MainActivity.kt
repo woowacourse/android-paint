@@ -55,7 +55,6 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnEraser.setOnClickListener {
             binding.customView.changeBrushMode(BrushMode.ERASER)
-            binding.customView.changeColor(colorOnPrimary)
         }
 
         binding.btnUndo.setOnClickListener {
