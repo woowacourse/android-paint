@@ -142,7 +142,7 @@ class EraserState(private val strokes: Strokes) : BrushState {
         currentPath: Path?,
         currentPaint: Paint,
     ) {
-        // Eraser DOES NOT draw anything.
+        currentPath?.let { canvas.drawPath(it, currentPaint) }
     }
 
     override fun start(
@@ -156,13 +156,12 @@ class EraserState(private val strokes: Strokes) : BrushState {
         y: Float,
     ) {
         path.lineTo(x, y)
-        strokes.removeIntersectingStrokes(path)
     }
 
     override fun finish(
         path: Path,
         paint: Paint,
     ) {
-        // ERASER DOES NOTHING WHEN TOUCHING UP
+        strokes.add(Stroke(path, Paint(paint)))
     }
 }

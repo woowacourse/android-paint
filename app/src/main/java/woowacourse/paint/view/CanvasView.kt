@@ -7,6 +7,8 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -26,6 +28,7 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val currentPaint: Paint = Paint()
 
     init {
+        setLayerType(LAYER_TYPE_HARDWARE, null)
         initializePaint(context, attrs)
     }
 
@@ -90,33 +93,52 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         return true
     }
 
-    fun setDrawingToolType(drawingToolType: DrawingToolType) {
-        currentState =
-            when (drawingToolType) {
-                DrawingToolType.PEN -> PenState(strokes)
-                DrawingToolType.RECTANGULAR -> RectangularState(strokes)
-                DrawingToolType.CIRCLE -> CircleState(strokes)
-                DrawingToolType.ERASER -> EraserState(strokes)
-                DrawingToolType.RESET -> {
-                    strokes.clear()
-                    invalidate()
-                    currentState
-                }
-            }
-
-        currentPaint.style =
-            when (drawingToolType) {
-                DrawingToolType.PEN, DrawingToolType.ERASER, DrawingToolType.RESET -> Paint.Style.STROKE
-                DrawingToolType.RECTANGULAR, DrawingToolType.CIRCLE -> Paint.Style.FILL
-            }
-    }
-
     fun setLineColor(color: Int) {
         currentPaint.color = color
     }
 
     fun setLineWidth(width: Float) {
         currentPaint.strokeWidth = width
+    }
+
+    fun setDrawingToolType(drawingToolType: DrawingToolType) {
+        setCurrentState(drawingToolType)
+        setEraseMode(drawingToolType)
+        setPaintStyle(drawingToolType)
+    }
+
+    private fun setCurrentState(drawingToolType: DrawingToolType) {
+        currentState =
+            when (drawingToolType) {
+                DrawingToolType.PEN -> PenState(strokes)
+                DrawingToolType.RECTANGULAR -> RectangularState(strokes)
+                DrawingToolType.CIRCLE -> CircleState(strokes)
+                DrawingToolType.ERASER -> {
+                    EraserState(strokes)
+                }
+
+                DrawingToolType.RESET -> {
+                    strokes.clear()
+                    invalidate()
+                    currentState
+                }
+            }
+    }
+
+    private fun setEraseMode(drawingToolType: DrawingToolType) {
+        if (drawingToolType == DrawingToolType.ERASER) {
+            currentPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+        } else {
+            currentPaint.xfermode = null
+        }
+    }
+
+    private fun setPaintStyle(drawingToolType: DrawingToolType) {
+        currentPaint.style =
+            when (drawingToolType) {
+                DrawingToolType.PEN, DrawingToolType.ERASER, DrawingToolType.RESET -> Paint.Style.STROKE
+                DrawingToolType.RECTANGULAR, DrawingToolType.CIRCLE -> Paint.Style.FILL
+            }
     }
 
     companion object {
