@@ -5,16 +5,19 @@ import android.os.Bundle
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.databinding.ActivityMainBinding
-import woowacourse.paint.model.DrawingStyle
-import woowacourse.paint.ui.adapter.DrawingColorAdapter
+import woowacourse.paint.model.BrushStyle
+import woowacourse.paint.model.BrushType
+import woowacourse.paint.ui.adapter.BrushColorAdapter
+import woowacourse.paint.ui.adapter.BrushTypeAdapter
 
-class MainActivity : AppCompatActivity(), ActionHandler {
+class MainActivity : AppCompatActivity(), BrushColorActionHandler, BrushTypeActionHandler {
     private lateinit var binding: ActivityMainBinding
 
-    private val adapter: DrawingColorAdapter by lazy { DrawingColorAdapter(this@MainActivity) }
+    private val drawingColorAdapter: BrushColorAdapter by lazy { BrushColorAdapter(this@MainActivity) }
+    private val brushTypeAdapter: BrushTypeAdapter by lazy { BrushTypeAdapter(this@MainActivity) }
 
-    private lateinit var currentDrawingStyle: DrawingStyle
     private lateinit var drawingView: DrawingView
+    private var brushStyle = BrushStyle()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,12 +33,14 @@ class MainActivity : AppCompatActivity(), ActionHandler {
     }
 
     private fun initAdapter() {
-        binding.rvDrawingColor.adapter = adapter
-        adapter.submitList(drawingStyles)
+        binding.rvDrawingColor.adapter = drawingColorAdapter
+        binding.rvDrawingType.adapter = brushTypeAdapter
+
+        drawingColorAdapter.submitList(brushStyles)
+        brushTypeAdapter.submitList(BrushType.entries)
     }
 
     private fun initDrawingView() {
-        currentDrawingStyle = DrawingStyle(Color.RED)
         addView()
     }
 
@@ -48,7 +53,7 @@ class MainActivity : AppCompatActivity(), ActionHandler {
                     progress: Int,
                     fromUser: Boolean,
                 ) {
-                    currentDrawingStyle = currentDrawingStyle.copy(strokeWidth = progress.toFloat())
+                    brushStyle = brushStyle.copy(strokeWidth = progress.toFloat())
                     addView()
                 }
 
@@ -59,29 +64,30 @@ class MainActivity : AppCompatActivity(), ActionHandler {
         )
     }
 
-    override fun changeDrawingColor(color: Int) {
-        currentDrawingStyle = currentDrawingStyle.copy(color = color)
+    override fun changeBrushColor(color: Int) {
+        brushStyle = brushStyle.copy(color = color)
+        addView()
+    }
+
+    override fun changeBrushType(brushType: BrushType) {
+        brushStyle = brushStyle.copy(brushType = brushType)
         addView()
     }
 
     private fun addView() {
-        drawingView =
-            DrawingView(
-                context = this,
-                drawingStyle = currentDrawingStyle,
-            )
+        drawingView = DrawingView(context = this, brushStyle = brushStyle)
         binding.constraintPaintBoard.addView(drawingView)
     }
 
     companion object {
         private val orange = Color.parseColor("#FFA500")
-        val drawingStyles =
+        val brushStyles =
             listOf(
-                DrawingStyle(color = Color.RED),
-                DrawingStyle(color = orange),
-                DrawingStyle(color = Color.YELLOW),
-                DrawingStyle(color = Color.GREEN),
-                DrawingStyle(color = Color.BLUE),
+                BrushStyle(color = Color.RED),
+                BrushStyle(color = orange),
+                BrushStyle(color = Color.YELLOW),
+                BrushStyle(color = Color.GREEN),
+                BrushStyle(color = Color.BLUE),
             )
     }
 }
