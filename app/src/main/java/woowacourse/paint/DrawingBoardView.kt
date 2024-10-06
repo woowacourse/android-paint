@@ -30,9 +30,7 @@ class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, at
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                currentDrawing = currentDrawing.copyPoint(pointX, pointY)
-                drawings.add(currentDrawing)
-                currentDrawing.setStartPoint(pointX, pointY)
+                updateDrawing(pointX, pointY)
             }
 
             MotionEvent.ACTION_MOVE -> {
@@ -47,6 +45,12 @@ class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, at
         }
         invalidate()
         return true
+    }
+
+    private fun updateDrawing(pointX: Float, pointY: Float) {
+        currentDrawing = currentDrawing.copyPoint(pointX, pointY)
+        drawings.add(currentDrawing)
+        currentDrawing.setStartPoint(pointX, pointY)
     }
 
     fun setBrushThickness(thickness: Float) {
