@@ -7,8 +7,6 @@ data class Line(
     val path: Path = Path(),
     val paint: Paint = Paint(),
 ) {
-    private var linePath = path
-    private var linePaint = paint
     private var endX = DEFAULT_POINT
     private var endY = DEFAULT_POINT
 
