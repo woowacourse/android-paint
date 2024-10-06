@@ -1,7 +1,6 @@
 package woowacourse.paint.model
 
 import android.graphics.Path
-import android.graphics.RectF
 
 class Strokes(value: MutableList<Stroke> = mutableListOf()) {
     private val _value: MutableList<Stroke> = value
@@ -23,11 +22,7 @@ class Strokes(value: MutableList<Stroke> = mutableListOf()) {
     fun removeIntersectingStrokes(eraserPath: Path) {
         val strokesToRemove = mutableListOf<Int>()
         value.forEachIndexed { index, stroke ->
-            if (isPathIntersecting(
-                    stroke.path,
-                    eraserPath
-                )
-            ) {
+            if (isPathIntersecting(stroke.path, eraserPath)) {
                 strokesToRemove.add(index)
             }
         }
@@ -37,7 +32,10 @@ class Strokes(value: MutableList<Stroke> = mutableListOf()) {
         }
     }
 
-    private fun isPathIntersecting(path1: Path, path2: Path): Boolean {
+    private fun isPathIntersecting(
+        path1: Path,
+        path2: Path,
+    ): Boolean {
         val intersectionPath = Path()
         intersectionPath.op(path1, path2, Path.Op.INTERSECT)
         return !intersectionPath.isEmpty

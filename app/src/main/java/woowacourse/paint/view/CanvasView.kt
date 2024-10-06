@@ -12,8 +12,8 @@ import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.R
 import woowacourse.paint.model.BrushState
-import woowacourse.paint.model.DrawingToolType
 import woowacourse.paint.model.CircleState
+import woowacourse.paint.model.DrawingToolType
 import woowacourse.paint.model.EraserState
 import woowacourse.paint.model.PenState
 import woowacourse.paint.model.RectangularState
@@ -29,12 +29,15 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         initializePaint(context, attrs)
     }
 
-    private fun initializePaint(context: Context, attrs: AttributeSet) {
+    private fun initializePaint(
+        context: Context,
+        attrs: AttributeSet,
+    ) {
         context.theme.obtainStyledAttributes(
             attrs,
             R.styleable.CustomView,
             0,
-            0
+            0,
         ).apply {
             initializePaintAttributes()
         }
@@ -88,22 +91,24 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     fun setDrawingToolType(drawingToolType: DrawingToolType) {
-        currentState = when (drawingToolType) {
-            DrawingToolType.PEN -> PenState(strokes)
-            DrawingToolType.RECTANGULAR -> RectangularState(strokes)
-            DrawingToolType.CIRCLE -> CircleState(strokes)
-            DrawingToolType.ERASER -> EraserState(strokes)
-            DrawingToolType.RESET -> {
-                strokes.clear()
-                invalidate()
-                currentState
+        currentState =
+            when (drawingToolType) {
+                DrawingToolType.PEN -> PenState(strokes)
+                DrawingToolType.RECTANGULAR -> RectangularState(strokes)
+                DrawingToolType.CIRCLE -> CircleState(strokes)
+                DrawingToolType.ERASER -> EraserState(strokes)
+                DrawingToolType.RESET -> {
+                    strokes.clear()
+                    invalidate()
+                    currentState
+                }
             }
-        }
 
-        currentPaint.style = when (drawingToolType) {
-            DrawingToolType.PEN, DrawingToolType.ERASER, DrawingToolType.RESET -> Paint.Style.STROKE
-            DrawingToolType.RECTANGULAR, DrawingToolType.CIRCLE -> Paint.Style.FILL
-        }
+        currentPaint.style =
+            when (drawingToolType) {
+                DrawingToolType.PEN, DrawingToolType.ERASER, DrawingToolType.RESET -> Paint.Style.STROKE
+                DrawingToolType.RECTANGULAR, DrawingToolType.CIRCLE -> Paint.Style.FILL
+            }
     }
 
     fun setLineColor(color: Int) {

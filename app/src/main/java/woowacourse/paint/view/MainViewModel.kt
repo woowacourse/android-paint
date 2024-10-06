@@ -3,13 +3,13 @@ package woowacourse.paint.view
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import woowacourse.paint.model.ColorItem
 import woowacourse.paint.model.DrawingTool
 import woowacourse.paint.model.DrawingToolType
-import woowacourse.paint.model.ColorItem
-import woowacourse.paint.view.listener.DrawingToolChangeListener
-import woowacourse.paint.view.listener.DrawingToolControllerVisibilityChangeListener
 import woowacourse.paint.view.listener.ColorControllerVisibilityChangeListener
 import woowacourse.paint.view.listener.ColorSelectionChangeListener
+import woowacourse.paint.view.listener.DrawingToolChangeListener
+import woowacourse.paint.view.listener.DrawingToolControllerVisibilityChangeListener
 import woowacourse.paint.view.listener.WidthControllerVisibilityChangeListener
 
 class MainViewModel :
