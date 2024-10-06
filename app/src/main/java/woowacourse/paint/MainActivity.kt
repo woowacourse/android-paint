@@ -2,6 +2,10 @@ package woowacourse.paint
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import woowacourse.paint.brush.Circle
+import woowacourse.paint.brush.Eraser
+import woowacourse.paint.brush.Pen
+import woowacourse.paint.brush.Rect
 import woowacourse.paint.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -17,10 +21,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.brushGroup.setOnCheckedChangeListener { _, checkedId ->
             when(checkedId){
-                R.id.btn_pen -> binding.paintView.changeBrush(BrushType.PEN)
-                R.id.btn_rect -> binding.paintView.changeBrush(BrushType.RECT)
-                R.id.btn_circle -> binding.paintView.changeBrush(BrushType.CIRCLE)
-                R.id.btn_erase -> binding.paintView.changeBrush(BrushType.ERASER)
+                R.id.btn_pen -> binding.paintView.changeBrush(Pen::class)
+                R.id.btn_rect -> binding.paintView.changeBrush(Rect::class)
+                R.id.btn_circle -> binding.paintView.changeBrush(Circle::class)
+                R.id.btn_erase -> binding.paintView.changeBrush(Eraser::class)
             }
 
         }
