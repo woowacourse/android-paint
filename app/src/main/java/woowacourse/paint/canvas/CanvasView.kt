@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import androidx.core.content.ContextCompat
 import woowacourse.paint.brush.Brush
 import woowacourse.paint.brush.ColorPalette
 import woowacourse.paint.brush.Line
@@ -78,7 +79,7 @@ class CanvasView(
 
     private fun createNewPaint(brush: Brush): Paint {
         return Paint().apply {
-            this.color = brush.colorPalette.colorRes
+            this.color = ContextCompat.getColor(context, brush.colorPalette.colorRes)
             this.strokeWidth = brush.width
         }
     }
