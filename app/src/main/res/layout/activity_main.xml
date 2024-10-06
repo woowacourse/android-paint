@@ -37,6 +37,8 @@
 
         <RadioButton
             android:id="@+id/btn_pen"
+            android:checked="true"
+            android:backgroundTint="@color/sel_brush_color"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginHorizontal="10dp"
@@ -45,6 +47,7 @@
 
         <RadioButton
             android:id="@+id/btn_rect"
+            android:backgroundTint="@color/sel_brush_color"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginHorizontal="10dp"
@@ -55,6 +58,7 @@
             android:id="@+id/btn_circle"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:backgroundTint="@color/sel_brush_color"
             android:layout_marginHorizontal="10dp"
             android:background="@drawable/ic_circle"
             android:button="@null" />
@@ -62,6 +66,7 @@
         <RadioButton
             android:id="@+id/btn_erase"
             android:layout_width="30dp"
+            android:backgroundTint="@color/sel_brush_color"
             android:layout_height="30dp"
             android:layout_marginHorizontal="10dp"
             android:background="@drawable/ic_eraser"
