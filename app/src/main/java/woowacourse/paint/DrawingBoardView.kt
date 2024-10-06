@@ -7,14 +7,14 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import woowacourse.paint.drawing.Drawing2
+import woowacourse.paint.drawing.Drawing
 import woowacourse.paint.drawing.Pen
 
 class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private var currentPaint = Paint()
-    private var currentDrawing: Drawing2 = Pen.default()
+    private var currentDrawing: Drawing = Pen.default()
 
-    private val drawings: MutableList<Drawing2> = mutableListOf()
+    private val drawings: MutableList<Drawing> = mutableListOf()
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -58,7 +58,7 @@ class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, at
         currentDrawing = currentDrawing.copyWithPaint(color)
     }
 
-    fun setDrawingType(drawingType: Drawing2) {
+    fun setDrawingType(drawingType: Drawing) {
         currentDrawing = drawingType
         setBrushColor(currentPaint.color)
     }

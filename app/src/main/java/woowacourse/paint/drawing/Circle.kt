@@ -3,13 +3,13 @@ package woowacourse.paint.drawing
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.RectF
-import woowacourse.paint.drawing.Drawing2.Companion.DEFAULT_BRUSH_CAP
-import woowacourse.paint.drawing.Drawing2.Companion.DEFAULT_BRUSH_STYLE
+import woowacourse.paint.drawing.Drawing.Companion.DEFAULT_BRUSH_CAP
+import woowacourse.paint.drawing.Drawing.Companion.DEFAULT_BRUSH_STYLE
 
 data class Circle(
     private val rect: RectF = RectF(),
     private val paint: Paint,
-) : Drawing2 {
+) : Drawing {
     override fun setUpDefaultPaint() {
         paint.apply {
             style = DEFAULT_BRUSH_STYLE
@@ -44,7 +44,7 @@ data class Circle(
         rect.bottom = y
     }
 
-    override fun copyWithPaint(thickness: Float): Drawing2 {
+    override fun copyWithPaint(thickness: Float): Drawing {
         val newPaint =
             Paint(paint).apply {
                 strokeWidth = thickness
@@ -52,7 +52,7 @@ data class Circle(
         return Circle(RectF(rect), newPaint)
     }
 
-    override fun copyWithPaint(color: Int): Drawing2 {
+    override fun copyWithPaint(color: Int): Drawing {
         val newPaint =
             Paint(paint).apply {
                 this.color = color
@@ -63,7 +63,7 @@ data class Circle(
     override fun copyPoint(
         pointX: Float,
         pointY: Float,
-    ): Drawing2 = this.copy(rect = RectF(pointX, pointY, pointX, pointY))
+    ): Drawing = this.copy(rect = RectF(pointX, pointY, pointX, pointY))
 
     companion object {
         fun default(): Circle {

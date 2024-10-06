@@ -3,7 +3,7 @@ package woowacourse.paint.drawing
 import android.graphics.Canvas
 import android.graphics.Paint
 
-sealed interface Drawing2 {
+sealed interface Drawing {
     fun setUpDefaultPaint()
 
     // 캔버스에 전체를 모두 그릴 때
@@ -21,14 +21,14 @@ sealed interface Drawing2 {
         y: Float,
     )
 
-    fun copyWithPaint(thickness: Float): Drawing2
+    fun copyWithPaint(thickness: Float): Drawing
 
-    fun copyWithPaint(color: Int): Drawing2
+    fun copyWithPaint(color: Int): Drawing
 
     fun copyPoint(
         pointX: Float,
         pointY: Float,
-    ): Drawing2
+    ): Drawing
 
     companion object {
         val DEFAULT_BRUSH_STYLE = Paint.Style.STROKE

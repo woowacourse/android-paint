@@ -3,10 +3,10 @@ package woowacourse.paint.drawing
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
-import woowacourse.paint.drawing.Drawing2.Companion.DEFAULT_BRUSH_CAP
-import woowacourse.paint.drawing.Drawing2.Companion.DEFAULT_BRUSH_STYLE
+import woowacourse.paint.drawing.Drawing.Companion.DEFAULT_BRUSH_CAP
+import woowacourse.paint.drawing.Drawing.Companion.DEFAULT_BRUSH_STYLE
 
-data class Pen(private val path: Path, private val paint: Paint) : Drawing2 {
+data class Pen(private val path: Path, private val paint: Paint) : Drawing {
     override fun setUpDefaultPaint() {
         paint.apply {
             style = DEFAULT_BRUSH_STYLE
@@ -33,7 +33,7 @@ data class Pen(private val path: Path, private val paint: Paint) : Drawing2 {
         path.lineTo(x, y)
     }
 
-    override fun copyWithPaint(thickness: Float): Drawing2 {
+    override fun copyWithPaint(thickness: Float): Drawing {
         val paint =
             Paint(paint).apply {
                 strokeWidth = thickness
@@ -41,7 +41,7 @@ data class Pen(private val path: Path, private val paint: Paint) : Drawing2 {
         return Pen(path, paint)
     }
 
-    override fun copyWithPaint(color: Int): Drawing2 {
+    override fun copyWithPaint(color: Int): Drawing {
         val paint =
             Paint(paint).apply {
                 this.color = color
@@ -52,7 +52,7 @@ data class Pen(private val path: Path, private val paint: Paint) : Drawing2 {
     override fun copyPoint(
         pointX: Float,
         pointY: Float,
-    ): Drawing2 = this.copy(path = Path())
+    ): Drawing = this.copy(path = Path())
 
     companion object {
         fun default(): Pen {
