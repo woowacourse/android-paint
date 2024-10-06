@@ -56,12 +56,11 @@ data class Brush(
             BrushState.PEN -> lineTo(endX, endY)
 
             BrushState.RECTANGLE -> {
-                if (!isEnd) resetPath()
                 saveRectangleMovement(startX, startY, endX, endY)
             }
 
             BrushState.CIRCLE -> {
-                if (!isEnd) resetPath()
+                if (!isEnd) path.reset()
                 saveCircleMovement(startX, startY, endX, endY)
             }
 
@@ -139,9 +138,5 @@ data class Brush(
         paint.style = Paint.Style.STROKE
         brushState = BrushState.ERASER
         paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
-    }
-
-    private fun resetPath() {
-        path.reset()
     }
 }
