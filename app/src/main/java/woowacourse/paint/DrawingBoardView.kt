@@ -3,6 +3,7 @@ package woowacourse.paint
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -10,6 +11,7 @@ import woowacourse.paint.drawing.Drawing2
 import woowacourse.paint.drawing.Pen
 
 class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
+    private var currentPaint = Paint()
     private var currentDrawing: Drawing2 = Pen.default()
 
     private val drawings: MutableList<Drawing2> = mutableListOf()
@@ -35,7 +37,6 @@ class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, at
 
             MotionEvent.ACTION_MOVE -> {
                 currentDrawing.pathLineTo(pointX, pointY)
-//                invalidate()
             }
 
             MotionEvent.ACTION_UP -> {
@@ -49,16 +50,16 @@ class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, at
     }
 
     fun setBrushThickness(thickness: Float) {
-        // TODO: remove type casting
         currentDrawing = currentDrawing.copyWithPaint(thickness)
     }
 
     fun setBrushColor(color: Int) {
-        // TODO: remove type casting
+        currentPaint.color = color
         currentDrawing = currentDrawing.copyWithPaint(color)
     }
 
-    fun setDrawingType(drawingType: Drawing2, color: Int) {
-        currentDrawing = drawingType.copyWithPaint(color)
+    fun setDrawingType(drawingType: Drawing2) {
+        currentDrawing = drawingType
+        setBrushColor(currentPaint.color)
     }
 }

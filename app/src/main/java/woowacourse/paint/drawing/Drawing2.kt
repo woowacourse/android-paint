@@ -10,16 +10,25 @@ sealed interface Drawing2 {
     fun drawOn(canvas: Canvas)
 
     // 다음 윤곽선의 시작을 점(x,y)으로 설정합니다.
-    fun setStartPoint(x: Float, y: Float)
+    fun setStartPoint(
+        x: Float,
+        y: Float,
+    )
 
     // 마지막 점의 선을 지정된 점(x,y)에 추가합니다.
-    fun pathLineTo(x: Float, y: Float)
+    fun pathLineTo(
+        x: Float,
+        y: Float,
+    )
 
     fun copyWithPaint(thickness: Float): Drawing2
 
     fun copyWithPaint(color: Int): Drawing2
 
-    fun copyPoint(pointX: Float, pointY: Float): Drawing2
+    fun copyPoint(
+        pointX: Float,
+        pointY: Float,
+    ): Drawing2
 
     companion object {
         val DEFAULT_BRUSH_STYLE = Paint.Style.STROKE

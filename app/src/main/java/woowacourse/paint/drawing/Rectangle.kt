@@ -19,14 +19,20 @@ data class Rectangle(val rect: RectF = RectF(), private val paint: Paint) : Draw
         canvas.drawRect(rect, paint)
     }
 
-    override fun setStartPoint(x: Float, y: Float) {
+    override fun setStartPoint(
+        x: Float,
+        y: Float,
+    ) {
         rect.apply {
             left = x
             top = y
         }
     }
 
-    override fun pathLineTo(x: Float, y: Float) {
+    override fun pathLineTo(
+        x: Float,
+        y: Float,
+    ) {
         rect.apply {
             right = x
             bottom = y
@@ -49,15 +55,18 @@ data class Rectangle(val rect: RectF = RectF(), private val paint: Paint) : Draw
         return Rectangle(rect, paint)
     }
 
-    override fun copyPoint(pointX: Float, pointY: Float): Drawing2 =
-        this.copy(rect = RectF(pointX, pointY, pointX, pointY))
+    override fun copyPoint(
+        pointX: Float,
+        pointY: Float,
+    ): Drawing2 = this.copy(rect = RectF(pointX, pointY, pointX, pointY))
 
     companion object {
         fun default(): Rectangle {
-            val paint = Paint().apply {
-                strokeCap = DEFAULT_BRUSH_CAP
-                isAntiAlias = true
-            }
+            val paint =
+                Paint().apply {
+                    strokeCap = DEFAULT_BRUSH_CAP
+                    isAntiAlias = true
+                }
             return Rectangle(RectF(), paint)
         }
     }

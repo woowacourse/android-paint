@@ -1,8 +1,5 @@
 package woowacourse.paint
 
-import android.graphics.Paint
-import android.graphics.Path
-import android.graphics.RectF
 import android.os.Bundle
 import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
@@ -28,20 +25,22 @@ class MainActivity : AppCompatActivity() {
 
         drawingTypes.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
-                R.id.rb_drawing_pen -> drawingBoard.setDrawingType(
-                    Pen.default(), ColorUiModel.DEFAULT_COLOR.color
-                )
+                R.id.rb_drawing_pen ->
+                    drawingBoard.setDrawingType(
+                        Pen.default(),
+                    )
 
-                R.id.rb_drawing_rectangle -> drawingBoard.setDrawingType(
-                    Rectangle.default(), ColorUiModel.DEFAULT_COLOR.color
-                )
+                R.id.rb_drawing_rectangle ->
+                    drawingBoard.setDrawingType(
+                        Rectangle.default(),
+                    )
 
-                R.id.rb_drawing_circle -> drawingBoard.setDrawingType(
-                    Circle.default(), ColorUiModel.DEFAULT_COLOR.color
-                )
+                R.id.rb_drawing_circle ->
+                    drawingBoard.setDrawingType(
+                        Circle.default(),
+                    )
             }
         }
-
 
         recyclerView.adapter =
             ColorsAdapter(

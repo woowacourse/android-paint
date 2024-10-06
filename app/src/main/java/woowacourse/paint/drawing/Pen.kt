@@ -19,11 +19,17 @@ data class Pen(private val path: Path, private val paint: Paint) : Drawing2 {
         canvas.drawPath(path, paint)
     }
 
-    override fun setStartPoint(x: Float, y: Float) {
+    override fun setStartPoint(
+        x: Float,
+        y: Float,
+    ) {
         path.moveTo(x, y)
     }
 
-    override fun pathLineTo(x: Float, y: Float) {
+    override fun pathLineTo(
+        x: Float,
+        y: Float,
+    ) {
         path.lineTo(x, y)
     }
 
@@ -43,18 +49,20 @@ data class Pen(private val path: Path, private val paint: Paint) : Drawing2 {
         return Pen(path, paint)
     }
 
-    override fun copyPoint(pointX: Float, pointY: Float): Drawing2 =
-        this.copy(path = Path())
+    override fun copyPoint(
+        pointX: Float,
+        pointY: Float,
+    ): Drawing2 = this.copy(path = Path())
 
     companion object {
         fun default(): Pen {
-            val paint = Paint().apply {
-                style = DEFAULT_BRUSH_STYLE
-                strokeCap = DEFAULT_BRUSH_CAP
-                isAntiAlias = true
-            }
+            val paint =
+                Paint().apply {
+                    style = DEFAULT_BRUSH_STYLE
+                    strokeCap = DEFAULT_BRUSH_CAP
+                    isAntiAlias = true
+                }
             return Pen(Path(), paint)
         }
     }
 }
-
