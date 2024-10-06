@@ -12,6 +12,7 @@ import woowacourse.paint.drawing.Pen
 
 class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private var currentPaint = Paint()
+    private var currentThickness = 5f
     private var currentDrawing: Drawing = Pen.default()
 
     private val drawings: MutableList<Drawing> = mutableListOf()
@@ -54,16 +55,18 @@ class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, at
     }
 
     fun setBrushThickness(thickness: Float) {
-        currentDrawing = currentDrawing.copyWithPaint(thickness)
+        currentThickness = thickness
+        currentDrawing = currentDrawing.copyWithPaint(currentThickness)
     }
 
     fun setBrushColor(color: Int) {
         currentPaint.color = color
-        currentDrawing = currentDrawing.copyWithPaint(color)
+        currentDrawing = currentDrawing.copyWithPaint(currentPaint.color)
     }
 
     fun setDrawingType(drawingType: Drawing) {
         currentDrawing = drawingType
+        setBrushThickness(currentThickness)
         setBrushColor(currentPaint.color)
     }
 }

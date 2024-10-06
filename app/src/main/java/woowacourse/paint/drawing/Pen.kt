@@ -7,14 +7,6 @@ import woowacourse.paint.drawing.Drawing.Companion.DEFAULT_BRUSH_CAP
 import woowacourse.paint.drawing.Drawing.Companion.DEFAULT_BRUSH_STYLE
 
 data class Pen(private val path: Path, private val paint: Paint) : Drawing {
-    override fun setUpDefaultPaint() {
-        paint.apply {
-            style = DEFAULT_BRUSH_STYLE
-            strokeCap = DEFAULT_BRUSH_CAP
-            isAntiAlias = true
-        }
-    }
-
     override fun drawOn(canvas: Canvas) {
         canvas.drawPath(path, paint)
     }
