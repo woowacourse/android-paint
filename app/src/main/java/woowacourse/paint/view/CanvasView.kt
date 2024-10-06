@@ -124,6 +124,8 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
                 DrawingToolType.RESET -> {
                     strokes.clear()
+                    cacheBitmap = null
+                    cacheCanvas = null
                     invalidate()
                     currentState
                 }
@@ -149,13 +151,10 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private fun updateCache() {
         if (cacheBitmap == null) {
             cacheBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-            cacheCanvas = Canvas(cacheBitmap!!)
+            cacheCanvas = Canvas(cacheBitmap ?: return)
         }
-
-        val lastStroke = strokes.value.lastOrNull()
-        lastStroke?.let {
-            cacheCanvas?.drawPath(it.path, it.paint)
-        }
+        val lastStroke = strokes.value.lastOrNull() ?: return
+        cacheCanvas?.drawPath(lastStroke.path, lastStroke.paint)
     }
 
     companion object {
