@@ -29,6 +29,9 @@ class Rect(
         pointX: Float,
         pointY: Float,
     ) {
+        require(startXPoint != INVALID_X && startYPoint != INVALID_Y) {
+            "startDraw 메서드를 먼저 호출해주세요"
+        }
         reset()
         addRect(startXPoint, startYPoint, pointX, pointY, Direction.CW)
     }
