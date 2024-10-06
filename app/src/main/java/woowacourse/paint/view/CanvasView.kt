@@ -7,7 +7,6 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
-import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -18,7 +17,6 @@ import woowacourse.paint.model.CircleState
 import woowacourse.paint.model.EraserState
 import woowacourse.paint.model.PenState
 import woowacourse.paint.model.RectangularState
-import woowacourse.paint.model.Stroke
 import woowacourse.paint.model.Strokes
 
 class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
@@ -62,7 +60,7 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         strokes.value.forEach { stroke ->
             canvas.drawPath(stroke.path, stroke.paint)
         }
-        currentState.onDraw(canvas, currentPath, currentPaint)
+        currentState.draw(canvas, currentPath, currentPaint)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -71,15 +69,15 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         val pointY = event.y
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                currentPath = currentState.onTouchDown(pointX, pointY)
+                currentPath = currentState.start(pointX, pointY)
             }
 
             MotionEvent.ACTION_MOVE -> {
-                currentPath?.let { currentState.onTouchMove(it, pointX, pointY) }
+                currentPath?.let { currentState.move(it, pointX, pointY) }
             }
 
             MotionEvent.ACTION_UP -> {
-                currentPath?.let { currentState.onTouchUp(it, currentPaint) }
+                currentPath?.let { currentState.finish(it, currentPaint) }
                 currentPath = null
             }
 
