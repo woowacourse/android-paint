@@ -68,7 +68,7 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         cacheBitmap?.let { canvas.drawBitmap(it, 0f, 0f, null) }
-        currentState.draw(canvas, currentPath, currentPaint)
+        currentPath?.let { currentState.draw(canvas, it, currentPaint) }
     }
 
     @SuppressLint("ClickableViewAccessibility")
