@@ -9,7 +9,6 @@ import woowacourse.paint.drawing.Circle
 import woowacourse.paint.drawing.Eraser
 import woowacourse.paint.drawing.Pen
 import woowacourse.paint.drawing.Rectangle
-import java.time.chrono.Era
 
 class MainActivity : AppCompatActivity() {
     private val drawingBoard: DrawingBoardView by lazy { findViewById(R.id.drawing_board) }

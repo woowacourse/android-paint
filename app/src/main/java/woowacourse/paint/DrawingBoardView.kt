@@ -48,7 +48,10 @@ class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, at
         return true
     }
 
-    private fun updateDrawing(pointX: Float, pointY: Float) {
+    private fun updateDrawing(
+        pointX: Float,
+        pointY: Float,
+    ) {
         currentDrawing = currentDrawing.copyPoint(pointX, pointY)
         drawings.add(currentDrawing)
         currentDrawing.setStartPoint(pointX, pointY)
