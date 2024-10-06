@@ -17,13 +17,13 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
+        android:layout_marginHorizontal="@dimen/margin_drawing_mode_item"
         android:clickable="true"
-        android:drawablePadding="5dp"
+        android:drawablePadding="@dimen/padding_drawing_mode_item_icon"
         android:gravity="center"
         android:onClick="@{() -> clickHandler.onDrawingModeClicked(drawingMode)}"
         android:text="@{drawingMode.modeName}"
-        android:textSize="16sp"
+        android:textSize="@dimen/text_size_drawing_mode_item"
         bind:setDrawableIcon="@{drawingMode.icon}"
         tools:drawableLeft="@drawable/icon_circle_border"
         tools:text="원 그리기" />
