@@ -21,13 +21,9 @@ class Strokes(value: MutableList<Stroke> = mutableListOf()) {
     }
 
     fun removeIntersectingStrokes(eraserPath: Path) {
-        val eraserBounds = RectF()
-        eraserPath.computeBounds(eraserBounds, true)
         val strokesToRemove = mutableListOf<Int>()
         value.forEachIndexed { index, stroke ->
-            val strokeBounds = RectF()
-            stroke.path.computeBounds(strokeBounds, true)
-            if (RectF.intersects(eraserBounds, strokeBounds) && isPathIntersecting(
+            if (isPathIntersecting(
                     stroke.path,
                     eraserPath
                 )
