@@ -19,10 +19,11 @@ import woowacourse.paint.model.EraserState
 import woowacourse.paint.model.PenState
 import woowacourse.paint.model.RectangularState
 import woowacourse.paint.model.Stroke
+import woowacourse.paint.model.Strokes
 
 class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    private val strokes = mutableListOf<Stroke>()
-    private var currentState: BrushState = PenState()
+    private val strokes: Strokes = Strokes()
+    private var currentState: BrushState = PenState(strokes)
     private var currentPath: Path? = null
     private val currentPaint: Paint = Paint()
 
@@ -58,7 +59,7 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        strokes.forEach { stroke ->
+        strokes.value.forEach { stroke ->
             canvas.drawPath(stroke.path, stroke.paint)
         }
         currentState.onDraw(canvas, currentPath, currentPaint)
@@ -78,7 +79,7 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             }
 
             MotionEvent.ACTION_UP -> {
-                currentPath?.let { currentState.onTouchUp(this, it, currentPaint) }
+                currentPath?.let { currentState.onTouchUp(it, currentPaint) }
                 currentPath = null
             }
 
@@ -90,10 +91,10 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     fun setDrawingToolType(drawingToolType: DrawingToolType) {
         currentState = when (drawingToolType) {
-            DrawingToolType.PEN -> PenState()
-            DrawingToolType.RECTANGULAR -> RectangularState()
-            DrawingToolType.CIRCLE -> CircleState()
-            DrawingToolType.ERASER -> EraserState()
+            DrawingToolType.PEN -> PenState(strokes)
+            DrawingToolType.RECTANGULAR -> RectangularState(strokes)
+            DrawingToolType.CIRCLE -> CircleState(strokes)
+            DrawingToolType.ERASER -> EraserState(strokes)
             DrawingToolType.RESET -> {
                 strokes.clear()
                 invalidate()
@@ -105,39 +106,6 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             DrawingToolType.PEN, DrawingToolType.ERASER, DrawingToolType.RESET -> Paint.Style.STROKE
             DrawingToolType.RECTANGULAR, DrawingToolType.CIRCLE -> Paint.Style.FILL
         }
-    }
-
-    fun addStroke(stroke: Stroke) {
-        strokes.add(stroke)
-        invalidate()
-    }
-
-    fun eraseIntersectingStrokes(eraserPath: Path) {
-        val eraserBounds = RectF()
-        eraserPath.computeBounds(eraserBounds, true)
-        val strokesToRemove = mutableListOf<Int>()
-        strokes.forEachIndexed { index, stroke ->
-            val strokeBounds = RectF()
-            stroke.path.computeBounds(strokeBounds, true)
-            if (RectF.intersects(eraserBounds, strokeBounds) && isPathIntersecting(
-                    stroke.path,
-                    eraserPath
-                )
-            ) {
-                strokesToRemove.add(index)
-            }
-        }
-
-        strokesToRemove.asReversed().forEach { index ->
-            strokes.removeAt(index)
-        }
-        invalidate()
-    }
-
-    private fun isPathIntersecting(path1: Path, path2: Path): Boolean {
-        val intersectionPath = Path()
-        intersectionPath.op(path1, path2, Path.Op.INTERSECT)
-        return !intersectionPath.isEmpty
     }
 
     fun setLineColor(color: Int) {
