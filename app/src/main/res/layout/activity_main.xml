@@ -28,7 +28,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_color"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:orientation="horizontal"
@@ -41,7 +41,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_brush"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:orientation="horizontal"
