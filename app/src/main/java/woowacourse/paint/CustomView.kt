@@ -2,6 +2,7 @@ package woowacourse.paint
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
@@ -65,6 +66,9 @@ class CustomView(
         return true
     }
 
+    private fun isDarkMode(): Boolean =
+        (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
+
     private fun currentDrawing(): Drawing = drawings.last()
 
     private fun setupPaint() {
@@ -82,7 +86,11 @@ class CustomView(
     }
 
     fun changeBrushMode(brushMode: BrushMode) {
-        if (currentDrawing().brushMode == BrushMode.ERASER && brushMode != BrushMode.ERASER) {
+        if (brushMode == BrushMode.ERASER) {
+            val backgroundColor = if (isDarkMode()) Color.BLACK else Color.WHITE
+            println("backgroundColor: ${isDarkMode()}")
+            currentDrawing().changeColor(backgroundColor)
+        } else if (currentDrawing().brushMode == BrushMode.ERASER) {
             currentDrawing().changeColor(Color.RED)
         }
         currentDrawing().brushMode = brushMode

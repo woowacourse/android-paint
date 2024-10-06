@@ -1,6 +1,7 @@
 package woowacourse.paint
 
 import android.os.Bundle
+import android.util.TypedValue
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import woowacourse.paint.databinding.ActivityMainBinding
@@ -24,6 +25,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        val typedValue = TypedValue()
+        theme.resolveAttribute(com.google.android.material.R.attr.colorOnPrimary, typedValue, true)
+        val colorOnPrimary = typedValue.data
+        binding.customView.setBackgroundColor(colorOnPrimary)
 
         binding.rvColors.adapter = paintingColorAdapter
         binding.rangeSlider
@@ -49,6 +55,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnEraser.setOnClickListener {
             binding.customView.changeBrushMode(BrushMode.ERASER)
+            binding.customView.changeColor(colorOnPrimary)
         }
 
         binding.btnUndo.setOnClickListener {

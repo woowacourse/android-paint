@@ -43,7 +43,6 @@ data class Drawing(
             }
             BrushMode.ERASER -> {
                 paint.style = Paint.Style.STROKE
-                paint.color = BACKGROUND_COLOR
                 path.lineTo(pointX, pointY)
             }
         }
