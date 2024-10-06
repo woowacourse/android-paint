@@ -2,6 +2,7 @@ package woowacourse.paint
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.util.AttributeSet
@@ -15,13 +16,16 @@ class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, at
     private var currentThickness = 5f
     private var currentDrawing: Drawing = Pen.default()
 
-    private val drawings: MutableList<Drawing> = mutableListOf()
-
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        for (drawing in drawings) {
+        for (drawing in DrawingsRepository.drawings) {
             drawing.drawOn(canvas)
         }
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration?) {
+        super.onConfigurationChanged(newConfig)
+        invalidate()
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -53,7 +57,7 @@ class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, at
         pointY: Float,
     ) {
         currentDrawing = currentDrawing.copyPoint(pointX, pointY)
-        drawings.add(currentDrawing)
+        DrawingsRepository.addDrawing(currentDrawing)
         currentDrawing.setStartPoint(pointX, pointY)
     }
 
