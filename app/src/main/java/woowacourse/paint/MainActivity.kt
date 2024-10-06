@@ -1,6 +1,7 @@
 package woowacourse.paint
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.view.PaletteAdapter
@@ -14,10 +15,13 @@ class MainActivity : AppCompatActivity() {
             binding.drawingPaper.currentColor = it.color
         }
     }
+    private val viewModel by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        binding.vm = viewModel
+        binding.lifecycleOwner = this
         initDrawingPaper()
         initSlider()
         initAdapter()
@@ -39,3 +43,4 @@ class MainActivity : AppCompatActivity() {
         adapter.submitList(Paint.dummy)
     }
 }
+

@@ -5,6 +5,11 @@
 
     <data>
 
+        <import type="woowacourse.paint.PanelType" />
+
+        <variable
+            name="vm"
+            type="woowacourse.paint.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,24 +20,124 @@
             android:id="@+id/drawing_paper"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/rv_palette"
+            app:layout_constraintBottom_toTopOf="@id/panel"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/panel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            app:layout_constraintBottom_toTopOf="@id/my_slider">
+
+            <Button
+                android:id="@+id/btn_brush_color"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/purple_500"
+                android:onClick="@{() -> vm.changePanelState(PanelType.BRUSH_COLOR)}"
+                android:text="색상 변경"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/btn_brush_stroke"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/purple_500"
+                android:onClick="@{() -> vm.changePanelState(PanelType.BRUSH_STROKE)}"
+                android:text="굵기 변경"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/btn_brush_change"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/purple_500"
+                android:onClick="@{() -> vm.changePanelState(PanelType.TOOL)}"
+                android:text="브러쉬 변경"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_palette"
+            visible="@{vm.panelState.blushColorVisible}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@id/my_slider"
+            app:layout_constraintBottom_toBottomOf="parent"
             tools:itemCount="5"
             tools:listitem="@layout/item_paint" />
 
         <woowacourse.paint.view.SliderView
             android:id="@+id/my_slider"
+            visible="@{vm.panelState.brushStrokeVisible}"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_marginBottom="30dp"
             app:layout_constraintBottom_toBottomOf="parent" />
+
+
+        <LinearLayout
+            android:id="@+id/tool_group"
+            visible="@{vm.panelState.toolVisible}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <Button
+                android:id="@+id/btn_pen"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/purple_500"
+                android:text="펜"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/btn_circle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:backgroundTint="@color/purple_500"
+                android:text="직사각형"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/btn_rect"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/purple_500"
+                android:text="원"
+                android:textColor="@android:color/white" />
+
+
+            <Button
+                android:id="@+id/btn_eraser"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/purple_500"
+                android:text="지우개"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
