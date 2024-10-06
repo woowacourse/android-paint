@@ -7,73 +7,68 @@
     <woowacourse.paint.CanvasView
         android:id="@+id/paint_view"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/range_slider"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <com.google.android.material.slider.RangeSlider
-        android:id="@+id/range_slider"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginHorizontal="40dp"
-        android:layout_marginBottom="10dp"
-        android:valueFrom="1"
-        android:valueTo="100"
-        app:layout_constraintBottom_toTopOf="@id/brush_group"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
+        android:layout_height="match_parent" />
 
     <RadioGroup
         android:id="@+id/brush_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toTopOf="@id/color_group"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <RadioButton
             android:id="@+id/btn_pen"
-            android:checked="true"
-            android:backgroundTint="@color/sel_brush_color"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginHorizontal="10dp"
             android:background="@drawable/ic_brush"
-            android:button="@null" />
+            android:backgroundTint="@color/sel_brush_color"
+            android:button="@null"
+            android:checked="true" />
 
         <RadioButton
             android:id="@+id/btn_rect"
-            android:backgroundTint="@color/sel_brush_color"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginHorizontal="10dp"
             android:background="@drawable/ic_rect"
+            android:backgroundTint="@color/sel_brush_color"
             android:button="@null" />
 
         <RadioButton
             android:id="@+id/btn_circle"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:backgroundTint="@color/sel_brush_color"
             android:layout_marginHorizontal="10dp"
             android:background="@drawable/ic_circle"
+            android:backgroundTint="@color/sel_brush_color"
             android:button="@null" />
 
         <RadioButton
             android:id="@+id/btn_erase"
             android:layout_width="30dp"
-            android:backgroundTint="@color/sel_brush_color"
             android:layout_height="30dp"
             android:layout_marginHorizontal="10dp"
             android:background="@drawable/ic_eraser"
+            android:backgroundTint="@color/sel_brush_color"
             android:button="@null" />
 
 
     </RadioGroup>
+
+    <com.google.android.material.slider.RangeSlider
+        android:id="@+id/range_slider"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:layout_marginBottom="10dp"
+        android:valueFrom="1"
+        android:valueTo="100"
+        app:layout_constraintEnd_toEndOf="@id/brush_group"
+        app:layout_constraintStart_toStartOf="@id/brush_group"
+        app:layout_constraintTop_toBottomOf="@id/brush_group" />
 
     <RadioGroup
         android:id="@+id/color_group"
@@ -82,9 +77,8 @@
         android:layout_marginBottom="20dp"
         android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="@id/brush_group"
+        app:layout_constraintTop_toBottomOf="@id/range_slider">
 
         <RadioButton
             android:id="@+id/btn_red"
@@ -127,6 +121,9 @@
             android:button="@null" />
 
     </RadioGroup>
+
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
