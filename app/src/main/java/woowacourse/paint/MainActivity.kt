@@ -61,7 +61,8 @@ class MainActivity : AppCompatActivity(), PaintCanvasHandler {
     }
 
     override fun selectDiagram(selectedDiagram: Diagram) {
-        binding.strokeWidthSlider.isGone = (selectedDiagram != Diagram.PEN)
+        binding.strokeWidthSlider.isGone =
+            !(selectedDiagram == Diagram.PEN || selectedDiagram == Diagram.ERASER)
         paintCanvas.selectDiagram(selectedDiagram)
     }
 

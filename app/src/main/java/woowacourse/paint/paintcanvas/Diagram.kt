@@ -1,5 +1,6 @@
 package woowacourse.paint.paintcanvas
 
+import woowacourse.paint.paintcanvas.shape.EraserShape
 import woowacourse.paint.paintcanvas.shape.OvalShape
 import woowacourse.paint.paintcanvas.shape.PathShape
 import woowacourse.paint.paintcanvas.shape.RectShape
@@ -17,7 +18,7 @@ enum class Diagram(val actionName: String) {
             PEN -> PathShape()
             RECT -> RectShape()
             OVAL -> OvalShape()
-            ERASER -> OvalShape()
+            ERASER -> EraserShape()
         }
     }
 }

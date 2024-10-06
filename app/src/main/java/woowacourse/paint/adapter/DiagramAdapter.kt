@@ -40,6 +40,7 @@ class DiagramAdapter(private val handler: PaintCanvasHandler) :
                 Diagram.PEN,
                 Diagram.RECT,
                 Diagram.OVAL,
+                Diagram.ERASER,
             )
     }
 }

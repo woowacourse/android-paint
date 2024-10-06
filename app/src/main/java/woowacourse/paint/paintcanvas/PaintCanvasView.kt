@@ -5,7 +5,6 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.util.AttributeSet
-import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.ColorInt
@@ -26,6 +25,7 @@ class PaintCanvasView(context: Context, attrs: AttributeSet) : View(context, att
     private var deletedHistory = Stack<Pair<Shape, Paint>>()
 
     init {
+        setLayerType(LAYER_TYPE_HARDWARE, null)
         isFocusable = true
         isFocusableInTouchMode = true
     }
@@ -116,7 +116,7 @@ class PaintCanvasView(context: Context, attrs: AttributeSet) : View(context, att
             }
 
             Diagram.ERASER -> {
-                // to-do
+                shape.onActionMove(pointX, pointY)
             }
         }
     }
