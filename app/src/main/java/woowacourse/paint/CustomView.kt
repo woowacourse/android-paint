@@ -5,19 +5,21 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import woowacourse.paint.model.BrushMode
+import woowacourse.paint.model.Drawing
 
 class CustomView(
     context: Context,
     attrs: AttributeSet,
 ) : View(context, attrs) {
-    private val drawings: MutableMap<Path, Paint> = mutableMapOf()
+    private val drawings: MutableList<Drawing> = mutableListOf(Drawing())
+    private val stackHistory = mutableListOf<Drawing>()
 
-    private var path = Path()
-    private var paint = Paint()
+    private var startX: Float = 0f
+    private var startY: Float = 0f
 
     init {
         isFocusable = true
@@ -28,12 +30,11 @@ class CustomView(
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         drawAllPaths(canvas)
-        canvas.drawPath(path, paint)
     }
 
     private fun drawAllPaths(canvas: Canvas) {
-        for ((path, paint) in drawings) {
-            canvas.drawPath(path, paint)
+        for (drawing in drawings) {
+            drawing.draw(canvas)
         }
     }
 
@@ -41,18 +42,21 @@ class CustomView(
     override fun onTouchEvent(event: MotionEvent): Boolean {
         val pointX = event.x
         val pointY = event.y
+        val drawing = drawings.last()
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                path = Path()
-                path.moveTo(pointX, pointY)
+                startX = pointX
+                startY = pointY
+
+                drawing.moveTo(pointX, pointY)
             }
 
             MotionEvent.ACTION_MOVE -> {
-                path.lineTo(pointX, pointY)
+                drawing.saveMovement(startX, startY, pointX, pointY, false)
             }
 
             MotionEvent.ACTION_UP -> {
-                drawings[path] = Paint(paint)
+                drawings.add(newDrawing())
             }
 
             else -> super.onTouchEvent(event)
@@ -61,17 +65,54 @@ class CustomView(
         return true
     }
 
+    private fun currentDrawing(): Drawing = drawings.last()
+
     private fun setupPaint() {
-        paint.color = Color.RED
-        paint.style = Paint.Style.STROKE
-        paint.strokeWidth = 5f
+        currentDrawing().changeColor(Color.RED)
+        currentDrawing().changePaintStyle(Paint.Style.STROKE)
+        currentDrawing().changeStrokeWidth(5f)
     }
 
     fun changeColor(color: Int) {
-        paint.color = color
+        currentDrawing().changeColor(color)
     }
 
     fun changeStrokeWidth(width: Float) {
-        paint.strokeWidth = width
+        currentDrawing().changeStrokeWidth(width)
+    }
+
+    fun changeBrushMode(brushMode: BrushMode) {
+        if (currentDrawing().brushMode == BrushMode.ERASER && brushMode != BrushMode.ERASER) {
+            currentDrawing().changeColor(Color.RED)
+        }
+        currentDrawing().brushMode = brushMode
+    }
+
+    private fun newDrawing(): Drawing =
+        Drawing(
+            paint = Paint(currentDrawing().paint),
+            brushMode = currentDrawing().brushMode,
+        )
+
+    fun undo() {
+        if (drawings.size > 1) {
+            stackHistory.add(drawings.removeAt(drawings.size - 2))
+            invalidate()
+        }
+    }
+
+    fun redo() {
+        if (stackHistory.isNotEmpty()) {
+            drawings.add(stackHistory.removeLast())
+            invalidate()
+        }
+    }
+
+    fun clear() {
+        val newDrawing = newDrawing()
+        stackHistory.clear()
+        drawings.clear()
+        drawings.add(newDrawing)
+        invalidate()
     }
 }

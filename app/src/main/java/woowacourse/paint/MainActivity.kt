@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import woowacourse.paint.databinding.ActivityMainBinding
+import woowacourse.paint.model.BrushMode
 import woowacourse.paint.model.PaintingColor
 
 class MainActivity : AppCompatActivity() {
@@ -27,11 +28,37 @@ class MainActivity : AppCompatActivity() {
         binding.rvColors.adapter = paintingColorAdapter
         binding.rangeSlider
             .apply {
-                values = listOf(5f)
+                values = listOf(10f)
                 valueFrom = 1f
-                valueTo = 20f
+                valueTo = 50f
             }.addOnChangeListener { _, value, _ ->
                 binding.customView.changeStrokeWidth(value)
             }
+
+        binding.btnPen.setOnClickListener {
+            binding.customView.changeBrushMode(BrushMode.PEN)
+        }
+
+        binding.btnRectangler.setOnClickListener {
+            binding.customView.changeBrushMode(BrushMode.RECT)
+        }
+
+        binding.btnCircle.setOnClickListener {
+            binding.customView.changeBrushMode(BrushMode.CIRCLE)
+        }
+
+        binding.btnEraser.setOnClickListener {
+            binding.customView.changeBrushMode(BrushMode.ERASER)
+        }
+
+        binding.btnUndo.setOnClickListener {
+            binding.customView.undo()
+        }
+        binding.btnRedo.setOnClickListener {
+            binding.customView.redo()
+        }
+        binding.btnClear.setOnClickListener {
+            binding.customView.clear()
+        }
     }
 }
