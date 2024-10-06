@@ -57,28 +57,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="펜" />
+                android:text="@string/drawing_tools_pen" />
 
             <RadioButton
                 android:id="@+id/radio_rectangle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="직사각형" />
+                android:text="@string/drawing_tools_rectangle" />
 
             <RadioButton
                 android:id="@+id/radio_circle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="원" />
+                android:text="@string/drawing_tools_circle" />
 
             <RadioButton
                 android:id="@+id/radio_eraser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="지우개" />
+                android:text="@string/drawing_tools_eraser" />
 
         </RadioGroup>
 
