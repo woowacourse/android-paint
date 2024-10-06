@@ -65,6 +65,7 @@ class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, at
     }
 
     fun setDrawingType(drawingType: Drawing) {
+        setLayerType(LAYER_TYPE_HARDWARE, null)
         currentDrawing = drawingType
         setBrushThickness(currentThickness)
         setBrushColor(currentPaint.color)

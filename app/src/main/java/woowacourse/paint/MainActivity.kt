@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.slider.RangeSlider
 import woowacourse.paint.drawing.Circle
+import woowacourse.paint.drawing.Eraser
 import woowacourse.paint.drawing.Pen
 import woowacourse.paint.drawing.Rectangle
+import java.time.chrono.Era
 
 class MainActivity : AppCompatActivity() {
     private val drawingBoard: DrawingBoardView by lazy { findViewById(R.id.drawing_board) }
@@ -18,7 +20,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         initBrushThickness()
         initDrawingTypes()
         initColorsPallet()
@@ -47,6 +48,12 @@ class MainActivity : AppCompatActivity() {
                     drawingBoard.setDrawingType(
                         Circle.default(),
                     )
+
+                R.id.rb_drawing_eraser -> {
+                    drawingBoard.setDrawingType(
+                        Eraser(),
+                    )
+                }
             }
         }
     }
