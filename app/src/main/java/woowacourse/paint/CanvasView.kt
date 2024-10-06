@@ -91,7 +91,7 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             }
     }
 
-    fun clear()  {
+    fun clear() {
         drawings.clear()
         invalidate()
     }
