@@ -1,6 +1,7 @@
 package woowacourse.paint
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.brush.Circle
 import woowacourse.paint.brush.Eraser
@@ -25,13 +26,38 @@ class MainActivity : AppCompatActivity() {
         with(binding) {
             brushGroup.setOnCheckedChangeListener { _, checkedId ->
                 when (checkedId) {
-                    R.id.btn_pen -> paintView.changeBrush(Pen::class)
-                    R.id.btn_rect -> paintView.changeBrush(Rect::class)
-                    R.id.btn_circle -> paintView.changeBrush(Circle::class)
-                    R.id.btn_erase -> paintView.changeBrush(Eraser::class)
+                    R.id.btn_pen -> changePen()
+                    R.id.btn_rect -> changeRect()
+                    R.id.btn_circle -> changeCircle()
+                    R.id.btn_erase -> changeErase()
+
                 }
             }
         }
+    }
+
+    private fun ActivityMainBinding.changeErase() {
+        paintView.changeBrush(Eraser::class)
+        colorGroup.visibility = View.INVISIBLE
+        rangeSlider.visibility = View.VISIBLE
+    }
+
+    private fun ActivityMainBinding.changeCircle() {
+        paintView.changeBrush(Circle::class)
+        rangeSlider.visibility = View.INVISIBLE
+        colorGroup.visibility = View.VISIBLE
+    }
+
+    private fun ActivityMainBinding.changeRect() {
+        paintView.changeBrush(Rect::class)
+        rangeSlider.visibility = View.INVISIBLE
+        colorGroup.visibility = View.VISIBLE
+    }
+
+    private fun ActivityMainBinding.changePen() {
+        paintView.changeBrush(Pen::class)
+        rangeSlider.visibility = View.VISIBLE
+        colorGroup.visibility = View.VISIBLE
     }
 
     private fun setupRangeSlider() {
