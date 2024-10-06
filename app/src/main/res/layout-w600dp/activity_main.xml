@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <woowacourse.paint.CanvasView
+        android:id="@+id/paint_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <RadioGroup
+        android:id="@+id/brush_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RadioButton
+            android:id="@+id/btn_pen"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginHorizontal="10dp"
+            android:background="@drawable/ic_brush"
+            android:backgroundTint="@color/sel_brush_color"
+            android:button="@null"
+            android:checked="true" />
+
+        <RadioButton
+            android:id="@+id/btn_rect"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginHorizontal="10dp"
+            android:background="@drawable/ic_rect"
+            android:backgroundTint="@color/sel_brush_color"
+            android:button="@null" />
+
+        <RadioButton
+            android:id="@+id/btn_circle"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginHorizontal="10dp"
+            android:background="@drawable/ic_circle"
+            android:backgroundTint="@color/sel_brush_color"
+            android:button="@null" />
+
+        <RadioButton
+            android:id="@+id/btn_erase"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginHorizontal="10dp"
+            android:background="@drawable/ic_eraser"
+            android:backgroundTint="@color/sel_brush_color"
+            android:button="@null" />
+
+
+    </RadioGroup>
+
+    <com.google.android.material.slider.RangeSlider
+        android:id="@+id/range_slider"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:layout_marginBottom="10dp"
+        android:valueFrom="1"
+        android:valueTo="100"
+        app:layout_constraintEnd_toEndOf="@id/brush_group"
+        app:layout_constraintStart_toStartOf="@id/brush_group"
+        app:layout_constraintTop_toBottomOf="@id/brush_group" />
+
+    <RadioGroup
+        android:id="@+id/color_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@id/brush_group"
+        app:layout_constraintTop_toBottomOf="@id/range_slider">
+
+        <RadioButton
+            android:id="@+id/btn_red"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="12dp"
+            android:background="@color/red"
+            android:button="@null" />
+
+        <RadioButton
+            android:id="@+id/btn_orange"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="12dp"
+            android:background="@color/orange"
+            android:button="@null" />
+
+        <RadioButton
+            android:id="@+id/btn_yellow"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="12dp"
+            android:background="@color/yellow"
+            android:button="@null" />
+
+        <RadioButton
+            android:id="@+id/btn_green"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="12dp"
+            android:background="@color/green"
+            android:button="@null" />
+
+        <RadioButton
+            android:id="@+id/btn_blue"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginHorizontal="12dp"
+            android:background="@color/blue"
+            android:button="@null" />
+
+    </RadioGroup>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
