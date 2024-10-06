@@ -14,6 +14,16 @@ class MainActivity : AppCompatActivity() {
 
         setupRangeSlider()
         setupColorGroupListener()
+
+        binding.brushGroup.setOnCheckedChangeListener { _, checkedId ->
+            when(checkedId){
+                R.id.btn_pen -> binding.paintView.changeBrush(BrushType.PEN)
+                R.id.btn_rect -> binding.paintView.changeBrush(BrushType.RECT)
+                R.id.btn_circle -> binding.paintView.changeBrush(BrushType.CIRCLE)
+                R.id.btn_erase -> binding.paintView.changeBrush(BrushType.ERASER)
+            }
+
+        }
     }
 
     private fun setupRangeSlider() {

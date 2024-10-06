@@ -10,8 +10,14 @@ import android.view.View
 
 class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val drawings = mutableListOf<Drawing>()
-    private var currentPaint =
+    private var currentBrush = CanvasBrush(
+        BrushType.PEN,
         CanvasPaint(this.context.getColor(DEFAULT_COLOR.colorId), DEFAULT_BRUSH_SIZE)
+    )
+
+    init {
+        setLayerType(LAYER_TYPE_HARDWARE, null)
+    }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -36,18 +42,9 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         pointX: Float,
         pointY: Float,
     ) {
-        val currentPath =
-            Path().apply {
-                addOval(
-                    pointX,
-                    pointY,
-                    pointX,
-                    pointY,
-                    Path.Direction.CW,
-                )
-            }
+        val currentBrush = currentBrush.startDraw(pointX, pointY)
 
-        drawings.add(Drawing(currentPath, currentPaint))
+        drawings.add(Drawing(currentBrush, currentBrush.paint))
         invalidate()
     }
 
@@ -55,17 +52,21 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
         pointX: Float,
         pointY: Float,
     ) {
-        drawings.lastOrNull()?.path?.lineTo(pointX, pointY)?.let {
+        drawings.lastOrNull()?.path?.moveBrush(pointX, pointY)?.let {
             invalidate()
         }
     }
 
     fun changePaintColor(colorType: ColorType) {
-        currentPaint = currentPaint.changeColor(this.context.getColor(colorType.colorId))
+        currentBrush = currentBrush.changeColor(colorType, this.context)
     }
 
     fun changeBrushWidth(width: Float) {
-        currentPaint = currentPaint.changeBrushWidth(width)
+        currentBrush = currentBrush.changeBrushWidth(width)
+    }
+
+    fun changeBrush(brushType: BrushType) {
+        currentBrush = currentBrush.changeBrush(brushType)
     }
 
     companion object {
