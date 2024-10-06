@@ -20,17 +20,14 @@ class PaintColorAdapter(private val actionHandler: PaintActionHandler) :
     ): PaintColorViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemPaintColorBinding.inflate(inflater, parent, false)
-        return PaintColorViewHolder(binding)
+        return PaintColorViewHolder(binding, actionHandler)
     }
 
     override fun onBindViewHolder(
         holder: PaintColorViewHolder,
         position: Int,
     ) {
-        holder.bind(
-            paintColorUiModel = getItem(position),
-            actionHandler = actionHandler,
-        )
+        holder.bind(paintColorUiModel = getItem(position))
     }
 
     companion object {

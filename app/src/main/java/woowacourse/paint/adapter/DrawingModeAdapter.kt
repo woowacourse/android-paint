@@ -20,17 +20,14 @@ class DrawingModeAdapter(private val actionHandler: PaintActionHandler) :
     ): DrawingModeViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemPaintDrawingModeBinding.inflate(inflater, parent, false)
-        return DrawingModeViewHolder(binding)
+        return DrawingModeViewHolder(binding, actionHandler)
     }
 
     override fun onBindViewHolder(
         holder: DrawingModeViewHolder,
         position: Int,
     ) {
-        holder.bind(
-            drawingModeUiModel = getItem(position),
-            actionHandler = actionHandler,
-        )
+        holder.bind(drawingModeUiModel = getItem(position))
     }
 
     companion object {

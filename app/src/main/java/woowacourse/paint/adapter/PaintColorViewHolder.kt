@@ -5,12 +5,12 @@ import woowacourse.paint.action.PaintActionHandler
 import woowacourse.paint.databinding.ItemPaintColorBinding
 import woowacourse.paint.uimodel.PaintColorUiModel
 
-class PaintColorViewHolder(private val binding: ItemPaintColorBinding) :
+class PaintColorViewHolder(
+    private val binding: ItemPaintColorBinding,
+    private val actionHandler: PaintActionHandler
+) :
     RecyclerView.ViewHolder(binding.root) {
-    fun bind(
-        paintColorUiModel: PaintColorUiModel,
-        actionHandler: PaintActionHandler,
-    ) {
+    fun bind(paintColorUiModel: PaintColorUiModel) {
         binding.paintColorUiModel = paintColorUiModel
         binding.actionHandler = actionHandler
     }
