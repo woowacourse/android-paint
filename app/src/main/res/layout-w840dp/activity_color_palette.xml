@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="color"
+            type="woowacourse.paint.presentation.paint.model.ColorUiModel" />
+
+        <variable
+            name="brush"
+            type="woowacourse.paint.presentation.paint.model.BrushType" />
+
+        <variable
+            name="brushListener"
+            type="woowacourse.paint.presentation.palette.listener.BrushListener" />
+
+        <variable
+            name="paintHistoryListener"
+            type="woowacourse.paint.presentation.palette.listener.PaintHistoryListener" />
+
+        <variable
+            name="colorPaletteListener"
+            type="woowacourse.paint.presentation.palette.listener.ColorPaletteListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <woowacourse.paint.presentation.paint.PaintView
+            android:id="@+id/paint_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btn_change_color"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/change_color"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:onClickReverseVisibility="@{layoutColorPalette}" />
+
+        <Button
+            android:id="@+id/btn_change_thickness"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/change_thickness"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_change_color"
+            app:onClickReverseVisibility="@{rangeSliderThickness}" />
+
+        <Button
+            android:id="@+id/btn_change_brush"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/change_brush"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_change_thickness"
+            app:onClickReverseVisibility="@{layoutBrush}" />
+
+        <ImageView
+            android:id="@+id/iv_paint_undo"
+            style="@style/canvas_history_image_view"
+            android:onClick="@{() -> paintHistoryListener.onUndo()}"
+            android:src="@drawable/ic_undo"
+            app:layout_constraintEnd_toStartOf="@id/iv_paint_redo"
+            app:layout_constraintStart_toEndOf="@id/range_slider_thickness"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_paint_redo"
+            style="@style/canvas_history_image_view"
+            android:onClick="@{() -> paintHistoryListener.onRedo()}"
+            android:src="@drawable/ic_redo"
+            app:layout_constraintEnd_toStartOf="@id/iv_paint_empty"
+            app:layout_constraintStart_toEndOf="@id/iv_paint_undo"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_paint_empty"
+            style="@style/canvas_history_image_view"
+            android:onClick="@{() -> paintHistoryListener.onClear()}"
+            android:src="@drawable/ic_trash"
+            app:layout_constraintStart_toEndOf="@id/iv_paint_redo"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.slider.RangeSlider
+            android:id="@+id/range_slider_thickness"
+            android:layout_width="420dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:stepSize="10.0"
+            android:valueFrom="10.0"
+            android:valueTo="100.0"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@id/btn_change_color"
+            app:layout_constraintTop_toTopOf="parent"
+            app:values="@array/default_thickness_range_slider"
+            tools:visibility="visible" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_color_palette"
+            android:layout_width="420dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@id/btn_change_color"
+            app:layout_constraintTop_toBottomOf="@id/range_slider_thickness"
+            tools:visibility="visible">
+
+            <ImageView
+                android:id="@+id/iv_color_red"
+                style="@style/color_palette_image_view"
+                android:background="@color/red"
+                android:onClick="@{() -> colorPaletteListener.onSelectColor(color.RED)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/iv_color_orange"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_color_orange"
+                style="@style/color_palette_image_view"
+                android:background="@color/orange"
+                android:onClick="@{() -> colorPaletteListener.onSelectColor(color.ORANGE)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/iv_color_yellow"
+                app:layout_constraintStart_toEndOf="@id/iv_color_red"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_color_yellow"
+                style="@style/color_palette_image_view"
+                android:background="@color/yellow"
+                android:onClick="@{() -> colorPaletteListener.onSelectColor(color.YELLOW)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/iv_color_green"
+                app:layout_constraintStart_toEndOf="@id/iv_color_orange"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_color_green"
+                style="@style/color_palette_image_view"
+                android:background="@color/green"
+                android:onClick="@{() -> colorPaletteListener.onSelectColor(color.GREEN)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/iv_color_blue"
+                app:layout_constraintStart_toEndOf="@id/iv_color_yellow"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iv_color_blue"
+                style="@style/color_palette_image_view"
+                android:background="@color/blue"
+                android:onClick="@{() -> colorPaletteListener.onSelectColor(color.BLUE)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_color_green"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_brush"
+            android:layout_width="420dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@id/btn_change_color"
+            app:layout_constraintTop_toBottomOf="@id/layout_color_palette"
+            tools:visibility="visible">
+
+            <Button
+                android:id="@+id/btn_brush_type_pen"
+                style="@style/brush_type_button"
+                android:onClick="@{() ->brushListener.onChangeBrushType(brush.PEN)}"
+                android:text="@string/brush_type_pen"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btn_brush_type_rectangle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btn_brush_type_rectangle"
+                style="@style/brush_type_button"
+                android:onClick="@{() ->brushListener.onChangeBrushType(brush.RECTANGLE)}"
+                android:text="@string/brush_type_rectangle"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btn_brush_type_circle"
+                app:layout_constraintStart_toEndOf="@id/btn_brush_type_pen"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btn_brush_type_circle"
+                style="@style/brush_type_button"
+                android:onClick="@{() ->brushListener.onChangeBrushType(brush.CIRCLE)}"
+                android:text="@string/brush_type_circle"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btn_brush_type_eraser"
+                app:layout_constraintStart_toEndOf="@id/btn_brush_type_rectangle"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btn_brush_type_eraser"
+                style="@style/brush_type_button"
+                android:onClick="@{() ->brushListener.onChangeBrushType(brush.ERASER)}"
+                android:text="@string/brush_type_eraser"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/btn_brush_type_circle"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
