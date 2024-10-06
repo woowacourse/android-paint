@@ -1,3 +1,5 @@
 package woowacourse.paint.brush.draw
 
-interface Draw
+interface Draw {
+    fun drawing(x:Float,y: Float)
+}
