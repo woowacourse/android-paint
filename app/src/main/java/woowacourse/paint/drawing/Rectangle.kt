@@ -49,7 +49,16 @@ data class Rectangle(val rect: RectF = RectF(), private val paint: Paint) : Draw
         return Rectangle(rect, paint)
     }
 
-    override fun copy(pointX: Float, pointY: Float): Drawing2 =
-        Rectangle(RectF(pointX, pointY, pointX, pointY), Paint(paint))
+    override fun copyPoint(pointX: Float, pointY: Float): Drawing2 =
+        this.copy(rect = RectF(pointX, pointY, pointX, pointY))
 
+    companion object {
+        fun default(): Rectangle {
+            val paint = Paint().apply {
+                strokeCap = DEFAULT_BRUSH_CAP
+                isAntiAlias = true
+            }
+            return Rectangle(RectF(), paint)
+        }
+    }
 }

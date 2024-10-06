@@ -3,7 +3,6 @@ package woowacourse.paint.drawing
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
-import android.graphics.RectF
 import woowacourse.paint.drawing.Drawing2.Companion.DEFAULT_BRUSH_CAP
 import woowacourse.paint.drawing.Drawing2.Companion.DEFAULT_BRUSH_STYLE
 
@@ -44,7 +43,18 @@ data class Pen(private val path: Path, private val paint: Paint) : Drawing2 {
         return Pen(path, paint)
     }
 
-    override fun copy(pointX: Float, pointY: Float): Drawing2 = Pen(Path(path), Paint(paint))
+    override fun copyPoint(pointX: Float, pointY: Float): Drawing2 =
+        this.copy(path = Path())
 
+    companion object {
+        fun default(): Pen {
+            val paint = Paint().apply {
+                style = DEFAULT_BRUSH_STYLE
+                strokeCap = DEFAULT_BRUSH_CAP
+                isAntiAlias = true
+            }
+            return Pen(Path(), paint)
+        }
+    }
 }
 

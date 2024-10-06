@@ -3,16 +3,14 @@ package woowacourse.paint
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import woowacourse.paint.drawing.Circle
 import woowacourse.paint.drawing.Drawing2
+import woowacourse.paint.drawing.Pen
 
 class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
-    private var currentDrawing: Drawing2 = Circle(RectF(), Paint())
+    private var currentDrawing: Drawing2 = Pen.default()
 
     private val drawings: MutableList<Drawing2> = mutableListOf()
 
@@ -30,21 +28,23 @@ class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, at
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
+                currentDrawing = currentDrawing.copyPoint(pointX, pointY)
                 drawings.add(currentDrawing)
                 currentDrawing.setStartPoint(pointX, pointY)
             }
 
             MotionEvent.ACTION_MOVE -> {
                 currentDrawing.pathLineTo(pointX, pointY)
-                invalidate()
+//                invalidate()
             }
 
             MotionEvent.ACTION_UP -> {
-                currentDrawing = currentDrawing.copy(pointX, pointY)
+                currentDrawing = currentDrawing.copyPoint(pointX, pointY)
             }
 
             else -> return false
         }
+        invalidate()
         return true
     }
 
@@ -56,5 +56,9 @@ class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, at
     fun setBrushColor(color: Int) {
         // TODO: remove type casting
         currentDrawing = currentDrawing.copyWithPaint(color)
+    }
+
+    fun setDrawingType(drawingType: Drawing2, color: Int) {
+        currentDrawing = drawingType.copyWithPaint(color)
     }
 }

@@ -14,9 +14,11 @@
         android:layout_weight="8.5" />
 
     <RadioGroup
+        android:id="@+id/rg_drawing_types"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:checkedButton="@id/rb_drawing_pen"
         android:orientation="horizontal">
 
         <RadioButton

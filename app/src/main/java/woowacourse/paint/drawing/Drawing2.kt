@@ -19,7 +19,7 @@ sealed interface Drawing2 {
 
     fun copyWithPaint(color: Int): Drawing2
 
-    fun copy(pointX: Float, pointY: Float): Drawing2
+    fun copyPoint(pointX: Float, pointY: Float): Drawing2
 
     companion object {
         val DEFAULT_BRUSH_STYLE = Paint.Style.STROKE
