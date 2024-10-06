@@ -7,9 +7,6 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 
 data class Drawing(
-    val path: Path,
-    val paint: Paint,
-)
     val path: Path = Path(),
     val paint: Paint = Paint(),
     var brush: Brush = Brush(),
@@ -30,6 +27,7 @@ data class Drawing(
             style = when (brush.brushType) {
                 BrushType.PENCIL -> Paint.Style.STROKE
                 BrushType.SQUARE -> Paint.Style.FILL
+                BrushType.CIRCLE -> Paint.Style.FILL
             }
         }
     }
@@ -45,6 +43,14 @@ data class Drawing(
 
             BrushType.SQUARE -> path.addRect(startX, startY, endX, endY, Path.Direction.CW)
 
+
+            BrushType.CIRCLE -> {
+                val radius = sqrt(
+                    (endX - startX).toDouble().pow(2.0) +
+                            (endY - startY).toDouble().pow(2.0)
+                ).toFloat()
+                path.addCircle(startX, startY, radius, Path.Direction.CW)
+            }
 
         }
     }
