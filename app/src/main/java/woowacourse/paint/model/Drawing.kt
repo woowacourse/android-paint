@@ -28,6 +28,11 @@ data class Drawing(
                 BrushType.PENCIL -> Paint.Style.STROKE
                 BrushType.SQUARE -> Paint.Style.FILL
                 BrushType.CIRCLE -> Paint.Style.FILL
+                BrushType.ERASER -> {
+                    color = Color.WHITE
+                    strokeWidth = 30f
+                    Paint.Style.STROKE
+                }
             }
         }
     }
@@ -52,6 +57,7 @@ data class Drawing(
                 path.addCircle(startX, startY, radius, Path.Direction.CW)
             }
 
+            BrushType.ERASER -> path.lineTo(endX, endY)
         }
     }
 }
