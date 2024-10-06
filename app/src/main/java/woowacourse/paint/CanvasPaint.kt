@@ -1,16 +1,12 @@
 package woowacourse.paint
 
 import android.graphics.Paint
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffXfermode
-import android.graphics.Xfermode
 import androidx.annotation.ColorInt
 
 data class CanvasPaint(
     @ColorInt private val colorInt: Int,
     private val brushWidth: Float,
 ) : Paint() {
-
     init {
         isAntiAlias = true
         strokeJoin = Join.ROUND
@@ -28,5 +24,4 @@ data class CanvasPaint(
     fun changeBrushWidth(brushWidth: Float): CanvasPaint {
         return this.copy(brushWidth = brushWidth)
     }
-
 }

@@ -19,11 +19,10 @@ class MainActivity : AppCompatActivity() {
         setUpBrushListener()
         setupRangeSlider()
         setupColorGroupListener()
-
     }
 
     private fun setUpBrushListener() {
-        with(binding){
+        with(binding) {
             brushGroup.setOnCheckedChangeListener { _, checkedId ->
                 when (checkedId) {
                     R.id.btn_pen -> paintView.changeBrush(Pen::class)
@@ -31,7 +30,6 @@ class MainActivity : AppCompatActivity() {
                     R.id.btn_circle -> paintView.changeBrush(Circle::class)
                     R.id.btn_erase -> paintView.changeBrush(Eraser::class)
                 }
-
             }
         }
     }
@@ -45,7 +43,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupColorGroupListener() {
-        with(binding){
+        with(binding) {
             colorGroup.setOnCheckedChangeListener { _, checkedId ->
                 when (checkedId) {
                     R.id.btn_red -> paintView.changePaintColor(ColorType.RED)

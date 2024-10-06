@@ -15,9 +15,10 @@ import kotlin.reflect.KClass
 
 class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val drawings = mutableListOf<Brush>()
-    private var currentBrush: Brush = Pen(
-        CanvasPaint(this.context.getColor(DEFAULT_COLOR.colorId), DEFAULT_BRUSH_SIZE)
-    )
+    private var currentBrush: Brush =
+        Pen(
+            CanvasPaint(this.context.getColor(DEFAULT_COLOR.colorId), DEFAULT_BRUSH_SIZE),
+        )
 
     init {
         setLayerType(LAYER_TYPE_HARDWARE, null)
@@ -60,31 +61,34 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     }
 
     fun changePaintColor(colorType: ColorType) {
-        currentBrush = when (currentBrush) {
-            is Eraser -> return
-            is Pen -> (currentBrush as Pen).changeColor(colorType, this.context)
-            is Circle -> (currentBrush as Circle).changeColor(colorType, this.context)
-            is Rect -> (currentBrush as Rect).changeColor(colorType, this.context)
-        }
+        currentBrush =
+            when (currentBrush) {
+                is Eraser -> return
+                is Pen -> (currentBrush as Pen).changeColor(colorType, this.context)
+                is Circle -> (currentBrush as Circle).changeColor(colorType, this.context)
+                is Rect -> (currentBrush as Rect).changeColor(colorType, this.context)
+            }
     }
 
     fun changeBrushWidth(width: Float) {
-        currentBrush = when (currentBrush) {
-            is Eraser -> (currentBrush as Eraser).changeBrushWidth(width)
-            is Pen -> (currentBrush as Pen).changeBrushWidth(width)
-            is Circle -> return
-            is Rect -> return
-        }
+        currentBrush =
+            when (currentBrush) {
+                is Eraser -> (currentBrush as Eraser).changeBrushWidth(width)
+                is Pen -> (currentBrush as Pen).changeBrushWidth(width)
+                is Circle -> return
+                is Rect -> return
+            }
     }
 
     fun changeBrush(brush: KClass<out Brush>) {
-        currentBrush = when(brush){
-            Eraser::class -> Eraser(currentBrush.paint.copy())
-            Pen::class -> Pen(currentBrush.paint.copy())
-            Circle::class -> Circle(currentBrush.paint.copy())
-            Rect::class -> Rect(currentBrush.paint.copy())
-            else -> throw IllegalArgumentException("$brush 는 Brush 타입이 아닙니다.")
-        }
+        currentBrush =
+            when (brush) {
+                Eraser::class -> Eraser(currentBrush.paint.copy())
+                Pen::class -> Pen(currentBrush.paint.copy())
+                Circle::class -> Circle(currentBrush.paint.copy())
+                Rect::class -> Rect(currentBrush.paint.copy())
+                else -> throw IllegalArgumentException("$brush 는 Brush 타입이 아닙니다.")
+            }
     }
 
     companion object {
