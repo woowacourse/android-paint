@@ -86,9 +86,10 @@ class EraserState(private val strokes: Strokes) : BrushState {
 
     override fun onTouchMove(path: Path, x: Float, y: Float) {
         path.lineTo(x, y)
+        strokes.removeIntersectingStrokes(path)
     }
 
     override fun onTouchUp(path: Path, paint: Paint) {
-        strokes.removeIntersectingStrokes(path)
+        /* ERASER DOES NOTHING WHEN TOUCHING UP */
     }
 }
