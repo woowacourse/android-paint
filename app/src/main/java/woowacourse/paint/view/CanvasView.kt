@@ -3,6 +3,7 @@ package woowacourse.paint.view
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.TypedArray
+import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
@@ -26,6 +27,9 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private var currentState: BrushState = PenState(strokes)
     private var currentPath: Path? = null
     private val currentPaint: Paint = Paint()
+
+    private var cacheBitmap: Bitmap? = null
+    private var cacheCanvas: Canvas? = null
 
     init {
         setLayerType(LAYER_TYPE_HARDWARE, null)
@@ -63,9 +67,7 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        strokes.value.forEach { stroke ->
-            canvas.drawPath(stroke.path, stroke.paint)
-        }
+        cacheBitmap?.let { canvas.drawBitmap(it, 0f, 0f, null) }
         currentState.draw(canvas, currentPath, currentPaint)
     }
 
@@ -83,7 +85,10 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
             }
 
             MotionEvent.ACTION_UP -> {
-                currentPath?.let { currentState.finish(it, currentPaint) }
+                currentPath?.let {
+                    currentState.finish(it, currentPaint)
+                    updateCache()
+                }
                 currentPath = null
             }
 
@@ -139,6 +144,18 @@ class CanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
                 DrawingToolType.PEN, DrawingToolType.ERASER, DrawingToolType.RESET -> Paint.Style.STROKE
                 DrawingToolType.RECTANGULAR, DrawingToolType.CIRCLE -> Paint.Style.FILL
             }
+    }
+
+    private fun updateCache() {
+        if (cacheBitmap == null) {
+            cacheBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+            cacheCanvas = Canvas(cacheBitmap!!)
+        }
+
+        val lastStroke = strokes.value.lastOrNull()
+        lastStroke?.let {
+            cacheCanvas?.drawPath(it.path, it.paint)
+        }
     }
 
     companion object {
