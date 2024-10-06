@@ -7,7 +7,7 @@ import woowacourse.paint.uimodel.PaintColorUiModel
 
 class PaintColorViewHolder(
     private val binding: ItemPaintColorBinding,
-    private val actionHandler: PaintActionHandler
+    private val actionHandler: PaintActionHandler,
 ) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(paintColorUiModel: PaintColorUiModel) {

@@ -9,8 +9,8 @@ import woowacourse.paint.PaintBoard.Companion.DEFAULT_DRAWING_MODE
 import woowacourse.paint.PaintBoard.Companion.DEFAULT_PAINT_COLOR_RES
 import woowacourse.paint.PaintBoard.Companion.DEFAULT_STROKE_WIDTH
 import woowacourse.paint.action.PaintBoardAction
-import woowacourse.paint.adapter.PaintColorAdapter
 import woowacourse.paint.adapter.DrawingModeAdapter
+import woowacourse.paint.adapter.PaintColorAdapter
 import woowacourse.paint.databinding.ActivityPaintBinding
 import woowacourse.paint.model.DrawingMode
 import woowacourse.paint.model.PaintColor

@@ -5,8 +5,6 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffXfermode
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -106,7 +104,10 @@ class PaintBoard(context: Context, attr: AttributeSet) : View(context, attr) {
         }
     }
 
-    private fun updatePath(currentX: Float, currentY: Float) {
+    private fun updatePath(
+        currentX: Float,
+        currentY: Float,
+    ) {
         when (drawingMode) {
             DrawingMode.PEN -> {
                 path.lineTo(currentX, currentY)
@@ -153,27 +154,8 @@ class PaintBoard(context: Context, attr: AttributeSet) : View(context, attr) {
     }
 
     private fun applyDrawingMode() {
-        when (drawingMode) {
-            DrawingMode.PEN -> {
-                paint.style = Paint.Style.STROKE
-                paint.xfermode = null
-            }
-
-            DrawingMode.SQUARE -> {
-                paint.style = Paint.Style.FILL
-                paint.xfermode = null
-            }
-
-            DrawingMode.CIRCLE -> {
-                paint.style = Paint.Style.FILL
-                paint.xfermode = null
-            }
-
-            DrawingMode.ERASER -> {
-                paint.style = Paint.Style.STROKE
-                paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
-            }
-        }
+        paint.style = drawingMode.paintStyle
+        paint.xfermode = drawingMode.xferMode
     }
 
     private fun createRectangle(

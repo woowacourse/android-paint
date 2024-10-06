@@ -7,12 +7,10 @@ import woowacourse.paint.uimodel.DrawingModeUiModel
 
 class DrawingModeViewHolder(
     private val binding: ItemPaintDrawingModeBinding,
-    private val actionHandler: PaintActionHandler
+    private val actionHandler: PaintActionHandler,
 ) :
     RecyclerView.ViewHolder(binding.root) {
-    fun bind(
-        drawingModeUiModel: DrawingModeUiModel,
-    ) {
+    fun bind(drawingModeUiModel: DrawingModeUiModel) {
         binding.drawingModeUiModel = drawingModeUiModel
         binding.actionHandler = actionHandler
     }
