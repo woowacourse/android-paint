@@ -8,8 +8,8 @@ import woowacourse.paint.action.PaintActionHandler
 import woowacourse.paint.databinding.ItemPaintDrawingModeBinding
 import woowacourse.paint.uimodel.DrawingModeUiModel
 
-class PaintDrawingModeAdapter(private val actionHandler: PaintActionHandler) :
-    ListAdapter<DrawingModeUiModel, PaintDrawingModelHolder>(diffUtil) {
+class DrawingModeAdapter(private val actionHandler: PaintActionHandler) :
+    ListAdapter<DrawingModeUiModel, DrawingModeViewHolder>(diffUtil) {
     init {
         setHasStableIds(true)
     }
@@ -17,14 +17,14 @@ class PaintDrawingModeAdapter(private val actionHandler: PaintActionHandler) :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): PaintDrawingModelHolder {
+    ): DrawingModeViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemPaintDrawingModeBinding.inflate(inflater, parent, false)
-        return PaintDrawingModelHolder(binding)
+        return DrawingModeViewHolder(binding)
     }
 
     override fun onBindViewHolder(
-        holder: PaintDrawingModelHolder,
+        holder: DrawingModeViewHolder,
         position: Int,
     ) {
         holder.bind(

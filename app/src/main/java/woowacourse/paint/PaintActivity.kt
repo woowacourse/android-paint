@@ -10,7 +10,7 @@ import woowacourse.paint.PaintBoard.Companion.DEFAULT_PAINT_COLOR_RES
 import woowacourse.paint.PaintBoard.Companion.DEFAULT_STROKE_WIDTH
 import woowacourse.paint.action.PaintBoardAction
 import woowacourse.paint.adapter.PaintColorAdapter
-import woowacourse.paint.adapter.PaintDrawingModeAdapter
+import woowacourse.paint.adapter.DrawingModeAdapter
 import woowacourse.paint.databinding.ActivityPaintBinding
 import woowacourse.paint.model.DrawingMode
 import woowacourse.paint.model.PaintColor
@@ -25,8 +25,8 @@ class PaintActivity : AppCompatActivity() {
     private val rangeSlider: RangeSlider by lazy { binding.rangeSliderThickness }
     private val paintBoard: PaintBoard by lazy { binding.paintBoard }
     private val paintColorAdapter: PaintColorAdapter by lazy { PaintColorAdapter(viewModel) }
-    private val paintDrawingModeAdapter: PaintDrawingModeAdapter by lazy {
-        PaintDrawingModeAdapter(
+    private val drawingModeAdapter: DrawingModeAdapter by lazy {
+        DrawingModeAdapter(
             viewModel,
         )
     }
@@ -57,7 +57,7 @@ class PaintActivity : AppCompatActivity() {
         binding.rcvPaintColor.adapter = paintColorAdapter
         submitPaintColors(DEFAULT_PAINT_COLOR_RES)
 
-        binding.rcvPaintDrawingMode.adapter = paintDrawingModeAdapter
+        binding.rcvPaintDrawingMode.adapter = drawingModeAdapter
         submitDrawingModes(DEFAULT_DRAWING_MODE)
     }
 
@@ -111,7 +111,7 @@ class PaintActivity : AppCompatActivity() {
                 val isChecked = drawingMode == checkedDrawingMode
                 DrawingModeUiModel(drawingMode, isChecked)
             }
-        paintDrawingModeAdapter.submitList(drawingModes)
+        drawingModeAdapter.submitList(drawingModes)
     }
 
     private fun setupRangeSlider() {
