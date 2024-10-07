@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
             binding.drawingPaper.currentColor = it.color
         }
     }
-    private val viewModel by viewModels<MainViewModel>()
+    private val viewModel by viewModels<DrawingPaperViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +40,6 @@ class MainActivity : AppCompatActivity() {
     private fun initAdapter() {
         binding.rvPalette.adapter = adapter
         binding.rvPalette.setHasFixedSize(true)
-        adapter.submitList(Paint.dummy)
+        adapter.submitList(Paint.defaults)
     }
 }
-

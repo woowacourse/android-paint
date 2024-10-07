@@ -5,11 +5,13 @@
 
     <data>
 
+        <import type="woowacourse.paint.view.BrushType" />
+
         <import type="woowacourse.paint.PanelType" />
 
         <variable
             name="vm"
-            type="woowacourse.paint.MainViewModel" />
+            type="woowacourse.paint.DrawingPaperViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,6 +20,7 @@
 
         <woowacourse.paint.view.DrawingPaperView
             android:id="@+id/drawing_paper"
+            brushType="@{vm.panelState.brushType}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@id/panel"
@@ -106,25 +109,28 @@
                 android:layout_weight="1"
                 android:backgroundTint="@color/purple_500"
                 android:text="펜"
-                android:textColor="@android:color/white" />
-
-            <Button
-                android:id="@+id/btn_circle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="1"
-                android:backgroundTint="@color/purple_500"
-                android:text="직사각형"
+                android:onClick="@{() -> vm.changeBrushType(BrushType.PEN)}"
                 android:textColor="@android:color/white" />
 
             <Button
                 android:id="@+id/btn_rect"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/purple_500"
+                android:onClick="@{() -> vm.changeBrushType(BrushType.RECTANGLE)}"
+                android:text="직사각형"
+                android:textColor="@android:color/white" />
+
+            <Button
+                android:id="@+id/btn_circle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="@color/purple_500"
+                android:onClick="@{() -> vm.changeBrushType(BrushType.CIRCLE)}"
                 android:text="원"
                 android:textColor="@android:color/white" />
 
@@ -135,6 +141,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="@color/purple_500"
+                android:onClick="@{() -> vm.changeBrushType(BrushType.ERASER)}"
                 android:text="지우개"
                 android:textColor="@android:color/white" />
 
