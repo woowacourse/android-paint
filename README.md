@@ -26,4 +26,4 @@ android-paint 저장소를 기반으로 미션을 진행한다. 온라인 코드
 
 - [x] 그림판의 Configuration Change 에 대응한다'
 - [x] 다크 모드와 화이트 모드 지원한다.
-- [ ] Landscape 모드를 지원한다.
+- [x] 태블릿 ,Landscape 모드를 지원한다.

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/clear_group"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <Button
+                android:id="@+id/btn_undo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:text="undo" />
+
+            <Button
+                android:id="@+id/btn_redo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:text="redo" />
+
+            <Button
+                android:id="@+id/btn_clear_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:text="clear" />
+        </LinearLayout>
+
+        <woowacourse.paint.view.DrawingPaperView
+            android:id="@+id/drawing_paper"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
+
+        <LinearLayout
+            android:id="@+id/panel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/clear_group">
+
+            <Button
+                android:id="@+id/btn_brush_color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="색상 변경" />
+
+            <Button
+                android:id="@+id/btn_brush_stroke"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="굵기 변경" />
+
+            <Button
+                android:id="@+id/btn_brush_change"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="브러쉬 변경" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_palette"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintStart_toEndOf="@id/panel"
+            app:layout_constraintTop_toTopOf="@id/panel"
+            tools:itemCount="5"
+            tools:listitem="@layout/item_paint" />
+
+        <woowacourse.paint.view.SliderView
+            android:id="@+id/my_slider"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintStart_toEndOf="@id/panel"
+            app:layout_constraintTop_toTopOf="@id/panel" />
+
+        <LinearLayout
+            android:id="@+id/tool_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            app:layout_constraintStart_toEndOf="@id/panel"
+            app:layout_constraintTop_toTopOf="@id/panel">
+
+            <Button
+                android:id="@+id/btn_pen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="펜" />
+
+            <Button
+                android:id="@+id/btn_rect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="직사각형" />
+
+            <Button
+                android:id="@+id/btn_circle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="원" />
+
+            <Button
+                android:id="@+id/btn_eraser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="지우개" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

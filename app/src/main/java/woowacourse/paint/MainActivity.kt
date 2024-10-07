@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initAdapter() {
         binding.rvPalette.adapter = adapter
-        binding.rvPalette.setHasFixedSize(true)
+//        binding.rvPalette.setHasFixedSize(true)
         adapter.submitList(Paint.defaults)
     }
 
