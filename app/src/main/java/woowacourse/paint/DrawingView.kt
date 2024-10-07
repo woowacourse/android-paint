@@ -184,6 +184,10 @@ class DrawingView(
         currentStrokeWidth = size
     }
 
+    fun setBrushType(brushType: BrushType) {
+        currentBrushType = brushType
+    }
+
     companion object {
         private const val INIT_STROKE_WIDTH = 10f
         private const val START_POSITION = 0f

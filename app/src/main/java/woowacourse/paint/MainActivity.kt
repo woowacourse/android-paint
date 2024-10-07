@@ -40,19 +40,19 @@ class MainActivity : AppCompatActivity() {
             drawingView.clearCanvas()
         }
         btnPen.setOnClickListener {
-            drawingView.currentBrushType = BrushType.PEN
+            setBrushType(BrushType.PEN)
         }
 
         btnRectangle.setOnClickListener {
-            drawingView.currentBrushType = BrushType.RECTANGLE
+            setBrushType(BrushType.RECTANGLE)
         }
 
         btnCircle.setOnClickListener {
-            drawingView.currentBrushType = BrushType.CIRCLE
+            setBrushType(BrushType.CIRCLE)
         }
 
         btnEraser.setOnClickListener {
-            drawingView.currentBrushType = BrushType.ERASER
+            setBrushType(BrushType.ERASER)
         }
 
         btnBlack.setOnClickListener {
@@ -83,6 +83,10 @@ class MainActivity : AppCompatActivity() {
         sliderBrushSize.addOnChangeListener { _, value, _ ->
             drawingView.updateBrushSize(value)
         }
+    }
+
+    private fun setBrushType(brushType: BrushType) {
+        drawingView.setBrushType(brushType)
     }
 
     companion object {
