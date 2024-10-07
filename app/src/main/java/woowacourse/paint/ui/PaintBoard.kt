@@ -52,10 +52,11 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
                     endY = pointY,
                 )
 
-                val newDrawing = drawing.copy(
-                    path = Path(),
-                    paint = Paint(drawing.paint)
-                )
+                val newDrawing =
+                    drawing.copy(
+                        path = Path(),
+                        paint = Paint(drawing.paint),
+                    )
                 drawings.add(newDrawing)
             }
 

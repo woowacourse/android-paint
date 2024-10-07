@@ -5,7 +5,6 @@ data class Brush(
     val color: Int = DEFAULT_COLOR,
     val brushType: BrushType = DEFAULT_BRUSH_TYPE,
 ) {
-
     fun update(updateBrush: Brush.() -> Brush): Brush {
         return this.updateBrush()
     }
@@ -33,5 +32,5 @@ enum class BrushType {
     PENCIL,
     ERASER,
     CIRCLE,
-    SQUARE
+    SQUARE,
 }
