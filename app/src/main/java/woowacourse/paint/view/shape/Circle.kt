@@ -2,14 +2,18 @@ package woowacourse.paint.view.shape
 
 import android.graphics.Canvas
 import android.graphics.Paint
+import kotlinx.parcelize.Parcelize
+import woowacourse.paint.utils.PaintWrapper
 
+@Parcelize
 data class Circle(
     override val startX: Float,
     override val startY: Float,
-    override val paint: Paint,
+    override val paint: PaintWrapper,
     override val strokeWidth: Float,
 ) : BrushShape(startX, startY, paint, strokeWidth) {
     private var radius = 0f
+    private val circlePaint = paint.toPaint()
 
     override fun updatePosition(
         x: Float,
@@ -21,7 +25,7 @@ data class Circle(
     }
 
     override fun draw(canvas: Canvas) {
-        paint.style = Paint.Style.FILL
-        canvas.drawCircle(startX, startY, radius, paint)
+        circlePaint.style = Paint.Style.FILL
+        canvas.drawCircle(startX, startY, radius, circlePaint)
     }
 }

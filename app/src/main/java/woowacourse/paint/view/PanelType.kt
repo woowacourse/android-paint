@@ -5,4 +5,3 @@ enum class PanelType {
     BRUSH_STROKE,
     BRUSH_TOOL,
 }
-
