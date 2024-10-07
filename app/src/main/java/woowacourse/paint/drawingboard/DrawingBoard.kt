@@ -13,10 +13,13 @@ import woowacourse.paint.BrushType
 
 class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs) {
     private var currentLine =
-        Line(Path(), Paint().apply {
-            color = DEFAULT_LINE_COLOR
-            style = Paint.Style.STROKE
-        })
+        Line(
+            Path(),
+            Paint().apply {
+                color = DEFAULT_LINE_COLOR
+                style = Paint.Style.STROKE
+            },
+        )
     private val lines: MutableList<Line> = mutableListOf(currentLine)
     private var brushType: BrushType = DEFAULT_BRUSH_TYPE
 
@@ -56,29 +59,42 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
         return true
     }
 
-    private fun actionDown(pointX: Float, pointY: Float) {
+    private fun actionDown(
+        pointX: Float,
+        pointY: Float,
+    ) {
         addNewLine()
         if (brushType == BrushType.PEN) {
             currentLine.moveTo(pointX, pointY)
         }
     }
 
-    private fun actionMove(pointX: Float, pointY: Float) {
+    private fun actionMove(
+        pointX: Float,
+        pointY: Float,
+    ) {
         when (brushType) {
             BrushType.PEN -> currentLine.lineTo(pointX, pointY)
             BrushType.RECTANGLE -> {
                 currentLine.updateRect(startX, startY, pointX, pointY)
             }
+            BrushType.CIRCLE -> {
+                currentLine.updateCircle(startX, startY, pointX, pointY)
+            }
         }
         invalidate()
     }
 
-    private fun actionUp(pointX: Float, pointY: Float) {
+    private fun actionUp(
+        pointX: Float,
+        pointY: Float,
+    ) {
         when (brushType) {
             BrushType.PEN -> {}
             BrushType.RECTANGLE -> {
                 currentLine.addRect(startX, startY, pointX, pointY)
             }
+            BrushType.CIRCLE -> {}
         }
     }
 

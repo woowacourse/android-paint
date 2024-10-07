@@ -2,13 +2,9 @@ package woowacourse.paint.drawingboard
 
 import android.graphics.Paint
 import android.graphics.Path
-import android.graphics.RectF
-import android.util.Log
-import woowacourse.paint.BrushType
 
 // TODO: Line 네이밍 변경하기
 class Line(val path: Path = Path(), val paint: Paint = Paint()) {
-
     init {
         setupPaint()
     }
@@ -44,6 +40,16 @@ class Line(val path: Path = Path(), val paint: Paint = Paint()) {
         bottom: Float,
     ) {
         path.addRect(left, top, right, bottom, Path.Direction.CW)
+    }
+
+    fun updateCircle(
+        left: Float,
+        top: Float,
+        right: Float,
+        bottom: Float,
+    ) {
+        path.rewind()
+        path.addOval(left, top, right, bottom, Path.Direction.CW)
     }
 
     fun updateStrokeWidth(strokeWidth: Float): Line {

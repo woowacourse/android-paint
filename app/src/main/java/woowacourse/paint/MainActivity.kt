@@ -34,6 +34,15 @@ class MainActivity : AppCompatActivity(), ColorPaletteHandler, BrushHandler {
 
     override fun onRectangleClicked() {
         drawingBoard.changeBrushType(BrushType.RECTANGLE)
+        setupFigureToolPanel()
+    }
+
+    override fun onCircleClicked() {
+        drawingBoard.changeBrushType(BrushType.CIRCLE)
+        setupFigureToolPanel()
+    }
+
+    private fun setupFigureToolPanel() {
         drawingBoard.setupStyle(Paint.Style.FILL)
         binding.rangeSliderMainStrokeWidth.visibility = View.GONE
     }

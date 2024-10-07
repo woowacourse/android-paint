@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="brushHandler"
             type="woowacourse.paint.BrushHandler" />
@@ -66,8 +67,8 @@
             android:id="@+id/btn_main_rectangle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/main_rectangle"
             android:onClick="@{() -> brushHandler.onRectangleClicked()}"
+            android:text="@string/main_rectangle"
             app:layout_constraintBottom_toBottomOf="@id/btn_main_pen"
             app:layout_constraintEnd_toStartOf="@id/btn_main_circle"
             app:layout_constraintStart_toEndOf="@id/btn_main_pen"
@@ -77,6 +78,7 @@
             android:id="@+id/btn_main_circle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{() -> brushHandler.onCircleClicked()}"
             android:text="@string/main_circle"
             app:layout_constraintBottom_toBottomOf="@id/btn_main_pen"
             app:layout_constraintEnd_toStartOf="@id/btn_main_eraser"
