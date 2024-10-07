@@ -15,7 +15,7 @@ import woowacourse.paint.BrushType
 class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs) {
     private var currentDrawing = initializeDrawing()
 
-    private val lines: MutableList<Drawing> = mutableListOf(currentDrawing)
+    private val drawings: MutableList<Drawing> = mutableListOf(currentDrawing)
     private var brushType: BrushType = DEFAULT_BRUSH_TYPE
 
     private var startX: Float = 0f
@@ -28,8 +28,8 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        for (line in lines) {
-            canvas.drawPath(line.path, line.paint)
+        for (drawing in drawings) {
+            canvas.drawPath(drawing.path, drawing.paint)
         }
     }
 
@@ -76,7 +76,7 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
             BrushType.CIRCLE -> addNewLine()
             BrushType.ERASER -> {
                 val removeItemIndex = findRemoveItem(pointX, pointY)
-                if (removeItemIndex != INVALID_INDEX) lines.removeAt(removeItemIndex)
+                if (removeItemIndex != INVALID_INDEX) drawings.removeAt(removeItemIndex)
             }
         }
     }
@@ -104,9 +104,9 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
     ): Int {
         val bounds = RectF()
 
-        for (index in lines.indices.reversed()) {
-            val line = lines[index]
-            line.path.computeBounds(bounds, true)
+        for (index in drawings.indices.reversed()) {
+            val drawing = drawings[index]
+            drawing.computeBounds(bounds)
 
             if (bounds.contains(x, y)) return index
         }
@@ -133,7 +133,7 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
     }
 
     private fun addNewLine() {
-        lines.add(currentDrawing)
+        drawings.add(currentDrawing)
     }
 
     companion object {

@@ -2,6 +2,7 @@ package woowacourse.paint.drawingboard
 
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.RectF
 import kotlin.math.max
 import kotlin.math.min
 
@@ -50,6 +51,10 @@ class Drawing(val path: Path, val paint: Paint) {
     ) {
         path.reset()
         path.addOval(left, top, right, bottom, Path.Direction.CW)
+    }
+
+    fun computeBounds(bounds: RectF) {
+        path.computeBounds(bounds, true)
     }
 
     fun updateStrokeWidth(strokeWidth: Float): Drawing {
