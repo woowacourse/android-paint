@@ -15,7 +15,7 @@
             android:id="@+id/custom_view_drawing_board"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@color/white"
+            android:background="@color/drawing_board_background"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,7 +23,7 @@
             android:id="@+id/constraint_drawing_tools_pannel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/shape_rect_round"
+            android:background="@drawable/shape_rect_round_tools_panel"
             android:maxWidth="600dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -31,6 +31,7 @@
 
             <com.google.android.material.slider.RangeSlider
                 android:id="@+id/range_slider_drawing_brush_size_controller"
+                style="@style/RangeSliderStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_horizontal_brush_size_controller"

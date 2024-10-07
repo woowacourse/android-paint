@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -15,15 +16,9 @@
     </data>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/margin_drawing_mode_item"
-        android:clickable="true"
-        android:drawablePadding="@dimen/padding_drawing_mode_item_icon"
-        android:gravity="center"
+        style="@style/DrawingModeItemStyle"
         android:onClick="@{() -> clickHandler.onDrawingModeClicked(drawingMode)}"
         android:text="@{drawingMode.modeName}"
-        android:textSize="@dimen/text_size_drawing_mode_item"
         bind:setDrawableIcon="@{drawingMode.icon}"
         tools:drawableLeft="@drawable/icon_circle_border"
         tools:text="원 그리기" />
