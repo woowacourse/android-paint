@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
         initDrawingPaper()
         initSlider()
         initAdapter()
+        initListeners()
     }
 
     private fun initDrawingPaper() {
@@ -41,5 +42,17 @@ class MainActivity : AppCompatActivity() {
         binding.rvPalette.adapter = adapter
         binding.rvPalette.setHasFixedSize(true)
         adapter.submitList(Paint.defaults)
+    }
+
+    private fun initListeners() {
+        binding.btnUndo.setOnClickListener {
+            binding.drawingPaper.undo()
+        }
+        binding.btnRedo.setOnClickListener {
+            binding.drawingPaper.redo()
+        }
+        binding.btnClearAll.setOnClickListener {
+            binding.drawingPaper.clearAll()
+        }
     }
 }

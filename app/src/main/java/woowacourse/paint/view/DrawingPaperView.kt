@@ -23,9 +23,12 @@ constructor(
     attrs: AttributeSet? = null,
     defStyle: Int = 0,
 ) : View(context, attrs, defStyle) {
-    
+
     private var currentShape: BrushShape =
         Pencil(0f, 0f, createPaint(DEFAULT_COLOR, DEFAULT_STROKE_WIDTH), DEFAULT_STROKE_WIDTH)
+
+    private val shapes = mutableListOf<BrushShape>()
+    private val redoShapes = mutableListOf<BrushShape>()
 
     var currentColor: Int = DEFAULT_COLOR
         set(value) {
@@ -38,8 +41,6 @@ constructor(
             field = value
             updateCurrentShape()
         }
-
-    private val shapes = mutableListOf<BrushShape>()
 
     init {
         setLayerType(LAYER_TYPE_HARDWARE, null)
@@ -80,6 +81,7 @@ constructor(
             MotionEvent.ACTION_DOWN -> {
                 val shape = currentShape.copy(x = x, y = y)
                 shapes.add(shape)
+                redoShapes.clear()
                 currentShape = shape
             }
 
@@ -92,6 +94,28 @@ constructor(
             MotionEvent.ACTION_UP -> {}
         }
         return true
+    }
+
+    fun undo() {
+        if (shapes.isNotEmpty()) {
+            val lastShape = shapes.removeLast()
+            redoShapes.add(lastShape)
+            invalidate()
+        }
+    }
+
+    fun redo() {
+        if (redoShapes.isNotEmpty()) {
+            val lastRedoShape = redoShapes.removeLast()
+            shapes.add(lastRedoShape)
+            invalidate()
+        }
+    }
+
+    fun clearAll() {
+        shapes.clear()
+        redoShapes.clear()
+        invalidate()
     }
 
     private fun BrushType.toShape(
