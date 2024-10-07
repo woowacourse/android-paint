@@ -11,6 +11,7 @@ import android.graphics.PorterDuffXfermode
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import kotlin.math.abs
 
 class DrawingView(
     context: Context,
@@ -25,6 +26,9 @@ class DrawingView(
     private var currentBrushType = BrushType.PEN
     private var currentColor = Color.BLACK
     private var currentStrokeWidth = INIT_STROKE_WIDTH
+    private var lastX = 0f
+    private var lastY = 0f
+    private val touchTolerance = 4f
 
     init {
         setLayerType(LAYER_TYPE_HARDWARE, null)
@@ -70,7 +74,8 @@ class DrawingView(
                         )
                     }
                 }
-                invalidate()
+                lastX = x
+                lastY = y
                 return true
             }
 
@@ -85,7 +90,11 @@ class DrawingView(
                         strokes[strokes.size - 1] = lastStroke.copy(endX = x, endY = y)
                     }
                 }
-                invalidate()
+                if (abs(x - lastX) >= touchTolerance || abs(y - lastY) >= touchTolerance) {
+                    lastX = x
+                    lastY = y
+                    invalidate()
+                }
                 return true
             }
 
