@@ -81,6 +81,7 @@ class PainterView(context: Context, attrs: AttributeSet) : View(context, attrs) 
 
     fun setBrush() {
         mode = PainterMode.BRUSH
+        brushPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_OVER)
     }
 
     fun setSquare() {
@@ -99,6 +100,7 @@ class PainterView(context: Context, attrs: AttributeSet) : View(context, attrs) 
     }
 
     fun setEraser() {
+        mode = PainterMode.BRUSH
         brushPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.DST_OUT)
     }
 }
