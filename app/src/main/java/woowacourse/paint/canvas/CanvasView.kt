@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffXfermode
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -45,12 +43,13 @@ class CanvasView(
             when (draw) {
                 is Line -> canvas.drawPath(draw.path, draw.paint)
                 is Rectangle -> canvas.drawRect(draw.recF, draw.paint)
-                is Circle -> canvas.drawCircle(
-                    draw.currentX,
-                    draw.currentY,
-                    draw.currentRadius,
-                    draw.paint
-                )
+                is Circle ->
+                    canvas.drawCircle(
+                        draw.currentX,
+                        draw.currentY,
+                        draw.currentRadius,
+                        draw.paint,
+                    )
             }
         }
     }
@@ -65,7 +64,7 @@ class CanvasView(
             }
 
             MotionEvent.ACTION_MOVE -> {
-                drawing.drawing(event.x,event.y)
+                drawing.drawing(event.x, event.y)
                 invalidate()
                 true
             }
@@ -89,35 +88,43 @@ class CanvasView(
         setDraw()
     }
 
-    private fun startDraw(x: Float, y: Float) {
+    private fun startDraw(
+        x: Float,
+        y: Float,
+    ) {
         setDraw(x, y)
         drawn.add(drawing)
     }
 
-    private fun setDraw(x: Float, y: Float) {
-        drawing = when(brush.brushType){
-            BrushType.PEN -> {
-                val line = Line(brushType = BrushType.PEN,paint = createNewPaint())
-                line.move(x,y)
-                line
+    private fun setDraw(
+        x: Float,
+        y: Float,
+    ) {
+        drawing =
+            when (brush.brushType) {
+                BrushType.PEN -> {
+                    val line = Line(brushType = BrushType.PEN, paint = createNewPaint())
+                    line.move(x, y)
+                    line
+                }
+                BrushType.RECTANGLE -> Rectangle(RectF(x, y, x, y), createNewPaint())
+                BrushType.CIRCLE -> Circle(x, y, 0f, createNewPaint())
+                BrushType.ERASER -> {
+                    val line = Line(brushType = BrushType.ERASER, paint = createNewPaint())
+                    line.move(x, y)
+                    line
+                }
             }
-            BrushType.RECTANGLE -> Rectangle(RectF(x,y,x,y),createNewPaint())
-            BrushType.CIRCLE -> Circle(x,y, 0f, createNewPaint())
-            BrushType.ERASER -> {
-                val line = Line(brushType = BrushType.ERASER,paint = createNewPaint())
-                line.move(x,y)
-                line
-            }
-        }
     }
 
     private fun setDraw() {
-        drawing = when(brush.brushType){
-            BrushType.PEN -> Line( brushType = BrushType.PEN, paint = createNewPaint())
-            BrushType.RECTANGLE -> Rectangle(paint = createNewPaint())
-            BrushType.CIRCLE -> Circle(paint = createNewPaint())
-            BrushType.ERASER -> Line( brushType = BrushType.ERASER, paint = createNewPaint())
-        }
+        drawing =
+            when (brush.brushType) {
+                BrushType.PEN -> Line(brushType = BrushType.PEN, paint = createNewPaint())
+                BrushType.RECTANGLE -> Rectangle(paint = createNewPaint())
+                BrushType.CIRCLE -> Circle(paint = createNewPaint())
+                BrushType.ERASER -> Line(brushType = BrushType.ERASER, paint = createNewPaint())
+            }
     }
 
     private fun createNewPaint(): Paint {

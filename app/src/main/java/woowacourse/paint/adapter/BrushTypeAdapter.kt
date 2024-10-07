@@ -10,8 +10,10 @@ class BrushTypeAdapter(
     private val brushTypes: List<BrushType>,
     private val onClickBrush: (BrushType) -> Unit,
 ) : RecyclerView.Adapter<BrushTypeViewHolder>() {
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BrushTypeViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): BrushTypeViewHolder {
         val binding =
             ItemBrushBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return BrushTypeViewHolder(binding, onClickBrush)

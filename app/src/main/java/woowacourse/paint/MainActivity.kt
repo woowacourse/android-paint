@@ -2,7 +2,6 @@ package woowacourse.paint
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import woowacourse.paint.adapter.BrushTypeAdapter
 import woowacourse.paint.adapter.ColorPaletteAdapter
@@ -32,11 +31,11 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
-    private fun initBrushTypes(){
+    private fun initBrushTypes() {
         activityViewBinding.rvBrush.adapter =
             BrushTypeAdapter(
-                brushTypes = BrushType.entries
-            ){ brushType ->
+                brushTypes = BrushType.entries,
+            ) { brushType ->
                 activityViewBinding.customCanvas.changeBrushType(brushType)
             }
     }
@@ -56,10 +55,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setViewType(currentView: View){
-        activityViewBinding.rvBrush.visibility  = View.GONE
-        activityViewBinding.rvColor.visibility  = View.GONE
-        activityViewBinding.rangeSlider.visibility  = View.GONE
+    private fun setViewType(currentView: View) {
+        activityViewBinding.rvBrush.visibility = View.GONE
+        activityViewBinding.rvColor.visibility = View.GONE
+        activityViewBinding.rangeSlider.visibility = View.GONE
         currentView.visibility = View.VISIBLE
     }
 }

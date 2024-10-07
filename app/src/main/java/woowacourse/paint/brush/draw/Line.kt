@@ -1,11 +1,9 @@
 package woowacourse.paint.brush.draw
 
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffXfermode
-import android.util.Log
 import woowacourse.paint.brush.BrushType
 
 data class Line(
@@ -35,7 +33,10 @@ data class Line(
         endY = y
     }
 
-    override fun drawing(x: Float, y: Float) {
+    override fun drawing(
+        x: Float,
+        y: Float,
+    ) {
         path.quadTo(endX, endY, (x + endX) / 2, (y + endY) / 2)
         endX = x
         endY = y
