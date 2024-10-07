@@ -2,6 +2,8 @@ package woowacourse.paint.drawingboard
 
 import android.graphics.Paint
 import android.graphics.Path
+import kotlin.math.max
+import kotlin.math.min
 
 class Drawing(val path: Path, val paint: Paint) {
     init {
@@ -25,13 +27,19 @@ class Drawing(val path: Path, val paint: Paint) {
     }
 
     fun drawRect(
-        left: Float,
-        top: Float,
-        right: Float,
-        bottom: Float,
+        startX: Float,
+        startY: Float,
+        pointX: Float,
+        pointY: Float,
     ) {
         path.reset()
-        path.addRect(left, top, right, bottom, Path.Direction.CW)
+        path.addRect(
+            min(startX, pointX),
+            min(startY, pointY),
+            max(startX, pointX),
+            max(startY, pointY),
+            Path.Direction.CW,
+        )
     }
 
     fun drawCircle(
