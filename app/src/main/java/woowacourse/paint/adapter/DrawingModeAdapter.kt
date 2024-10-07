@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import woowacourse.paint.action.PaintActionHandler
-import woowacourse.paint.databinding.ItemPaintColorBinding
-import woowacourse.paint.uimodel.PaintColorUiModel
+import woowacourse.paint.databinding.ItemPaintDrawingModeBinding
+import woowacourse.paint.uimodel.DrawingModeUiModel
 
-class PaintColorAdapter(private val actionHandler: PaintActionHandler) :
-    ListAdapter<PaintColorUiModel, PaintColorViewHolder>(diffUtil) {
+class DrawingModeAdapter(private val actionHandler: PaintActionHandler) :
+    ListAdapter<DrawingModeUiModel, DrawingModeViewHolder>(diffUtil) {
     init {
         setHasStableIds(true)
     }
@@ -17,32 +17,32 @@ class PaintColorAdapter(private val actionHandler: PaintActionHandler) :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
-    ): PaintColorViewHolder {
+    ): DrawingModeViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemPaintColorBinding.inflate(inflater, parent, false)
-        return PaintColorViewHolder(binding, actionHandler)
+        val binding = ItemPaintDrawingModeBinding.inflate(inflater, parent, false)
+        return DrawingModeViewHolder(binding, actionHandler)
     }
 
     override fun onBindViewHolder(
-        holder: PaintColorViewHolder,
+        holder: DrawingModeViewHolder,
         position: Int,
     ) {
-        holder.bind(paintColorUiModel = getItem(position))
+        holder.bind(drawingModeUiModel = getItem(position))
     }
 
     companion object {
         val diffUtil =
-            object : DiffUtil.ItemCallback<PaintColorUiModel>() {
+            object : DiffUtil.ItemCallback<DrawingModeUiModel>() {
                 override fun areContentsTheSame(
-                    oldItem: PaintColorUiModel,
-                    newItem: PaintColorUiModel,
+                    oldItem: DrawingModeUiModel,
+                    newItem: DrawingModeUiModel,
                 ): Boolean {
                     return oldItem == newItem
                 }
 
                 override fun areItemsTheSame(
-                    oldItem: PaintColorUiModel,
-                    newItem: PaintColorUiModel,
+                    oldItem: DrawingModeUiModel,
+                    newItem: DrawingModeUiModel,
                 ): Boolean {
                     return oldItem === newItem
                 }

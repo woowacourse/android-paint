@@ -5,12 +5,8 @@
     <data>
 
         <variable
-            name="color"
-            type="woowacourse.paint.util.Color" />
-
-        <variable
-            name="isChecked"
-            type="Boolean" />
+            name="paintColorUiModel"
+            type="woowacourse.paint.uimodel.PaintColorUiModel" />
 
         <variable
             name="actionHandler"
@@ -24,13 +20,14 @@
 
         <ImageView
             android:id="@+id/iv_color"
-            colorBackgroundTint="@{color.colorRes}"
-            isChecked="@{isChecked}"
+            colorBackgroundTint="@{paintColorUiModel.paintColor.colorRes}"
+            colorIsChecked="@{paintColorUiModel.isChecked}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/color_circle"
             android:clickable="true"
-            android:onClick="@{() -> actionHandler.changeColorRes(color.colorRes)}"
+            android:onClick="@{() -> actionHandler.changeColorRes(paintColorUiModel.paintColor.colorRes)}"
+            android:padding="8dp"
             tools:backgroundTint="@color/red" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
