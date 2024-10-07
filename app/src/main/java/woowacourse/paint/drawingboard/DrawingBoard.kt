@@ -53,6 +53,9 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
             MotionEvent.ACTION_MOVE -> {
                 actionMove(pointX, pointY)
             }
+            MotionEvent.ACTION_UP -> {
+                currentLine = currentLine.copy()
+            }
         }
         return true
     }

@@ -8,6 +8,8 @@ class Drawing(val path: Path, val paint: Paint) {
         setupPaint()
     }
 
+    fun copy() = Drawing(Path(), paint)
+
     fun moveTo(
         pointX: Float,
         pointY: Float,
