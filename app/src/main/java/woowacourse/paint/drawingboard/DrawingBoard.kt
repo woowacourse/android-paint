@@ -13,15 +13,9 @@ import android.view.View
 import woowacourse.paint.BrushType
 
 class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs) {
-    private var currentLine =
-        Drawing(
-            Path(),
-            Paint().apply {
-                color = DEFAULT_LINE_COLOR
-                style = Paint.Style.STROKE
-            },
-        )
-    private val lines: MutableList<Drawing> = mutableListOf(currentLine)
+    private var currentDrawing = initializeDrawing()
+
+    private val lines: MutableList<Drawing> = mutableListOf(currentDrawing)
     private var brushType: BrushType = DEFAULT_BRUSH_TYPE
 
     private var startX: Float = 0f
@@ -54,11 +48,20 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
                 actionMove(pointX, pointY)
             }
             MotionEvent.ACTION_UP -> {
-                currentLine = currentLine.copy()
+                currentDrawing = currentDrawing.copy()
             }
         }
         return true
     }
+
+    private fun initializeDrawing() =
+        Drawing(
+            Path(),
+            Paint().apply {
+                color = DEFAULT_LINE_COLOR
+                style = Paint.Style.STROKE
+            },
+        )
 
     private fun actionDown(
         pointX: Float,
@@ -67,7 +70,7 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
         when (brushType) {
             BrushType.PEN -> {
                 addNewLine()
-                currentLine.moveTo(pointX, pointY)
+                currentDrawing.moveTo(pointX, pointY)
             }
             BrushType.RECTANGLE -> addNewLine()
             BrushType.CIRCLE -> addNewLine()
@@ -83,12 +86,12 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
         pointY: Float,
     ) {
         when (brushType) {
-            BrushType.PEN -> currentLine.lineTo(pointX, pointY)
+            BrushType.PEN -> currentDrawing.lineTo(pointX, pointY)
             BrushType.RECTANGLE -> {
-                currentLine.drawRect(startX, startY, pointX, pointY)
+                currentDrawing.drawRect(startX, startY, pointX, pointY)
             }
             BrushType.CIRCLE -> {
-                currentLine.drawCircle(startX, startY, pointX, pointY)
+                currentDrawing.drawCircle(startX, startY, pointX, pointY)
             }
             BrushType.ERASER -> {}
         }
@@ -111,18 +114,18 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
     }
 
     fun setupStrokeWidth(strokeWidth: Float) {
-        val newStrokeWidthLine = currentLine.updateStrokeWidth(strokeWidth)
-        currentLine = newStrokeWidthLine
+        val newStrokeWidthLine = currentDrawing.updateStrokeWidth(strokeWidth)
+        currentDrawing = newStrokeWidthLine
     }
 
     fun setupColor(color: Int) {
-        val newColorLine = currentLine.updateColor(color)
-        currentLine = newColorLine
+        val newColorLine = currentDrawing.updateColor(color)
+        currentDrawing = newColorLine
     }
 
     fun setupStyle(style: Paint.Style) {
-        val newStyle = currentLine.updatePaintStyle(style)
-        currentLine = newStyle
+        val newStyle = currentDrawing.updatePaintStyle(style)
+        currentDrawing = newStyle
     }
 
     fun changeBrushType(brush: BrushType) {
@@ -130,7 +133,7 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
     }
 
     private fun addNewLine() {
-        lines.add(currentLine)
+        lines.add(currentDrawing)
     }
 
     companion object {
