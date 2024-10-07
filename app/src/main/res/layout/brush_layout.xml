@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="onClickPaletteListener"
+            type="woowacourse.paint.OnPaletteClickListener" />
+
+        <variable
+            name="brushState"
+            type="woowacourse.paint.BrushState" />
+
+        <variable
+            name="isBrushListVisible"
+            type="Boolean" />
+
+    </data>
+
+    <merge>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_pen"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:backgroundTint="@color/purple_200"
+            android:onClick="@{() -> onClickPaletteListener.onClickBrushChange(brushState.PEN)}"
+            android:text="@string/brush_pen"
+            android:visibility="@{isBrushListVisible ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/range_slider"
+            app:layout_constraintEnd_toStartOf="@id/btn_rectangle"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_rectangle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:backgroundTint="@color/purple_200"
+            android:onClick="@{() -> onClickPaletteListener.onClickBrushChange(brushState.RECTANGLE)}"
+            android:text="@string/brush_rectangle"
+            android:visibility="@{isBrushListVisible ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/range_slider"
+            app:layout_constraintEnd_toStartOf="@id/btn_circle"
+            app:layout_constraintStart_toEndOf="@id/btn_pen" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_circle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:backgroundTint="@color/purple_200"
+            android:onClick="@{() -> onClickPaletteListener.onClickBrushChange(brushState.CIRCLE)}"
+            android:text="@string/brush_circle"
+            android:visibility="@{isBrushListVisible ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/range_slider"
+            app:layout_constraintEnd_toStartOf="@id/btn_eraser"
+            app:layout_constraintStart_toEndOf="@id/btn_rectangle" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_eraser"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:backgroundTint="@color/purple_200"
+            android:onClick="@{() -> onClickPaletteListener.onClickBrushChange(brushState.ERASER)}"
+            android:text="@string/brush_eraser"
+            android:visibility="@{isBrushListVisible ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/range_slider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_circle" />
+
+    </merge>
+</layout>

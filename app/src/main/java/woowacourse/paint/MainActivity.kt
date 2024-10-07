@@ -9,6 +9,7 @@ class MainActivity : AppCompatActivity(), OnPaletteClickListener {
     private val binding get() = _binding!!
     private var isPaletteVisible = false
     private var isRangeSliderVisible = false
+    private var isBrushListVisible = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,8 +46,17 @@ class MainActivity : AppCompatActivity(), OnPaletteClickListener {
         binding.isRangeSliderVisible = isRangeSliderVisible
     }
 
+    override fun onClickChangeBrushButton() {
+        isBrushListVisible = !isBrushListVisible
+        binding.isBrushListVisible = isBrushListVisible
+    }
+
     override fun onClickPaint(color: Int) {
         binding.paintView.changeColor(color)
+    }
+
+    override fun onClickBrushChange(brushState: BrushState) {
+        binding.paintView.changeBrush(brushState)
     }
 
     override fun onDestroy() {

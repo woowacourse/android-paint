@@ -12,14 +12,17 @@ import androidx.annotation.ColorRes
 
 class PaintView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
     private val brushHistory = mutableListOf(Brush())
+    private var startX: Float = DEFAULT_POSITION
+    private var startY: Float = DEFAULT_POSITION
 
     init {
         isFocusable = true
         isFocusableInTouchMode = true
-        brushHistory.last().apply {
+        currentBrush().apply {
             setColor(DEFAULT_COLOR)
             setThickness(DEFAULT_STROKE_WIDTH)
         }
+        setLayerType(LAYER_TYPE_HARDWARE, null)
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -34,10 +37,23 @@ class PaintView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         val pointX = event.x
         val pointY = event.y
-        val currentBrush = brushHistory.last()
+        val currentBrush = currentBrush()
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> currentBrush.moveTo(pointX, pointY)
-            MotionEvent.ACTION_MOVE -> currentBrush.lineTo(pointX, pointY)
+            MotionEvent.ACTION_DOWN -> {
+                startX = pointX
+                startY = pointY
+                currentBrush.moveTo(pointX, pointY)
+            }
+
+            MotionEvent.ACTION_MOVE -> {
+                currentBrush.saveMovement(startX, startY, pointX, pointY, false)
+            }
+
+            MotionEvent.ACTION_UP -> {
+                currentBrush.saveMovement(startX, startY, pointX, pointY, true)
+                brushHistory.add(newBrush())
+            }
+
             else -> super.onTouchEvent(event)
         }
 
@@ -45,23 +61,31 @@ class PaintView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
         return true
     }
 
-    @SuppressLint("ResourceAsColor")
     fun changeColor(
         @ColorRes color: Int,
-    ) {
-        val newBrush = Brush(paint = Paint(brushHistory.last().paint))
-        newBrush.setColor(color)
+    ) = updateBrush { it.setColor(color) }
+
+    fun changeThickness(size: Float) = updateBrush { it.setThickness(size) }
+
+    fun changeBrush(brushState: BrushState) = updateBrush { it.setBrush(brushState) }
+
+    private fun updateBrush(updateAction: (Brush) -> Unit) {
+        val newBrush = newBrush()
+        updateAction(newBrush)
         brushHistory.add(newBrush)
     }
 
-    fun changeThickness(size: Float) {
-        val newBrush = Brush(paint = Paint(brushHistory.last().paint))
-        newBrush.setThickness(size)
-        brushHistory.add(newBrush)
-    }
+    private fun newBrush() =
+        Brush(
+            paint = Paint(currentBrush().paint),
+            brushState = currentBrush().brushState,
+        )
+
+    private fun currentBrush() = brushHistory.last()
 
     companion object {
         private const val DEFAULT_STROKE_WIDTH = 10.0f
         private const val DEFAULT_COLOR = Color.RED
+        private const val DEFAULT_POSITION = 0f
     }
 }

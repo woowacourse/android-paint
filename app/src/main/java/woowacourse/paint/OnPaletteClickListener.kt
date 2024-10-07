@@ -5,5 +5,9 @@ interface OnPaletteClickListener {
 
     fun onClickChangeThicknessButton()
 
+    fun onClickChangeBrushButton()
+
     fun onClickPaint(color: Int)
+
+    fun onClickBrushChange(brushState: BrushState)
 }
