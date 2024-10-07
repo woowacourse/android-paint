@@ -6,7 +6,7 @@ import androidx.annotation.ColorRes
 import woowacourse.paint.R
 
 enum class ColorPalette(
-    @ColorRes val colorResId: Int
+    @ColorRes val colorResId: Int,
 ) {
     RED(colorResId = R.color.red),
     ORANGE(colorResId = R.color.orange),

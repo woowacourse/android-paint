@@ -15,9 +15,9 @@ import androidx.annotation.ColorInt
 import woowacourse.paint.model.CircleShape
 import woowacourse.paint.model.DrawableShape
 import woowacourse.paint.model.PathShape
-import woowacourse.paint.model.SquareShape
 import woowacourse.paint.model.Shape
 import woowacourse.paint.model.ShapeType
+import woowacourse.paint.model.SquareShape
 
 class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val shapes = mutableListOf<DrawableShape>()
@@ -50,16 +50,17 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                currentShape = if (shapeType == ShapeType.ERASER) {
-                    PathShape(Path().apply { moveTo(pointX, pointY) })
-                } else {
-                    when (shapeType) {
-                        ShapeType.PEN -> PathShape(Path().apply { moveTo(pointX, pointY) })
-                        ShapeType.SQUARE -> SquareShape(pointX, pointY, pointX, pointY)
-                        ShapeType.CIRCLE -> CircleShape(pointX, pointY)
-                        else -> PathShape(Path().apply { moveTo(pointX, pointY) })
+                currentShape =
+                    if (shapeType == ShapeType.ERASER) {
+                        PathShape(Path().apply { moveTo(pointX, pointY) })
+                    } else {
+                        when (shapeType) {
+                            ShapeType.PEN -> PathShape(Path().apply { moveTo(pointX, pointY) })
+                            ShapeType.SQUARE -> SquareShape(pointX, pointY, pointX, pointY)
+                            ShapeType.CIRCLE -> CircleShape(pointX, pointY)
+                            else -> PathShape(Path().apply { moveTo(pointX, pointY) })
+                        }
                     }
-                }
             }
 
             MotionEvent.ACTION_MOVE -> {
@@ -85,20 +86,23 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
     }
 
     private fun resetShape() {
-        currentShape = when (shapeType) {
-            ShapeType.PEN, ShapeType.ERASER -> PathShape(Path())
-            ShapeType.SQUARE -> SquareShape(
-                startX = INITIAL_WIDTH,
-                startY = INITIAL_WIDTH,
-                endX = INITIAL_WIDTH,
-                endY = INITIAL_WIDTH
-            )
+        currentShape =
+            when (shapeType) {
+                ShapeType.PEN, ShapeType.ERASER -> PathShape(Path())
+                ShapeType.SQUARE ->
+                    SquareShape(
+                        startX = INITIAL_WIDTH,
+                        startY = INITIAL_WIDTH,
+                        endX = INITIAL_WIDTH,
+                        endY = INITIAL_WIDTH,
+                    )
 
-            ShapeType.CIRCLE -> CircleShape(
-                centerX = INITIAL_WIDTH,
-                centerY = INITIAL_WIDTH,
-            )
-        }
+                ShapeType.CIRCLE ->
+                    CircleShape(
+                        centerX = INITIAL_WIDTH,
+                        centerY = INITIAL_WIDTH,
+                    )
+            }
     }
 
     private fun initialPaint(): Paint {
@@ -109,7 +113,9 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         }
     }
 
-    fun setPaintColor(@ColorInt color: Int) {
+    fun setPaintColor(
+        @ColorInt color: Int,
+    ) {
         currentPaint.color = color
     }
 
