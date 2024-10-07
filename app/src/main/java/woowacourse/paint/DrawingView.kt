@@ -22,7 +22,7 @@ class DrawingView(
     private val undoneStrokes = mutableListOf<Stroke>()
     private var startX = START_POSITION
     private var startY = START_POSITION
-    var currentBrushType = BrushType.PEN
+    private var currentBrushType = BrushType.PEN
     private var currentColor = Color.BLACK
     private var currentStrokeWidth = INIT_STROKE_WIDTH
 
@@ -105,7 +105,7 @@ class DrawingView(
         for (stroke in strokes) {
             when (stroke.brushType) {
                 BrushType.PEN -> {
-                    canvas.drawPath(stroke.path!!, stroke.paint)
+                    stroke.path?.let { canvas.drawPath(it, stroke.paint) }
                 }
 
                 BrushType.RECTANGLE -> {
@@ -129,7 +129,7 @@ class DrawingView(
                 }
 
                 BrushType.ERASER -> {
-                    canvas.drawPath(stroke.path!!, stroke.paint)
+                    stroke.path?.let { canvas.drawPath(it, stroke.paint) }
                 }
             }
         }
