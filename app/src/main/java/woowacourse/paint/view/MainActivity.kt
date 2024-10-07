@@ -10,15 +10,27 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
     private val viewModel: MainViewModel by viewModels()
-    private val adapter: ColorSelectionAdapter by lazy {
+    private val colorSelectionAdapter: ColorSelectionAdapter by lazy {
         ColorSelectionAdapter(viewModel.colors, viewModel)
+    }
+    private val drawingToolControllerAdapter: DrawingToolControllerAdapter by lazy {
+        DrawingToolControllerAdapter(viewModel.drawingTools, viewModel)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        initializeViewModel()
+        initializeAdapters()
+    }
+
+    private fun initializeViewModel() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        binding.adapter = adapter
+    }
+
+    private fun initializeAdapters() {
+        binding.colorSelectionAdapter = colorSelectionAdapter
+        binding.drawingToolControllerAdapter = drawingToolControllerAdapter
     }
 }

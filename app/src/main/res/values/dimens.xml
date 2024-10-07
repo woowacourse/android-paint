@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="controller_orientation">@dimen/horizontal</dimen>
+    <dimen name="visibility_button_controller_width">@dimen/match_parent</dimen>
+    <dimen name="visibility_button_width">@dimen/wrap_content</dimen>
+    <dimen name="brush_controller_width">@dimen/match_parent</dimen>
+    <dimen name="controller_horizontal_margin">0dp</dimen>
+</resources>

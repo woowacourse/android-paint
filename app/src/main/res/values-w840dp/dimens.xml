@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="controller_orientation">@dimen/vertical</dimen>
+    <dimen name="visibility_button_controller_width">150dp</dimen>
+    <dimen name="visibility_button_width">@dimen/match_parent</dimen>
+    <dimen name="brush_controller_width">520dp</dimen>
+    <dimen name="controller_horizontal_margin">0dp</dimen>
+</resources>
