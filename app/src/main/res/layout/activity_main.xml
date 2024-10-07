@@ -18,10 +18,54 @@
             android:id="@+id/drawing_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/sb_paint_width"
+            app:layout_constraintBottom_toTopOf="@id/iv_pen"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_pen"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/iv_pen"
+            app:layout_constraintBottom_toTopOf="@+id/sb_paint_width"
+            app:layout_constraintEnd_toStartOf="@+id/iv_eraser"
+            app:layout_constraintStart_toStartOf="parent"
+            app:tint="@color/gray" />
+
+        <ImageView
+            android:id="@+id/iv_eraser"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/iv_eraser"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_pen"
+            app:layout_constraintStart_toEndOf="@+id/iv_pen"
+            app:layout_constraintTop_toTopOf="@+id/iv_pen"
+            app:tint="@color/gray" />
+
+        <ImageView
+            android:id="@+id/iv_circle"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/iv_circle"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_eraser"
+            app:layout_constraintStart_toEndOf="@+id/iv_eraser"
+            app:layout_constraintTop_toTopOf="@+id/iv_eraser"
+            app:tint="@color/gray" />
+
+        <ImageView
+            android:id="@+id/iv_square"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/iv_square"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_circle"
+            app:layout_constraintStart_toEndOf="@+id/iv_circle"
+            app:layout_constraintTop_toTopOf="@+id/iv_circle"
+            app:tint="@color/gray" />
 
         <SeekBar
             android:id="@+id/sb_paint_width"
@@ -37,7 +81,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_color_selector"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="0dp"
+            android:layout_marginBottom="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">

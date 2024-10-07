@@ -12,8 +12,7 @@ enum class ColorPalette(
     ORANGE(colorResId = R.color.orange),
     YELLOW(colorResId = R.color.yellow),
     GREEN(colorResId = R.color.green),
-    BLUE(colorResId = R.color.blue),
-    ;
+    BLUE(colorResId = R.color.blue), ;
 
     @ColorInt
     fun getColor(context: Context): Int {
