@@ -6,6 +6,7 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -33,8 +34,8 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        lines.forEach {
-            canvas.drawPath(it.path, it.paint)
+        for (line in lines) {
+            canvas.drawPath(line.path, line.paint)
         }
     }
 
@@ -52,9 +53,6 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
             MotionEvent.ACTION_MOVE -> {
                 actionMove(pointX, pointY)
             }
-            MotionEvent.ACTION_UP -> {
-                actionUp(pointX, pointY)
-            }
         }
         return true
     }
@@ -63,9 +61,17 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
         pointX: Float,
         pointY: Float,
     ) {
-        addNewLine()
-        if (brushType == BrushType.PEN) {
-            currentLine.moveTo(pointX, pointY)
+        when (brushType) {
+            BrushType.PEN -> {
+                addNewLine()
+                currentLine.moveTo(pointX, pointY)
+            }
+            BrushType.RECTANGLE -> addNewLine()
+            BrushType.CIRCLE -> addNewLine()
+            BrushType.ERASER -> {
+                val removeItemIndex = findRemoveItem(pointX, pointY)
+                if (removeItemIndex != INVALID_INDEX) lines.removeAt(removeItemIndex)
+            }
         }
     }
 
@@ -81,21 +87,24 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
             BrushType.CIRCLE -> {
                 currentLine.updateCircle(startX, startY, pointX, pointY)
             }
+            BrushType.ERASER -> {}
         }
         invalidate()
     }
 
-    private fun actionUp(
-        pointX: Float,
-        pointY: Float,
-    ) {
-        when (brushType) {
-            BrushType.PEN -> {}
-            BrushType.RECTANGLE -> {
-                currentLine.addRect(startX, startY, pointX, pointY)
-            }
-            BrushType.CIRCLE -> {}
+    private fun findRemoveItem(
+        x: Float,
+        y: Float,
+    ): Int {
+        val bounds = RectF()
+
+        for (index in lines.indices.reversed()) {
+            val line = lines[index]
+            line.path.computeBounds(bounds, true)
+
+            if (bounds.contains(x, y)) return index
         }
+        return INVALID_INDEX
     }
 
     fun setupStrokeWidth(strokeWidth: Float) {
@@ -123,6 +132,7 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
 
     companion object {
         const val DEFAULT_LINE_COLOR = Color.RED
+        const val INVALID_INDEX = -1
         val DEFAULT_BRUSH_TYPE = BrushType.PEN
     }
 }

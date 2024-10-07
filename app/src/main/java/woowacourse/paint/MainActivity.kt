@@ -42,6 +42,10 @@ class MainActivity : AppCompatActivity(), ColorPaletteHandler, BrushHandler {
         setupFigureToolPanel()
     }
 
+    override fun onEraserClicked() {
+        drawingBoard.changeBrushType(BrushType.ERASER)
+    }
+
     private fun setupFigureToolPanel() {
         drawingBoard.setupStyle(Paint.Style.FILL)
         binding.rangeSliderMainStrokeWidth.visibility = View.GONE

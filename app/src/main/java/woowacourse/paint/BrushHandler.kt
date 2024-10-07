@@ -6,4 +6,6 @@ interface BrushHandler {
     fun onRectangleClicked()
 
     fun onCircleClicked()
+
+    fun onEraserClicked()
 }

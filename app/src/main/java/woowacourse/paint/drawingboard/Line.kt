@@ -4,7 +4,7 @@ import android.graphics.Paint
 import android.graphics.Path
 
 // TODO: Line 네이밍 변경하기
-class Line(val path: Path = Path(), val paint: Paint = Paint()) {
+class Line(val path: Path, val paint: Paint) {
     init {
         setupPaint()
     }
@@ -29,16 +29,7 @@ class Line(val path: Path = Path(), val paint: Paint = Paint()) {
         right: Float,
         bottom: Float,
     ) {
-        path.rewind()
-        path.addRect(left, top, right, bottom, Path.Direction.CW)
-    }
-
-    fun addRect(
-        left: Float,
-        top: Float,
-        right: Float,
-        bottom: Float,
-    ) {
+        path.reset()
         path.addRect(left, top, right, bottom, Path.Direction.CW)
     }
 
@@ -48,7 +39,7 @@ class Line(val path: Path = Path(), val paint: Paint = Paint()) {
         right: Float,
         bottom: Float,
     ) {
-        path.rewind()
+        path.reset()
         path.addOval(left, top, right, bottom, Path.Direction.CW)
     }
 
