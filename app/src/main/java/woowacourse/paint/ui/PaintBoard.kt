@@ -16,6 +16,10 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private var startX = 0f
     private var startY = 0f
 
+    init {
+        setLayerType(LAYER_TYPE_HARDWARE, null)
+    }
+
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         for (drawing in drawings) {
@@ -79,5 +83,10 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
 
     fun setBrushType(brushType: BrushType) {
         currentDrawing().updateBrush { changeBrushType(brushType) }
+        if (brushType == BrushType.ERASER) {
+            currentDrawing().setEraseMode(true)
+        } else {
+            currentDrawing().setEraseMode(false)
+        }
     }
 }

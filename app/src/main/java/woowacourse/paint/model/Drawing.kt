@@ -1,8 +1,9 @@
 package woowacourse.paint.model
 
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -14,7 +15,6 @@ data class Drawing(
     init {
         paint.apply {
             isAntiAlias = true
-            style = Paint.Style.STROKE
         }
     }
 
@@ -28,11 +28,7 @@ data class Drawing(
                     BrushType.PENCIL -> Paint.Style.STROKE
                     BrushType.SQUARE -> Paint.Style.FILL
                     BrushType.CIRCLE -> Paint.Style.FILL
-                    BrushType.ERASER -> {
-                        color = Color.WHITE
-                        strokeWidth = 30f
-                        Paint.Style.STROKE
-                    }
+                    BrushType.ERASER -> Paint.Style.STROKE
                 }
         }
     }
@@ -52,12 +48,20 @@ data class Drawing(
                 val radius =
                     sqrt(
                         (endX - startX).toDouble().pow(2.0) +
-                            (endY - startY).toDouble().pow(2.0),
+                                (endY - startY).toDouble().pow(2.0),
                     ).toFloat()
                 path.addCircle(startX, startY, radius, Path.Direction.CW)
             }
 
             BrushType.ERASER -> path.lineTo(endX, endY)
+        }
+    }
+
+    fun setEraseMode(erase: Boolean) {
+        if (erase) {
+            paint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+        } else {
+            paint.xfermode = null
         }
     }
 }
