@@ -48,7 +48,7 @@ data class Drawing(
                 val radius =
                     sqrt(
                         (endX - startX).toDouble().pow(2.0) +
-                                (endY - startY).toDouble().pow(2.0),
+                            (endY - startY).toDouble().pow(2.0),
                     ).toFloat()
                 path.addCircle(startX, startY, radius, Path.Direction.CW)
             }
