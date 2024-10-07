@@ -6,6 +6,8 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -28,6 +30,7 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
     init {
         isFocusable = true
         isFocusableInTouchMode = true
+        setLayerType(LAYER_TYPE_HARDWARE, null)
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -47,11 +50,15 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                currentShape = when (shapeType) {
-                    ShapeType.PEN -> PathShape(Path().apply { moveTo(pointX, pointY) })
-                    ShapeType.SQUARE -> SquareShape(pointX, pointY, pointX, pointY)
-                    ShapeType.CIRCLE -> CircleShape(pointX, pointY)
-                    ShapeType.ERASER -> PathShape(Path().apply { moveTo(pointX, pointY) })
+                currentShape = if (shapeType == ShapeType.ERASER) {
+                    PathShape(Path().apply { moveTo(pointX, pointY) })
+                } else {
+                    when (shapeType) {
+                        ShapeType.PEN -> PathShape(Path().apply { moveTo(pointX, pointY) })
+                        ShapeType.SQUARE -> SquareShape(pointX, pointY, pointX, pointY)
+                        ShapeType.CIRCLE -> CircleShape(pointX, pointY)
+                        else -> PathShape(Path().apply { moveTo(pointX, pointY) })
+                    }
                 }
             }
 
@@ -61,28 +68,37 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
 
             MotionEvent.ACTION_UP -> {
                 shapes.add(DrawableShape(currentShape, Paint(currentPaint)))
-
-                currentShape = when (shapeType) {
-                    ShapeType.PEN -> PathShape(Path())
-                    ShapeType.SQUARE -> SquareShape(
-                        startX = INITIAL_WIDTH,
-                        startY = INITIAL_WIDTH,
-                        endX = INITIAL_WIDTH,
-                        endY = INITIAL_WIDTH
-                    )
-
-                    ShapeType.CIRCLE -> CircleShape(
-                        centerX = INITIAL_WIDTH,
-                        centerY = INITIAL_WIDTH,
-                    )
-
-                    ShapeType.ERASER -> PathShape(Path())
-                }
+                resetShape()
             }
         }
 
         invalidate()
         return true
+    }
+
+    private fun setEraseMode(erase: Boolean) {
+        if (erase) {
+            currentPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+        } else {
+            currentPaint.xfermode = null
+        }
+    }
+
+    private fun resetShape() {
+        currentShape = when (shapeType) {
+            ShapeType.PEN, ShapeType.ERASER -> PathShape(Path())
+            ShapeType.SQUARE -> SquareShape(
+                startX = INITIAL_WIDTH,
+                startY = INITIAL_WIDTH,
+                endX = INITIAL_WIDTH,
+                endY = INITIAL_WIDTH
+            )
+
+            ShapeType.CIRCLE -> CircleShape(
+                centerX = INITIAL_WIDTH,
+                centerY = INITIAL_WIDTH,
+            )
+        }
     }
 
     private fun initialPaint(): Paint {
@@ -103,6 +119,7 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
 
     fun setShapeType(type: ShapeType) {
         shapeType = type
+        setEraseMode(type == ShapeType.ERASER)
     }
 
     companion object {
