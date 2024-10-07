@@ -28,27 +28,32 @@ class MainActivity : AppCompatActivity(), ColorPaletteHandler, BrushHandler {
 
     override fun onPenClicked() {
         drawingBoard.changeBrushType(BrushType.PEN)
-        drawingBoard.setupStyle(Paint.Style.STROKE)
-        binding.rangeSliderMainStrokeWidth.visibility = View.VISIBLE
+        setupToolPanel(style = Paint.Style.STROKE, visibleState = View.VISIBLE)
     }
 
     override fun onRectangleClicked() {
         drawingBoard.changeBrushType(BrushType.RECTANGLE)
-        setupFigureToolPanel()
+        setupToolPanel(style = Paint.Style.FILL, visibleState = View.GONE)
     }
 
     override fun onCircleClicked() {
         drawingBoard.changeBrushType(BrushType.CIRCLE)
-        setupFigureToolPanel()
+        setupToolPanel(style = Paint.Style.FILL, visibleState = View.GONE)
     }
 
     override fun onEraserClicked() {
         drawingBoard.changeBrushType(BrushType.ERASER)
+        setupToolPanel(visibleState = View.GONE)
     }
 
-    private fun setupFigureToolPanel() {
-        drawingBoard.setupStyle(Paint.Style.FILL)
-        binding.rangeSliderMainStrokeWidth.visibility = View.GONE
+    private fun setupToolPanel(
+        style: Paint.Style? = null,
+        visibleState: Int,
+    ) {
+        style?.let {
+            drawingBoard.setupStyle(it)
+        }
+        binding.rangeSliderMainStrokeWidth.visibility = visibleState
     }
 
     private fun setupColorPalette() {
