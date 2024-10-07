@@ -20,11 +20,11 @@ class DrawingView(
     private var currentPath: Path? = null
     private var currentPaint: Paint? = null
     private val undoneStrokes = mutableListOf<Stroke>()
-    private var startX = 0f
-    private var startY = 0f
+    private var startX = START_POSITION
+    private var startY = START_POSITION
     var currentBrushType = BrushType.PEN
     private var currentColor = Color.BLACK
-    private var currentStrokeWidth = 10f
+    private var currentStrokeWidth = INIT_STROKE_WIDTH
 
     init {
         setLayerType(LAYER_TYPE_HARDWARE, null)
@@ -182,5 +182,10 @@ class DrawingView(
 
     fun updateBrushSize(size: Float) {
         currentStrokeWidth = size
+    }
+
+    companion object {
+        private const val INIT_STROKE_WIDTH = 10f
+        private const val START_POSITION = 0f
     }
 }
