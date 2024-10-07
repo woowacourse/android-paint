@@ -14,14 +14,14 @@ import woowacourse.paint.BrushType
 
 class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs) {
     private var currentLine =
-        Line(
+        Drawing(
             Path(),
             Paint().apply {
                 color = DEFAULT_LINE_COLOR
                 style = Paint.Style.STROKE
             },
         )
-    private val lines: MutableList<Line> = mutableListOf(currentLine)
+    private val lines: MutableList<Drawing> = mutableListOf(currentLine)
     private var brushType: BrushType = DEFAULT_BRUSH_TYPE
 
     private var startX: Float = 0f
@@ -82,10 +82,10 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
         when (brushType) {
             BrushType.PEN -> currentLine.lineTo(pointX, pointY)
             BrushType.RECTANGLE -> {
-                currentLine.updateRect(startX, startY, pointX, pointY)
+                currentLine.drawRect(startX, startY, pointX, pointY)
             }
             BrushType.CIRCLE -> {
-                currentLine.updateCircle(startX, startY, pointX, pointY)
+                currentLine.drawCircle(startX, startY, pointX, pointY)
             }
             BrushType.ERASER -> {}
         }

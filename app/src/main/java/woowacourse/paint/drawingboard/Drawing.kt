@@ -3,8 +3,7 @@ package woowacourse.paint.drawingboard
 import android.graphics.Paint
 import android.graphics.Path
 
-// TODO: Line 네이밍 변경하기
-class Line(val path: Path, val paint: Paint) {
+class Drawing(val path: Path, val paint: Paint) {
     init {
         setupPaint()
     }
@@ -23,7 +22,7 @@ class Line(val path: Path, val paint: Paint) {
         path.lineTo(pointX, pointY)
     }
 
-    fun updateRect(
+    fun drawRect(
         left: Float,
         top: Float,
         right: Float,
@@ -33,7 +32,7 @@ class Line(val path: Path, val paint: Paint) {
         path.addRect(left, top, right, bottom, Path.Direction.CW)
     }
 
-    fun updateCircle(
+    fun drawCircle(
         left: Float,
         top: Float,
         right: Float,
@@ -43,22 +42,22 @@ class Line(val path: Path, val paint: Paint) {
         path.addOval(left, top, right, bottom, Path.Direction.CW)
     }
 
-    fun updateStrokeWidth(strokeWidth: Float): Line {
+    fun updateStrokeWidth(strokeWidth: Float): Drawing {
         val paint = Paint(paint)
         paint.strokeWidth = strokeWidth
-        return Line(Path(), paint)
+        return Drawing(Path(), paint)
     }
 
-    fun updateColor(color: Int): Line {
+    fun updateColor(color: Int): Drawing {
         val paint = Paint(paint)
         paint.color = color
-        return Line(Path(), paint)
+        return Drawing(Path(), paint)
     }
 
-    fun updatePaintStyle(style: Paint.Style): Line {
+    fun updatePaintStyle(style: Paint.Style): Drawing {
         val paint = Paint(paint)
         paint.style = style
-        return Line(Path(), paint)
+        return Drawing(Path(), paint)
     }
 
     private fun setupPaint() =
