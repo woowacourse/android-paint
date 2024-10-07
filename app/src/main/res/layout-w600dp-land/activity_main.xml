@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="brushHandler"
+            type="woowacourse.paint.BrushHandler" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <woowacourse.paint.drawingboard.DrawingBoard
+            android:id="@+id/custom_view_main_drawing_board"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.slider.RangeSlider
+            android:id="@+id/range_slider_main_stroke_width"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:valueFrom="1"
+            android:valueTo="100"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/btn_main_eraser"
+            app:layout_constraintStart_toStartOf="@id/btn_main_pen"
+            tools:visibility="visible" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_main_color_palette"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/shape_color_palette_background"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/range_slider_main_stroke_width"
+            app:layout_constraintEnd_toEndOf="@id/btn_main_eraser"
+            app:layout_constraintStart_toStartOf="@id/btn_main_pen"
+            tools:itemCount="5"
+            tools:listitem="@layout/item_color_palette" />
+
+        <Button
+            android:id="@+id/btn_main_pen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginBottom="8dp"
+            android:onClick="@{() -> brushHandler.onPenClicked()}"
+            android:text="@string/main_pen"
+            app:layout_constraintTop_toBottomOf="@id/rv_main_color_palette"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/btn_main_rectangle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:onClick="@{() -> brushHandler.onRectangleClicked()}"
+            android:text="@string/main_rectangle"
+            app:layout_constraintBottom_toBottomOf="@id/btn_main_pen"
+            app:layout_constraintStart_toEndOf="@id/btn_main_pen"
+            app:layout_constraintTop_toTopOf="@id/btn_main_pen" />
+
+        <Button
+            android:id="@+id/btn_main_circle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:onClick="@{() -> brushHandler.onCircleClicked()}"
+            android:text="@string/main_circle"
+            app:layout_constraintBottom_toBottomOf="@id/btn_main_pen"
+            app:layout_constraintStart_toEndOf="@id/btn_main_rectangle"
+            app:layout_constraintTop_toTopOf="@id/btn_main_pen" />
+
+        <Button
+            android:id="@+id/btn_main_eraser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:onClick="@{() -> brushHandler.onEraserClicked()}"
+            android:text="@string/main_eraser"
+            app:layout_constraintBottom_toBottomOf="@id/btn_main_pen"
+            app:layout_constraintStart_toEndOf="@id/btn_main_circle"
+            app:layout_constraintTop_toTopOf="@id/btn_main_pen" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
