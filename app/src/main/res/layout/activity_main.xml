@@ -23,9 +23,7 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/purple_500"
-                android:text="undo"
-                android:textColor="@android:color/white" />
+                android:text="undo" />
 
             <Button
                 android:id="@+id/btn_redo"
@@ -34,9 +32,7 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/purple_500"
-                android:text="redo"
-                android:textColor="@android:color/white" />
+                android:text="redo" />
 
             <Button
                 android:id="@+id/btn_clear_all"
@@ -45,9 +41,7 @@
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/purple_500"
-                android:text="clear"
-                android:textColor="@android:color/white" />
+                android:text="clear" />
 
         </LinearLayout>
 
@@ -72,9 +66,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:backgroundTint="@color/purple_500"
-                android:text="색상 변경"
-                android:textColor="@android:color/white" />
+
+                android:text="색상 변경" />
 
             <Button
                 android:id="@+id/btn_brush_stroke"
@@ -83,18 +76,14 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/purple_500"
-                android:text="굵기 변경"
-                android:textColor="@android:color/white" />
+                android:text="굵기 변경" />
 
             <Button
                 android:id="@+id/btn_brush_change"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:backgroundTint="@color/purple_500"
-                android:text="브러쉬 변경"
-                android:textColor="@android:color/white" />
+                android:text="브러쉬 변경" />
 
         </LinearLayout>
 
@@ -131,9 +120,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:backgroundTint="@color/purple_500"
-                android:text="펜"
-                android:textColor="@android:color/white" />
+                android:text="펜" />
 
             <Button
                 android:id="@+id/btn_rect"
@@ -142,27 +129,21 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/purple_500"
-                android:text="직사각형"
-                android:textColor="@android:color/white" />
+                android:text="직사각형" />
 
             <Button
                 android:id="@+id/btn_circle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:backgroundTint="@color/purple_500"
-                android:text="원"
-                android:textColor="@android:color/white" />
+                android:text="원" />
 
             <Button
                 android:id="@+id/btn_eraser"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:backgroundTint="@color/purple_500"
-                android:text="지우개"
-                android:textColor="@android:color/white" />
+                android:text="지우개" />
 
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
