@@ -67,7 +67,7 @@ class PaintView(context: Context?, attrs: AttributeSet?) : View(context, attrs) 
 
     fun changeThickness(size: Float) = updateBrush { it.setThickness(size) }
 
-    fun changeBrush(brushName: String) = updateBrush { it.setBrush(brushName) }
+    fun changeBrush(brushState: BrushState) = updateBrush { it.setBrush(brushState) }
 
     private fun updateBrush(updateAction: (Brush) -> Unit) {
         val newBrush = newBrush()

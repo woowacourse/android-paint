@@ -11,6 +11,10 @@
             type="woowacourse.paint.OnPaletteClickListener" />
 
         <variable
+            name="brushState"
+            type="woowacourse.paint.BrushState" />
+
+        <variable
             name="isBrushListVisible"
             type="Boolean" />
 
@@ -24,12 +28,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:backgroundTint="@color/purple_200"
-            android:onClick="@{() -> onClickPaletteListener.onClickBrushChange(@string/brush_pen)}"
+            android:onClick="@{() -> onClickPaletteListener.onClickBrushChange(brushState.PEN)}"
             android:text="@string/brush_pen"
             android:textColor="@color/default_text_color"
             android:visibility="@{isBrushListVisible ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toTopOf="@id/range_slider"
-            app:layout_constraintEnd_toStartOf="@id/orange_palette"
+            app:layout_constraintEnd_toStartOf="@id/btn_rectangle"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -39,13 +43,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:backgroundTint="@color/purple_200"
-            android:onClick="@{() -> onClickPaletteListener.onClickBrushChange(@string/brush_rectangle)}"
+            android:onClick="@{() -> onClickPaletteListener.onClickBrushChange(brushState.RECTANGLE)}"
             android:text="@string/brush_rectangle"
             android:textColor="@color/default_text_color"
             android:visibility="@{isBrushListVisible ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toTopOf="@id/range_slider"
-            app:layout_constraintEnd_toStartOf="@id/yellow_palette"
-            app:layout_constraintStart_toEndOf="@id/red_palette" />
+            app:layout_constraintEnd_toStartOf="@id/btn_circle"
+            app:layout_constraintStart_toEndOf="@id/btn_pen" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_circle"
@@ -53,13 +57,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:backgroundTint="@color/purple_200"
-            android:onClick="@{() -> onClickPaletteListener.onClickBrushChange(@string/brush_circle)}"
+            android:onClick="@{() -> onClickPaletteListener.onClickBrushChange(brushState.CIRCLE)}"
             android:text="@string/brush_circle"
             android:textColor="@color/default_text_color"
             android:visibility="@{isBrushListVisible ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toTopOf="@id/range_slider"
-            app:layout_constraintEnd_toStartOf="@id/green_palette"
-            app:layout_constraintStart_toEndOf="@id/orange_palette" />
+            app:layout_constraintEnd_toStartOf="@id/btn_eraser"
+            app:layout_constraintStart_toEndOf="@id/btn_rectangle" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_eraser"
@@ -68,13 +72,13 @@
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
             android:backgroundTint="@color/purple_200"
-            android:onClick="@{() -> onClickPaletteListener.onClickBrushChange(@string/brush_eraser)}"
+            android:onClick="@{() -> onClickPaletteListener.onClickBrushChange(brushState.ERASER)}"
             android:text="@string/brush_eraser"
             android:textColor="@color/default_text_color"
             android:visibility="@{isBrushListVisible ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toTopOf="@id/range_slider"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/yellow_palette" />
+            app:layout_constraintStart_toEndOf="@id/btn_circle" />
 
     </merge>
 </layout>

@@ -98,8 +98,8 @@ data class Brush(
         ).toFloat()
     }
 
-    fun setBrush(brushName: String) {
-        when (BrushState.getBrushState(brushName)) {
+    fun setBrush(brushState: BrushState) {
+        when (brushState) {
             BrushState.PEN -> changeBrushToPen()
             BrushState.RECTANGLE -> changeBrushToRectangle()
             BrushState.CIRCLE -> changeBrushToCircle()

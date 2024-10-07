@@ -9,5 +9,5 @@ interface OnPaletteClickListener {
 
     fun onClickPaint(color: Int)
 
-    fun onClickBrushChange(brushName: String)
+    fun onClickBrushChange(brushState: BrushState)
 }
