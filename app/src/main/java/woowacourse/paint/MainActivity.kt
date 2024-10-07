@@ -1,5 +1,6 @@
 package woowacourse.paint
 
+import android.graphics.Paint
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -27,11 +28,13 @@ class MainActivity : AppCompatActivity(), ColorPaletteHandler, BrushHandler {
 
     override fun onPenClicked() {
         drawingBoard.changeBrushType(BrushType.PEN)
+        drawingBoard.setupStyle(Paint.Style.STROKE)
         binding.rangeSliderMainStrokeWidth.visibility = View.VISIBLE
     }
 
     override fun onRectangleClicked() {
         drawingBoard.changeBrushType(BrushType.RECTANGLE)
+        drawingBoard.setupStyle(Paint.Style.FILL)
         binding.rangeSliderMainStrokeWidth.visibility = View.GONE
     }
 

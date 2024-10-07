@@ -12,9 +12,16 @@ import android.view.View
 import woowacourse.paint.BrushType
 
 class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs) {
-    private var currentLine = Line(Path(), Paint().apply { color = DEFAULT_LINE_COLOR })
+    private var currentLine =
+        Line(Path(), Paint().apply {
+            color = DEFAULT_LINE_COLOR
+            style = Paint.Style.STROKE
+        })
     private val lines: MutableList<Line> = mutableListOf(currentLine)
     private var brushType: BrushType = DEFAULT_BRUSH_TYPE
+
+    private var startX: Float = 0f
+    private var startY: Float = 0f
 
     init {
         isFocusable = true
@@ -30,30 +37,49 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
 
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        when (brushType) {
-            BrushType.PEN -> onTouchEventForPen(event)
-            BrushType.RECTANGLE -> {
-                // TODO: 직사각형 그리기 구현
-            }
-        }
-
-        invalidate()
-        return true
-    }
-
-    private fun onTouchEventForPen(event: MotionEvent): Boolean {
         val pointX = event.x
         val pointY = event.y
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                addNewLine()
-                currentLine.moveTo(pointX, pointY)
+                startX = event.x
+                startY = event.y
+                actionDown(pointX, pointY)
             }
-            MotionEvent.ACTION_MOVE -> currentLine.lineTo(pointX, pointY)
-            else -> return super.onTouchEvent(event)
+            MotionEvent.ACTION_MOVE -> {
+                actionMove(pointX, pointY)
+            }
+            MotionEvent.ACTION_UP -> {
+                actionUp(pointX, pointY)
+            }
         }
         return true
+    }
+
+    private fun actionDown(pointX: Float, pointY: Float) {
+        addNewLine()
+        if (brushType == BrushType.PEN) {
+            currentLine.moveTo(pointX, pointY)
+        }
+    }
+
+    private fun actionMove(pointX: Float, pointY: Float) {
+        when (brushType) {
+            BrushType.PEN -> currentLine.lineTo(pointX, pointY)
+            BrushType.RECTANGLE -> {
+                currentLine.updateRect(startX, startY, pointX, pointY)
+            }
+        }
+        invalidate()
+    }
+
+    private fun actionUp(pointX: Float, pointY: Float) {
+        when (brushType) {
+            BrushType.PEN -> {}
+            BrushType.RECTANGLE -> {
+                currentLine.addRect(startX, startY, pointX, pointY)
+            }
+        }
     }
 
     fun setupStrokeWidth(strokeWidth: Float) {
@@ -64,6 +90,11 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
     fun setupColor(color: Int) {
         val newColorLine = currentLine.updateColor(color)
         currentLine = newColorLine
+    }
+
+    fun setupStyle(style: Paint.Style) {
+        val newStyle = currentLine.updatePaintStyle(style)
+        currentLine = newStyle
     }
 
     fun changeBrushType(brush: BrushType) {
