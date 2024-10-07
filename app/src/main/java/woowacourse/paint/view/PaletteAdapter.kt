@@ -4,7 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import woowacourse.paint.Paint
 import woowacourse.paint.databinding.ItemPaintBinding
 import woowacourse.paint.utils.ItemDiffCallback
 

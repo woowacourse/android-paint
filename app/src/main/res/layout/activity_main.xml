@@ -3,17 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <import type="woowacourse.paint.view.BrushType" />
-
-        <import type="woowacourse.paint.PanelType" />
-
-        <variable
-            name="vm"
-            type="woowacourse.paint.DrawingPaperViewModel" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -49,7 +38,6 @@
                 android:text="redo"
                 android:textColor="@android:color/white" />
 
-
             <Button
                 android:id="@+id/btn_clear_all"
                 android:layout_width="0dp"
@@ -65,7 +53,6 @@
 
         <woowacourse.paint.view.DrawingPaperView
             android:id="@+id/drawing_paper"
-            brushType="@{vm.panelState.brushType}"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toTopOf="@id/panel"
@@ -86,7 +73,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="@color/purple_500"
-                android:onClick="@{() -> vm.changePanelState(PanelType.BRUSH_COLOR)}"
                 android:text="색상 변경"
                 android:textColor="@android:color/white" />
 
@@ -98,7 +84,6 @@
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/purple_500"
-                android:onClick="@{() -> vm.changePanelState(PanelType.BRUSH_STROKE)}"
                 android:text="굵기 변경"
                 android:textColor="@android:color/white" />
 
@@ -108,16 +93,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="@color/purple_500"
-                android:onClick="@{() -> vm.changePanelState(PanelType.TOOL)}"
                 android:text="브러쉬 변경"
                 android:textColor="@android:color/white" />
 
         </LinearLayout>
 
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_palette"
-            visible="@{vm.panelState.blushColorVisible}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
@@ -129,16 +111,13 @@
 
         <woowacourse.paint.view.SliderView
             android:id="@+id/my_slider"
-            visible="@{vm.panelState.brushStrokeVisible}"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_marginBottom="30dp"
             app:layout_constraintBottom_toBottomOf="parent" />
 
-
         <LinearLayout
             android:id="@+id/tool_group"
-            visible="@{vm.panelState.toolVisible}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="30dp"
@@ -153,7 +132,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="@color/purple_500"
-                android:onClick="@{() -> vm.changeBrushType(BrushType.PEN)}"
                 android:text="펜"
                 android:textColor="@android:color/white" />
 
@@ -165,7 +143,6 @@
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:backgroundTint="@color/purple_500"
-                android:onClick="@{() -> vm.changeBrushType(BrushType.RECTANGLE)}"
                 android:text="직사각형"
                 android:textColor="@android:color/white" />
 
@@ -175,10 +152,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="@color/purple_500"
-                android:onClick="@{() -> vm.changeBrushType(BrushType.CIRCLE)}"
                 android:text="원"
                 android:textColor="@android:color/white" />
-
 
             <Button
                 android:id="@+id/btn_eraser"
@@ -186,7 +161,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:backgroundTint="@color/purple_500"
-                android:onClick="@{() -> vm.changeBrushType(BrushType.ERASER)}"
                 android:text="지우개"
                 android:textColor="@android:color/white" />
 

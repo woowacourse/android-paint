@@ -24,23 +24,17 @@ constructor(
     defStyle: Int = 0,
 ) : View(context, attrs, defStyle) {
 
-    private var currentShape: BrushShape =
-        Pencil(0f, 0f, createPaint(DEFAULT_COLOR, DEFAULT_STROKE_WIDTH), DEFAULT_STROKE_WIDTH)
+    private var drawingState = DrawingState(
+        brushType = BrushType.PEN,
+        panelType = PanelType.BRUSH_COLOR,
+        color = DEFAULT_COLOR,
+        strokeWidth = DEFAULT_STROKE_WIDTH,
+        shapes = emptyList(),
+        redoShapes = emptyList()
+    )
 
-    private val shapes = mutableListOf<BrushShape>()
-    private val redoShapes = mutableListOf<BrushShape>()
-
-    var currentColor: Int = DEFAULT_COLOR
-        set(value) {
-            field = value
-            updateCurrentShape()
-        }
-
-    var currentStrokeWidth: Float = DEFAULT_STROKE_WIDTH
-        set(value) {
-            field = value
-            updateCurrentShape()
-        }
+    val panelType: PanelType
+        get() = drawingState.panelType
 
     init {
         setLayerType(LAYER_TYPE_HARDWARE, null)
@@ -59,16 +53,9 @@ constructor(
         }
     }
 
-    private fun updateCurrentShape() {
-        currentShape = currentShape.copy(
-            paint = createPaint(currentColor, currentStrokeWidth),
-            strokeWidth = currentStrokeWidth
-        )
-    }
-
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        for (shape in shapes) {
+        for (shape in drawingState.shapes) {
             shape.draw(canvas)
         }
     }
@@ -79,16 +66,18 @@ constructor(
         val y = event.y
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                val shape = currentShape.copy(x = x, y = y)
-                shapes.add(shape)
-                redoShapes.clear()
-                currentShape = shape
+                val newShape = createShape(x, y)
+                drawingState = drawingState.copy(
+                    shapes = drawingState.shapes + newShape,
+                    redoShapes = emptyList()
+                )
             }
 
             MotionEvent.ACTION_MOVE -> {
-                val shape = currentShape
-                shape.updatePosition(x, y)
-                invalidate()
+                drawingState.shapes.lastOrNull()?.let {
+                    it.updatePosition(x, y)
+                    invalidate()
+                }
             }
 
             MotionEvent.ACTION_UP -> {}
@@ -97,53 +86,58 @@ constructor(
     }
 
     fun undo() {
-        if (shapes.isNotEmpty()) {
-            val lastShape = shapes.removeLast()
-            redoShapes.add(lastShape)
+        if (drawingState.shapes.isNotEmpty()) {
+            val lastShape = drawingState.shapes.last()
+            drawingState = drawingState.copy(
+                shapes = drawingState.shapes.dropLast(1),
+                redoShapes = drawingState.redoShapes + lastShape
+            )
             invalidate()
         }
     }
 
     fun redo() {
-        if (redoShapes.isNotEmpty()) {
-            val lastRedoShape = redoShapes.removeLast()
-            shapes.add(lastRedoShape)
+        if (drawingState.redoShapes.isNotEmpty()) {
+            val lastRedoShape = drawingState.redoShapes.last()
+            drawingState = drawingState.copy(
+                shapes = drawingState.shapes + lastRedoShape,
+                redoShapes = drawingState.redoShapes.dropLast(1)
+            )
             invalidate()
         }
     }
 
     fun clearAll() {
-        shapes.clear()
-        redoShapes.clear()
+        drawingState = drawingState.copy(
+            shapes = emptyList(),
+            redoShapes = emptyList()
+        )
         invalidate()
     }
 
-    private fun BrushType.toShape(
-        x: Float,
-        y: Float,
-        color: Int,
-        strokeWidth: Float,
-    ): BrushShape {
-        val paint = createPaint(color, strokeWidth)
-        return when (this) {
-            BrushType.PEN -> Pencil(x, y, paint, strokeWidth)
-            BrushType.RECTANGLE -> Rectangle(x, y, paint, strokeWidth)
-            BrushType.CIRCLE -> Circle(x, y, paint, strokeWidth)
-            BrushType.ERASER -> Eraser(x, y, paint, strokeWidth)
-        }
+    fun changeBrushType(brushType: BrushType) {
+        drawingState = drawingState.copy(brushType = brushType)
     }
 
-    private fun BrushShape.copy(
-        x: Float = this.startX,
-        y: Float = this.startY,
-        paint: Paint = this.paint,
-        strokeWidth: Float = this.strokeWidth,
-    ): BrushShape {
-        return when (this) {
-            is Pencil -> Pencil(x, y, Paint(paint), strokeWidth)
-            is Rectangle -> Rectangle(x, y, Paint(paint), strokeWidth)
-            is Circle -> Circle(x, y, Paint(paint), strokeWidth)
-            is Eraser -> Eraser(x, y, Paint(paint), strokeWidth)
+    fun changeColor(color: Int) {
+        drawingState = drawingState.copy(color = color)
+    }
+
+    fun changeStrokeWidth(strokeWidth: Float) {
+        drawingState = drawingState.copy(strokeWidth = strokeWidth)
+    }
+
+    fun changePanelType(panelType: PanelType) {
+        drawingState = drawingState.copy(panelType = panelType)
+    }
+
+    private fun createShape(x: Float, y: Float): BrushShape {
+        val paint = createPaint(drawingState.color, drawingState.strokeWidth)
+        return when (drawingState.brushType) {
+            BrushType.PEN -> Pencil(x, y, paint, drawingState.strokeWidth)
+            BrushType.RECTANGLE -> Rectangle(x, y, paint, drawingState.strokeWidth)
+            BrushType.CIRCLE -> Circle(x, y, paint, drawingState.strokeWidth)
+            BrushType.ERASER -> Eraser(x, y, paint, drawingState.strokeWidth)
         }
     }
 
@@ -154,12 +148,16 @@ constructor(
         @BindingAdapter("brushType")
         @JvmStatic
         fun DrawingPaperView.bindBrushType(brushType: BrushType) {
-            currentShape = brushType.toShape(
-                currentShape.startX,
-                currentShape.startY,
-                currentColor,
-                currentStrokeWidth
-            )
+            changeBrushType(brushType)
         }
     }
 }
+
+data class DrawingState(
+    val brushType: BrushType,
+    val panelType: PanelType,
+    val color: Int,
+    val strokeWidth: Float,
+    val shapes: List<BrushShape>,
+    val redoShapes: List<BrushShape>
+)
