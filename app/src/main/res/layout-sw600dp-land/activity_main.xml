@@ -28,8 +28,7 @@
             android:src="@drawable/icon_undo"
             app:layout_constraintBottom_toBottomOf="@id/btn_delete_all"
             app:layout_constraintEnd_toStartOf="@id/btn_delete_all"
-            app:layout_constraintTop_toTopOf="@id/btn_delete_all"
-            app:tint="@color/default_color" />
+            app:layout_constraintTop_toTopOf="@id/btn_delete_all" />
 
         <ImageView
             android:id="@+id/btn_delete_all"
@@ -38,8 +37,7 @@
             android:layout_margin="12dp"
             android:src="@drawable/icon_delete_all"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/default_color" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <RadioGroup
             android:id="@+id/radioGroup"
