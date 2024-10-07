@@ -18,6 +18,10 @@ class MainActivity : AppCompatActivity() {
         val green = findViewById<View>(R.id.green)
         val blue = findViewById<View>(R.id.blue)
         val eraser = findViewById<View>(R.id.eraser)
+        val brush = findViewById<View>(R.id.brush)
+        val rectangle = findViewById<View>(R.id.rectangle)
+        val circle = findViewById<View>(R.id.circle)
+        val triangle = findViewById<View>(R.id.triangle)
 
         rangeSlider.valueFrom = 0.0f
         rangeSlider.valueTo = 100.0f
@@ -41,6 +45,18 @@ class MainActivity : AppCompatActivity() {
         }
         blue.setOnClickListener {
             painterView.setColor(Color.BLUE)
+        }
+        brush.setOnClickListener {
+            painterView.setBrush()
+        }
+        rectangle.setOnClickListener {
+            painterView.setSquare()
+        }
+        circle.setOnClickListener {
+            painterView.setCircle()
+        }
+        triangle.setOnClickListener {
+            painterView.setTriangle()
         }
         eraser.setOnClickListener {
             painterView.setEraser()
