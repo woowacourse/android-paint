@@ -71,7 +71,6 @@
             android:layout_marginTop="10dp"
             android:onClick="@{() -> onClickPaletteListener.onClickChangePaintButton()}"
             android:text="@string/main_change_color"
-            android:textColor="@color/default_text_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_change_thickness"
             app:layout_constraintStart_toStartOf="parent" />
@@ -82,7 +81,6 @@
             android:layout_height="wrap_content"
             android:onClick="@{() -> onClickPaletteListener.onClickChangeThicknessButton()}"
             android:text="@string/main_change_thickness"
-            android:textColor="@color/default_text_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_change_brush"
             app:layout_constraintStart_toEndOf="@id/btn_change_color" />
@@ -94,7 +92,6 @@
             android:layout_marginEnd="15dp"
             android:onClick="@{() -> onClickPaletteListener.onClickChangeBrushButton()}"
             android:text="@string/main_change_brush"
-            android:textColor="@color/default_text_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/btn_change_thickness" />
