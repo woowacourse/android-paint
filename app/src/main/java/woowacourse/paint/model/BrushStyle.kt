@@ -5,5 +5,5 @@ import android.graphics.Color
 data class BrushStyle(
     val color: Int = Color.RED,
     val strokeWidth: Float = 5f,
-    var brushType: BrushType = BrushType.PEN,
+    val brushType: BrushType = BrushType.PEN,
 )
