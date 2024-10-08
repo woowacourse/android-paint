@@ -10,6 +10,7 @@ import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.RectF
 import android.util.AttributeSet
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.ColorRes
@@ -62,7 +63,35 @@ class PaintBoardView(context: Context, attrs: AttributeSet) : View(context, attr
                         drawShapes.add(DrawShape.Line(path, paint.strokeWidth, paint.color, Paint.Style.STROKE))
                     }
 
-                    ShapeType.RECTANGLE, ShapeType.CIRCLE -> Unit
+                    ShapeType.RECTANGLE -> {
+                        val path = Path()
+                        path.moveTo(startX, startY)
+                        drawShapes.add(
+                            DrawShape.Rectangle(
+                                RectF(startX, startY, event.x, event.y),
+                                paint.strokeWidth,
+                                paint.color,
+                                Paint.Style.FILL
+                            ),
+                        )
+                    }
+
+                    ShapeType.CIRCLE -> {
+                        val path = Path()
+                        val radius = calculateRadius(startX, startY, event.x, event.y)
+
+                        path.moveTo(startX, startY)
+                        drawShapes.add(
+                            DrawShape.Circle(
+                                startX,
+                                startY,
+                                radius,
+                                paint.strokeWidth,
+                                paint.color,
+                                Paint.Style.FILL
+                            ),
+                        )
+                    }
                 }
             }
 
