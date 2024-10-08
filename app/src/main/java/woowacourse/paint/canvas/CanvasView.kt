@@ -24,7 +24,7 @@ class CanvasView(
 ) : View(context, attributeSet) {
     private var brush: Brush = Brush()
     private val drawn = Drawn()
-    private var drawing: Draw = Line()
+    private var currentDraw: Draw = Line()
 
     init {
         changeColor(Brush.INIT_COLOR)
@@ -64,7 +64,7 @@ class CanvasView(
             }
 
             MotionEvent.ACTION_MOVE -> {
-                drawing.drawing(event.x, event.y)
+                currentDraw.drawing(event.x, event.y)
                 invalidate()
                 true
             }
@@ -93,14 +93,14 @@ class CanvasView(
         y: Float,
     ) {
         setDraw(x, y)
-        drawn.add(drawing)
+        drawn.add(currentDraw)
     }
 
     private fun setDraw(
         x: Float,
         y: Float,
     ) {
-        drawing =
+        currentDraw =
             when (brush.brushType) {
                 BrushType.PEN -> {
                     val line = Line(brushType = BrushType.PEN, paint = createNewPaint())
@@ -118,7 +118,7 @@ class CanvasView(
     }
 
     private fun setDraw() {
-        drawing =
+        currentDraw =
             when (brush.brushType) {
                 BrushType.PEN -> Line(brushType = BrushType.PEN, paint = createNewPaint())
                 BrushType.RECTANGLE -> Rectangle(paint = createNewPaint())
