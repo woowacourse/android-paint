@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
-import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -13,7 +12,6 @@ import woowacourse.paint.brush.Brush
 import woowacourse.paint.brush.BrushType
 import woowacourse.paint.brush.ColorPalette
 import woowacourse.paint.brush.draw.Circle
-import woowacourse.paint.brush.draw.Draw
 import woowacourse.paint.brush.draw.Drawn
 import woowacourse.paint.brush.draw.Line
 import woowacourse.paint.brush.draw.Rectangle
@@ -22,9 +20,7 @@ class CanvasView(
     context: Context,
     attributeSet: AttributeSet,
 ) : View(context, attributeSet) {
-    private var brush: Brush = Brush()
     private val drawn = Drawn()
-    private var currentDraw: Draw = Line()
 
     init {
         changeColor(Brush.INIT_COLOR)
@@ -64,7 +60,7 @@ class CanvasView(
             }
 
             MotionEvent.ACTION_MOVE -> {
-                currentDraw.drawing(event.x, event.y)
+                drawn.drawing(event.x, event.y)
                 invalidate()
                 true
             }
@@ -74,63 +70,25 @@ class CanvasView(
     }
 
     fun changeBrushType(brushType: BrushType) {
-        brush = brush.changeType(brushType)
-        setDraw()
+        drawn.changeBrushType(brushType, createNewPaint())
     }
 
     fun changeLineWidth(width: Float) {
-        brush = brush.changeWidth(width)
-        setDraw()
+        drawn.changeLineWidth(width, createNewPaint())
     }
 
     fun changeColor(colorPalette: ColorPalette) {
-        brush = brush.changeColor(colorPalette)
-        setDraw()
+        drawn.changeColor(colorPalette, createNewPaint())
     }
 
-    private fun startDraw(
-        x: Float,
-        y: Float,
-    ) {
-        setDraw(x, y)
-        drawn.add(currentDraw)
-    }
-
-    private fun setDraw(
-        x: Float,
-        y: Float,
-    ) {
-        currentDraw =
-            when (brush.brushType) {
-                BrushType.PEN -> {
-                    val line = Line(brushType = BrushType.PEN, paint = createNewPaint())
-                    line.move(x, y)
-                    line
-                }
-                BrushType.RECTANGLE -> Rectangle(RectF(x, y, x, y), createNewPaint())
-                BrushType.CIRCLE -> Circle(x, y, 0f, createNewPaint())
-                BrushType.ERASER -> {
-                    val line = Line(brushType = BrushType.ERASER, paint = createNewPaint())
-                    line.move(x, y)
-                    line
-                }
-            }
-    }
-
-    private fun setDraw() {
-        currentDraw =
-            when (brush.brushType) {
-                BrushType.PEN -> Line(brushType = BrushType.PEN, paint = createNewPaint())
-                BrushType.RECTANGLE -> Rectangle(paint = createNewPaint())
-                BrushType.CIRCLE -> Circle(paint = createNewPaint())
-                BrushType.ERASER -> Line(brushType = BrushType.ERASER, paint = createNewPaint())
-            }
+    private fun startDraw(x: Float, y: Float) {
+        drawn.startDraw(x, y, createNewPaint())
     }
 
     private fun createNewPaint(): Paint {
         return Paint().apply {
-            this.color = ContextCompat.getColor(context, brush.colorPalette.colorRes)
-            this.strokeWidth = brush.width
+            this.color = ContextCompat.getColor(context, drawn.getBrushColorRes())
+            this.strokeWidth = drawn.getBrushWidth()
         }
     }
 }
