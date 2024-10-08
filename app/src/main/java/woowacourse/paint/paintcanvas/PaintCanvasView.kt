@@ -12,7 +12,6 @@ import androidx.core.content.ContextCompat
 import woowacourse.paint.R
 import woowacourse.paint.paintcanvas.shape.PathShape
 import woowacourse.paint.paintcanvas.shape.Shape
-import java.util.Stack
 
 class PaintCanvasView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private var selectedColorInt = ContextCompat.getColor(context, R.color.red)
@@ -21,26 +20,21 @@ class PaintCanvasView(context: Context, attrs: AttributeSet) : View(context, att
 
     private var shape: Shape = PathShape()
     private var paint = createNewPaint()
-    private var canvasHistory: MutableList<Pair<Shape, Paint>> = mutableListOf()
-    private var deletedHistory = Stack<Pair<Shape, Paint>>()
+    private val canvasHistory = CanvasHistory
 
     init {
         setLayerType(LAYER_TYPE_HARDWARE, null)
-        isFocusable = true
-        isFocusableInTouchMode = true
+        isFocusable = false
+        isFocusableInTouchMode = false
     }
 
     fun undo() {
-        canvasHistory.removeLastOrNull()?.let {
-            deletedHistory.add(it)
-        }
+        canvasHistory.undo()
         invalidate()
     }
 
     fun redo() {
-        deletedHistory.removeLastOrNull()?.let {
-            canvasHistory.add(it)
-        }
+        canvasHistory.redo()
         invalidate()
     }
 
@@ -60,9 +54,7 @@ class PaintCanvasView(context: Context, attrs: AttributeSet) : View(context, att
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        canvasHistory.forEach {
-            it.first.draw(canvas, it.second)
-        }
+        canvasHistory.onDraw(canvas)
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -88,8 +80,7 @@ class PaintCanvasView(context: Context, attrs: AttributeSet) : View(context, att
                 onActionDown(pointX, pointY)
             }
         paint = createNewPaint()
-        canvasHistory.add(shape to paint)
-        deletedHistory.clear()
+        canvasHistory.addNewShape(shape to paint)
     }
 
     private fun progressDrawing(
@@ -103,16 +94,12 @@ class PaintCanvasView(context: Context, attrs: AttributeSet) : View(context, att
 
             Diagram.RECT -> {
                 shape.onActionMove(pointX, pointY)
-                canvasHistory.removeLastOrNull()
-                canvasHistory.add(shape to paint)
-                deletedHistory.clear()
+                canvasHistory.replaceNewShape(shape to paint)
             }
 
             Diagram.OVAL -> {
                 shape.onActionMove(pointX, pointY)
-                canvasHistory.removeLastOrNull()
-                canvasHistory.add(shape to paint)
-                deletedHistory.clear()
+                canvasHistory.replaceNewShape(shape to paint)
             }
 
             Diagram.ERASER -> {
