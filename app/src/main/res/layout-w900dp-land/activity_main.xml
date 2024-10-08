@@ -9,41 +9,39 @@
         <woowacourse.paint.view.CanvasView
             android:id="@+id/canvas_view"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/range_slider"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent" />
 
         <Button
             android:id="@+id/btn_change_to_pen"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
             android:background="@color/purple_500"
             android:text="@string/paint_change_to_pen"
             android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_change_to_rectangle"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintWidth_percent="0.2" />
+            app:layout_constraintTop_toBottomOf="@id/btn_color_red" />
 
         <Button
             android:id="@+id/btn_change_to_rectangle"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
             android:background="@color/purple_500"
             android:text="@string/paint_change_to_rectangle"
-            android:textSize="10sp"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@id/btn_change_to_pen"
             app:layout_constraintEnd_toStartOf="@id/btn_change_to_circle"
             app:layout_constraintStart_toEndOf="@id/btn_change_to_pen"
             app:layout_constraintTop_toTopOf="@id/btn_change_to_pen"
-            app:layout_constraintWidth_percent="0.2" />
+            app:layout_constraintWidth_percent="0.25" />
 
         <Button
             android:id="@+id/btn_change_to_circle"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
             android:background="@color/purple_500"
             android:text="@string/paint_change_to_circle"
             android:textColor="@color/white"
@@ -51,34 +49,34 @@
             app:layout_constraintEnd_toStartOf="@id/btn_change_to_eraser"
             app:layout_constraintStart_toEndOf="@id/btn_change_to_rectangle"
             app:layout_constraintTop_toTopOf="@id/btn_change_to_pen"
-            app:layout_constraintWidth_percent="0.2" />
+            app:layout_constraintWidth_percent="0.25" />
 
         <Button
             android:id="@+id/btn_change_to_eraser"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/purple_500"
             android:text="@string/paint_change_to_eraser"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="@id/btn_change_to_pen"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/btn_color_blue"
             app:layout_constraintStart_toEndOf="@id/btn_change_to_circle"
             app:layout_constraintTop_toTopOf="@id/btn_change_to_pen"
-            app:layout_constraintWidth_percent="0.2" />
+            app:layout_constraintWidth_percent="0.25" />
 
         <Button
             android:id="@+id/btn_color_red"
-            android:layout_width="0dp"
+            android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginBottom="10dp"
             android:background="#DD3723"
-            app:layout_constraintBottom_toTopOf="@id/btn_change_to_pen"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintWidth_percent="0.2" />
+            app:layout_constraintTop_toBottomOf="@id/range_slider"
+            app:layout_constraintWidth_percent="0.25" />
 
         <Button
             android:id="@+id/btn_color_orange"
-            android:layout_width="0dp"
+            android:layout_width="80dp"
             android:layout_height="80dp"
             android:background="#E79D39"
             app:layout_constraintBottom_toBottomOf="@id/btn_color_red"
@@ -87,7 +85,7 @@
 
         <Button
             android:id="@+id/btn_color_yellow"
-            android:layout_width="0dp"
+            android:layout_width="80dp"
             android:layout_height="80dp"
             android:background="#F6EC62"
             app:layout_constraintBottom_toBottomOf="@id/btn_color_red"
@@ -96,7 +94,7 @@
 
         <Button
             android:id="@+id/btn_color_green"
-            android:layout_width="0dp"
+            android:layout_width="80dp"
             android:layout_height="80dp"
             android:background="#6FAC5C"
             app:layout_constraintBottom_toBottomOf="@id/btn_color_red"
@@ -105,7 +103,7 @@
 
         <Button
             android:id="@+id/btn_color_blue"
-            android:layout_width="0dp"
+            android:layout_width="80dp"
             android:layout_height="80dp"
             android:background="#4D51AE"
             app:layout_constraintBottom_toBottomOf="@id/btn_color_red"
@@ -114,13 +112,14 @@
 
         <com.google.android.material.slider.RangeSlider
             android:id="@+id/range_slider"
-            android:layout_width="match_parent"
+            android:layout_width="400dp"
             android:layout_height="wrap_content"
             android:visibility="visible"
-            app:trackColor="#FFAEC9"
-            app:thumbColor="#FFAEC9"
             app:haloColor="#FFAEC9"
-            app:layout_constraintBottom_toTopOf="@id/btn_color_red" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:thumbColor="#FFAEC9"
+            app:trackColor="#FFAEC9" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

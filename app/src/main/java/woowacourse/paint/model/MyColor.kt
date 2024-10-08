@@ -1,4 +1,4 @@
-package woowacourse.paint.util
+package woowacourse.paint.model
 
 import android.graphics.Color
 
