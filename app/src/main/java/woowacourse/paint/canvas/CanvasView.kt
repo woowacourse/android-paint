@@ -7,28 +7,46 @@ import android.graphics.Paint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import androidx.core.content.ContextCompat
 import woowacourse.paint.brush.Brush
+import woowacourse.paint.brush.BrushType
 import woowacourse.paint.brush.ColorPalette
-import woowacourse.paint.brush.Line
+import woowacourse.paint.brush.draw.Circle
+import woowacourse.paint.brush.draw.Drawn
+import woowacourse.paint.brush.draw.Line
+import woowacourse.paint.brush.draw.Rectangle
 
 class CanvasView(
     context: Context,
     attributeSet: AttributeSet,
 ) : View(context, attributeSet) {
-    private var brush: Brush = Brush()
-    private val lines: MutableList<Line> = mutableListOf()
-    private var drawingLine = Line()
+    private val drawn = Drawn()
 
     init {
         changeColor(Brush.INIT_COLOR)
         isFocusable = true
         isFocusableInTouchMode = true
+        setLayerType(LAYER_TYPE_HARDWARE, null)
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        lines.forEach { line ->
-            canvas.drawPath(line.path, line.paint)
+        drawCanvas(canvas)
+    }
+
+    private fun drawCanvas(canvas: Canvas) {
+        drawn.draws.forEach { draw ->
+            when (draw) {
+                is Line -> canvas.drawPath(draw.path, draw.paint)
+                is Rectangle -> canvas.drawRect(draw.recF, draw.paint)
+                is Circle ->
+                    canvas.drawCircle(
+                        draw.currentX,
+                        draw.currentY,
+                        draw.currentRadius,
+                        draw.paint,
+                    )
+            }
         }
     }
 
@@ -36,13 +54,13 @@ class CanvasView(
     override fun onTouchEvent(event: MotionEvent): Boolean {
         return when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                startDrawing(event.x, event.y)
+                startDraw(event.x, event.y)
                 invalidate()
                 true
             }
 
             MotionEvent.ACTION_MOVE -> {
-                quadDrawing(event.x, event.y)
+                drawn.drawing(event.x, event.y)
                 invalidate()
                 true
             }
@@ -51,35 +69,29 @@ class CanvasView(
         }
     }
 
-    private fun startDrawing(
-        x: Float,
-        y: Float,
-    ) {
-        drawingLine.move(x, y)
-        lines.add(drawingLine)
-    }
-
-    private fun quadDrawing(
-        x: Float,
-        y: Float,
-    ) {
-        drawingLine.quad(x, y)
+    fun changeBrushType(brushType: BrushType) {
+        drawn.changeBrushType(brushType, createNewPaint())
     }
 
     fun changeLineWidth(width: Float) {
-        brush = brush.changeWidth(width)
-        drawingLine = Line(paint = createNewPaint(brush))
+        drawn.changeLineWidth(width, createNewPaint())
     }
 
     fun changeColor(colorPalette: ColorPalette) {
-        brush = brush.changeColor(colorPalette)
-        drawingLine = Line(paint = createNewPaint(brush))
+        drawn.changeColor(colorPalette, createNewPaint())
     }
 
-    private fun createNewPaint(brush: Brush): Paint {
+    private fun startDraw(
+        x: Float,
+        y: Float,
+    ) {
+        drawn.startDraw(x, y, createNewPaint())
+    }
+
+    private fun createNewPaint(): Paint {
         return Paint().apply {
-            this.color = brush.colorPalette.colorRes
-            this.strokeWidth = brush.width
+            this.color = ContextCompat.getColor(context, drawn.getBrushColorRes())
+            this.strokeWidth = drawn.getBrushWidth()
         }
     }
 }

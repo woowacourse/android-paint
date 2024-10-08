@@ -1,14 +1,13 @@
 package woowacourse.paint.brush
 
-import android.graphics.Color
-import androidx.annotation.ColorInt
+import woowacourse.paint.R
 
 enum class ColorPalette(
-    @ColorInt val colorRes: Int,
+    val colorRes: Int,
 ) {
-    RED(Color.parseColor("#EA3323")),
-    ORANGE(Color.parseColor("#F19D38")),
-    YELLOW(Color.parseColor("#FCEC60")),
-    GREEN(Color.parseColor("#67AD5B")),
-    BLUE(Color.parseColor("#4350AF")),
+    RED(R.color.palette_red),
+    ORANGE(R.color.palette_orange),
+    YELLOW(R.color.palette_yellow),
+    GREEN(R.color.palette_green),
+    BLUE(R.color.palette_blue),
 }
