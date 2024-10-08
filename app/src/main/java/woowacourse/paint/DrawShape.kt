@@ -1,3 +1,5 @@
+package woowacourse.paint
+
 import android.graphics.Path
 import android.graphics.RectF
 

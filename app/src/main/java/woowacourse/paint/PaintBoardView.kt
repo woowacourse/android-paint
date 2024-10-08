@@ -1,6 +1,5 @@
 package woowacourse.paint
 
-import DrawShape
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
@@ -43,8 +42,6 @@ class PaintBoardView(context: Context, attrs: AttributeSet) : View(context, attr
                         shape.radius,
                         paint,
                     )
-
-                else -> throw IllegalArgumentException()
             }
         }
     }
