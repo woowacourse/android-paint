@@ -56,11 +56,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
                     endY = pointY,
                 )
 
-                val newDrawing =
-                    drawing.copy(
-                        path = Path(),
-                        paint = Paint(drawing.paint),
-                    )
+                val newDrawing = updateDrawing(drawing)
                 drawings.add(newDrawing)
             }
 
@@ -71,18 +67,21 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
         return true
     }
 
+    private fun updateDrawing(drawing: Drawing): Drawing =
+        drawing.copy(path = Path(), paint = Paint(drawing.paint), brush = drawing.brush)
+
     private fun currentDrawing(): Drawing = drawings.last()
 
     fun setBrushWidth(width: Float) {
-        currentDrawing().updateBrush { changeWidth(width) }
+        currentDrawing().updateBrushWidth(width)
     }
 
     fun setBrushColor(color: Int) {
-        currentDrawing().updateBrush { changeColor(color) }
+        currentDrawing().updateBrushColor(color)
     }
 
     fun setBrushType(brushType: BrushType) {
-        currentDrawing().updateBrush { changeBrushType(brushType) }
+        currentDrawing().updateBrushType(brushType)
         if (brushType == BrushType.ERASER) {
             currentDrawing().setEraseMode(true)
         } else {

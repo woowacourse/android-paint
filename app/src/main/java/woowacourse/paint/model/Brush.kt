@@ -5,9 +5,6 @@ data class Brush(
     val color: Int = DEFAULT_COLOR,
     val brushType: BrushType = DEFAULT_BRUSH_TYPE,
 ) {
-    fun update(updateBrush: Brush.() -> Brush): Brush {
-        return this.updateBrush()
-    }
 
     fun changeWidth(width: Float): Brush {
         return copy(strokeWidth = width)
@@ -23,7 +20,7 @@ data class Brush(
 
     companion object {
         const val DEFAULT_STROKE_WIDTH = 10f
-        const val DEFAULT_COLOR = 0xFF000000.toInt()
+        const val DEFAULT_COLOR = 0xFFFF0000.toInt()
         val DEFAULT_BRUSH_TYPE = BrushType.PENCIL
     }
 }

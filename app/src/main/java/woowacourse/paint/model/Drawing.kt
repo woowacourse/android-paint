@@ -13,24 +13,40 @@ data class Drawing(
     var brush: Brush = Brush(),
 ) {
     init {
+        updatePaint()
+    }
+
+    private fun updatePaint() {
         paint.apply {
             isAntiAlias = true
+            color = brush.color
+            strokeWidth = brush.strokeWidth
+            setPaintStyle()
         }
     }
 
-    fun updateBrush(newBrush: Brush.() -> Brush) {
-        brush = brush.update(newBrush)
-        paint.apply {
-            strokeWidth = brush.strokeWidth
-            color = brush.color
-            style =
-                when (brush.brushType) {
-                    BrushType.PENCIL -> Paint.Style.STROKE
-                    BrushType.SQUARE -> Paint.Style.FILL
-                    BrushType.CIRCLE -> Paint.Style.FILL
-                    BrushType.ERASER -> Paint.Style.STROKE
-                }
+    private fun setPaintStyle() {
+        paint.style = when (brush.brushType) {
+            BrushType.PENCIL -> Paint.Style.STROKE
+            BrushType.SQUARE -> Paint.Style.FILL
+            BrushType.CIRCLE -> Paint.Style.FILL
+            BrushType.ERASER -> Paint.Style.STROKE
         }
+    }
+
+    fun updateBrushType(brushType: BrushType) {
+        brush = brush.changeBrushType(brushType)
+        setPaintStyle()
+    }
+
+    fun updateBrushWidth(width: Float) {
+        brush = brush.changeWidth(width)
+        paint.strokeWidth = width
+    }
+
+    fun updateBrushColor(color: Int) {
+        brush = brush.changeColor(color)
+        paint.color = color
     }
 
     fun move(
@@ -48,7 +64,7 @@ data class Drawing(
                 val radius =
                     sqrt(
                         (endX - startX).toDouble().pow(2.0) +
-                            (endY - startY).toDouble().pow(2.0),
+                                (endY - startY).toDouble().pow(2.0),
                     ).toFloat()
                 path.addCircle(startX, startY, radius, Path.Direction.CW)
             }
