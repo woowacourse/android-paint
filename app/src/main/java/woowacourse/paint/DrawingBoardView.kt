@@ -34,17 +34,11 @@ class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, at
         val pointY = event.y
 
         when (event.action) {
-            MotionEvent.ACTION_DOWN -> {
-                updateDrawing(pointX, pointY)
-            }
+            MotionEvent.ACTION_DOWN -> updateDrawing(pointX, pointY)
 
-            MotionEvent.ACTION_MOVE -> {
-                currentDrawing.pathLineTo(pointX, pointY)
-            }
+            MotionEvent.ACTION_MOVE -> currentDrawing.pathLineTo(pointX, pointY)
 
-            MotionEvent.ACTION_UP -> {
-                currentDrawing = currentDrawing.copyPoint(pointX, pointY)
-            }
+            MotionEvent.ACTION_UP -> currentDrawing = currentDrawing.copyPoint(pointX, pointY)
 
             else -> return false
         }
