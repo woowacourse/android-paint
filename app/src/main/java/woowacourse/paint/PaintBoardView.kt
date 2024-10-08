@@ -75,7 +75,7 @@ class PaintBoardView(context: Context, attrs: AttributeSet) : View(context, attr
                     }
 
                     ShapeType.RECTANGLE -> {
-                        if (drawShapes.last() !is DrawShape.Line) {
+                        if (drawShapes.isNotEmpty() && drawShapes.last() !is DrawShape.Line) {
                             drawShapes.removeLastOrNull()
                         }
 
@@ -90,7 +90,7 @@ class PaintBoardView(context: Context, attrs: AttributeSet) : View(context, attr
                     }
 
                     ShapeType.CIRCLE -> {
-                        if (drawShapes.last() !is DrawShape.Line) {
+                        if (drawShapes.isNotEmpty() && drawShapes.last() !is DrawShape.Line) {
                             drawShapes.removeLastOrNull()
                         }
 
