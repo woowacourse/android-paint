@@ -3,7 +3,6 @@ package woowacourse.paint
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.Button
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.slider.Slider
 
@@ -22,6 +21,39 @@ class MainActivity : AppCompatActivity() {
         val btnYellow: Button = findViewById(R.id.btn_yellow)
         val btnGreen: Button = findViewById(R.id.btn_green)
         val btnBlue: Button = findViewById(R.id.btn_blue)
+        val btnPen: Button = findViewById(R.id.btn_pen)
+        val btnRectangle: Button = findViewById(R.id.btn_rectangle)
+        val btnCircle: Button = findViewById(R.id.btn_circle)
+        val btnEraser: Button = findViewById(R.id.btn_eraser)
+        val btnClear: Button = findViewById(R.id.btn_clear)
+        val btnUndo: Button = findViewById(R.id.btn_undo)
+        val btnRedo: Button = findViewById(R.id.btn_redo)
+
+        btnUndo.setOnClickListener {
+            drawingView.undo()
+        }
+
+        btnRedo.setOnClickListener {
+            drawingView.redo()
+        }
+        btnClear.setOnClickListener {
+            drawingView.clearCanvas()
+        }
+        btnPen.setOnClickListener {
+            setBrushType(BrushType.PEN)
+        }
+
+        btnRectangle.setOnClickListener {
+            setBrushType(BrushType.RECTANGLE)
+        }
+
+        btnCircle.setOnClickListener {
+            setBrushType(BrushType.CIRCLE)
+        }
+
+        btnEraser.setOnClickListener {
+            setBrushType(BrushType.ERASER)
+        }
 
         btnBlack.setOnClickListener {
             drawingView.updateBrushColor(Color.BLACK)
@@ -51,6 +83,10 @@ class MainActivity : AppCompatActivity() {
         sliderBrushSize.addOnChangeListener { _, value, _ ->
             drawingView.updateBrushSize(value)
         }
+    }
+
+    private fun setBrushType(brushType: BrushType) {
+        drawingView.setBrushType(brushType)
     }
 
     companion object {
