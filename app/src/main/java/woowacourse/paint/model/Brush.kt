@@ -1,6 +1,5 @@
 package woowacourse.paint.model
 
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
 import kotlin.math.pow
@@ -42,7 +41,6 @@ data class Brush(
         paint.apply {
             style = Paint.Style.STROKE
             strokeWidth = 50f
-            color = Color.WHITE
         }
     }
 

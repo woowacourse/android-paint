@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.os.Bundle
 import android.widget.SeekBar
 import androidx.appcompat.app.AppCompatActivity
+import woowacourse.paint.R
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.model.BrushStyle
 import woowacourse.paint.model.BrushType
@@ -70,7 +71,8 @@ class MainActivity : AppCompatActivity(), BrushColorActionHandler, BrushTypeActi
     }
 
     override fun changeBrushType(brushType: BrushType) {
-        brushStyle = brushStyle.copy(brushType = brushType)
+        val color = if (brushType == BrushType.ERASER) getColor(R.color.white) else brushStyle.color
+        brushStyle = brushStyle.copy(color = color, brushType = brushType)
         addView()
     }
 
