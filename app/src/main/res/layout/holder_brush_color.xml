@@ -5,12 +5,12 @@
     <data>
 
         <variable
-            name="drawingColor"
-            type="woowacourse.paint.model.DrawingStyle" />
+            name="brushStyle"
+            type="woowacourse.paint.model.BrushStyle" />
 
         <variable
             name="actionHandler"
-            type="woowacourse.paint.ui.ActionHandler" />
+            type="woowacourse.paint.ui.BrushColorActionHandler" />
 
     </data>
 
@@ -18,8 +18,8 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_margin="10dp"
-        android:background="@{drawingColor.color}"
-        android:onClick="@{() -> actionHandler.changeDrawingColor(drawingColor.color)}">
+        android:background="@{brushStyle.color}"
+        android:onClick="@{() -> actionHandler.changeBrushColor(brushStyle.color)}">
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
