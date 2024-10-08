@@ -32,6 +32,7 @@ class PaintBoardView(context: Context, attrs: AttributeSet) : View(context, attr
         drawShapes.forEach { shape ->
             paint.strokeWidth = shape.strokeWidth
             paint.color = shape.color
+            paint.style = shape.style
             when (shape) {
                 is DrawShape.Line -> canvas.drawPath(shape.path, paint)
                 is DrawShape.Rectangle -> canvas.drawRect(shape.rect, paint)
@@ -56,7 +57,7 @@ class PaintBoardView(context: Context, attrs: AttributeSet) : View(context, attr
                     ShapeType.FREEHAND, ShapeType.ERASER -> {
                         val path = Path()
                         path.moveTo(startX, startY)
-                        drawShapes.add(DrawShape.Line(path, paint.strokeWidth, paint.color))
+                        drawShapes.add(DrawShape.Line(path, paint.strokeWidth, paint.color, Paint.Style.STROKE))
                     }
 
                     ShapeType.RECTANGLE, ShapeType.CIRCLE -> Unit
@@ -83,6 +84,7 @@ class PaintBoardView(context: Context, attrs: AttributeSet) : View(context, attr
                                 RectF(startX, startY, event.x, event.y),
                                 paint.strokeWidth,
                                 paint.color,
+                                Paint.Style.FILL
                             ),
                         )
                     }
@@ -100,6 +102,7 @@ class PaintBoardView(context: Context, attrs: AttributeSet) : View(context, attr
                                 radius,
                                 paint.strokeWidth,
                                 paint.color,
+                                Paint.Style.FILL
                             ),
                         )
                     }
@@ -157,7 +160,6 @@ class PaintBoardView(context: Context, attrs: AttributeSet) : View(context, attr
     private fun setupPaint() {
         paint.color = Color.RED
         paint.strokeWidth = 10f
-        paint.style = Paint.Style.STROKE
     }
 
     private fun calculateRadius(

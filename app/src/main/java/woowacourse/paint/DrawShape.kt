@@ -1,16 +1,19 @@
 package woowacourse.paint
 
+import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.RectF
 
 sealed class DrawShape {
     abstract val strokeWidth: Float
     abstract val color: Int
+    abstract val style: Paint.Style
 
     data class Line(
         val path: Path,
         override val strokeWidth: Float,
         override val color: Int,
+        override val style: Paint.Style = Paint.Style.STROKE,
     ) :
         DrawShape()
 
@@ -18,7 +21,8 @@ sealed class DrawShape {
         val rect: RectF,
         override val strokeWidth: Float,
         override val color: Int,
-    ) : DrawShape()
+        override val style: Paint.Style = Paint.Style.STROKE,
+        ) : DrawShape()
 
     data class Circle(
         val centerX: Float,
@@ -26,6 +30,6 @@ sealed class DrawShape {
         val radius: Float,
         override val strokeWidth: Float,
         override val color: Int,
-        val isEraser: Boolean = false,
-    ) : DrawShape()
+        override val style: Paint.Style = Paint.Style.STROKE,
+        ) : DrawShape()
 }
