@@ -2,6 +2,8 @@ package woowacourse.paint
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.Configuration
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
@@ -151,7 +153,12 @@ class PaintBoardView(context: Context, attrs: AttributeSet) : View(context, attr
         currentShapeType = shapeType
 
         if (shapeType == ShapeType.ERASER) {
-            paint.color = context.getColor(R.color.white)
+            val uiMode = context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
+            paint.color = if (uiMode == UI_MODE_NIGHT_YES) {
+                context.getColor(R.color.black)
+            } else {
+                context.getColor(R.color.white)
+            }
         } else {
             paint.color = context.getColor(R.color.red)
         }
