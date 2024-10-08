@@ -10,90 +10,105 @@
             android:id="@+id/paint_board"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/ll_tools"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/tool_chip_group"
+        <LinearLayout
+            android:id="@+id/ll_tools"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="200dp"
+            android:gravity="center"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toTopOf="@id/range_slider"
-            app:singleSelection="true">
+            app:layout_constraintHorizontal_chainStyle="spread">
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/pen_tool"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
                 android:text="펜" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/rectangle_tool"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
                 android:text="직사각형" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/circle_tool"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
                 android:text="원" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/eraser_tool"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
                 android:text="지우개" />
-
-        </com.google.android.material.chip.ChipGroup>
-
+        </LinearLayout>
 
         <com.google.android.material.slider.RangeSlider
             android:id="@+id/range_slider"
             android:layout_width="match_parent"
             android:layout_height="3dp"
+            android:layout_marginHorizontal="200dp"
             android:stepSize="10.0"
             android:valueFrom="0.0"
             android:valueTo="100.0"
             app:layout_constraintBottom_toTopOf="@id/color_chip_group" />
 
-        <com.google.android.material.chip.ChipGroup
+        <LinearLayout
             android:id="@+id/color_chip_group"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="200dp"
+            android:gravity="center"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_chainStyle="spread"
             app:singleSelection="true">
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/redColor"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 app:chipBackgroundColor="@color/red" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/orangeColor"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 app:chipBackgroundColor="@color/orange" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/yellowColor"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 app:chipBackgroundColor="@color/yellow" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/greenColor"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 app:chipBackgroundColor="@color/green" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/blueColor"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 app:chipBackgroundColor="@color/blue" />
 
-        </com.google.android.material.chip.ChipGroup>
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
