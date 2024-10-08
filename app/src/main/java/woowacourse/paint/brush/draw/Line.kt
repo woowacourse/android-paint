@@ -37,12 +37,17 @@ data class Line(
         x: Float,
         y: Float,
     ) {
-        path.quadTo(endX, endY, (x + endX) / 2, (y + endY) / 2)
+        path.quadTo(endX, endY, calculateMidpoint(endX, x), calculateMidpoint(endY, y))
         endX = x
         endY = y
     }
 
+    private fun calculateMidpoint(a: Float, b: Float): Float {
+        return (a + b) / MID_POINT
+    }
+
     companion object {
         private const val DEFAULT_POINT = 0f
+        private const val MID_POINT = 2
     }
 }

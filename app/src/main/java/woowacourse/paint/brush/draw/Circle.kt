@@ -16,11 +16,16 @@ data class Circle(
         x: Float,
         y: Float,
     ) {
-        currentRadius = sqrt((currentX - x).pow(2) + (currentY - y).pow(2))
+        currentRadius = calculateRadius(currentX, currentY, x, y)
+    }
+
+    private fun calculateRadius(centerX: Float, centerY: Float, pointX: Float, pointY: Float): Float {
+        return sqrt((centerX - pointX).pow(MID_POINT) + (centerY - pointY).pow(MID_POINT))
     }
 
     companion object {
         private const val DEFAULT_POINT = 0f
         private const val DEFAULT_RADIUS = 0f
+        private const val MID_POINT = 2
     }
 }
