@@ -8,7 +8,7 @@ data class Circle(
     val currentX: Float = DEFAULT_POINT,
     val currentY: Float = DEFAULT_POINT,
     val radius: Float = DEFAULT_RADIUS,
-    val paint: Paint = Paint(),
+    override val  paint: Paint = Paint(),
 ) : Draw {
     var currentRadius: Float = radius
 

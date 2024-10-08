@@ -5,7 +5,7 @@ import android.graphics.RectF
 
 class Rectangle(
     val recF: RectF = RectF(),
-    val paint: Paint = Paint(),
+    override val  paint: Paint = Paint(),
 ) : Draw {
     override fun drawing(
         x: Float,
