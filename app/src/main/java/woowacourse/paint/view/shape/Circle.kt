@@ -4,6 +4,8 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import kotlinx.parcelize.Parcelize
 import woowacourse.paint.utils.PaintWrapper
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 @Parcelize
 data class Circle(
@@ -19,9 +21,16 @@ data class Circle(
         x: Float,
         y: Float,
     ) {
-        radius = Math.sqrt(
-            ((x - startX) * (x - startX) + (y - startY) * (y - startY)).toDouble(),
-        ).toFloat() + strokeWidth / 2
+        radius = distance(x, y) + strokeWidth / 2
+    }
+
+    private fun distance(x: Float, y: Float): Float {
+        // x 변위
+        val dx = x - startX
+        val dy = y - startY
+        return sqrt(
+            (dx.pow(2) + dy.pow(2)).toDouble(),
+        ).toFloat()
     }
 
     override fun draw(canvas: Canvas) {

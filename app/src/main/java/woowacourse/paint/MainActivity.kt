@@ -41,22 +41,32 @@ class MainActivity : AppCompatActivity() {
 
     private fun initAdapter() {
         binding.rvPalette.adapter = adapter
-//        binding.rvPalette.setHasFixedSize(true)
+        binding.rvPalette.setHasFixedSize(true)
         adapter.submitList(Paint.defaults)
     }
 
     private fun initListeners() {
-        // Clear, Undo, Redo 버튼
-        binding.btnUndo.setOnClickListener {
-            binding.drawingPaper.undo()
+        initClearGroupListener()
+        initBrushToolListener()
+        initBrushChangeGroupListener()
+    }
+
+    private fun initBrushChangeGroupListener() {
+        binding.btnBrushColor.setOnClickListener {
+            binding.drawingPaper.changePanelType(PanelType.BRUSH_COLOR)
+            updatePanelVisibility()
         }
-        binding.btnRedo.setOnClickListener {
-            binding.drawingPaper.redo()
+        binding.btnBrushStroke.setOnClickListener {
+            binding.drawingPaper.changePanelType(PanelType.BRUSH_STROKE)
+            updatePanelVisibility()
         }
-        binding.btnClearAll.setOnClickListener {
-            binding.drawingPaper.clearAll()
+        binding.btnBrushChange.setOnClickListener {
+            binding.drawingPaper.changePanelType(PanelType.BRUSH_TOOL)
+            updatePanelVisibility()
         }
-        // brush Tool 버튼
+    }
+
+    private fun initBrushToolListener() {
         binding.btnPen.setOnClickListener {
             binding.drawingPaper.changeBrushType(BrushType.PEN)
         }
@@ -72,18 +82,17 @@ class MainActivity : AppCompatActivity() {
         binding.btnEraser.setOnClickListener {
             binding.drawingPaper.changeBrushType(BrushType.ERASER)
         }
-        // brush Tool 변경 버튼
-        binding.btnBrushColor.setOnClickListener {
-            binding.drawingPaper.changePanelType(PanelType.BRUSH_COLOR)
-            updatePanelVisibility()
+    }
+
+    private fun initClearGroupListener() {
+        binding.btnUndo.setOnClickListener {
+            binding.drawingPaper.undo()
         }
-        binding.btnBrushStroke.setOnClickListener {
-            binding.drawingPaper.changePanelType(PanelType.BRUSH_STROKE)
-            updatePanelVisibility()
+        binding.btnRedo.setOnClickListener {
+            binding.drawingPaper.redo()
         }
-        binding.btnBrushChange.setOnClickListener {
-            binding.drawingPaper.changePanelType(PanelType.BRUSH_TOOL)
-            updatePanelVisibility()
+        binding.btnClearAll.setOnClickListener {
+            binding.drawingPaper.clearAll()
         }
     }
 
