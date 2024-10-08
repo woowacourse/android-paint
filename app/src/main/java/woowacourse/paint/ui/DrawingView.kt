@@ -22,7 +22,7 @@ class DrawingView(
     private val brushHistory: MutableList<Brush> =
         mutableListOf(
             Brush().apply {
-                setBrush(brushStyle = brushStyle)
+                configureBrush(brushStyle = brushStyle)
             },
         )
 

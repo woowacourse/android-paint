@@ -14,31 +14,31 @@ data class Brush(
         paint.isAntiAlias = true
     }
 
-    fun setBrush(brushStyle: BrushStyle) {
+    fun configureBrush(brushStyle: BrushStyle) {
         paint.color = brushStyle.color
         paint.strokeWidth = brushStyle.strokeWidth
 
         when (brushStyle.brushType) {
-            BrushType.PEN -> setBrushToPen()
-            BrushType.RECTANGLE -> setBrushToRectangle()
-            BrushType.CIRCLE -> setBrushToCircle()
-            BrushType.ERASER -> setBrushToEraser()
+            BrushType.PEN -> configurePenBrush()
+            BrushType.RECTANGLE -> configureRectangleBrush()
+            BrushType.CIRCLE -> configureCircleBrush()
+            BrushType.ERASER -> configureEraserBrush()
         }
     }
 
-    private fun setBrushToPen() {
+    private fun configurePenBrush() {
         paint.style = Paint.Style.STROKE
     }
 
-    private fun setBrushToRectangle() {
+    private fun configureRectangleBrush() {
         paint.style = Paint.Style.FILL
     }
 
-    private fun setBrushToCircle() {
+    private fun configureCircleBrush() {
         paint.style = Paint.Style.FILL
     }
 
-    private fun setBrushToEraser() {
+    private fun configureEraserBrush() {
         paint.apply {
             style = Paint.Style.STROKE
             strokeWidth = 50f
