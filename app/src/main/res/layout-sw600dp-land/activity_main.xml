@@ -27,28 +27,24 @@
             android:id="@+id/rb_drawing_pen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/drawing_pen" />
 
         <RadioButton
             android:id="@+id/rb_drawing_rectangle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/drawing_rectangle" />
 
         <RadioButton
             android:id="@+id/rb_drawing_circle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/drawing_circle" />
 
         <RadioButton
             android:id="@+id/rb_drawing_eraser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="@string/drawing_eraser" />
 
     </RadioGroup>
@@ -58,7 +54,6 @@
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:layout_marginBottom="10dp"
-        android:layout_weight="1"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintStart_toEndOf="@id/rg_drawing_types"
