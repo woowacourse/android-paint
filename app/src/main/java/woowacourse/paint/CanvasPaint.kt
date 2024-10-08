@@ -8,7 +8,6 @@ data class CanvasPaint(
     private val brushWidth: Float,
 ) : Paint() {
     init {
-        style = Style.STROKE
         isAntiAlias = true
         strokeJoin = Join.ROUND
         strokeCap = Cap.ROUND

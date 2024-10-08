@@ -4,6 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <woowacourse.paint.CanvasView
+        android:id="@+id/paint_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <ImageButton
         android:id="@+id/btn_clear"
         android:layout_width="50dp"
@@ -16,36 +21,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/brush_unselected" />
 
-    <woowacourse.paint.CanvasView
-        android:id="@+id/paint_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/range_slider"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <com.google.android.material.slider.RangeSlider
-        android:id="@+id/range_slider"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginHorizontal="40dp"
-        android:layout_marginBottom="10dp"
-        android:valueFrom="1"
-        android:valueTo="100"
-        app:layout_constraintBottom_toTopOf="@id/brush_group"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-
     <RadioGroup
         android:id="@+id/brush_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@id/color_group"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <RadioButton
             android:id="@+id/btn_pen"
@@ -87,6 +71,17 @@
 
     </RadioGroup>
 
+    <com.google.android.material.slider.RangeSlider
+        android:id="@+id/range_slider"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
+        android:layout_marginBottom="10dp"
+        android:valueFrom="1"
+        android:valueTo="100"
+        app:layout_constraintEnd_toEndOf="@id/brush_group"
+        app:layout_constraintStart_toStartOf="@id/brush_group"
+        app:layout_constraintTop_toBottomOf="@id/brush_group" />
+
     <RadioGroup
         android:id="@+id/color_group"
         android:layout_width="wrap_content"
@@ -94,9 +89,8 @@
         android:layout_marginBottom="20dp"
         android:gravity="center"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="@id/brush_group"
+        app:layout_constraintTop_toBottomOf="@id/range_slider">
 
         <RadioButton
             android:id="@+id/btn_red"
