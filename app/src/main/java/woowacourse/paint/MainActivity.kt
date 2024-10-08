@@ -31,29 +31,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initDrawingTypes() {
-        drawingTypes.setOnCheckedChangeListener { group, checkedId ->
-            when (checkedId) {
-                R.id.rb_drawing_pen ->
-                    drawingBoard.setDrawingType(
-                        Pen.default(),
-                    )
-
-                R.id.rb_drawing_rectangle ->
-                    drawingBoard.setDrawingType(
-                        Rectangle.default(),
-                    )
-
-                R.id.rb_drawing_circle ->
-                    drawingBoard.setDrawingType(
-                        Circle.default(),
-                    )
-
-                R.id.rb_drawing_eraser -> {
-                    drawingBoard.setDrawingType(
-                        Eraser(),
-                    )
-                }
+        drawingTypes.setOnCheckedChangeListener { _, checkedId ->
+            val drawingType = when (checkedId) {
+                R.id.rb_drawing_pen -> Pen.default()
+                R.id.rb_drawing_rectangle -> Rectangle.default()
+                R.id.rb_drawing_circle -> Circle.default()
+                R.id.rb_drawing_eraser -> Eraser()
+                else -> null
             }
+
+            drawingType?.let { drawingBoard.setDrawingType(it) }
         }
     }
 
