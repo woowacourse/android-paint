@@ -1,4 +1,4 @@
-package woowacourse.paint
+package woowacourse.paint.view
 
 import androidx.annotation.ColorInt
 
@@ -6,7 +6,7 @@ data class Paint(
     @ColorInt val color: Int,
 ) {
     companion object {
-        val dummy =
+        val defaults =
             listOf(
                 Paint(0xFF000000.toInt()),
                 Paint(0xFF0000FF.toInt()),

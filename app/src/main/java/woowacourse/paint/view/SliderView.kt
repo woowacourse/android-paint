@@ -124,7 +124,7 @@ class SliderView
         companion object {
             private const val DEFAULT_MIN_VALUE = 0f
             private const val DEFAULT_MAX_VALUE = 100f
-            private const val SLIDER_DEFAULT_POSITION = 0f
+            private const val SLIDER_DEFAULT_POSITION = 15f
             private val DEFAULT_THUMB_RADIUS = 15f.dp
         }
     }
