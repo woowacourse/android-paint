@@ -45,14 +45,9 @@ class DrawingView(
                 brush.path.moveTo(x, y)
             }
 
-            MotionEvent.ACTION_MOVE -> {
-                brush.move(brushStyle.brushType, startX, startY, x, y, false)
-            }
+            MotionEvent.ACTION_MOVE -> brush.move(brushStyle.brushType, startX, startY, x, y, false)
 
-            MotionEvent.ACTION_UP -> {
-                brush.move(brushStyle.brushType, startX, startY, x, y, true)
-                saveBrush(brush)
-            }
+            MotionEvent.ACTION_UP -> saveBrush(brush)
 
             else -> super.onTouchEvent(event)
         }
