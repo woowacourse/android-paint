@@ -81,7 +81,10 @@ class CanvasView(
         drawn.changeColor(colorPalette, createNewPaint())
     }
 
-    private fun startDraw(x: Float, y: Float) {
+    private fun startDraw(
+        x: Float,
+        y: Float,
+    ) {
         drawn.startDraw(x, y, createNewPaint())
     }
 

@@ -9,7 +9,7 @@ import woowacourse.paint.brush.BrushType
 data class Line(
     val brushType: BrushType = BrushType.PEN,
     val path: Path = Path(),
-    override val  paint: Paint = Paint(),
+    override val paint: Paint = Paint(),
 ) : Draw {
     private var endX = DEFAULT_POINT
     private var endY = DEFAULT_POINT
@@ -42,7 +42,10 @@ data class Line(
         endY = y
     }
 
-    private fun calculateMidpoint(a: Float, b: Float): Float {
+    private fun calculateMidpoint(
+        a: Float,
+        b: Float,
+    ): Float {
         return (a + b) / MID_POINT
     }
 
