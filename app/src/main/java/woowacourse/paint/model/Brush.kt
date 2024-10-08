@@ -27,10 +27,3 @@ data class Brush(
         val DEFAULT_BRUSH_TYPE = BrushType.PENCIL
     }
 }
-
-enum class BrushType {
-    PENCIL,
-    ERASER,
-    CIRCLE,
-    SQUARE,
-}
