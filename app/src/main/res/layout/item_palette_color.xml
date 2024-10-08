@@ -20,8 +20,8 @@
 
         <View
             android:id="@+id/vw_color"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="@dimen/palette_item_width"
+            android:layout_height="@dimen/palette_item_height"
             android:background="@{color}"
             android:onClick="@{() -> actionHandler.onColorSelected(color)}"
             tools:background="@color/red" />

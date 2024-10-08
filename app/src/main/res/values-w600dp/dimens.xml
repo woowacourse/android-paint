@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="palette_item_width">80dp</dimen>
+    <dimen name="palette_item_height">80dp</dimen>
+
+    <dimen name="radio_button_margin">50dp</dimen>
+</resources>
