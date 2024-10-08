@@ -5,7 +5,6 @@ data class Brush(
     val color: Int = DEFAULT_COLOR,
     val brushType: BrushType = DEFAULT_BRUSH_TYPE,
 ) {
-
     fun changeWidth(width: Float): Brush {
         return copy(strokeWidth = width)
     }

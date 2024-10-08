@@ -26,12 +26,13 @@ data class Drawing(
     }
 
     private fun setPaintStyle() {
-        paint.style = when (brush.brushType) {
-            BrushType.PENCIL -> Paint.Style.STROKE
-            BrushType.SQUARE -> Paint.Style.FILL
-            BrushType.CIRCLE -> Paint.Style.FILL
-            BrushType.ERASER -> Paint.Style.STROKE
-        }
+        paint.style =
+            when (brush.brushType) {
+                BrushType.PENCIL -> Paint.Style.STROKE
+                BrushType.SQUARE -> Paint.Style.FILL
+                BrushType.CIRCLE -> Paint.Style.FILL
+                BrushType.ERASER -> Paint.Style.STROKE
+            }
     }
 
     fun updateBrushType(brushType: BrushType) {
@@ -64,7 +65,7 @@ data class Drawing(
                 val radius =
                     sqrt(
                         (endX - startX).toDouble().pow(2.0) +
-                                (endY - startY).toDouble().pow(2.0),
+                            (endY - startY).toDouble().pow(2.0),
                     ).toFloat()
                 path.addCircle(startX, startY, radius, Path.Direction.CW)
             }

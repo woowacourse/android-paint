@@ -67,8 +67,7 @@ class PaintBoard(context: Context, attrs: AttributeSet) : View(context, attrs) {
         return true
     }
 
-    private fun updateDrawing(drawing: Drawing): Drawing =
-        drawing.copy(path = Path(), paint = Paint(drawing.paint), brush = drawing.brush)
+    private fun updateDrawing(drawing: Drawing): Drawing = drawing.copy(path = Path(), paint = Paint(drawing.paint), brush = drawing.brush)
 
     private fun currentDrawing(): Drawing = drawings.last()
 
