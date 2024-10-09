@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity(), ColorPaletteHandler, BrushHandler {
         visibleState: Int,
     ) {
         changeBrushType(brushType)
-        drawingBoard.setupStyle(brushType)
+        drawingBoard.setupStyle()
         binding.rangeSliderMainStrokeWidth.visibility = visibleState
     }
 

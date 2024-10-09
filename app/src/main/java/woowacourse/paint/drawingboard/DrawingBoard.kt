@@ -69,7 +69,7 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
         currentDrawing = newDrawing
     }
 
-    fun setupStyle(brushType: BrushType) {
+    fun setupStyle() {
         val newDrawing =
             when (brushType) {
                 BrushType.PEN -> Pen(paint = currentDrawing.paint).updatePaintStyle()
