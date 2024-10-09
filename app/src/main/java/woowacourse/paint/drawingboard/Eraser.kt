@@ -14,18 +14,23 @@ class Eraser(path: Path = Path(), paint: Paint) : Drawing(path, paint) {
         x: Float,
         y: Float,
     ): Int {
-        val bounds = RectF()
-
         for (index in drawings.indices.reversed()) {
             val drawing = drawings[index]
-            drawing.computeBounds(bounds)
+            val bounds = RectF()
+            drawing.path.computeBounds(bounds, true)
 
-            if (bounds.contains(x, y)) return index
+            bounds.left -= PADDING
+            bounds.top -= PADDING
+            bounds.right += PADDING
+            bounds.bottom += PADDING
+
+            val newBounds = RectF(bounds)
+            if (newBounds.contains(x, y)) return index
         }
         return DrawingBoard.INVALID_INDEX
     }
 
-    private fun Drawing.computeBounds(bounds: RectF) {
-        path.computeBounds(bounds, true)
+    companion object {
+        private const val PADDING = 30f
     }
 }
