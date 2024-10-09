@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.TypedValue
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.google.android.material.R
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.model.BrushMode
 import woowacourse.paint.model.PaintingColor
@@ -26,17 +27,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        val typedValue = TypedValue()
-        theme.resolveAttribute(com.google.android.material.R.attr.colorOnPrimary, typedValue, true)
-        val colorOnPrimary = typedValue.data
-        binding.customView.setBackgroundColor(colorOnPrimary)
+        setBackgroundColorByDarkModeCondition()
 
         binding.rvColors.adapter = paintingColorAdapter
         binding.rangeSlider
             .apply {
-                values = listOf(10f)
-                valueFrom = 1f
-                valueTo = 50f
+                values = listOf(DEFAULT_RANGE_SLIDER_VALUE)
+                valueFrom = MIN_RANGE_SLIDER_VALUE
+                valueTo = MAX_RANGE_SLIDER_VALUE
             }.addOnChangeListener { _, value, _ ->
                 binding.customView.changeStrokeWidth(value)
             }
@@ -66,5 +64,18 @@ class MainActivity : AppCompatActivity() {
         binding.btnClear.setOnClickListener {
             binding.customView.clear()
         }
+    }
+
+    private fun setBackgroundColorByDarkModeCondition() {
+        val typedValue = TypedValue()
+        theme.resolveAttribute(R.attr.colorOnPrimary, typedValue, true)
+        val colorOnPrimary = typedValue.data
+        binding.customView.setBackgroundColor(colorOnPrimary)
+    }
+
+    companion object {
+        const val DEFAULT_RANGE_SLIDER_VALUE = 10f
+        const val MIN_RANGE_SLIDER_VALUE = 1f
+        const val MAX_RANGE_SLIDER_VALUE = 50f
     }
 }

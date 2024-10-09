@@ -27,17 +27,17 @@ data class Drawing(
         startY: Float,
         pointX: Float,
         pointY: Float,
-        b: Boolean,
+        isEndOfDrawing: Boolean,
     ) {
         when (brushMode) {
             BrushMode.PEN -> path.lineTo(pointX, pointY)
             BrushMode.RECT -> {
-                if (!b) path.reset()
+                if (!isEndOfDrawing) path.reset()
                 paint.style = Paint.Style.FILL
                 path.addRect(startX, startY, pointX, pointY, Path.Direction.CCW)
             }
             BrushMode.CIRCLE -> {
-                if (!b) path.reset()
+                if (!isEndOfDrawing) path.reset()
                 paint.style = Paint.Style.FILL
                 path.addCircle(startX, startY, calculateRadius(startX, startY, pointX, pointY), Path.Direction.CCW)
             }

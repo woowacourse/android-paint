@@ -102,7 +102,7 @@ class CustomView(
         )
 
     fun undo() {
-        if (drawings.size > 1) {
+        if (drawings.size > MINIMUM_SIZE) {
             stackHistory.add(drawings.removeAt(drawings.size - 2))
             invalidate()
         }
@@ -121,5 +121,9 @@ class CustomView(
         drawings.clear()
         drawings.add(newDrawing)
         invalidate()
+    }
+
+    companion object {
+        const val MINIMUM_SIZE = 1
     }
 }
