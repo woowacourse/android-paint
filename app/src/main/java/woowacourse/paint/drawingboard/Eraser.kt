@@ -19,10 +19,7 @@ class Eraser(path: Path = Path(), paint: Paint) : Drawing(path, paint) {
             val bounds = RectF()
             drawing.path.computeBounds(bounds, true)
 
-            bounds.left -= PADDING
-            bounds.top -= PADDING
-            bounds.right += PADDING
-            bounds.bottom += PADDING
+            bounds.inset(PADDING, PADDING)
 
             val newBounds = RectF(bounds)
             if (newBounds.contains(x, y)) return index
@@ -31,6 +28,6 @@ class Eraser(path: Path = Path(), paint: Paint) : Drawing(path, paint) {
     }
 
     companion object {
-        private const val PADDING = 30f
+        private const val PADDING = -20f
     }
 }
