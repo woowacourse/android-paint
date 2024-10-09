@@ -1,5 +1,6 @@
 package woowacourse.paint.model
 
+import android.graphics.BlurMaskFilter
 import android.graphics.Paint
 import android.graphics.Paint.Style
 import android.graphics.PorterDuff
@@ -39,7 +40,7 @@ enum class DrawingMode(
         R.string.drawing_mode_erase,
         Style.STROKE,
         PorterDuffXfermode(
-            PorterDuff.Mode.CLEAR
+            PorterDuff.Mode.DST_OUT
         ),
     ), ;
 
@@ -49,6 +50,11 @@ enum class DrawingMode(
         fun DrawingMode.setPaintStyle(paint: Paint) {
             paint.style = this.paintStyle
             paint.xfermode = this.xfermode
+            if (this == ERASE) {
+                paint.maskFilter = BlurMaskFilter(3F, BlurMaskFilter.Blur.NORMAL)
+            } else {
+                paint.maskFilter = null
+            }
         }
     }
 }
