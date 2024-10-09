@@ -7,20 +7,12 @@ import woowacourse.paint.BrushType.Companion.changeBrushType
 import woowacourse.paint.Color.Companion.DEFAULT_DRAWING_COLOR
 
 abstract class Drawing(val path: Path = Path(), val paint: Paint = Paint()) {
-    init {
-        initializePaint()
-    }
-
     abstract fun updateColor(color: Int): Drawing
 
     abstract fun updatePaintStyle(): Drawing
 
     fun setupDefaultDrawing() {
-        paint.apply {
-            strokeWidth = DEFAULT_STROKE_WIDTH
-            color = DEFAULT_DRAWING_COLOR
-            style = Paint.Style.STROKE
-        }
+        initializePaint()
         changeBrushType(DEFAULT_BRUSH_TYPE)
     }
 
@@ -76,6 +68,9 @@ abstract class Drawing(val path: Path = Path(), val paint: Paint = Paint()) {
     private fun initializePaint() =
         paint.apply {
             strokeCap = Paint.Cap.ROUND
+            strokeWidth = DEFAULT_STROKE_WIDTH
+            color = DEFAULT_DRAWING_COLOR
+            style = Paint.Style.STROKE
             isAntiAlias = true
         }
 
