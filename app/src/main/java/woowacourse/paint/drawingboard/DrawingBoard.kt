@@ -3,15 +3,16 @@ package woowacourse.paint.drawingboard
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import woowacourse.paint.BrushType
+import woowacourse.paint.BrushType.Companion.brushType
 import woowacourse.paint.drawingboard.Drawings.drawings
 
 class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs) {
-    private var currentDrawing = Drawing()
+    private var currentDrawing: Drawing = Pen()
 
     private var startX: Float = 0f
     private var startY: Float = 0f
@@ -54,17 +55,29 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
 
     fun setupStrokeWidth(strokeWidth: Float) {
         val newPaint = currentDrawing.updateStrokeWidth(strokeWidth)
-        currentDrawing = Drawing(Path(), newPaint)
+        currentDrawing = Pen(Path(), newPaint)
     }
 
     fun setupColor(color: Int) {
-        val newPaint = currentDrawing.updateColor(color)
-        currentDrawing = Drawing(Path(), newPaint)
+        val newDrawing =
+            when (brushType) {
+                BrushType.PEN -> Pen(paint = currentDrawing.paint).updateColor(color)
+                BrushType.RECTANGLE -> Rectangle(paint = currentDrawing.paint).updateColor(color)
+                BrushType.CIRCLE -> Circle(paint = currentDrawing.paint).updateColor(color)
+                BrushType.ERASER -> Eraser(paint = currentDrawing.paint).updateColor(color)
+            }
+        currentDrawing = newDrawing
     }
 
-    fun setupStyle(style: Paint.Style) {
-        val newPaint = currentDrawing.updatePaintStyle(style)
-        currentDrawing = Drawing(Path(), newPaint)
+    fun setupStyle(brushType: BrushType) {
+        val newDrawing =
+            when (brushType) {
+                BrushType.PEN -> Pen(paint = currentDrawing.paint).updatePaintStyle()
+                BrushType.RECTANGLE -> Rectangle(paint = currentDrawing.paint).updatePaintStyle()
+                BrushType.CIRCLE -> Circle(paint = currentDrawing.paint).updatePaintStyle()
+                BrushType.ERASER -> Eraser(paint = currentDrawing.paint).updatePaintStyle()
+            }
+        currentDrawing = newDrawing
     }
 
     companion object {

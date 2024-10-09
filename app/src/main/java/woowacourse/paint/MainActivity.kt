@@ -1,6 +1,5 @@
 package woowacourse.paint
 
-import android.graphics.Paint
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -28,32 +27,27 @@ class MainActivity : AppCompatActivity(), ColorPaletteHandler, BrushHandler {
     }
 
     override fun onPenClicked() {
-        changeBrushType(BrushType.PEN)
-        setupToolPanel(style = Paint.Style.STROKE, visibleState = View.VISIBLE)
+        changeTool(BrushType.PEN, visibleState = View.VISIBLE)
     }
 
     override fun onRectangleClicked() {
-        changeBrushType(BrushType.RECTANGLE)
-        setupToolPanel(style = Paint.Style.FILL, visibleState = View.GONE)
+        changeTool(BrushType.RECTANGLE, visibleState = View.GONE)
     }
 
     override fun onCircleClicked() {
-        changeBrushType(BrushType.CIRCLE)
-        setupToolPanel(style = Paint.Style.FILL, visibleState = View.GONE)
+        changeTool(BrushType.CIRCLE, visibleState = View.GONE)
     }
 
     override fun onEraserClicked() {
-        changeBrushType(BrushType.ERASER)
-        setupToolPanel(visibleState = View.GONE)
+        changeTool(BrushType.ERASER, visibleState = View.GONE)
     }
 
-    private fun setupToolPanel(
-        style: Paint.Style? = null,
+    private fun changeTool(
+        brushType: BrushType,
         visibleState: Int,
     ) {
-        style?.let {
-            drawingBoard.setupStyle(it)
-        }
+        changeBrushType(brushType)
+        drawingBoard.setupStyle(brushType)
         binding.rangeSliderMainStrokeWidth.visibility = visibleState
     }
 
