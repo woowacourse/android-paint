@@ -7,7 +7,8 @@ import woowacourse.paint.PaintColor
 import woowacourse.paint.R
 import woowacourse.paint.databinding.ItemColorButtonBinding
 
-class ColorAdapter(private val handler: ColorHandler) : RecyclerView.Adapter<ColorViewHolder>() {
+class ColorAdapter(private val handler: PaintCanvasHandler) :
+    RecyclerView.Adapter<ColorViewHolder>() {
     private var color: List<PaintColor> = defaultColors
 
     fun submitList(newColors: List<PaintColor>) {

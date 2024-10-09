@@ -18,28 +18,29 @@
             android:id="@+id/paint_canvas"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@id/stroke_width_slider"
+            app:layout_constraintBaseline_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/iv_arrow_back"
-            android:backgroundTint="@color/primary"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@drawable/baseline_arrow_back_24"
+            android:backgroundTint="@color/primary"
             android:onClick="@{()->handler.undo()}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/iv_arrow_forward"
-            android:backgroundTint="@color/primary"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginStart="20dp"
             android:background="@drawable/baseline_arrow_forward_24"
+            android:backgroundTint="@color/primary"
             android:onClick="@{()->handler.redo()}"
             app:layout_constraintStart_toEndOf="@id/iv_arrow_back"
             app:layout_constraintTop_toTopOf="parent" />
@@ -48,10 +49,9 @@
             android:id="@+id/stroke_width_slider"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            app:layout_constraintBottom_toTopOf="@id/rv_diagram"
-            app:layout_constraintEnd_toEndOf="@id/rv_color"
-            app:layout_constraintStart_toStartOf="@id/rv_color" />
+            app:layout_constraintEnd_toStartOf="@id/rv_color"
+            app:layout_constraintStart_toStartOf="@id/rv_diagram"
+            app:layout_constraintTop_toBottomOf="@id/rv_diagram" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_diagram"
@@ -60,24 +60,23 @@
             android:orientation="horizontal"
             android:overScrollMode="never"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toTopOf="@id/rv_color"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:itemCount="3"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:itemCount="4"
             tools:listitem="@layout/item_diagram" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_color"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginBottom="10dp"
             android:clipToPadding="false"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:overScrollMode="never"
-            android:paddingHorizontal="10dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_diagram"
             tools:itemCount="8"
             tools:listitem="@layout/item_color_button" />
 

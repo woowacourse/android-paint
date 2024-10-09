@@ -7,7 +7,7 @@
 
         <variable
             name="item"
-            type="woowacourse.paint.PaintColor" />
+            type="woowacourse.paint.paintcanvas.Diagram" />
 
         <variable
             name="handler"
@@ -18,12 +18,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/iv_color"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_diagram"
+            android:layout_width="100dp"
             android:layout_margin="10dp"
-            android:onClick="@{()->handler.selectColor(item)}"
+            android:layout_height="50dp"
+            android:onClick="@{()->handler.selectDiagram(item)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
