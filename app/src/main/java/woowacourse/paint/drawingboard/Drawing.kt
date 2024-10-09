@@ -3,12 +3,22 @@ package woowacourse.paint.drawingboard
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.RectF
+import woowacourse.paint.BrushType
+import woowacourse.paint.BrushType.Companion.changeBrushType
 import kotlin.math.max
 import kotlin.math.min
 
-class Drawing(val path: Path, val paint: Paint) {
+class Drawing(val path: Path = Path(), val paint: Paint = Paint()) {
     init {
-        setupPaint()
+        initializePaint()
+    }
+
+    fun setupDefaultDrawing() {
+        paint.apply {
+            color = DrawingBoard.DEFAULT_LINE_COLOR
+            style = Paint.Style.STROKE
+        }
+        changeBrushType(BrushType.DEFAULT_BRUSH_TYPE)
     }
 
     fun copy() = Drawing(Path(), paint)
@@ -75,7 +85,7 @@ class Drawing(val path: Path, val paint: Paint) {
         return Drawing(Path(), paint)
     }
 
-    private fun setupPaint() =
+    private fun initializePaint() =
         paint.apply {
             strokeCap = Paint.Cap.ROUND
             isAntiAlias = true

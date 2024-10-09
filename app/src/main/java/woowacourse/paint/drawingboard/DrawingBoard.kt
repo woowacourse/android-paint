@@ -5,18 +5,15 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import android.graphics.Path
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.BrushType
-import woowacourse.paint.BrushType.Companion.DEFAULT_BRUSH_TYPE
 import woowacourse.paint.BrushType.Companion.brushType
-import woowacourse.paint.BrushType.Companion.changeBrushType
 
 class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs) {
-    private var currentDrawing = initializeDrawing()
+    private var currentDrawing = Drawing()
     private val drawings: MutableList<Drawing> = mutableListOf(currentDrawing)
 
     private var startX: Float = 0f
@@ -25,7 +22,7 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
     init {
         isFocusable = true
         isFocusableInTouchMode = true
-        changeBrushType(DEFAULT_BRUSH_TYPE)
+        currentDrawing.setupDefaultDrawing()
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -55,15 +52,6 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
         }
         return true
     }
-
-    private fun initializeDrawing() =
-        Drawing(
-            Path(),
-            Paint().apply {
-                color = DEFAULT_LINE_COLOR
-                style = Paint.Style.STROKE
-            },
-        )
 
     private fun actionDown(
         pointX: Float,
