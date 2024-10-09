@@ -17,6 +17,7 @@ abstract class Drawing(val path: Path = Path(), val paint: Paint = Paint()) {
 
     fun setupDefaultDrawing() {
         paint.apply {
+            strokeWidth = DEFAULT_STROKE_WIDTH
             color = DEFAULT_DRAWING_COLOR
             style = Paint.Style.STROKE
         }
@@ -77,4 +78,8 @@ abstract class Drawing(val path: Path = Path(), val paint: Paint = Paint()) {
             strokeCap = Paint.Cap.ROUND
             isAntiAlias = true
         }
+
+    companion object {
+        private const val DEFAULT_STROKE_WIDTH = 10f
+    }
 }
