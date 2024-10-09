@@ -8,16 +8,14 @@ import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import woowacourse.paint.data.Drawings
 import woowacourse.paint.model.Drawing
 import woowacourse.paint.model.DrawingMode
-import woowacourse.paint.model.DrawingMode.Companion.setPaintStyle
-import kotlin.math.max
-import kotlin.math.min
 
-class DrawingBoardView constructor(context: Context, attrs: AttributeSet) : View(context, attrs) {
+class DrawingBoardView(context: Context, attrs: AttributeSet) : View(context, attrs) {
     private val paint = Paint()
     private var path = Path()
-    private val drawings = mutableListOf<Drawing>()
+    private lateinit var drawing: Drawing
     private var drawingMode: DrawingMode = DrawingMode.PEN
     private var startX: Float = 0F
     private var startY: Float = 0F
@@ -38,7 +36,7 @@ class DrawingBoardView constructor(context: Context, attrs: AttributeSet) : View
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        drawings.forEach { canvas.drawPath(it.path, it.paint) }
+        Drawings.drawing.forEach { canvas.drawPath(it.path, it.paint) }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -46,16 +44,18 @@ class DrawingBoardView constructor(context: Context, attrs: AttributeSet) : View
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 initStartPosition(event)
-                addNewDrawing(event)
-                drawByMode(event.x, event.y)
+                drawing = createNewDrawing(event)
+                drawing.draw(startX, startY, event.x, event.y)
+                invalidate()
             }
 
             MotionEvent.ACTION_MOVE -> {
-                drawByMode(event.x, event.y)
+                drawing.draw(startX, startY, event.x, event.y)
+                invalidate()
             }
 
             MotionEvent.ACTION_UP -> {
-                path = Path()
+                initializePath()
             }
 
             else -> super.onTouchEvent(event)
@@ -68,62 +68,16 @@ class DrawingBoardView constructor(context: Context, attrs: AttributeSet) : View
         startY = event.y
     }
 
-    private fun addNewDrawing(event: MotionEvent) {
-        path =
-            Path().apply {
-                moveTo(event.x, event.y)
-            }
-        drawings.add(Drawing(path, Paint(paint)))
+    private fun createNewDrawing(event: MotionEvent): Drawing {
+        initializePath().moveTo(event.x, event.y)
+        val newDrawing = Drawing.getDrawing(path, Paint(paint), drawingMode)
+        Drawings.addNewDrawing(newDrawing)
+        return newDrawing
     }
 
-    private fun drawByMode(
-        currentX: Float,
-        currentY: Float,
-    ) {
-        when (drawingMode) {
-            DrawingMode.PEN -> {
-                drawLine(currentX, currentY)
-            }
-
-            DrawingMode.CIRCLE -> {
-                drawCircle(currentX, currentY)
-            }
-
-            DrawingMode.RECTANGLE -> {
-                drawRectangle(currentX, currentY)
-            }
-
-            DrawingMode.ERASE -> {
-                drawLine(currentX, currentY)
-            }
-        }
-        invalidate()
-    }
-
-    private fun drawLine(currentX: Float, currentY: Float) {
-        path.lineTo(currentX, currentY)
-    }
-
-    private fun drawCircle(currentX: Float, currentY: Float) {
-        path.reset()
-        path.addOval(
-            startX,
-            startY,
-            currentX,
-            currentY,
-            Path.Direction.CW,
-        )
-    }
-
-    private fun drawRectangle(currentX: Float, currentY: Float) {
-        path.reset()
-        path.addRect(
-            min(startX, currentX),
-            min(startY, currentY),
-            max(currentX, startX),
-            max(currentY, startY),
-            Path.Direction.CW,
-        )
+    private fun initializePath(): Path {
+        path = Path()
+        return path
     }
 
     fun setPaintColor(color: Int) {
@@ -136,6 +90,5 @@ class DrawingBoardView constructor(context: Context, attrs: AttributeSet) : View
 
     fun setDrawingMode(mode: DrawingMode) {
         drawingMode = mode
-        drawingMode.setPaintStyle(paint)
     }
 }
