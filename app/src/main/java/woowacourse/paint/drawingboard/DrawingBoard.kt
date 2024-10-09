@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -52,18 +53,18 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
     }
 
     fun setupStrokeWidth(strokeWidth: Float) {
-        val newStrokeWidthLine = currentDrawing.updateStrokeWidth(strokeWidth)
-        currentDrawing = newStrokeWidthLine
+        val newPaint = currentDrawing.updateStrokeWidth(strokeWidth)
+        currentDrawing = Drawing(Path(), newPaint)
     }
 
     fun setupColor(color: Int) {
-        val newColorLine = currentDrawing.updateColor(color)
-        currentDrawing = newColorLine
+        val newPaint = currentDrawing.updateColor(color)
+        currentDrawing = Drawing(Path(), newPaint)
     }
 
     fun setupStyle(style: Paint.Style) {
-        val newStyle = currentDrawing.updatePaintStyle(style)
-        currentDrawing = newStyle
+        val newPaint = currentDrawing.updatePaintStyle(style)
+        currentDrawing = Drawing(Path(), newPaint)
     }
 
     companion object {

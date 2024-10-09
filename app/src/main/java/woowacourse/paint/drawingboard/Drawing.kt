@@ -59,22 +59,22 @@ class Drawing(val path: Path = Path(), val paint: Paint = Paint()) {
 
     fun actionUp(): Drawing = Drawing(Path(), paint)
 
-    fun updateStrokeWidth(strokeWidth: Float): Drawing {
+    fun updateStrokeWidth(strokeWidth: Float): Paint {
         val paint = Paint(paint)
         paint.strokeWidth = strokeWidth
-        return Drawing(Path(), paint)
+        return paint
     }
 
-    fun updateColor(color: Int): Drawing {
+    fun updateColor(color: Int): Paint {
         val paint = Paint(paint)
         paint.color = color
-        return Drawing(Path(), paint)
+        return paint
     }
 
-    fun updatePaintStyle(style: Paint.Style): Drawing {
+    fun updatePaintStyle(style: Paint.Style): Paint {
         val paint = Paint(paint)
         paint.style = style
-        return Drawing(Path(), paint)
+        return paint
     }
 
     private fun initializePaint() =
