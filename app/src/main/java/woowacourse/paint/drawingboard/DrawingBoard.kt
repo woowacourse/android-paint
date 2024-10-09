@@ -3,7 +3,6 @@ package woowacourse.paint.drawingboard
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
 import android.util.AttributeSet
@@ -123,7 +122,6 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
     }
 
     companion object {
-        const val DEFAULT_LINE_COLOR = Color.RED
         const val INVALID_INDEX = -1
     }
 }

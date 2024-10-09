@@ -10,4 +10,9 @@ enum class Color(
     YELLOW(R.color.yellow),
     GREEN(R.color.green),
     BLUE(R.color.blue),
+    ;
+
+    companion object {
+        const val DEFAULT_DRAWING_COLOR = android.graphics.Color.RED
+    }
 }
