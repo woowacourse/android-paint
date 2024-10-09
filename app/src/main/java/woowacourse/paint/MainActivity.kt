@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import woowacourse.paint.BrushType.Companion.changeBrushType
 import woowacourse.paint.adapter.ColorPaletteAdapter
 import woowacourse.paint.databinding.ActivityMainBinding
 import woowacourse.paint.drawingboard.DrawingBoard
@@ -27,22 +28,22 @@ class MainActivity : AppCompatActivity(), ColorPaletteHandler, BrushHandler {
     }
 
     override fun onPenClicked() {
-        drawingBoard.changeBrushType(BrushType.PEN)
+        changeBrushType(BrushType.PEN)
         setupToolPanel(style = Paint.Style.STROKE, visibleState = View.VISIBLE)
     }
 
     override fun onRectangleClicked() {
-        drawingBoard.changeBrushType(BrushType.RECTANGLE)
+        changeBrushType(BrushType.RECTANGLE)
         setupToolPanel(style = Paint.Style.FILL, visibleState = View.GONE)
     }
 
     override fun onCircleClicked() {
-        drawingBoard.changeBrushType(BrushType.CIRCLE)
+        changeBrushType(BrushType.CIRCLE)
         setupToolPanel(style = Paint.Style.FILL, visibleState = View.GONE)
     }
 
     override fun onEraserClicked() {
-        drawingBoard.changeBrushType(BrushType.ERASER)
+        changeBrushType(BrushType.ERASER)
         setupToolPanel(visibleState = View.GONE)
     }
 

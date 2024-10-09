@@ -11,12 +11,13 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.BrushType
+import woowacourse.paint.BrushType.Companion.DEFAULT_BRUSH_TYPE
+import woowacourse.paint.BrushType.Companion.brushType
+import woowacourse.paint.BrushType.Companion.changeBrushType
 
 class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs) {
     private var currentDrawing = initializeDrawing()
-
     private val drawings: MutableList<Drawing> = mutableListOf(currentDrawing)
-    private var brushType: BrushType = DEFAULT_BRUSH_TYPE
 
     private var startX: Float = 0f
     private var startY: Float = 0f
@@ -24,6 +25,7 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
     init {
         isFocusable = true
         isFocusableInTouchMode = true
+        changeBrushType(DEFAULT_BRUSH_TYPE)
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -128,10 +130,6 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
         currentDrawing = newStyle
     }
 
-    fun changeBrushType(brush: BrushType) {
-        this.brushType = brush
-    }
-
     private fun addNewLine() {
         drawings.add(currentDrawing)
     }
@@ -139,6 +137,5 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
     companion object {
         const val DEFAULT_LINE_COLOR = Color.RED
         const val INVALID_INDEX = -1
-        val DEFAULT_BRUSH_TYPE = BrushType.PEN
     }
 }
