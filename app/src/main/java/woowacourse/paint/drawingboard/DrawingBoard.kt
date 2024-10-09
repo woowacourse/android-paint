@@ -4,12 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Paint
-import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import woowacourse.paint.BrushType
-import woowacourse.paint.BrushType.Companion.brushType
 import woowacourse.paint.drawingboard.Drawings.drawings
 
 class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs) {
@@ -41,66 +38,17 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
             MotionEvent.ACTION_DOWN -> {
                 startX = event.x
                 startY = event.y
-                actionDown(pointX, pointY)
+                currentDrawing.actionDown(pointX, pointY)
             }
             MotionEvent.ACTION_MOVE -> {
-                actionMove(pointX, pointY)
+                currentDrawing.actionMove(startX, startY, pointX, pointY)
+                invalidate()
             }
             MotionEvent.ACTION_UP -> {
-                currentDrawing = currentDrawing.copy()
+                currentDrawing = currentDrawing.actionUp()
             }
         }
         return true
-    }
-
-    private fun actionDown(
-        pointX: Float,
-        pointY: Float,
-    ) {
-        when (brushType) {
-            BrushType.PEN -> {
-                Drawings.addNewDrawing(currentDrawing)
-                currentDrawing.moveTo(pointX, pointY)
-            }
-            BrushType.RECTANGLE -> Drawings.addNewDrawing(currentDrawing)
-            BrushType.CIRCLE -> Drawings.addNewDrawing(currentDrawing)
-            BrushType.ERASER -> {
-                val removeItemIndex = findRemoveItem(pointX, pointY)
-                if (removeItemIndex != INVALID_INDEX) Drawings.removeDrawing(removeItemIndex)
-            }
-        }
-    }
-
-    private fun actionMove(
-        pointX: Float,
-        pointY: Float,
-    ) {
-        when (brushType) {
-            BrushType.PEN -> currentDrawing.lineTo(pointX, pointY)
-            BrushType.RECTANGLE -> {
-                currentDrawing.drawRect(startX, startY, pointX, pointY)
-            }
-            BrushType.CIRCLE -> {
-                currentDrawing.drawCircle(startX, startY, pointX, pointY)
-            }
-            BrushType.ERASER -> {}
-        }
-        invalidate()
-    }
-
-    private fun findRemoveItem(
-        x: Float,
-        y: Float,
-    ): Int {
-        val bounds = RectF()
-
-        for (index in drawings.indices.reversed()) {
-            val drawing = drawings[index]
-            drawing.computeBounds(bounds)
-
-            if (bounds.contains(x, y)) return index
-        }
-        return INVALID_INDEX
     }
 
     fun setupStrokeWidth(strokeWidth: Float) {
