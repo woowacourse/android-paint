@@ -24,8 +24,6 @@ class PaintCanvasView(context: Context, attrs: AttributeSet) : View(context, att
 
     init {
         setLayerType(LAYER_TYPE_HARDWARE, null)
-        isFocusable = false
-        isFocusableInTouchMode = false
     }
 
     fun undo() {
