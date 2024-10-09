@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="primary">@color/dark_gray</color>
+    <color name="primary_variant">@color/semi_black</color>
+    <color name="primary_on">@color/light_gray</color>
+
+    <color name="drawing_board_background">@color/semi_black</color>
+
+    <color name="tools_panel_background">@color/light_gray</color>
+    <color name="tools_panel_primary">@color/gray</color>
+    <color name="tools_panel_primary_variant">@color/dark_gray</color>
+</resources>

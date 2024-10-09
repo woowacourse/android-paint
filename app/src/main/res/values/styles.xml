@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="PaintToolbarStyle" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="titleTextColor">@color/primary_on</item>
+    </style>
+
+    <style name="RangeSliderStyle" parent="Widget.MaterialComponents.Slider">
+        <item name="tickColor">@color/tools_panel_primary</item>
+        <item name="trackColor">@color/white</item>
+        <item name="thumbColor">@color/tools_panel_primary_variant</item>
+    </style>
+
+    <style name="DrawingModeItemStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:clickable">true</item>
+        <item name="android:layout_marginHorizontal">@dimen/margin_drawing_mode_item</item>
+        <item name="android:drawablePadding">@dimen/padding_drawing_mode_item_icon</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/tools_panel_primary_variant</item>
+        <item name="android:textSize">@dimen/text_size_drawing_mode_item</item>
+        <item name="drawableTint">@color/tools_panel_primary_variant</item>
+    </style>
+</resources>

@@ -7,11 +7,25 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="color_picker_background">#E9B5F2</color>
 
-    <color name="red">#D71010</color>
-    <color name="orange">#FF8C00</color>
-    <color name="yellow">#FFF200</color>
-    <color name="green">#07E000</color>
-    <color name="blue">#1420FF</color>
+    <color name="semi_black">#161616</color>
+    <color name="dark_gray">#484848</color>
+    <color name="gray">#8F8F8F</color>
+    <color name="light_gray">#F1F1F1</color>
+
+    <color name="red">#B70606</color>
+    <color name="orange">#F28006</color>
+    <color name="yellow">#E4DA1F</color>
+    <color name="green">#08AE37</color>
+    <color name="blue">#0A13BA</color>
+
+    <color name="primary">@color/light_gray</color>
+    <color name="primary_variant">@color/gray</color>
+    <color name="primary_on">@color/semi_black</color>
+
+    <color name="drawing_board_background">@color/white</color>
+
+    <color name="tools_panel_background">@color/gray</color>
+    <color name="tools_panel_primary">@color/dark_gray</color>
+    <color name="tools_panel_primary_variant">@color/semi_black</color>
 </resources>

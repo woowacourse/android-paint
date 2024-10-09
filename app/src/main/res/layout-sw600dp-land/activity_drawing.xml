@@ -23,11 +23,38 @@
             android:id="@+id/constraint_drawing_tools_pannel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:background="@drawable/shape_rect_round_tools_panel"
             android:maxWidth="600dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_drawing_color_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/margin_vertical_color_picker"
+                android:orientation="horizontal"
+                android:paddingHorizontal="@dimen/padding_horizontal_color_picker"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:itemCount="5"
+                tools:listitem="@layout/item_color_picker" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_drawing_mode_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_marginTop="@dimen/margin_vertical_drawing_mode_picker"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/rv_drawing_color_picker"
+                tools:itemCount="4"
+                tools:listitem="@layout/item_drawing_mode" />
 
             <com.google.android.material.slider.RangeSlider
                 android:id="@+id/range_slider_drawing_brush_size_controller"
@@ -35,36 +62,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/margin_horizontal_brush_size_controller"
-                android:layout_marginBottom="@dimen/margin_vertical_brush_size_controller"
-                app:layout_constraintBottom_toTopOf="@id/rv_drawing_mode_picker"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_drawing_mode_picker"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_marginBottom="@dimen/margin_vertical_drawing_mode_picker"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintBottom_toTopOf="@id/rv_drawing_color_picker"
+                android:layout_marginTop="@dimen/margin_vertical_brush_size_controller"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:itemCount="4"
-                tools:listitem="@layout/item_drawing_mode" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_drawing_color_picker"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:orientation="horizontal"
-                android:paddingHorizontal="@dimen/padding_horizontal_color_picker"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:itemCount="5"
-                tools:listitem="@layout/item_color_picker" />
+                app:layout_constraintTop_toBottomOf="@id/rv_drawing_mode_picker" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

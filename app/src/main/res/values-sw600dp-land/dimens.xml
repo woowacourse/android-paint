@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_drawing_mode_item">16dp</dimen>
+    <dimen name="padding_drawing_mode_item_icon">5dp</dimen>
+    <dimen name="text_size_drawing_mode_item">18sp</dimen>
+
+    <dimen name="width_color_item">50dp</dimen>
+    <dimen name="height_color_item">32dp</dimen>
+    <dimen name="margin_color_item">10dp</dimen>
+
+    <dimen name="margin_vertical_brush_size_controller">4dp</dimen>
+    <dimen name="margin_vertical_drawing_mode_picker">12dp</dimen>
+    <dimen name="margin_vertical_color_picker">12dp</dimen>
+</resources>
