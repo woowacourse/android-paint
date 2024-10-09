@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import woowacourse.paint.BrushType.Companion.brushType
 import woowacourse.paint.BrushType.Companion.changeBrushType
 import woowacourse.paint.adapter.ColorPaletteAdapter
 import woowacourse.paint.databinding.ActivityMainBinding
@@ -27,28 +28,43 @@ class MainActivity : AppCompatActivity(), ColorPaletteHandler, BrushHandler {
     }
 
     override fun onPenClicked() {
-        changeTool(BrushType.PEN, visibleState = View.VISIBLE)
+        changeTool(
+            brushType = BrushType.PEN,
+            strokeWidthSliderVisibility = View.VISIBLE,
+        )
     }
 
     override fun onRectangleClicked() {
-        changeTool(BrushType.RECTANGLE, visibleState = View.GONE)
+        changeTool(
+            brushType = BrushType.RECTANGLE,
+            strokeWidthSliderVisibility = View.GONE,
+        )
     }
 
     override fun onCircleClicked() {
-        changeTool(BrushType.CIRCLE, visibleState = View.GONE)
+        changeTool(
+            brushType = BrushType.CIRCLE,
+            strokeWidthSliderVisibility = View.GONE,
+        )
     }
 
     override fun onEraserClicked() {
-        changeTool(BrushType.ERASER, visibleState = View.GONE)
+        changeTool(
+            brushType = BrushType.ERASER,
+            strokeWidthSliderVisibility = View.GONE,
+            colorPaletteVisibility = View.GONE,
+        )
     }
 
     private fun changeTool(
         brushType: BrushType,
-        visibleState: Int,
+        strokeWidthSliderVisibility: Int,
+        colorPaletteVisibility: Int = View.VISIBLE,
     ) {
         changeBrushType(brushType)
         drawingBoard.setupStyle()
-        binding.rangeSliderMainStrokeWidth.visibility = visibleState
+        binding.rangeSliderMainStrokeWidth.visibility = strokeWidthSliderVisibility
+        binding.rvMainColorPalette.visibility = colorPaletteVisibility
     }
 
     private fun setupColorPalette() {
