@@ -10,10 +10,10 @@ import android.view.MotionEvent
 import android.view.View
 import woowacourse.paint.BrushType
 import woowacourse.paint.BrushType.Companion.brushType
+import woowacourse.paint.drawingboard.Drawings.drawings
 
 class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs) {
     private var currentDrawing = Drawing()
-    private val drawings: MutableList<Drawing> = mutableListOf(currentDrawing)
 
     private var startX: Float = 0f
     private var startY: Float = 0f
@@ -22,6 +22,7 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
         isFocusable = true
         isFocusableInTouchMode = true
         currentDrawing.setupDefaultDrawing()
+        Drawings.addNewDrawing(currentDrawing)
     }
 
     override fun onDraw(canvas: Canvas) {
@@ -58,14 +59,14 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
     ) {
         when (brushType) {
             BrushType.PEN -> {
-                addNewLine()
+                Drawings.addNewDrawing(currentDrawing)
                 currentDrawing.moveTo(pointX, pointY)
             }
-            BrushType.RECTANGLE -> addNewLine()
-            BrushType.CIRCLE -> addNewLine()
+            BrushType.RECTANGLE -> Drawings.addNewDrawing(currentDrawing)
+            BrushType.CIRCLE -> Drawings.addNewDrawing(currentDrawing)
             BrushType.ERASER -> {
                 val removeItemIndex = findRemoveItem(pointX, pointY)
-                if (removeItemIndex != INVALID_INDEX) drawings.removeAt(removeItemIndex)
+                if (removeItemIndex != INVALID_INDEX) Drawings.removeDrawing(removeItemIndex)
             }
         }
     }
@@ -115,10 +116,6 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
     fun setupStyle(style: Paint.Style) {
         val newStyle = currentDrawing.updatePaintStyle(style)
         currentDrawing = newStyle
-    }
-
-    private fun addNewLine() {
-        drawings.add(currentDrawing)
     }
 
     companion object {
