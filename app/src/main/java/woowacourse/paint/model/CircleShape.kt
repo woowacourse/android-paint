@@ -6,10 +6,11 @@ import kotlin.math.abs
 import kotlin.math.min
 
 class CircleShape(
-    private var centerX: Float,
-    private var centerY: Float,
-    private var radius: Float = 0f,
+    private val centerX: Float,
+    private val centerY: Float,
 ) : Shape {
+    private var radius = 0f
+
     override fun draw(
         canvas: Canvas,
         paint: Paint,

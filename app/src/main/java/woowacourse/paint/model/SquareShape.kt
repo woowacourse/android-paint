@@ -4,8 +4,8 @@ import android.graphics.Canvas
 import android.graphics.Paint
 
 class SquareShape(
-    private var startX: Float,
-    private var startY: Float,
+    private val startX: Float,
+    private val startY: Float,
     private var endX: Float,
     private var endY: Float,
 ) : Shape {
