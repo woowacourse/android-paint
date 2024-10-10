@@ -4,7 +4,7 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 
-class PathShape(private val path: Path) : Shape {
+class EraserShape(private val path: Path) : Shape {
     override fun draw(
         canvas: Canvas,
         paint: Paint,

@@ -14,7 +14,8 @@ import android.view.View
 import androidx.annotation.ColorInt
 import woowacourse.paint.model.CircleShape
 import woowacourse.paint.model.DrawableShape
-import woowacourse.paint.model.PathShape
+import woowacourse.paint.model.EraserShape
+import woowacourse.paint.model.PenShape
 import woowacourse.paint.model.Shape
 import woowacourse.paint.model.ShapeType
 import woowacourse.paint.model.SquareShape
@@ -23,7 +24,7 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
     private val shapes = mutableListOf<DrawableShape>()
 
     private var currentPaint: Paint = initialPaint()
-    private var currentShape: Shape = PathShape(Path())
+    private var currentShape: Shape = PenShape(Path())
 
     private var shapeType: ShapeType = ShapeType.PEN
 
@@ -50,17 +51,12 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                currentShape =
-                    if (shapeType == ShapeType.ERASER) {
-                        PathShape(Path().apply { moveTo(pointX, pointY) })
-                    } else {
-                        when (shapeType) {
-                            ShapeType.PEN -> PathShape(Path().apply { moveTo(pointX, pointY) })
-                            ShapeType.SQUARE -> SquareShape(pointX, pointY, pointX, pointY)
-                            ShapeType.CIRCLE -> CircleShape(pointX, pointY)
-                            else -> PathShape(Path().apply { moveTo(pointX, pointY) })
-                        }
-                    }
+                currentShape = when (shapeType) {
+                    ShapeType.PEN -> PenShape(Path().apply { moveTo(pointX, pointY) })
+                    ShapeType.SQUARE -> SquareShape(pointX, pointY, pointX, pointY)
+                    ShapeType.CIRCLE -> CircleShape(pointX, pointY)
+                    ShapeType.ERASER -> EraserShape(Path().apply { moveTo(pointX, pointY) })
+                }
             }
 
             MotionEvent.ACTION_MOVE -> {
@@ -77,24 +73,13 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         return true
     }
 
-    private fun setEraseMode(erase: Boolean) {
-        if (erase) {
-            currentPaint.xfermode = PorterDuffXfermode(PorterDuff.Mode.CLEAR)
-        } else {
-            currentPaint.xfermode = null
-        }
-    }
-
     private fun resetShape() {
-        currentShape =
-            when (shapeType) {
-                ShapeType.PEN, ShapeType.ERASER -> PathShape(Path())
-                ShapeType.SQUARE ->
-                    SquareShape()
-
-                ShapeType.CIRCLE ->
-                    CircleShape()
-            }
+        currentShape = when (shapeType) {
+            ShapeType.PEN -> PenShape(Path())
+            ShapeType.ERASER -> EraserShape(Path())
+            ShapeType.SQUARE -> SquareShape()
+            ShapeType.CIRCLE -> CircleShape()
+        }
     }
 
     private fun initialPaint(): Paint {
@@ -120,9 +105,16 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
         setEraseMode(type == ShapeType.ERASER)
     }
 
+    private fun setEraseMode(erase: Boolean) {
+        currentPaint.xfermode = if (erase) {
+            PorterDuffXfermode(PorterDuff.Mode.CLEAR)
+        } else {
+            null
+        }
+    }
+
     companion object {
         private const val DEFAULT_COLOR = Color.RED
         private const val DEFAULT_WIDTH = 50f
-        private const val INITIAL_WIDTH = 0f
     }
 }
