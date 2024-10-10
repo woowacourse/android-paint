@@ -4,10 +4,10 @@ import android.graphics.Canvas
 import android.graphics.Paint
 
 class SquareShape(
-    private val startX: Float,
-    private val startY: Float,
-    private var endX: Float,
-    private var endY: Float,
+    private val startX: Float = 0f,
+    private val startY: Float = 0f,
+    private var endX: Float = 0f,
+    private var endY: Float = 0f,
 ) : Shape {
     override fun draw(
         canvas: Canvas,

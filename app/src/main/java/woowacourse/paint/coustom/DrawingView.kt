@@ -90,18 +90,10 @@ class DrawingView(context: Context, attrs: AttributeSet) : View(context, attrs) 
             when (shapeType) {
                 ShapeType.PEN, ShapeType.ERASER -> PathShape(Path())
                 ShapeType.SQUARE ->
-                    SquareShape(
-                        startX = INITIAL_WIDTH,
-                        startY = INITIAL_WIDTH,
-                        endX = INITIAL_WIDTH,
-                        endY = INITIAL_WIDTH,
-                    )
+                    SquareShape()
 
                 ShapeType.CIRCLE ->
-                    CircleShape(
-                        centerX = INITIAL_WIDTH,
-                        centerY = INITIAL_WIDTH,
-                    )
+                    CircleShape()
             }
     }
 

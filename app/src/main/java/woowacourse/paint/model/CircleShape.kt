@@ -6,8 +6,8 @@ import kotlin.math.abs
 import kotlin.math.min
 
 class CircleShape(
-    private val centerX: Float,
-    private val centerY: Float,
+    private val centerX: Float = 0f,
+    private val centerY: Float = 0f,
 ) : Shape {
     private var radius = 0f
 
