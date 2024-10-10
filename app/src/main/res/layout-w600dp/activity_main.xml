@@ -27,13 +27,12 @@
             android:id="@+id/range_slider_main_stroke_width"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="8dp"
             android:layout_marginBottom="8dp"
             android:valueFrom="10"
             android:valueTo="100"
             app:layout_constraintBottom_toTopOf="@id/rv_main_color_palette"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/btn_main_eraser"
+            app:layout_constraintStart_toStartOf="@id/btn_main_pen"
             tools:visibility="visible" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -56,17 +55,20 @@
             android:id="@+id/btn_main_pen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="6dp"
             android:layout_marginBottom="8dp"
             android:onClick="@{() -> brushHandler.onPenClicked()}"
             android:text="@string/main_pen"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_main_rectangle"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/btn_main_rectangle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="6dp"
             android:onClick="@{() -> brushHandler.onRectangleClicked()}"
             android:text="@string/main_rectangle"
             app:layout_constraintBottom_toBottomOf="@id/btn_main_pen"
@@ -78,6 +80,7 @@
             android:id="@+id/btn_main_circle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="6dp"
             android:onClick="@{() -> brushHandler.onCircleClicked()}"
             android:text="@string/main_circle"
             app:layout_constraintBottom_toBottomOf="@id/btn_main_pen"
@@ -95,6 +98,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/btn_main_circle"
             app:layout_constraintTop_toTopOf="@id/btn_main_pen" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

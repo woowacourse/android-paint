@@ -3,26 +3,31 @@ package woowacourse.paint.drawingboard
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
 import android.graphics.Path
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
+import woowacourse.paint.BrushType
+import woowacourse.paint.BrushType.Companion.brushType
+import woowacourse.paint.drawingboard.Drawings.drawings
 
 class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs) {
-    private var currentLine = Line(Path(), Paint().apply { color = DEFAULT_LINE_COLOR })
-    private val lines: MutableList<Line> = mutableListOf(currentLine)
+    private var currentDrawing: Drawing = Pen()
+
+    private var startX: Float = 0f
+    private var startY: Float = 0f
 
     init {
         isFocusable = true
         isFocusableInTouchMode = true
+        currentDrawing.setupDefaultDrawing()
+        Drawings.addNewDrawing(currentDrawing)
     }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
-        lines.forEach {
-            canvas.drawPath(it.path, it.paint)
+        for (drawing in drawings) {
+            canvas.drawPath(drawing.path, drawing.paint)
         }
     }
 
@@ -33,31 +38,49 @@ class DrawingBoard(context: Context, attrs: AttributeSet?) : View(context, attrs
 
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
-                addNewLine()
-                currentLine.moveTo(pointX, pointY)
+                startX = event.x
+                startY = event.y
+                currentDrawing.actionDown(pointX, pointY)
             }
-            MotionEvent.ACTION_MOVE -> currentLine.lineTo(pointX, pointY)
-            else -> return super.onTouchEvent(event)
+            MotionEvent.ACTION_MOVE -> {
+                currentDrawing.actionMove(startX, startY, pointX, pointY)
+                invalidate()
+            }
+            MotionEvent.ACTION_UP -> {
+                currentDrawing = currentDrawing.actionUp()
+            }
         }
-        invalidate()
         return true
     }
 
     fun setupStrokeWidth(strokeWidth: Float) {
-        val newStrokeWidthLine = currentLine.updateStrokeWidth(strokeWidth)
-        currentLine = newStrokeWidthLine
+        val newPaint = currentDrawing.updateStrokeWidth(strokeWidth)
+        currentDrawing = Pen(Path(), newPaint)
     }
 
     fun setupColor(color: Int) {
-        val newColorLine = currentLine.updateColor(color)
-        currentLine = newColorLine
+        val newDrawing =
+            when (brushType) {
+                BrushType.PEN -> Pen(paint = currentDrawing.paint).updateColor(color)
+                BrushType.RECTANGLE -> Rectangle(paint = currentDrawing.paint).updateColor(color)
+                BrushType.CIRCLE -> Circle(paint = currentDrawing.paint).updateColor(color)
+                BrushType.ERASER -> Eraser(paint = currentDrawing.paint).updateColor(color)
+            }
+        currentDrawing = newDrawing
     }
 
-    private fun addNewLine() {
-        lines.add(currentLine)
+    fun setupStyle() {
+        val newDrawing =
+            when (brushType) {
+                BrushType.PEN -> Pen(paint = currentDrawing.paint).updatePaintStyle()
+                BrushType.RECTANGLE -> Rectangle(paint = currentDrawing.paint).updatePaintStyle()
+                BrushType.CIRCLE -> Circle(paint = currentDrawing.paint).updatePaintStyle()
+                BrushType.ERASER -> Eraser(paint = currentDrawing.paint).updatePaintStyle()
+            }
+        currentDrawing = newDrawing
     }
 
     companion object {
-        const val DEFAULT_LINE_COLOR = Color.RED
+        const val INVALID_INDEX = -1
     }
 }
