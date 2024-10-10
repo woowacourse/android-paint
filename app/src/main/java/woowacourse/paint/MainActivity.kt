@@ -36,6 +36,13 @@ class MainActivity : AppCompatActivity() {
                 binding.drawingView.setPaintColor(color = color.getColor(this))
             },
         )
+
+        viewModel.selectedShape.observe(
+            this,
+            Observer { shapeType ->
+                binding.drawingView.setShapeType(shapeType)
+            },
+        )
     }
 
     private fun observeStrokeWidth() {
