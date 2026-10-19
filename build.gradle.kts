@@ -3,6 +3,7 @@ plugins {
     id("com.android.application") version "9.1.0" apply false
     id("org.jlleitschuh.gradle.ktlint") version "12.1.0" apply false
     id("org.jetbrains.kotlin.plugin.compose") version "2.4.10" apply false
+    id("org.jetbrains.kotlin.plugin.parcelize") version "2.4.10" apply false
 }
 
 allprojects {
